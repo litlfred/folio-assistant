@@ -1,0 +1,1446 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-347190",
+  "instance": "who-iris",
+  "about": "library/10665-347190",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "dtp coverage",
+        "score": 5.9335,
+        "evidence": []
+      },
+      {
+        "term": "mcv coverage",
+        "score": 5.6047,
+        "evidence": []
+      },
+      {
+        "term": "congenital rubella",
+        "score": 4.999,
+        "evidence": []
+      },
+      {
+        "term": "rubella syndrome",
+        "score": 4.985,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 4.837,
+        "evidence": []
+      },
+      {
+        "term": "rubella elimination",
+        "score": 4.704,
+        "evidence": []
+      },
+      {
+        "term": "mcv measles-mumps-rubella",
+        "score": 4.6492,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 4.3813,
+        "evidence": []
+      },
+      {
+        "term": "mcv reported",
+        "score": 4.2303,
+        "evidence": []
+      },
+      {
+        "term": "immunization profile",
+        "score": 4.0206,
+        "evidence": []
+      },
+      {
+        "term": "pcv pneumococcal",
+        "score": 4.0206,
+        "evidence": []
+      },
+      {
+        "term": "polio vaccine",
+        "score": 4.004,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "mcv coverage",
+        "score": 110.6017,
+        "evidence": []
+      },
+      {
+        "term": "dtp coverage",
+        "score": 109.2379,
+        "evidence": []
+      },
+      {
+        "term": "measles-mumps-rubella vaccine",
+        "score": 106.9216,
+        "evidence": []
+      },
+      {
+        "term": "polio vaccine",
+        "score": 103.4591,
+        "evidence": []
+      },
+      {
+        "term": "european vaccine",
+        "score": 101.816,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis vaccine",
+        "score": 99.8231,
+        "evidence": []
+      },
+      {
+        "term": "conjugate vaccine",
+        "score": 95.8325,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 92.7577,
+        "evidence": []
+      },
+      {
+        "term": "congenital rubella",
+        "score": 92.124,
+        "evidence": []
+      },
+      {
+        "term": "rubella syndrome",
+        "score": 90.3977,
+        "evidence": []
+      },
+      {
+        "term": "vaccine action",
+        "score": 88.6433,
+        "evidence": []
+      },
+      {
+        "term": "rubella elimination",
+        "score": 84.3737,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hepatitis vaccine",
+        "score": 1.9108,
+        "evidence": []
+      },
+      {
+        "term": "polio vaccine",
+        "score": 1.8451,
+        "evidence": []
+      },
+      {
+        "term": "conjugate vaccine",
+        "score": 1.7609,
+        "evidence": []
+      },
+      {
+        "term": "measles-mumps-rubella vaccine",
+        "score": 1.7204,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 1.6867,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 1.6841,
+        "evidence": []
+      },
+      {
+        "term": "vaccine action",
+        "score": 1.6665,
+        "evidence": []
+      },
+      {
+        "term": "national immunization",
+        "score": 1.5354,
+        "evidence": []
+      },
+      {
+        "term": "european vaccine",
+        "score": 1.4834,
+        "evidence": []
+      },
+      {
+        "term": "routine immunization",
+        "score": 1.3759,
+        "evidence": []
+      },
+      {
+        "term": "immunization profile",
+        "score": 1.129,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 1.092,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "yes",
+        "score": 49.4057,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis vaccine",
+        "score": 49.4026,
+        "evidence": []
+      },
+      {
+        "term": "measles-mumps-rubella vaccine",
+        "score": 46.165,
+        "evidence": []
+      },
+      {
+        "term": "polio vaccine",
+        "score": 44.6912,
+        "evidence": []
+      },
+      {
+        "term": "mumps",
+        "score": 42.4526,
+        "evidence": []
+      },
+      {
+        "term": "conjugate vaccine",
+        "score": 41.0083,
+        "evidence": []
+      },
+      {
+        "term": "european vaccine",
+        "score": 41.0083,
+        "evidence": []
+      },
+      {
+        "term": "vaccine action",
+        "score": 41.0083,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 34.3993,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 33.4628,
+        "evidence": []
+      },
+      {
+        "term": "national immunization",
+        "score": 30.5265,
+        "evidence": []
+      },
+      {
+        "term": "routine immunization",
+        "score": 30.4658,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hepatitis vaccine",
+        "score": 1.9108,
+        "evidence": []
+      },
+      {
+        "term": "polio vaccine",
+        "score": 1.8451,
+        "evidence": []
+      },
+      {
+        "term": "conjugate vaccine",
+        "score": 1.7609,
+        "evidence": []
+      },
+      {
+        "term": "measles-mumps-rubella vaccine",
+        "score": 1.7204,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 1.6867,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 1.6841,
+        "evidence": []
+      },
+      {
+        "term": "vaccine action",
+        "score": 1.6665,
+        "evidence": []
+      },
+      {
+        "term": "european vaccine",
+        "score": 1.6148,
+        "evidence": []
+      },
+      {
+        "term": "national immunization",
+        "score": 1.5354,
+        "evidence": []
+      },
+      {
+        "term": "routine immunization",
+        "score": 1.3759,
+        "evidence": []
+      },
+      {
+        "term": "immunization profile",
+        "score": 1.1637,
+        "evidence": []
+      },
+      {
+        "term": "dtp coverage",
+        "score": 1.0596,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "潜在受试者",
+        "score": 165.324,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 160.6903,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 143.5069,
+        "evidence": []
+      },
+      {
+        "term": "显而易见",
+        "score": 133.9422,
+        "evidence": []
+      },
+      {
+        "term": "在一些国家",
+        "score": 125.383,
+        "evidence": []
+      },
+      {
+        "term": "青少年",
+        "score": 125.383,
+        "evidence": []
+      },
+      {
+        "term": "很重要",
+        "score": 99.5824,
+        "evidence": []
+      },
+      {
+        "term": "岁的女孩",
+        "score": 96.0959,
+        "evidence": []
+      },
+      {
+        "term": "服务的提供",
+        "score": 96.0959,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 89.5953,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 89.5953,
+        "evidence": []
+      },
+      {
+        "term": "疫苗有关的",
+        "score": 89.0439,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "live births",
+          "score": 1.541,
+          "evidence": []
+        },
+        {
+          "term": "nitag",
+          "score": 1.4379,
+          "evidence": []
+        },
+        {
+          "term": "pcv",
+          "score": 1.1725,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.9991,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.959,
+          "evidence": []
+        },
+        {
+          "term": "every years",
+          "score": 0.9569,
+          "evidence": []
+        },
+        {
+          "term": "mmr",
+          "score": 0.8731,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 0.8511,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nitag",
+          "score": 31.4812,
+          "evidence": []
+        },
+        {
+          "term": "live births",
+          "score": 26.9494,
+          "evidence": []
+        },
+        {
+          "term": "pcv",
+          "score": 24.0979,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 23.3139,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 16.0024,
+          "evidence": []
+        },
+        {
+          "term": "every years",
+          "score": 15.5342,
+          "evidence": []
+        },
+        {
+          "term": "mmr",
+          "score": 12.8079,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 12.0669,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "national immunization",
+          "score": 0.3524,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3138,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.263,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1921,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.1699,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "every years",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1441,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 19.6419,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 5.2679,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 5.0882,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 4.6175,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 4.3444,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.7785,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 3.4356,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 2.9372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "national immunization",
+          "score": 0.3524,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.1942,
+          "evidence": []
+        },
+        {
+          "term": "every years",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1371,
+          "evidence": []
+        },
+        {
+          "term": "coverage",
+          "score": 0.1342,
+          "evidence": []
+        },
+        {
+          "term": "live births",
+          "score": 0.1229,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1225,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 0.1127,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 49.4036,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 45.3814,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 45.059,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 38.8433,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 38.8433,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 33.3646,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 31.688,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 30.2511,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "invasive meningococcal",
+          "score": 2.1703,
+          "evidence": []
+        },
+        {
+          "term": "congenital rubella",
+          "score": 2.1535,
+          "evidence": []
+        },
+        {
+          "term": "rubella syndrome",
+          "score": 2.1441,
+          "evidence": []
+        },
+        {
+          "term": "rotating schedule",
+          "score": 2.094,
+          "evidence": []
+        },
+        {
+          "term": "invasive haemophilus",
+          "score": 2.0113,
+          "evidence": []
+        },
+        {
+          "term": "invasive pneumococcal",
+          "score": 2.0089,
+          "evidence": []
+        },
+        {
+          "term": "mcv reported",
+          "score": 1.7537,
+          "evidence": []
+        },
+        {
+          "term": "haemophilus influenzae",
+          "score": 1.5478,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "congenital rubella",
+          "score": 48.087,
+          "evidence": []
+        },
+        {
+          "term": "rubella syndrome",
+          "score": 46.7922,
+          "evidence": []
+        },
+        {
+          "term": "invasive meningococcal",
+          "score": 44.4915,
+          "evidence": []
+        },
+        {
+          "term": "invasive haemophilus",
+          "score": 43.2343,
+          "evidence": []
+        },
+        {
+          "term": "invasive pneumococcal",
+          "score": 42.3794,
+          "evidence": []
+        },
+        {
+          "term": "rotating schedule",
+          "score": 35.2672,
+          "evidence": []
+        },
+        {
+          "term": "mcv reported",
+          "score": 34.9927,
+          "evidence": []
+        },
+        {
+          "term": "coverage surveys",
+          "score": 29.6017,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.2946,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2255,
+          "evidence": []
+        },
+        {
+          "term": "reported coverage",
+          "score": 0.2056,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.2003,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1991,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "mcv reported",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "coverage surveys",
+          "score": 0.1776,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 16.6494,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 8.9545,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 6.5763,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 5.469,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 3.9016,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.6495,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.3322,
+          "evidence": []
+        },
+        {
+          "term": "reported coverage",
+          "score": 2.8853,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reported coverage",
+          "score": 0.2056,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "mcv reported",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "coverage surveys",
+          "score": 0.1776,
+          "evidence": []
+        },
+        {
+          "term": "pneumococcal disease",
+          "score": 0.166,
+          "evidence": []
+        },
+        {
+          "term": "meningococcal disease",
+          "score": 0.1528,
+          "evidence": []
+        },
+        {
+          "term": "rubella syndrome",
+          "score": 0.144,
+          "evidence": []
+        },
+        {
+          "term": "congenital rubella",
+          "score": 0.1426,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 47.973,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 29.5505,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 26.8949,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 26.1602,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 25.0328,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 25.0328,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 24.9081,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 24.324,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mcv coverage",
+          "score": 1.8114,
+          "evidence": []
+        },
+        {
+          "term": "dtp coverage",
+          "score": 1.7216,
+          "evidence": []
+        },
+        {
+          "term": "dropout rate",
+          "score": 1.6386,
+          "evidence": []
+        },
+        {
+          "term": "level stockout",
+          "score": 1.6016,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 1.0253,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 0.9837,
+          "evidence": []
+        },
+        {
+          "term": "nitag",
+          "score": 0.9815,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.8281,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mcv coverage",
+          "score": 37.4466,
+          "evidence": []
+        },
+        {
+          "term": "dtp coverage",
+          "score": 35.3671,
+          "evidence": []
+        },
+        {
+          "term": "level stockout",
+          "score": 31.005,
+          "evidence": []
+        },
+        {
+          "term": "dropout rate",
+          "score": 29.0203,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 18.3978,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 16.8048,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 16.6528,
+          "evidence": []
+        },
+        {
+          "term": "nitag",
+          "score": 15.7406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.264,
+          "evidence": []
+        },
+        {
+          "term": "dtp coverage",
+          "score": 0.2454,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2323,
+          "evidence": []
+        },
+        {
+          "term": "mcv coverage",
+          "score": 0.2316,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.189,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1868,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1857,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 13.7362,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 12.0891,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 8.3926,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 5.274,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 4.6554,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.8286,
+          "evidence": []
+        },
+        {
+          "term": "dtp coverage",
+          "score": 3.8143,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 3.7078,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.264,
+          "evidence": []
+        },
+        {
+          "term": "dtp coverage",
+          "score": 0.2454,
+          "evidence": []
+        },
+        {
+          "term": "mcv coverage",
+          "score": 0.2316,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.189,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1857,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.1601,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 0.1399,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可能性",
+          "score": 40.7652,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 40.7372,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 38.6132,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 32.7173,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 26.5035,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 25.8267,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 25.8267,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 25.0323,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "measles-mumps-rubella vaccine",
+          "score": 2.7234,
+          "evidence": []
+        },
+        {
+          "term": "mcv measles-mumps-rubella",
+          "score": 2.3594,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 2.3046,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 2.2704,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 2.0778,
+          "evidence": []
+        },
+        {
+          "term": "pneumococcal conjugate",
+          "score": 1.6181,
+          "evidence": []
+        },
+        {
+          "term": "pcv pneumococcal",
+          "score": 1.5717,
+          "evidence": []
+        },
+        {
+          "term": "haemophilus influenzae",
+          "score": 1.5478,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "measles-mumps-rubella vaccine",
+          "score": 91.4937,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 82.9941,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 80.4045,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 77.7903,
+          "evidence": []
+        },
+        {
+          "term": "mcv measles-mumps-rubella",
+          "score": 42.3934,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 34.4345,
+          "evidence": []
+        },
+        {
+          "term": "haemophilus influenzae",
+          "score": 25.0434,
+          "evidence": []
+        },
+        {
+          "term": "pneumococcal conjugate",
+          "score": 24.1885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hepatitis vaccine",
+          "score": 0.7262,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 0.6816,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 0.6387,
+          "evidence": []
+        },
+        {
+          "term": "measles-mumps-rubella vaccine",
+          "score": 0.6111,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.5577,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.516,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3975,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.3222,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hepatitis vaccine",
+          "score": 25.4906,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 23.1518,
+          "evidence": []
+        },
+        {
+          "term": "measles-mumps-rubella vaccine",
+          "score": 23.096,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 20.9512,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 17.6305,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 14.8335,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 13.4925,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 10.3165,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hepatitis vaccine",
+          "score": 0.7262,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 0.6816,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 0.6387,
+          "evidence": []
+        },
+        {
+          "term": "measles-mumps-rubella vaccine",
+          "score": 0.6111,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.5577,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.516,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.3222,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.3055,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "潜在受试者",
+          "score": 54.2973,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 49.9714,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 45.3156,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 35.6801,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 35.6801,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 27.5365,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 26.8187,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 25.9397,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

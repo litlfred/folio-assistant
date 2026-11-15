@@ -1,0 +1,938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-20231",
+  "instance": "who-iris",
+  "about": "library/10665-20231",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "smallpox vaccine",
+        "score": 5.6361,
+        "evidence": []
+      },
+      {
+        "term": "vaccine reserve",
+        "score": 5.1528,
+        "evidence": []
+      },
+      {
+        "term": "smallpox eradication",
+        "score": 4.8835,
+        "evidence": []
+      },
+      {
+        "term": "smallpox emergency",
+        "score": 4.8272,
+        "evidence": []
+      },
+      {
+        "term": "global smallpox",
+        "score": 4.6456,
+        "evidence": []
+      },
+      {
+        "term": "smallpox virus",
+        "score": 4.3269,
+        "evidence": []
+      },
+      {
+        "term": "vaccine stocks",
+        "score": 3.8479,
+        "evidence": []
+      },
+      {
+        "term": "vaccine supplies",
+        "score": 3.1344,
+        "evidence": []
+      },
+      {
+        "term": "bifurcated needles",
+        "score": 2.6133,
+        "evidence": []
+      },
+      {
+        "term": "million doses",
+        "score": 2.2743,
+        "evidence": []
+      },
+      {
+        "term": "global preparedness",
+        "score": 1.8502,
+        "evidence": []
+      },
+      {
+        "term": "hoc committee",
+        "score": 1.8135,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "smallpox vaccine",
+        "score": 201.3963,
+        "evidence": []
+      },
+      {
+        "term": "smallpox emergency",
+        "score": 166.9023,
+        "evidence": []
+      },
+      {
+        "term": "global smallpox",
+        "score": 166.6585,
+        "evidence": []
+      },
+      {
+        "term": "smallpox eradication",
+        "score": 166.3723,
+        "evidence": []
+      },
+      {
+        "term": "smallpox virus",
+        "score": 151.3895,
+        "evidence": []
+      },
+      {
+        "term": "vaccine reserve",
+        "score": 145.2882,
+        "evidence": []
+      },
+      {
+        "term": "vaccine stocks",
+        "score": 91.9756,
+        "evidence": []
+      },
+      {
+        "term": "vaccine supplies",
+        "score": 87.5544,
+        "evidence": []
+      },
+      {
+        "term": "bifurcated needles",
+        "score": 38.185,
+        "evidence": []
+      },
+      {
+        "term": "global commission",
+        "score": 36.383,
+        "evidence": []
+      },
+      {
+        "term": "million doses",
+        "score": 34.2123,
+        "evidence": []
+      },
+      {
+        "term": "hoc committee",
+        "score": 33.2753,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccine supplies",
+        "score": 0.8886,
+        "evidence": []
+      },
+      {
+        "term": "smallpox vaccine",
+        "score": 0.7844,
+        "evidence": []
+      },
+      {
+        "term": "vaccine reserve",
+        "score": 0.7844,
+        "evidence": []
+      },
+      {
+        "term": "vaccine stocks",
+        "score": 0.7844,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.7084,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 0.6184,
+        "evidence": []
+      },
+      {
+        "term": "global preparedness",
+        "score": 0.6024,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 0.5911,
+        "evidence": []
+      },
+      {
+        "term": "pandemic",
+        "score": 0.5647,
+        "evidence": []
+      },
+      {
+        "term": "response capacity",
+        "score": 0.5274,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.5098,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 0.5075,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "smallpox vaccine",
+        "score": 16.7757,
+        "evidence": []
+      },
+      {
+        "term": "vaccine reserve",
+        "score": 16.7757,
+        "evidence": []
+      },
+      {
+        "term": "vaccine stocks",
+        "score": 16.7757,
+        "evidence": []
+      },
+      {
+        "term": "vaccine supplies",
+        "score": 16.7757,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 13.6958,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 13.2881,
+        "evidence": []
+      },
+      {
+        "term": "mumps",
+        "score": 12.8777,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 9.8872,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 8.869,
+        "evidence": []
+      },
+      {
+        "term": "million doses",
+        "score": 7.0954,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 6.8058,
+        "evidence": []
+      },
+      {
+        "term": "covid",
+        "score": 6.4381,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccine supplies",
+        "score": 0.8886,
+        "evidence": []
+      },
+      {
+        "term": "vaccine stocks",
+        "score": 0.8464,
+        "evidence": []
+      },
+      {
+        "term": "vaccine reserve",
+        "score": 0.835,
+        "evidence": []
+      },
+      {
+        "term": "smallpox vaccine",
+        "score": 0.8226,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.7084,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 0.6184,
+        "evidence": []
+      },
+      {
+        "term": "global preparedness",
+        "score": 0.6024,
+        "evidence": []
+      },
+      {
+        "term": "response capacity",
+        "score": 0.5274,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 0.5075,
+        "evidence": []
+      },
+      {
+        "term": "million doses",
+        "score": 0.4732,
+        "evidence": []
+      },
+      {
+        "term": "countries",
+        "score": 0.421,
+        "evidence": []
+      },
+      {
+        "term": "smallpox virus",
+        "score": 0.3646,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "显而易见",
+        "score": 97.4798,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 84.4887,
+        "evidence": []
+      },
+      {
+        "term": "潜在受试者",
+        "score": 83.9561,
+        "evidence": []
+      },
+      {
+        "term": "如上所述",
+        "score": 47.5256,
+        "evidence": []
+      },
+      {
+        "term": "kunimitsu",
+        "score": 43.3584,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 41.693,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 41.693,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 37.939,
+        "evidence": []
+      },
+      {
+        "term": "的研究中",
+        "score": 35.6981,
+        "evidence": []
+      },
+      {
+        "term": "区域和全球各",
+        "score": 32.9454,
+        "evidence": []
+      },
+      {
+        "term": "saito",
+        "score": 32.7399,
+        "evidence": []
+      },
+      {
+        "term": "这种差异",
+        "score": 29.399,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "smallpox vaccine",
+          "score": 2.7895,
+          "evidence": []
+        },
+        {
+          "term": "global reserve",
+          "score": 1.8933,
+          "evidence": []
+        },
+        {
+          "term": "global commission",
+          "score": 1.303,
+          "evidence": []
+        },
+        {
+          "term": "unforeseen",
+          "score": 0.9713,
+          "evidence": []
+        },
+        {
+          "term": "eradication",
+          "score": 0.929,
+          "evidence": []
+        },
+        {
+          "term": "final report",
+          "score": 0.8491,
+          "evidence": []
+        },
+        {
+          "term": "stocks",
+          "score": 0.8173,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.741,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "smallpox vaccine",
+          "score": 104.1756,
+          "evidence": []
+        },
+        {
+          "term": "global reserve",
+          "score": 42.5908,
+          "evidence": []
+        },
+        {
+          "term": "global commission",
+          "score": 28.4202,
+          "evidence": []
+        },
+        {
+          "term": "eradication",
+          "score": 18.8816,
+          "evidence": []
+        },
+        {
+          "term": "unforeseen",
+          "score": 15.7406,
+          "evidence": []
+        },
+        {
+          "term": "stocks",
+          "score": 14.2926,
+          "evidence": []
+        },
+        {
+          "term": "final report",
+          "score": 13.1908,
+          "evidence": []
+        },
+        {
+          "term": "concluded",
+          "score": 9.8169,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.398,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.3529,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 0.3266,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.2335,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.2306,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2304,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.19,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.1626,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 7.7032,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 7.4588,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 5.6676,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.9048,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.2896,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 3.194,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 2.9397,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 2.8496,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.398,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.3529,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 0.3444,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.19,
+          "evidence": []
+        },
+        {
+          "term": "global commission",
+          "score": 0.1863,
+          "evidence": []
+        },
+        {
+          "term": "global reserve",
+          "score": 0.1674,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.1626,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可能性",
+          "score": 36.4388,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 34.0939,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 34.0216,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.7851,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 26.2421,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 26.2421,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 18.5144,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 18.4236,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccine reserve",
+          "score": 3.0058,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 2.8466,
+          "evidence": []
+        },
+        {
+          "term": "vaccine supplies",
+          "score": 2.2509,
+          "evidence": []
+        },
+        {
+          "term": "global smallpox",
+          "score": 2.1098,
+          "evidence": []
+        },
+        {
+          "term": "bifurcated needles",
+          "score": 1.6024,
+          "evidence": []
+        },
+        {
+          "term": "hoc committee",
+          "score": 1.5296,
+          "evidence": []
+        },
+        {
+          "term": "million doses",
+          "score": 1.3768,
+          "evidence": []
+        },
+        {
+          "term": "response capacity",
+          "score": 1.2002,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccine reserve",
+          "score": 100.1095,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 97.2207,
+          "evidence": []
+        },
+        {
+          "term": "vaccine supplies",
+          "score": 69.0409,
+          "evidence": []
+        },
+        {
+          "term": "global smallpox",
+          "score": 65.0709,
+          "evidence": []
+        },
+        {
+          "term": "hoc committee",
+          "score": 29.9412,
+          "evidence": []
+        },
+        {
+          "term": "bifurcated needles",
+          "score": 25.4566,
+          "evidence": []
+        },
+        {
+          "term": "response capacity",
+          "score": 24.9644,
+          "evidence": []
+        },
+        {
+          "term": "million doses",
+          "score": 22.7005,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine supplies",
+          "score": 0.5275,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 0.4578,
+          "evidence": []
+        },
+        {
+          "term": "vaccine reserve",
+          "score": 0.4578,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.3576,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.3341,
+          "evidence": []
+        },
+        {
+          "term": "response capacity",
+          "score": 0.3197,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2794,
+          "evidence": []
+        },
+        {
+          "term": "million doses",
+          "score": 0.2513,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "smallpox vaccine",
+          "score": 11.1082,
+          "evidence": []
+        },
+        {
+          "term": "vaccine reserve",
+          "score": 11.1082,
+          "evidence": []
+        },
+        {
+          "term": "vaccine supplies",
+          "score": 11.1082,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 8.973,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 6.5976,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 6.0194,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 5.0716,
+          "evidence": []
+        },
+        {
+          "term": "million doses",
+          "score": 4.5234,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine supplies",
+          "score": 0.5275,
+          "evidence": []
+        },
+        {
+          "term": "vaccine reserve",
+          "score": 0.4897,
+          "evidence": []
+        },
+        {
+          "term": "smallpox vaccine",
+          "score": 0.4782,
+          "evidence": []
+        },
+        {
+          "term": "response capacity",
+          "score": 0.3197,
+          "evidence": []
+        },
+        {
+          "term": "million doses",
+          "score": 0.2513,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.231,
+          "evidence": []
+        },
+        {
+          "term": "establish global",
+          "score": 0.1968,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1597,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 63.386,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 49.9345,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 48.0499,
+          "evidence": []
+        },
+        {
+          "term": "如上所述",
+          "score": 31.1983,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 29.0884,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.4002,
+          "evidence": []
+        },
+        {
+          "term": "kunimitsu",
+          "score": 26.2089,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 24.8698,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

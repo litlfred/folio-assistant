@@ -195,7 +195,7 @@ digraph "cat_harness" {
   }
   subgraph "cluster_pkg_cat_harness_attestations" {
     label=<<b>cat-harness/attestations</b><br/><i>«attestations»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
-    "cat_harness_attestations_QaAttestations" [fillcolor="#f4f4f1", class="fa_uml_kind_attestations", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>QaAttestations</b></td></tr><tr><td><i>«json: QaAttestationsSchema»</i></td></tr></table>>];
+    "cat_harness_attestations_qa_attestations_v1_qa_attestations_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_attestations", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>qa-attestations/v1</b></td></tr><tr><td><i>«json: QaAttestationsKind»</i></td></tr><tr><td align="left">family [1] : enum(9)</td></tr><tr><td align="left">subject [1] : object</td></tr></table>>];
     "grid_pkg_cat_harness_attestations_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_attestations_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
@@ -956,8 +956,8 @@ digraph "cat_harness" {
   "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" -> "grid_pkg_cat_harness_qa_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_qa_viewer_nav_qa_v1_Page" -> "grid_pkg_cat_harness_qa_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1" -> "grid_pkg_cat_harness_qa_bottom" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_attestations_top" -> "cat_harness_attestations_QaAttestations" [style=invis, class="kg-graph-anchor"];
-  "cat_harness_attestations_QaAttestations" -> "grid_pkg_cat_harness_attestations_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_attestations_top" -> "cat_harness_attestations_qa_attestations_v1_qa_attestations_v1" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_attestations_qa_attestations_v1_qa_attestations_v1" -> "grid_pkg_cat_harness_attestations_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_test_plans_Assertion" -> "cat_harness_test_plans_Dependency" [style=invis, class="kg-graph-anchor"];
   "cat_harness_test_plans_TestCase" -> "cat_harness_test_plans_TestPlan" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_test_plans_top" -> "cat_harness_test_plans_Assertion" [style=invis, class="kg-graph-anchor"];

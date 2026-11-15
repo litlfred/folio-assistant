@@ -1,0 +1,324 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-218508",
+  "instance": "who-iris",
+  "about": "library/10665-218508",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "choiera",
+        "score": 1.4952,
+        "evidence": []
+      },
+      {
+        "term": "insérer",
+        "score": 1.1278,
+        "evidence": []
+      },
+      {
+        "term": "cholera",
+        "score": 1.1216,
+        "evidence": []
+      },
+      {
+        "term": "insert",
+        "score": 0.8564,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "choiera",
+        "score": 33.103,
+        "evidence": []
+      },
+      {
+        "term": "cholera",
+        "score": 22.4064,
+        "evidence": []
+      },
+      {
+        "term": "insérer",
+        "score": 21.5314,
+        "evidence": []
+      },
+      {
+        "term": "insert",
+        "score": 15.994,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "les",
+        "score": 0.1211,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.12,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.1103,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.0855,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "les",
+        "score": 3.0673,
+        "evidence": []
+      },
+      {
+        "term": "consulté",
+        "score": 2.1438,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 1.8143,
+        "evidence": []
+      },
+      {
+        "term": "février",
+        "score": 1.7033,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "les",
+        "score": 0.1211,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.1103,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.0807,
+        "evidence": []
+      },
+      {
+        "term": "une",
+        "score": 0.0724,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "巴西登革热",
+        "score": 334.0546,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 227.6298,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 227.6298,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 223.9711,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "choiera",
+          "score": 1.4952,
+          "evidence": []
+        },
+        {
+          "term": "insérer",
+          "score": 1.1278,
+          "evidence": []
+        },
+        {
+          "term": "cholera",
+          "score": 1.1216,
+          "evidence": []
+        },
+        {
+          "term": "insert",
+          "score": 0.8564,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "choiera",
+          "score": 33.103,
+          "evidence": []
+        },
+        {
+          "term": "cholera",
+          "score": 22.4064,
+          "evidence": []
+        },
+        {
+          "term": "insérer",
+          "score": 21.5314,
+          "evidence": []
+        },
+        {
+          "term": "insert",
+          "score": 15.994,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.1211,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.12,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1103,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.0855,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 3.0673,
+          "evidence": []
+        },
+        {
+          "term": "consulté",
+          "score": 2.1438,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.8143,
+          "evidence": []
+        },
+        {
+          "term": "février",
+          "score": 1.7033,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.1211,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1103,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.0807,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.0724,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 334.0546,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 227.6298,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 227.6298,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 223.9711,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

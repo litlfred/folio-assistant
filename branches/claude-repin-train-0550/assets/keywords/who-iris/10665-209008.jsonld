@@ -1,0 +1,542 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-209008",
+  "instance": "who-iris",
+  "about": "library/10665-209008",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccination contre",
+        "score": 1.9439,
+        "evidence": []
+      },
+      {
+        "term": "vaccination against",
+        "score": 1.7439,
+        "evidence": []
+      },
+      {
+        "term": "fièvre jaune",
+        "score": 1.7051,
+        "evidence": []
+      },
+      {
+        "term": "yellow fever",
+        "score": 1.4369,
+        "evidence": []
+      },
+      {
+        "term": "typhus",
+        "score": 1.2256,
+        "evidence": []
+      },
+      {
+        "term": "contre ces",
+        "score": 1.1865,
+        "evidence": []
+      },
+      {
+        "term": "certificat",
+        "score": 1.0913,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccination contre",
+        "score": 33.8291,
+        "evidence": []
+      },
+      {
+        "term": "fièvre jaune",
+        "score": 29.8943,
+        "evidence": []
+      },
+      {
+        "term": "vaccination against",
+        "score": 29.2562,
+        "evidence": []
+      },
+      {
+        "term": "yellow fever",
+        "score": 23.6523,
+        "evidence": []
+      },
+      {
+        "term": "contre ces",
+        "score": 21.7561,
+        "evidence": []
+      },
+      {
+        "term": "certificat",
+        "score": 20.6684,
+        "evidence": []
+      },
+      {
+        "term": "arrivant",
+        "score": 16.5515,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccination contre",
+        "score": 0.3656,
+        "evidence": []
+      },
+      {
+        "term": "vaccination against",
+        "score": 0.3294,
+        "evidence": []
+      },
+      {
+        "term": "les",
+        "score": 0.2451,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des",
+        "score": 0.245,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.1725,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.1724,
+        "evidence": []
+      },
+      {
+        "term": "une",
+        "score": 0.1618,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "les",
+        "score": 5.6092,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination contre",
+        "score": 5.4611,
+        "evidence": []
+      },
+      {
+        "term": "vaccination against",
+        "score": 5.0164,
+        "evidence": []
+      },
+      {
+        "term": "ddcc",
+        "score": 3.6787,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 3.0625,
+        "evidence": []
+      },
+      {
+        "term": "une",
+        "score": 2.9529,
+        "evidence": []
+      },
+      {
+        "term": "vaccin",
+        "score": 2.7306,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccination contre",
+        "score": 0.3656,
+        "evidence": []
+      },
+      {
+        "term": "vaccination against",
+        "score": 0.3294,
+        "evidence": []
+      },
+      {
+        "term": "les",
+        "score": 0.2451,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contre ces",
+        "score": 0.1325,
+        "evidence": []
+      },
+      {
+        "term": "est",
+        "score": 0.1205,
+        "evidence": []
+      },
+      {
+        "term": "pays",
+        "score": 0.1017,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "être",
+        "score": 0.0704,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "巴西登革热",
+        "score": 343.7115,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 136.7717,
+        "evidence": []
+      },
+      {
+        "term": "以及卫生保健界",
+        "score": 136.0367,
+        "evidence": []
+      },
+      {
+        "term": "基金会和开发银行",
+        "score": 136.0367,
+        "evidence": []
+      },
+      {
+        "term": "大学和研究机构",
+        "score": 136.0367,
+        "evidence": []
+      },
+      {
+        "term": "如非政府组织和民间社会组织",
+        "score": 136.0367,
+        "evidence": []
+      },
+      {
+        "term": "宗教组织",
+        "score": 136.0367,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-certificats-de-vacciîiatlon-exigés-par-les-diver": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "exigés",
+          "score": 1.8152,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fièvre jaune",
+          "score": 1.7051,
+          "evidence": []
+        },
+        {
+          "term": "vaccination contre",
+          "score": 1.3934,
+          "evidence": []
+        },
+        {
+          "term": "contre ces",
+          "score": 1.1865,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fièvre jaune",
+          "score": 29.8943,
+          "evidence": []
+        },
+        {
+          "term": "exigés",
+          "score": 29.4379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination contre",
+          "score": 25.9223,
+          "evidence": []
+        },
+        {
+          "term": "contre ces",
+          "score": 21.7561,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.4781,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par",
+          "score": 0.2621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 0.2385,
+          "evidence": []
+        },
+        {
+          "term": "vaccination contre",
+          "score": 0.2276,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 10.9006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par",
+          "score": 3.6918,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination contre",
+          "score": 3.4843,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 2.9761,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.4781,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par",
+          "score": 0.2621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 0.2385,
+          "evidence": []
+        },
+        {
+          "term": "vaccination contre",
+          "score": 0.2276,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 273.3641,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 117.5757,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 113.1303,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 113.1303,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-k-orea": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "yellow fever",
+          "score": 1.4369,
+          "evidence": []
+        },
+        {
+          "term": "vaccination against",
+          "score": 1.1049,
+          "evidence": []
+        },
+        {
+          "term": "certificates",
+          "score": 0.8501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "yellow fever",
+          "score": 23.6523,
+          "evidence": []
+        },
+        {
+          "term": "vaccination against",
+          "score": 18.7137,
+          "evidence": []
+        },
+        {
+          "term": "certificates",
+          "score": 15.4867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination against",
+          "score": 0.158,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.0963,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 0.0923,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ddcc",
+          "score": 2.3346,
+          "evidence": []
+        },
+        {
+          "term": "vaccination against",
+          "score": 2.0927,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 1.455,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination against",
+          "score": 0.158,
+          "evidence": []
+        },
+        {
+          "term": "yellow fever",
+          "score": 0.0486,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated",
+          "score": 0.0416,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 70.3474,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 47.3591,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 46.2481,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

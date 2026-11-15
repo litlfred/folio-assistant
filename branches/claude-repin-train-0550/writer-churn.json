@@ -1,32 +1,46 @@
 {
-  "against": "8915622dfe381e219463c36369c16e5b43599974",
+  "against": "none",
   "skipped": 0,
-  "ran": 42,
+  "ran": 47,
   "reused": 0,
   "groups": [
     {
-      "cause": "its script, imports or tools",
-      "writtenBy": "the commit",
+      "cause": "",
+      "writtenBy": "-",
       "reran": [
+        "handler:index",
+        "ig-index:build",
         "smart-base:document-kinds",
         "uml:overview",
         "subgraph:jsonld",
         "library:viz",
+        "library:keywords",
         "voices:viz",
         "theme:viz",
         "uploads:viz",
         "document-kinds:viz",
         "skills:docs",
         "node-kinds",
+        "node-kind:pages",
         "bibliography:page",
+        "glossary:page",
+        "smart:pages",
         "jsonld:contexts",
+        "smart-trust-phw:pages",
+        "smart-base:pages",
+        "smart-trust:pages",
         "smart-base:l1-extraction:pages",
+        "tools:viz",
         "auto:docs",
+        "lsi:viz",
+        "web-apps:build",
+        "translation:status",
         "openapi:viz",
         "schema:viz",
         "methodologies:viz",
         "external-schemas:viz",
         "subscriptions:viz",
+        "docs:pages",
         "docs:harness",
         "navbar:include",
         "kind:table",
@@ -34,435 +48,299 @@
         "themes:css",
         "folio:viz",
         "kg:viewer",
+        "state:visualizer",
+        "site:viz",
+        "slice:sqlite",
         "render:bpmn",
         "processes:viz",
+        "fsh-guts:viz",
         "kind:json-schemas"
       ],
-      "seconds": 674.0502167889999
-    },
-    {
-      "cause": "the deploy at 8915622dfe38 recorded nothing for it",
-      "writtenBy": "-",
-      "reran": [
-        "library:keywords",
-        "web-apps:build",
-        "fsh-guts:viz"
-      ],
-      "seconds": 384.0734778359998
-    },
-    {
-      "cause": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "writtenBy": "-",
-      "reran": [
-        "tools:viz",
-        "docs:pages"
-      ],
-      "seconds": 61.5720268339999
-    },
-    {
-      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "writtenBy": "-",
-      "reran": [
-        "ig-index:build"
-      ],
-      "seconds": 22.97901282599999
-    },
-    {
-      "cause": "not recorded: the run reached a traced input site (state-visualizer: today)",
-      "writtenBy": "-",
-      "reran": [
-        "state:visualizer"
-      ],
-      "seconds": 16.423420688000043
-    },
-    {
-      "cause": "",
-      "writtenBy": "-",
-      "reran": [
-        "node-kind:pages"
-      ],
-      "seconds": 3.5807362449998035
-    },
-    {
-      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "writtenBy": "-",
-      "reran": [
-        "site:viz"
-      ],
-      "seconds": 2.090742850000039
-    },
-    {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "writtenBy": "-",
-      "reran": [
-        "smart-base:pages"
-      ],
-      "seconds": 1.2803308589998632
-    },
-    {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "writtenBy": "-",
-      "reran": [
-        "smart-trust:pages"
-      ],
-      "seconds": 1.2644827020000666
-    },
-    {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "writtenBy": "-",
-      "reran": [
-        "smart-trust-phw:pages"
-      ],
-      "seconds": 0.9405622679998632
-    },
-    {
-      "cause": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
-      "writtenBy": "-",
-      "reran": [
-        "smart:pages"
-      ],
-      "seconds": 0.8171512190001086
+      "seconds": 766.8717947719992
     }
   ],
   "writers": [
     {
       "writer": "auto:docs",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 11.200999494000104
+      "why": "",
+      "seconds": 6.306059230000013
     },
     {
       "writer": "avatars:css",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.1484168710000813
+      "why": "",
+      "seconds": 0.09252204799978063
     },
     {
       "writer": "bibliography:page",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 3.538391188000096
+      "why": "",
+      "seconds": 1.154939611000009
     },
     {
       "writer": "docs:harness",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 4.166166474000085
+      "why": "",
+      "seconds": 2.3575865720000584
     },
     {
       "writer": "docs:pages",
       "did": "ran",
-      "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 4.150053114000009
+      "why": "",
+      "seconds": 1.8302105959998445
     },
     {
       "writer": "document-kinds:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.7841092080001254
+      "why": "",
+      "seconds": 0.59980177000002
     },
     {
       "writer": "external-schemas:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 12.077735626999987
+      "why": "",
+      "seconds": 8.130070780999958
     },
     {
       "writer": "folio:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.7208307430001442
+      "why": "",
+      "seconds": 0.4829936760000419
     },
     {
       "writer": "fsh-guts:viz",
       "did": "ran",
-      "why": "the deploy at 8915622dfe38 recorded nothing for it",
-      "seconds": 2.064198231999995
+      "why": "",
+      "seconds": 1.1613558269999922
+    },
+    {
+      "writer": "glossary:page",
+      "did": "ran",
+      "why": "",
+      "seconds": 12.250717503999825
+    },
+    {
+      "writer": "handler:index",
+      "did": "ran",
+      "why": "",
+      "seconds": 1.853307334000012
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
-      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 22.97901282599999
+      "why": "",
+      "seconds": 14.894567340000009
     },
     {
       "writer": "jsonld:contexts",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 3.298527099999832
+      "why": "",
+      "seconds": 1.90682619599998
     },
     {
       "writer": "kg:viewer",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.5600631109999958
+      "why": "",
+      "seconds": 0.32857304300018586
     },
     {
       "writer": "kind:json-schemas",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 1.1627321179998107
+      "why": "",
+      "seconds": 0.7242694310001098
     },
     {
       "writer": "kind:table",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.19839345400012098
+      "why": "",
+      "seconds": 0.12103752300003544
     },
     {
       "writer": "library:keywords",
       "did": "ran",
-      "why": "the deploy at 8915622dfe38 recorded nothing for it",
-      "seconds": 381.53363968199983
+      "why": "",
+      "seconds": 197.36531505700003
     },
     {
       "writer": "library:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 21.035582355000077
+      "why": "",
+      "seconds": 13.138904276999995
+    },
+    {
+      "writer": "lsi:viz",
+      "did": "ran",
+      "why": "",
+      "seconds": 4.16464404699998
     },
     {
       "writer": "methodologies:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 2.337113440999994
+      "why": "",
+      "seconds": 1.5188006400000305
     },
     {
       "writer": "navbar:include",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.1773099889999721
+      "why": "",
+      "seconds": 0.10882877100002952
     },
     {
       "writer": "node-kind:pages",
       "did": "ran",
       "why": "",
-      "seconds": 3.5807362449998035
+      "seconds": 17.299537295999937
     },
     {
       "writer": "node-kinds",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 1.1588971160000656
+      "why": "",
+      "seconds": 0.7582492859999184
     },
     {
       "writer": "openapi:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.22922239599982278
+      "why": "",
+      "seconds": 0.13979908100003377
     },
     {
       "writer": "processes:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 10.233890803999966
+      "why": "",
+      "seconds": 6.653568747999845
     },
     {
       "writer": "render:bpmn",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 13.956841001000022
+      "why": "",
+      "seconds": 7.682217196000042
     },
     {
       "writer": "schema:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 2.782759745999938
+      "why": "",
+      "seconds": 1.7348669789999258
     },
     {
       "writer": "site:viz",
       "did": "ran",
-      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 2.090742850000039
+      "why": "",
+      "seconds": 1.6296103920000606
     },
     {
       "writer": "skills:docs",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 22.31080459899991
+      "why": "",
+      "seconds": 16.45438163099997
+    },
+    {
+      "writer": "slice:sqlite",
+      "did": "ran",
+      "why": "",
+      "seconds": 9.456441463999916
     },
     {
       "writer": "smart-base:document-kinds",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 1.2795550870000152
+      "why": "",
+      "seconds": 0.4234325390000013
     },
     {
       "writer": "smart-base:l1-extraction:pages",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.8917110450000036
+      "why": "",
+      "seconds": 0.5632837930000387
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
-      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 1.2803308589998632
+      "why": "",
+      "seconds": 0.7763586110000033
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
-      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.9405622679998632
+      "why": "",
+      "seconds": 0.5337889969998505
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
-      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 1.2644827020000666
+      "why": "",
+      "seconds": 0.7921223220000975
     },
     {
       "writer": "smart:pages",
       "did": "ran",
-      "why": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
-      "seconds": 0.8171512190001086
+      "why": "",
+      "seconds": 0.6040818940000608
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
-      "why": "not recorded: the run reached a traced input site (state-visualizer: today)",
-      "seconds": 16.423420688000043
+      "why": "",
+      "seconds": 11.09121538800001
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 44.33196982100001
+      "why": "",
+      "seconds": 26.18587574499997
     },
     {
       "writer": "subscriptions:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.2423346110000275
+      "why": "",
+      "seconds": 0.14234502399992197
     },
     {
       "writer": "theme:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.6440442349999211
+      "why": "",
+      "seconds": 0.426731558999978
     },
     {
       "writer": "themes:css",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.6270013889998663
+      "why": "",
+      "seconds": 0.4254873190000653
     },
     {
       "writer": "tools:viz",
       "did": "ran",
-      "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 57.42197371999989
+      "why": "",
+      "seconds": 40.62618564399984
+    },
+    {
+      "writer": "translation:status",
+      "did": "ran",
+      "why": "",
+      "seconds": 0.9012453360001091
     },
     {
       "writer": "uml:overview",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 509.93438563200004
+      "why": "",
+      "seconds": 347.954079433
     },
     {
       "writer": "uploads:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 3.0923385459999553
+      "why": "",
+      "seconds": 2.2159312470000003
     },
     {
       "writer": "voices:viz",
       "did": "ran",
-      "why": "its script, imports, audited environment or tools changed",
-      "cause": {
-        "kind": "script"
-      },
-      "seconds": 0.9280895879999734
+      "why": "",
+      "seconds": 0.6266204259999795
     },
     {
       "writer": "web-apps:build",
       "did": "ran",
-      "why": "the deploy at 8915622dfe38 recorded nothing for it",
-      "seconds": 0.4756399220000021
+      "why": "",
+      "seconds": 0.28300614800001495
     }
   ]
 }

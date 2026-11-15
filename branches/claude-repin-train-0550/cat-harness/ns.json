@@ -129,6 +129,21 @@
       "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/agentic-harness.html"
     },
     {
+      "@id": "cat-harness:QaAttestation",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "QaAttestation",
+      "comment": "One subject's QA judgements — pair attestations, voice reviews, agent and human verdicts, bibliography verifications — kept as one `qa-attestations/v1` file in a layer's attestations store, each judgement pinned to the hash it attested so a stale one is detectable. The judgement half of a QA verdict: unlike a derived result, it cannot be regenerated.",
+      "prefLabel": "QaAttestation",
+      "definition": "One subject's QA judgements — pair attestations, voice reviews, agent and human verdicts, bibliography verifications — kept as one `qa-attestations/v1` file in a layer's attestations store, each judgement pinned to the hash it attested so a stale one is detectable. The judgement half of a QA verdict: unlike a derived result, it cannot be regenerated.",
+      "notation": "cat-harness:QaAttestation",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:Requirement",
       "@type": [
         "rdfs:Class",

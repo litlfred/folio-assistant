@@ -1,0 +1,8252 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-145614",
+  "instance": "who-iris",
+  "about": "library/10665-145614",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "del consejo",
+        "score": 66.222,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo las",
+        "score": 57.2238,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo que",
+        "score": 56.2565,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 52.827,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo para",
+        "score": 51.882,
+        "evidence": []
+      },
+      {
+        "term": "consejo sobre",
+        "score": 47.9951,
+        "evidence": []
+      },
+      {
+        "term": "del orden",
+        "score": 47.9567,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo por",
+        "score": 47.8223,
+        "evidence": []
+      },
+      {
+        "term": "del documento",
+        "score": 47.1031,
+        "evidence": []
+      },
+      {
+        "term": "consejo ejecutivo",
+        "score": 47.085,
+        "evidence": []
+      },
+      {
+        "term": "del punto",
+        "score": 46.9089,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del director",
+        "score": 46.823,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "del consejo",
+        "score": 2221.673,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo que",
+        "score": 2166.7891,
+        "evidence": []
+      },
+      {
+        "term": "las que",
+        "score": 2014.9015,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 1790.2187,
+        "evidence": []
+      },
+      {
+        "term": "resolución que",
+        "score": 1652.5508,
+        "evidence": []
+      },
+      {
+        "term": "para que",
+        "score": 1633.3779,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 1619.9325,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del director",
+        "score": 1599.8444,
+        "evidence": []
+      },
+      {
+        "term": "asamblea que",
+        "score": 1597.9064,
+        "evidence": []
+      },
+      {
+        "term": "del comité",
+        "score": 1578.1184,
+        "evidence": []
+      },
+      {
+        "term": "salud que",
+        "score": 1555.65,
+        "evidence": []
+      },
+      {
+        "term": "del tema",
+        "score": 1516.6882,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "del consejo",
+        "score": 46.9115,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo las",
+        "score": 45.0044,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 43.4458,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 43.098,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 40.4027,
+        "evidence": []
+      },
+      {
+        "term": "del director",
+        "score": 38.8106,
+        "evidence": []
+      },
+      {
+        "term": "resolución que",
+        "score": 36.5983,
+        "evidence": []
+      },
+      {
+        "term": "sobre las",
+        "score": 36.4823,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 36.2113,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "por las",
+        "score": 36.0953,
+        "evidence": []
+      },
+      {
+        "term": "con las",
+        "score": 35.9891,
+        "evidence": []
+      },
+      {
+        "term": "asamblea que",
+        "score": 35.5025,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "las que",
+        "score": 2038.0711,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 1745.1764,
+        "evidence": []
+      },
+      {
+        "term": "para que",
+        "score": 1641.7124,
+        "evidence": []
+      },
+      {
+        "term": "consejo que",
+        "score": 1613.2117,
+        "evidence": []
+      },
+      {
+        "term": "salud que",
+        "score": 1488.1784,
+        "evidence": []
+      },
+      {
+        "term": "del consejo",
+        "score": 1446.0975,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "asamblea que",
+        "score": 1398.0772,
+        "evidence": []
+      },
+      {
+        "term": "tema que",
+        "score": 1363.1968,
+        "evidence": []
+      },
+      {
+        "term": "resolución que",
+        "score": 1348.7839,
+        "evidence": []
+      },
+      {
+        "term": "general que",
+        "score": 1302.2937,
+        "evidence": []
+      },
+      {
+        "term": "técnicas que",
+        "score": 1287.6169,
+        "evidence": []
+      },
+      {
+        "term": "por las",
+        "score": 1286.257,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "del consejo",
+        "score": 46.9115,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo las",
+        "score": 45.0044,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 43.4458,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 43.098,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 40.4027,
+        "evidence": []
+      },
+      {
+        "term": "del director",
+        "score": 38.8106,
+        "evidence": []
+      },
+      {
+        "term": "resolución que",
+        "score": 36.5983,
+        "evidence": []
+      },
+      {
+        "term": "sobre las",
+        "score": 36.4823,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 36.2113,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "por las",
+        "score": 36.0953,
+        "evidence": []
+      },
+      {
+        "term": "con las",
+        "score": 35.9891,
+        "evidence": []
+      },
+      {
+        "term": "asamblea que",
+        "score": 35.5025,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 42595.4763,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 14105.4592,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 13758.9105,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 12836.0167,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 11820.9995,
+        "evidence": []
+      },
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 11027.3148,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 10302.6579,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 9651.8625,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 9651.8625,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 9651.8625,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 9457.7343,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 9169.6013,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-página": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las discusiones",
+          "score": 1.6911,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 1.685,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 1.5781,
+          "evidence": []
+        },
+        {
+          "term": "fecha lugar",
+          "score": 1.5325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 29.9378,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 27.5354,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 25.2394,
+          "evidence": []
+        },
+        {
+          "term": "fecha lugar",
+          "score": 21.8192,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.434,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4292,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.429,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3472,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las discusiones",
+          "score": 13.1492,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 8.7768,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 8.5692,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 8.2559,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.434,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4292,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.429,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3472,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 989.5169,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 327.5653,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 278.567,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 251.6276,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-lunes-16-de-unio-de-1958-д-las-9-horas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "suplente del",
+          "score": 1.4922,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 0.8879,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 0.8864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "suplente del",
+          "score": 25.4694,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 14.3543,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 14.3543,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 0.1915,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suplente del",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.107,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 4.2514,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 4.2514,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 3.1078,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.1915,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suplente del",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.107,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 2066.3495,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 1295.2561,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 1213.2539,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-dr-h-m-penido": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arabe",
+          "score": 0.586,
+          "evidence": []
+        },
+        {
+          "term": "secretario",
+          "score": 0.5725,
+          "evidence": []
+        },
+        {
+          "term": "repúblicas",
+          "score": 0.5688,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "arabe",
+          "score": 7.5826,
+          "evidence": []
+        },
+        {
+          "term": "repúblicas",
+          "score": 7.3595,
+          "evidence": []
+        },
+        {
+          "term": "secretario",
+          "score": 7.3595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 0.0859,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.0838,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.0817,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 2.0588,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.7148,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 1.1967,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.0838,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.0817,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.0557,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1106.0835,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 433.9925,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 343.8254,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-1-apertura-de-iâ-hecjnxon": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 2.4337,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 2.3042,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 1.9023,
+          "evidence": []
+        },
+        {
+          "term": "apertura",
+          "score": 1.0379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tambiln",
+          "score": 1.0206,
+          "evidence": []
+        },
+        {
+          "term": "diba",
+          "score": 0.9354,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.9018,
+          "evidence": []
+        },
+        {
+          "term": "shoib",
+          "score": 0.8864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 73.7973,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 60.0045,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 50.4723,
+          "evidence": []
+        },
+        {
+          "term": "tambiln",
+          "score": 16.5515,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 16.4172,
+          "evidence": []
+        },
+        {
+          "term": "diba",
+          "score": 15.1652,
+          "evidence": []
+        },
+        {
+          "term": "shoib",
+          "score": 14.3543,
+          "evidence": []
+        },
+        {
+          "term": "apertura",
+          "score": 13.3326,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.7767,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.4916,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.3835,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3802,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3497,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.304,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.247,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.2456,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 24.8078,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 17.2131,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 14.7126,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 8.955,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 8.1333,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 7.2056,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 5.3725,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 4.1101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.7767,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.4916,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.3835,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3497,
+          "evidence": []
+        },
+        {
+          "term": "designados por",
+          "score": 0.2383,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.1892,
+          "evidence": []
+        },
+        {
+          "term": "miembros",
+          "score": 0.1616,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 0.1602,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1782.0122,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 678.3663,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 624.3875,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 611.2921,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 603.8098,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 564.1143,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 523.8125,
+          "evidence": []
+        },
+        {
+          "term": "在发生突发事件时",
+          "score": 475.9318,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-eb22klna-revl": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "presenten candidaturas",
+          "score": 2.2907,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 2.2336,
+          "evidence": []
+        },
+        {
+          "term": "declara elegidos",
+          "score": 2.0817,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 1.9567,
+          "evidence": []
+        },
+        {
+          "term": "mis candidaturas",
+          "score": 1.936,
+          "evidence": []
+        },
+        {
+          "term": "invita ocupar",
+          "score": 1.8743,
+          "evidence": []
+        },
+        {
+          "term": "unanimi dad",
+          "score": 1.8445,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.6265,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "presidente declara",
+          "score": 47.677,
+          "evidence": []
+        },
+        {
+          "term": "presenten candidaturas",
+          "score": 44.6847,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 39.1164,
+          "evidence": []
+        },
+        {
+          "term": "mis candidaturas",
+          "score": 38.8856,
+          "evidence": []
+        },
+        {
+          "term": "declara elegidos",
+          "score": 36.8666,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 33.5726,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 30.7042,
+          "evidence": []
+        },
+        {
+          "term": "invita ocupar",
+          "score": 30.4595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 1.0155,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 0.9561,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5466,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 0.5466,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.5266,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.4509,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3565,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 0.3201,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para los",
+          "score": 25.4212,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 18.1686,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 16.9078,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 16.6033,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 16.6033,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 9.0978,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 5.9455,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 5.8087,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 1.0155,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 0.9561,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 0.563,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.5266,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.4752,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 0.3201,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.3193,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 0.2866,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1713.0556,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 1043.1805,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 1013.0448,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 970.7942,
+          "evidence": []
+        },
+        {
+          "term": "在发生突发事件时",
+          "score": 874.9866,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 828.621,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 742.9617,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 736.0492,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-4-programa-de-trabajo-comunicacion-acerca-del-pu": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del orden",
+          "score": 5.4174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 5.0405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 4.4967,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 2.5102,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 2.1346,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 2.1093,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 2.0043,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 1.9952,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del orden",
+          "score": 216.993,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 205.4759,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 158.3519,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 97.02,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 78.2923,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 50.0734,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 49.623,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 44.5294,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "punto del",
+          "score": 1.5067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 1.5044,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 1.15,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.7428,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.5855,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.58,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.575,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5637,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "punto del",
+          "score": 57.3593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 56.5703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 53.5331,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 28.1963,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 26.7666,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 20.0383,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 17.0543,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 14.6574,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "punto del",
+          "score": 1.5067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 1.5044,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 1.1791,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.7428,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.6068,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.5855,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.58,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4909,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 850.3071,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 313.9201,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 275.3724,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 264.1794,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 242.151,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 235.047,
+          "evidence": []
+        },
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 220.118,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 198.482,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-comite-para-la-erradicacion-del-paludismo-sustit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del paludismo",
+          "score": 5.0981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 2.5143,
+          "evidence": []
+        },
+        {
+          "term": "comité especial",
+          "score": 2.1591,
+          "evidence": []
+        },
+        {
+          "term": "cuenta especial",
+          "score": 1.9597,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 1.8316,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.8042,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los fondos",
+          "score": 1.7143,
+          "evidence": []
+        },
+        {
+          "term": "los dos",
+          "score": 1.6391,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del paludismo",
+          "score": 161.1384,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 76.6101,
+          "evidence": []
+        },
+        {
+          "term": "comité especial",
+          "score": 52.8616,
+          "evidence": []
+        },
+        {
+          "term": "cuenta especial",
+          "score": 44.9206,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 43.8365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comité para",
+          "score": 42.0164,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 37.6133,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 35.0602,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del paludismo",
+          "score": 1.5745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.3771,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 1.1067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los dos",
+          "score": 0.8747,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.8616,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.815,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.6885,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6851,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 50.4351,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del paludismo",
+          "score": 50.4351,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 38.3373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 31.4923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 26.7013,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 26.7013,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 26.3201,
+          "evidence": []
+        },
+        {
+          "term": "los dos",
+          "score": 21.9506,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del paludismo",
+          "score": 1.5745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.3771,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 1.1067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los dos",
+          "score": 0.8747,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.8616,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.815,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.714,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6851,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 801.7609,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 306.7276,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 253.1429,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 239.9949,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 234.4133,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 191.9858,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 191.7573,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 190.1842,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-7-establecimiento-de-un-comite-consultivo-sobre": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del comité",
+          "score": 3.0954,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 3.0255,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.7146,
+          "evidence": []
+        },
+        {
+          "term": "las negociaciones",
+          "score": 2.7124,
+          "evidence": []
+        },
+        {
+          "term": "zile hyde",
+          "score": 2.7108,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.6996,
+          "evidence": []
+        },
+        {
+          "term": "negociaciones con",
+          "score": 2.6908,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 2.6774,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del comité",
+          "score": 161.6902,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 137.2253,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 127.6447,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 122.3688,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 103.1006,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 95.3169,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 87.1657,
+          "evidence": []
+        },
+        {
+          "term": "las negociaciones",
+          "score": 86.6646,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 2.3618,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.0034,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 1.9432,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 1.7408,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 1.6989,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 1.6491,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.5814,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 1.5373,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 82.8177,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 69.69,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 68.8984,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 68.5101,
+          "evidence": []
+        },
+        {
+          "term": "funciones que",
+          "score": 65.5286,
+          "evidence": []
+        },
+        {
+          "term": "indica que",
+          "score": 65.3245,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 64.6359,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 64.3222,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 2.3618,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.0034,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 1.9432,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 1.7408,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 1.6989,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 1.6491,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.5814,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 1.5373,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 902.4137,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 324.0146,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 263.7653,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 255.5055,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 255.0054,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 253.3648,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 229.6822,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 227.9214,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-8-inporfc-sobre-los-nombramientos-para-los-cuadr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 3.2679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 2.9568,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 2.7524,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 55.3798,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 50.3688,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 42.045,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 0.8838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.785,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.4923,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para los",
+          "score": 23.4187,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 16.9911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 14.3975,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 0.8838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.785,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.5203,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 975.55,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 343.5075,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 316.0504,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-asamblea": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del presidente",
+          "score": 2.2453,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 2.2126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 2.0396,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 1.9306,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.9241,
+          "evidence": []
+        },
+        {
+          "term": "sir arcot",
+          "score": 1.7939,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 1.7724,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del presidente",
+          "score": 60.1843,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 50.7709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 45.8923,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 45.1785,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 42.6164,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 36.1902,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 32.4165,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.9446,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 0.8493,
+          "evidence": []
+        },
+        {
+          "term": "del presidente",
+          "score": 0.7244,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.6438,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.609,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.5949,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.5713,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "consejo que",
+          "score": 24.8422,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 24.1195,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 17.8286,
+          "evidence": []
+        },
+        {
+          "term": "del presidente",
+          "score": 17.4253,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 13.3251,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 10.6629,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 10.2141,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.9446,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 0.8493,
+          "evidence": []
+        },
+        {
+          "term": "del presidente",
+          "score": 0.7244,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.6438,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.609,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.5949,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.5713,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1198.7558,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 387.2494,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 351.1684,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 331.4553,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 323.4619,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 323.4619,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 323.4619,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-ев22лйпд-revl": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "propuesta",
+          "score": 0.684,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "mudaliar",
+          "score": 0.615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "propuesta",
+          "score": 10.7708,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 10.4625,
+          "evidence": []
+        },
+        {
+          "term": "mudaliar",
+          "score": 7.8703,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "consejo",
+          "score": 0.095,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.0839,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.074,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 2.0354,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 1.4472,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.1267,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.074,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.0692,
+          "evidence": []
+        },
+        {
+          "term": "director",
+          "score": 0.0628,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1364.0353,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 449.9743,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 411.9143,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-10-eieccion-del-tema-de-las-discüsiohes-тесжсаэ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tema",
+          "score": 4.6089,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 4.4846,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 4.1284,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 3.5495,
+          "evidence": []
+        },
+        {
+          "term": "esas discusiones",
+          "score": 3.54,
+          "evidence": []
+        },
+        {
+          "term": "tema elegido",
+          "score": 3.4967,
+          "evidence": []
+        },
+        {
+          "term": "tema relativo",
+          "score": 3.3275,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 2.9197,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 258.8609,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 225.1811,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 198.7973,
+          "evidence": []
+        },
+        {
+          "term": "esas discusiones",
+          "score": 164.018,
+          "evidence": []
+        },
+        {
+          "term": "las enfermedades",
+          "score": 148.1637,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 144.6045,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 143.147,
+          "evidence": []
+        },
+        {
+          "term": "salud mental",
+          "score": 127.3952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 3.0468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 2.9946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para las",
+          "score": 2.6598,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 2.377,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.048,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 2.0143,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 1.9868,
+          "evidence": []
+        },
+        {
+          "term": "mundial para",
+          "score": 1.9603,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 201.4904,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para las",
+          "score": 137.5929,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 128.9741,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 125.9629,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 115.3555,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 114.3599,
+          "evidence": []
+        },
+        {
+          "term": "las enfermedades",
+          "score": 111.0116,
+          "evidence": []
+        },
+        {
+          "term": "técnicas que",
+          "score": 109.3586,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 3.0468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 2.9946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para las",
+          "score": 2.6598,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 2.377,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.048,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 2.0143,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 1.9868,
+          "evidence": []
+        },
+        {
+          "term": "mundial para",
+          "score": 1.9603,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 693.5649,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 257.7536,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 222.3101,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 222.3101,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 222.3101,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 221.3576,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 212.7433,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 195.9957,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-11-pecha-y-iugar-de-la-12": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 2.0396,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 1.3975,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 1.3925,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 1.3707,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 1.2593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 45.8923,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 23.8508,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 23.5584,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 21.3986,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 19.0413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dice que",
+          "score": 0.4752,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4741,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.4368,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3942,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.3656,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud",
+          "score": 10.7634,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 10.5178,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 10.2798,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 9.7788,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 8.156,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dice que",
+          "score": 0.4752,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4741,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.4368,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3942,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.3939,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1150.679,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 394.4615,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 329.5432,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 306.2729,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 298.8527,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-kesuel邓": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea",
+          "score": 0.6783,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "martes",
+          "score": 0.6009,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "resolución",
+          "score": 10.4625,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 10.1542,
+          "evidence": []
+        },
+        {
+          "term": "celebre",
+          "score": 7.5826,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.119,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1153,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 3.483,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 3.2144,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 2.1658,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.1153,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1131,
+          "evidence": []
+        },
+        {
+          "term": "mundial",
+          "score": 0.0943,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 945.4056,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 364.5033,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 294.1424,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-12-pecha-у-lugar-de-la-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 3.7826,
+          "evidence": []
+        },
+        {
+          "term": "comité permanente",
+          "score": 3.3322,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.3222,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.0314,
+          "evidence": []
+        },
+        {
+          "term": "del martes",
+          "score": 2.9565,
+          "evidence": []
+        },
+        {
+          "term": "nuevo estudio",
+          "score": 2.9,
+          "evidence": []
+        },
+        {
+          "term": "sesión del",
+          "score": 2.8497,
+          "evidence": []
+        },
+        {
+          "term": "estudio sobre",
+          "score": 2.8172,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 276.3646,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 187.5161,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 164.1068,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 161.2602,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 160.1765,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 157.1222,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 155.4399,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 151.9657,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 4.08,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.2552,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.1028,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 2.9373,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 2.8419,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 2.8333,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.8038,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 2.7621,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 149.3251,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 131.2311,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 123.3812,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 122.7456,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 122.6311,
+          "evidence": []
+        },
+        {
+          "term": "estima que",
+          "score": 119.7937,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 113.3205,
+          "evidence": []
+        },
+        {
+          "term": "que acaba",
+          "score": 110.8501,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 4.08,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.2552,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.1028,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 2.9373,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 2.8419,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 2.8333,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.8038,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 2.7621,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 915.4636,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 334.5429,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 274.214,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 262.1125,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 258.2128,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 225.5422,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 218.0168,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 218.0168,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-orden-del-día-documerrto-eb2217": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "viajes transportes",
+          "score": 2.1142,
+          "evidence": []
+        },
+        {
+          "term": "del anexo",
+          "score": 1.7244,
+          "evidence": []
+        },
+        {
+          "term": "otros gastos",
+          "score": 1.6748,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.613,
+          "evidence": []
+        },
+        {
+          "term": "profesor canaperia",
+          "score": 1.5465,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 1.3701,
+          "evidence": []
+        },
+        {
+          "term": "comprende",
+          "score": 1.2672,
+          "evidence": []
+        },
+        {
+          "term": "servicios técnicos",
+          "score": 1.2015,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del anexo",
+          "score": 38.0846,
+          "evidence": []
+        },
+        {
+          "term": "viajes transportes",
+          "score": 37.819,
+          "evidence": []
+        },
+        {
+          "term": "otros gastos",
+          "score": 35.1123,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 33.6243,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 29.6829,
+          "evidence": []
+        },
+        {
+          "term": "comprende",
+          "score": 27.5579,
+          "evidence": []
+        },
+        {
+          "term": "profesor canaperia",
+          "score": 24.6567,
+          "evidence": []
+        },
+        {
+          "term": "partida",
+          "score": 23.8927,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 1.2805,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los gastos",
+          "score": 0.7491,
+          "evidence": []
+        },
+        {
+          "term": "del anexo",
+          "score": 0.7172,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 0.6008,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5987,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.4922,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4731,
+          "evidence": []
+        },
+        {
+          "term": "orden",
+          "score": 0.4021,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 28.126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 17.3246,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 17.3246,
+          "evidence": []
+        },
+        {
+          "term": "del anexo",
+          "score": 15.2938,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 13.8558,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 11.2507,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 8.3761,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 6.669,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 1.2805,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los gastos",
+          "score": 0.7491,
+          "evidence": []
+        },
+        {
+          "term": "del anexo",
+          "score": 0.7172,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 0.6008,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5987,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4731,
+          "evidence": []
+        },
+        {
+          "term": "orden",
+          "score": 0.4021,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "día",
+          "score": 0.3992,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 745.0784,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 270.3383,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 222.2263,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 211.5949,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 208.396,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 179.9472,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 170.0323,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 170.0323,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-16-transferencias-entre-las-secciones-de-lfi-bes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 2.5423,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 2.3275,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.0888,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 1.9729,
+          "evidence": []
+        },
+        {
+          "term": "habla rusa",
+          "score": 1.9104,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 1.7952,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 1.7691,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 1.7627,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 81.0414,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 68.5675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 62.7364,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 53.6191,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 52.874,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 45.6299,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 45.0949,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 43.6553,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 1.6727,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.6606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 1.261,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.2229,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 1.2026,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.0988,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.0215,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 0.9818,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 58.8204,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 44.5422,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 35.4411,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 33.5003,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 32.2064,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 31.9905,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 30.6697,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 25.5241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 1.6727,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.6606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 1.261,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.2229,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 1.2026,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.0988,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.0215,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 0.9818,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 984.4784,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 369.4254,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 305.4932,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 288.6721,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 281.9697,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 242.2857,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 237.1984,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 230.3026,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-18-donativos-de-vacuna-antivabiolica": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vacuna",
+          "score": 3.1379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacuna que",
+          "score": 2.8071,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 2.6055,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 2.5303,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 2.4672,
+          "evidence": []
+        },
+        {
+          "term": "regla mento",
+          "score": 2.3619,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 2.3456,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.3256,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vacuna que",
+          "score": 156.681,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 149.4288,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 123.0275,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 119.645,
+          "evidence": []
+        },
+        {
+          "term": "contesta que",
+          "score": 115.0706,
+          "evidence": []
+        },
+        {
+          "term": "cree que",
+          "score": 111.7226,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 89.9453,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 89.0616,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los que",
+          "score": 2.6394,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 2.5941,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 2.002,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 1.9684,
+          "evidence": []
+        },
+        {
+          "term": "del proyecto",
+          "score": 1.8757,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.8384,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 1.7793,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.7082,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los que",
+          "score": 119.9902,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 85.9779,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 77.3122,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 75.3103,
+          "evidence": []
+        },
+        {
+          "term": "cree que",
+          "score": 72.4987,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 70.8513,
+          "evidence": []
+        },
+        {
+          "term": "contesta que",
+          "score": 69.7309,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 69.7309,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los que",
+          "score": 2.6394,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 2.5941,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 2.002,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 1.9684,
+          "evidence": []
+        },
+        {
+          "term": "del proyecto",
+          "score": 1.8757,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.8384,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 1.7793,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.7082,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 677.2509,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 265.0889,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 216.1657,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 208.7573,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 204.3933,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 167.693,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 159.4671,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 154.5396,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-19-posibilidad-de-qgje-ы-oms-patrocine-ia-adopci": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "resolución",
+          "score": 0.8535,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "sesi6n",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "resolución",
+          "score": 15.6937,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 9.62,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 8.2758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 0.1262,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1132,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.1122,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 2.921,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.6805,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 2.6326,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 0.1262,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1132,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.0809,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1570.6618,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 546.0118,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 497.8027,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-dtoice": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "erradicación del",
+          "score": 1.8172,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 1.7712,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.6793,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 1.6564,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "erradicación del",
+          "score": 41.2703,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 40.3996,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 38.8442,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 38.5907,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 15.6559,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del orden",
+          "score": 0.4726,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.464,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.4248,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.3983,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.3757,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del orden",
+          "score": 13.0036,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 12.9652,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 12.4462,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 12.4462,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 11.6771,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del orden",
+          "score": 0.4726,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.464,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.4248,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.3983,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.3757,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 807.4921,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 285.7779,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 255.5013,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 220.7153,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 218.6855,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-pagina": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las discusiones",
+          "score": 1.7559,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 1.685,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 1.5781,
+          "evidence": []
+        },
+        {
+          "term": "fecha lugar",
+          "score": 1.5325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 33.0545,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 27.5354,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 25.9962,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 25.2394,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.6592,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4378,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.4345,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.4344,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 14.3377,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 14.0312,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 9.1498,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 8.9214,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.6592,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4378,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.4345,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.4344,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 976.3488,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 322.0633,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 274.9597,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 246.752,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-primera-ееsion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "suplente del",
+          "score": 1.3965,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 0.8879,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 0.8864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "suplente del",
+          "score": 22.3441,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 14.3543,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 14.3543,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "suplente del",
+          "score": 0.1463,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.1135,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.112,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 3.5292,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 3.5292,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 3.0466,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "suplente del",
+          "score": 0.1463,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.112,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1024,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 2278.2058,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 1305.4016,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 1269.4951,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-042-1-apertura-de-la-reunion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 2.3966,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 2.3042,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 1.7897,
+          "evidence": []
+        },
+        {
+          "term": "reunion",
+          "score": 1.0804,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "apertura",
+          "score": 1.0379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documento",
+          "score": 0.6187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 69.606,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 60.0045,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 41.0962,
+          "evidence": []
+        },
+        {
+          "term": "reunion",
+          "score": 13.7789,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "apertura",
+          "score": 13.3326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documento",
+          "score": 9.62,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.6545,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.4142,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.3254,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3222,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2973,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.2625,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 20.3678,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 13.6802,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 12.101,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 6.896,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 5.1999,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 4.4586,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.6545,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.4142,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2973,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 0.2076,
+          "evidence": []
+        },
+        {
+          "term": "reunion",
+          "score": 0.1507,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documento",
+          "score": 0.1364,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1625.9786,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 582.1782,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 549.5183,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 537.9621,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 504.0819,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 490.2867,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-043-eieccion-del-presidente-de-los-vicepresidentes-y": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "presidente",
+          "score": 2.7055,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presenten candidaturas",
+          "score": 2.6824,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 2.4207,
+          "evidence": []
+        },
+        {
+          "term": "canaperia secunda",
+          "score": 2.2886,
+          "evidence": []
+        },
+        {
+          "term": "habla francesa",
+          "score": 2.2848,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 2.1154,
+          "evidence": []
+        },
+        {
+          "term": "declara elegidos",
+          "score": 2.0817,
+          "evidence": []
+        },
+        {
+          "term": "sus puestos",
+          "score": 2.0177,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "presidente",
+          "score": 76.6136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presenten candidaturas",
+          "score": 59.4445,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 58.6218,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 46.699,
+          "evidence": []
+        },
+        {
+          "term": "habla francesa",
+          "score": 44.4492,
+          "evidence": []
+        },
+        {
+          "term": "canaperia secunda",
+          "score": 44.0391,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 43.8365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sus puestos",
+          "score": 41.5197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 1.1394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.1285,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 1.0245,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.0148,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "pide que",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.4725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.4603,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 28.3675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 28.3492,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 23.933,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 20.6963,
+          "evidence": []
+        },
+        {
+          "term": "pide que",
+          "score": 17.9812,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 13.2423,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 9.7583,
+          "evidence": []
+        },
+        {
+          "term": "elegidos por",
+          "score": 5.7942,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 1.1394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.1285,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 1.0245,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.0148,
+          "evidence": []
+        },
+        {
+          "term": "pide que",
+          "score": 0.5797,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.4868,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.4725,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1832.0313,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 1100.275,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 1075.0894,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 1039.0603,
+          "evidence": []
+        },
+        {
+          "term": "在发生突发事件时",
+          "score": 925.8147,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 880.6385,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 797.9198,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 791.0974,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-044-3-horario-de-trabajo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "horario",
+          "score": 1.1375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "horas",
+          "score": 0.9573,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "horas",
+          "score": 18.2356,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 15.5835,
+          "evidence": []
+        },
+        {
+          "term": "horario",
+          "score": 14.7189,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.1373,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1301,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1242,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 5.3174,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 3.1133,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 3.0639,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.1301,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1242,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.0742,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 853.4852,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 428.3286,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 350.5331,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-045-comunicacion-acerca-del-punto-19-del-orden-del-d": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del orden",
+          "score": 5.3775,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 4.8726,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 2.5714,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 2.0894,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 2.0764,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 2.0185,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 1.9403,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.5635,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del orden",
+          "score": 210.7422,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 189.9489,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 99.1259,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 75.1669,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 49.7607,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 48.7757,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 45.4352,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 26.2701,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "punto del",
+          "score": 1.4818,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 1.4815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.7313,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.5816,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5707,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.5649,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.5548,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4835,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "punto del",
+          "score": 55.1875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 54.4676,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 27.1462,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 25.7655,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 19.5213,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 16.8492,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 14.419,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 13.2858,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "punto del",
+          "score": 1.4818,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 1.4815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.7313,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.5968,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.5816,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5707,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4835,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4564,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 881.6099,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 323.3704,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 280.2517,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 272.5848,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 249.1245,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 241.5033,
+          "evidence": []
+        },
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 225.6164,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 203.1444,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-046-comite-para-la-erradicacion-del-paludismo-sustit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del paludismo",
+          "score": 5.0981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 2.6306,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 2.3107,
+          "evidence": []
+        },
+        {
+          "term": "comité especial",
+          "score": 2.1591,
+          "evidence": []
+        },
+        {
+          "term": "cuenta especial",
+          "score": 1.9597,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 1.8316,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.8042,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los fondos",
+          "score": 1.7143,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del paludismo",
+          "score": 161.1384,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 83.1811,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 69.6786,
+          "evidence": []
+        },
+        {
+          "term": "comité especial",
+          "score": 52.8616,
+          "evidence": []
+        },
+        {
+          "term": "cuenta especial",
+          "score": 44.9206,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 43.8365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comité para",
+          "score": 42.0164,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 37.6133,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del paludismo",
+          "score": 1.5695,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.3645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.3042,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.0973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.8581,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.811,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.6823,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6807,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 50.4861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del paludismo",
+          "score": 50.4861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 37.3203,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 36.1976,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 30.9313,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 26.5901,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 26.5901,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 26.3411,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del paludismo",
+          "score": 1.5695,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.3645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.3042,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.0973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.8581,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.811,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.7069,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6807,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 781.8055,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 297.5914,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 246.6061,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 232.3327,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 226.1456,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 186.7764,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 185.0854,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 183.0668,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-047-7-establecimiento-de-ш-comite-consultivo-para-el": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del comité",
+          "score": 3.0954,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 2.9742,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.7494,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.6996,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 2.6774,
+          "evidence": []
+        },
+        {
+          "term": "las negociaciones",
+          "score": 2.5576,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.5158,
+          "evidence": []
+        },
+        {
+          "term": "negociaciones con",
+          "score": 2.4676,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del comité",
+          "score": 161.6902,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 132.0405,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 131.6936,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 122.3688,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 103.1006,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 95.3169,
+          "evidence": []
+        },
+        {
+          "term": "director general",
+          "score": 88.7528,
+          "evidence": []
+        },
+        {
+          "term": "opinión del",
+          "score": 88.1507,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 2.3024,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 1.9491,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 1.8992,
+          "evidence": []
+        },
+        {
+          "term": "sobre las",
+          "score": 1.7132,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 1.7026,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 1.6593,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 1.6308,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.5436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 81.9702,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 69.0621,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 68.3617,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 67.9795,
+          "evidence": []
+        },
+        {
+          "term": "funciones que",
+          "score": 65.0237,
+          "evidence": []
+        },
+        {
+          "term": "indica que",
+          "score": 64.8393,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 64.0653,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 63.7069,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 2.3024,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 1.9491,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 1.8992,
+          "evidence": []
+        },
+        {
+          "term": "sobre las",
+          "score": 1.7132,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 1.7026,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 1.6593,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 1.6308,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.5436,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 883.5615,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 317.0012,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 257.8689,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 254.2572,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 249.5923,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 248.182,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 227.636,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 222.8698,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-048-8-informe-sobre-los-nombramientos-para-los-cuadr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 3.2679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 2.9568,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 2.7524,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 55.3798,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 50.3688,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 42.045,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 0.8788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.7751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.4906,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para los",
+          "score": 23.4483,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 16.9858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 14.4656,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 0.8788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.7751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.5171,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 943.6112,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 331.7712,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 305.168,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-049-9-ncmbramiemto-del-presidente-general-de-las-dis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del presidente",
+          "score": 4.7449,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presidente general",
+          "score": 3.9434,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 3.9137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea",
+          "score": 2.5678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 2.2172,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 2.1211,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.9746,
+          "evidence": []
+        },
+        {
+          "term": "sir arcot",
+          "score": 1.7939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del presidente",
+          "score": 137.5641,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presidente general",
+          "score": 110.464,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 76.1174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea",
+          "score": 71.0792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 56.0465,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 45.7418,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 39.5937,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 38.3975,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del presidente",
+          "score": 1.7057,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 1.3949,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.1157,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 1.0413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo que",
+          "score": 1.0046,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.77,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.7307,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.6788,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las discusiones",
+          "score": 44.0168,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del presidente",
+          "score": 42.1208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo que",
+          "score": 30.8212,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 13.6809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 13.5794,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 13.181,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 12.6475,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 11.9082,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del presidente",
+          "score": 1.7057,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 1.3949,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.1157,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 1.0413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo que",
+          "score": 1.0046,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.77,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.7307,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.6788,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1234.2817,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 401.6915,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 364.615,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 345.6237,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 335.8341,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 335.8341,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 335.8341,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 309.3691,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-050-10-eleccion-del-теш-de-las-discusiohes-tecmicas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "discusiones técnicas",
+          "score": 4.8187,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 4.4885,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 4.1644,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 4.1209,
+          "evidence": []
+        },
+        {
+          "term": "tema elegido",
+          "score": 3.9316,
+          "evidence": []
+        },
+        {
+          "term": "tema relativo",
+          "score": 3.927,
+          "evidence": []
+        },
+        {
+          "term": "enfermedades transmisibles",
+          "score": 3.926,
+          "evidence": []
+        },
+        {
+          "term": "lucha contra",
+          "score": 3.8935,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 357.0807,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 356.446,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 347.3779,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 282.837,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 275.8604,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 261.1392,
+          "evidence": []
+        },
+        {
+          "term": "las enfermedades",
+          "score": 252.7279,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 243.5926,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 4.0151,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 4.0018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 3.8109,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 3.7792,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 3.5296,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 3.1958,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 2.7495,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.7336,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 328.0749,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 320.4163,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 251.9666,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 224.0965,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 211.5855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 205.2323,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 192.4334,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 187.0082,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 4.0151,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 4.0018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 3.8109,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 3.7792,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 3.5296,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 3.1958,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 2.7495,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.7336,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 632.1794,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 242.1497,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 206.9858,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 199.7351,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 199.7351,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 199.7351,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 199.0516,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 185.0543,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-051-11-fecha-y-lugar-de-la-12": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 2.0396,
+          "evidence": []
+        },
+        {
+          "term": "fecha",
+          "score": 1.7863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vistas las",
+          "score": 1.3975,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 1.3925,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 1.3707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 45.8923,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 23.8508,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 23.5584,
+          "evidence": []
+        },
+        {
+          "term": "fecha",
+          "score": 23.1634,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vistas las",
+          "score": 21.3986,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dice que",
+          "score": 0.4905,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4903,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.4466,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.4037,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.3719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dice que",
+          "score": 11.3029,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 10.19,
+          "evidence": []
+        },
+        {
+          "term": "fecha",
+          "score": 9.9387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vistas las",
+          "score": 9.6444,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 9.0526,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dice que",
+          "score": 0.4905,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4903,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.4466,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.4037,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.4015,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1074.1055,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 375.1322,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 314.8576,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 290.3122,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 281.7045,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-052-resuelve": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea",
+          "score": 0.6783,
+          "evidence": []
+        },
+        {
+          "term": "martes",
+          "score": 0.6009,
+          "evidence": []
+        },
+        {
+          "term": "celebre",
+          "score": 0.586,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "asamblea",
+          "score": 10.1542,
+          "evidence": []
+        },
+        {
+          "term": "celebre",
+          "score": 7.5826,
+          "evidence": []
+        },
+        {
+          "term": "martes",
+          "score": 7.5826,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 0.1215,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.1185,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 3.2511,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 3.1705,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 2.0589,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.1215,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1176,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.0987,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 852.529,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 321.8515,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 258.5745,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-053-12-fecha-y-lugar-de-la": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 3.8843,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.3419,
+          "evidence": []
+        },
+        {
+          "term": "comité permanente",
+          "score": 3.3322,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.1743,
+          "evidence": []
+        },
+        {
+          "term": "del martes",
+          "score": 3.0385,
+          "evidence": []
+        },
+        {
+          "term": "nuevo estudio",
+          "score": 2.9613,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.9388,
+          "evidence": []
+        },
+        {
+          "term": "sesión del",
+          "score": 2.9317,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 306.5522,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 194.4951,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 192.7008,
+          "evidence": []
+        },
+        {
+          "term": "estima que",
+          "score": 190.9477,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 189.2283,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 186.2631,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 183.9714,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 182.6255,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 4.6883,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.7477,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.5288,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 3.3914,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.279,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 3.2703,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 3.2259,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 3.1832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 178.0817,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 156.5744,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 150.1298,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 149.25,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 147.0664,
+          "evidence": []
+        },
+        {
+          "term": "estima que",
+          "score": 145.939,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 136.0664,
+          "evidence": []
+        },
+        {
+          "term": "que acaba",
+          "score": 135.4805,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 4.6883,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.7477,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.5288,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 3.3914,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.279,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 3.2703,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 3.2259,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 3.1832,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 917.2109,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 334.2636,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 274.7729,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 261.533,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 257.0851,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 224.7644,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 217.504,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 217.504,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-054-16-traibeerencias-entre-las-sesiones-de-la-resol": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "consejo ejecutivo",
+          "score": 2.0001,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 1.6732,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 1.6193,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 1.6141,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 1.6063,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.4741,
+          "evidence": []
+        },
+        {
+          "term": "naciones unidas",
+          "score": 1.4267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las",
+          "score": 49.8672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 41.9975,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 37.4227,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 36.3076,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 35.5443,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 34.239,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 26.6007,
+          "evidence": []
+        },
+        {
+          "term": "párrafo",
+          "score": 24.5428,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 1.3364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 0.9278,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 0.8522,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.7221,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 0.6682,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 0.6378,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.522,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 39.4947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "explica que",
+          "score": 21.9194,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 20.6988,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 19.7474,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 18.6291,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 17.9288,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 11.5276,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 10.2868,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 1.3364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 0.9278,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 0.8522,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.7221,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 0.7129,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 0.6378,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.522,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 893.2365,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 335.5805,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 275.9637,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 263.5662,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 258.9162,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 217.7892,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 211.4152,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 206.2823,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-055-17-empleo-del-ruso-en-las-reuni0ke3-del-consejo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 5.066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacuna que",
+          "score": 2.7777,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 2.5083,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 2.4486,
+          "evidence": []
+        },
+        {
+          "term": "las que",
+          "score": 2.374,
+          "evidence": []
+        },
+        {
+          "term": "vacuna anti",
+          "score": 2.2263,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 2.1717,
+          "evidence": []
+        },
+        {
+          "term": "reunion del",
+          "score": 2.142,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 180.9803,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 149.993,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 147.8517,
+          "evidence": []
+        },
+        {
+          "term": "las que",
+          "score": 137.2512,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 117.5874,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 74.2555,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 73.8119,
+          "evidence": []
+        },
+        {
+          "term": "reunion del",
+          "score": 73.1608,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 5.2479,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 2.7213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 2.6334,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.9201,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 1.9102,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 1.9012,
+          "evidence": []
+        },
+        {
+          "term": "reunion del",
+          "score": 1.7261,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 153.5292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 120.3513,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 116.856,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 81.1682,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 65.9931,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 60.4622,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 58.4212,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 57.7359,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 5.2479,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 2.7213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 2.6334,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.9201,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 1.9102,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 1.9012,
+          "evidence": []
+        },
+        {
+          "term": "reunion del",
+          "score": 1.7261,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 739.8895,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 287.4147,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 237.5666,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 224.4352,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 217.4773,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 182.3702,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 178.4979,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 168.6093,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-056-бв22м1пд-pagina-32": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las palabras",
+          "score": 2.1051,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 1.5883,
+          "evidence": []
+        },
+        {
+          "term": "calidad aceptable",
+          "score": 1.4885,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 1.4439,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las palabras",
+          "score": 45.4278,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 32.4276,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 25.0928,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 24.6578,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "párrafo del",
+          "score": 0.4143,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 0.3779,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 0.3277,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.2856,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "propone que",
+          "score": 11.2589,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 10.9846,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 10.325,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 7.9141,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "párrafo del",
+          "score": 0.4143,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 0.3779,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 0.3277,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 0.2957,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 763.344,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 285.2817,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 233.3067,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 224.6661,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-057-19-posibilidad-de-que-u-oms-patrociné-ia-adopcio": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "resolución",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 0.6187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "resolución",
+          "score": 10.4625,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 9.62,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 8.2758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que",
+          "score": 0.1557,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 0.1091,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.1047,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 4.2571,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 2.6599,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.6523,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.1557,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 0.1091,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.0932,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1317.0467,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 463.3487,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 430.2636,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "erradicación del",
+          "score": 1.772,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 1.726,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.6341,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 1.6112,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.3791,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "erradicación del",
+          "score": 38.1449,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 37.2743,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 35.7189,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 35.4654,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 21.0854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del orden",
+          "score": 0.477,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.4681,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.4255,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.3994,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.3922,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del orden",
+          "score": 12.5382,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 12.486,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 11.9065,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 11.9065,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 10.4515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del orden",
+          "score": 0.477,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.4681,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.4255,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.3994,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.3922,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 875.1001,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 292.3824,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 267.7706,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 263.4476,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 245.1788,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

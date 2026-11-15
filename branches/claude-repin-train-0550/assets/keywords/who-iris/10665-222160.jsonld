@@ -1,0 +1,938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-222160",
+  "instance": "who-iris",
+  "about": "library/10665-222160",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "meningococcal polysaccharide",
+        "score": 6.9859,
+        "evidence": []
+      },
+      {
+        "term": "meningococcal vaccines",
+        "score": 5.766,
+        "evidence": []
+      },
+      {
+        "term": "serogroup vaccine",
+        "score": 5.6244,
+        "evidence": []
+      },
+      {
+        "term": "sérogroupe été",
+        "score": 5.4407,
+        "evidence": []
+      },
+      {
+        "term": "meningococcal disease",
+        "score": 5.3669,
+        "evidence": []
+      },
+      {
+        "term": "des sérogroupes",
+        "score": 4.819,
+        "evidence": []
+      },
+      {
+        "term": "serogroup strains",
+        "score": 4.7049,
+        "evidence": []
+      },
+      {
+        "term": "antiméningococciques polyosidiques",
+        "score": 4.5969,
+        "evidence": []
+      },
+      {
+        "term": "aux sérogroupes",
+        "score": 4.425,
+        "evidence": []
+      },
+      {
+        "term": "maladies méningocoque",
+        "score": 4.3614,
+        "evidence": []
+      },
+      {
+        "term": "aux etats-unis",
+        "score": 4.0485,
+        "evidence": []
+      },
+      {
+        "term": "vaccins antiméningococciques",
+        "score": 4.0255,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "meningococcal polysaccharide",
+        "score": 206.0328,
+        "evidence": []
+      },
+      {
+        "term": "serogroup vaccine",
+        "score": 183.1643,
+        "evidence": []
+      },
+      {
+        "term": "meningococcal disease",
+        "score": 169.2721,
+        "evidence": []
+      },
+      {
+        "term": "sérogroupe été",
+        "score": 158.4521,
+        "evidence": []
+      },
+      {
+        "term": "serogroup strains",
+        "score": 143.9492,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 137.7844,
+        "evidence": []
+      },
+      {
+        "term": "les maladies",
+        "score": 137.1541,
+        "evidence": []
+      },
+      {
+        "term": "des sérogroupes",
+        "score": 136.8961,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 129.4031,
+        "evidence": []
+      },
+      {
+        "term": "les épidémies",
+        "score": 124.4553,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 120.8597,
+        "evidence": []
+      },
+      {
+        "term": "les contacts",
+        "score": 120.2814,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 3.6752,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 3.3191,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 3.0447,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 2.8727,
+        "evidence": []
+      },
+      {
+        "term": "des cas",
+        "score": 2.8192,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 2.7781,
+        "evidence": []
+      },
+      {
+        "term": "les enfants",
+        "score": 2.7284,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 2.6125,
+        "evidence": []
+      },
+      {
+        "term": "les nourrissons",
+        "score": 2.5211,
+        "evidence": []
+      },
+      {
+        "term": "les contacts",
+        "score": 2.4904,
+        "evidence": []
+      },
+      {
+        "term": "les maladies",
+        "score": 2.4467,
+        "evidence": []
+      },
+      {
+        "term": "parmi les",
+        "score": 2.4289,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 130.1563,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 103.8632,
+        "evidence": []
+      },
+      {
+        "term": "les enfants",
+        "score": 101.4702,
+        "evidence": []
+      },
+      {
+        "term": "les contacts",
+        "score": 101.0895,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 100.2929,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 99.7198,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 98.8997,
+        "evidence": []
+      },
+      {
+        "term": "les nourrissons",
+        "score": 96.0644,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 95.214,
+        "evidence": []
+      },
+      {
+        "term": "les groupes",
+        "score": 95.0933,
+        "evidence": []
+      },
+      {
+        "term": "les épidémies",
+        "score": 92.0983,
+        "evidence": []
+      },
+      {
+        "term": "les maladies",
+        "score": 92.0983,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 3.6752,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 3.3191,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 3.0447,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 2.8727,
+        "evidence": []
+      },
+      {
+        "term": "des cas",
+        "score": 2.8192,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 2.7781,
+        "evidence": []
+      },
+      {
+        "term": "les enfants",
+        "score": 2.7284,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 2.6125,
+        "evidence": []
+      },
+      {
+        "term": "les nourrissons",
+        "score": 2.5211,
+        "evidence": []
+      },
+      {
+        "term": "les contacts",
+        "score": 2.4904,
+        "evidence": []
+      },
+      {
+        "term": "les maladies",
+        "score": 2.4467,
+        "evidence": []
+      },
+      {
+        "term": "parmi les",
+        "score": 2.4289,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "相一致",
+        "score": 161.0245,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 139.6318,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 133.1673,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 133.1673,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 126.4655,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 101.1173,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 94.4822,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 93.9684,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 85.6418,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 81.7331,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 76.3124,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 71.6065,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "meningococcal polysaccharide",
+          "score": 3.3372,
+          "evidence": []
+        },
+        {
+          "term": "serogroup strains",
+          "score": 2.8236,
+          "evidence": []
+        },
+        {
+          "term": "sérogroupe été",
+          "score": 2.8138,
+          "evidence": []
+        },
+        {
+          "term": "maladies méningocoque",
+          "score": 2.6611,
+          "evidence": []
+        },
+        {
+          "term": "meningococcal disease",
+          "score": 2.624,
+          "evidence": []
+        },
+        {
+          "term": "antiméningococciques polyosidiques",
+          "score": 2.2984,
+          "evidence": []
+        },
+        {
+          "term": "aux etats-unis",
+          "score": 2.1954,
+          "evidence": []
+        },
+        {
+          "term": "les maladies",
+          "score": 2.1691,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "meningococcal polysaccharide",
+          "score": 92.3356,
+          "evidence": []
+        },
+        {
+          "term": "serogroup strains",
+          "score": 88.8571,
+          "evidence": []
+        },
+        {
+          "term": "sérogroupe été",
+          "score": 88.2081,
+          "evidence": []
+        },
+        {
+          "term": "les maladies",
+          "score": 83.2727,
+          "evidence": []
+        },
+        {
+          "term": "meningococcal disease",
+          "score": 78.796,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 76.3659,
+          "evidence": []
+        },
+        {
+          "term": "maladies méningocoque",
+          "score": 73.6794,
+          "evidence": []
+        },
+        {
+          "term": "des maladies",
+          "score": 68.8257,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chez les",
+          "score": 1.3738,
+          "evidence": []
+        },
+        {
+          "term": "chez des",
+          "score": 1.3379,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.2603,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.2302,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.1352,
+          "evidence": []
+        },
+        {
+          "term": "les contacts",
+          "score": 1.123,
+          "evidence": []
+        },
+        {
+          "term": "les maladies",
+          "score": 1.1132,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 1.0834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chez les",
+          "score": 49.2818,
+          "evidence": []
+        },
+        {
+          "term": "les contacts",
+          "score": 48.8341,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 47.9252,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 46.1712,
+          "evidence": []
+        },
+        {
+          "term": "les maladies",
+          "score": 44.6693,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 40.9759,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 38.9813,
+          "evidence": []
+        },
+        {
+          "term": "environ des",
+          "score": 35.6739,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chez les",
+          "score": 1.3738,
+          "evidence": []
+        },
+        {
+          "term": "chez des",
+          "score": 1.3379,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.2603,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.2302,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.1352,
+          "evidence": []
+        },
+        {
+          "term": "les contacts",
+          "score": 1.123,
+          "evidence": []
+        },
+        {
+          "term": "les maladies",
+          "score": 1.1132,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 1.0834,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 85.4813,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 69.6757,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 69.6754,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 69.6754,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 63.7978,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 49.9756,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 46.4722,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 44.7204,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "meningococcal polysaccharide",
+          "score": 3.6486,
+          "evidence": []
+        },
+        {
+          "term": "serogroup vaccine",
+          "score": 3.1402,
+          "evidence": []
+        },
+        {
+          "term": "meningococcal disease",
+          "score": 2.7429,
+          "evidence": []
+        },
+        {
+          "term": "vaccin monovalent",
+          "score": 2.7121,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antiméningococcique",
+          "score": 2.6895,
+          "evidence": []
+        },
+        {
+          "term": "sérogroupe été",
+          "score": 2.6269,
+          "evidence": []
+        },
+        {
+          "term": "aux sérogroupes",
+          "score": 2.5597,
+          "evidence": []
+        },
+        {
+          "term": "antiméningococcique polyosidique",
+          "score": 2.32,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "meningococcal polysaccharide",
+          "score": 113.6972,
+          "evidence": []
+        },
+        {
+          "term": "serogroup vaccine",
+          "score": 101.3758,
+          "evidence": []
+        },
+        {
+          "term": "vaccin monovalent",
+          "score": 90.8246,
+          "evidence": []
+        },
+        {
+          "term": "meningococcal disease",
+          "score": 90.4761,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antiméningococcique",
+          "score": 84.0027,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 77.1293,
+          "evidence": []
+        },
+        {
+          "term": "sérogroupe été",
+          "score": 70.244,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 66.4307,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.9912,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 1.8288,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.6709,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.5891,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 1.4965,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4172,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 1.3195,
+          "evidence": []
+        },
+        {
+          "term": "est pas",
+          "score": 1.0637,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 68.5259,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 54.5814,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 54.3638,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 53.3692,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 51.3059,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 49.8308,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 47.4291,
+          "evidence": []
+        },
+        {
+          "term": "vaccin monovalent",
+          "score": 28.6444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.9912,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 1.8288,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.6709,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.5891,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 1.4965,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4172,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 1.3195,
+          "evidence": []
+        },
+        {
+          "term": "est pas",
+          "score": 1.0637,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 75.5432,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 69.9561,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 63.4919,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 63.4919,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 62.6676,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 51.1416,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 49.7618,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 49.7027,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

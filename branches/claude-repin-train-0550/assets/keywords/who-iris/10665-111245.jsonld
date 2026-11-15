@@ -1,0 +1,1684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-111245",
+  "instance": "who-iris",
+  "about": "library/10665-111245",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "двадцать седьмая",
+        "score": 7.8314,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 6.9828,
+        "evidence": []
+      },
+      {
+        "term": "седьмая сессия",
+        "score": 6.0928,
+        "evidence": []
+      },
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 5.963,
+        "evidence": []
+      },
+      {
+        "term": "двадцать восьмой",
+        "score": 5.7825,
+        "evidence": []
+      },
+      {
+        "term": "сессии всемирной",
+        "score": 5.6494,
+        "evidence": []
+      },
+      {
+        "term": "предлагает генеральному",
+        "score": 4.4773,
+        "evidence": []
+      },
+      {
+        "term": "генеральному директору",
+        "score": 4.154,
+        "evidence": []
+      },
+      {
+        "term": "служб здравоохранения",
+        "score": 3.8457,
+        "evidence": []
+      },
+      {
+        "term": "паразитарных болезней",
+        "score": 3.7667,
+        "evidence": []
+      },
+      {
+        "term": "программы борьбы",
+        "score": 3.7113,
+        "evidence": []
+      },
+      {
+        "term": "борьбы малярией",
+        "score": 3.6797,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "двадцать седьмая",
+        "score": 115.344,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 109.9578,
+        "evidence": []
+      },
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 95.4796,
+        "evidence": []
+      },
+      {
+        "term": "двадцать восьмой",
+        "score": 88.8326,
+        "evidence": []
+      },
+      {
+        "term": "сессии всемирной",
+        "score": 86.3137,
+        "evidence": []
+      },
+      {
+        "term": "сессия всемирной",
+        "score": 85.8134,
+        "evidence": []
+      },
+      {
+        "term": "что организация",
+        "score": 67.3809,
+        "evidence": []
+      },
+      {
+        "term": "научных исследований",
+        "score": 67.079,
+        "evidence": []
+      },
+      {
+        "term": "служб здравоохранения",
+        "score": 66.9575,
+        "evidence": []
+      },
+      {
+        "term": "предлагает генеральному",
+        "score": 66.5715,
+        "evidence": []
+      },
+      {
+        "term": "вакцин бцж",
+        "score": 63.3804,
+        "evidence": []
+      },
+      {
+        "term": "паразитарных болезней",
+        "score": 63.1648,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 1.4561,
+        "evidence": []
+      },
+      {
+        "term": "исследований области",
+        "score": 1.2934,
+        "evidence": []
+      },
+      {
+        "term": "этой области",
+        "score": 1.2027,
+        "evidence": []
+      },
+      {
+        "term": "служб здравоохранения",
+        "score": 1.151,
+        "evidence": []
+      },
+      {
+        "term": "воз",
+        "score": 1.0354,
+        "evidence": []
+      },
+      {
+        "term": "для",
+        "score": 1.0044,
+        "evidence": []
+      },
+      {
+        "term": "программы борьбы",
+        "score": 0.9392,
+        "evidence": []
+      },
+      {
+        "term": "что организация",
+        "score": 0.8649,
+        "evidence": []
+      },
+      {
+        "term": "научных исследований",
+        "score": 0.8462,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 0.7452,
+        "evidence": []
+      },
+      {
+        "term": "сессия всемирной",
+        "score": 0.7082,
+        "evidence": []
+      },
+      {
+        "term": "также",
+        "score": 0.6544,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "спид",
+        "score": 32.3073,
+        "evidence": []
+      },
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 21.9334,
+        "evidence": []
+      },
+      {
+        "term": "для",
+        "score": 20.8585,
+        "evidence": []
+      },
+      {
+        "term": "служб здравоохранения",
+        "score": 19.2173,
+        "evidence": []
+      },
+      {
+        "term": "программы борьбы",
+        "score": 16.6412,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 15.7927,
+        "evidence": []
+      },
+      {
+        "term": "что организация",
+        "score": 15.7927,
+        "evidence": []
+      },
+      {
+        "term": "или",
+        "score": 15.7085,
+        "evidence": []
+      },
+      {
+        "term": "воз",
+        "score": 15.0486,
+        "evidence": []
+      },
+      {
+        "term": "исследований области",
+        "score": 13.8814,
+        "evidence": []
+      },
+      {
+        "term": "исследований этой",
+        "score": 13.1756,
+        "evidence": []
+      },
+      {
+        "term": "научных исследований",
+        "score": 11.3952,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 1.4561,
+        "evidence": []
+      },
+      {
+        "term": "исследований области",
+        "score": 1.2934,
+        "evidence": []
+      },
+      {
+        "term": "этой области",
+        "score": 1.2027,
+        "evidence": []
+      },
+      {
+        "term": "служб здравоохранения",
+        "score": 1.1928,
+        "evidence": []
+      },
+      {
+        "term": "воз",
+        "score": 1.0354,
+        "evidence": []
+      },
+      {
+        "term": "для",
+        "score": 1.0044,
+        "evidence": []
+      },
+      {
+        "term": "программы борьбы",
+        "score": 0.9392,
+        "evidence": []
+      },
+      {
+        "term": "что организация",
+        "score": 0.8649,
+        "evidence": []
+      },
+      {
+        "term": "научных исследований",
+        "score": 0.8462,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 0.7452,
+        "evidence": []
+      },
+      {
+        "term": "сессия всемирной",
+        "score": 0.7082,
+        "evidence": []
+      },
+      {
+        "term": "также",
+        "score": 0.6544,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 908.6723,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 874.5085,
+        "evidence": []
+      },
+      {
+        "term": "一致元数据和定义",
+        "score": 665.7578,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 658.1378,
+        "evidence": []
+      },
+      {
+        "term": "非同寻常",
+        "score": 551.7734,
+        "evidence": []
+      },
+      {
+        "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+        "score": 511.3064,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 503.3471,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 495.4762,
+        "evidence": []
+      },
+      {
+        "term": "平等主义",
+        "score": 455.3223,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 408.7054,
+        "evidence": []
+      },
+      {
+        "term": "数字疗法",
+        "score": 394.7074,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感的防范",
+        "score": 384.9087,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "всемирной ассамблеи",
+          "score": 1.2641,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 1.0294,
+          "evidence": []
+        },
+        {
+          "term": "двадцать",
+          "score": 0.8153,
+          "evidence": []
+        },
+        {
+          "term": "адекватность",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "всемирной ассамблеи",
+          "score": 19.9923,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 15.574,
+          "evidence": []
+        },
+        {
+          "term": "двадцать",
+          "score": 13.142,
+          "evidence": []
+        },
+        {
+          "term": "комитет",
+          "score": 10.0742,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.1442,
+          "evidence": []
+        },
+        {
+          "term": "области",
+          "score": 0.0858,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.0829,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.0736,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "спид",
+          "score": 2.6302,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 2.1893,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 1.7571,
+          "evidence": []
+        },
+        {
+          "term": "электронного",
+          "score": 1.3669,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.1442,
+          "evidence": []
+        },
+        {
+          "term": "области",
+          "score": 0.0858,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.0736,
+          "evidence": []
+        },
+        {
+          "term": "исследований",
+          "score": 0.0547,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 205.1897,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 200.7801,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 147.7877,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 133.3526,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "борьбы малярией",
+          "score": 1.7204,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 1.5952,
+          "evidence": []
+        },
+        {
+          "term": "ход выполнения",
+          "score": 1.397,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 1.299,
+          "evidence": []
+        },
+        {
+          "term": "программы борьбы",
+          "score": 1.1728,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "всемирной ассамблеи",
+          "score": 29.9885,
+          "evidence": []
+        },
+        {
+          "term": "борьбы малярией",
+          "score": 29.4118,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 23.361,
+          "evidence": []
+        },
+        {
+          "term": "ход выполнения",
+          "score": 22.3851,
+          "evidence": []
+        },
+        {
+          "term": "двадцать",
+          "score": 19.713,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.1767,
+          "evidence": []
+        },
+        {
+          "term": "программы борьбы",
+          "score": 0.13,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.1012,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.0976,
+          "evidence": []
+        },
+        {
+          "term": "спид",
+          "score": 0.0938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "спид",
+          "score": 5.4639,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 3.2735,
+          "evidence": []
+        },
+        {
+          "term": "программы борьбы",
+          "score": 2.612,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 2.1881,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 2.0698,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.1767,
+          "evidence": []
+        },
+        {
+          "term": "программы борьбы",
+          "score": 0.13,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.1012,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.0846,
+          "evidence": []
+        },
+        {
+          "term": "борьбы малярией",
+          "score": 0.082,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 184.9683,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 180.3492,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 133.6935,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 131.4886,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 114.4651,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "тропических паразитарных",
+          "score": 2.4337,
+          "evidence": []
+        },
+        {
+          "term": "паразитарных болезней",
+          "score": 2.0559,
+          "evidence": []
+        },
+        {
+          "term": "научных исследований",
+          "score": 1.8608,
+          "evidence": []
+        },
+        {
+          "term": "генеральному директору",
+          "score": 1.5789,
+          "evidence": []
+        },
+        {
+          "term": "исследований этой",
+          "score": 1.4729,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 1.2641,
+          "evidence": []
+        },
+        {
+          "term": "этой области",
+          "score": 1.2206,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 1.0294,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "научных исследований",
+          "score": 52.1726,
+          "evidence": []
+        },
+        {
+          "term": "тропических паразитарных",
+          "score": 46.3587,
+          "evidence": []
+        },
+        {
+          "term": "паразитарных болезней",
+          "score": 39.165,
+          "evidence": []
+        },
+        {
+          "term": "исследований этой",
+          "score": 34.5652,
+          "evidence": []
+        },
+        {
+          "term": "генеральному директору",
+          "score": 25.0434,
+          "evidence": []
+        },
+        {
+          "term": "этой области",
+          "score": 23.6838,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 19.9923,
+          "evidence": []
+        },
+        {
+          "term": "борьбы",
+          "score": 19.9197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.3642,
+          "evidence": []
+        },
+        {
+          "term": "этой области",
+          "score": 0.3461,
+          "evidence": []
+        },
+        {
+          "term": "исследований этой",
+          "score": 0.2642,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.2641,
+          "evidence": []
+        },
+        {
+          "term": "научных исследований",
+          "score": 0.2602,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.2421,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.2022,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.1826,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "спид",
+          "score": 11.0907,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 5.6697,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 4.9363,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 4.8561,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 4.4503,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 4.3385,
+          "evidence": []
+        },
+        {
+          "term": "исследований этой",
+          "score": 4.2135,
+          "evidence": []
+        },
+        {
+          "term": "этой области",
+          "score": 3.9257,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.3642,
+          "evidence": []
+        },
+        {
+          "term": "этой области",
+          "score": 0.3461,
+          "evidence": []
+        },
+        {
+          "term": "исследований этой",
+          "score": 0.2642,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.2641,
+          "evidence": []
+        },
+        {
+          "term": "научных исследований",
+          "score": 0.2602,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.2421,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.2022,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.1826,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 153.8239,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 153.2485,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 128.3679,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 109.1914,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 91.8815,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 87.9291,
+          "evidence": []
+        },
+        {
+          "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+          "score": 86.8251,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 85.4642,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "психосоциальных факторов",
+          "score": 2.3257,
+          "evidence": []
+        },
+        {
+          "term": "роли психосоциальных",
+          "score": 2.1934,
+          "evidence": []
+        },
+        {
+          "term": "деятельность служб",
+          "score": 1.7452,
+          "evidence": []
+        },
+        {
+          "term": "служб здравоохранения",
+          "score": 1.7448,
+          "evidence": []
+        },
+        {
+          "term": "генеральному директору",
+          "score": 1.5789,
+          "evidence": []
+        },
+        {
+          "term": "отношении роли",
+          "score": 1.5469,
+          "evidence": []
+        },
+        {
+          "term": "предлагает генеральному",
+          "score": 1.5249,
+          "evidence": []
+        },
+        {
+          "term": "этих факторов",
+          "score": 1.4844,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "психосоциальных факторов",
+          "score": 49.3696,
+          "evidence": []
+        },
+        {
+          "term": "роли психосоциальных",
+          "score": 43.7665,
+          "evidence": []
+        },
+        {
+          "term": "служб здравоохранения",
+          "score": 38.8319,
+          "evidence": []
+        },
+        {
+          "term": "деятельность служб",
+          "score": 34.3354,
+          "evidence": []
+        },
+        {
+          "term": "этих факторов",
+          "score": 31.8439,
+          "evidence": []
+        },
+        {
+          "term": "здоровье",
+          "score": 30.7125,
+          "evidence": []
+        },
+        {
+          "term": "отношении роли",
+          "score": 30.4385,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 25.3967,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.3397,
+          "evidence": []
+        },
+        {
+          "term": "служб здравоохранения",
+          "score": 0.2803,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.2096,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.2041,
+          "evidence": []
+        },
+        {
+          "term": "области",
+          "score": 0.1851,
+          "evidence": []
+        },
+        {
+          "term": "что организация",
+          "score": 0.1713,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.1501,
+          "evidence": []
+        },
+        {
+          "term": "также",
+          "score": 0.1399,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 7.0566,
+          "evidence": []
+        },
+        {
+          "term": "служб здравоохранения",
+          "score": 6.5577,
+          "evidence": []
+        },
+        {
+          "term": "спид",
+          "score": 5.8523,
+          "evidence": []
+        },
+        {
+          "term": "электронного",
+          "score": 4.574,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 4.5303,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 3.1802,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 2.7352,
+          "evidence": []
+        },
+        {
+          "term": "что организация",
+          "score": 2.7352,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.3397,
+          "evidence": []
+        },
+        {
+          "term": "служб здравоохранения",
+          "score": 0.2892,
+          "evidence": []
+        },
+        {
+          "term": "что организация",
+          "score": 0.1713,
+          "evidence": []
+        },
+        {
+          "term": "всемирной ассамблеи",
+          "score": 0.1501,
+          "evidence": []
+        },
+        {
+          "term": "отношении роли",
+          "score": 0.1391,
+          "evidence": []
+        },
+        {
+          "term": "генеральному директору",
+          "score": 0.0988,
+          "evidence": []
+        },
+        {
+          "term": "роли этих",
+          "score": 0.0985,
+          "evidence": []
+        },
+        {
+          "term": "предлагает генеральному",
+          "score": 0.0917,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 144.9561,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 143.111,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 119.2019,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 102.9041,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 87.2094,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 86.3731,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 81.2065,
+          "evidence": []
+        },
+        {
+          "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+          "score": 80.647,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "вакцины бцж",
+          "score": 2.4172,
+          "evidence": []
+        },
+        {
+          "term": "вакцин бцж",
+          "score": 2.3019,
+          "evidence": []
+        },
+        {
+          "term": "качества вакцин",
+          "score": 1.7816,
+          "evidence": []
+        },
+        {
+          "term": "контроль качества",
+          "score": 1.6638,
+          "evidence": []
+        },
+        {
+          "term": "вакцину",
+          "score": 0.7271,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.6802,
+          "evidence": []
+        },
+        {
+          "term": "контроля",
+          "score": 0.6391,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.4508,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вакцины бцж",
+          "score": 62.4045,
+          "evidence": []
+        },
+        {
+          "term": "вакцин бцж",
+          "score": 58.7422,
+          "evidence": []
+        },
+        {
+          "term": "качества вакцин",
+          "score": 41.5113,
+          "evidence": []
+        },
+        {
+          "term": "контроль качества",
+          "score": 37.8773,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 16.8589,
+          "evidence": []
+        },
+        {
+          "term": "вакцину",
+          "score": 11.5817,
+          "evidence": []
+        },
+        {
+          "term": "контроля",
+          "score": 10.3245,
+          "evidence": []
+        },
+        {
+          "term": "его",
+          "score": 6.9271,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "воз",
+          "score": 0.2576,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.2296,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.1471,
+          "evidence": []
+        },
+        {
+          "term": "против",
+          "score": 0.1469,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 0.1464,
+          "evidence": []
+        },
+        {
+          "term": "вакцины",
+          "score": 0.1417,
+          "evidence": []
+        },
+        {
+          "term": "вакцины бцж",
+          "score": 0.1417,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.1368,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для",
+          "score": 4.2393,
+          "evidence": []
+        },
+        {
+          "term": "спид",
+          "score": 4.0864,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 3.569,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 3.4555,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 2.6798,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 2.6468,
+          "evidence": []
+        },
+        {
+          "term": "плт",
+          "score": 2.118,
+          "evidence": []
+        },
+        {
+          "term": "как",
+          "score": 1.9661,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "воз",
+          "score": 0.2576,
+          "evidence": []
+        },
+        {
+          "term": "вакцины бцж",
+          "score": 0.1495,
+          "evidence": []
+        },
+        {
+          "term": "качества вакцин",
+          "score": 0.1402,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.1368,
+          "evidence": []
+        },
+        {
+          "term": "при",
+          "score": 0.0902,
+          "evidence": []
+        },
+        {
+          "term": "его",
+          "score": 0.0465,
+          "evidence": []
+        },
+        {
+          "term": "контроль качества",
+          "score": 0.0403,
+          "evidence": []
+        },
+        {
+          "term": "вакцину",
+          "score": 0.0366,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 100.2675,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 81.9301,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 76.3908,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 73.8963,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 72.8477,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 67.2735,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 67.1694,
+          "evidence": []
+        },
+        {
+          "term": "个部分",
+          "score": 63.9628,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "международной классификации",
+          "score": 2.1681,
+          "evidence": []
+        },
+        {
+          "term": "классификации болезней",
+          "score": 1.9128,
+          "evidence": []
+        },
+        {
+          "term": "отмечая",
+          "score": 0.8739,
+          "evidence": []
+        },
+        {
+          "term": "признавая",
+          "score": 0.7787,
+          "evidence": []
+        },
+        {
+          "term": "данные",
+          "score": 0.485,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.4846,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "международной классификации",
+          "score": 41.5304,
+          "evidence": []
+        },
+        {
+          "term": "классификации болезней",
+          "score": 34.5557,
+          "evidence": []
+        },
+        {
+          "term": "отмечая",
+          "score": 14.046,
+          "evidence": []
+        },
+        {
+          "term": "признавая",
+          "score": 12.3926,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 8.4294,
+          "evidence": []
+        },
+        {
+          "term": "данные",
+          "score": 7.5188,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "здравоохранения",
+          "score": 0.1973,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.1638,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.1283,
+          "evidence": []
+        },
+        {
+          "term": "также",
+          "score": 0.1073,
+          "evidence": []
+        },
+        {
+          "term": "области",
+          "score": 0.1069,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.0976,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "спид",
+          "score": 3.1839,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 2.92,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 2.6626,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 2.213,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 2.014,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 1.7223,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "для",
+          "score": 0.1638,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.0959,
+          "evidence": []
+        },
+        {
+          "term": "данные",
+          "score": 0.0339,
+          "evidence": []
+        },
+        {
+          "term": "признавая",
+          "score": 0.0234,
+          "evidence": []
+        },
+        {
+          "term": "отмечая",
+          "score": 0.0231,
+          "evidence": []
+        },
+        {
+          "term": "классификации болезней",
+          "score": 0.0167,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 124.0859,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 110.4705,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 98.2848,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 84.3555,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 78.521,
+          "evidence": []
+        },
+        {
+          "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+          "score": 70.2677,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

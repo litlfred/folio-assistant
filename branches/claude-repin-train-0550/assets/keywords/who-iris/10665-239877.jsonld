@@ -1,0 +1,670 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-239877",
+  "instance": "who-iris",
+  "about": "library/10665-239877",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "des certificats",
+        "score": 2.0023,
+        "evidence": []
+      },
+      {
+        "term": "les certificats",
+        "score": 1.857,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "countries inoculation",
+        "score": 1.6093,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 1.5083,
+        "evidence": []
+      },
+      {
+        "term": "publiée dans",
+        "score": 1.4572,
+        "evidence": []
+      },
+      {
+        "term": "certificates required",
+        "score": 1.4261,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "guam",
+        "score": 1.4218,
+        "evidence": []
+      },
+      {
+        "term": "liste des",
+        "score": 1.3987,
+        "evidence": []
+      },
+      {
+        "term": "ents",
+        "score": 1.1943,
+        "evidence": []
+      },
+      {
+        "term": "irom",
+        "score": 1.0206,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "des certificats",
+        "score": 43.4468,
+        "evidence": []
+      },
+      {
+        "term": "les certificats",
+        "score": 38.153,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "guam",
+        "score": 37.5651,
+        "evidence": []
+      },
+      {
+        "term": "countries inoculation",
+        "score": 33.2052,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 28.1654,
+        "evidence": []
+      },
+      {
+        "term": "certificates required",
+        "score": 27.8179,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "liste des",
+        "score": 27.3895,
+        "evidence": []
+      },
+      {
+        "term": "publiée dans",
+        "score": 25.2377,
+        "evidence": []
+      },
+      {
+        "term": "ents",
+        "score": 22.7478,
+        "evidence": []
+      },
+      {
+        "term": "february",
+        "score": 17.7885,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "les",
+        "score": 0.3944,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les certificats",
+        "score": 0.3944,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des",
+        "score": 0.3877,
+        "evidence": []
+      },
+      {
+        "term": "liste des",
+        "score": 0.3877,
+        "evidence": []
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 0.3088,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.2653,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.2501,
+        "evidence": []
+      },
+      {
+        "term": "publiée dans",
+        "score": 0.2501,
+        "evidence": []
+      },
+      {
+        "term": "une",
+        "score": 0.2204,
+        "evidence": []
+      },
+      {
+        "term": "sur",
+        "score": 0.1977,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "des",
+        "score": 12.9442,
+        "evidence": []
+      },
+      {
+        "term": "des certificats",
+        "score": 12.9442,
+        "evidence": []
+      },
+      {
+        "term": "liste des",
+        "score": 12.9442,
+        "evidence": []
+      },
+      {
+        "term": "les",
+        "score": 11.7994,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 6.1522,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 4.8443,
+        "evidence": []
+      },
+      {
+        "term": "publiée dans",
+        "score": 4.8443,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 4.3634,
+        "evidence": []
+      },
+      {
+        "term": "ddcc",
+        "score": 4.3629,
+        "evidence": []
+      },
+      {
+        "term": "une",
+        "score": 3.9229,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "liste des",
+        "score": 0.4036,
+        "evidence": []
+      },
+      {
+        "term": "les certificats",
+        "score": 0.397,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 0.3088,
+        "evidence": []
+      },
+      {
+        "term": "publiée dans",
+        "score": 0.2533,
+        "evidence": []
+      },
+      {
+        "term": "contre",
+        "score": 0.0808,
+        "evidence": []
+      },
+      {
+        "term": "certificates required",
+        "score": 0.068,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "countries inoculation",
+        "score": 0.0316,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "note",
+        "score": 0.0277,
+        "evidence": []
+      },
+      {
+        "term": "december",
+        "score": 0.0266,
+        "evidence": []
+      },
+      {
+        "term": "february",
+        "score": 0.0179,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "相一致",
+        "score": 127.7474,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 106.1528,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 92.1649,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 92.1649,
+        "evidence": []
+      },
+      {
+        "term": "以及卫生保健界",
+        "score": 68.4323,
+        "evidence": []
+      },
+      {
+        "term": "基金会和开发银行",
+        "score": 68.4323,
+        "evidence": []
+      },
+      {
+        "term": "大学和研究机构",
+        "score": 68.4323,
+        "evidence": []
+      },
+      {
+        "term": "如非政府组织和民间社会组织",
+        "score": 68.4323,
+        "evidence": []
+      },
+      {
+        "term": "宗教组织",
+        "score": 68.4323,
+        "evidence": []
+      },
+      {
+        "term": "患者和公众",
+        "score": 68.4323,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-inoculation-and-vaccination-certificates-require": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "countries inoculation",
+          "score": 3.2186,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "certificates required",
+          "score": 2.8522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des certificats",
+          "score": 2.0023,
+          "evidence": []
+        },
+        {
+          "term": "les certificats",
+          "score": 1.857,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.6514,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "publiée dans",
+          "score": 1.4572,
+          "evidence": []
+        },
+        {
+          "term": "guam",
+          "score": 1.4218,
+          "evidence": []
+        },
+        {
+          "term": "liste des",
+          "score": 1.3987,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "countries inoculation",
+          "score": 66.4103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "certificates required",
+          "score": 55.6359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des certificats",
+          "score": 43.4468,
+          "evidence": []
+        },
+        {
+          "term": "les certificats",
+          "score": 38.153,
+          "evidence": []
+        },
+        {
+          "term": "guam",
+          "score": 37.5651,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 36.8988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "liste des",
+          "score": 27.3895,
+          "evidence": []
+        },
+        {
+          "term": "publiée dans",
+          "score": 25.2377,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.4686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.3944,
+          "evidence": []
+        },
+        {
+          "term": "les certificats",
+          "score": 0.3944,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3877,
+          "evidence": []
+        },
+        {
+          "term": "liste des",
+          "score": 0.3877,
+          "evidence": []
+        },
+        {
+          "term": "vaccination certificate",
+          "score": 0.3088,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2653,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 12.9442,
+          "evidence": []
+        },
+        {
+          "term": "des certificats",
+          "score": 12.9442,
+          "evidence": []
+        },
+        {
+          "term": "liste des",
+          "score": 12.9442,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 11.7994,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.541,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination certificate",
+          "score": 6.1522,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 4.8443,
+          "evidence": []
+        },
+        {
+          "term": "publiée dans",
+          "score": 4.8443,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.4686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "liste des",
+          "score": 0.4036,
+          "evidence": []
+        },
+        {
+          "term": "les certificats",
+          "score": 0.397,
+          "evidence": []
+        },
+        {
+          "term": "vaccination certificate",
+          "score": 0.3088,
+          "evidence": []
+        },
+        {
+          "term": "publiée dans",
+          "score": 0.2533,
+          "evidence": []
+        },
+        {
+          "term": "certificates required",
+          "score": 0.1361,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "contre",
+          "score": 0.0808,
+          "evidence": []
+        },
+        {
+          "term": "countries inoculation",
+          "score": 0.0631,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 127.7474,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 106.1528,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 92.1649,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 92.1649,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 68.4323,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 68.4323,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 68.4323,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 68.4323,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

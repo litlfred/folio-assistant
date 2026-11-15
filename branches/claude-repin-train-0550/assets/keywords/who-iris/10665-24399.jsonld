@@ -1,0 +1,940 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-24399",
+  "instance": "who-iris",
+  "about": "library/10665-24399",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "éradication mondiale",
+        "score": 6.5124,
+        "evidence": []
+      },
+      {
+        "term": "pour éradication",
+        "score": 6.225,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus urgence",
+        "score": 6.2235,
+        "evidence": []
+      },
+      {
+        "term": "éradication des",
+        "score": 6.2076,
+        "evidence": []
+      },
+      {
+        "term": "les poliovirus",
+        "score": 6.1781,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus sauvage",
+        "score": 6.1387,
+        "evidence": []
+      },
+      {
+        "term": "poliomyélite urgence",
+        "score": 5.9774,
+        "evidence": []
+      },
+      {
+        "term": "que éradication",
+        "score": 5.3924,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus par",
+        "score": 5.3445,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus dérivés",
+        "score": 5.3246,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus été",
+        "score": 5.3034,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus circulant",
+        "score": 4.884,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "pour éradication",
+        "score": 354.5794,
+        "evidence": []
+      },
+      {
+        "term": "éradication mondiale",
+        "score": 348.058,
+        "evidence": []
+      },
+      {
+        "term": "les poliovirus",
+        "score": 342.0858,
+        "evidence": []
+      },
+      {
+        "term": "éradication des",
+        "score": 333.4645,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus sauvage",
+        "score": 273.4839,
+        "evidence": []
+      },
+      {
+        "term": "que éradication",
+        "score": 270.2853,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus urgence",
+        "score": 267.8409,
+        "evidence": []
+      },
+      {
+        "term": "poliomyélite urgence",
+        "score": 263.1388,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus par",
+        "score": 243.6629,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus été",
+        "score": 238.4925,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 238.4708,
+        "evidence": []
+      },
+      {
+        "term": "bien éradication",
+        "score": 234.9281,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 6.1501,
+        "evidence": []
+      },
+      {
+        "term": "des poliovirus",
+        "score": 6.0954,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 5.7089,
+        "evidence": []
+      },
+      {
+        "term": "éradication des",
+        "score": 5.3898,
+        "evidence": []
+      },
+      {
+        "term": "mondiale pour",
+        "score": 5.3253,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 5.1903,
+        "evidence": []
+      },
+      {
+        "term": "des activités",
+        "score": 4.9625,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 4.7426,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 4.6968,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 4.5574,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 4.3595,
+        "evidence": []
+      },
+      {
+        "term": "les zones",
+        "score": 4.3393,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 278.8182,
+        "evidence": []
+      },
+      {
+        "term": "les poliovirus",
+        "score": 251.2036,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 248.8093,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 235.7417,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 226.5011,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 214.414,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 210.881,
+        "evidence": []
+      },
+      {
+        "term": "des poliovirus",
+        "score": 197.56,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 197.4146,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 191.636,
+        "evidence": []
+      },
+      {
+        "term": "les zones",
+        "score": 190.5202,
+        "evidence": []
+      },
+      {
+        "term": "les niveaux",
+        "score": 186.7077,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 6.1501,
+        "evidence": []
+      },
+      {
+        "term": "des poliovirus",
+        "score": 6.0954,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 5.7089,
+        "evidence": []
+      },
+      {
+        "term": "éradication des",
+        "score": 5.3898,
+        "evidence": []
+      },
+      {
+        "term": "mondiale pour",
+        "score": 5.3253,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 5.1903,
+        "evidence": []
+      },
+      {
+        "term": "des activités",
+        "score": 4.9625,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 4.7426,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 4.6968,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 4.5574,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 4.3595,
+        "evidence": []
+      },
+      {
+        "term": "les zones",
+        "score": 4.3393,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "相一致",
+        "score": 124.2437,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 98.7998,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 98.7998,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 84.1045,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 69.2825,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 64.5103,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 63.4562,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 62.6155,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 46.2645,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 44.2206,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 43.1906,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 42.9351,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-mesures-à-prendre-par-le-conseil-exécutif": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conseil exécutif",
+          "score": 3.5794,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "poliovirus urgence",
+          "score": 3.0974,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 2.9756,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus circulants",
+          "score": 2.8764,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 2.8279,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus sauvage",
+          "score": 2.7414,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 2.3045,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 2.2368,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des poliovirus",
+          "score": 142.9022,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus urgence",
+          "score": 131.4305,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 126.2336,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus circulants",
+          "score": 118.381,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus sauvage",
+          "score": 115.5924,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 108.4894,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 97.1352,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 81.071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 2.5162,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 2.5133,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 2.2325,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 2.0554,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus sauvage",
+          "score": 1.8227,
+          "evidence": []
+        },
+        {
+          "term": "les zones",
+          "score": 1.781,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.7804,
+          "evidence": []
+        },
+        {
+          "term": "des risques",
+          "score": 1.6485,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 106.813,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 77.4047,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 75.3737,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 73.655,
+          "evidence": []
+        },
+        {
+          "term": "les zones",
+          "score": 72.8765,
+          "evidence": []
+        },
+        {
+          "term": "les niveaux",
+          "score": 71.8366,
+          "evidence": []
+        },
+        {
+          "term": "les ressources",
+          "score": 69.0518,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 55.9858,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 2.5162,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 2.5133,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 2.2325,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 2.0554,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus sauvage",
+          "score": 1.8227,
+          "evidence": []
+        },
+        {
+          "term": "les zones",
+          "score": 1.781,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.7804,
+          "evidence": []
+        },
+        {
+          "term": "des risques",
+          "score": 1.6485,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 51.3081,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 50.5659,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 42.0663,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 42.0663,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 30.8212,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 29.0397,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 25.7629,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 24.2032,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "éradication mondiale",
+          "score": 3.608,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus sauvage",
+          "score": 3.3973,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 3.3971,
+          "evidence": []
+        },
+        {
+          "term": "suivi indépendant",
+          "score": 3.3635,
+          "evidence": []
+        },
+        {
+          "term": "les poliovirus",
+          "score": 3.1734,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 3.1578,
+          "evidence": []
+        },
+        {
+          "term": "que éradication",
+          "score": 3.0492,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite doit",
+          "score": 2.919,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "éradication mondiale",
+          "score": 231.3407,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 228.3458,
+          "evidence": []
+        },
+        {
+          "term": "les poliovirus",
+          "score": 187.3238,
+          "evidence": []
+        },
+        {
+          "term": "que éradication",
+          "score": 184.1334,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 172.9043,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 170.8077,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus sauvage",
+          "score": 157.8915,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite doit",
+          "score": 148.9396,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 3.6338,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 3.582,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 3.3993,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 3.1,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 3.0929,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 2.8552,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.8344,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.8011,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 172.0052,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 154.7923,
+          "evidence": []
+        },
+        {
+          "term": "les poliovirus",
+          "score": 153.8787,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 147.2781,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 141.0986,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 135.4528,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 131.0732,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 122.0409,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 3.6338,
+          "evidence": []
+        },
+        {
+          "term": "des poliovirus",
+          "score": 3.582,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 3.3993,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 3.1,
+          "evidence": []
+        },
+        {
+          "term": "mondiale pour",
+          "score": 3.0929,
+          "evidence": []
+        },
+        {
+          "term": "pour éradication",
+          "score": 2.8552,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.8344,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.8011,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 72.9356,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 56.7335,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 56.7335,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 40.7354,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 38.4613,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 38.4123,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 34.4165,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 33.5386,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

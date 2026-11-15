@@ -679,6 +679,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/content/translation.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "translation.test",
+      "graphNode": "undeclared",
+      "summary": "TranslationNodeSchema's locale: a BCP 47 tag, region and script subtags",
+      "isTest": true
+    },
+    {
       "module": "cat-harness-tools/schemas/content/translation.ts",
       "instance": "cat-harness-tools",
       "name": "translation",
@@ -2395,6 +2403,14 @@
       "name": "merge-review",
       "graphNode": "schema",
       "summary": "Agentic pre-merge review and would-have-blocked counterfactual schemas.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "instance": "cat-harness-tools",
+      "name": "node-view-coverage",
+      "graphNode": "schema",
+      "summary": "The node-view coverage report: for each node a declared directory holds,",
       "isTest": false
     },
     {
@@ -25926,26 +25942,26 @@
       "exported": true
     },
     {
-      "id": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeSchema",
-      "name": "TranslationNodeSchema",
+      "id": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeFields",
+      "name": "TranslationNodeFields",
       "module": "cat-harness-tools/schemas/content/translation.ts",
       "kind": "zod-object",
-      "doc": "Zod schema for `TranslationNode`.",
+      "doc": "The fields of `TranslationNode`, before the cross-field check.",
       "fields": [
         {
           "name": "label",
-          "type": "z.string().regex(/^trans:[a-z]{2,}\\//, { message: 'label must follow \"trans:<locale>/<stem>\" convention', })",
+          "type": "z.string().regex(TRANSLATION_LABEL, { message: 'label must follow \"trans:<locale>/<stem>\" convention, <locale> a BCP 47…",
           "optional": false,
           "array": false,
           "card": "1..1",
-          "utype": "string",
+          "utype": "string().regex(TRANSLATION_LABEL, { message: 'label must follow \"trans:<locale>/<stem>\" convention, <locale> a BCP 47…",
           "links": {
             "string": "https://zod.dev/api#strings"
           }
         },
         {
           "name": "locale",
-          "type": "z.string().min(2)",
+          "type": "z.string().regex(LANGUAGE_TAG, { message: \"locale must be a BCP 47 language tag\" })",
           "optional": false,
           "array": false,
           "card": "1..1",
@@ -26052,10 +26068,32 @@
       "refs": [
         "cat-harness-tools/schemas/content/translation.ts#TranslationStatusSchema"
       ],
-      "unresolved": [],
+      "unresolved": [
+        "LANGUAGE_TAG"
+      ],
       "external": [
+        "TRANSLATION_LABEL",
         "z"
       ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeSchema",
+      "name": "TranslationNodeSchema",
+      "module": "cat-harness-tools/schemas/content/translation.ts",
+      "kind": "zod-object",
+      "doc": "Zod schema for `TranslationNode`.",
+      "fields": [],
+      "extendsNames": [
+        "TranslationNodeFields"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/content/translation.ts#TranslationNodeFields"
+      ],
+      "unresolved": [],
+      "external": [],
       "source": "zod",
       "exported": true
     },
@@ -76443,6 +76481,554 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#Count",
+      "name": "Count",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "name": "CountSchema",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "zod-union",
+      "doc": "A count, or `\"unknown\"` when it could not be taken. Never a 0 for unknown.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "unknown"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRow",
+      "name": "CoverageRow",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "name": "CoverageRowSchema",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "zod-object",
+      "doc": "One layer × declared directory × kind.",
+      "fields": [
+        {
+          "name": "layer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "directory",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The declared directory's `id`."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Its layer-relative path."
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "viewer",
+          "type": "ViewerStateSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "folderPage",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The folder page the rows should be on, site-relative; absent with no viewer."
+        },
+        {
+          "name": "folderPageFound",
+          "type": "z.union([z.boolean(), z.literal(\"unknown\")])",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "union",
+          "links": {
+            "union": "https://zod.dev/api#unions"
+          },
+          "doc": "Whether the folder page answered."
+        },
+        {
+          "name": "census",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "How the nodes were counted: `export` (the layer's KG), or the file rule named."
+        },
+        {
+          "name": "declared",
+          "type": "CountSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "withIri",
+          "type": "CountSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "withJsonld",
+          "type": "CountSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "withJson",
+          "type": "CountSchema.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "CountSchema",
+          "doc": "Only where the kind's source is JSON, so a `.json` twin is owed."
+        },
+        {
+          "name": "withPage",
+          "type": "CountSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "listed",
+          "type": "CountSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "deadLinks",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Folder-page links (HTML or data file) that do not resolve."
+        },
+        {
+          "name": "rawRepoLinks",
+          "type": "CountSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "doc": "Folder-page links to `github.com/<o>/<r>/blob|tree/…` instead of a page."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Why the row, or a count in it, is unknown."
+        },
+        {
+          "name": "nodes",
+          "type": "z.array(NodeRowSchema)",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "NodeRowSchema[]"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+        "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema",
+        "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#ViewerStateSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeLack",
+      "name": "NodeLack",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeLackSchema",
+      "name": "NodeLackSchema",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "zod-enum",
+      "doc": "What a node lacks. `iri` — no `@id` in its layer's export; `iri-extension` —",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "iri",
+        "iri-extension",
+        "jsonld",
+        "json",
+        "page",
+        "canonical-page",
+        "listed"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRow",
+      "name": "NodeRow",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema",
+      "name": "NodeRowSchema",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The node's id inside its directory (a file stem, an entry folder, an export `name`)."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Layer-relative source path, when the node is a file or folder."
+        },
+        {
+          "name": "iri",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Its `@id` in the layer's export, when it has one."
+        },
+        {
+          "name": "page",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Its page, when one was found (site-relative)."
+        },
+        {
+          "name": "verdict",
+          "type": "z.enum([\"ok\", \"missing\", \"unknown\"])",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          },
+          "doc": "`ok`, `missing` (see `missing`) or `unknown` (see `reason`)."
+        },
+        {
+          "name": "missing",
+          "type": "z.array(NodeLackSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "NodeLackSchema[]"
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeLackSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeViewCoverage",
+      "name": "NodeViewCoverage",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeViewCoverageSchema",
+      "name": "NodeViewCoverageSchema",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(NODE_VIEW_COVERAGE_SCHEMA)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "NODE_VIEW_COVERAGE_SCHEMA"
+        },
+        {
+          "name": "layer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "site",
+          "type": "z.object({ kind: z.enum([\"dir\", \"url\", \"none\"]), at: z.string().optional() })",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "object",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          },
+          "doc": "What was read: a built site directory or a live base URL."
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "totals",
+          "type": "z.object({ rows: z.number().int().nonnegative(), nodes: CountSchema, ok: z.number().int().nonnegative(), missing: z.num…",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "object",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          }
+        },
+        {
+          "name": "rows",
+          "type": "z.array(CoverageRowSchema)",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "CoverageRowSchema[]"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+        "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "NODE_VIEW_COVERAGE_SCHEMA",
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#ViewerStateSchema",
+      "name": "ViewerStateSchema",
+      "module": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts",
+      "kind": "zod-object",
+      "doc": "Is a folder viewed? `waived` needs a ruling; none is recorded today (owner, 2026-11-13).",
+      "fields": [
+        {
+          "name": "state",
+          "type": "z.enum([\"declared\", \"none\", \"waived\"])",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The visualiser's `<harness>/<id>` when declared."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "ruling",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/sdlc/python-deps.ts#DepTier",
       "name": "DepTier",
       "module": "cat-harness-tools/schemas/sdlc/python-deps.ts",
@@ -77806,6 +78392,25 @@
         "QA_ATTESTATIONS_SCHEMA",
         "z"
       ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsKind",
+      "name": "QaAttestationsKind",
+      "module": "cat-harness-tools/schemas/sdlc/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The NODE KIND of an attestation file (owner, 2026-11-13, node-kind audit:",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
       "source": "zod",
       "exported": true
     },
@@ -95111,6 +95716,18 @@
             "number": "https://zod.dev/api#numbers"
           },
           "doc": "Running heads, footers, folios and side tabs `strip_furniture` took out before the split."
+        },
+        {
+          "name": "grade_marks_written",
+          "type": "z.number().int().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "number",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          },
+          "doc": "Runs of GRADE quality-of-evidence marks drawn as vector rings and"
         },
         {
           "name": "outline_reordered",
@@ -114041,6 +114658,15 @@
           "doc": "A note for the editors, not part of the meaning (`skos:editorialNote`):"
         },
         {
+          "name": "example",
+          "type": "LangTextSchema.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "LangTextSchema",
+          "doc": "An instance of the concept (`skos:example`), such as \"The Client"
+        },
+        {
           "name": "broader",
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
@@ -129820,10 +130446,18 @@
       "array": false
     },
     {
-      "from": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeSchema",
+      "from": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeFields",
       "to": "cat-harness-tools/schemas/content/translation.ts#TranslationStatusSchema",
       "via": "status",
       "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeSchema",
+      "to": "cat-harness-tools/schemas/content/translation.ts#TranslationNodeFields",
+      "via": "",
+      "kind": "extends",
       "optional": false,
       "array": false
     },
@@ -137268,6 +137902,102 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "declared",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "listed",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "rawRepoLinks",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "withIri",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "withJson",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "withJsonld",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "withPage",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema",
+      "via": "nodes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#ViewerStateSchema",
+      "via": "viewer",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeLackSchema",
+      "via": "missing",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeViewCoverageSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CountSchema",
+      "via": "totals",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeViewCoverageSchema",
+      "to": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema",
+      "via": "rows",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AdversarialReviewAttestationsSchema",
       "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsBaseSchema",
       "via": "",
@@ -141558,6 +142288,14 @@
     {
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
       "to": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
+      "via": "example",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
       "via": "prefLabel",
       "kind": "field",
       "optional": false,
@@ -143022,14 +143760,6 @@
       ]
     },
     {
-      "id": "attestations",
-      "source": "typology",
-      "instance": "cat-harness",
-      "typologies": [
-        "attestations"
-      ]
-    },
-    {
       "id": "basic-cdn-site",
       "source": "node-kind",
       "instance": "cat-harness",
@@ -143684,6 +144414,18 @@
       ]
     },
     {
+      "id": "folio-library-extraction/v1",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "library"
+      ],
+      "page": "en/cat-harness-tools/folio-library-extraction/v1/",
+      "note": "cat-harness-tools/schemas/library/entry-extraction.ts#EntryExtractionKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "folio-library-index/v1",
       "source": "family",
       "instance": "cat-harness",
@@ -144253,6 +144995,18 @@
         "public-comments"
       ],
       "page": "en/folio-assistant-core/public-comment/"
+    },
+    {
+      "id": "qa-attestations",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "decl": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsKind",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "attestations"
+      ],
+      "page": "en/cat-harness-tools/qa-attestations/"
     },
     {
       "id": "qa-report",

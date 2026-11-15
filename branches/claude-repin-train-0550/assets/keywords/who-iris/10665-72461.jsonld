@@ -1,0 +1,7288 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-72461",
+  "instance": "who-iris",
+  "about": "library/10665-72461",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "dans les",
+        "score": 44.4622,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 44.2663,
+        "evidence": []
+      },
+      {
+        "term": "sante des",
+        "score": 43.1558,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 40.4747,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 38.6761,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 37.5068,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 37.4538,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 35.6288,
+        "evidence": []
+      },
+      {
+        "term": "dans une",
+        "score": 35.5729,
+        "evidence": []
+      },
+      {
+        "term": "les syste",
+        "score": 34.4188,
+        "evidence": []
+      },
+      {
+        "term": "anglais dans",
+        "score": 33.6877,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 32.9627,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "dans les",
+        "score": 1410.8385,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 1295.3911,
+        "evidence": []
+      },
+      {
+        "term": "sante des",
+        "score": 1233.543,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 1216.8227,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1153.1075,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 1130.1939,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 1115.4817,
+        "evidence": []
+      },
+      {
+        "term": "les syste",
+        "score": 1106.5785,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 1094.6943,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 1032.7002,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 1031.3055,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 1019.1261,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 38.5823,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 38.3007,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 37.4499,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 35.7434,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 34.6608,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 33.3041,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 32.1348,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 31.5432,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 31.5124,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 30.8994,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 30.3727,
+        "evidence": []
+      },
+      {
+        "term": "les taux",
+        "score": 29.7822,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 1172.0299,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 1157.9387,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 1090.9633,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 1048.5325,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1047.9731,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 1047.4383,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 970.3347,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 967.5059,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 960.4781,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 959.7445,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 953.5024,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 942.9497,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 38.5823,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 38.3007,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 37.4499,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 35.7434,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 34.6608,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 33.3041,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 32.1348,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 31.5432,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 31.5124,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 30.8994,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 30.3727,
+        "evidence": []
+      },
+      {
+        "term": "les taux",
+        "score": 29.7822,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "相一致",
+        "score": 4805.5628,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 3531.5372,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 3375.1949,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 3375.1949,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 3263.7129,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 2603.4171,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 2300.422,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 2262.1737,
+        "evidence": []
+      },
+      {
+        "term": "议程项目",
+        "score": 2252.088,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 2237.9746,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 2189.9906,
+        "evidence": []
+      },
+      {
+        "term": "在一些国家",
+        "score": 2133.4362,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les oreillons",
+          "score": 2.475,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.8906,
+          "evidence": []
+        },
+        {
+          "term": "dans pays",
+          "score": 1.815,
+          "evidence": []
+        },
+        {
+          "term": "vaccination antiourlienne",
+          "score": 1.7933,
+          "evidence": []
+        },
+        {
+          "term": "est une",
+          "score": 1.5971,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.5416,
+          "evidence": []
+        },
+        {
+          "term": "pays qui",
+          "score": 1.4992,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.4986,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les oreillons",
+          "score": 71.6002,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 65.7487,
+          "evidence": []
+        },
+        {
+          "term": "dans pays",
+          "score": 61.0009,
+          "evidence": []
+        },
+        {
+          "term": "est une",
+          "score": 45.81,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 45.0873,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 44.1391,
+          "evidence": []
+        },
+        {
+          "term": "pays qui",
+          "score": 37.5495,
+          "evidence": []
+        },
+        {
+          "term": "vaccination antiourlienne",
+          "score": 32.3653,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les pays",
+          "score": 1.4305,
+          "evidence": []
+        },
+        {
+          "term": "est une",
+          "score": 1.1389,
+          "evidence": []
+        },
+        {
+          "term": "les oreillons",
+          "score": 1.0848,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 1.0589,
+          "evidence": []
+        },
+        {
+          "term": "dans pays",
+          "score": 1.0561,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.8649,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.8531,
+          "evidence": []
+        },
+        {
+          "term": "pays qui",
+          "score": 0.761,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les pays",
+          "score": 46.8763,
+          "evidence": []
+        },
+        {
+          "term": "les oreillons",
+          "score": 40.5261,
+          "evidence": []
+        },
+        {
+          "term": "est une",
+          "score": 28.8048,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 26.3961,
+          "evidence": []
+        },
+        {
+          "term": "dans pays",
+          "score": 22.1579,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 16.791,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 15.8305,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 15.8078,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les pays",
+          "score": 1.4305,
+          "evidence": []
+        },
+        {
+          "term": "est une",
+          "score": 1.1389,
+          "evidence": []
+        },
+        {
+          "term": "les oreillons",
+          "score": 1.1113,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 1.0589,
+          "evidence": []
+        },
+        {
+          "term": "dans pays",
+          "score": 1.0561,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.8649,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.8531,
+          "evidence": []
+        },
+        {
+          "term": "pays qui",
+          "score": 0.761,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 169.0758,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 139.757,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 129.642,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 122.6738,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 122.6738,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 101.8772,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 92.8443,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 86.4741,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les seringues",
+          "score": 2.3096,
+          "evidence": []
+        },
+        {
+          "term": "seringues jetables",
+          "score": 2.2522,
+          "evidence": []
+        },
+        {
+          "term": "sujets symptomatiques",
+          "score": 1.8927,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.8697,
+          "evidence": []
+        },
+        {
+          "term": "donne des",
+          "score": 1.8603,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.7747,
+          "evidence": []
+        },
+        {
+          "term": "symptomatiques qui",
+          "score": 1.7145,
+          "evidence": []
+        },
+        {
+          "term": "aux vaccinateurs",
+          "score": 1.5736,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les seringues",
+          "score": 65.7035,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 59.3785,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 56.0603,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 45.5148,
+          "evidence": []
+        },
+        {
+          "term": "seringues jetables",
+          "score": 43.2572,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 42.9441,
+          "evidence": []
+        },
+        {
+          "term": "donne des",
+          "score": 42.3909,
+          "evidence": []
+        },
+        {
+          "term": "sujets symptomatiques",
+          "score": 32.1746,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.439,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.4346,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.2197,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.0626,
+          "evidence": []
+        },
+        {
+          "term": "donne des",
+          "score": 0.9239,
+          "evidence": []
+        },
+        {
+          "term": "les seringues",
+          "score": 0.885,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6893,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6824,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 41.9826,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 41.9231,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 34.1096,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 32.3142,
+          "evidence": []
+        },
+        {
+          "term": "les seringues",
+          "score": 30.9781,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 22.5842,
+          "evidence": []
+        },
+        {
+          "term": "donne des",
+          "score": 22.5842,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 11.6049,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.439,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.4346,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.2197,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.0626,
+          "evidence": []
+        },
+        {
+          "term": "donne des",
+          "score": 0.9239,
+          "evidence": []
+        },
+        {
+          "term": "les seringues",
+          "score": 0.9119,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6893,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6824,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 196.7341,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 158.6734,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 144.6592,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 140.8283,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 140.8283,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 117.8914,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 104.1323,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 99.6546,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "seringue soloshot",
+          "score": 2.8686,
+          "evidence": []
+        },
+        {
+          "term": "sante des",
+          "score": 2.4457,
+          "evidence": []
+        },
+        {
+          "term": "diffe rence",
+          "score": 2.0462,
+          "evidence": []
+        },
+        {
+          "term": "duire les",
+          "score": 1.854,
+          "evidence": []
+        },
+        {
+          "term": "mune ration",
+          "score": 1.8443,
+          "evidence": []
+        },
+        {
+          "term": "les couˆts",
+          "score": 1.8117,
+          "evidence": []
+        },
+        {
+          "term": "eˆtre",
+          "score": 1.3,
+          "evidence": []
+        },
+        {
+          "term": "syste",
+          "score": 1.2562,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sante des",
+          "score": 79.6425,
+          "evidence": []
+        },
+        {
+          "term": "seringue soloshot",
+          "score": 67.6628,
+          "evidence": []
+        },
+        {
+          "term": "duire les",
+          "score": 45.2545,
+          "evidence": []
+        },
+        {
+          "term": "les couˆts",
+          "score": 44.4435,
+          "evidence": []
+        },
+        {
+          "term": "diffe rence",
+          "score": 39.6737,
+          "evidence": []
+        },
+        {
+          "term": "eˆtre",
+          "score": 31.6492,
+          "evidence": []
+        },
+        {
+          "term": "mune ration",
+          "score": 29.8842,
+          "evidence": []
+        },
+        {
+          "term": "syste",
+          "score": 27.0867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sante des",
+          "score": 0.9769,
+          "evidence": []
+        },
+        {
+          "term": "duire les",
+          "score": 0.8874,
+          "evidence": []
+        },
+        {
+          "term": "les couˆts",
+          "score": 0.8874,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5723,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5619,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5124,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4699,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.4488,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "duire les",
+          "score": 28.7678,
+          "evidence": []
+        },
+        {
+          "term": "les couˆts",
+          "score": 28.7678,
+          "evidence": []
+        },
+        {
+          "term": "sante des",
+          "score": 27.1925,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 12.2564,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.6561,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 11.3211,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 10.3528,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 9.7494,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sante des",
+          "score": 0.9769,
+          "evidence": []
+        },
+        {
+          "term": "les couˆts",
+          "score": 0.9074,
+          "evidence": []
+        },
+        {
+          "term": "duire les",
+          "score": 0.9002,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5723,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5124,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4699,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.4488,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.4069,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 236.4862,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 184.229,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 166.6978,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 165.038,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 165.038,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 136.9576,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 120.817,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 119.1377,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "syste mes",
+          "score": 3.0444,
+          "evidence": []
+        },
+        {
+          "term": "sante doit",
+          "score": 2.9937,
+          "evidence": []
+        },
+        {
+          "term": "sante doivent",
+          "score": 2.9776,
+          "evidence": []
+        },
+        {
+          "term": "des syste",
+          "score": 2.8911,
+          "evidence": []
+        },
+        {
+          "term": "forme des",
+          "score": 2.57,
+          "evidence": []
+        },
+        {
+          "term": "les principes",
+          "score": 2.4596,
+          "evidence": []
+        },
+        {
+          "term": "les citoyens",
+          "score": 2.1367,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 2.1197,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sante doit",
+          "score": 149.7835,
+          "evidence": []
+        },
+        {
+          "term": "sante doivent",
+          "score": 148.9325,
+          "evidence": []
+        },
+        {
+          "term": "des syste",
+          "score": 104.2489,
+          "evidence": []
+        },
+        {
+          "term": "forme des",
+          "score": 98.7117,
+          "evidence": []
+        },
+        {
+          "term": "syste mes",
+          "score": 91.0675,
+          "evidence": []
+        },
+        {
+          "term": "les principes",
+          "score": 84.0436,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 76.3659,
+          "evidence": []
+        },
+        {
+          "term": "les citoyens",
+          "score": 72.3692,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "par les",
+          "score": 1.3962,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.3659,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 1.1625,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.137,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.1326,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.0997,
+          "evidence": []
+        },
+        {
+          "term": "les principes",
+          "score": 1.0448,
+          "evidence": []
+        },
+        {
+          "term": "les valeurs",
+          "score": 1.0309,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "par les",
+          "score": 54.5029,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 52.1164,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 49.0167,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 45.7239,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 45.4598,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 45.2579,
+          "evidence": []
+        },
+        {
+          "term": "les principes",
+          "score": 44.2658,
+          "evidence": []
+        },
+        {
+          "term": "les citoyens",
+          "score": 43.2625,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "par les",
+          "score": 1.3962,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.3659,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 1.1625,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.137,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.1326,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.0997,
+          "evidence": []
+        },
+        {
+          "term": "les principes",
+          "score": 1.0448,
+          "evidence": []
+        },
+        {
+          "term": "les valeurs",
+          "score": 1.0309,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 143.9333,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 95.8161,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 95.524,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 95.524,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 87.1386,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 71.0883,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 70.8795,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 70.8795,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des syste",
+          "score": 2.3899,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 2.3321,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 2.0883,
+          "evidence": []
+        },
+        {
+          "term": "ame liorer",
+          "score": 1.9052,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 1.5512,
+          "evidence": []
+        },
+        {
+          "term": "sante",
+          "score": 1.2216,
+          "evidence": []
+        },
+        {
+          "term": "qualite",
+          "score": 1.1787,
+          "evidence": []
+        },
+        {
+          "term": "chaque fois",
+          "score": 1.1306,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des soins",
+          "score": 83.963,
+          "evidence": []
+        },
+        {
+          "term": "des syste",
+          "score": 75.4851,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 63.1464,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 53.919,
+          "evidence": []
+        },
+        {
+          "term": "ame liorer",
+          "score": 33.5662,
+          "evidence": []
+        },
+        {
+          "term": "sante",
+          "score": 30.9735,
+          "evidence": []
+        },
+        {
+          "term": "qualite",
+          "score": 25.6158,
+          "evidence": []
+        },
+        {
+          "term": "doivent",
+          "score": 20.8656,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur des",
+          "score": 1.0761,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 0.9311,
+          "evidence": []
+        },
+        {
+          "term": "des syste",
+          "score": 0.6924,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.464,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4324,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.381,
+          "evidence": []
+        },
+        {
+          "term": "fois que",
+          "score": 0.3683,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3532,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur des",
+          "score": 47.1862,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 46.6673,
+          "evidence": []
+        },
+        {
+          "term": "des syste",
+          "score": 38.889,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 34.4355,
+          "evidence": []
+        },
+        {
+          "term": "données",
+          "score": 11.3575,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.2545,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 9.5242,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 8.2743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur des",
+          "score": 1.0761,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 0.9311,
+          "evidence": []
+        },
+        {
+          "term": "des syste",
+          "score": 0.7223,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.464,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4324,
+          "evidence": []
+        },
+        {
+          "term": "fois que",
+          "score": 0.3683,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.3216,
+          "evidence": []
+        },
+        {
+          "term": "chaque fois",
+          "score": 0.1612,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 138.702,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 96.0044,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 96.0044,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 71.3426,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 67.6952,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 57.7779,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 57.5506,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 57.5506,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des concours",
+          "score": 2.5111,
+          "evidence": []
+        },
+        {
+          "term": "par concours",
+          "score": 2.2825,
+          "evidence": []
+        },
+        {
+          "term": "cataracte",
+          "score": 1.5085,
+          "evidence": []
+        },
+        {
+          "term": "poids",
+          "score": 1.2933,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 1.2397,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.1752,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.1323,
+          "evidence": []
+        },
+        {
+          "term": "volution",
+          "score": 1.0206,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des concours",
+          "score": 64.5351,
+          "evidence": []
+        },
+        {
+          "term": "par concours",
+          "score": 55.4386,
+          "evidence": []
+        },
+        {
+          "term": "cataracte",
+          "score": 33.103,
+          "evidence": []
+        },
+        {
+          "term": "poids",
+          "score": 30.9816,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 27.5818,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 20.5995,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 19.6513,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 19.0924,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.8435,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8149,
+          "evidence": []
+        },
+        {
+          "term": "des concours",
+          "score": 0.8149,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6572,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6523,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5309,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4608,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4363,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 26.4375,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 21.0904,
+          "evidence": []
+        },
+        {
+          "term": "des concours",
+          "score": 21.0904,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 10.485,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 8.8768,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 8.8768,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 8.7762,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 7.3214,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.8435,
+          "evidence": []
+        },
+        {
+          "term": "des concours",
+          "score": 0.8236,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6572,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6523,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5309,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4608,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4363,
+          "evidence": []
+        },
+        {
+          "term": "par concours",
+          "score": 0.3997,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 182.3547,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 128.076,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 128.076,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 120.5005,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 112.8621,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 87.9005,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 82.3326,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 80.8139,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duction des",
+          "score": 1.8323,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.8221,
+          "evidence": []
+        },
+        {
+          "term": "ende mique",
+          "score": 1.7836,
+          "evidence": []
+        },
+        {
+          "term": "incidence annuelle",
+          "score": 1.5215,
+          "evidence": []
+        },
+        {
+          "term": "chinococcose",
+          "score": 1.5196,
+          "evidence": []
+        },
+        {
+          "term": "dans certains",
+          "score": 1.364,
+          "evidence": []
+        },
+        {
+          "term": "par voie",
+          "score": 1.2581,
+          "evidence": []
+        },
+        {
+          "term": "tait",
+          "score": 1.1939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chez les",
+          "score": 50.2283,
+          "evidence": []
+        },
+        {
+          "term": "duction des",
+          "score": 37.8299,
+          "evidence": []
+        },
+        {
+          "term": "chinococcose",
+          "score": 33.103,
+          "evidence": []
+        },
+        {
+          "term": "dans certains",
+          "score": 30.683,
+          "evidence": []
+        },
+        {
+          "term": "tait",
+          "score": 29.1671,
+          "evidence": []
+        },
+        {
+          "term": "ende mique",
+          "score": 28.7086,
+          "evidence": []
+        },
+        {
+          "term": "incidence annuelle",
+          "score": 28.3914,
+          "evidence": []
+        },
+        {
+          "term": "par voie",
+          "score": 21.7924,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chez les",
+          "score": 1.2773,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8792,
+          "evidence": []
+        },
+        {
+          "term": "duction des",
+          "score": 0.8792,
+          "evidence": []
+        },
+        {
+          "term": "dans certains",
+          "score": 0.6809,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5697,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5302,
+          "evidence": []
+        },
+        {
+          "term": "par voie",
+          "score": 0.5071,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4539,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chez les",
+          "score": 28.7974,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 20.005,
+          "evidence": []
+        },
+        {
+          "term": "duction des",
+          "score": 20.005,
+          "evidence": []
+        },
+        {
+          "term": "dans certains",
+          "score": 11.8721,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 10.6313,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.8579,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 9.2797,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 8.4249,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chez les",
+          "score": 1.2773,
+          "evidence": []
+        },
+        {
+          "term": "duction des",
+          "score": 0.8968,
+          "evidence": []
+        },
+        {
+          "term": "dans certains",
+          "score": 0.6809,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5697,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5302,
+          "evidence": []
+        },
+        {
+          "term": "par voie",
+          "score": 0.5071,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4539,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.4176,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 206.2101,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 164.2155,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 151.7807,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 151.1685,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 151.1685,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 120.3824,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 108.2467,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 106.1012,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les personnes",
+          "score": 1.7411,
+          "evidence": []
+        },
+        {
+          "term": "traitement des",
+          "score": 1.6278,
+          "evidence": []
+        },
+        {
+          "term": "personnes aˆge",
+          "score": 1.6113,
+          "evidence": []
+        },
+        {
+          "term": "les effets",
+          "score": 1.5838,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 1.2397,
+          "evidence": []
+        },
+        {
+          "term": "campagne unique",
+          "score": 1.217,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.1752,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.1323,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les personnes",
+          "score": 45.6285,
+          "evidence": []
+        },
+        {
+          "term": "les effets",
+          "score": 42.7921,
+          "evidence": []
+        },
+        {
+          "term": "traitement des",
+          "score": 35.129,
+          "evidence": []
+        },
+        {
+          "term": "personnes aˆge",
+          "score": 26.1738,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 20.5995,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 19.6513,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 19.0924,
+          "evidence": []
+        },
+        {
+          "term": "campagne unique",
+          "score": 18.8654,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "traitement des",
+          "score": 0.9876,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 0.9507,
+          "evidence": []
+        },
+        {
+          "term": "les effets",
+          "score": 0.8854,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6528,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6455,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5015,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4817,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4231,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les personnes",
+          "score": 29.8302,
+          "evidence": []
+        },
+        {
+          "term": "les effets",
+          "score": 27.0667,
+          "evidence": []
+        },
+        {
+          "term": "traitement des",
+          "score": 21.3131,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 9.8919,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 9.8078,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 9.8078,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.2042,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 7.772,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "traitement des",
+          "score": 0.9876,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 0.9507,
+          "evidence": []
+        },
+        {
+          "term": "les effets",
+          "score": 0.8854,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6528,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6455,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4817,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.4161,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3775,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 182.824,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 138.9388,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 132.8599,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 132.8599,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 128.0324,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 102.5779,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 94.5262,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 94.1754,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les enfants",
+          "score": 1.7863,
+          "evidence": []
+        },
+        {
+          "term": "une mortalite",
+          "score": 1.7788,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.7145,
+          "evidence": []
+        },
+        {
+          "term": "lutte antivectorielle",
+          "score": 1.6863,
+          "evidence": []
+        },
+        {
+          "term": "long terme",
+          "score": 1.5776,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.5237,
+          "evidence": []
+        },
+        {
+          "term": "moustiques",
+          "score": 1.0137,
+          "evidence": []
+        },
+        {
+          "term": "sensiblement",
+          "score": 1.0023,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les enfants",
+          "score": 46.3713,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 39.1279,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 36.9293,
+          "evidence": []
+        },
+        {
+          "term": "une mortalite",
+          "score": 35.4966,
+          "evidence": []
+        },
+        {
+          "term": "long terme",
+          "score": 31.408,
+          "evidence": []
+        },
+        {
+          "term": "lutte antivectorielle",
+          "score": 28.8318,
+          "evidence": []
+        },
+        {
+          "term": "sensiblement",
+          "score": 19.2119,
+          "evidence": []
+        },
+        {
+          "term": "tait",
+          "score": 17.5002,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chez les",
+          "score": 1.0649,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.9237,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.8791,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4657,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.461,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.397,
+          "evidence": []
+        },
+        {
+          "term": "une mortalite",
+          "score": 0.397,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3733,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chez les",
+          "score": 25.4971,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 24.9427,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 19.3402,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.6929,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 8.2958,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 7.591,
+          "evidence": []
+        },
+        {
+          "term": "une mortalite",
+          "score": 7.591,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.4573,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chez les",
+          "score": 1.0649,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.9237,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.8791,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4657,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.461,
+          "evidence": []
+        },
+        {
+          "term": "une mortalite",
+          "score": 0.4176,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3733,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3195,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 212.1273,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 164.4018,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 152.1992,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 150.6453,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 150.6453,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 120.4216,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 110.0325,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 108.2106,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "syste mes",
+          "score": 2.212,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 1.7474,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.5823,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4167,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.2949,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.252,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 1.2397,
+          "evidence": []
+        },
+        {
+          "term": "sante",
+          "score": 1.1248,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "syste mes",
+          "score": 49.6902,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 43.907,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 35.8628,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 26.0412,
+          "evidence": []
+        },
+        {
+          "term": "sante",
+          "score": 25.8112,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 25.0931,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 19.0924,
+          "evidence": []
+        },
+        {
+          "term": "sume",
+          "score": 17.0192,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.0523,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 0.9928,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 0.6516,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.4889,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4301,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3393,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 30.1239,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 27.0532,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 22.3714,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 17.2037,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.8199,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 7.7525,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 7.7525,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.82,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.0523,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 0.9928,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 0.6778,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.4889,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3393,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2946,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 153.6382,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 109.84,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 109.84,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 97.884,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 95.101,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 77.9151,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 76.2138,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 75.366,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les comite",
+          "score": 1.8561,
+          "evidence": []
+        },
+        {
+          "term": "dica ments",
+          "score": 1.7198,
+          "evidence": []
+        },
+        {
+          "term": "ces fonds",
+          "score": 1.6654,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 1.6493,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.6254,
+          "evidence": []
+        },
+        {
+          "term": "couˆt abordable",
+          "score": 1.5999,
+          "evidence": []
+        },
+        {
+          "term": "une qualite",
+          "score": 1.5068,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 1.3839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les comite",
+          "score": 49.4584,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 48.4356,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 46.3336,
+          "evidence": []
+        },
+        {
+          "term": "ces fonds",
+          "score": 37.6523,
+          "evidence": []
+        },
+        {
+          "term": "une qualite",
+          "score": 29.5661,
+          "evidence": []
+        },
+        {
+          "term": "dica ments",
+          "score": 27.8249,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 26.0412,
+          "evidence": []
+        },
+        {
+          "term": "couˆt abordable",
+          "score": 25.6637,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.346,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 0.8234,
+          "evidence": []
+        },
+        {
+          "term": "les comite",
+          "score": 0.8234,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7946,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6338,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6243,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4525,
+          "evidence": []
+        },
+        {
+          "term": "une qualite",
+          "score": 0.4525,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 42.4074,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 31.5273,
+          "evidence": []
+        },
+        {
+          "term": "les comite",
+          "score": 31.5273,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 24.2225,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 11.2064,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 11.2064,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 10.5915,
+          "evidence": []
+        },
+        {
+          "term": "une qualite",
+          "score": 10.5915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.346,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 0.8608,
+          "evidence": []
+        },
+        {
+          "term": "les comite",
+          "score": 0.8354,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7946,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6338,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6243,
+          "evidence": []
+        },
+        {
+          "term": "une qualite",
+          "score": 0.4879,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3945,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 149.9747,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 111.821,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 102.947,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 102.4667,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 102.4667,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 82.476,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 75.7717,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 75.7717,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les syste",
+          "score": 2.3791,
+          "evidence": []
+        },
+        {
+          "term": "les hoˆpitaux",
+          "score": 2.0586,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.9761,
+          "evidence": []
+        },
+        {
+          "term": "les chiffres",
+          "score": 1.9031,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 1.7345,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7345,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.4558,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.4128,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dans les",
+          "score": 82.3722,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 82.2503,
+          "evidence": []
+        },
+        {
+          "term": "les hoˆpitaux",
+          "score": 70.3288,
+          "evidence": []
+        },
+        {
+          "term": "les chiffres",
+          "score": 67.8233,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 66.2049,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 47.9661,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 38.9324,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 36.9247,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.5314,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4431,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0689,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 0.9934,
+          "evidence": []
+        },
+        {
+          "term": "les chiffres",
+          "score": 0.9423,
+          "evidence": []
+        },
+        {
+          "term": "les hoˆpitaux",
+          "score": 0.9423,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 0.9423,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7294,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 56.9331,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 51.5177,
+          "evidence": []
+        },
+        {
+          "term": "les chiffres",
+          "score": 42.8231,
+          "evidence": []
+        },
+        {
+          "term": "les hoˆpitaux",
+          "score": 42.8231,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 42.8231,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 37.8215,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 37.667,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 15.4476,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.5314,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4431,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0689,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 0.9934,
+          "evidence": []
+        },
+        {
+          "term": "les syste",
+          "score": 0.9844,
+          "evidence": []
+        },
+        {
+          "term": "les chiffres",
+          "score": 0.965,
+          "evidence": []
+        },
+        {
+          "term": "les hoˆpitaux",
+          "score": 0.9596,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7294,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 157.1841,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 109.0773,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 109.0773,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 99.4749,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 92.3174,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 73.008,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 71.1958,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 68.6356,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sultats ont",
+          "score": 2.4295,
+          "evidence": []
+        },
+        {
+          "term": "corrects pour",
+          "score": 2.1033,
+          "evidence": []
+        },
+        {
+          "term": "pour chantillons",
+          "score": 2.0241,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.9117,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.7476,
+          "evidence": []
+        },
+        {
+          "term": "chantillons sur",
+          "score": 1.7469,
+          "evidence": []
+        },
+        {
+          "term": "doses des",
+          "score": 1.7425,
+          "evidence": []
+        },
+        {
+          "term": "ame liorer",
+          "score": 1.6938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sultats ont",
+          "score": 75.6976,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 75.0054,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 68.8729,
+          "evidence": []
+        },
+        {
+          "term": "doses des",
+          "score": 68.3784,
+          "evidence": []
+        },
+        {
+          "term": "rec les",
+          "score": 47.6088,
+          "evidence": []
+        },
+        {
+          "term": "les trois",
+          "score": 46.3191,
+          "evidence": []
+        },
+        {
+          "term": "corrects pour",
+          "score": 46.1576,
+          "evidence": []
+        },
+        {
+          "term": "pour chantillons",
+          "score": 44.0781,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des vaccins",
+          "score": 1.2376,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.1884,
+          "evidence": []
+        },
+        {
+          "term": "les trois",
+          "score": 1.1667,
+          "evidence": []
+        },
+        {
+          "term": "doses des",
+          "score": 1.1011,
+          "evidence": []
+        },
+        {
+          "term": "rec les",
+          "score": 1.0265,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.8011,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.7927,
+          "evidence": []
+        },
+        {
+          "term": "est avec",
+          "score": 0.7589,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des vaccins",
+          "score": 50.6334,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 49.8754,
+          "evidence": []
+        },
+        {
+          "term": "doses des",
+          "score": 46.7618,
+          "evidence": []
+        },
+        {
+          "term": "les trois",
+          "score": 41.1801,
+          "evidence": []
+        },
+        {
+          "term": "rec les",
+          "score": 39.766,
+          "evidence": []
+        },
+        {
+          "term": "corrects pour",
+          "score": 16.6849,
+          "evidence": []
+        },
+        {
+          "term": "pour chantillons",
+          "score": 16.6849,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 15.0677,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des vaccins",
+          "score": 1.2376,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.1884,
+          "evidence": []
+        },
+        {
+          "term": "les trois",
+          "score": 1.1667,
+          "evidence": []
+        },
+        {
+          "term": "doses des",
+          "score": 1.1011,
+          "evidence": []
+        },
+        {
+          "term": "rec les",
+          "score": 1.0423,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.8011,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.7927,
+          "evidence": []
+        },
+        {
+          "term": "est avec",
+          "score": 0.7589,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 170.8834,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 130.9584,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 123.3621,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 123.3621,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 118.5432,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 97.9574,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 87.1707,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 86.7472,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chez les",
+          "score": 1.6906,
+          "evidence": []
+        },
+        {
+          "term": "caracte rise",
+          "score": 1.63,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.6016,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.5994,
+          "evidence": []
+        },
+        {
+          "term": "tude",
+          "score": 1.3075,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 1.2397,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.1752,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.1323,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chez les",
+          "score": 45.8958,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 44.3964,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 43.8908,
+          "evidence": []
+        },
+        {
+          "term": "tude",
+          "score": 32.0198,
+          "evidence": []
+        },
+        {
+          "term": "caracte rise",
+          "score": 26.4032,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 20.5995,
+          "evidence": []
+        },
+        {
+          "term": "drogues",
+          "score": 20.315,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 19.6513,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.2637,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.1809,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.1658,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.652,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6446,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5314,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4467,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3548,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "par des",
+          "score": 35.3646,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 34.3662,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 29.6881,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.0559,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 10.2694,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 10.2694,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 8.4075,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 6.0043,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.2637,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.1809,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.1658,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.652,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6446,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5314,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3548,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 0.3393,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 220.7894,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 154.3474,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 154.3474,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 146.3047,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 132.685,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 109.4204,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 98.4969,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 94.0443,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anesthe sistes",
+          "score": 3.055,
+          "evidence": []
+        },
+        {
+          "term": "res anesthe",
+          "score": 2.9634,
+          "evidence": []
+        },
+        {
+          "term": "les infirmie",
+          "score": 2.6265,
+          "evidence": []
+        },
+        {
+          "term": "des malades",
+          "score": 2.0217,
+          "evidence": []
+        },
+        {
+          "term": "des retards",
+          "score": 1.9567,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.6955,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.4218,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.3789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "res anesthe",
+          "score": 88.075,
+          "evidence": []
+        },
+        {
+          "term": "anesthe sistes",
+          "score": 82.7576,
+          "evidence": []
+        },
+        {
+          "term": "les infirmie",
+          "score": 79.4705,
+          "evidence": []
+        },
+        {
+          "term": "des malades",
+          "score": 58.6761,
+          "evidence": []
+        },
+        {
+          "term": "des retards",
+          "score": 55.1108,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 53.9206,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 34.2038,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 33.2556,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.4779,
+          "evidence": []
+        },
+        {
+          "term": "des malades",
+          "score": 0.9941,
+          "evidence": []
+        },
+        {
+          "term": "les infirmie",
+          "score": 0.9743,
+          "evidence": []
+        },
+        {
+          "term": "des retards",
+          "score": 0.9319,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7422,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.734,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6262,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4986,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 47.2351,
+          "evidence": []
+        },
+        {
+          "term": "les infirmie",
+          "score": 38.3063,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 35.4938,
+          "evidence": []
+        },
+        {
+          "term": "des malades",
+          "score": 35.4938,
+          "evidence": []
+        },
+        {
+          "term": "des retards",
+          "score": 35.4938,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 15.2145,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 12.99,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 12.99,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.4779,
+          "evidence": []
+        },
+        {
+          "term": "des malades",
+          "score": 0.9941,
+          "evidence": []
+        },
+        {
+          "term": "les infirmie",
+          "score": 0.9925,
+          "evidence": []
+        },
+        {
+          "term": "des retards",
+          "score": 0.9466,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7422,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.734,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6262,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4986,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 128.7229,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 105.5896,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 98.7215,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 87.7742,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 87.7742,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 78.7466,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 77.5138,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 75.2694,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "allaitement maternel",
+          "score": 2.6131,
+          "evidence": []
+        },
+        {
+          "term": "anesthe sistes",
+          "score": 2.5089,
+          "evidence": []
+        },
+        {
+          "term": "anesthe sie",
+          "score": 2.4306,
+          "evidence": []
+        },
+        {
+          "term": "res anesthe",
+          "score": 2.3235,
+          "evidence": []
+        },
+        {
+          "term": "alimentation des",
+          "score": 2.1822,
+          "evidence": []
+        },
+        {
+          "term": "elles avaient",
+          "score": 2.1175,
+          "evidence": []
+        },
+        {
+          "term": "elles taient",
+          "score": 2.101,
+          "evidence": []
+        },
+        {
+          "term": "maternel exclusif",
+          "score": 2.064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "alimentation des",
+          "score": 70.6587,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 67.9832,
+          "evidence": []
+        },
+        {
+          "term": "une formation",
+          "score": 67.0676,
+          "evidence": []
+        },
+        {
+          "term": "sentation une",
+          "score": 66.0153,
+          "evidence": []
+        },
+        {
+          "term": "connaissance des",
+          "score": 63.9137,
+          "evidence": []
+        },
+        {
+          "term": "allaitement maternel",
+          "score": 63.2985,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 61.4563,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 56.0603,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chez les",
+          "score": 1.5225,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.3199,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.2849,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 1.1804,
+          "evidence": []
+        },
+        {
+          "term": "alimentation des",
+          "score": 1.0482,
+          "evidence": []
+        },
+        {
+          "term": "connaissance des",
+          "score": 1.0482,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6883,
+          "evidence": []
+        },
+        {
+          "term": "sur pre",
+          "score": 0.6872,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chez les",
+          "score": 48.0946,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 45.073,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 44.4431,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 42.0593,
+          "evidence": []
+        },
+        {
+          "term": "alimentation des",
+          "score": 40.6711,
+          "evidence": []
+        },
+        {
+          "term": "connaissance des",
+          "score": 40.6711,
+          "evidence": []
+        },
+        {
+          "term": "une formation",
+          "score": 17.9311,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 17.7139,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chez les",
+          "score": 1.5225,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.3199,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.2849,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 1.1804,
+          "evidence": []
+        },
+        {
+          "term": "alimentation des",
+          "score": 1.0828,
+          "evidence": []
+        },
+        {
+          "term": "connaissance des",
+          "score": 1.082,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6883,
+          "evidence": []
+        },
+        {
+          "term": "sur pre",
+          "score": 0.6872,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 145.6836,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 136.1968,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 122.8076,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 106.103,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 106.103,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 102.3945,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 90.3035,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 88.0848,
+          "evidence": []
+        }
+      ]
+    },
+    "page-017": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des proble",
+          "score": 2.2913,
+          "evidence": []
+        },
+        {
+          "term": "inclination psychologique",
+          "score": 2.2706,
+          "evidence": []
+        },
+        {
+          "term": "sante mentale",
+          "score": 1.8909,
+          "evidence": []
+        },
+        {
+          "term": "vention des",
+          "score": 1.8042,
+          "evidence": []
+        },
+        {
+          "term": "pratiques sexuelles",
+          "score": 1.6869,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.6375,
+          "evidence": []
+        },
+        {
+          "term": "mst sida",
+          "score": 1.6244,
+          "evidence": []
+        },
+        {
+          "term": "des jeunes",
+          "score": 1.6094,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des proble",
+          "score": 59.276,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 48.9219,
+          "evidence": []
+        },
+        {
+          "term": "vention des",
+          "score": 44.1108,
+          "evidence": []
+        },
+        {
+          "term": "inclination psychologique",
+          "score": 40.5679,
+          "evidence": []
+        },
+        {
+          "term": "des jeunes",
+          "score": 40.5646,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 40.4999,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 38.3474,
+          "evidence": []
+        },
+        {
+          "term": "sante mentale",
+          "score": 32.0382,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.2248,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 0.9227,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 0.922,
+          "evidence": []
+        },
+        {
+          "term": "des jeunes",
+          "score": 0.8271,
+          "evidence": []
+        },
+        {
+          "term": "des proble",
+          "score": 0.7333,
+          "evidence": []
+        },
+        {
+          "term": "vention des",
+          "score": 0.7333,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.5735,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.5655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 36.8181,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 30.3,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 28.7867,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 25.9242,
+          "evidence": []
+        },
+        {
+          "term": "des jeunes",
+          "score": 25.9242,
+          "evidence": []
+        },
+        {
+          "term": "des proble",
+          "score": 25.9242,
+          "evidence": []
+        },
+        {
+          "term": "vention des",
+          "score": 25.9242,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 10.2291,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.2248,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 0.9227,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 0.922,
+          "evidence": []
+        },
+        {
+          "term": "des jeunes",
+          "score": 0.8271,
+          "evidence": []
+        },
+        {
+          "term": "des proble",
+          "score": 0.7496,
+          "evidence": []
+        },
+        {
+          "term": "vention des",
+          "score": 0.743,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.5735,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.5655,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 148.787,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 102.5431,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 102.5431,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 78.8738,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 75.068,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 64.4211,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 61.7065,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 58.3787,
+          "evidence": []
+        }
+      ]
+    },
+    "page-018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hygie niques",
+          "score": 2.2068,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 1.754,
+          "evidence": []
+        },
+        {
+          "term": "tendances conomiques",
+          "score": 1.7193,
+          "evidence": []
+        },
+        {
+          "term": "les tendances",
+          "score": 1.695,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4229,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.4218,
+          "evidence": []
+        },
+        {
+          "term": "avoir une",
+          "score": 1.412,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.3789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des femmes",
+          "score": 46.9513,
+          "evidence": []
+        },
+        {
+          "term": "les tendances",
+          "score": 44.7538,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 39.9988,
+          "evidence": []
+        },
+        {
+          "term": "hygie niques",
+          "score": 39.5462,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 34.2038,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 33.2556,
+          "evidence": []
+        },
+        {
+          "term": "dicaments",
+          "score": 30.3304,
+          "evidence": []
+        },
+        {
+          "term": "avoir une",
+          "score": 29.9408,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tous les",
+          "score": 1.1508,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 1.1221,
+          "evidence": []
+        },
+        {
+          "term": "les tendances",
+          "score": 0.9951,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7435,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.7305,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "avoir une",
+          "score": 0.6143,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.5238,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tous les",
+          "score": 37.4844,
+          "evidence": []
+        },
+        {
+          "term": "les tendances",
+          "score": 35.3384,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 31.517,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 13.297,
+          "evidence": []
+        },
+        {
+          "term": "avoir une",
+          "score": 12.9725,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 12.6927,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 12.6927,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 9.9105,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tous les",
+          "score": 1.1508,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 1.1221,
+          "evidence": []
+        },
+        {
+          "term": "les tendances",
+          "score": 1.0136,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7435,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.7305,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "avoir une",
+          "score": 0.6143,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.5238,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 129.4447,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 89.7642,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 89.7642,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 84.5194,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 78.7261,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 67.654,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 66.3891,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 64.8809,
+          "evidence": []
+        }
+      ]
+    },
+    "page-019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "paludisme grave",
+          "score": 2.6412,
+          "evidence": []
+        },
+        {
+          "term": "malade traite",
+          "score": 2.3014,
+          "evidence": []
+        },
+        {
+          "term": "solliciter des",
+          "score": 2.1273,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 2.0828,
+          "evidence": []
+        },
+        {
+          "term": "par malade",
+          "score": 1.9107,
+          "evidence": []
+        },
+        {
+          "term": "pouvoirs publics",
+          "score": 1.8981,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.7202,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.6871,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "paludisme grave",
+          "score": 79.423,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 60.434,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 55.5703,
+          "evidence": []
+        },
+        {
+          "term": "solliciter des",
+          "score": 54.6461,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 50.7841,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 44.9696,
+          "evidence": []
+        },
+        {
+          "term": "malade traite",
+          "score": 43.9259,
+          "evidence": []
+        },
+        {
+          "term": "par malade",
+          "score": 37.7131,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.4312,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.2498,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.0331,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 0.8862,
+          "evidence": []
+        },
+        {
+          "term": "solliciter des",
+          "score": 0.8473,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.693,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6853,
+          "evidence": []
+        },
+        {
+          "term": "une exposition",
+          "score": 0.5599,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 47.7269,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 45.1503,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 34.863,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 31.7806,
+          "evidence": []
+        },
+        {
+          "term": "solliciter des",
+          "score": 28.0839,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 11.6082,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 11.6082,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 11.5432,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.4312,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.2498,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.0331,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 0.9086,
+          "evidence": []
+        },
+        {
+          "term": "solliciter des",
+          "score": 0.8545,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.693,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.6853,
+          "evidence": []
+        },
+        {
+          "term": "une exposition",
+          "score": 0.5599,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 185.9339,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 135.7984,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 131.4497,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 131.4497,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 126.7272,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 99.2763,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 89.6684,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 88.8403,
+          "evidence": []
+        }
+      ]
+    },
+    "page-020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des logements",
+          "score": 2.6724,
+          "evidence": []
+        },
+        {
+          "term": "ame lioration",
+          "score": 2.6379,
+          "evidence": []
+        },
+        {
+          "term": "ende mie",
+          "score": 2.4218,
+          "evidence": []
+        },
+        {
+          "term": "stockage des",
+          "score": 2.136,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.9729,
+          "evidence": []
+        },
+        {
+          "term": "zones ende",
+          "score": 1.9728,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 1.9097,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.8841,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des logements",
+          "score": 71.9462,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 67.9679,
+          "evidence": []
+        },
+        {
+          "term": "stockage des",
+          "score": 61.409,
+          "evidence": []
+        },
+        {
+          "term": "ame lioration",
+          "score": 60.7284,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 57.6507,
+          "evidence": []
+        },
+        {
+          "term": "ende mie",
+          "score": 50.0435,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 49.9453,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 48.523,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.6055,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 1.5746,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.2072,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.1996,
+          "evidence": []
+        },
+        {
+          "term": "des logements",
+          "score": 0.9528,
+          "evidence": []
+        },
+        {
+          "term": "des zones",
+          "score": 0.9528,
+          "evidence": []
+        },
+        {
+          "term": "lioration des",
+          "score": 0.9528,
+          "evidence": []
+        },
+        {
+          "term": "stockage des",
+          "score": 0.9528,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 47.327,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 43.7869,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 35.7399,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 35.685,
+          "evidence": []
+        },
+        {
+          "term": "des zones",
+          "score": 30.5798,
+          "evidence": []
+        },
+        {
+          "term": "des logements",
+          "score": 29.4915,
+          "evidence": []
+        },
+        {
+          "term": "lioration des",
+          "score": 29.4915,
+          "evidence": []
+        },
+        {
+          "term": "stockage des",
+          "score": 29.4915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.6055,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 1.5746,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.2072,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.1996,
+          "evidence": []
+        },
+        {
+          "term": "des zones",
+          "score": 0.9997,
+          "evidence": []
+        },
+        {
+          "term": "lioration des",
+          "score": 0.9788,
+          "evidence": []
+        },
+        {
+          "term": "stockage des",
+          "score": 0.9765,
+          "evidence": []
+        },
+        {
+          "term": "des logements",
+          "score": 0.969,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 233.5489,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 164.4694,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 164.4694,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 160.2497,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 149.3321,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 117.4364,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 107.18,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 105.286,
+          "evidence": []
+        }
+      ]
+    },
+    "page-021": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "frige rateurs",
+          "score": 3.9508,
+          "evidence": []
+        },
+        {
+          "term": "tempe rature",
+          "score": 3.6432,
+          "evidence": []
+        },
+        {
+          "term": "une tempe",
+          "score": 2.4329,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 2.3892,
+          "evidence": []
+        },
+        {
+          "term": "taient satisfaits",
+          "score": 2.1396,
+          "evidence": []
+        },
+        {
+          "term": "doit eˆtre",
+          "score": 1.9932,
+          "evidence": []
+        },
+        {
+          "term": "satisfaits des",
+          "score": 1.9842,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.9263,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "frige rateurs",
+          "score": 131.2409,
+          "evidence": []
+        },
+        {
+          "term": "tempe rature",
+          "score": 96.8763,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 77.4835,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 77.1439,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 68.1323,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 63.8745,
+          "evidence": []
+        },
+        {
+          "term": "satisfaits des",
+          "score": 62.1773,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 61.4121,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.5069,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.1772,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.1595,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 1.0599,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 0.9932,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 0.9159,
+          "evidence": []
+        },
+        {
+          "term": "des sept",
+          "score": 0.8983,
+          "evidence": []
+        },
+        {
+          "term": "satisfaits des",
+          "score": 0.8983,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 58.9556,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 48.8249,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 47.1986,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 46.2167,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 43.828,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 43.828,
+          "evidence": []
+        },
+        {
+          "term": "des sept",
+          "score": 41.2198,
+          "evidence": []
+        },
+        {
+          "term": "satisfaits des",
+          "score": 41.2198,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.5069,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.1772,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.1595,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 1.0599,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 0.9932,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 0.9269,
+          "evidence": []
+        },
+        {
+          "term": "des sept",
+          "score": 0.9239,
+          "evidence": []
+        },
+        {
+          "term": "satisfaits des",
+          "score": 0.9058,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 238.9341,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 191.7912,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 172.5572,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 165.718,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 165.718,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 144.4163,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 125.1614,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 117.5575,
+          "evidence": []
+        }
+      ]
+    },
+    "page-022": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arte sunate",
+          "score": 2.4865,
+          "evidence": []
+        },
+        {
+          "term": "groupe expe",
+          "score": 2.1678,
+          "evidence": []
+        },
+        {
+          "term": "tait sensiblement",
+          "score": 1.5263,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.3424,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 1.2995,
+          "evidence": []
+        },
+        {
+          "term": "floquine",
+          "score": 1.2994,
+          "evidence": []
+        },
+        {
+          "term": "plus leve",
+          "score": 1.271,
+          "evidence": []
+        },
+        {
+          "term": "article publie",
+          "score": 1.2397,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "groupe expe",
+          "score": 50.1342,
+          "evidence": []
+        },
+        {
+          "term": "arte sunate",
+          "score": 47.5751,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 28.7621,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 27.8139,
+          "evidence": []
+        },
+        {
+          "term": "floquine",
+          "score": 24.8273,
+          "evidence": []
+        },
+        {
+          "term": "tait sensiblement",
+          "score": 24.4747,
+          "evidence": []
+        },
+        {
+          "term": "sensibilite",
+          "score": 23.6109,
+          "evidence": []
+        },
+        {
+          "term": "plus leve",
+          "score": 21.1075,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.6243,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "avec une",
+          "score": 0.5079,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.4863,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.4801,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3932,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3149,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2791,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 12.2324,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 10.7828,
+          "evidence": []
+        },
+        {
+          "term": "avec une",
+          "score": 7.47,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 5.7332,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 5.7332,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.1214,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.618,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.4717,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.6243,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "avec une",
+          "score": 0.5079,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.4863,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.4801,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 0.2638,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.251,
+          "evidence": []
+        },
+        {
+          "term": "plus leve",
+          "score": 0.2397,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 213.9194,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 157.7278,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 148.6163,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 146.9562,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 146.9562,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 114.4856,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 105.7425,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 103.8155,
+          "evidence": []
+        }
+      ]
+    },
+    "page-023": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arte sunate",
+          "score": 3.0453,
+          "evidence": []
+        },
+        {
+          "term": "efficacite des",
+          "score": 2.0241,
+          "evidence": []
+        },
+        {
+          "term": "sunate est",
+          "score": 2.0083,
+          "evidence": []
+        },
+        {
+          "term": "mode les",
+          "score": 1.8322,
+          "evidence": []
+        },
+        {
+          "term": "comportements nutritionnels",
+          "score": 1.8103,
+          "evidence": []
+        },
+        {
+          "term": "corre lation",
+          "score": 1.735,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.6585,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.6522,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "arte sunate",
+          "score": 71.0161,
+          "evidence": []
+        },
+        {
+          "term": "efficacite des",
+          "score": 56.6163,
+          "evidence": []
+        },
+        {
+          "term": "mode les",
+          "score": 50.0089,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 49.491,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 49.1353,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 46.4379,
+          "evidence": []
+        },
+        {
+          "term": "sunate est",
+          "score": 42.0429,
+          "evidence": []
+        },
+        {
+          "term": "une corre",
+          "score": 31.1125,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.4884,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.3038,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 0.9516,
+          "evidence": []
+        },
+        {
+          "term": "mode les",
+          "score": 0.9161,
+          "evidence": []
+        },
+        {
+          "term": "efficacite des",
+          "score": 0.8788,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6054,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4844,
+          "evidence": []
+        },
+        {
+          "term": "une corre",
+          "score": 0.4844,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 44.2013,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 40.0473,
+          "evidence": []
+        },
+        {
+          "term": "mode les",
+          "score": 32.3111,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 30.8135,
+          "evidence": []
+        },
+        {
+          "term": "efficacite des",
+          "score": 30.8135,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 12.9944,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 10.61,
+          "evidence": []
+        },
+        {
+          "term": "une corre",
+          "score": 10.61,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.4884,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.3038,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 0.9516,
+          "evidence": []
+        },
+        {
+          "term": "mode les",
+          "score": 0.9389,
+          "evidence": []
+        },
+        {
+          "term": "efficacite des",
+          "score": 0.9178,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6054,
+          "evidence": []
+        },
+        {
+          "term": "une corre",
+          "score": 0.4932,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4616,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 149.0773,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 109.3634,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 102.2727,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 102.0283,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 102.0283,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 79.974,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 74.9585,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 74.9585,
+          "evidence": []
+        }
+      ]
+    },
+    "page-024": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pre valence",
+          "score": 2.583,
+          "evidence": []
+        },
+        {
+          "term": "trouve porteurs",
+          "score": 1.9291,
+          "evidence": []
+        },
+        {
+          "term": "infection chlamydia",
+          "score": 1.639,
+          "evidence": []
+        },
+        {
+          "term": "strate gie",
+          "score": 1.6048,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 1.5747,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 1.4867,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 1.3843,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.3582,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pre valence",
+          "score": 75.6161,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 44.1112,
+          "evidence": []
+        },
+        {
+          "term": "trouve porteurs",
+          "score": 34.7381,
+          "evidence": []
+        },
+        {
+          "term": "infection chlamydia",
+          "score": 34.5453,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 31.7967,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 31.483,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 30.7477,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 30.5348,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.2926,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 0.9341,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7631,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 0.7631,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6258,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.62,
+          "evidence": []
+        },
+        {
+          "term": "une infection",
+          "score": 0.5379,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 27.2939,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 18.0941,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 18.0941,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 17.7477,
+          "evidence": []
+        },
+        {
+          "term": "une infection",
+          "score": 9.9412,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 9.018,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 9.018,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 8.2199,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.2926,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 0.9341,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 0.7887,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.6258,
+          "evidence": []
+        },
+        {
+          "term": "dans bulletin",
+          "score": 0.62,
+          "evidence": []
+        },
+        {
+          "term": "une infection",
+          "score": 0.5379,
+          "evidence": []
+        },
+        {
+          "term": "sont pas",
+          "score": 0.4848,
+          "evidence": []
+        },
+        {
+          "term": "maladie est",
+          "score": 0.4114,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 184.8359,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 132.5997,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 128.9675,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 128.6415,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 128.6415,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 107.8075,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 101.4667,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 100.934,
+          "evidence": []
+        }
+      ]
+    },
+    "page-025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "couˆts indirects",
+          "score": 2.0983,
+          "evidence": []
+        },
+        {
+          "term": "traitement sous",
+          "score": 2.0818,
+          "evidence": []
+        },
+        {
+          "term": "surveillance directe",
+          "score": 1.963,
+          "evidence": []
+        },
+        {
+          "term": "des couˆts",
+          "score": 1.7362,
+          "evidence": []
+        },
+        {
+          "term": "sce",
+          "score": 1.7017,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.5366,
+          "evidence": []
+        },
+        {
+          "term": "une analyse",
+          "score": 1.5222,
+          "evidence": []
+        },
+        {
+          "term": "situait entre",
+          "score": 1.5116,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "traitement sous",
+          "score": 56.454,
+          "evidence": []
+        },
+        {
+          "term": "surveillance directe",
+          "score": 46.3904,
+          "evidence": []
+        },
+        {
+          "term": "sce",
+          "score": 41.3788,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 38.5973,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 38.5647,
+          "evidence": []
+        },
+        {
+          "term": "une analyse",
+          "score": 37.9798,
+          "evidence": []
+        },
+        {
+          "term": "couˆts indirects",
+          "score": 37.272,
+          "evidence": []
+        },
+        {
+          "term": "des couˆts",
+          "score": 31.7206,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.3524,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8065,
+          "evidence": []
+        },
+        {
+          "term": "des couˆts",
+          "score": 0.8065,
+          "evidence": []
+        },
+        {
+          "term": "une analyse",
+          "score": 0.4901,
+          "evidence": []
+        },
+        {
+          "term": "une perspective",
+          "score": 0.4901,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4422,
+          "evidence": []
+        },
+        {
+          "term": "millions par",
+          "score": 0.4238,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 34.212,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 19.83,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 16.8384,
+          "evidence": []
+        },
+        {
+          "term": "des couˆts",
+          "score": 16.8384,
+          "evidence": []
+        },
+        {
+          "term": "une analyse",
+          "score": 10.4224,
+          "evidence": []
+        },
+        {
+          "term": "une perspective",
+          "score": 10.4224,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 8.7985,
+          "evidence": []
+        },
+        {
+          "term": "millions par",
+          "score": 8.2033,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.3524,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "des couˆts",
+          "score": 0.8276,
+          "evidence": []
+        },
+        {
+          "term": "une analyse",
+          "score": 0.5347,
+          "evidence": []
+        },
+        {
+          "term": "une perspective",
+          "score": 0.5023,
+          "evidence": []
+        },
+        {
+          "term": "millions par",
+          "score": 0.4642,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4422,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 0.3637,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 177.0505,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 164.0898,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 150.9065,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 125.4617,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 125.4617,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 122.2023,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 107.0911,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 106.375,
+          "evidence": []
+        }
+      ]
+    },
+    "page-026": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les malades",
+          "score": 2.2404,
+          "evidence": []
+        },
+        {
+          "term": "les hommes",
+          "score": 2.0302,
+          "evidence": []
+        },
+        {
+          "term": "ont obtenu",
+          "score": 1.9904,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.8933,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.8501,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.7674,
+          "evidence": []
+        },
+        {
+          "term": "supple mentation",
+          "score": 1.7517,
+          "evidence": []
+        },
+        {
+          "term": "des trois",
+          "score": 1.6773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les malades",
+          "score": 81.5638,
+          "evidence": []
+        },
+        {
+          "term": "les hommes",
+          "score": 74.2758,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 73.6688,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 71.5076,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 70.9151,
+          "evidence": []
+        },
+        {
+          "term": "ont obtenu",
+          "score": 50.6439,
+          "evidence": []
+        },
+        {
+          "term": "des trois",
+          "score": 40.3407,
+          "evidence": []
+        },
+        {
+          "term": "chacun des",
+          "score": 33.9319,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.6114,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.421,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.1968,
+          "evidence": []
+        },
+        {
+          "term": "les hommes",
+          "score": 1.1211,
+          "evidence": []
+        },
+        {
+          "term": "des trois",
+          "score": 1.0897,
+          "evidence": []
+        },
+        {
+          "term": "les malades",
+          "score": 1.0674,
+          "evidence": []
+        },
+        {
+          "term": "chacun des",
+          "score": 0.9567,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7781,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 59.0766,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 55.5473,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 45.7614,
+          "evidence": []
+        },
+        {
+          "term": "les hommes",
+          "score": 44.9038,
+          "evidence": []
+        },
+        {
+          "term": "les malades",
+          "score": 43.948,
+          "evidence": []
+        },
+        {
+          "term": "des trois",
+          "score": 30.2985,
+          "evidence": []
+        },
+        {
+          "term": "chacun des",
+          "score": 28.8235,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 14.9697,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.6114,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.421,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.1968,
+          "evidence": []
+        },
+        {
+          "term": "les hommes",
+          "score": 1.1211,
+          "evidence": []
+        },
+        {
+          "term": "des trois",
+          "score": 1.0897,
+          "evidence": []
+        },
+        {
+          "term": "les malades",
+          "score": 1.0674,
+          "evidence": []
+        },
+        {
+          "term": "chacun des",
+          "score": 0.9872,
+          "evidence": []
+        },
+        {
+          "term": "anglais dans",
+          "score": 0.7781,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 195.4215,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 155.4965,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 139.4343,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 139.4343,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 138.2713,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 116.789,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 100.2455,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 96.1879,
+          "evidence": []
+        }
+      ]
+    },
+    "page-027": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "strate gie",
+          "score": 1.6048,
+          "evidence": []
+        },
+        {
+          "term": "decins",
+          "score": 1.5314,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.4655,
+          "evidence": []
+        },
+        {
+          "term": "cette strate",
+          "score": 1.2895,
+          "evidence": []
+        },
+        {
+          "term": "comment cette",
+          "score": 1.1866,
+          "evidence": []
+        },
+        {
+          "term": "dicaments",
+          "score": 1.1764,
+          "evidence": []
+        },
+        {
+          "term": "rationnelle",
+          "score": 0.9074,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8714,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "que les",
+          "score": 41.426,
+          "evidence": []
+        },
+        {
+          "term": "decins",
+          "score": 36.7973,
+          "evidence": []
+        },
+        {
+          "term": "strate gie",
+          "score": 25.8544,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 22.9255,
+          "evidence": []
+        },
+        {
+          "term": "dicaments",
+          "score": 22.7478,
+          "evidence": []
+        },
+        {
+          "term": "cette strate",
+          "score": 20.3259,
+          "evidence": []
+        },
+        {
+          "term": "comment cette",
+          "score": 20.0546,
+          "evidence": []
+        },
+        {
+          "term": "sante",
+          "score": 15.4867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que les",
+          "score": 0.9241,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6186,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4156,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.387,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3274,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3265,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2808,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 32.3534,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 19.3374,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.286,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 8.2197,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.938,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.8966,
+          "evidence": []
+        },
+        {
+          "term": "données",
+          "score": 4.902,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 4.7775,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que les",
+          "score": 0.9241,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6186,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4156,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.387,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3265,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2621,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 0.2463,
+          "evidence": []
+        },
+        {
+          "term": "sont",
+          "score": 0.2193,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 153.2858,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 102.9397,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 102.9397,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 94.9231,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 88.438,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 71.4938,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 70.6112,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 70.6112,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

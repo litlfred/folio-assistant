@@ -1,0 +1,3266 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-67518",
+  "instance": "who-iris",
+  "about": "library/10665-67518",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccin antivariolique",
+        "score": 22.3168,
+        "evidence": []
+      },
+      {
+        "term": "titrage mca",
+        "score": 19.8007,
+        "evidence": []
+      },
+      {
+        "term": "vaccin témoin",
+        "score": 19.2773,
+        "evidence": []
+      },
+      {
+        "term": "vaccin expertiser",
+        "score": 19.141,
+        "evidence": []
+      },
+      {
+        "term": "rapport vaccin",
+        "score": 18.8379,
+        "evidence": []
+      },
+      {
+        "term": "vaccin lyophilisé",
+        "score": 18.8144,
+        "evidence": []
+      },
+      {
+        "term": "titre mca",
+        "score": 18.3744,
+        "evidence": []
+      },
+      {
+        "term": "d'un vaccin",
+        "score": 18.2743,
+        "evidence": []
+      },
+      {
+        "term": "vaccin stockés",
+        "score": 17.9747,
+        "evidence": []
+      },
+      {
+        "term": "vaccin réhydraté",
+        "score": 17.721,
+        "evidence": []
+      },
+      {
+        "term": "sur mca",
+        "score": 17.3874,
+        "evidence": []
+      },
+      {
+        "term": "vaccin lyophilise",
+        "score": 17.3591,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccin antivariolique",
+        "score": 590.7067,
+        "evidence": []
+      },
+      {
+        "term": "vaccin témoin",
+        "score": 583.6069,
+        "evidence": []
+      },
+      {
+        "term": "vaccin expertiser",
+        "score": 547.5283,
+        "evidence": []
+      },
+      {
+        "term": "vaccin stockés",
+        "score": 541.9539,
+        "evidence": []
+      },
+      {
+        "term": "rapport vaccin",
+        "score": 537.2803,
+        "evidence": []
+      },
+      {
+        "term": "d'un vaccin",
+        "score": 531.0819,
+        "evidence": []
+      },
+      {
+        "term": "vaccin lyophilisé",
+        "score": 530.454,
+        "evidence": []
+      },
+      {
+        "term": "vaccin réhydraté",
+        "score": 519.2061,
+        "evidence": []
+      },
+      {
+        "term": "dryvax vaccin",
+        "score": 512.7742,
+        "evidence": []
+      },
+      {
+        "term": "vaccin lyophilise",
+        "score": 511.6235,
+        "evidence": []
+      },
+      {
+        "term": "vaccin produit",
+        "score": 511.399,
+        "evidence": []
+      },
+      {
+        "term": "pryvax vaccin",
+        "score": 497.8446,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dans des",
+        "score": 12.1441,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 11.9693,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 11.6973,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 11.4596,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 11.2259,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 10.5642,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 10.1713,
+        "evidence": []
+      },
+      {
+        "term": "avec des",
+        "score": 10.1662,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 9.9639,
+        "evidence": []
+      },
+      {
+        "term": "dans une",
+        "score": 9.9179,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 9.6667,
+        "evidence": []
+      },
+      {
+        "term": "cas des",
+        "score": 9.4678,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "dans des",
+        "score": 372.4446,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 349.06,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 340.4511,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 330.5405,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 322.7083,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 320.9723,
+        "evidence": []
+      },
+      {
+        "term": "avec des",
+        "score": 294.3691,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 288.9133,
+        "evidence": []
+      },
+      {
+        "term": "cas des",
+        "score": 287.7709,
+        "evidence": []
+      },
+      {
+        "term": "resultats des",
+        "score": 281.6867,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 274.8355,
+        "evidence": []
+      },
+      {
+        "term": "dans une",
+        "score": 271.5999,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dans des",
+        "score": 12.1441,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 11.9693,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 11.6973,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 11.4596,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 11.2259,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 10.5642,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 10.1713,
+        "evidence": []
+      },
+      {
+        "term": "avec des",
+        "score": 10.1662,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 9.9639,
+        "evidence": []
+      },
+      {
+        "term": "dans une",
+        "score": 9.9179,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 9.6667,
+        "evidence": []
+      },
+      {
+        "term": "cas des",
+        "score": 9.4678,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "相一致",
+        "score": 8345.0527,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 8049.9281,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 7851.7877,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 6731.6779,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 6622.8639,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 5867.5368,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 5867.5368,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 5824.9629,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 5696.7853,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 5166.6181,
+        "evidence": []
+      },
+      {
+        "term": "宫颈癌",
+        "score": 4620.0032,
+        "evidence": []
+      },
+      {
+        "term": "个部分",
+        "score": 4594.8334,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "par wyeth",
+          "score": 2.513,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 2.0003,
+          "evidence": []
+        },
+        {
+          "term": "titrage mca",
+          "score": 1.9783,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.6218,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.4244,
+          "evidence": []
+        },
+        {
+          "term": "l'united states",
+          "score": 1.3969,
+          "evidence": []
+        },
+        {
+          "term": "lymphe",
+          "score": 1.0405,
+          "evidence": []
+        },
+        {
+          "term": "produit",
+          "score": 0.9523,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "par wyeth",
+          "score": 79.484,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 55.5523,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 42.142,
+          "evidence": []
+        },
+        {
+          "term": "titrage mca",
+          "score": 39.9486,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 33.6638,
+          "evidence": []
+        },
+        {
+          "term": "l'united states",
+          "score": 21.9663,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 20.3783,
+          "evidence": []
+        },
+        {
+          "term": "produit",
+          "score": 20.0706,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.3656,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.2553,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5526,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.544,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.4908,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 0.4908,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.4859,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 34.9184,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 30.5058,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 23.8129,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 18.5829,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 18.5829,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 15.0686,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 11.775,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 11.5443,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.3656,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.2553,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5526,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 0.5468,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.544,
+          "evidence": []
+        },
+        {
+          "term": "par wyeth",
+          "score": 0.5129,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.4192,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 222.6489,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 194.9363,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 192.6858,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 177.1737,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 173.3643,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 160.8495,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 155.1785,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 145.463,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des oeufs",
+          "score": 3.2196,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 3.207,
+          "evidence": []
+        },
+        {
+          "term": "les oeufs",
+          "score": 3.1401,
+          "evidence": []
+        },
+        {
+          "term": "oeufs embryonnés",
+          "score": 2.8865,
+          "evidence": []
+        },
+        {
+          "term": "sur embryons",
+          "score": 2.7767,
+          "evidence": []
+        },
+        {
+          "term": "des inoculums",
+          "score": 2.5615,
+          "evidence": []
+        },
+        {
+          "term": "les titres",
+          "score": 2.5528,
+          "evidence": []
+        },
+        {
+          "term": "vaccin inoculer",
+          "score": 2.3715,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des oeufs",
+          "score": 130.7459,
+          "evidence": []
+        },
+        {
+          "term": "les oeufs",
+          "score": 127.4017,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 121.7364,
+          "evidence": []
+        },
+        {
+          "term": "les titres",
+          "score": 95.8352,
+          "evidence": []
+        },
+        {
+          "term": "oeufs embryonnés",
+          "score": 90.7963,
+          "evidence": []
+        },
+        {
+          "term": "sur embryons",
+          "score": 84.8054,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 84.5173,
+          "evidence": []
+        },
+        {
+          "term": "des inoculums",
+          "score": 83.8234,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur des",
+          "score": 1.5302,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 1.3883,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.3848,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 1.329,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 1.1375,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 0.9895,
+          "evidence": []
+        },
+        {
+          "term": "des inoculums",
+          "score": 0.9895,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 0.9895,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur des",
+          "score": 57.2605,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 52.5979,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 50.7777,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 45.0465,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 44.7809,
+          "evidence": []
+        },
+        {
+          "term": "des inoculums",
+          "score": 44.7809,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 44.7809,
+          "evidence": []
+        },
+        {
+          "term": "utilisé des",
+          "score": 44.7809,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur des",
+          "score": 1.5302,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 1.3883,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.3848,
+          "evidence": []
+        },
+        {
+          "term": "dans une",
+          "score": 1.329,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 1.1375,
+          "evidence": []
+        },
+        {
+          "term": "les titres",
+          "score": 1.0546,
+          "evidence": []
+        },
+        {
+          "term": "utilisé des",
+          "score": 1.0427,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 1.0331,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 312.9093,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 276.8328,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 264.9608,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 254.9169,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 238.8349,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 235.6432,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 212.9006,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 201.9006,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des embryons",
+          "score": 2.6345,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 2.3725,
+          "evidence": []
+        },
+        {
+          "term": "d'un vaccin",
+          "score": 2.1651,
+          "evidence": []
+        },
+        {
+          "term": "référence non",
+          "score": 2.037,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 1.9555,
+          "evidence": []
+        },
+        {
+          "term": "les inoculums",
+          "score": 1.9429,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.9264,
+          "evidence": []
+        },
+        {
+          "term": "nous avons",
+          "score": 1.9136,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin antivariolique",
+          "score": 81.356,
+          "evidence": []
+        },
+        {
+          "term": "d'un vaccin",
+          "score": 76.6992,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 76.1223,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 61.3213,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 59.9263,
+          "evidence": []
+        },
+        {
+          "term": "les inoculums",
+          "score": 52.7768,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 52.2552,
+          "evidence": []
+        },
+        {
+          "term": "l'âge des",
+          "score": 51.5419,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "avec des",
+          "score": 1.6365,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.63,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.3516,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 1.1747,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 1.1747,
+          "evidence": []
+        },
+        {
+          "term": "des titres",
+          "score": 1.1747,
+          "evidence": []
+        },
+        {
+          "term": "l'âge des",
+          "score": 1.1747,
+          "evidence": []
+        },
+        {
+          "term": "les inoculums",
+          "score": 1.1583,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "avec des",
+          "score": 46.0396,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 45.8261,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 42.5169,
+          "evidence": []
+        },
+        {
+          "term": "les inoculums",
+          "score": 39.5526,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 37.7482,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 37.7482,
+          "evidence": []
+        },
+        {
+          "term": "des titres",
+          "score": 37.7482,
+          "evidence": []
+        },
+        {
+          "term": "l'âge des",
+          "score": 37.7482,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "avec des",
+          "score": 1.6365,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.63,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.3516,
+          "evidence": []
+        },
+        {
+          "term": "des titres",
+          "score": 1.2523,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 1.2239,
+          "evidence": []
+        },
+        {
+          "term": "des embryons",
+          "score": 1.2157,
+          "evidence": []
+        },
+        {
+          "term": "l'âge des",
+          "score": 1.2091,
+          "evidence": []
+        },
+        {
+          "term": "les inoculums",
+          "score": 1.184,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 247.5332,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 225.1846,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 221.5867,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 198.1275,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 193.03,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 180.7949,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 163.3566,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 163.3566,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "référence dilué",
+          "score": 3.4867,
+          "evidence": []
+        },
+        {
+          "term": "vaccin témoin",
+          "score": 3.4447,
+          "evidence": []
+        },
+        {
+          "term": "préparation témoin",
+          "score": 2.86,
+          "evidence": []
+        },
+        {
+          "term": "non dilué",
+          "score": 2.8114,
+          "evidence": []
+        },
+        {
+          "term": "réaction majeure",
+          "score": 2.738,
+          "evidence": []
+        },
+        {
+          "term": "les réactions",
+          "score": 2.5729,
+          "evidence": []
+        },
+        {
+          "term": "deux bras",
+          "score": 2.5378,
+          "evidence": []
+        },
+        {
+          "term": "vaccin expertiser",
+          "score": 2.5055,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin témoin",
+          "score": 145.8276,
+          "evidence": []
+        },
+        {
+          "term": "référence dilué",
+          "score": 117.5396,
+          "evidence": []
+        },
+        {
+          "term": "vaccin expertiser",
+          "score": 105.4545,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 102.8926,
+          "evidence": []
+        },
+        {
+          "term": "les réactions",
+          "score": 95.6996,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 92.007,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 86.1884,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 82.3722,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.8905,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 1.7991,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.4391,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 1.4131,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 1.3127,
+          "evidence": []
+        },
+        {
+          "term": "des réactions",
+          "score": 1.2873,
+          "evidence": []
+        },
+        {
+          "term": "une réaction",
+          "score": 0.8966,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.7971,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 70.9194,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 67.4104,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 53.0695,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 50.2951,
+          "evidence": []
+        },
+        {
+          "term": "les réactions",
+          "score": 49.1239,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 46.4583,
+          "evidence": []
+        },
+        {
+          "term": "des réactions",
+          "score": 43.3939,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 32.2943,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.8905,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 1.7991,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.4391,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 1.4131,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 1.3127,
+          "evidence": []
+        },
+        {
+          "term": "des réactions",
+          "score": 1.2873,
+          "evidence": []
+        },
+        {
+          "term": "une réaction",
+          "score": 0.8966,
+          "evidence": []
+        },
+        {
+          "term": "présenté une",
+          "score": 0.8174,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 263.2699,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 245.591,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 230.3823,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 209.6354,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 208.1047,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 188.5734,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 173.2199,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 170.9218,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccins stockés",
+          "score": 2.884,
+          "evidence": []
+        },
+        {
+          "term": "stabilité des",
+          "score": 2.3527,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 2.2285,
+          "evidence": []
+        },
+        {
+          "term": "vaccin réhydraté",
+          "score": 2.2215,
+          "evidence": []
+        },
+        {
+          "term": "six lots",
+          "score": 2.1803,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 2.1518,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 2.0068,
+          "evidence": []
+        },
+        {
+          "term": "semaine pendant",
+          "score": 1.9783,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les vaccins",
+          "score": 86.3317,
+          "evidence": []
+        },
+        {
+          "term": "vaccins stockés",
+          "score": 84.1861,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 81.9942,
+          "evidence": []
+        },
+        {
+          "term": "pendant les",
+          "score": 77.2703,
+          "evidence": []
+        },
+        {
+          "term": "stabilité des",
+          "score": 70.3905,
+          "evidence": []
+        },
+        {
+          "term": "vaccin réhydraté",
+          "score": 62.5055,
+          "evidence": []
+        },
+        {
+          "term": "les titrages",
+          "score": 60.974,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 59.9224,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des vaccins",
+          "score": 1.5452,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.5248,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.4111,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 1.35,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 1.1957,
+          "evidence": []
+        },
+        {
+          "term": "les caractéristiques",
+          "score": 1.1758,
+          "evidence": []
+        },
+        {
+          "term": "des périodes",
+          "score": 1.1146,
+          "evidence": []
+        },
+        {
+          "term": "stabilité des",
+          "score": 1.1146,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les vaccins",
+          "score": 55.7642,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 53.9431,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 49.5113,
+          "evidence": []
+        },
+        {
+          "term": "pendant les",
+          "score": 48.1083,
+          "evidence": []
+        },
+        {
+          "term": "les caractéristiques",
+          "score": 44.1458,
+          "evidence": []
+        },
+        {
+          "term": "les titrages",
+          "score": 44.1458,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 42.3247,
+          "evidence": []
+        },
+        {
+          "term": "des périodes",
+          "score": 42.3247,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des vaccins",
+          "score": 1.5452,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.5248,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.4111,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 1.35,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 1.1957,
+          "evidence": []
+        },
+        {
+          "term": "les caractéristiques",
+          "score": 1.1758,
+          "evidence": []
+        },
+        {
+          "term": "stabilité des",
+          "score": 1.1719,
+          "evidence": []
+        },
+        {
+          "term": "les titrages",
+          "score": 1.1434,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 242.2242,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 200.7487,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 199.1199,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 193.3877,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 188.99,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 175.104,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 158.4251,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 157.5545,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "inoculum",
+          "score": 0.8672,
+          "evidence": []
+        },
+        {
+          "term": "titrage",
+          "score": 0.7692,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7364,
+          "evidence": []
+        },
+        {
+          "term": "inf",
+          "score": 0.7338,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.6951,
+          "evidence": []
+        },
+        {
+          "term": "activité",
+          "score": 0.6891,
+          "evidence": []
+        },
+        {
+          "term": "microbiol",
+          "score": 0.6549,
+          "evidence": []
+        },
+        {
+          "term": "titre",
+          "score": 0.6036,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des",
+          "score": 15.2837,
+          "evidence": []
+        },
+        {
+          "term": "inoculum",
+          "score": 14.046,
+          "evidence": []
+        },
+        {
+          "term": "titrage",
+          "score": 12.2714,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 11.8351,
+          "evidence": []
+        },
+        {
+          "term": "inf",
+          "score": 11.5817,
+          "evidence": []
+        },
+        {
+          "term": "activité",
+          "score": 11.0698,
+          "evidence": []
+        },
+        {
+          "term": "microbiol",
+          "score": 10.4625,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 10.0297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.5023,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.4986,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.331,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3293,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3143,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2739,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2726,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.2571,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 12.6941,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 10.6036,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 6.4876,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.7543,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.7418,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.6448,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.5672,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 4.403,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.5023,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.4986,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.331,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3293,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.2571,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2448,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2293,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.1689,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 247.276,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 228.905,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 212.205,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 185.1799,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 175.0993,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 174.209,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 174.209,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 170.2754,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "oeufs embryonnes",
+          "score": 2.4987,
+          "evidence": []
+        },
+        {
+          "term": "oeufs embryonnés",
+          "score": 2.3147,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 2.1561,
+          "evidence": []
+        },
+        {
+          "term": "jours",
+          "score": 1.4001,
+          "evidence": []
+        },
+        {
+          "term": "titrage",
+          "score": 1.2545,
+          "evidence": []
+        },
+        {
+          "term": "l'embryon",
+          "score": 1.0206,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "oeufs embryonnes",
+          "score": 51.6665,
+          "evidence": []
+        },
+        {
+          "term": "oeufs embryonnés",
+          "score": 48.6583,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 47.8514,
+          "evidence": []
+        },
+        {
+          "term": "jours",
+          "score": 46.2624,
+          "evidence": []
+        },
+        {
+          "term": "titrage",
+          "score": 30.6785,
+          "evidence": []
+        },
+        {
+          "term": "inf",
+          "score": 17.3726,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.2272,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 0.2272,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.222,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.1544,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.1524,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.1493,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 8.8497,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 8.8497,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 4.3704,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 3.5843,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.0682,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 2.8573,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des oeufs",
+          "score": 0.2393,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.1544,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.1367,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.135,
+          "evidence": []
+        },
+        {
+          "term": "jours",
+          "score": 0.0556,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0398,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 488.3623,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 471.3925,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 405.3839,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 390.1068,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 388.9841,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 356.1026,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "titrage mca",
+          "score": 1.4571,
+          "evidence": []
+        },
+        {
+          "term": "ecart type",
+          "score": 1.3849,
+          "evidence": []
+        },
+        {
+          "term": "l'inoculum",
+          "score": 1.3827,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 1.322,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "l'inoculum",
+          "score": 30.3304,
+          "evidence": []
+        },
+        {
+          "term": "titrage mca",
+          "score": 23.0422,
+          "evidence": []
+        },
+        {
+          "term": "ecart type",
+          "score": 21.6011,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 19.1406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 0.3052,
+          "evidence": []
+        },
+        {
+          "term": "les resultats",
+          "score": 0.2411,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1976,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 0.1976,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 5.1395,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 5.1395,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 4.7742,
+          "evidence": []
+        },
+        {
+          "term": "les resultats",
+          "score": 4.206,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 0.3052,
+          "evidence": []
+        },
+        {
+          "term": "les resultats",
+          "score": 0.2411,
+          "evidence": []
+        },
+        {
+          "term": "des oeufs",
+          "score": 0.2082,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.1409,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 513.5686,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 489.224,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 424.7332,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 416.7144,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccin témoin",
+          "score": 2.823,
+          "evidence": []
+        },
+        {
+          "term": "non dilué",
+          "score": 2.3592,
+          "evidence": []
+        },
+        {
+          "term": "rapport vaccin",
+          "score": 2.0501,
+          "evidence": []
+        },
+        {
+          "term": "réactions majeures",
+          "score": 2.0332,
+          "evidence": []
+        },
+        {
+          "term": "moyenne intervalle",
+          "score": 1.8666,
+          "evidence": []
+        },
+        {
+          "term": "adultes revaccines",
+          "score": 1.7149,
+          "evidence": []
+        },
+        {
+          "term": "jeunes adultes",
+          "score": 1.333,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin témoin",
+          "score": 90.6565,
+          "evidence": []
+        },
+        {
+          "term": "rapport vaccin",
+          "score": 71.1727,
+          "evidence": []
+        },
+        {
+          "term": "non dilué",
+          "score": 49.7651,
+          "evidence": []
+        },
+        {
+          "term": "réactions majeures",
+          "score": 37.6876,
+          "evidence": []
+        },
+        {
+          "term": "moyenne intervalle",
+          "score": 35.5874,
+          "evidence": []
+        },
+        {
+          "term": "adultes revaccines",
+          "score": 27.4963,
+          "evidence": []
+        },
+        {
+          "term": "référence",
+          "score": 24.8079,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.3434,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3322,
+          "evidence": []
+        },
+        {
+          "term": "rapport vaccin",
+          "score": 0.3135,
+          "evidence": []
+        },
+        {
+          "term": "vaccin témoin",
+          "score": 0.2671,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2476,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2298,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2059,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "rapport vaccin",
+          "score": 13.8318,
+          "evidence": []
+        },
+        {
+          "term": "vaccin témoin",
+          "score": 13.2831,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 9.1481,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 8.0656,
+          "evidence": []
+        },
+        {
+          "term": "oui",
+          "score": 7.556,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 7.209,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.7452,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.3434,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3322,
+          "evidence": []
+        },
+        {
+          "term": "rapport vaccin",
+          "score": 0.3135,
+          "evidence": []
+        },
+        {
+          "term": "vaccin témoin",
+          "score": 0.2818,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.1879,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.1638,
+          "evidence": []
+        },
+        {
+          "term": "non dilué",
+          "score": 0.1324,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 504.2789,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 465.5739,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 422.9982,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 373.3694,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 367.729,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 340.6792,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 320.8183,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "par semaine",
+          "score": 1.1409,
+          "evidence": []
+        },
+        {
+          "term": "référence",
+          "score": 1.0986,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 1.0426,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 1.0077,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin",
+          "score": 27.6152,
+          "evidence": []
+        },
+        {
+          "term": "référence",
+          "score": 24.8079,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 21.5415,
+          "evidence": []
+        },
+        {
+          "term": "par semaine",
+          "score": 17.3966,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccin",
+          "score": 0.1656,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.1243,
+          "evidence": []
+        },
+        {
+          "term": "par semaine",
+          "score": 0.1195,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin",
+          "score": 6.3905,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 3.6243,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 3.5556,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 3.2425,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccin",
+          "score": 0.1656,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "par semaine",
+          "score": 0.1195,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.0827,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 479.5999,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 462.4132,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 459.6364,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 396.7854,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dryvax",
+          "score": 0.9713,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.8984,
+          "evidence": []
+        },
+        {
+          "term": "inf",
+          "score": 0.7338,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin",
+          "score": 19.7251,
+          "evidence": []
+        },
+        {
+          "term": "dryvax",
+          "score": 15.7406,
+          "evidence": []
+        },
+        {
+          "term": "nombre",
+          "score": 11.9559,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccin",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.084,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0837,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin",
+          "score": 4.3879,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 2.4014,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 2.3314,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccin",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.0557,
+          "evidence": []
+        },
+        {
+          "term": "avec",
+          "score": 0.0494,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 629.9911,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 613.6473,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 582.0228,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "heures",
+          "score": 1.6697,
+          "evidence": []
+        },
+        {
+          "term": "temps diluant",
+          "score": 1.385,
+          "evidence": []
+        },
+        {
+          "term": "phénol",
+          "score": 1.0162,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "heures",
+          "score": 61.6177,
+          "evidence": []
+        },
+        {
+          "term": "temps diluant",
+          "score": 21.7461,
+          "evidence": []
+        },
+        {
+          "term": "phénol",
+          "score": 16.5515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccin",
+          "score": 0.1125,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0693,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.0677,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin",
+          "score": 2.8259,
+          "evidence": []
+        },
+        {
+          "term": "apres",
+          "score": 1.5796,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 1.5289,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccin",
+          "score": 0.1125,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.0619,
+          "evidence": []
+        },
+        {
+          "term": "avec",
+          "score": 0.0448,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 611.5709,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 600.7768,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 556.68,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "titrage",
+          "score": 0.7692,
+          "evidence": []
+        },
+        {
+          "term": "boss",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "mamans",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "titrage",
+          "score": 12.2714,
+          "evidence": []
+        },
+        {
+          "term": "boss",
+          "score": 8.2758,
+          "evidence": []
+        },
+        {
+          "term": "mamans",
+          "score": 8.2758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccin",
+          "score": 0.1018,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0911,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.0843,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin",
+          "score": 2.4955,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 2.2059,
+          "evidence": []
+        },
+        {
+          "term": "apres",
+          "score": 1.3771,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccin",
+          "score": 0.1018,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0911,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.0545,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 1215.0245,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 913.7625,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 877.8968,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccin antivariolique",
+          "score": 1.4495,
+          "evidence": []
+        },
+        {
+          "term": "rsc",
+          "score": 0.8547,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 0.6879,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin antivariolique",
+          "score": 23.9921,
+          "evidence": []
+        },
+        {
+          "term": "rsc",
+          "score": 13.7789,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 10.7708,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.1302,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.1235,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 0.114,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 4.0497,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 3.2019,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 1.7619,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.1302,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 0.114,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.076,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 866.1422,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 812.7071,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 812.2249,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "titrage",
+          "score": 0.7692,
+          "evidence": []
+        },
+        {
+          "term": "pryvax",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "inoculums",
+          "score": 0.5994,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "titrage",
+          "score": 12.2714,
+          "evidence": []
+        },
+        {
+          "term": "pryvax",
+          "score": 8.2758,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 7.8901,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccin",
+          "score": 0.1009,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0788,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.0702,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin",
+          "score": 2.5168,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 2.0793,
+          "evidence": []
+        },
+        {
+          "term": "apres",
+          "score": 1.3867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccin",
+          "score": 0.1009,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0788,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.0488,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 1246.187,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 955.4151,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 925.5344,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccin antivariolique",
+          "score": 1.4495,
+          "evidence": []
+        },
+        {
+          "term": "rsc",
+          "score": 0.8547,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 0.6879,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin antivariolique",
+          "score": 23.9921,
+          "evidence": []
+        },
+        {
+          "term": "rsc",
+          "score": 13.7789,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 10.7708,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.1342,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 0.1189,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 4.0196,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 3.2288,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 1.8174,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antivariolique",
+          "score": 0.1189,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.0816,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "et-ot",
+          "score": 880.5366,
+          "evidence": []
+        },
+        {
+          "term": "ge-9e",
+          "score": 880.5366,
+          "evidence": []
+        },
+        {
+          "term": "savd",
+          "score": 880.5366,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

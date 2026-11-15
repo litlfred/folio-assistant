@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 37,
+      "count": 40,
       "unit": "open beans"
     }
   },
@@ -135,6 +135,20 @@
       "updatedAt": "2026-11-12T09:45:00Z",
       "preview": "Questions waiting on the owner at 2026-11-12 09:32Z. Each needs the full written question + tappable card (see folio-assistant-php1). Record answers in folio-assistant-1b7t.\n\n- [ ] Q-GLD-4 — CDE/NHWA (thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9WwtQiEUvdGPQ4efY1dCDAo)\n- [ ] Q-L1T-1 — if still open\n- [ ] Q-TODO-1 — if still open (memory li",
       "file": "beans/defs/folio-assistant-34c1--open-owner-questions-at-handover-q-gld-4-q-l1t-1-q.md"
+    },
+    {
+      "id": "folio-assistant-3bk1",
+      "title": "IG publish-on-push rollout: re-pins after the cascade, and the smart-trust injection gate",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-12T09:55:00Z",
+      "updatedAt": "2026-11-15T07:30:00Z",
+      "preview": "Owner thread: \"Finish publish-on-push rollout PRs\" https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9GSmgusK4K8TCWBQfu5rM7S, session https://claude.ai/code/session_01Qmmkt6TSbSJzATzKNZujVV. Assigned by the merge manager via the coordinator 08:34Z: land the IG publish rollout after the re-pin cascade (folio-assistant-um0y). Never merges; reports heads ",
+      "file": "beans/defs/folio-assistant-3bk1--ig-publish-on-push-rollout-re-pins-and-smart-trust-injection-gate.md"
     },
     {
       "id": "folio-assistant-3v2t",
@@ -1079,6 +1093,20 @@
       "file": "beans/defs/folio-assistant-mbd8--cut-node-kind-indexts-srcauthgatewayts-static-impo.md"
     },
     {
+      "id": "folio-assistant-mm15",
+      "title": "Merge manager handover 2026-11-15 06:35Z",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T06:35:00Z",
+      "updatedAt": "2026-11-15T06:40:00Z",
+      "preview": "Merge manager thread: cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR (session_01Qmmkt6te9q7bF3KBT2Qq11). Helpers: /mnt/project-files/merge-manager/handover/ (m.sh, lk.sh, render-watch.sh, HANDOVER.md running log). Re-check every PR live before acting.\n\n## Window and rules\n- Owner card tapped 2026-11-15 06:26Z: \"12h window, incl. #238\". Runs to about **18:26Z 11-15**. Scope: re-pins, green non",
+      "file": "beans/defs/folio-assistant-mm15--merge-manager-handover-2026-11-15.md"
+    },
+    {
       "id": "folio-assistant-n6ny",
       "title": "Project memory: owner rules, facts, to-dos, cards and threads (read first)",
       "status": "in-progress",
@@ -1233,6 +1261,20 @@
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
     {
+      "id": "folio-assistant-pb15",
+      "title": "Harness PR backlog plan 2026-11-15",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:15:00Z",
+      "updatedAt": "2026-11-15T07:10:00Z",
+      "preview": "Plan to clear the open-PR backlog in the harness repos (all litlfred repos except qou, sgex, pqtorus, folio-test, fmlrunner). Owner ask 07:00Z \"for harness repos: make a plan to resolve\", then 07:01Z \"coordinate w/ merge manager. stack merges and fix issues afterwards, send agents to complete work on stalled PRs\" and 07:03Z \"dispatch siblings fix existing reds\". The merge manager (thread cmsg_017W",
+      "file": "beans/defs/folio-assistant-pb15--harness-pr-backlog-plan-2026-11-15.md"
+    },
+    {
       "id": "folio-assistant-pbv1",
       "title": "BEANS BY PROCESS: processed-beans and processed-bean visualiser pages (BPMN with bean markers, filters, stalled search)",
       "status": "completed",
@@ -1284,7 +1326,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-13T20:49:00Z",
+      "updatedAt": "2026-11-15T07:37:00Z",
       "preview": "Every agent follows these. Newest rule wins where two disagree; the owner's message in a thread wins over this list. Links `folio-assistant-xxxx` point to the detail record.\n\n- WHO MIGRATION (user 16:10Z 11-11): smart-* and dth-* repos move to WorldHealthOrganization. Q-MIG-1 = A (draft PRs removing hard-coded owner: tools#1918, smart-base#351). Q-MIG-3 = B: IRIs use staging root worldhealthorgani",
       "file": "beans/defs/folio-assistant-php1--owner-standing-rules-moved-from-project-memory-202.md"
     },
@@ -1340,8 +1382,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T12:50:00Z",
-      "preview": "Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RBRzWsBEvv2Z19MPdrGVRt. Owner chose C and said OK to merge. The thread merges in order as CI goes green.\n\n- [x] folio-assistant-core#764 (first)\n- [ ] then dth-hrh#121 (blocked on lock/pins), dth-phc#41 (merged), dth-sfp#10 (merged into dth-sfp#8)\n- [x] cat-harness-tools#1950 and smart-tr",
+      "updatedAt": "2026-11-14T17:08:00Z",
+      "preview": "Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RBRzWsBEvv2Z19MPdrGVRt. Owner chose C and said OK to merge. The thread merges in order as CI goes green.\n\n- [x] folio-assistant-core#764 (first)\n- [x] then dth-hrh#121 (merged 2026-11-14 17:08Z), dth-phc#41 (merged), dth-sfp#10 (merged into dth-sfp#8)\n- [x] cat-harness-tools#1950 and smar",
       "file": "beans/defs/folio-assistant-rk1e--archimate-links-back-to-smart-ra-merge-the-pr-chai.md"
     },
     {
@@ -1536,7 +1578,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-13T20:49:00Z",
+      "updatedAt": "2026-11-15T06:35:00Z",
       "preview": "Coordinator's handover summary, 2026-11-12 09:32Z, one child bean per open workstream. Re-check every PR live on GitHub before acting. Append `_<UTC>_ — <change>` to the child and bump `updated_at` after each change; complete a child when its work is merged or handed off.\n\nStanding rules for this window (full list folio-assistant-php1): litlfred forks only; never bump versions or cut tags; content",
       "file": "beans/defs/folio-assistant-v8bg--handover-2026-11-12-09-32z-open-workstreams.md"
     },
@@ -1780,8 +1822,8 @@
         "share": 0.7936507936507936
       }
     ],
-    "orphanOpen": 23,
-    "openTotal": 37,
+    "orphanOpen": 26,
+    "openTotal": 40,
     "coveredOpen": 13,
     "duplicateIds": 0
   }

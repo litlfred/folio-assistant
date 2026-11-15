@@ -1,0 +1,2432 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-270157",
+  "instance": "who-iris",
+  "about": "library/10665-270157",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "routine hct",
+        "score": 14.1849,
+        "evidence": []
+      },
+      {
+        "term": "offered hct",
+        "score": 12.4098,
+        "evidence": []
+      },
+      {
+        "term": "provider-initiated hct",
+        "score": 11.0131,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 10.5421,
+        "evidence": []
+      },
+      {
+        "term": "hct policy",
+        "score": 10.421,
+        "evidence": []
+      },
+      {
+        "term": "hct programme",
+        "score": 10.3098,
+        "evidence": []
+      },
+      {
+        "term": "hct relative",
+        "score": 10.1396,
+        "evidence": []
+      },
+      {
+        "term": "ugandan hospitals",
+        "score": 9.4587,
+        "evidence": []
+      },
+      {
+        "term": "rhoda wanyenze",
+        "score": 9.4304,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 9.357,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 8.8257,
+        "evidence": []
+      },
+      {
+        "term": "inpatient wards",
+        "score": 8.5962,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "routine hct",
+        "score": 473.5132,
+        "evidence": []
+      },
+      {
+        "term": "offered hct",
+        "score": 440.2356,
+        "evidence": []
+      },
+      {
+        "term": "provider-initiated hct",
+        "score": 389.9919,
+        "evidence": []
+      },
+      {
+        "term": "hct policy",
+        "score": 381.8843,
+        "evidence": []
+      },
+      {
+        "term": "hct programme",
+        "score": 381.3809,
+        "evidence": []
+      },
+      {
+        "term": "hct relative",
+        "score": 379.1953,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 352.5249,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 275.7163,
+        "evidence": []
+      },
+      {
+        "term": "hiv-positive patients",
+        "score": 274.4904,
+        "evidence": []
+      },
+      {
+        "term": "hiv clinics",
+        "score": 271.0136,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 260.287,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 258.5632,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hiv aids",
+        "score": 6.6897,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 6.1535,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 5.9758,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 5.928,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 5.8618,
+        "evidence": []
+      },
+      {
+        "term": "hiv among",
+        "score": 5.8097,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 5.524,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 5.4307,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 5.3008,
+        "evidence": []
+      },
+      {
+        "term": "hiv clinics",
+        "score": 5.0701,
+        "evidence": []
+      },
+      {
+        "term": "partner hiv",
+        "score": 5.027,
+        "evidence": []
+      },
+      {
+        "term": "routine hiv",
+        "score": 4.9243,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv aids",
+        "score": 263.473,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 259.8733,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 233.5063,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 233.4359,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 230.7604,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 223.3122,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 222.6724,
+        "evidence": []
+      },
+      {
+        "term": "hiv among",
+        "score": 220.0791,
+        "evidence": []
+      },
+      {
+        "term": "partner hiv",
+        "score": 218.6004,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 217.2306,
+        "evidence": []
+      },
+      {
+        "term": "routine hiv",
+        "score": 211.8531,
+        "evidence": []
+      },
+      {
+        "term": "hiv infected",
+        "score": 209.3366,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hiv aids",
+        "score": 6.6897,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 6.1535,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 5.9758,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 5.928,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 5.8618,
+        "evidence": []
+      },
+      {
+        "term": "hiv among",
+        "score": 5.8097,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 5.524,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 5.4307,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 5.3008,
+        "evidence": []
+      },
+      {
+        "term": "hiv clinics",
+        "score": 5.0701,
+        "evidence": []
+      },
+      {
+        "term": "partner hiv",
+        "score": 5.027,
+        "evidence": []
+      },
+      {
+        "term": "routine hiv",
+        "score": 4.9243,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "乌干达",
+        "score": 334.2787,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 321.815,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 294.7084,
+        "evidence": []
+      },
+      {
+        "term": "在世界卫生组织",
+        "score": 271.0019,
+        "evidence": []
+      },
+      {
+        "term": "澳大利亚",
+        "score": 268.3371,
+        "evidence": []
+      },
+      {
+        "term": "在马拉维",
+        "score": 255.6998,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 181.0488,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 180.6541,
+        "evidence": []
+      },
+      {
+        "term": "议程项目",
+        "score": 159.4923,
+        "evidence": []
+      },
+      {
+        "term": "世界医学协会",
+        "score": 135.411,
+        "evidence": []
+      },
+      {
+        "term": "可持续发展目标和世卫组织",
+        "score": 116.9063,
+        "evidence": []
+      },
+      {
+        "term": "流行病学",
+        "score": 114.9967,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "routine hct",
+          "score": 2.8803,
+          "evidence": []
+        },
+        {
+          "term": "mbarara hospitals",
+          "score": 2.2328,
+          "evidence": []
+        },
+        {
+          "term": "ugandan hospitals",
+          "score": 1.9878,
+          "evidence": []
+        },
+        {
+          "term": "hiv seroprevalence",
+          "score": 1.7885,
+          "evidence": []
+        },
+        {
+          "term": "rhoda wanyenze",
+          "score": 1.6841,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.6631,
+          "evidence": []
+        },
+        {
+          "term": "offered hiv",
+          "score": 1.6263,
+          "evidence": []
+        },
+        {
+          "term": "hiv infected",
+          "score": 1.5279,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "routine hct",
+          "score": 112.0773,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 73.3621,
+          "evidence": []
+        },
+        {
+          "term": "offered hiv",
+          "score": 56.8631,
+          "evidence": []
+        },
+        {
+          "term": "hiv seroprevalence",
+          "score": 56.7371,
+          "evidence": []
+        },
+        {
+          "term": "mbarara hospitals",
+          "score": 54.6852,
+          "evidence": []
+        },
+        {
+          "term": "hiv infected",
+          "score": 53.0526,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 52.2136,
+          "evidence": []
+        },
+        {
+          "term": "ugandan hospitals",
+          "score": 49.8569,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 1.129,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.0151,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.8556,
+          "evidence": []
+        },
+        {
+          "term": "hiv infected",
+          "score": 0.8503,
+          "evidence": []
+        },
+        {
+          "term": "offered hiv",
+          "score": 0.8338,
+          "evidence": []
+        },
+        {
+          "term": "hiv seroprevalence",
+          "score": 0.7156,
+          "evidence": []
+        },
+        {
+          "term": "among patients",
+          "score": 0.5132,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.372,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 46.007,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 44.6781,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 36.7446,
+          "evidence": []
+        },
+        {
+          "term": "hiv infected",
+          "score": 36.3382,
+          "evidence": []
+        },
+        {
+          "term": "offered hiv",
+          "score": 36.0441,
+          "evidence": []
+        },
+        {
+          "term": "hiv seroprevalence",
+          "score": 34.4311,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-positive",
+          "score": 10.1109,
+          "evidence": []
+        },
+        {
+          "term": "among patients",
+          "score": 8.4108,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 1.129,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.0151,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.8556,
+          "evidence": []
+        },
+        {
+          "term": "hiv infected",
+          "score": 0.8503,
+          "evidence": []
+        },
+        {
+          "term": "offered hiv",
+          "score": 0.8338,
+          "evidence": []
+        },
+        {
+          "term": "hiv seroprevalence",
+          "score": 0.7475,
+          "evidence": []
+        },
+        {
+          "term": "among patients",
+          "score": 0.5132,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.372,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "注意到",
+          "score": 39.5958,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 39.4897,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 34.6886,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 31.9521,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 31.7121,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 30.232,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 23.0744,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 22.7077,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "offered hct",
+          "score": 3.2457,
+          "evidence": []
+        },
+        {
+          "term": "routine hct",
+          "score": 3.0369,
+          "evidence": []
+        },
+        {
+          "term": "inpatient wards",
+          "score": 2.7159,
+          "evidence": []
+        },
+        {
+          "term": "hct programme",
+          "score": 2.5627,
+          "evidence": []
+        },
+        {
+          "term": "outpatient clinics",
+          "score": 2.0348,
+          "evidence": []
+        },
+        {
+          "term": "hos pital",
+          "score": 1.9441,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 1.8387,
+          "evidence": []
+        },
+        {
+          "term": "mulago",
+          "score": 1.6996,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "offered hct",
+          "score": 141.0066,
+          "evidence": []
+        },
+        {
+          "term": "routine hct",
+          "score": 133.1463,
+          "evidence": []
+        },
+        {
+          "term": "hct programme",
+          "score": 116.0328,
+          "evidence": []
+        },
+        {
+          "term": "inpatient wards",
+          "score": 87.0371,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 70.5844,
+          "evidence": []
+        },
+        {
+          "term": "outpatient clinics",
+          "score": 55.5989,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 53.7508,
+          "evidence": []
+        },
+        {
+          "term": "mulago",
+          "score": 50.24,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 1.0548,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 0.9717,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.9464,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 0.572,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.4654,
+          "evidence": []
+        },
+        {
+          "term": "children aged",
+          "score": 0.4538,
+          "evidence": []
+        },
+        {
+          "term": "care available",
+          "score": 0.414,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 42.7278,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 39.5865,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 38.4848,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 12.1975,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 11.3799,
+          "evidence": []
+        },
+        {
+          "term": "children aged",
+          "score": 7.9517,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 7.9168,
+          "evidence": []
+        },
+        {
+          "term": "sexual partner",
+          "score": 7.7467,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 1.0548,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 0.9717,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.9464,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 0.572,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.4654,
+          "evidence": []
+        },
+        {
+          "term": "children aged",
+          "score": 0.4538,
+          "evidence": []
+        },
+        {
+          "term": "care available",
+          "score": 0.414,
+          "evidence": []
+        },
+        {
+          "term": "sexual partner",
+          "score": 0.3492,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 34.57,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 30.7475,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 27.6425,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 27.1641,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 26.5928,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 25.9184,
+          "evidence": []
+        },
+        {
+          "term": "et-ot",
+          "score": 19.5429,
+          "evidence": []
+        },
+        {
+          "term": "ge-9e",
+          "score": 19.5429,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "offered hct",
+          "score": 2.7173,
+          "evidence": []
+        },
+        {
+          "term": "routine hct",
+          "score": 2.4847,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-positive",
+          "score": 2.351,
+          "evidence": []
+        },
+        {
+          "term": "hos pital",
+          "score": 2.1994,
+          "evidence": []
+        },
+        {
+          "term": "medical wards",
+          "score": 2.1447,
+          "evidence": []
+        },
+        {
+          "term": "chil dren",
+          "score": 1.7727,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-negative",
+          "score": 1.7481,
+          "evidence": []
+        },
+        {
+          "term": "paediatric patients",
+          "score": 1.7042,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tested hiv-positive",
+          "score": 93.5234,
+          "evidence": []
+        },
+        {
+          "term": "offered hct",
+          "score": 88.1291,
+          "evidence": []
+        },
+        {
+          "term": "routine hct",
+          "score": 80.6191,
+          "evidence": []
+        },
+        {
+          "term": "paediatric patients",
+          "score": 74.0161,
+          "evidence": []
+        },
+        {
+          "term": "medical wards",
+          "score": 62.7523,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-negative",
+          "score": 60.7705,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 59.985,
+          "evidence": []
+        },
+        {
+          "term": "hiv among",
+          "score": 55.1934,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 0.979,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.9615,
+          "evidence": []
+        },
+        {
+          "term": "hiv among",
+          "score": 0.9544,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.8964,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.7571,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-positive",
+          "score": 0.5141,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-negative",
+          "score": 0.3957,
+          "evidence": []
+        },
+        {
+          "term": "paediatric patients",
+          "score": 0.3742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 47.0167,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 42.4741,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 41.9893,
+          "evidence": []
+        },
+        {
+          "term": "hiv among",
+          "score": 38.7735,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 36.4267,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-positive",
+          "score": 14.3632,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-negative",
+          "score": 11.3173,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 10.2474,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 0.979,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.9615,
+          "evidence": []
+        },
+        {
+          "term": "hiv among",
+          "score": 0.9544,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.8964,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.7571,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-positive",
+          "score": 0.5141,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv-negative",
+          "score": 0.3957,
+          "evidence": []
+        },
+        {
+          "term": "paediatric patients",
+          "score": 0.3742,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 32.39,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 28.4877,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 28.0568,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 27.1218,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 25.6781,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 25.1649,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 24.9015,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 24.2016,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv testing",
+          "score": 0.8896,
+          "evidence": []
+        },
+        {
+          "term": "married",
+          "score": 0.7873,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.741,
+          "evidence": []
+        },
+        {
+          "term": "partner",
+          "score": 0.7344,
+          "evidence": []
+        },
+        {
+          "term": "variable",
+          "score": 0.5875,
+          "evidence": []
+        },
+        {
+          "term": "inpatient",
+          "score": 0.5831,
+          "evidence": []
+        },
+        {
+          "term": "tested",
+          "score": 0.5741,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "years",
+          "score": 20.6605,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 15.0844,
+          "evidence": []
+        },
+        {
+          "term": "partner",
+          "score": 14.3745,
+          "evidence": []
+        },
+        {
+          "term": "married",
+          "score": 11.2734,
+          "evidence": []
+        },
+        {
+          "term": "tested",
+          "score": 9.2484,
+          "evidence": []
+        },
+        {
+          "term": "variable",
+          "score": 9.1738,
+          "evidence": []
+        },
+        {
+          "term": "inpatient",
+          "score": 8.7476,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 0.3325,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.1546,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1456,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.1398,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.1327,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1296,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 0.1258,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 9.9753,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 3.0077,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 2.8245,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 2.5527,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 2.2566,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 2.1685,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 2.1541,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 0.3325,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.1546,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.1327,
+          "evidence": []
+        },
+        {
+          "term": "tested",
+          "score": 0.1064,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 0.1051,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive",
+          "score": 0.101,
+          "evidence": []
+        },
+        {
+          "term": "prevalence",
+          "score": 0.1005,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 27.6369,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 24.6427,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 22.0592,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 21.5238,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 21.0439,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 20.2266,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 18.7033,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "routine hct",
+          "score": 2.6455,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 1.4473,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.3587,
+          "evidence": []
+        },
+        {
+          "term": "patients aged",
+          "score": 1.3298,
+          "evidence": []
+        },
+        {
+          "term": "adjusted odds",
+          "score": 1.2865,
+          "evidence": []
+        },
+        {
+          "term": "odds ratio",
+          "score": 1.2192,
+          "evidence": []
+        },
+        {
+          "term": "wards",
+          "score": 1.143,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 0.9826,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "routine hct",
+          "score": 88.411,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 41.5594,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 40.5774,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 40.47,
+          "evidence": []
+        },
+        {
+          "term": "patients aged",
+          "score": 28.7901,
+          "evidence": []
+        },
+        {
+          "term": "wards",
+          "score": 23.6975,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 20.6605,
+          "evidence": []
+        },
+        {
+          "term": "adjusted odds",
+          "score": 20.5601,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 0.765,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 0.7177,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.6162,
+          "evidence": []
+        },
+        {
+          "term": "follow-up care",
+          "score": 0.3923,
+          "evidence": []
+        },
+        {
+          "term": "patients aged",
+          "score": 0.3294,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.2759,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 0.2742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 26.7882,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 22.498,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 21.4185,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 5.8142,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 4.9657,
+          "evidence": []
+        },
+        {
+          "term": "patients aged",
+          "score": 4.9649,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 4.5343,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 4.3232,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 0.765,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 0.7177,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.6162,
+          "evidence": []
+        },
+        {
+          "term": "follow-up care",
+          "score": 0.3923,
+          "evidence": []
+        },
+        {
+          "term": "patients aged",
+          "score": 0.3294,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 0.2742,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 0.2138,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 21.8324,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 20.8071,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 20.4704,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 18.3851,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 17.7536,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 16.3918,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 15.9554,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 15.9036,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del vih",
+          "score": 2.8371,
+          "evidence": []
+        },
+        {
+          "term": "los familiares",
+          "score": 2.7311,
+          "evidence": []
+        },
+        {
+          "term": "vih fue",
+          "score": 2.7213,
+          "evidence": []
+        },
+        {
+          "term": "vih était",
+          "score": 2.6437,
+          "evidence": []
+        },
+        {
+          "term": "vih sida",
+          "score": 2.6266,
+          "evidence": []
+        },
+        {
+          "term": "pruebas del",
+          "score": 2.5738,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 2.5416,
+          "evidence": []
+        },
+        {
+          "term": "las pruebas",
+          "score": 2.4193,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del vih",
+          "score": 152.4912,
+          "evidence": []
+        },
+        {
+          "term": "vih était",
+          "score": 131.8616,
+          "evidence": []
+        },
+        {
+          "term": "vih fue",
+          "score": 131.4284,
+          "evidence": []
+        },
+        {
+          "term": "vih sida",
+          "score": 128.5103,
+          "evidence": []
+        },
+        {
+          "term": "por vih",
+          "score": 124.6924,
+          "evidence": []
+        },
+        {
+          "term": "pruebas del",
+          "score": 92.0128,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 90.5086,
+          "evidence": []
+        },
+        {
+          "term": "los familiares",
+          "score": 87.8423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los que",
+          "score": 1.4896,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.2051,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 1.0098,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 0.9979,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 0.9426,
+          "evidence": []
+        },
+        {
+          "term": "del vih",
+          "score": 0.934,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 0.8632,
+          "evidence": []
+        },
+        {
+          "term": "por vih",
+          "score": 0.8411,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los que",
+          "score": 69.9099,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 53.1036,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 48.2957,
+          "evidence": []
+        },
+        {
+          "term": "los familiares",
+          "score": 43.8286,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 37.1708,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 33.8511,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 33.8511,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 33.8511,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los que",
+          "score": 1.4896,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.2051,
+          "evidence": []
+        },
+        {
+          "term": "les patients",
+          "score": 1.0098,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 0.9979,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 0.9426,
+          "evidence": []
+        },
+        {
+          "term": "del vih",
+          "score": 0.934,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 0.9198,
+          "evidence": []
+        },
+        {
+          "term": "por vih",
+          "score": 0.8411,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 65.5425,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 53.5529,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 53.4209,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 51.8093,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 47.9206,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 44.8838,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 42.2802,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 41.604,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "defic syndr",
+          "score": 2.1285,
+          "evidence": []
+        },
+        {
+          "term": "voluntary counselling",
+          "score": 1.9785,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 1.8826,
+          "evidence": []
+        },
+        {
+          "term": "acquir immune",
+          "score": 1.8529,
+          "evidence": []
+        },
+        {
+          "term": "mmwr morb",
+          "score": 1.8088,
+          "evidence": []
+        },
+        {
+          "term": "pmid",
+          "score": 1.7552,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 1.7054,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.5972,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "voluntary hiv",
+          "score": 70.8447,
+          "evidence": []
+        },
+        {
+          "term": "pmid",
+          "score": 69.0004,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 68.1489,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 66.9242,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 65.9305,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 53.373,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 48.7947,
+          "evidence": []
+        },
+        {
+          "term": "defic syndr",
+          "score": 45.0936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 1.3011,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.1218,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.9946,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.9782,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 0.9727,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 0.7334,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.6022,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4227,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 63.4384,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 54.4579,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 51.9115,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 50.9119,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 48.7968,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 44.3977,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 24.1635,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 10.7711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 1.3011,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.1218,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.9946,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.9782,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 0.9727,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 0.7899,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.6022,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4227,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "注意到",
+          "score": 92.0231,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 75.2345,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 69.9521,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 69.7758,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 66.3447,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 66.2159,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 62.0252,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 61.5777,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pmid",
+          "score": 1.3316,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.2371,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 1.2089,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 1.2002,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 0.9682,
+          "evidence": []
+        },
+        {
+          "term": "losina",
+          "score": 0.9354,
+          "evidence": []
+        },
+        {
+          "term": "wanyenze",
+          "score": 0.8358,
+          "evidence": []
+        },
+        {
+          "term": "botswana",
+          "score": 0.6561,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pmid",
+          "score": 34.5002,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 31.2261,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 27.0135,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 23.8025,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 22.0536,
+          "evidence": []
+        },
+        {
+          "term": "losina",
+          "score": 15.1652,
+          "evidence": []
+        },
+        {
+          "term": "wanyenze",
+          "score": 13.5434,
+          "evidence": []
+        },
+        {
+          "term": "uganda",
+          "score": 11.7189,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 0.483,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 0.4822,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.4198,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.2917,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 0.2283,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 0.2167,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.2154,
+          "evidence": []
+        },
+        {
+          "term": "infect",
+          "score": 0.2103,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 20.4705,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 18.0822,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 17.7312,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 12.1702,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 7.1961,
+          "evidence": []
+        },
+        {
+          "term": "june",
+          "score": 3.8174,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 3.4724,
+          "evidence": []
+        },
+        {
+          "term": "pmid",
+          "score": 2.8909,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 0.483,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 0.4822,
+          "evidence": []
+        },
+        {
+          "term": "routine hiv",
+          "score": 0.4198,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.2917,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 0.2283,
+          "evidence": []
+        },
+        {
+          "term": "med",
+          "score": 0.1927,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1654,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1435,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "注意到",
+          "score": 76.4068,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 75.6384,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 61.8703,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 56.9818,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 54.3517,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 54.2837,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 54.0413,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 53.5863,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

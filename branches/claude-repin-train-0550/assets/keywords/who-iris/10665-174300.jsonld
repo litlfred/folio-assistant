@@ -1,0 +1,266 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-174300",
+  "instance": "who-iris",
+  "about": "library/10665-174300",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "посвященный обзору",
+        "score": 1.8364,
+        "evidence": []
+      },
+      {
+        "term": "генерального директора",
+        "score": 1.5663,
+        "evidence": []
+      },
+      {
+        "term": "обзору программ",
+        "score": 1.5345,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "посвященный обзору",
+        "score": 29.7866,
+        "evidence": []
+      },
+      {
+        "term": "программ вакцинации",
+        "score": 27.5514,
+        "evidence": []
+      },
+      {
+        "term": "генерального директора",
+        "score": 25.1814,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "воз",
+        "score": 0.0483,
+        "evidence": []
+      },
+      {
+        "term": "программ вакцинации",
+        "score": 0.0408,
+        "evidence": []
+      },
+      {
+        "term": "спид",
+        "score": 0.04,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "спид",
+        "score": 1.4171,
+        "evidence": []
+      },
+      {
+        "term": "воз",
+        "score": 0.6115,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 0.6004,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "программ вакцинации",
+        "score": 0.0408,
+        "evidence": []
+      },
+      {
+        "term": "обзору программ",
+        "score": 0.0238,
+        "evidence": []
+      },
+      {
+        "term": "генерального директора",
+        "score": 0.0214,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 341.9246,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 324.2914,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 313.6988,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-резолюции-исполнительного-комитета": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "посвященный обзору",
+          "score": 1.8364,
+          "evidence": []
+        },
+        {
+          "term": "генерального директора",
+          "score": 1.5663,
+          "evidence": []
+        },
+        {
+          "term": "обзору программ",
+          "score": 1.5345,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "посвященный обзору",
+          "score": 29.7866,
+          "evidence": []
+        },
+        {
+          "term": "программ вакцинации",
+          "score": 27.5514,
+          "evidence": []
+        },
+        {
+          "term": "генерального директора",
+          "score": 25.1814,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "воз",
+          "score": 0.0483,
+          "evidence": []
+        },
+        {
+          "term": "программ вакцинации",
+          "score": 0.0408,
+          "evidence": []
+        },
+        {
+          "term": "спид",
+          "score": 0.04,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "спид",
+          "score": 1.4171,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.6115,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.6004,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "программ вакцинации",
+          "score": 0.0408,
+          "evidence": []
+        },
+        {
+          "term": "резолюции",
+          "score": 0.0296,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "обзору программ",
+          "score": 0.0238,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 341.9246,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 324.2914,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 313.6988,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

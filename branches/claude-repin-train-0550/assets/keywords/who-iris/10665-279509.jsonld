@@ -1,0 +1,436 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-279509",
+  "instance": "who-iris",
+  "about": "library/10665-279509",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "适用时 还包括区域经济一体化组织",
+        "score": 2.5988,
+        "evidence": []
+      },
+      {
+        "term": "号决议",
+        "score": 0.9847,
+        "evidence": []
+      },
+      {
+        "term": "wha",
+        "score": 0.6801,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "适用时 还包括区域经济一体化组织",
+        "score": 49.6546,
+        "evidence": []
+      },
+      {
+        "term": "号决议",
+        "score": 15.1652,
+        "evidence": []
+      },
+      {
+        "term": "wha",
+        "score": 12.2357,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "oms",
+        "score": 0.0063,
+        "evidence": []
+      },
+      {
+        "term": "wha",
+        "score": 0.0063,
+        "evidence": []
+      },
+      {
+        "term": "consejo",
+        "score": 0.0061,
+        "evidence": []
+      },
+      {
+        "term": "mundial",
+        "score": 0.0061,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 0.0058,
+        "evidence": []
+      },
+      {
+        "term": "pdf",
+        "score": 0.0056,
+        "evidence": []
+      },
+      {
+        "term": "global",
+        "score": 0.0054,
+        "evidence": []
+      },
+      {
+        "term": "world",
+        "score": 0.0051,
+        "evidence": []
+      },
+      {
+        "term": "handle",
+        "score": 0.0051,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "world",
+        "score": 0.0983,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis",
+        "score": 0.0917,
+        "evidence": []
+      },
+      {
+        "term": "consultado",
+        "score": 0.0917,
+        "evidence": []
+      },
+      {
+        "term": "que",
+        "score": 0.0914,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 0.0881,
+        "evidence": []
+      },
+      {
+        "term": "licence",
+        "score": 0.0779,
+        "evidence": []
+      },
+      {
+        "term": "las",
+        "score": 0.074,
+        "evidence": []
+      },
+      {
+        "term": "consejo",
+        "score": 0.0739,
+        "evidence": []
+      },
+      {
+        "term": "geneva",
+        "score": 0.0722,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "wha",
+        "score": 0.0063,
+        "evidence": []
+      },
+      {
+        "term": "号决议",
+        "score": 0.0001,
+        "evidence": []
+      },
+      {
+        "term": "适用时 还包括区域经济一体化组织",
+        "score": 0,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "适用时 还包括区域经济一体化组织",
+        "score": 130527.8908,
+        "evidence": []
+      },
+      {
+        "term": "文件a",
+        "score": 47967.9735,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 43715.4606,
+        "evidence": []
+      },
+      {
+        "term": "敦促会员国",
+        "score": 41042.8614,
+        "evidence": []
+      },
+      {
+        "term": "确定优先领域",
+        "score": 41042.8614,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 38898.8091,
+        "evidence": []
+      },
+      {
+        "term": "予以实施",
+        "score": 28124.3513,
+        "evidence": []
+      },
+      {
+        "term": "数据安全",
+        "score": 27834.8675,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 27003.9756,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-数字卫生保健": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "适用时 还包括区域经济一体化组织",
+          "score": 2.5988,
+          "evidence": []
+        },
+        {
+          "term": "号决议",
+          "score": 0.9847,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 0.6801,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "适用时 还包括区域经济一体化组织",
+          "score": 49.6546,
+          "evidence": []
+        },
+        {
+          "term": "号决议",
+          "score": 15.1652,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 12.2357,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "oms",
+          "score": 0.0063,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 0.0063,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.0061,
+          "evidence": []
+        },
+        {
+          "term": "mundial",
+          "score": 0.0061,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.0058,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 0.0056,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.0054,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.0051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world",
+          "score": 0.0983,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 0.0917,
+          "evidence": []
+        },
+        {
+          "term": "consultado",
+          "score": 0.0917,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.0914,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0881,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.0779,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.074,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.0739,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "wha",
+          "score": 0.0063,
+          "evidence": []
+        },
+        {
+          "term": "号决议",
+          "score": 0.0001,
+          "evidence": []
+        },
+        {
+          "term": "适用时 还包括区域经济一体化组织",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "数字卫生保健",
+          "score": 0,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "适用时 还包括区域经济一体化组织",
+          "score": 130527.8908,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 47967.9735,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 43715.4606,
+          "evidence": []
+        },
+        {
+          "term": "敦促会员国",
+          "score": 41042.8614,
+          "evidence": []
+        },
+        {
+          "term": "确定优先领域",
+          "score": 41042.8614,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 38898.8091,
+          "evidence": []
+        },
+        {
+          "term": "予以实施",
+          "score": 28124.3513,
+          "evidence": []
+        },
+        {
+          "term": "数据安全",
+          "score": 27834.8675,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

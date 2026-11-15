@@ -1,0 +1,1042 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-174553",
+  "instance": "who-iris",
+  "about": "library/10665-174553",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "conseil exécutif",
+        "score": 4.7181,
+        "evidence": []
+      },
+      {
+        "term": "trente-cinquième assemblée",
+        "score": 3.9985,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 3.9527,
+        "evidence": []
+      },
+      {
+        "term": "les etats",
+        "score": 3.6256,
+        "evidence": []
+      },
+      {
+        "term": "les progrès",
+        "score": 3.6007,
+        "evidence": []
+      },
+      {
+        "term": "les orientations",
+        "score": 3.3388,
+        "evidence": []
+      },
+      {
+        "term": "exécutif sur",
+        "score": 3.3338,
+        "evidence": []
+      },
+      {
+        "term": "pour exécution",
+        "score": 3.2353,
+        "evidence": []
+      },
+      {
+        "term": "assemblée mondiale",
+        "score": 3.228,
+        "evidence": []
+      },
+      {
+        "term": "selon les",
+        "score": 3.1451,
+        "evidence": []
+      },
+      {
+        "term": "les médicaments",
+        "score": 2.8672,
+        "evidence": []
+      },
+      {
+        "term": "approuvées par",
+        "score": 2.7162,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "pour les",
+        "score": 92.1739,
+        "evidence": []
+      },
+      {
+        "term": "conseil exécutif",
+        "score": 89.8477,
+        "evidence": []
+      },
+      {
+        "term": "les etats",
+        "score": 83.5121,
+        "evidence": []
+      },
+      {
+        "term": "les progrès",
+        "score": 79.2955,
+        "evidence": []
+      },
+      {
+        "term": "trente-cinquième assemblée",
+        "score": 78.7968,
+        "evidence": []
+      },
+      {
+        "term": "les orientations",
+        "score": 75.7326,
+        "evidence": []
+      },
+      {
+        "term": "selon les",
+        "score": 73.3303,
+        "evidence": []
+      },
+      {
+        "term": "les médicaments",
+        "score": 69.862,
+        "evidence": []
+      },
+      {
+        "term": "assemblée mondiale",
+        "score": 67.5985,
+        "evidence": []
+      },
+      {
+        "term": "pour exécution",
+        "score": 57.9314,
+        "evidence": []
+      },
+      {
+        "term": "exécutif sur",
+        "score": 53.591,
+        "evidence": []
+      },
+      {
+        "term": "programme action",
+        "score": 46.315,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 2.5868,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 2.0174,
+        "evidence": []
+      },
+      {
+        "term": "santé dans",
+        "score": 1.8095,
+        "evidence": []
+      },
+      {
+        "term": "les progrès",
+        "score": 1.6457,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 1.6428,
+        "evidence": []
+      },
+      {
+        "term": "selon les",
+        "score": 1.5858,
+        "evidence": []
+      },
+      {
+        "term": "les etats",
+        "score": 1.4863,
+        "evidence": []
+      },
+      {
+        "term": "les médicaments",
+        "score": 1.4863,
+        "evidence": []
+      },
+      {
+        "term": "les orientations",
+        "score": 1.4863,
+        "evidence": []
+      },
+      {
+        "term": "des commentaires",
+        "score": 1.4448,
+        "evidence": []
+      },
+      {
+        "term": "réserve des",
+        "score": 1.4448,
+        "evidence": []
+      },
+      {
+        "term": "d'action pour",
+        "score": 1.1005,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 71.0352,
+        "evidence": []
+      },
+      {
+        "term": "les etats",
+        "score": 49.5231,
+        "evidence": []
+      },
+      {
+        "term": "les médicaments",
+        "score": 49.5231,
+        "evidence": []
+      },
+      {
+        "term": "les orientations",
+        "score": 49.5231,
+        "evidence": []
+      },
+      {
+        "term": "les progrès",
+        "score": 49.5231,
+        "evidence": []
+      },
+      {
+        "term": "selon les",
+        "score": 49.5231,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 44.4178,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 35.3913,
+        "evidence": []
+      },
+      {
+        "term": "des commentaires",
+        "score": 33.5502,
+        "evidence": []
+      },
+      {
+        "term": "réserve des",
+        "score": 33.5502,
+        "evidence": []
+      },
+      {
+        "term": "santé dans",
+        "score": 31.8155,
+        "evidence": []
+      },
+      {
+        "term": "d'action pour",
+        "score": 21.512,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 2.5868,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 2.0174,
+        "evidence": []
+      },
+      {
+        "term": "santé dans",
+        "score": 1.8095,
+        "evidence": []
+      },
+      {
+        "term": "les progrès",
+        "score": 1.6457,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 1.6428,
+        "evidence": []
+      },
+      {
+        "term": "selon les",
+        "score": 1.5858,
+        "evidence": []
+      },
+      {
+        "term": "les etats",
+        "score": 1.5563,
+        "evidence": []
+      },
+      {
+        "term": "les orientations",
+        "score": 1.5189,
+        "evidence": []
+      },
+      {
+        "term": "les médicaments",
+        "score": 1.4963,
+        "evidence": []
+      },
+      {
+        "term": "des commentaires",
+        "score": 1.4755,
+        "evidence": []
+      },
+      {
+        "term": "réserve des",
+        "score": 1.4531,
+        "evidence": []
+      },
+      {
+        "term": "d'action pour",
+        "score": 1.1366,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "捐助者",
+        "score": 120.825,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 105.0513,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 84.5063,
+        "evidence": []
+      },
+      {
+        "term": "正如edwards",
+        "score": 65.5264,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 63.4017,
+        "evidence": []
+      },
+      {
+        "term": "gonzalvo-cirac",
+        "score": 60.225,
+        "evidence": []
+      },
+      {
+        "term": "尤其在发展中国家",
+        "score": 58.9705,
+        "evidence": []
+      },
+      {
+        "term": "必要的",
+        "score": 55.7922,
+        "evidence": []
+      },
+      {
+        "term": "中所讨论的一样",
+        "score": 55.7504,
+        "evidence": []
+      },
+      {
+        "term": "非同寻常",
+        "score": 55.113,
+        "evidence": []
+      },
+      {
+        "term": "在这些活动中",
+        "score": 54.7628,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 51.5121,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conseil exécutif",
+          "score": 2.0336,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 1.8981,
+          "evidence": []
+        },
+        {
+          "term": "réserve des",
+          "score": 1.5644,
+          "evidence": []
+        },
+        {
+          "term": "résolution wha",
+          "score": 1.557,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 1.5199,
+          "evidence": []
+        },
+        {
+          "term": "les médicaments",
+          "score": 1.4522,
+          "evidence": []
+        },
+        {
+          "term": "sous réserve",
+          "score": 1.4483,
+          "evidence": []
+        },
+        {
+          "term": "d'action pour",
+          "score": 1.4379,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "assemblée mondiale",
+          "score": 45.0657,
+          "evidence": []
+        },
+        {
+          "term": "conseil exécutif",
+          "score": 44.5123,
+          "evidence": []
+        },
+        {
+          "term": "les médicaments",
+          "score": 32.2505,
+          "evidence": []
+        },
+        {
+          "term": "résolution wha",
+          "score": 29.5891,
+          "evidence": []
+        },
+        {
+          "term": "réserve des",
+          "score": 27.0907,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 26.0691,
+          "evidence": []
+        },
+        {
+          "term": "d'action pour",
+          "score": 25.8531,
+          "evidence": []
+        },
+        {
+          "term": "ayant examiné",
+          "score": 24.101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.6227,
+          "evidence": []
+        },
+        {
+          "term": "les médicaments",
+          "score": 0.6227,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6161,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 0.6161,
+          "evidence": []
+        },
+        {
+          "term": "réserve des",
+          "score": 0.6161,
+          "evidence": []
+        },
+        {
+          "term": "d'action pour",
+          "score": 0.4682,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.4021,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3755,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 19.5359,
+          "evidence": []
+        },
+        {
+          "term": "les médicaments",
+          "score": 19.5359,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 15.7627,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 15.7627,
+          "evidence": []
+        },
+        {
+          "term": "réserve des",
+          "score": 15.7627,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 11.9369,
+          "evidence": []
+        },
+        {
+          "term": "d'action pour",
+          "score": 9.133,
+          "evidence": []
+        },
+        {
+          "term": "numérique",
+          "score": 6.6516,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les médicaments",
+          "score": 0.6334,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 0.632,
+          "evidence": []
+        },
+        {
+          "term": "réserve des",
+          "score": 0.6193,
+          "evidence": []
+        },
+        {
+          "term": "d'action pour",
+          "score": 0.4841,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.4021,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3755,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 0.3252,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.322,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 35.1571,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 28.4225,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.3774,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 24.8509,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 22.6225,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 22.4625,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 21.0066,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 20.3749,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "trente-cinquième assemblée",
+          "score": 1.8337,
+          "evidence": []
+        },
+        {
+          "term": "conseil exécutif",
+          "score": 1.7897,
+          "evidence": []
+        },
+        {
+          "term": "pour exécution",
+          "score": 1.6704,
+          "evidence": []
+        },
+        {
+          "term": "etats membres",
+          "score": 1.6205,
+          "evidence": []
+        },
+        {
+          "term": "orientations approuvées",
+          "score": 1.6094,
+          "evidence": []
+        },
+        {
+          "term": "les orientations",
+          "score": 1.5925,
+          "evidence": []
+        },
+        {
+          "term": "restent résoudre",
+          "score": 1.5753,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 1.4738,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les orientations",
+          "score": 40.4587,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 38.8571,
+          "evidence": []
+        },
+        {
+          "term": "conseil exécutif",
+          "score": 34.0016,
+          "evidence": []
+        },
+        {
+          "term": "pour exécution",
+          "score": 32.7834,
+          "evidence": []
+        },
+        {
+          "term": "trente-cinquième assemblée",
+          "score": 31.7828,
+          "evidence": []
+        },
+        {
+          "term": "etats membres",
+          "score": 29.8744,
+          "evidence": []
+        },
+        {
+          "term": "coopération technique",
+          "score": 25.974,
+          "evidence": []
+        },
+        {
+          "term": "orientations approuvées",
+          "score": 25.5347,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que des",
+          "score": 0.8472,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 0.6684,
+          "evidence": []
+        },
+        {
+          "term": "les orientations",
+          "score": 0.6243,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4642,
+          "evidence": []
+        },
+        {
+          "term": "pour exécution",
+          "score": 0.4642,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3924,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3754,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 0.3195,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 23.4459,
+          "evidence": []
+        },
+        {
+          "term": "les orientations",
+          "score": 23.4459,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 23.4459,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 17.3169,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.4282,
+          "evidence": []
+        },
+        {
+          "term": "pour exécution",
+          "score": 9.4282,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.859,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 5.7146,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que des",
+          "score": 0.8472,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 0.6684,
+          "evidence": []
+        },
+        {
+          "term": "les orientations",
+          "score": 0.6411,
+          "evidence": []
+        },
+        {
+          "term": "pour exécution",
+          "score": 0.4728,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3924,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3754,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 0.3195,
+          "evidence": []
+        },
+        {
+          "term": "approuvées par",
+          "score": 0.2582,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 49.7651,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 42.6003,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 33.6597,
+          "evidence": []
+        },
+        {
+          "term": "正如edwards",
+          "score": 27.4106,
+          "evidence": []
+        },
+        {
+          "term": "gonzalvo-cirac",
+          "score": 24.4341,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 24.3463,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 23.5297,
+          "evidence": []
+        },
+        {
+          "term": "在这些活动中",
+          "score": 22.0328,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "continuer",
+          "score": 0.6858,
+          "evidence": []
+        },
+        {
+          "term": "conf",
+          "score": 0.5659,
+          "evidence": []
+        },
+        {
+          "term": "périodiquement",
+          "score": 0.5581,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "continuer",
+          "score": 11.1354,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 7.6418,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 7.5223,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.2393,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2242,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1682,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 6.5413,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 5.7421,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 2.9508,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.2393,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2242,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1682,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 37.6002,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 35.9028,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 32.508,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

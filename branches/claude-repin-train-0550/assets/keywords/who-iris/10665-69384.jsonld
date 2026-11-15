@@ -1,0 +1,4782 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-69384",
+  "instance": "who-iris",
+  "about": "library/10665-69384",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "hpv vaccines",
+        "score": 30.2454,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv immunization",
+        "score": 24.2276,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vaccination",
+        "score": 21.9529,
+        "evidence": []
+      },
+      {
+        "term": "cervical cancer",
+        "score": 21.643,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vac",
+        "score": 21.1433,
+        "evidence": []
+      },
+      {
+        "term": "against hpv",
+        "score": 20.9313,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv infection",
+        "score": 19.908,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different hpv",
+        "score": 19.7974,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv genotypes",
+        "score": 19.4717,
+        "evidence": []
+      },
+      {
+        "term": "hpv types",
+        "score": 19.3538,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "preventing hpv",
+        "score": 18.5991,
+        "evidence": []
+      },
+      {
+        "term": "hpv testing",
+        "score": 18.299,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hpv vaccines",
+        "score": 774.2878,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv immunization",
+        "score": 621.6643,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vaccination",
+        "score": 583.5506,
+        "evidence": []
+      },
+      {
+        "term": "against hpv",
+        "score": 574.594,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vac",
+        "score": 563.8886,
+        "evidence": []
+      },
+      {
+        "term": "hpv infection",
+        "score": 547.7972,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different hpv",
+        "score": 542.4933,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv types",
+        "score": 541.1362,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv genotypes",
+        "score": 541.0574,
+        "evidence": []
+      },
+      {
+        "term": "preventing hpv",
+        "score": 524.036,
+        "evidence": []
+      },
+      {
+        "term": "hpv testing",
+        "score": 519.3081,
+        "evidence": []
+      },
+      {
+        "term": "persistent hpv",
+        "score": 519.1655,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "cervical cancer",
+        "score": 11.757,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vaccine",
+        "score": 11.1716,
+        "evidence": []
+      },
+      {
+        "term": "cancer screening",
+        "score": 10.9198,
+        "evidence": []
+      },
+      {
+        "term": "hpv vaccination",
+        "score": 9.7997,
+        "evidence": []
+      },
+      {
+        "term": "hpv immunization",
+        "score": 9.0044,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cancer prevention",
+        "score": 8.9604,
+        "evidence": []
+      },
+      {
+        "term": "national cervical",
+        "score": 8.3,
+        "evidence": []
+      },
+      {
+        "term": "hpv infection",
+        "score": 7.8739,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical lesions",
+        "score": 7.8665,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health services",
+        "score": 7.652,
+        "evidence": []
+      },
+      {
+        "term": "cancer control",
+        "score": 7.6255,
+        "evidence": []
+      },
+      {
+        "term": "against cancer",
+        "score": 7.6128,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hpv vaccine",
+        "score": 281.3584,
+        "evidence": []
+      },
+      {
+        "term": "hpv vaccination",
+        "score": 260.248,
+        "evidence": []
+      },
+      {
+        "term": "hpv immunization",
+        "score": 250.7834,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cancer screening",
+        "score": 215.6626,
+        "evidence": []
+      },
+      {
+        "term": "hpv infection",
+        "score": 211.8139,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical cancer",
+        "score": 203.0472,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "against hpv",
+        "score": 200.6267,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv testing",
+        "score": 198.7548,
+        "evidence": []
+      },
+      {
+        "term": "different hpv",
+        "score": 187.4659,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv genotypes",
+        "score": 187.4659,
+        "evidence": []
+      },
+      {
+        "term": "hpv types",
+        "score": 187.4659,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vac",
+        "score": 187.4659,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "cervical cancer",
+        "score": 11.757,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv vaccine",
+        "score": 11.1716,
+        "evidence": []
+      },
+      {
+        "term": "cancer screening",
+        "score": 10.9198,
+        "evidence": []
+      },
+      {
+        "term": "hpv vaccination",
+        "score": 9.7997,
+        "evidence": []
+      },
+      {
+        "term": "hpv immunization",
+        "score": 9.0044,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cancer prevention",
+        "score": 8.9604,
+        "evidence": []
+      },
+      {
+        "term": "national cervical",
+        "score": 8.3,
+        "evidence": []
+      },
+      {
+        "term": "hpv infection",
+        "score": 7.8739,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical lesions",
+        "score": 7.8665,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health services",
+        "score": 7.652,
+        "evidence": []
+      },
+      {
+        "term": "cancer control",
+        "score": 7.6255,
+        "evidence": []
+      },
+      {
+        "term": "against cancer",
+        "score": 7.6128,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "提供hpv",
+        "score": 1450.1198,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 1265.8098,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 1217.6708,
+        "evidence": []
+      },
+      {
+        "term": "管理和筹资",
+        "score": 1151.8708,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 1093.1353,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 1072.3668,
+        "evidence": []
+      },
+      {
+        "term": "个部分",
+        "score": 893.4896,
+        "evidence": []
+      },
+      {
+        "term": "宫颈癌",
+        "score": 874.3364,
+        "evidence": []
+      },
+      {
+        "term": "宣传动员",
+        "score": 855.3714,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 836.92,
+        "evidence": []
+      },
+      {
+        "term": "结束语",
+        "score": 760.3974,
+        "evidence": []
+      },
+      {
+        "term": "过程中",
+        "score": 721.4591,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "trol",
+          "score": 0.6082,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.5034,
+          "evidence": []
+        },
+        {
+          "term": "cer",
+          "score": 0.4853,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "trol",
+          "score": 7.8703,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 6.3949,
+          "evidence": []
+        },
+        {
+          "term": "cer",
+          "score": 6.1963,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.0721,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0667,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.0533,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunization",
+          "score": 0.8969,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.8554,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.8121,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.0667,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.0536,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.0517,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 52.2976,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 47.4862,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 35.7587,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-cervical-cancer-and-hpv-infection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 5.6464,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv infection",
+          "score": 4.0621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "against cervical",
+          "score": 2.0014,
+          "evidence": []
+        },
+        {
+          "term": "cancer cases",
+          "score": 1.9789,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 1.9725,
+          "evidence": []
+        },
+        {
+          "term": "persistent hpv",
+          "score": 1.9384,
+          "evidence": []
+        },
+        {
+          "term": "common cancer",
+          "score": 1.9368,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 1.865,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 279.5911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv infection",
+          "score": 133.9809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer cases",
+          "score": 89.027,
+          "evidence": []
+        },
+        {
+          "term": "common cancer",
+          "score": 87.604,
+          "evidence": []
+        },
+        {
+          "term": "against cervical",
+          "score": 74.5583,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 60.4994,
+          "evidence": []
+        },
+        {
+          "term": "persistent hpv",
+          "score": 58.4998,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 43.9997,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 3.0868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv infection",
+          "score": 1.914,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer cases",
+          "score": 0.9382,
+          "evidence": []
+        },
+        {
+          "term": "against cervical",
+          "score": 0.8624,
+          "evidence": []
+        },
+        {
+          "term": "common cancer",
+          "score": 0.7876,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 0.7836,
+          "evidence": []
+        },
+        {
+          "term": "persistent hpv",
+          "score": 0.7301,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 0.6595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 90.7363,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv infection",
+          "score": 56.055,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "persistent hpv",
+          "score": 26.5719,
+          "evidence": []
+        },
+        {
+          "term": "cancer cases",
+          "score": 25.4275,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 24.1778,
+          "evidence": []
+        },
+        {
+          "term": "common cancer",
+          "score": 23.6855,
+          "evidence": []
+        },
+        {
+          "term": "against cervical",
+          "score": 22.9058,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 21.4007,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 3.0868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv infection",
+          "score": 1.914,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer cases",
+          "score": 0.9382,
+          "evidence": []
+        },
+        {
+          "term": "against cervical",
+          "score": 0.8624,
+          "evidence": []
+        },
+        {
+          "term": "common cancer",
+          "score": 0.8342,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 0.7836,
+          "evidence": []
+        },
+        {
+          "term": "persistent hpv",
+          "score": 0.7301,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 0.7016,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 71.1078,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 60.4253,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 56.3481,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 53.5807,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 46.2199,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 43.2103,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 42.2959,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 37.6838,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-vaccines-against-hpv-v-v": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 3.4901,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "efﬁ cacy",
+          "score": 2.3885,
+          "evidence": []
+        },
+        {
+          "term": "immunogenicity",
+          "score": 1.1573,
+          "evidence": []
+        },
+        {
+          "term": "particles",
+          "score": 0.9354,
+          "evidence": []
+        },
+        {
+          "term": "genotypes",
+          "score": 0.7822,
+          "evidence": []
+        },
+        {
+          "term": "contain",
+          "score": 0.6243,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.5208,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 72.1146,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "efﬁ cacy",
+          "score": 45.4957,
+          "evidence": []
+        },
+        {
+          "term": "immunogenicity",
+          "score": 20.6684,
+          "evidence": []
+        },
+        {
+          "term": "particles",
+          "score": 15.1652,
+          "evidence": []
+        },
+        {
+          "term": "genotypes",
+          "score": 12.5217,
+          "evidence": []
+        },
+        {
+          "term": "contain",
+          "score": 8.9605,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 6.8008,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv vaccines",
+          "score": 0.7465,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.2196,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.214,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.2097,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.1453,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 0.1209,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1191,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccines",
+          "score": 14.8108,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 4.162,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 4.0781,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.5911,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 2.8408,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 2.5651,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 2.496,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv vaccines",
+          "score": 0.7465,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.2196,
+          "evidence": []
+        },
+        {
+          "term": "against",
+          "score": 0.114,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "safety",
+          "score": 0.0477,
+          "evidence": []
+        },
+        {
+          "term": "immunogenicity",
+          "score": 0.0373,
+          "evidence": []
+        },
+        {
+          "term": "genotypes",
+          "score": 0.0304,
+          "evidence": []
+        },
+        {
+          "term": "following",
+          "score": 0.0299,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 84.7578,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 78.9907,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 74.3045,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 65.5574,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 64.572,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 62.6176,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 62.3384,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-target-populations-for-hpv-immunization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv",
+          "score": 2.3756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 2.0453,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 1.5685,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 1.5052,
+          "evidence": []
+        },
+        {
+          "term": "popula tion",
+          "score": 1.294,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.2703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.2417,
+          "evidence": []
+        },
+        {
+          "term": "both vaccines",
+          "score": 1.2219,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv",
+          "score": 75.519,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 54.9371,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 43.4655,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 28.5086,
+          "evidence": []
+        },
+        {
+          "term": "age groups",
+          "score": 24.6292,
+          "evidence": []
+        },
+        {
+          "term": "beneﬁ",
+          "score": 24.0979,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 23.7206,
+          "evidence": []
+        },
+        {
+          "term": "both vaccines",
+          "score": 23.4804,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.7808,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.7234,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.701,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.6315,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sexual health",
+          "score": 0.5831,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5537,
+          "evidence": []
+        },
+        {
+          "term": "health strategy",
+          "score": 0.533,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 26.3499,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 16.8904,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 13.4153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv types",
+          "score": 13.175,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 12.5244,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 9.8861,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 9.1807,
+          "evidence": []
+        },
+        {
+          "term": "health strategy",
+          "score": 8.8313,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.7808,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.7234,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.701,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.6315,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sexual health",
+          "score": 0.5831,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5537,
+          "evidence": []
+        },
+        {
+          "term": "health strategy",
+          "score": 0.533,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 67.6453,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 55.5315,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 53.8059,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 52.1497,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 44.597,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 41.9703,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 40.1847,
+          "evidence": []
+        },
+        {
+          "term": "宫颈癌",
+          "score": 36.7242,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-innovative-features-of-hpv-vaccines": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 2.4153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "features",
+          "score": 0.6189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dysplasia",
+          "score": 0.5563,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 35.7169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "features",
+          "score": 7.5519,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dysplasia",
+          "score": 6.8895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv vaccines",
+          "score": 0.277,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer",
+          "score": 0.0806,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.0792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccines",
+          "score": 5.1745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 1.4509,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 1.0123,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv vaccines",
+          "score": 0.277,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer",
+          "score": 0.0806,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0584,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 82.3179,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 67.918,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 65.1438,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-a-unique-opportunity": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 2.2881,
+          "evidence": []
+        },
+        {
+          "term": "immunization vision",
+          "score": 2.0019,
+          "evidence": []
+        },
+        {
+          "term": "global immunization",
+          "score": 1.733,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 1.7271,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.7199,
+          "evidence": []
+        },
+        {
+          "term": "intro duction",
+          "score": 1.679,
+          "evidence": []
+        },
+        {
+          "term": "diseases immunization",
+          "score": 1.5664,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 1.5586,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 68.3387,
+          "evidence": []
+        },
+        {
+          "term": "immunization vision",
+          "score": 56.5505,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 52.7697,
+          "evidence": []
+        },
+        {
+          "term": "global immunization",
+          "score": 50.3137,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 44.7946,
+          "evidence": []
+        },
+        {
+          "term": "diseases immunization",
+          "score": 44.0062,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 42.2604,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 40.4056,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hepatitis vaccine",
+          "score": 0.8369,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.825,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.7631,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.6189,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.5812,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "global immunization",
+          "score": 0.5479,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 0.5363,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hepatitis vaccine",
+          "score": 18.2417,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 17.9995,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 14.9636,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 11.6923,
+          "evidence": []
+        },
+        {
+          "term": "global immunization",
+          "score": 10.9619,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 10.8645,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 10.4234,
+          "evidence": []
+        },
+        {
+          "term": "diseases immunization",
+          "score": 10.2192,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hepatitis vaccine",
+          "score": 0.8369,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.825,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.7631,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.6189,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.5812,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "global immunization",
+          "score": 0.5479,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 0.5363,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 129.9349,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 106.9202,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 104.699,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 102.1138,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 91.0274,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 79.7529,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 78.1052,
+          "evidence": []
+        },
+        {
+          "term": "宫颈癌",
+          "score": 72.7616,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-an-expensive-product": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 1.4569,
+          "evidence": []
+        },
+        {
+          "term": "advocacy",
+          "score": 0.5414,
+          "evidence": []
+        },
+        {
+          "term": "private",
+          "score": 0.4545,
+          "evidence": []
+        },
+        {
+          "term": "introduction",
+          "score": 0.382,
+          "evidence": []
+        },
+        {
+          "term": "settings",
+          "score": 0.3355,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.3173,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 25.0699,
+          "evidence": []
+        },
+        {
+          "term": "advocacy",
+          "score": 8.649,
+          "evidence": []
+        },
+        {
+          "term": "private",
+          "score": 6.4776,
+          "evidence": []
+        },
+        {
+          "term": "introduction",
+          "score": 5.7372,
+          "evidence": []
+        },
+        {
+          "term": "settings",
+          "score": 4.5022,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 3.8974,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv vaccines",
+          "score": 0.2772,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1946,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1442,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1222,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1183,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccines",
+          "score": 4.5418,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.8273,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 2.269,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 2.1576,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 2.0179,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 1.9413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv vaccines",
+          "score": 0.2772,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1222,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.058,
+          "evidence": []
+        },
+        {
+          "term": "introduction",
+          "score": 0.0311,
+          "evidence": []
+        },
+        {
+          "term": "settings",
+          "score": 0.0266,
+          "evidence": []
+        },
+        {
+          "term": "private",
+          "score": 0.0259,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 89.0401,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 72.0668,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 71.7237,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 69.8879,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 69.2017,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 61.1548,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-introduction-challenges": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 1.4886,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 1.2182,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 1.1546,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.696,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.6867,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.5512,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 0.5445,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 28.5655,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 22.3934,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 21.9147,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 11.3278,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 9.3244,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 9.2377,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 6.871,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.5511,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 0.5341,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.3399,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2639,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.2586,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2435,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2433,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cancer screening",
+          "score": 9.0455,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 8.5077,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 5.3348,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 4.7653,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 3.3868,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 3.318,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 3.0097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.5511,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 0.5341,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.3399,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2639,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.2586,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2433,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1722,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 50.5911,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 42.4512,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 39.9996,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 37.6189,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 32.8834,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 30.915,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 29.8998,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-not-business-as-usual": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "usual",
+          "score": 0.7994,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concert",
+          "score": 0.5547,
+          "evidence": []
+        },
+        {
+          "term": "negotiated",
+          "score": 0.5436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "usual",
+          "score": 9.9598,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concert",
+          "score": 7.1771,
+          "evidence": []
+        },
+        {
+          "term": "negotiated",
+          "score": 6.8895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "countries",
+          "score": 0.0591,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.0539,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0503,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 0.9391,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.7279,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.6617,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "countries",
+          "score": 0.0591,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.0459,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.0383,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 55.668,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 37.2283,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 36.9546,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-advocacy-information-and-communication": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 2.6477,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 2.009,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 1.8393,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.6674,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 1.6182,
+          "evidence": []
+        },
+        {
+          "term": "protect against",
+          "score": 1.3737,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 1.0036,
+          "evidence": []
+        },
+        {
+          "term": "ing",
+          "score": 0.8474,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 105.7578,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 75.874,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 73.6731,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 35.8048,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 34.7248,
+          "evidence": []
+        },
+        {
+          "term": "protect against",
+          "score": 28.7022,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 18.4754,
+          "evidence": []
+        },
+        {
+          "term": "ing",
+          "score": 15.5541,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.9557,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 0.7703,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.7526,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.5416,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.4959,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 0.4555,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.383,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3583,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccination",
+          "score": 27.6903,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 26.2313,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 22.4022,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 18.3787,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 15.2754,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 12.1555,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 10.6449,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 10.6071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.9557,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 0.7703,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.7526,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.5416,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.4959,
+          "evidence": []
+        },
+        {
+          "term": "hpv types",
+          "score": 0.4674,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.383,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3583,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 78.4367,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 64.9807,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 61.8567,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 61.246,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 60.5442,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 51.447,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 50.7512,
+          "evidence": []
+        },
+        {
+          "term": "信息和传播",
+          "score": 50.7402,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-action-points": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccine",
+          "score": 2.2764,
+          "evidence": []
+        },
+        {
+          "term": "intro duction",
+          "score": 1.679,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.6188,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 1.5052,
+          "evidence": []
+        },
+        {
+          "term": "advocacy groups",
+          "score": 1.415,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 1.2848,
+          "evidence": []
+        },
+        {
+          "term": "country-speciﬁ",
+          "score": 1.0206,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.9176,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccine",
+          "score": 69.3057,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 35.4129,
+          "evidence": []
+        },
+        {
+          "term": "advocacy groups",
+          "score": 33.8908,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 28.7621,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 28.5086,
+          "evidence": []
+        },
+        {
+          "term": "intro duction",
+          "score": 27.1116,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 20.8797,
+          "evidence": []
+        },
+        {
+          "term": "girls",
+          "score": 17.9663,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.9152,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 0.8579,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.5823,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.5366,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.5145,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4573,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4148,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.331,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 23.5448,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 15.3786,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 10.1623,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 9.1476,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 8.8056,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 8.7129,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 7.2053,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 7.1597,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.9152,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 0.8579,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.5823,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.5366,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.5145,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4573,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4148,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2637,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 58.6467,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 48.3404,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 47.0402,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 45.2338,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 40.2762,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 39.2302,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 35.5683,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 34.3241,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-reaching-target-populations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccine",
+          "score": 2.5717,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 2.1991,
+          "evidence": []
+        },
+        {
+          "term": "hpv immunization",
+          "score": 2.0086,
+          "evidence": []
+        },
+        {
+          "term": "out-of-school youth",
+          "score": 1.768,
+          "evidence": []
+        },
+        {
+          "term": "target",
+          "score": 1.6427,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sexual debut",
+          "score": 1.6182,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.6041,
+          "evidence": []
+        },
+        {
+          "term": "pro grammes",
+          "score": 1.421,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccine",
+          "score": 96.7518,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 75.0886,
+          "evidence": []
+        },
+        {
+          "term": "hpv immunization",
+          "score": 66.2316,
+          "evidence": []
+        },
+        {
+          "term": "target",
+          "score": 46.2602,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "target population",
+          "score": 38.4527,
+          "evidence": []
+        },
+        {
+          "term": "primary target",
+          "score": 35.2912,
+          "evidence": []
+        },
+        {
+          "term": "sexual debut",
+          "score": 34.7248,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 32.773,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 1.0875,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 1.0237,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 1.0074,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.961,
+          "evidence": []
+        },
+        {
+          "term": "hpv immunization",
+          "score": 0.9204,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.8833,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.7032,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.6285,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 34.5658,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 33.0711,
+          "evidence": []
+        },
+        {
+          "term": "hpv immunization",
+          "score": 31.4875,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 20.5286,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 16.2936,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 13.8064,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 13.2063,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 13.1635,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv vaccine",
+          "score": 1.0875,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 1.0237,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 1.0074,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.961,
+          "evidence": []
+        },
+        {
+          "term": "hpv immunization",
+          "score": 0.9204,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.8833,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.7032,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.6285,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 53.7493,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 45.5209,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 41.9916,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 39.1905,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 34.0601,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 32.5504,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 31.927,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 28.4582,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-partnerships-between-programmes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccine",
+          "score": 1.3161,
+          "evidence": []
+        },
+        {
+          "term": "partnerships",
+          "score": 1.0768,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "programmes",
+          "score": 0.5832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "delivery",
+          "score": 0.3355,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.297,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2724,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccine",
+          "score": 20.5846,
+          "evidence": []
+        },
+        {
+          "term": "partnerships",
+          "score": 16.7591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "programmes",
+          "score": 8.2286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "delivery",
+          "score": 4.6295,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 3.7947,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 3.2705,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 0.3341,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1674,
+          "evidence": []
+        },
+        {
+          "term": "programmes",
+          "score": 0.1486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.1479,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.1444,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.1379,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 6.2323,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 2.3546,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.1907,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 2.1771,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.9986,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 1.9019,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv vaccine",
+          "score": 0.3341,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1674,
+          "evidence": []
+        },
+        {
+          "term": "programmes",
+          "score": 0.1486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "services",
+          "score": 0.1232,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1061,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.0954,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 57.1213,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 40.5453,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 38.1822,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 37.6926,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 36.6445,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 34.9725,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-monitoring-and-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 1.5976,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 1.0484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adverse events",
+          "score": 0.9238,
+          "evidence": []
+        },
+        {
+          "term": "pilot studies",
+          "score": 0.8423,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.6294,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.5442,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.5077,
+          "evidence": []
+        },
+        {
+          "term": "observed",
+          "score": 0.5028,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 32.3811,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 20.7626,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adverse events",
+          "score": 13.0677,
+          "evidence": []
+        },
+        {
+          "term": "pilot studies",
+          "score": 12.1827,
+          "evidence": []
+        },
+        {
+          "term": "impact",
+          "score": 11.0773,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 9.2567,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 7.9989,
+          "evidence": []
+        },
+        {
+          "term": "observed",
+          "score": 7.851,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.6247,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2878,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2413,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.2226,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2082,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 0.1858,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 0.1826,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 10.0115,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 4.705,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 4.2923,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 4.1827,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 3.7011,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 3.4037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 3.3328,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 2.8792,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.6247,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2878,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2082,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 0.1858,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.1478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "years",
+          "score": 0.127,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1225,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 35.0961,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 28.5562,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 28.3635,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 27.0505,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 23.8645,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 23.767,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 22.9192,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 22.501,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-action-points": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vac",
+          "score": 1.7636,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 1.7178,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.5976,
+          "evidence": []
+        },
+        {
+          "term": "vac cines",
+          "score": 1.5403,
+          "evidence": []
+        },
+        {
+          "term": "pro grammes",
+          "score": 1.421,
+          "evidence": []
+        },
+        {
+          "term": "national cervical",
+          "score": 1.1698,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 1.1546,
+          "evidence": []
+        },
+        {
+          "term": "adolescent sexual",
+          "score": 1.1247,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vac",
+          "score": 41.0347,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 39.4643,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 32.3811,
+          "evidence": []
+        },
+        {
+          "term": "vac cines",
+          "score": 24.8731,
+          "evidence": []
+        },
+        {
+          "term": "pro grammes",
+          "score": 22.8581,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 21.9147,
+          "evidence": []
+        },
+        {
+          "term": "national cervical",
+          "score": 21.6875,
+          "evidence": []
+        },
+        {
+          "term": "adolescent sexual",
+          "score": 19.629,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.797,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 0.667,
+          "evidence": []
+        },
+        {
+          "term": "national cervical",
+          "score": 0.5357,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.4706,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 0.3946,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3686,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3307,
+          "evidence": []
+        },
+        {
+          "term": "service delivery",
+          "score": 0.3032,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 14.82,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 12.8616,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 11.535,
+          "evidence": []
+        },
+        {
+          "term": "national cervical",
+          "score": 7.918,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 7.5763,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 7.56,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 7.0673,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 5.4502,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.797,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 0.667,
+          "evidence": []
+        },
+        {
+          "term": "national cervical",
+          "score": 0.5357,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.4706,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 0.4277,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3686,
+          "evidence": []
+        },
+        {
+          "term": "service delivery",
+          "score": 0.3032,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.2701,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 84.8289,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 69.7502,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 67.9595,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 65.8808,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 56.658,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 54.8186,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 50.863,
+          "evidence": []
+        },
+        {
+          "term": "宫颈癌",
+          "score": 46.0879,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-stewardship-and-ﬁ-nancing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nancing",
+          "score": 2.5344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 2.4965,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 1.9825,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.348,
+          "evidence": []
+        },
+        {
+          "term": "low-resource settings",
+          "score": 1.2895,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 1.2445,
+          "evidence": []
+        },
+        {
+          "term": "policy decisions",
+          "score": 1.2122,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 1.2064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 86.878,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 59.9144,
+          "evidence": []
+        },
+        {
+          "term": "nancing",
+          "score": 55.1157,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national programmes",
+          "score": 30.4627,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 25.655,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 24.9311,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 24.7499,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 24.3127,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 0.7515,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.6684,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.5963,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.5618,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.5117,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.4955,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 0.3412,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv vaccine",
+          "score": 24.3159,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 15.1383,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 11.7244,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 10.219,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 10.0636,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 9.8095,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 9.7663,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 8.3107,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv vaccine",
+          "score": 0.7515,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.6684,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.5963,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.5618,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.5117,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.4955,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "hpv vac",
+          "score": 0.3752,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "行动要点",
+          "score": 103.2535,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 95.03,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 91.5407,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 83.789,
+          "evidence": []
+        },
+        {
+          "term": "信息和传播",
+          "score": 80.3922,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 80.3577,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 78.9409,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 73.7467,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-action-points": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv",
+          "score": 0.8876,
+          "evidence": []
+        },
+        {
+          "term": "nancial",
+          "score": 0.8875,
+          "evidence": []
+        },
+        {
+          "term": "nancing",
+          "score": 0.865,
+          "evidence": []
+        },
+        {
+          "term": "gavi",
+          "score": 0.8256,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.7377,
+          "evidence": []
+        },
+        {
+          "term": "funds",
+          "score": 0.602,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.5368,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4974,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv",
+          "score": 18.8797,
+          "evidence": []
+        },
+        {
+          "term": "gavi",
+          "score": 15.766,
+          "evidence": []
+        },
+        {
+          "term": "nancial",
+          "score": 14.046,
+          "evidence": []
+        },
+        {
+          "term": "nancing",
+          "score": 13.7789,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 10.1153,
+          "evidence": []
+        },
+        {
+          "term": "funds",
+          "score": 9.0525,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 7.6312,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 6.8475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "reproductive health",
+          "score": 0.2502,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.2336,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2245,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.2224,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2088,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.1857,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1779,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1494,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 6.3947,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 4.2985,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 3.4441,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 3.1,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 3.08,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 3.0365,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 2.9581,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 2.7068,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reproductive health",
+          "score": 0.2502,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.2336,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2245,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.2224,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.1369,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.132,
+          "evidence": []
+        },
+        {
+          "term": "programme",
+          "score": 0.0951,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.0717,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 110.7538,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 105.4758,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 95.9964,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 91.0299,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 84.5149,
+          "evidence": []
+        },
+        {
+          "term": "宣传动员",
+          "score": 81.82,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 81.7577,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 79.9308,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-epilogue": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 2.0315,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.9609,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 1.9081,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.6794,
+          "evidence": []
+        },
+        {
+          "term": "human papillomavirus",
+          "score": 0.942,
+          "evidence": []
+        },
+        {
+          "term": "grade",
+          "score": 0.8552,
+          "evidence": []
+        },
+        {
+          "term": "universal access",
+          "score": 0.7637,
+          "evidence": []
+        },
+        {
+          "term": "fda",
+          "score": 0.7354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical intraepithelial",
+          "score": 44.4352,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 44.2548,
+          "evidence": []
+        },
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 43.1958,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 36.5886,
+          "evidence": []
+        },
+        {
+          "term": "grade",
+          "score": 22.5366,
+          "evidence": []
+        },
+        {
+          "term": "human papillomavirus",
+          "score": 13.6891,
+          "evidence": []
+        },
+        {
+          "term": "fda",
+          "score": 11.7557,
+          "evidence": []
+        },
+        {
+          "term": "universal access",
+          "score": 11.0287,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 0.7175,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 0.5879,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3649,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3643,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 0.2585,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.2569,
+          "evidence": []
+        },
+        {
+          "term": "human papillomavirus",
+          "score": 0.2525,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 15.5206,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 14.6933,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 8.4965,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 7.078,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 6.1854,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 5.6642,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 4.9797,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 4.7591,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 0.7175,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 0.5879,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3649,
+          "evidence": []
+        },
+        {
+          "term": "human papillomavirus",
+          "score": 0.2525,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 0.2427,
+          "evidence": []
+        },
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 0.2377,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.232,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "管理和筹资",
+          "score": 159.5077,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 158.5516,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 154.5638,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 137.4908,
+          "evidence": []
+        },
+        {
+          "term": "个部分",
+          "score": 131.8399,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 129.2474,
+          "evidence": []
+        },
+        {
+          "term": "结束语",
+          "score": 121.1508,
+          "evidence": []
+        },
+        {
+          "term": "宫颈癌",
+          "score": 120.1947,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 2.0836,
+          "evidence": []
+        },
+        {
+          "term": "felicity cutts",
+          "score": 1.8337,
+          "evidence": []
+        },
+        {
+          "term": "dale huntington",
+          "score": 1.7314,
+          "evidence": []
+        },
+        {
+          "term": "nathalie broutet",
+          "score": 1.5731,
+          "evidence": []
+        },
+        {
+          "term": "peter hall",
+          "score": 1.5688,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2436,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.238,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 1.1805,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv vaccines",
+          "score": 54.2562,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 31.7849,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 31.3682,
+          "evidence": []
+        },
+        {
+          "term": "felicity cutts",
+          "score": 29.8842,
+          "evidence": []
+        },
+        {
+          "term": "peter hall",
+          "score": 29.2878,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 28.1288,
+          "evidence": []
+        },
+        {
+          "term": "dale huntington",
+          "score": 28.0516,
+          "evidence": []
+        },
+        {
+          "term": "nathalie broutet",
+          "score": 25.3606,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 0.9935,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9862,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.5582,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.497,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.4474,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.4205,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.3842,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3748,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 18.6369,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 18.3999,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 11.6505,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 10.6919,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 10.4849,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 8.9522,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 8.5775,
+          "evidence": []
+        },
+        {
+          "term": "e-mail",
+          "score": 7.9822,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 0.9935,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9862,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.5582,
+          "evidence": []
+        },
+        {
+          "term": "health programmes",
+          "score": 0.5155,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccines",
+          "score": 0.497,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.4205,
+          "evidence": []
+        },
+        {
+          "term": "publication",
+          "score": 0.3404,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.3289,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可能会",
+          "score": 428.8887,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 333.6443,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 289.8214,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 289.8214,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 285.7178,
+          "evidence": []
+        },
+        {
+          "term": "他重复说",
+          "score": 275.5222,
+          "evidence": []
+        },
+        {
+          "term": "具有特殊的毒性和传染性",
+          "score": 275.5222,
+          "evidence": []
+        },
+        {
+          "term": "最近被诊断为mdr-tb",
+          "score": 275.5222,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

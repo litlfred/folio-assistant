@@ -26671,6 +26671,310 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.census",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.census"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How the nodes were counted: `export` (the layer's KG), or the file rule named."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.census",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.deadlinks",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.deadLinks"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Folder-page links (HTML or data file) that do not resolve."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.deadLinks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.directory",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.directory"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared directory's `id`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.directory",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.folderpage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.folderPage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The folder page the rows should be on, site-relative; absent with no viewer."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.folderPage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.folderpagefound",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.folderPageFound"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the folder page answered."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.folderPageFound",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its layer-relative path."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.rawrepolinks",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.rawRepoLinks"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Folder-page links to `github.com/<o>/<r>/blob|tree/…` instead of a page."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.rawRepoLinks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why the row, or a count in it, is unknown."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.coveragerowschema.withjson",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoverageRowSchema.withJson"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Only where the kind's source is JSON, so a `.json` twin is owed."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#CoverageRowSchema.withJson",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.noderowschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeRowSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The node's id inside its directory (a file stem, an entry folder, an export `name`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.noderowschema.iri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeRowSchema.iri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its `@id` in the layer's export, when it has one."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema.iri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.noderowschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeRowSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its page, when one was found (site-relative)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.noderowschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeRowSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Layer-relative source path, when the node is a file or folder."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.noderowschema.verdict",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeRowSchema.verdict"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ok`, `missing` (see `missing`) or `unknown` (see `reason`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeRowSchema.verdict",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.nodeviewcoverageschema.site",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeViewCoverageSchema.site"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What was read: a built site directory or a live base URL."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#NodeViewCoverageSchema.site",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/node-view-coverage.viewerstateschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ViewerStateSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The visualiser's `<harness>/<id>` when declared."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/node-view-coverage.ts#ViewerStateSchema.id",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/odrl.odrlpolicyschema.assignee",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -27561,6 +27865,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.furniture_lines_stripped",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.grade_marks_written",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.grade_marks_written"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Runs of GRADE quality-of-evidence marks drawn as vector rings and written into the text as ⊕/⊖ (`add_grade_marks`, issue #1925). Absent when none was."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.grade_marks_written",
       "skos:note": "candidate"
     },
     {

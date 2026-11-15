@@ -1,0 +1,264 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-174143",
+  "instance": "who-iris",
+  "about": "library/10665-174143",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "выработке требований",
+        "score": 1.5725,
+        "evidence": []
+      },
+      {
+        "term": "исследовательской группы",
+        "score": 1.2941,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 1.1513,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "выработке требований",
+        "score": 25.4027,
+        "evidence": []
+      },
+      {
+        "term": "исследовательской группы",
+        "score": 22.0878,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 17.1346,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "вакцины против",
+        "score": 0.0918,
+        "evidence": []
+      },
+      {
+        "term": "отношении вакцины",
+        "score": 0.068,
+        "evidence": []
+      },
+      {
+        "term": "воз",
+        "score": 0.0629,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "для",
+        "score": 0.8255,
+        "evidence": []
+      },
+      {
+        "term": "min",
+        "score": 0.775,
+        "evidence": []
+      },
+      {
+        "term": "или",
+        "score": 0.7466,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "вакцины против",
+        "score": 0.0918,
+        "evidence": []
+      },
+      {
+        "term": "отношении вакцины",
+        "score": 0.068,
+        "evidence": []
+      },
+      {
+        "term": "min",
+        "score": 0.0322,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "捐助者",
+        "score": 260.8563,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 258.9893,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 256.3823,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-резолюции-исполнительного-комитета": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "выработке требований",
+          "score": 1.5725,
+          "evidence": []
+        },
+        {
+          "term": "исследовательской группы",
+          "score": 1.2941,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 1.1513,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "выработке требований",
+          "score": 25.4027,
+          "evidence": []
+        },
+        {
+          "term": "исследовательской группы",
+          "score": 22.0878,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 17.1346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "вакцины против",
+          "score": 0.0918,
+          "evidence": []
+        },
+        {
+          "term": "отношении вакцины",
+          "score": 0.068,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.0629,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для",
+          "score": 0.8255,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.775,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.7466,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "вакцины против",
+          "score": 0.0918,
+          "evidence": []
+        },
+        {
+          "term": "отношении вакцины",
+          "score": 0.068,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.0322,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 260.8563,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 258.9893,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 256.3823,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

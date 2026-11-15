@@ -1,0 +1,968 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-67212",
+  "instance": "who-iris",
+  "about": "library/10665-67212",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vacuna anti-hepb",
+        "score": 8.3528,
+        "evidence": []
+      },
+      {
+        "term": "del vhb",
+        "score": 6.6393,
+        "evidence": []
+      },
+      {
+        "term": "inmunización los",
+        "score": 5.7582,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anti-hepb obtenida",
+        "score": 5.7522,
+        "evidence": []
+      },
+      {
+        "term": "anti-hepb son",
+        "score": 5.749,
+        "evidence": []
+      },
+      {
+        "term": "vhb perinatal",
+        "score": 5.5435,
+        "evidence": []
+      },
+      {
+        "term": "inmunización rutinaria",
+        "score": 5.4966,
+        "evidence": []
+      },
+      {
+        "term": "una vacuna",
+        "score": 5.4332,
+        "evidence": []
+      },
+      {
+        "term": "por hepb",
+        "score": 5.1962,
+        "evidence": []
+      },
+      {
+        "term": "vacuna combinada",
+        "score": 4.9384,
+        "evidence": []
+      },
+      {
+        "term": "las dosis",
+        "score": 4.9018,
+        "evidence": []
+      },
+      {
+        "term": "los lactantes",
+        "score": 4.8278,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vacuna anti-hepb",
+        "score": 591.6754,
+        "evidence": []
+      },
+      {
+        "term": "inmunización los",
+        "score": 392.625,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "una vacuna",
+        "score": 357.823,
+        "evidence": []
+      },
+      {
+        "term": "anti-hepb son",
+        "score": 342.9369,
+        "evidence": []
+      },
+      {
+        "term": "las dosis",
+        "score": 341.6505,
+        "evidence": []
+      },
+      {
+        "term": "anti-hepb obtenida",
+        "score": 329.644,
+        "evidence": []
+      },
+      {
+        "term": "vacuna combinada",
+        "score": 307.527,
+        "evidence": []
+      },
+      {
+        "term": "vacuna anti",
+        "score": 303.0078,
+        "evidence": []
+      },
+      {
+        "term": "para los",
+        "score": 299.7668,
+        "evidence": []
+      },
+      {
+        "term": "del vhb",
+        "score": 293.5297,
+        "evidence": []
+      },
+      {
+        "term": "por dosis",
+        "score": 290.8285,
+        "evidence": []
+      },
+      {
+        "term": "los lactantes",
+        "score": 290.5925,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "para los",
+        "score": 5.867,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 5.4162,
+        "evidence": []
+      },
+      {
+        "term": "que las",
+        "score": 5.3859,
+        "evidence": []
+      },
+      {
+        "term": "las vacunas",
+        "score": 4.8035,
+        "evidence": []
+      },
+      {
+        "term": "inmunización los",
+        "score": 4.6174,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los países",
+        "score": 4.5327,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 4.4656,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "como las",
+        "score": 4.2929,
+        "evidence": []
+      },
+      {
+        "term": "entre los",
+        "score": 4.1276,
+        "evidence": []
+      },
+      {
+        "term": "todos los",
+        "score": 4.0939,
+        "evidence": []
+      },
+      {
+        "term": "los lactantes",
+        "score": 4.0398,
+        "evidence": []
+      },
+      {
+        "term": "vacunas del",
+        "score": 3.9367,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "vacuna anti-hepb",
+        "score": 335.1122,
+        "evidence": []
+      },
+      {
+        "term": "inmunización los",
+        "score": 314.0521,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las dosis",
+        "score": 300.1231,
+        "evidence": []
+      },
+      {
+        "term": "para los",
+        "score": 293.1975,
+        "evidence": []
+      },
+      {
+        "term": "que las",
+        "score": 284.3201,
+        "evidence": []
+      },
+      {
+        "term": "los lactantes",
+        "score": 255.9704,
+        "evidence": []
+      },
+      {
+        "term": "una vacuna",
+        "score": 251.1171,
+        "evidence": []
+      },
+      {
+        "term": "los países",
+        "score": 234.3685,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 229.7556,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "todos los",
+        "score": 219.9175,
+        "evidence": []
+      },
+      {
+        "term": "los gastos",
+        "score": 216.4879,
+        "evidence": []
+      },
+      {
+        "term": "administrar las",
+        "score": 216.2728,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "para los",
+        "score": 5.867,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 5.4162,
+        "evidence": []
+      },
+      {
+        "term": "que las",
+        "score": 5.3859,
+        "evidence": []
+      },
+      {
+        "term": "las vacunas",
+        "score": 4.8035,
+        "evidence": []
+      },
+      {
+        "term": "inmunización los",
+        "score": 4.6174,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los países",
+        "score": 4.5327,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 4.4656,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "como las",
+        "score": 4.2929,
+        "evidence": []
+      },
+      {
+        "term": "entre los",
+        "score": 4.1276,
+        "evidence": []
+      },
+      {
+        "term": "todos los",
+        "score": 4.0939,
+        "evidence": []
+      },
+      {
+        "term": "los lactantes",
+        "score": 4.0398,
+        "evidence": []
+      },
+      {
+        "term": "vacunas del",
+        "score": 3.9367,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 261.9253,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 254.0796,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 210.1757,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 206.7937,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 204.2313,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 188.7114,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 163.5744,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 154.153,
+        "evidence": []
+      },
+      {
+        "term": "个部分",
+        "score": 130.4309,
+        "evidence": []
+      },
+      {
+        "term": "宫颈癌",
+        "score": 123.6768,
+        "evidence": []
+      },
+      {
+        "term": "过程中",
+        "score": 119.4751,
+        "evidence": []
+      },
+      {
+        "term": "人口约",
+        "score": 114.1909,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-inmunización-contra-la-hepatitis-b": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vacuna anti-hepb",
+          "score": 2.4396,
+          "evidence": []
+        },
+        {
+          "term": "vhb",
+          "score": 2.0031,
+          "evidence": []
+        },
+        {
+          "term": "crónicas causadas",
+          "score": 1.8404,
+          "evidence": []
+        },
+        {
+          "term": "causadas por",
+          "score": 1.8238,
+          "evidence": []
+        },
+        {
+          "term": "infecciones crónicas",
+          "score": 1.7538,
+          "evidence": []
+        },
+        {
+          "term": "infección por",
+          "score": 1.726,
+          "evidence": []
+        },
+        {
+          "term": "las infecciones",
+          "score": 1.5167,
+          "evidence": []
+        },
+        {
+          "term": "inmunización",
+          "score": 1.4795,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vhb",
+          "score": 62.9623,
+          "evidence": []
+        },
+        {
+          "term": "vacuna anti-hepb",
+          "score": 48.7235,
+          "evidence": []
+        },
+        {
+          "term": "infección por",
+          "score": 36.3976,
+          "evidence": []
+        },
+        {
+          "term": "causadas por",
+          "score": 35.699,
+          "evidence": []
+        },
+        {
+          "term": "infecciones crónicas",
+          "score": 30.5146,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 26.7304,
+          "evidence": []
+        },
+        {
+          "term": "las infecciones",
+          "score": 26.7227,
+          "evidence": []
+        },
+        {
+          "term": "inmunización",
+          "score": 21.1201,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los países",
+          "score": 1.023,
+          "evidence": []
+        },
+        {
+          "term": "las infecciones",
+          "score": 0.8411,
+          "evidence": []
+        },
+        {
+          "term": "contra",
+          "score": 0.6447,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.5699,
+          "evidence": []
+        },
+        {
+          "term": "infección por",
+          "score": 0.5609,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.556,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5355,
+          "evidence": []
+        },
+        {
+          "term": "inmunización",
+          "score": 0.4592,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vacuna anti-hepb",
+          "score": 26.4819,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 20.7706,
+          "evidence": []
+        },
+        {
+          "term": "las infecciones",
+          "score": 19.0797,
+          "evidence": []
+        },
+        {
+          "term": "inmunización",
+          "score": 17.8709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 10.5953,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 10.2245,
+          "evidence": []
+        },
+        {
+          "term": "dosis",
+          "score": 9.4438,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 8.7079,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los países",
+          "score": 1.023,
+          "evidence": []
+        },
+        {
+          "term": "las infecciones",
+          "score": 0.8411,
+          "evidence": []
+        },
+        {
+          "term": "contra",
+          "score": 0.6447,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.5699,
+          "evidence": []
+        },
+        {
+          "term": "infección por",
+          "score": 0.5609,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.556,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5355,
+          "evidence": []
+        },
+        {
+          "term": "causadas por",
+          "score": 0.4661,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 181.5982,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 153.4776,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 127.2751,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 124.3969,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 122.4659,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 113.5782,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 97.6858,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 92.2801,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-organización-mundial-de-la-salud-1211-ginebra-27": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vacuna anti-hepb",
+          "score": 5.9132,
+          "evidence": []
+        },
+        {
+          "term": "organización mundial",
+          "score": 5.034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anti-hepb obtenida",
+          "score": 4.4086,
+          "evidence": []
+        },
+        {
+          "term": "anti-hepb son",
+          "score": 4.4054,
+          "evidence": []
+        },
+        {
+          "term": "las dosis",
+          "score": 4.3191,
+          "evidence": []
+        },
+        {
+          "term": "inmunización los",
+          "score": 4.1744,
+          "evidence": []
+        },
+        {
+          "term": "inmunización rutinaria",
+          "score": 4.1412,
+          "evidence": []
+        },
+        {
+          "term": "del vhb",
+          "score": 4.0412,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vacuna anti-hepb",
+          "score": 542.9518,
+          "evidence": []
+        },
+        {
+          "term": "inmunización los",
+          "score": 363.2779,
+          "evidence": []
+        },
+        {
+          "term": "las dosis",
+          "score": 332.3004,
+          "evidence": []
+        },
+        {
+          "term": "una vacuna",
+          "score": 323.8484,
+          "evidence": []
+        },
+        {
+          "term": "anti-hepb son",
+          "score": 318.1096,
+          "evidence": []
+        },
+        {
+          "term": "anti-hepb obtenida",
+          "score": 304.8168,
+          "evidence": []
+        },
+        {
+          "term": "vacuna combinada",
+          "score": 283.6307,
+          "evidence": []
+        },
+        {
+          "term": "vacuna anti",
+          "score": 279.1115,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para las",
+          "score": 4.1396,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 4.1232,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 3.7314,
+          "evidence": []
+        },
+        {
+          "term": "inmunización los",
+          "score": 3.5896,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 3.5097,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.4376,
+          "evidence": []
+        },
+        {
+          "term": "como las",
+          "score": 3.3227,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 3.2008,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vacuna anti-hepb",
+          "score": 308.6303,
+          "evidence": []
+        },
+        {
+          "term": "inmunización los",
+          "score": 287.393,
+          "evidence": []
+        },
+        {
+          "term": "las dosis",
+          "score": 274.0203,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 257.0657,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 246.3399,
+          "evidence": []
+        },
+        {
+          "term": "los lactantes",
+          "score": 233.9668,
+          "evidence": []
+        },
+        {
+          "term": "una vacuna",
+          "score": 230.5229,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 213.5978,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para las",
+          "score": 4.1396,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 4.1232,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 3.7314,
+          "evidence": []
+        },
+        {
+          "term": "inmunización los",
+          "score": 3.5896,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 3.5097,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.4376,
+          "evidence": []
+        },
+        {
+          "term": "como las",
+          "score": 3.3227,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 3.2008,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 100.602,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 82.9006,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 82.3968,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 81.7654,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 80.3271,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 75.1332,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 65.8886,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 61.8729,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

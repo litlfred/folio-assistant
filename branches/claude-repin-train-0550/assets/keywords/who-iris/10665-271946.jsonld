@@ -1,0 +1,1194 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-271946",
+  "instance": "who-iris",
+  "about": "library/10665-271946",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "survey respondents",
+        "score": 7.7934,
+        "evidence": []
+      },
+      {
+        "term": "bio-behavioural surveys",
+        "score": 7.2297,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "asking respondents",
+        "score": 7.1832,
+        "evidence": []
+      },
+      {
+        "term": "self-reported hiv",
+        "score": 7.1618,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 6.4223,
+        "evidence": []
+      },
+      {
+        "term": "hiv serostatus",
+        "score": 6.2929,
+        "evidence": []
+      },
+      {
+        "term": "respondents human",
+        "score": 5.9597,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 5.6601,
+        "evidence": []
+      },
+      {
+        "term": "unrecognized hiv",
+        "score": 5.4049,
+        "evidence": []
+      },
+      {
+        "term": "survey participants",
+        "score": 5.3904,
+        "evidence": []
+      },
+      {
+        "term": "household surveys",
+        "score": 5.3207,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 5.1947,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hiv status",
+        "score": 539.6689,
+        "evidence": []
+      },
+      {
+        "term": "self-reported hiv",
+        "score": 487.6762,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 455.4248,
+        "evidence": []
+      },
+      {
+        "term": "asking hiv",
+        "score": 428.0331,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 424.9257,
+        "evidence": []
+      },
+      {
+        "term": "hiv serostatus",
+        "score": 419.1661,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 414.4286,
+        "evidence": []
+      },
+      {
+        "term": "unrecognized hiv",
+        "score": 410.267,
+        "evidence": []
+      },
+      {
+        "term": "respondent hiv",
+        "score": 403.853,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 398.4195,
+        "evidence": []
+      },
+      {
+        "term": "hiv test",
+        "score": 395.1017,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 394.4251,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hiv aids",
+        "score": 6.6558,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 5.7996,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 5.3767,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 5.3236,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 5.2944,
+        "evidence": []
+      },
+      {
+        "term": "hiv incidence",
+        "score": 5.2211,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 5.1245,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 5.0486,
+        "evidence": []
+      },
+      {
+        "term": "hiv epidemic",
+        "score": 4.9894,
+        "evidence": []
+      },
+      {
+        "term": "hiv med",
+        "score": 4.9525,
+        "evidence": []
+      },
+      {
+        "term": "hiv test",
+        "score": 4.8768,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 4.785,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv aids",
+        "score": 419.5903,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 388.7147,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 380.3505,
+        "evidence": []
+      },
+      {
+        "term": "hiv incidence",
+        "score": 355.0815,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 353.5077,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 350.9787,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 343.0512,
+        "evidence": []
+      },
+      {
+        "term": "hiv test",
+        "score": 340.5872,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 340.3981,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 338.4609,
+        "evidence": []
+      },
+      {
+        "term": "hiv med",
+        "score": 333.694,
+        "evidence": []
+      },
+      {
+        "term": "recent hiv",
+        "score": 331.0097,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hiv aids",
+        "score": 6.6558,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 5.7996,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 5.3767,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 5.3236,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 5.2944,
+        "evidence": []
+      },
+      {
+        "term": "hiv incidence",
+        "score": 5.2211,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 5.1245,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 5.0486,
+        "evidence": []
+      },
+      {
+        "term": "hiv epidemic",
+        "score": 4.9894,
+        "evidence": []
+      },
+      {
+        "term": "hiv med",
+        "score": 4.9525,
+        "evidence": []
+      },
+      {
+        "term": "hiv test",
+        "score": 4.8768,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 4.785,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "政治利益",
+        "score": 78.2317,
+        "evidence": []
+      },
+      {
+        "term": "可持续发展目标和世卫组织",
+        "score": 63.9918,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 59.6846,
+        "evidence": []
+      },
+      {
+        "term": "方面的作用",
+        "score": 56.2178,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 55.1643,
+        "evidence": []
+      },
+      {
+        "term": "促进全球合作",
+        "score": 54.8997,
+        "evidence": []
+      },
+      {
+        "term": "推动数字卫生保健知识传播",
+        "score": 54.8997,
+        "evidence": []
+      },
+      {
+        "term": "潜在的利益冲突",
+        "score": 54.3442,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 52.9229,
+        "evidence": []
+      },
+      {
+        "term": "公共利益",
+        "score": 46.304,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 45.448,
+        "evidence": []
+      },
+      {
+        "term": "经济方面",
+        "score": 44.9117,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-table-1": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "survey respondents",
+          "score": 2.4279,
+          "evidence": []
+        },
+        {
+          "term": "pwid",
+          "score": 1.9209,
+          "evidence": []
+        },
+        {
+          "term": "household surveys",
+          "score": 1.7021,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 1.5874,
+          "evidence": []
+        },
+        {
+          "term": "inject drugs",
+          "score": 1.5091,
+          "evidence": []
+        },
+        {
+          "term": "drugs indicated",
+          "score": 1.4043,
+          "evidence": []
+        },
+        {
+          "term": "andrea kim",
+          "score": 1.3975,
+          "evidence": []
+        },
+        {
+          "term": "indicator survey",
+          "score": 1.3817,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "survey respondents",
+          "score": 82.2505,
+          "evidence": []
+        },
+        {
+          "term": "pwid",
+          "score": 55.0921,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 52.7282,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 44.5482,
+          "evidence": []
+        },
+        {
+          "term": "recent hiv",
+          "score": 41.3843,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 39.717,
+          "evidence": []
+        },
+        {
+          "term": "rapid hiv",
+          "score": 39.5691,
+          "evidence": []
+        },
+        {
+          "term": "household surveys",
+          "score": 37.7893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv prevalence",
+          "score": 0.8481,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 0.847,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.8377,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.8162,
+          "evidence": []
+        },
+        {
+          "term": "recent hiv",
+          "score": 0.7115,
+          "evidence": []
+        },
+        {
+          "term": "female sex",
+          "score": 0.6566,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.5774,
+          "evidence": []
+        },
+        {
+          "term": "rapid hiv",
+          "score": 0.5765,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv status",
+          "score": 36.3357,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 35.0543,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 33.0951,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 31.8904,
+          "evidence": []
+        },
+        {
+          "term": "recent hiv",
+          "score": 29.6172,
+          "evidence": []
+        },
+        {
+          "term": "rapid hiv",
+          "score": 27.6525,
+          "evidence": []
+        },
+        {
+          "term": "aids indicator",
+          "score": 13.2193,
+          "evidence": []
+        },
+        {
+          "term": "female sex",
+          "score": 12.701,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv prevalence",
+          "score": 0.8481,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 0.847,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.8377,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.8162,
+          "evidence": []
+        },
+        {
+          "term": "recent hiv",
+          "score": 0.7115,
+          "evidence": []
+        },
+        {
+          "term": "female sex",
+          "score": 0.6566,
+          "evidence": []
+        },
+        {
+          "term": "rapid hiv",
+          "score": 0.621,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.5774,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 25.9986,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 23.0127,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 20.8378,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 20.83,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 19.3426,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 19.1306,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 15.3953,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 13.6367,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-table-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cited dec",
+          "score": 3.9094,
+          "evidence": []
+        },
+        {
+          "term": "self-reported hiv",
+          "score": 3.209,
+          "evidence": []
+        },
+        {
+          "term": "cited apr",
+          "score": 3.1982,
+          "evidence": []
+        },
+        {
+          "term": "unrecognized hiv",
+          "score": 2.9068,
+          "evidence": []
+        },
+        {
+          "term": "statut vih",
+          "score": 2.785,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 2.5503,
+          "evidence": []
+        },
+        {
+          "term": "compare self-reported",
+          "score": 2.4706,
+          "evidence": []
+        },
+        {
+          "term": "hiv counsellor",
+          "score": 2.4527,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv status",
+          "score": 302.2606,
+          "evidence": []
+        },
+        {
+          "term": "self-reported hiv",
+          "score": 287.8678,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 269.7954,
+          "evidence": []
+        },
+        {
+          "term": "unrecognized hiv",
+          "score": 251.9097,
+          "evidence": []
+        },
+        {
+          "term": "hiv care",
+          "score": 243.0422,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 242.4151,
+          "evidence": []
+        },
+        {
+          "term": "hiv counsellor",
+          "score": 237.0303,
+          "evidence": []
+        },
+        {
+          "term": "asking hiv",
+          "score": 235.003,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 3.5087,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 2.9923,
+          "evidence": []
+        },
+        {
+          "term": "hiv med",
+          "score": 2.8222,
+          "evidence": []
+        },
+        {
+          "term": "hiv incidence",
+          "score": 2.6531,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 2.6405,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 2.6229,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 2.6156,
+          "evidence": []
+        },
+        {
+          "term": "hiv epidemic",
+          "score": 2.5382,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 253.9695,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 228.5884,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 225.0412,
+          "evidence": []
+        },
+        {
+          "term": "hiv incidence",
+          "score": 213.367,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 211.8648,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 209.675,
+          "evidence": []
+        },
+        {
+          "term": "hiv med",
+          "score": 203.7973,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 203.4863,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 3.5087,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 2.9923,
+          "evidence": []
+        },
+        {
+          "term": "hiv med",
+          "score": 2.8222,
+          "evidence": []
+        },
+        {
+          "term": "hiv incidence",
+          "score": 2.6531,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 2.6405,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 2.6229,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 2.6156,
+          "evidence": []
+        },
+        {
+          "term": "hiv epidemic",
+          "score": 2.5382,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "政治利益",
+          "score": 77.8062,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 52.8104,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 48.155,
+          "evidence": []
+        },
+        {
+          "term": "公共利益",
+          "score": 47.6643,
+          "evidence": []
+        },
+        {
+          "term": "非政府组织",
+          "score": 44.0497,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 38.7411,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 26.8499,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 25.276,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bio-behavioural surveys",
+          "score": 3.3719,
+          "evidence": []
+        },
+        {
+          "term": "asking respondents",
+          "score": 3.1766,
+          "evidence": []
+        },
+        {
+          "term": "self-reported hiv",
+          "score": 2.6557,
+          "evidence": []
+        },
+        {
+          "term": "respondents human",
+          "score": 2.6514,
+          "evidence": []
+        },
+        {
+          "term": "oppose asking",
+          "score": 2.2895,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 2.2845,
+          "evidence": []
+        },
+        {
+          "term": "survey questionnaires",
+          "score": 2.1958,
+          "evidence": []
+        },
+        {
+          "term": "survey participants",
+          "score": 2.0514,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv status",
+          "score": 184.6801,
+          "evidence": []
+        },
+        {
+          "term": "self-reported hiv",
+          "score": 162.5587,
+          "evidence": []
+        },
+        {
+          "term": "bio-behavioural surveys",
+          "score": 161.8573,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 149.1583,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 149.1015,
+          "evidence": []
+        },
+        {
+          "term": "asking respondents",
+          "score": 146.5882,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 140.3154,
+          "evidence": []
+        },
+        {
+          "term": "hiv care",
+          "score": 140.2153,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 2.2047,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.9388,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.8986,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 1.8599,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 1.8553,
+          "evidence": []
+        },
+        {
+          "term": "hiv care",
+          "score": 1.8339,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.8192,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 1.7412,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 128.3908,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 123.7907,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 120.2549,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 109.9528,
+          "evidence": []
+        },
+        {
+          "term": "hiv care",
+          "score": 108.1151,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 107.7299,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 107.6745,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 106.6463,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 2.2047,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.9388,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.8986,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 1.8599,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 1.8553,
+          "evidence": []
+        },
+        {
+          "term": "hiv care",
+          "score": 1.8339,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.8192,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 1.7412,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 24.3735,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 23.5052,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 20.5693,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 20.115,
+          "evidence": []
+        },
+        {
+          "term": "推动数字卫生保健知识传播",
+          "score": 20.115,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 19.3999,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 17.9466,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 16.0399,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9002 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-94830",
+  "instance": "who-iris",
+  "about": "library/10665-94830",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "cervical cancer",
+        "score": 42.9748,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cancer screening",
+        "score": 39.3964,
+        "evidence": []
+      },
+      {
+        "term": "cervical cytology",
+        "score": 35.8217,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "screen-and-treat recommendations",
+        "score": 32.3526,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "precancerous cervical",
+        "score": 32.1475,
+        "evidence": []
+      },
+      {
+        "term": "cervical lesions",
+        "score": 31.4311,
+        "evidence": []
+      },
+      {
+        "term": "screen-and-treat strategies",
+        "score": 30.9864,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cancer prevention",
+        "score": 30.54,
+        "evidence": []
+      },
+      {
+        "term": "screen-and-treat strategy",
+        "score": 30.0078,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv test",
+        "score": 29.8893,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "colposcopy strategy",
+        "score": 28.1968,
+        "evidence": []
+      },
+      {
+        "term": "cervical neoplasia",
+        "score": 27.7536,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "cervical cancer",
+        "score": 1156.3353,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv test",
+        "score": 1113.7415,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical screening",
+        "score": 1058.2406,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical cytology",
+        "score": 1031.6333,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "colposcopy strategy",
+        "score": 920.5557,
+        "evidence": []
+      },
+      {
+        "term": "cytology followed",
+        "score": 826.7759,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "precancerous cervical",
+        "score": 764.654,
+        "evidence": []
+      },
+      {
+        "term": "cervical lesions",
+        "score": 756.7767,
+        "evidence": []
+      },
+      {
+        "term": "fewer cervical",
+        "score": 742.0496,
+        "evidence": []
+      },
+      {
+        "term": "hpv testing",
+        "score": 738.7738,
+        "evidence": []
+      },
+      {
+        "term": "cervical neoplasia",
+        "score": 732.1727,
+        "evidence": []
+      },
+      {
+        "term": "hpv vaccine",
+        "score": 715.6833,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "cervical cancer",
+        "score": 38.2753,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical screening",
+        "score": 37.4195,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical cytology",
+        "score": 31.8281,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "screening test",
+        "score": 27.7354,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv test",
+        "score": 27.6754,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical lesions",
+        "score": 26.9612,
+        "evidence": []
+      },
+      {
+        "term": "cervical intraepithelial",
+        "score": 24.53,
+        "evidence": []
+      },
+      {
+        "term": "cervical neoplasia",
+        "score": 24.3916,
+        "evidence": []
+      },
+      {
+        "term": "cancer prevention",
+        "score": 23.9777,
+        "evidence": []
+      },
+      {
+        "term": "precancerous cervical",
+        "score": 23.5467,
+        "evidence": []
+      },
+      {
+        "term": "screening strategy",
+        "score": 23.3369,
+        "evidence": []
+      },
+      {
+        "term": "follow-up screening",
+        "score": 23.3093,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hpv test",
+        "score": 1271.7235,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv testing",
+        "score": 948.9245,
+        "evidence": []
+      },
+      {
+        "term": "cervical screening",
+        "score": 932.2396,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cancer screening",
+        "score": 908.307,
+        "evidence": []
+      },
+      {
+        "term": "hpv vaccine",
+        "score": 890.3782,
+        "evidence": []
+      },
+      {
+        "term": "hpv prevalence",
+        "score": 863.6709,
+        "evidence": []
+      },
+      {
+        "term": "hpv vaccination",
+        "score": 863.6709,
+        "evidence": []
+      },
+      {
+        "term": "rapid hpv",
+        "score": 863.6709,
+        "evidence": []
+      },
+      {
+        "term": "cervical cytology",
+        "score": 845.6984,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "colposcopy strategy",
+        "score": 841.2961,
+        "evidence": []
+      },
+      {
+        "term": "cytology followed",
+        "score": 818.2977,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "colposcopy compared",
+        "score": 717.4257,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "cervical cancer",
+        "score": 38.2753,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical screening",
+        "score": 37.4195,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical cytology",
+        "score": 31.8281,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "screening test",
+        "score": 27.7354,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hpv test",
+        "score": 27.6754,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cervical lesions",
+        "score": 26.9612,
+        "evidence": []
+      },
+      {
+        "term": "cervical intraepithelial",
+        "score": 24.53,
+        "evidence": []
+      },
+      {
+        "term": "cervical neoplasia",
+        "score": 24.3916,
+        "evidence": []
+      },
+      {
+        "term": "cancer prevention",
+        "score": 23.9777,
+        "evidence": []
+      },
+      {
+        "term": "precancerous cervical",
+        "score": 23.5467,
+        "evidence": []
+      },
+      {
+        "term": "screening strategy",
+        "score": 23.3369,
+        "evidence": []
+      },
+      {
+        "term": "follow-up screening",
+        "score": 23.3093,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "的材料",
+        "score": 1935.6596,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 1847.0832,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 1811.6594,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 1503.2679,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 1493.5202,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 1448.6977,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 1389.0319,
+        "evidence": []
+      },
+      {
+        "term": "监督机制",
+        "score": 1360.0149,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 1300.7401,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 1283.9153,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 1275.5849,
+        "evidence": []
+      },
+      {
+        "term": "管理和筹资",
+        "score": 1080.4966,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-lists-of-participants": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "department obstetrics",
+          "score": 2.4558,
+          "evidence": []
+        },
+        {
+          "term": "cancer epidemiology",
+          "score": 2.4164,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 2.1283,
+          "evidence": []
+        },
+        {
+          "term": "cancer institute",
+          "score": 2.0163,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 2.0158,
+          "evidence": []
+        },
+        {
+          "term": "silvana luciani",
+          "score": 1.8149,
+          "evidence": []
+        },
+        {
+          "term": "national cancer",
+          "score": 1.8031,
+          "evidence": []
+        },
+        {
+          "term": "atomic energy",
+          "score": 1.6835,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cancer epidemiology",
+          "score": 105.755,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 95.6475,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 85.8716,
+          "evidence": []
+        },
+        {
+          "term": "cancer institute",
+          "score": 85.85,
+          "evidence": []
+        },
+        {
+          "term": "department obstetrics",
+          "score": 82.1039,
+          "evidence": []
+        },
+        {
+          "term": "national cancer",
+          "score": 81.7471,
+          "evidence": []
+        },
+        {
+          "term": "international agency",
+          "score": 45.63,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 43.8094,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "united kingdom",
+          "score": 1.333,
+          "evidence": []
+        },
+        {
+          "term": "cancer institute",
+          "score": 1.1371,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 0.9146,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.8906,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 0.8718,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.8549,
+          "evidence": []
+        },
+        {
+          "term": "national cancer",
+          "score": 0.8099,
+          "evidence": []
+        },
+        {
+          "term": "department obstetrics",
+          "score": 0.791,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united kingdom",
+          "score": 39.5408,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 30.245,
+          "evidence": []
+        },
+        {
+          "term": "cancer institute",
+          "score": 28.0713,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 27.6772,
+          "evidence": []
+        },
+        {
+          "term": "national cancer",
+          "score": 22.55,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 21.8857,
+          "evidence": []
+        },
+        {
+          "term": "cancer epidemiology",
+          "score": 20.2577,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 19.1325,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "united kingdom",
+          "score": 1.333,
+          "evidence": []
+        },
+        {
+          "term": "cancer institute",
+          "score": 1.1371,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 0.9146,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.8906,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 0.8718,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.8549,
+          "evidence": []
+        },
+        {
+          "term": "national cancer",
+          "score": 0.8099,
+          "evidence": []
+        },
+        {
+          "term": "department obstetrics",
+          "score": 0.791,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 193.9497,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 188.3703,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 182.733,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 174.4136,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 171.6561,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 168.2958,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 163.6925,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 162.853,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-process-for-managing-declarations-and-conflicts": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "declared interests",
+          "score": 2.0407,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.8272,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 1.7345,
+          "evidence": []
+        },
+        {
+          "term": "conflicts",
+          "score": 1.535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "joint sessions",
+          "score": 1.2889,
+          "evidence": []
+        },
+        {
+          "term": "erg",
+          "score": 1.2153,
+          "evidence": []
+        },
+        {
+          "term": "draft recommendations",
+          "score": 1.164,
+          "evidence": []
+        },
+        {
+          "term": "modelling exercise",
+          "score": 1.1501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 43.8279,
+          "evidence": []
+        },
+        {
+          "term": "declared interests",
+          "score": 41.0045,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 34.1171,
+          "evidence": []
+        },
+        {
+          "term": "erg",
+          "score": 29.1671,
+          "evidence": []
+        },
+        {
+          "term": "conflicts",
+          "score": 25.6653,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "joint sessions",
+          "score": 23.235,
+          "evidence": []
+        },
+        {
+          "term": "disclosed",
+          "score": 22.5468,
+          "evidence": []
+        },
+        {
+          "term": "draft recommendations",
+          "score": 20.4626,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.721,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 0.4725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "draft recommendations",
+          "score": 0.4492,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.4376,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.4112,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 0.3512,
+          "evidence": []
+        },
+        {
+          "term": "conflicts",
+          "score": 0.3342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 0.3247,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 14.4062,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 11.3942,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline",
+          "score": 8.7735,
+          "evidence": []
+        },
+        {
+          "term": "conflicts",
+          "score": 7.9029,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 7.117,
+          "evidence": []
+        },
+        {
+          "term": "declared interests",
+          "score": 6.6383,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 6.0261,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 5.9255,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.721,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 0.4725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "draft recommendations",
+          "score": 0.4492,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.4376,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.4112,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 0.3512,
+          "evidence": []
+        },
+        {
+          "term": "conflicts",
+          "score": 0.3342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg",
+          "score": 0.2894,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 28.0696,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 25.1086,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 25.0733,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 21.9264,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 20.2811,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 19.9871,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 19.1151,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 18.5214,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "thank",
+          "score": 0.6771,
+          "evidence": []
+        },
+        {
+          "term": "alliance",
+          "score": 0.5443,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4974,
+          "evidence": []
+        },
+        {
+          "term": "like",
+          "score": 0.4542,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.4506,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.3454,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "thank",
+          "score": 10.7708,
+          "evidence": []
+        },
+        {
+          "term": "alliance",
+          "score": 8.6684,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 7.959,
+          "evidence": []
+        },
+        {
+          "term": "like",
+          "score": 7.0101,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 6.8475,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 4.8101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cancer",
+          "score": 0.144,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.1356,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.1303,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.1303,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.1163,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.1151,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university",
+          "score": 2.2999,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 2.0899,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 2.0036,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 1.6891,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 1.6206,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 1.5899,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cancer",
+          "score": 0.144,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1103,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.0969,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.0939,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.0791,
+          "evidence": []
+        },
+        {
+          "term": "acknowledgements",
+          "score": 0.0549,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 118.8565,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 110.2749,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 107.8233,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 100.345,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 98.3014,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 89.5772,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-acronyms-and-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "acronyms",
+          "score": 0.8255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lletz",
+          "score": 0.8241,
+          "evidence": []
+        },
+        {
+          "term": "excision",
+          "score": 0.7583,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.7287,
+          "evidence": []
+        },
+        {
+          "term": "leep",
+          "score": 0.683,
+          "evidence": []
+        },
+        {
+          "term": "loop",
+          "score": 0.6589,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cancer",
+          "score": 13.6949,
+          "evidence": []
+        },
+        {
+          "term": "lletz",
+          "score": 12.2714,
+          "evidence": []
+        },
+        {
+          "term": "excision",
+          "score": 11.6668,
+          "evidence": []
+        },
+        {
+          "term": "acronyms",
+          "score": 10.6626,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "loop",
+          "score": 10.4154,
+          "evidence": []
+        },
+        {
+          "term": "leep",
+          "score": 10.1954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cancer",
+          "score": 0.4193,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.4138,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.3771,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3419,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.2556,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 0.254,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cancer",
+          "score": 6.2583,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 5.5039,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 4.9527,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 4.2661,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 4.0885,
+          "evidence": []
+        },
+        {
+          "term": "zone",
+          "score": 3.3212,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cancer",
+          "score": 0.4193,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.4138,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.2556,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1767,
+          "evidence": []
+        },
+        {
+          "term": "excision",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "lletz",
+          "score": 0.1186,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 76.1015,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 66.7436,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 61.0326,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 58.5818,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 57.7412,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 57.7191,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "screen-and-treat strategies",
+          "score": 2.0378,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.9436,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.8848,
+          "evidence": []
+        },
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 1.7498,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 1.4404,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive status",
+          "score": 1.3661,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.316,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 1.269,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "screen-and-treat strategies",
+          "score": 62.0669,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 47.6436,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 46.6811,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 44.0223,
+          "evidence": []
+        },
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 32.3968,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 31.3841,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive status",
+          "score": 27.98,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 26.7281,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.7998,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.267,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.1663,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.1078,
+          "evidence": []
+        },
+        {
+          "term": "available screening",
+          "score": 1.0562,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.8457,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.752,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 0.7138,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 31.5949,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 28.4034,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 21.3505,
+          "evidence": []
+        },
+        {
+          "term": "available screening",
+          "score": 20.0849,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 18.5896,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 18.2351,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 17.7854,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 14.4603,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.7998,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.267,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.1663,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.1078,
+          "evidence": []
+        },
+        {
+          "term": "available screening",
+          "score": 1.0562,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.8457,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.752,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 0.7138,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 42.2827,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 40.2787,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 40.2008,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 39.5357,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 39.1095,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 34.3618,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 33.8337,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 31.3983,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-screen-and-treat-strategy-summary-recommendation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cytology followed",
+          "score": 2.6625,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 2.2047,
+          "evidence": []
+        },
+        {
+          "term": "strategy",
+          "score": 1.8544,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 1.641,
+          "evidence": []
+        },
+        {
+          "term": "panel suggests",
+          "score": 1.528,
+          "evidence": []
+        },
+        {
+          "term": "expert panel",
+          "score": 1.5277,
+          "evidence": []
+        },
+        {
+          "term": "screen",
+          "score": 1.4569,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 1.3502,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv test",
+          "score": 97.4198,
+          "evidence": []
+        },
+        {
+          "term": "strategy",
+          "score": 96.7889,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cytology followed",
+          "score": 96.1733,
+          "evidence": []
+        },
+        {
+          "term": "screen",
+          "score": 69.975,
+          "evidence": []
+        },
+        {
+          "term": "treat",
+          "score": 62.1469,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 54.724,
+          "evidence": []
+        },
+        {
+          "term": "expert panel",
+          "score": 29.4756,
+          "evidence": []
+        },
+        {
+          "term": "biopsy",
+          "score": 27.362,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv test",
+          "score": 1.0169,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 0.6913,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.6185,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.6116,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 0.5911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.5478,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.4386,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 85.5492,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 57.5883,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 43.4054,
+          "evidence": []
+        },
+        {
+          "term": "strategy",
+          "score": 33.581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 24.119,
+          "evidence": []
+        },
+        {
+          "term": "biopsy",
+          "score": 21.4903,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 21.3652,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 19.5515,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv test",
+          "score": 1.0169,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 0.6913,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.6185,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 0.5911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.5478,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.4386,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.435,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.4162,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 99.5822,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 92.4641,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 84.4136,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 77.7368,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 74.9635,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 69.462,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 63.7239,
+          "evidence": []
+        },
+        {
+          "term": "信息和传播",
+          "score": 59.0342,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "treat cin",
+          "score": 2.4524,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 2.3656,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 2.0126,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.939,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat programme",
+          "score": 1.7214,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 1.6994,
+          "evidence": []
+        },
+        {
+          "term": "pap test",
+          "score": 1.5707,
+          "evidence": []
+        },
+        {
+          "term": "treating women",
+          "score": 1.5565,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "treat cin",
+          "score": 114.9215,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 91.5149,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 84.2321,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 64.1894,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 58.9195,
+          "evidence": []
+        },
+        {
+          "term": "pap test",
+          "score": 50.4336,
+          "evidence": []
+        },
+        {
+          "term": "single test",
+          "score": 45.225,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat programme",
+          "score": 43.9353,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 2.3729,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.7547,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.5461,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.403,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 1.2844,
+          "evidence": []
+        },
+        {
+          "term": "treat cin",
+          "score": 1.1711,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 1.115,
+          "evidence": []
+        },
+        {
+          "term": "pap test",
+          "score": 0.8613,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 63.1623,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 55.1447,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 37.3703,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 37.1802,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 35.1952,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 34.6635,
+          "evidence": []
+        },
+        {
+          "term": "treat cin",
+          "score": 32.4861,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 25.7926,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 2.3729,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.7547,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.5461,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.403,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 1.2844,
+          "evidence": []
+        },
+        {
+          "term": "treat cin",
+          "score": 1.1711,
+          "evidence": []
+        },
+        {
+          "term": "treating women",
+          "score": 0.8764,
+          "evidence": []
+        },
+        {
+          "term": "pap test",
+          "score": 0.8613,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 57.2188,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 53.5406,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 48.2593,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 47.6077,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 46.5467,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 39.7756,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 39.4769,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 37.4097,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-target-audience": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 1.0342,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.5346,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.5073,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 14.4787,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 6.3949,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 5.7414,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.2613,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.1967,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1378,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 3.2754,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 2.1663,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 1.9884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.2613,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.1967,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1378,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 35.2326,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 34.9408,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 31.8278,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 1.3083,
+          "evidence": []
+        },
+        {
+          "term": "evidence-to-recommendation tables",
+          "score": 1.2726,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.1737,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.0342,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 0.8519,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.8402,
+          "evidence": []
+        },
+        {
+          "term": "flowcharts",
+          "score": 0.7853,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 24.0871,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 20.5631,
+          "evidence": []
+        },
+        {
+          "term": "evidence-to-recommendation tables",
+          "score": 19.9445,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 15.5541,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 14.4787,
+          "evidence": []
+        },
+        {
+          "term": "flowcharts",
+          "score": 12.6597,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 11.8614,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.5107,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 0.3493,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.2829,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.2541,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.238,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.2268,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 5.7481,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 5.4901,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 5.1262,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 4.6863,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 4.2661,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 3.6158,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 3.3473,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.5107,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 0.3493,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.2829,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.238,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.211,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 0.1059,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 37.5587,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 25.7028,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 22.8367,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 17.6207,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 16.5739,
+          "evidence": []
+        },
+        {
+          "term": "正如edwards",
+          "score": 16.353,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 15.2721,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-guideline-groups": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 1.0342,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.9421,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline development",
+          "score": 0.8102,
+          "evidence": []
+        },
+        {
+          "term": "macgrade",
+          "score": 0.586,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "guideline",
+          "score": 14.5155,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 14.4787,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 12.8056,
+          "evidence": []
+        },
+        {
+          "term": "macgrade",
+          "score": 7.5826,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline",
+          "score": 0.3474,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.3351,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.2662,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.1633,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 5.513,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 4.9099,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 3.8964,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 2.3928,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline",
+          "score": 0.3474,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.3351,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.2662,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.1633,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "实验室",
+          "score": 45.8031,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 45.2308,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 45.2308,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 43.0295,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-formulating-questions-and-determining-outcomes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cytology followed",
+          "score": 2.0952,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.9237,
+          "evidence": []
+        },
+        {
+          "term": "survey monkey",
+          "score": 1.8808,
+          "evidence": []
+        },
+        {
+          "term": "cervical pre-cancer",
+          "score": 1.5754,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 1.5497,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.3728,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 1.3728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "questions",
+          "score": 1.313,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv test",
+          "score": 65.5339,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 58.513,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 54.9896,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 36.2123,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "survey monkey",
+          "score": 35.0519,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 33.9499,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 33.6071,
+          "evidence": []
+        },
+        {
+          "term": "screen",
+          "score": 31.1,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.2341,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 0.8574,
+          "evidence": []
+        },
+        {
+          "term": "cervical pre-cancer",
+          "score": 0.7578,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 0.6382,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.5868,
+          "evidence": []
+        },
+        {
+          "term": "screening options",
+          "score": 0.5868,
+          "evidence": []
+        },
+        {
+          "term": "evidence review",
+          "score": 0.4318,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 0.4193,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 46.9681,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 30.9651,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 23.2993,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 20.885,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 16.8828,
+          "evidence": []
+        },
+        {
+          "term": "screening options",
+          "score": 16.8828,
+          "evidence": []
+        },
+        {
+          "term": "single test",
+          "score": 15.6843,
+          "evidence": []
+        },
+        {
+          "term": "cervical pre-cancer",
+          "score": 12.1327,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.2341,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 0.8574,
+          "evidence": []
+        },
+        {
+          "term": "cervical pre-cancer",
+          "score": 0.7578,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 0.6382,
+          "evidence": []
+        },
+        {
+          "term": "screening options",
+          "score": 0.6318,
+          "evidence": []
+        },
+        {
+          "term": "evidence review",
+          "score": 0.4318,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 0.4193,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 0.4055,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 78.1106,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 64.3794,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 64.0183,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 62.4957,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 61.9056,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 54.3648,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 52.4878,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 50.6901,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-synthesis-of-the-evidence-and-preparation-of-evi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 3.5417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat strategy",
+          "score": 1.8615,
+          "evidence": []
+        },
+        {
+          "term": "supplemental material",
+          "score": 1.6285,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 1.606,
+          "evidence": []
+        },
+        {
+          "term": "false-negative screening",
+          "score": 1.5681,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic accuracy",
+          "score": 1.4882,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 1.469,
+          "evidence": []
+        },
+        {
+          "term": "test compared",
+          "score": 1.3036,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 98.4645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accuracy studies",
+          "score": 57.0657,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategy",
+          "score": 50.12,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic accuracy",
+          "score": 48.1609,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 46.3825,
+          "evidence": []
+        },
+        {
+          "term": "false-negative screening",
+          "score": 37.3188,
+          "evidence": []
+        },
+        {
+          "term": "test compared",
+          "score": 34.3449,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 34.0042,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence",
+          "score": 1.3144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 1.3144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 1.1021,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 1.0269,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 0.8917,
+          "evidence": []
+        },
+        {
+          "term": "false-negative screening",
+          "score": 0.7144,
+          "evidence": []
+        },
+        {
+          "term": "test compared",
+          "score": 0.698,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.6953,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "evidence",
+          "score": 34.4242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 34.4242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 32.4194,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 22.0246,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 19.267,
+          "evidence": []
+        },
+        {
+          "term": "test compared",
+          "score": 18.7473,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 18.5279,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic test",
+          "score": 17.4007,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence profiles",
+          "score": 1.4703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 1.1021,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 1.0269,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 0.8917,
+          "evidence": []
+        },
+        {
+          "term": "false-negative screening",
+          "score": 0.7229,
+          "evidence": []
+        },
+        {
+          "term": "test compared",
+          "score": 0.698,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.6953,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic test",
+          "score": 0.6886,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 53.8097,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 52.3974,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 46.8501,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 33.9919,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 26.8807,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 25.7905,
+          "evidence": []
+        },
+        {
+          "term": "美国cdc",
+          "score": 24.4139,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 23.9641,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-modelling-of-health-outcomes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health outcomes",
+          "score": 1.8186,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "patient-important outcomes",
+          "score": 1.5317,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.2975,
+          "evidence": []
+        },
+        {
+          "term": "downstream",
+          "score": 0.75,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.7267,
+          "evidence": []
+        },
+        {
+          "term": "priori",
+          "score": 0.7061,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.6658,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 0.6064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health outcomes",
+          "score": 34.1799,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "patient-important outcomes",
+          "score": 30.9522,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 30.5927,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 13.5788,
+          "evidence": []
+        },
+        {
+          "term": "downstream",
+          "score": 12.0489,
+          "evidence": []
+        },
+        {
+          "term": "priori",
+          "score": 11.5001,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 9.4988,
+          "evidence": []
+        },
+        {
+          "term": "calculated",
+          "score": 8.7476,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "screening test",
+          "score": 0.4883,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 0.2721,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv",
+          "score": 0.2228,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.2209,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.2184,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.2125,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.1754,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "screening test",
+          "score": 10.8128,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 6.7141,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 4.8189,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 4.4202,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv status",
+          "score": 4.0205,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 3.4986,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 3.0785,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 2.8869,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "screening test",
+          "score": 0.4883,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 0.2721,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv status",
+          "score": 0.2184,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.1754,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1522,
+          "evidence": []
+        },
+        {
+          "term": "modelling",
+          "score": 0.12,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compared",
+          "score": 0.1104,
+          "evidence": []
+        },
+        {
+          "term": "pooled",
+          "score": 0.1057,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 49.663,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 49.5499,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 47.1165,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 37.8592,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 29.6469,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 28.1117,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 26.9211,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 25.8439,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-development-of-the-recommendations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "recommendations",
+          "score": 1.4213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence-to-recommendation tables",
+          "score": 1.3962,
+          "evidence": []
+        },
+        {
+          "term": "desirable consequences",
+          "score": 1.3947,
+          "evidence": []
+        },
+        {
+          "term": "net desirable",
+          "score": 1.3461,
+          "evidence": []
+        },
+        {
+          "term": "strategy outweighed",
+          "score": 1.2758,
+          "evidence": []
+        },
+        {
+          "term": "erg",
+          "score": 1.2153,
+          "evidence": []
+        },
+        {
+          "term": "specified strategy",
+          "score": 1.0403,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.0342,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "recommendations",
+          "score": 36.2912,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erg",
+          "score": 29.1671,
+          "evidence": []
+        },
+        {
+          "term": "desirable consequences",
+          "score": 25.5351,
+          "evidence": []
+        },
+        {
+          "term": "net desirable",
+          "score": 23.5115,
+          "evidence": []
+        },
+        {
+          "term": "strategy outweighed",
+          "score": 23.4688,
+          "evidence": []
+        },
+        {
+          "term": "evidence-to-recommendation tables",
+          "score": 23.4328,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 20.4493,
+          "evidence": []
+        },
+        {
+          "term": "specified strategy",
+          "score": 19.2851,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 0.8419,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.8236,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer prevention",
+          "score": 0.5513,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.5185,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4837,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.3998,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3994,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 10.9253,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 10.5975,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 10.1135,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 8.4042,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 8.3501,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 7.1604,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 7.1107,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 6.9184,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 0.8419,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.8236,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer prevention",
+          "score": 0.5513,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.5185,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4837,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.3998,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3994,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.3797,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 38.214,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 26.8274,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 22.6452,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 19.6992,
+          "evidence": []
+        },
+        {
+          "term": "正如edwards",
+          "score": 18.7636,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 16.3494,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 16.268,
+          "evidence": []
+        },
+        {
+          "term": "gonzalvo-cirac",
+          "score": 16.054,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-guideline-review-and-approval-process": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "circulated among",
+          "score": 1.342,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 1.166,
+          "evidence": []
+        },
+        {
+          "term": "decisions consistent",
+          "score": 1.0516,
+          "evidence": []
+        },
+        {
+          "term": "decision aids",
+          "score": 0.9034,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.8541,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.7466,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erg",
+          "score": 0.7452,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.7396,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "circulated among",
+          "score": 24.0056,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 20.4493,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 20.3808,
+          "evidence": []
+        },
+        {
+          "term": "decisions consistent",
+          "score": 16.7816,
+          "evidence": []
+        },
+        {
+          "term": "decision aids",
+          "score": 13.4975,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 12.298,
+          "evidence": []
+        },
+        {
+          "term": "clinicians",
+          "score": 11.738,
+          "evidence": []
+        },
+        {
+          "term": "erg",
+          "score": 11.6668,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline",
+          "score": 0.6731,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 0.4111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "steering group",
+          "score": 0.3847,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.3422,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.2963,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.2788,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.268,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic",
+          "score": 0.1842,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 13.1479,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 7.2228,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 6.2534,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 5.9845,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 5.7943,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg",
+          "score": 4.5767,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 3.1311,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 3.1167,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline",
+          "score": 0.6731,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 0.4111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "steering group",
+          "score": 0.3847,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.3422,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.2963,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.2788,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.268,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "development",
+          "score": 0.1625,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 28.5351,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 16.4022,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 15.6927,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 14.14,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 13.8177,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 11.6154,
+          "evidence": []
+        },
+        {
+          "term": "正如edwards",
+          "score": 10.886,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 10.7619,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-3-recommendations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "unknown hiv",
+          "score": 0.8585,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.8402,
+          "evidence": []
+        },
+        {
+          "term": "flowcharts",
+          "score": 0.7853,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "flowcharts",
+          "score": 12.6597,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 12.3895,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 11.8614,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv status",
+          "score": 0.1559,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 0.1268,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1003,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv status",
+          "score": 5.0622,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 3.0905,
+          "evidence": []
+        },
+        {
+          "term": "adh",
+          "score": 1.5797,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv status",
+          "score": 0.1559,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 0.1268,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1003,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 39.1834,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 34.6172,
+          "evidence": []
+        },
+        {
+          "term": "正如edwards",
+          "score": 23.3398,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-important-considerations-that-apply-to-all-scree": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 2.9049,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "endocervical canal",
+          "score": 1.7506,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.6867,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive status",
+          "score": 1.5107,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 1.4934,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 1.4339,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 1.4109,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 1.3188,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 55.3024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryotherapy",
+          "score": 48.722,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 36.1967,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 35.7001,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive status",
+          "score": 34.113,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 34.0042,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 33.3116,
+          "evidence": []
+        },
+        {
+          "term": "endocervical canal",
+          "score": 27.8249,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.5833,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 1.2091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 1.1696,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 0.9889,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.7188,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 0.5363,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 0.5135,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 29.2808,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 29.2679,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 19.9107,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 18.0318,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 16.8717,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 13.1912,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 13.0934,
+          "evidence": []
+        },
+        {
+          "term": "transformation zone",
+          "score": 12.8986,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.5833,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 1.2091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 1.1696,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 0.9889,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.7188,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 0.5135,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.5074,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 58.2836,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 56.8548,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 54.7224,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 53.4375,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 47.7116,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 46.972,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 45.372,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 41.9926,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-screen-and-treat-recommendations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "underwent colposcopy",
+          "score": 4.4243,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 4.0432,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy strategy",
+          "score": 3.9757,
+          "evidence": []
+        },
+        {
+          "term": "fewer cancers",
+          "score": 3.9187,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy compared",
+          "score": 3.7984,
+          "evidence": []
+        },
+        {
+          "term": "fewer cin",
+          "score": 3.7266,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy due",
+          "score": 3.5912,
+          "evidence": []
+        },
+        {
+          "term": "fewer women",
+          "score": 3.486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hpv test",
+          "score": 455.381,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy strategy",
+          "score": 434.9284,
+          "evidence": []
+        },
+        {
+          "term": "underwent colposcopy",
+          "score": 374.8994,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 363.9845,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy compared",
+          "score": 359.5146,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy due",
+          "score": 344.9295,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 317.3179,
+          "evidence": []
+        },
+        {
+          "term": "fewer women",
+          "score": 282.1123,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 3.8048,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 3.0569,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 3.042,
+          "evidence": []
+        },
+        {
+          "term": "follow-up screening",
+          "score": 2.547,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 2.5451,
+          "evidence": []
+        },
+        {
+          "term": "screening strategy",
+          "score": 2.5032,
+          "evidence": []
+        },
+        {
+          "term": "fewer cervical",
+          "score": 2.4129,
+          "evidence": []
+        },
+        {
+          "term": "screening interval",
+          "score": 2.3762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 491.009,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 357.6892,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy strategy",
+          "score": 342.5677,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 330.0877,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 304.1854,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy compared",
+          "score": 289.3617,
+          "evidence": []
+        },
+        {
+          "term": "underwent colposcopy",
+          "score": 287.0987,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy due",
+          "score": 271.6323,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 3.8048,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 3.0569,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 3.042,
+          "evidence": []
+        },
+        {
+          "term": "follow-up screening",
+          "score": 2.547,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 2.5451,
+          "evidence": []
+        },
+        {
+          "term": "screening strategy",
+          "score": 2.5032,
+          "evidence": []
+        },
+        {
+          "term": "fewer cervical",
+          "score": 2.4129,
+          "evidence": []
+        },
+        {
+          "term": "screening interval",
+          "score": 2.3762,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 110.7621,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 106.4684,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 88.6193,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 83.8123,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 80.942,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 76.2939,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 68.9922,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 67.4268,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-4-research-gaps-and-further-considerations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cytology programmes",
+          "score": 1.9986,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.8806,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.6867,
+          "evidence": []
+        },
+        {
+          "term": "patient-important outcomes",
+          "score": 1.6431,
+          "evidence": []
+        },
+        {
+          "term": "evaluated screen-and-treat",
+          "score": 1.6358,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 1.6271,
+          "evidence": []
+        },
+        {
+          "term": "few randomized",
+          "score": 1.6151,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 1.5979,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cytology programmes",
+          "score": 64.535,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 61.758,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 50.3725,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 48.1587,
+          "evidence": []
+        },
+        {
+          "term": "screening strategies",
+          "score": 41.8159,
+          "evidence": []
+        },
+        {
+          "term": "patient-important outcomes",
+          "score": 37.742,
+          "evidence": []
+        },
+        {
+          "term": "few randomized",
+          "score": 36.6474,
+          "evidence": []
+        },
+        {
+          "term": "few studies",
+          "score": 36.454,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.8697,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.4504,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.4325,
+          "evidence": []
+        },
+        {
+          "term": "screening strategies",
+          "score": 1.1517,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.1192,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 0.8658,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.8507,
+          "evidence": []
+        },
+        {
+          "term": "cytology programmes",
+          "score": 0.7998,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 61.6449,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 45.1001,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 39.2064,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 31.9375,
+          "evidence": []
+        },
+        {
+          "term": "screening strategies",
+          "score": 29.7048,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 29.6,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic test",
+          "score": 25.0363,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 24.2679,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.8697,
+          "evidence": []
+        },
+        {
+          "term": "screening test",
+          "score": 1.4504,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.4325,
+          "evidence": []
+        },
+        {
+          "term": "screening strategies",
+          "score": 1.1517,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.1192,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 0.8658,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.8507,
+          "evidence": []
+        },
+        {
+          "term": "cytology programmes",
+          "score": 0.7998,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 55.2957,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 53.3175,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 52.4779,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 43.948,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 42.2479,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 40.9822,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 36.4818,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 36.3128,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-guideline-dissemination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "library database",
+          "score": 1.4008,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 1.3949,
+          "evidence": []
+        },
+        {
+          "term": "regional offices",
+          "score": 1.3745,
+          "evidence": []
+        },
+        {
+          "term": "rhl",
+          "score": 1.23,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.971,
+          "evidence": []
+        },
+        {
+          "term": "health web",
+          "score": 0.9162,
+          "evidence": []
+        },
+        {
+          "term": "journals",
+          "score": 0.8608,
+          "evidence": []
+        },
+        {
+          "term": "subscribers",
+          "score": 0.8483,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "reproductive health",
+          "score": 40.2533,
+          "evidence": []
+        },
+        {
+          "term": "library database",
+          "score": 28.371,
+          "evidence": []
+        },
+        {
+          "term": "regional offices",
+          "score": 27.3259,
+          "evidence": []
+        },
+        {
+          "term": "rhl",
+          "score": 23.6109,
+          "evidence": []
+        },
+        {
+          "term": "health web",
+          "score": 16.1591,
+          "evidence": []
+        },
+        {
+          "term": "journals",
+          "score": 16.1562,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 15.5406,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 15.0672,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "reproductive health",
+          "score": 0.2982,
+          "evidence": []
+        },
+        {
+          "term": "health web",
+          "score": 0.2847,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.2726,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.2001,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1895,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.1806,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1778,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.1657,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health web",
+          "score": 6.823,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 6.4625,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 4.2784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 4.0427,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 3.0422,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 2.5101,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 2.4722,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 2.4171,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reproductive health",
+          "score": 0.2982,
+          "evidence": []
+        },
+        {
+          "term": "health web",
+          "score": 0.2847,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.2726,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.2001,
+          "evidence": []
+        },
+        {
+          "term": "cancer control",
+          "score": 0.1806,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1568,
+          "evidence": []
+        },
+        {
+          "term": "regional offices",
+          "score": 0.1501,
+          "evidence": []
+        },
+        {
+          "term": "medical",
+          "score": 0.0947,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 52.191,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 38.34,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 38.0471,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 34.5921,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 34.003,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 33.5477,
+          "evidence": []
+        },
+        {
+          "term": "如上所述",
+          "score": 24.3715,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 23.4882,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-guideline-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regional offices",
+          "score": 1.0771,
+          "evidence": []
+        },
+        {
+          "term": "downloads",
+          "score": 0.6082,
+          "evidence": []
+        },
+        {
+          "term": "screen-and",
+          "score": 0.5725,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regional offices",
+          "score": 17.2807,
+          "evidence": []
+        },
+        {
+          "term": "downloads",
+          "score": 7.8703,
+          "evidence": []
+        },
+        {
+          "term": "screen-and",
+          "score": 7.3595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline",
+          "score": 0.1206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.0655,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.0531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 1.6956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 0.8424,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.5859,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline",
+          "score": 0.1206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.0655,
+          "evidence": []
+        },
+        {
+          "term": "regional offices",
+          "score": 0.0508,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 48.9734,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 36.8522,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 33.2226,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-guideline-update": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "update",
+          "score": 0.5531,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "precancerous",
+          "score": 0.4359,
+          "evidence": []
+        },
+        {
+          "term": "hoc",
+          "score": 0.4352,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "update",
+          "score": 6.3215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 6.0485,
+          "evidence": []
+        },
+        {
+          "term": "hoc",
+          "score": 5.5349,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline",
+          "score": 0.2088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 0.1423,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.1327,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 2.3497,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 2.0358,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 1.8711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline",
+          "score": 0.2088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 0.1423,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.1327,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 23.2137,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 22.8837,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 21.3685,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical intraepithelial",
+          "score": 2.6056,
+          "evidence": []
+        },
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 2.5409,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 2.3791,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 1.9803,
+          "evidence": []
+        },
+        {
+          "term": "accessed august",
+          "score": 1.8827,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 1.6715,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.5463,
+          "evidence": []
+        },
+        {
+          "term": "low-grade abnormal",
+          "score": 1.4367,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical intraepithelial",
+          "score": 93.3621,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 88.4396,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 71.5994,
+          "evidence": []
+        },
+        {
+          "term": "intraepithelial neoplasia",
+          "score": 70.2072,
+          "evidence": []
+        },
+        {
+          "term": "accessed august",
+          "score": 39.4892,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 38.6817,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 35.2824,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 30.3828,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.573,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 1.4947,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.0624,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.0211,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9015,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8969,
+          "evidence": []
+        },
+        {
+          "term": "accessed august",
+          "score": 0.7993,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 0.7663,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 32.4257,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 30.369,
+          "evidence": []
+        },
+        {
+          "term": "accessed august",
+          "score": 29.6016,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 25.999,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 24.4631,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 23.8498,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 19.6652,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 17.8205,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.573,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 1.4947,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.0624,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.0211,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9015,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8969,
+          "evidence": []
+        },
+        {
+          "term": "accessed august",
+          "score": 0.7993,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 0.7663,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 69.2779,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 62.2838,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 51.6913,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 46.5641,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 45.5862,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 42.5458,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 42.5209,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 42.4532,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-annex-1-declarations-of-interest": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 2.7906,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 2.2313,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 2.217,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 2.1149,
+          "evidence": []
+        },
+        {
+          "term": "path received",
+          "score": 2.0787,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 2.0547,
+          "evidence": []
+        },
+        {
+          "term": "sonichealthcare benelux",
+          "score": 2.0274,
+          "evidence": []
+        },
+        {
+          "term": "qiagen",
+          "score": 1.9968,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 133.34,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 92.2112,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 86.5416,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 75.8431,
+          "evidence": []
+        },
+        {
+          "term": "qiagen",
+          "score": 74.4885,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 73.5933,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 71.4914,
+          "evidence": []
+        },
+        {
+          "term": "rapid hpv",
+          "score": 68.8131,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.749,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 1.6748,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 1.3671,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.2594,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.1897,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 1.1064,
+          "evidence": []
+        },
+        {
+          "term": "rapid hpv",
+          "score": 0.7998,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.6535,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cancer screening",
+          "score": 50.3055,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 49.4552,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 42.0821,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 36.6191,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 34.4633,
+          "evidence": []
+        },
+        {
+          "term": "rapid hpv",
+          "score": 30.2713,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 29.0788,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 18.9318,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.749,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 1.6748,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccine",
+          "score": 1.3671,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.2594,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.1897,
+          "evidence": []
+        },
+        {
+          "term": "hpv vaccination",
+          "score": 1.1064,
+          "evidence": []
+        },
+        {
+          "term": "rapid hpv",
+          "score": 0.8801,
+          "evidence": []
+        },
+        {
+          "term": "operations research",
+          "score": 0.6756,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "经济方面",
+          "score": 57.0117,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 56.3733,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 54.4319,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 52.7995,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 48.1895,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 48.1895,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 47.6447,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 47.35,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-annex-2-decision-making-flowchart-for-screen-and": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "screen-and-treat",
+          "score": 2.202,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat strategy",
+          "score": 1.6385,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.5098,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 1.3509,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 1.2356,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive status",
+          "score": 1.1862,
+          "evidence": []
+        },
+        {
+          "term": "endemic hiv",
+          "score": 1.1144,
+          "evidence": []
+        },
+        {
+          "term": "flowchart",
+          "score": 0.9537,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "screen-and-treat",
+          "score": 51.8472,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat strategy",
+          "score": 37.4461,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 35.578,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 30.1795,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 24.779,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 23.7227,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive status",
+          "score": 21.8469,
+          "evidence": []
+        },
+        {
+          "term": "endemic hiv",
+          "score": 19.0029,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv test",
+          "score": 0.7236,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.4565,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4382,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4377,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4271,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 0.4195,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 0.405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv status",
+          "score": 0.3662,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 26.5633,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 17.3022,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 14.1544,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 12.8701,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 11.959,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 8.8623,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 8.5961,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 8.2062,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv test",
+          "score": 0.7236,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4377,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4271,
+          "evidence": []
+        },
+        {
+          "term": "test followed",
+          "score": 0.4195,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 0.405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv status",
+          "score": 0.3662,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.3546,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategy",
+          "score": 0.3447,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 63.789,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 54.0853,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 52.6634,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 49.6226,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 47.2606,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 44.4471,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 40.4992,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 39.5042,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-annex-3-flowcharts-for-screen-and-treat-strategi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "flowcharts",
+          "score": 1.5707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 1.3502,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategies",
+          "score": 0.6876,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "flowcharts",
+          "score": 25.3194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 20.7389,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategies",
+          "score": 10.2946,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.1011,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.0998,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.0915,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "recommendation",
+          "score": 2.0722,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "status",
+          "score": 1.6242,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.1011,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.0998,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.0915,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 35.3623,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 34.2849,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 27.2424,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-screen-with-an-hpv-test-and-treat-with-cryothera": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.5241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 1.6652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "visual inspection",
+          "score": 1.217,
+          "evidence": []
+        },
+        {
+          "term": "acetic acid",
+          "score": 1.2162,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 64.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 22.488,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "visual inspection",
+          "score": 18.9569,
+          "evidence": []
+        },
+        {
+          "term": "acetic acid",
+          "score": 18.6652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv test",
+          "score": 0.9207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.3149,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3082,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.2785,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 22.596,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryotherapy",
+          "score": 5.6442,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 5.5916,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 4.3138,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv test",
+          "score": 0.9207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.3149,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3082,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.2784,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 106.3412,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 88.6046,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 73.1564,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 71.4626,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-screen-with-an-hpv-test-followed-by-via-and-trea": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv test",
+          "score": 2.2184,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryotherapy",
+          "score": 2.0877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 0.982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 0.8618,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 43.3085,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 37.424,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 14.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "rescreen",
+          "score": 13.142,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv test",
+          "score": 0.9872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.3335,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3274,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3175,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 25.6396,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "followed",
+          "score": 7.5024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryotherapy",
+          "score": 6.1711,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 6.1112,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv test",
+          "score": 0.9872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.3335,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3274,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3175,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 96.0327,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 91.7332,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 77.5055,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 72.1597,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-screen-with-via-and-treat-with-cryotherapy-or-le": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.0877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 0.982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 0.8618,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 43.3085,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 14.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 10.1954,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical",
+          "score": 0.1526,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.1493,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.1451,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 3.6664,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 2.7465,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 2.7229,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cancer",
+          "score": 0.1493,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.1398,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen",
+          "score": 0.1154,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 78.788,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 64.9189,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 61.674,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-screen-with-an-hpv-test-followed-by-colposcopy-w": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.5241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 1.8974,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 1.8209,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 1.7236,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 1.4386,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 64.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 30.5862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 29.2456,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv",
+          "score": 0.854,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.5797,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.4457,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4346,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.3994,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 26.0111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 19.2184,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "followed",
+          "score": 11.8599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 11.3987,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 9.9748,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv",
+          "score": 0.854,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.5797,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.4457,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4346,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.3994,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 127.9824,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 94.2677,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 83.7475,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 80.209,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 79.0965,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-screen-with-cytology-followed-by-colposcopy-with": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.5241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 1.8974,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 1.8209,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 1.7236,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 64.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 30.5862,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cytology",
+          "score": 0.4917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.4747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.3513,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3406,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "colposcopy",
+          "score": 17.8234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cytology",
+          "score": 12.1162,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv",
+          "score": 11.8092,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 11.1822,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cytology",
+          "score": 0.4917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.4747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer",
+          "score": 0.3406,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.3267,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 131.1319,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 92.4624,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 91.865,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 88.3526,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-annex-4-flowcharts-for-screen-and-treat-strategi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "flowcharts",
+          "score": 1.5707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 1.3502,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "endemic",
+          "score": 0.771,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "flowcharts",
+          "score": 25.3194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screen-and-treat",
+          "score": 20.7389,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategies",
+          "score": 10.2946,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.1751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.1052,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.0897,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 4.0458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "status",
+          "score": 3.0353,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 2.2335,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.1751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.1052,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.0897,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 33.4743,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 31.8547,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 27.0067,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-034-screen-with-an-hpv-test-and-treat-with-cryothera": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.5241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 1.6652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "visual inspection",
+          "score": 1.217,
+          "evidence": []
+        },
+        {
+          "term": "acetic acid",
+          "score": 1.2162,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.1644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 64.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 22.488,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "visual inspection",
+          "score": 18.9569,
+          "evidence": []
+        },
+        {
+          "term": "acetic acid",
+          "score": 18.6652,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 17.9024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv test",
+          "score": 1.1533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.7992,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3654,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.3448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.3144,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 25.4364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 9.2941,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 6.2586,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 6.1452,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 5.5915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv test",
+          "score": 1.1533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.7992,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.3654,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.3448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.3144,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 89.3955,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 79.0301,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 67.6474,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 65.6659,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 65.3355,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-035-screen-with-an-hpv-test-followed-by-via-and-trea": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hpv test",
+          "score": 2.2184,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryotherapy",
+          "score": 2.0877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 0.982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 0.8618,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 43.3085,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv test",
+          "score": 37.424,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 14.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "rescreen",
+          "score": 13.142,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv test",
+          "score": 0.8661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.2685,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.2634,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.2611,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 24.3248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "followed",
+          "score": 7.3461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryotherapy",
+          "score": 5.7982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 5.7837,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv test",
+          "score": 0.8661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "screening",
+          "score": 0.2634,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.2611,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.2408,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 90.6163,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 89.4627,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 75.7643,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 70.1622,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-036-screen-with-via-and-treat-with-cryotherapy-or-le": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.0877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 0.982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 0.8618,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 43.3085,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 14.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 10.1954,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical",
+          "score": 0.2602,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.255,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.2448,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 4.6141,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 3.3757,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 3.2884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical",
+          "score": 0.2602,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.255,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.2448,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 63.4123,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 58.7473,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 58.706,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-037-screen-with-an-hpv-test-followed-by-colposcopy-w": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.5241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 1.8974,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 1.8209,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 1.7236,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 64.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 30.5862,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hpv",
+          "score": 0.7218,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.4909,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.3662,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3537,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 24.6887,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 18.5633,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "followed",
+          "score": 11.7035,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 11.4062,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hpv",
+          "score": 0.7218,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.4909,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cancer",
+          "score": 0.3537,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.3402,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 123.5747,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 92.2844,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 82.064,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 77.5208,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-038-screen-with-cytology-followed-by-colposcopy-with": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 2.5241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 1.8974,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 1.8209,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 1.7236,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 1.4386,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 64.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 32.8344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leep",
+          "score": 30.5862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treat",
+          "score": 29.2456,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cytology",
+          "score": 0.6144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.5879,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.4531,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4405,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.4299,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "colposcopy",
+          "score": 18.9544,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cytology",
+          "score": 13.076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hpv",
+          "score": 12.7569,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 11.7407,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biopsy",
+          "score": 9.8314,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cytology",
+          "score": 0.6144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.5879,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical",
+          "score": 0.4531,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.4405,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 0.4054,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 112.005,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 83.5972,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 81.4521,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 79.1105,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 78.9376,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-039-annex-5-search-strategies-for-evidence-reviews": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "receiver operator",
+          "score": 2.7748,
+          "evidence": []
+        },
+        {
+          "term": "dysplasia uterine",
+          "score": 2.5021,
+          "evidence": []
+        },
+        {
+          "term": "receiver operating",
+          "score": 2.3511,
+          "evidence": []
+        },
+        {
+          "term": "cervical dysplasia",
+          "score": 2.2424,
+          "evidence": []
+        },
+        {
+          "term": "adj cervi",
+          "score": 2.1977,
+          "evidence": []
+        },
+        {
+          "term": "operator characteristic",
+          "score": 2.1484,
+          "evidence": []
+        },
+        {
+          "term": "roc curve",
+          "score": 2.1062,
+          "evidence": []
+        },
+        {
+          "term": "neoplasia uterine",
+          "score": 1.9075,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "receiver operator",
+          "score": 75.5458,
+          "evidence": []
+        },
+        {
+          "term": "receiver operating",
+          "score": 66.1192,
+          "evidence": []
+        },
+        {
+          "term": "dysplasia uterine",
+          "score": 56.308,
+          "evidence": []
+        },
+        {
+          "term": "uterine cervical",
+          "score": 51.6438,
+          "evidence": []
+        },
+        {
+          "term": "adj cervi",
+          "score": 48.6191,
+          "evidence": []
+        },
+        {
+          "term": "operator characteristic",
+          "score": 46.7206,
+          "evidence": []
+        },
+        {
+          "term": "roc curve",
+          "score": 41.5949,
+          "evidence": []
+        },
+        {
+          "term": "neoplasia uterine",
+          "score": 39.5773,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical intraepithelial",
+          "score": 0.7062,
+          "evidence": []
+        },
+        {
+          "term": "uterine cervical",
+          "score": 0.5836,
+          "evidence": []
+        },
+        {
+          "term": "cervical dysplasia",
+          "score": 0.547,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasms",
+          "score": 0.547,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.5433,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.5082,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.4576,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 0.3469,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 10.9705,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 10.2243,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 9.3001,
+          "evidence": []
+        },
+        {
+          "term": "cervical dysplasia",
+          "score": 9.0276,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasms",
+          "score": 9.0276,
+          "evidence": []
+        },
+        {
+          "term": "uterine cervical",
+          "score": 9.0276,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 8.8806,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 7.3688,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical intraepithelial",
+          "score": 0.7062,
+          "evidence": []
+        },
+        {
+          "term": "uterine cervical",
+          "score": 0.5836,
+          "evidence": []
+        },
+        {
+          "term": "cervical dysplasia",
+          "score": 0.5781,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasms",
+          "score": 0.5637,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.5433,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.5082,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 0.3363,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 0.3333,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 289.0198,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 167.3494,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 161.9779,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 156.6524,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 139.4375,
+          "evidence": []
+        },
+        {
+          "term": "公共利益",
+          "score": 138.0348,
+          "evidence": []
+        },
+        {
+          "term": "正如edwards",
+          "score": 131.1975,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 130.5424,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-040-annex-6-prisma-flow-diagram-for-inclusion-and-ex": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "total colposcopy",
+          "score": 1.9814,
+          "evidence": []
+        },
+        {
+          "term": "total screening",
+          "score": 1.3721,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 1.3288,
+          "evidence": []
+        },
+        {
+          "term": "exclusion",
+          "score": 1.1118,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "plus random",
+          "score": 1.1035,
+          "evidence": []
+        },
+        {
+          "term": "random sample",
+          "score": 1.0149,
+          "evidence": []
+        },
+        {
+          "term": "calculate diagnostic",
+          "score": 0.9564,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "total colposcopy",
+          "score": 49.1825,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 32.2471,
+          "evidence": []
+        },
+        {
+          "term": "exclusion",
+          "score": 17.8764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "plus random",
+          "score": 17.8555,
+          "evidence": []
+        },
+        {
+          "term": "calculate diagnostic",
+          "score": 15.7744,
+          "evidence": []
+        },
+        {
+          "term": "random sample",
+          "score": 15.2448,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 15.207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "screening tests",
+          "score": 0.5842,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.4862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "diagnostic test",
+          "score": 0.4502,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 0.446,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.3973,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.3925,
+          "evidence": []
+        },
+        {
+          "term": "total screening",
+          "score": 0.3883,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv",
+          "score": 13.6176,
+          "evidence": []
+        },
+        {
+          "term": "screening tests",
+          "score": 11.4496,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic test",
+          "score": 10.1269,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 9.99,
+          "evidence": []
+        },
+        {
+          "term": "total colposcopy",
+          "score": 9.99,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 9.9387,
+          "evidence": []
+        },
+        {
+          "term": "cytology",
+          "score": 7.0494,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "screening tests",
+          "score": 0.5842,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.4862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "diagnostic test",
+          "score": 0.4502,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 0.446,
+          "evidence": []
+        },
+        {
+          "term": "total screening",
+          "score": 0.4204,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.3732,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3069,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 95.1802,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 62.3288,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 55.243,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 52.7345,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 45.8992,
+          "evidence": []
+        },
+        {
+          "term": "美国cdc",
+          "score": 43.5041,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 43.4801,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-041-annex-7-reference-list-of-all-studies-included-i": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 3.2177,
+          "evidence": []
+        },
+        {
+          "term": "cervical cytology",
+          "score": 3.0672,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasia",
+          "score": 2.9973,
+          "evidence": []
+        },
+        {
+          "term": "gynecology obstetrics",
+          "score": 2.8503,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 2.8054,
+          "evidence": []
+        },
+        {
+          "term": "acetic acid",
+          "score": 2.549,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 2.5479,
+          "evidence": []
+        },
+        {
+          "term": "visual inspection",
+          "score": 2.5323,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cervical cancer",
+          "score": 213.7565,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 167.2165,
+          "evidence": []
+        },
+        {
+          "term": "cervical cytology",
+          "score": 155.4185,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasia",
+          "score": 152.3633,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 130.6246,
+          "evidence": []
+        },
+        {
+          "term": "detect cervical",
+          "score": 125.1806,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 115.0968,
+          "evidence": []
+        },
+        {
+          "term": "cancer epidemiology",
+          "score": 106.8964,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 2.7021,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 2.5287,
+          "evidence": []
+        },
+        {
+          "term": "cervical cytology",
+          "score": 2.1917,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.7315,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasia",
+          "score": 1.7276,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 1.6722,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.6528,
+          "evidence": []
+        },
+        {
+          "term": "screening study",
+          "score": 1.5862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cancer screening",
+          "score": 81.6477,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 80.3064,
+          "evidence": []
+        },
+        {
+          "term": "cervical cytology",
+          "score": 61.46,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 49.8708,
+          "evidence": []
+        },
+        {
+          "term": "screening study",
+          "score": 46.4141,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 46.0512,
+          "evidence": []
+        },
+        {
+          "term": "primary screening",
+          "score": 44.6485,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 43.9003,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 2.7021,
+          "evidence": []
+        },
+        {
+          "term": "cervical screening",
+          "score": 2.5287,
+          "evidence": []
+        },
+        {
+          "term": "cervical cytology",
+          "score": 2.1917,
+          "evidence": []
+        },
+        {
+          "term": "cervical intraepithelial",
+          "score": 1.7315,
+          "evidence": []
+        },
+        {
+          "term": "cervical neoplasia",
+          "score": 1.7276,
+          "evidence": []
+        },
+        {
+          "term": "hpv testing",
+          "score": 1.6722,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 1.6528,
+          "evidence": []
+        },
+        {
+          "term": "screening study",
+          "score": 1.5862,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 111.5955,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 96.4839,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 87.4059,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 83.4114,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 80.6487,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 72.7203,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 65.4251,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 65.0233,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "precancerous lesions",
+          "score": 2.0864,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 1.7487,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 1.6994,
+          "evidence": []
+        },
+        {
+          "term": "precancerous conditions",
+          "score": 1.6278,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 1.569,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.5684,
+          "evidence": []
+        },
+        {
+          "term": "cryotherapy",
+          "score": 1.5552,
+          "evidence": []
+        },
+        {
+          "term": "leep",
+          "score": 1.4907,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryotherapy",
+          "score": 54.1356,
+          "evidence": []
+        },
+        {
+          "term": "leep",
+          "score": 50.977,
+          "evidence": []
+        },
+        {
+          "term": "precancerous lesions",
+          "score": 50.3577,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat strategies",
+          "score": 41.4029,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 41.1892,
+          "evidence": []
+        },
+        {
+          "term": "treat",
+          "score": 40.2127,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 39.27,
+          "evidence": []
+        },
+        {
+          "term": "screen",
+          "score": 38.875,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cervical cancer",
+          "score": 1.4811,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.0344,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 0.9621,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8656,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8303,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 0.7856,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 0.7578,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.6761,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hpv test",
+          "score": 51.5634,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 34.3188,
+          "evidence": []
+        },
+        {
+          "term": "colposcopy",
+          "score": 25.7051,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 22.152,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 17.6281,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 15.2302,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 15.0936,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 13.2788,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cervical cancer",
+          "score": 1.4811,
+          "evidence": []
+        },
+        {
+          "term": "hpv test",
+          "score": 1.0344,
+          "evidence": []
+        },
+        {
+          "term": "cancer prevention",
+          "score": 0.9621,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8656,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8303,
+          "evidence": []
+        },
+        {
+          "term": "screen-and-treat recommendations",
+          "score": 0.7856,
+          "evidence": []
+        },
+        {
+          "term": "cytology followed",
+          "score": 0.7578,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.6761,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 34.4177,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 29.0787,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 29.0089,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 28.9933,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 28.873,
+          "evidence": []
+        },
+        {
+          "term": "在发生突发事件时",
+          "score": 28.6734,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 28.1459,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 27.1216,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

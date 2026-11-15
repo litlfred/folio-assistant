@@ -4109,6 +4109,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_harnessrendering.a_nodeviews",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report node-view coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Tool `node-view-coverage` (`bun run cat node-views:report -- --site <built site>`) counts, per layer, folder and kind, which nodes have an IRI, a `.jsonld`, a page and a row on their folder page, and which folder links are dead or point at the raw repository. A QA report, not a gate: it always exits 0 and feeds no gateway, and its results go to `test/results/node-views/` and on to the `qa-reports` branch. A graph with no viewer is still shown inert and labelled by the tile step; this says how many of its nodes are owed a page."
+        }
+      ],
+      "skos:notation": "A_NodeViews",
+      "dcterms:source": "cat-harness/processes/ui/harness-default-rendering.bpmn#A_NodeViews",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_harnessrendering.a_propose",
       "@type": "skos:Concept",
       "skos:inScheme": {

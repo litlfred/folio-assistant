@@ -1,0 +1,920 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-218295",
+  "instance": "who-iris",
+  "about": "library/10665-218295",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "groupe âges",
+        "score": 3.1,
+        "evidence": []
+      },
+      {
+        "term": "year age-group",
+        "score": 2.8695,
+        "evidence": []
+      },
+      {
+        "term": "vaccination contre",
+        "score": 2.811,
+        "evidence": []
+      },
+      {
+        "term": "ans sans",
+        "score": 2.4106,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccine",
+        "score": 2.0555,
+        "evidence": []
+      },
+      {
+        "term": "year année",
+        "score": 1.967,
+        "evidence": []
+      },
+      {
+        "term": "immunization survey",
+        "score": 1.5342,
+        "evidence": []
+      },
+      {
+        "term": "les vaccinations",
+        "score": 1.3496,
+        "evidence": []
+      },
+      {
+        "term": "bureau",
+        "score": 1.2592,
+        "evidence": []
+      },
+      {
+        "term": "usa",
+        "score": 1.2087,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "groupe âges",
+        "score": 38.9236,
+        "evidence": []
+      },
+      {
+        "term": "year age-group",
+        "score": 36.7234,
+        "evidence": []
+      },
+      {
+        "term": "vaccination contre",
+        "score": 36.4648,
+        "evidence": []
+      },
+      {
+        "term": "ans sans",
+        "score": 33.906,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccine",
+        "score": 30.7402,
+        "evidence": []
+      },
+      {
+        "term": "year année",
+        "score": 24.4863,
+        "evidence": []
+      },
+      {
+        "term": "immunization survey",
+        "score": 23.0145,
+        "evidence": []
+      },
+      {
+        "term": "les vaccinations",
+        "score": 21.1725,
+        "evidence": []
+      },
+      {
+        "term": "bureau",
+        "score": 19.5655,
+        "evidence": []
+      },
+      {
+        "term": "enquête",
+        "score": 15.8401,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccination contre",
+        "score": 0.6526,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 0.5977,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccine",
+        "score": 0.5877,
+        "evidence": []
+      },
+      {
+        "term": "sans vaccination",
+        "score": 0.5854,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.3933,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 0.3201,
+        "evidence": []
+      },
+      {
+        "term": "immunization survey",
+        "score": 0.3201,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.2798,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.2723,
+        "evidence": []
+      },
+      {
+        "term": "doses",
+        "score": 0.2556,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "sur les",
+        "score": 9.8136,
+        "evidence": []
+      },
+      {
+        "term": "vaccination contre",
+        "score": 9.812,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccine",
+        "score": 9.532,
+        "evidence": []
+      },
+      {
+        "term": "sans vaccination",
+        "score": 9.4094,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 8.4733,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 6.2473,
+        "evidence": []
+      },
+      {
+        "term": "immunization survey",
+        "score": 6.2473,
+        "evidence": []
+      },
+      {
+        "term": "immz",
+        "score": 5.2304,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 4.4876,
+        "evidence": []
+      },
+      {
+        "term": "mumps",
+        "score": 4.1335,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccination contre",
+        "score": 0.6526,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 0.5977,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccine",
+        "score": 0.5877,
+        "evidence": []
+      },
+      {
+        "term": "sans vaccination",
+        "score": 0.5854,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.3933,
+        "evidence": []
+      },
+      {
+        "term": "immunization survey",
+        "score": 0.3441,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.2723,
+        "evidence": []
+      },
+      {
+        "term": "united states",
+        "score": 0.1977,
+        "evidence": []
+      },
+      {
+        "term": "year année",
+        "score": 0.1679,
+        "evidence": []
+      },
+      {
+        "term": "year age-group",
+        "score": 0.141,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "相一致",
+        "score": 472.7514,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 368.966,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 368.966,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 214.7442,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 192.8318,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 173.6672,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 171.3839,
+        "evidence": []
+      },
+      {
+        "term": "潜在受试者",
+        "score": 157.7864,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 157.3923,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 153.0149,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-fig-1": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "measles vaccine",
+          "score": 1.6139,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.685,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6391,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "measles vaccine",
+          "score": 26.1407,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 15.6652,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.5425,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "measles vaccine",
+          "score": 0.2417,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1827,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1128,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "measles vaccine",
+          "score": 5.423,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.804,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.7421,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "measles vaccine",
+          "score": 0.2417,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1827,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0735,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 78.3357,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 67.798,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 67.798,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-continued-on-page-suite-page-177": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les vaccinations",
+          "score": 1.3496,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.0233,
+          "evidence": []
+        },
+        {
+          "term": "enquête",
+          "score": 0.8433,
+          "evidence": []
+        },
+        {
+          "term": "effectues",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les vaccinations",
+          "score": 21.1725,
+          "evidence": []
+        },
+        {
+          "term": "enquête",
+          "score": 15.8401,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 15.8033,
+          "evidence": []
+        },
+        {
+          "term": "bureau",
+          "score": 9.7827,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 0.4421,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 0.3173,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2868,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2061,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 8.4384,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 7.3156,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 6.9308,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 2.7968,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 0.4421,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 0.3173,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2868,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.183,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 116.5855,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 82.0241,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 82.0241,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 51.821,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-fig-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ans",
+          "score": 0.6226,
+          "evidence": []
+        },
+        {
+          "term": "age-group",
+          "score": 0.586,
+          "evidence": []
+        },
+        {
+          "term": "buccal",
+          "score": 0.5581,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ans",
+          "score": 8.7884,
+          "evidence": []
+        },
+        {
+          "term": "age-group",
+          "score": 7.5826,
+          "evidence": []
+        },
+        {
+          "term": "buccal",
+          "score": 7.1771,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.1096,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.078,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.0615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 1.4927,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.0673,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 1.0335,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.1096,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.0615,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.04,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 133.4234,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 108.3121,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 108.3121,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-fig-3": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ans",
+          "score": 0.7857,
+          "evidence": []
+        },
+        {
+          "term": "age-group",
+          "score": 0.586,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.5344,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ans",
+          "score": 13.1826,
+          "evidence": []
+        },
+        {
+          "term": "age-group",
+          "score": 7.5826,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 7.3016,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.0872,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.066,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.0486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 1.3034,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.7938,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 0.7756,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.0872,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.048,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.0253,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 115.1498,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 84.7403,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 84.7403,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "immunization survey",
+          "score": 1.2166,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 0.8763,
+          "evidence": []
+        },
+        {
+          "term": "age-groups",
+          "score": 0.6497,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immunization survey",
+          "score": 19.8171,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 13.3864,
+          "evidence": []
+        },
+        {
+          "term": "bureau",
+          "score": 9.7827,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization survey",
+          "score": 0.1008,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.0921,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 0.0857,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunization survey",
+          "score": 1.727,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 1.6574,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 1.4249,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization survey",
+          "score": 0.1008,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 0.0857,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0554,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 33.5336,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 32.3625,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 30.7935,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

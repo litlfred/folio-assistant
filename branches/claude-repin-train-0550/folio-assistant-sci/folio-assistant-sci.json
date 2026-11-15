@@ -371,10 +371,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/211176b48990d1a2382a2913a91794b72853a53c",
-  "sourceCommitSha": "211176b48990d1a2382a2913a91794b72853a53c",
-  "sourceTree": "052431d7acabc679f86353c67b53d948b317ae9b",
-  "sourceCommitAt": "2026-11-14T15:36:20Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/782fc37375a522e91e5673161ac96eb47392105f",
+  "sourceCommitSha": "782fc37375a522e91e5673161ac96eb47392105f",
+  "sourceTree": "412445405e285f9a99d368a93bd98b5e151c22de",
+  "sourceCommitAt": "2026-11-15T07:32:40Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -385,6 +385,7 @@
     "ProcessNode": 28,
     "Decision": 1,
     "GraphTypology": 25,
+    "QaAttestation": 20,
     "Role": 4,
     "Subgraph": 26,
     "Asset": 3,
@@ -2564,6 +2565,206 @@
       "renderable": false,
       "summary": "A folio's Lean 4 formalisation: Lake packages, their modules and the declarations in them. Declared by the folio that holds the packages; this harness owns the kind, the Lean tools and the rendering (doc-gen4 HTML wrapped in the harness rail).",
       "validatorNotApplicable": "a member is Lean 4 source — a Lake package (`lakefile.toml` / `lakefile.lean`, `lean-toolchain`), its modules (`*.lean`) and their declarations — or a template the Lean tooling fills (`*.lean.tmpl`). Its validator is the Lean elaborator itself (`lake build`, or `lean`-direct against a restored cache), never a Zod schema: a file that parses as JSON tells you nothing about whether it typechecks."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/before-you-start",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/before-you-start",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/before-you-start (docs/source/guides-writing-a-paper/before-you-start), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/before-you-start.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/before-you-start"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/step-4-formalize-in-lean",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/step-4-formalize-in-lean (docs/source/guides-writing-a-paper/step-4-formalize-in-lean), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/step-5-validate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/step-5-validate",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/step-5-validate (docs/source/guides-writing-a-paper/step-5-validate), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/step-5-validate.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/step-5-validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/where-to-go-deeper",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/where-to-go-deeper (docs/source/guides-writing-a-paper/where-to-go-deeper), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/processes/content/atomic-mass-drift-check",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: process Process_AtomicMassDrift",
+      "description": "The kg-qa judgements recorded for process Process_AtomicMassDrift (processes/content/atomic-mass-drift-check.bpmn), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/processes/content/atomic-mass-drift-check.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/processes/content/atomic-mass-drift-check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/category-theory",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill category-theory",
+      "description": "The kg-qa judgements recorded for skill category-theory (skills/content/folio-paper-adapter/category-theory.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/category-theory.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/category-theory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/chapter-analysis",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill chapter-analysis",
+      "description": "The kg-qa judgements recorded for skill chapter-analysis (skills/content/folio-paper-adapter/chapter-analysis.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/chapter-analysis.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/chapter-analysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/content-block-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill content-block-review",
+      "description": "The kg-qa judgements recorded for skill content-block-review (skills/content/folio-paper-adapter/content-block-review.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/content-block-review.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/content-block-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/content-validation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill content-validation",
+      "description": "The kg-qa judgements recorded for skill content-validation (skills/content/folio-paper-adapter/content-validation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/content-validation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/content-validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/critical-path-analysis",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill critical-path-analysis",
+      "description": "The kg-qa judgements recorded for skill critical-path-analysis (skills/content/folio-paper-adapter/critical-path-analysis.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/critical-path-analysis.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/critical-path-analysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/formalizer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill formalizer",
+      "description": "The kg-qa judgements recorded for skill formalizer (skills/content/folio-paper-adapter/formalizer.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/formalizer.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/formalizer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/latex-compilation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill latex-compilation",
+      "description": "The kg-qa judgements recorded for skill latex-compilation (skills/content/folio-paper-adapter/latex-compilation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/latex-compilation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/latex-compilation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/latex-validation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill latex-validation",
+      "description": "The kg-qa judgements recorded for skill latex-validation (skills/content/folio-paper-adapter/latex-validation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/latex-validation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/latex-validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-environment-setup",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill lean-environment-setup",
+      "description": "The kg-qa judgements recorded for skill lean-environment-setup (skills/content/folio-paper-adapter/lean-environment-setup.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/lean-environment-setup.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-environment-setup"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-generation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill lean-generation",
+      "description": "The kg-qa judgements recorded for skill lean-generation (skills/content/folio-paper-adapter/lean-generation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/lean-generation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-generation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-proof-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill lean-proof-review",
+      "description": "The kg-qa judgements recorded for skill lean-proof-review (skills/content/folio-paper-adapter/lean-proof-review.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/lean-proof-review.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-proof-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/paper-importer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill paper-importer",
+      "description": "The kg-qa judgements recorded for skill paper-importer (skills/content/folio-paper-adapter/paper-importer.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/paper-importer.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/paper-importer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-simplifier",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill proof-simplifier",
+      "description": "The kg-qa judgements recorded for skill proof-simplifier (skills/content/folio-paper-adapter/proof-simplifier.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/proof-simplifier.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-status-tracking",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill proof-status-tracking",
+      "description": "The kg-qa judgements recorded for skill proof-status-tracking (skills/content/folio-paper-adapter/proof-status-tracking.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/proof-status-tracking.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-status-tracking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-triage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill proof-triage",
+      "description": "The kg-qa judgements recorded for skill proof-triage (skills/content/folio-paper-adapter/proof-triage.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/proof-triage.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-triage"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-sci/role/lean-authoring-agent",
@@ -4933,8 +5134,8 @@
   ],
   "staging": {
     "branch": "claude/repin-train-0550",
-    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "sha": "782fc37375a522e91e5673161ac96eb47392105f",
     "pr": "3124/merge",
-    "run": "43611082734"
+    "run": "43690506333"
   }
 }

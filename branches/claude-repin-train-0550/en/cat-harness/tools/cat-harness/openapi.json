@@ -119,6 +119,9 @@
       "name": "kg-to-portal"
     },
     {
+      "name": "kg-viewer"
+    },
+    {
       "name": "library-ingestion"
     },
     {
@@ -7643,6 +7646,95 @@
         ]
       }
     },
+    "/tools/merge-guard": {
+      "post": {
+        "operationId": "merge-guard",
+        "summary": "Judge whether a pull request may land",
+        "description": "The enforced merge guard: asks GitHub's live facts about one pull request whether it is finished (its checks, its tier, the session that marked it ready) before it reaches its base, and lands it only when every check passes. With `--status` it posts the verdict as the `merge-guard` commit status on the head, which is what the layer's merge-guard workflow does.",
+        "tags": [
+          "ci-health"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "merge-guard/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pr": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "The pull request number."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository holding the pull request. Default: the checkout's own."
+                  },
+                  "merge": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Land the pull request, only if every check passes. Needs `--session`."
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Post the verdict as the `merge-guard` commit status on the head."
+                  },
+                  "full_tier": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Require the full (release) tier of checks, not the fast tier a draft runs."
+                  }
+                },
+                "required": [
+                  "pr"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "Each check with its verdict; exit 0 when the pull request may land."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-guard.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat merge:guard"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ci-health"
+        ],
+        "x-selection": {
+          "when": "Before a pull request lands on its base, by the merge manager or a steward, and on every pull request event through the merge-guard workflow.",
+          "limits": "Reads GitHub's live facts about one pull request; it judges no declared graph.",
+          "cost": "A few GitHub REST calls."
+        }
+      }
+    },
     "/tools/merge-leftover": {
       "post": {
         "operationId": "merge-leftover",
@@ -8239,6 +8331,88 @@
         "x-satisfies": [
           "graph-rendering"
         ]
+      }
+    },
+    "/tools/node-view-coverage": {
+      "post": {
+        "operationId": "node-view-coverage",
+        "summary": "Does every node have an IRI, a .jsonld, a page and a row?",
+        "description": "For each node a declared directory holds, per layer × folder × kind: whether it has an IRI in its layer's export (extensionless), its JSON-LD at `<iri>.jsonld` (and `.json` where its source is JSON), a view page at `<locale>/<harness>/<vis>/<instance>/<id>/`, and a row on its folder page that links to it; plus the folder page's dead links and raw-repository links, and whether a viewer is declared. Folder pages are read with their data files, so rows drawn by JavaScript count. Writes `node-view-coverage/v1`, one file per layer, under `test/results/node-views/`.",
+        "tags": [
+          "kg-viewer"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "node-view-coverage/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`--site <dir>`: a built site (`_site`, or a preview's `branches/<slug>/`). With `--site-url`, the URL that directory is served at."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "`--base <url>`: a live site to probe instead of a directory. Optional; one of `site` or `base` is needed, or pages, rows and links are unknown."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "`--check` (`node-views:judge`): write nothing and judge. Exit 0 when no finding is new, 1 when one is new against the baseline, 2 when the run could not ask (JUDGEMENT_EXIT)."
+                  },
+                  "against": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "`--against <ref>`: the `qa-reports` entry to judge against (`main`, `main/<sha>`, `pr/<n>/<sha>`). Absent, the working copy; a missing baseline is UNKNOWN and not gated."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<layer qa home>/node-views/<layer>.node-views.qa.json` (`node-view-coverage/v1`), and a Markdown summary table on stdout. Always exit 0: reports, never gates. Published to `qa-reports` by `qa:publish`, and read by each layer's QA page."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/node-view-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat node-views:report"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "kg-viewer"
+        ],
+        "x-selection": {
+          "when": "After a site build, before the review of a preview: to see which nodes of which folders have no IRI, no .jsonld, no page or no row, and which folder links are dead or point at the raw repository.",
+          "limits": "It needs a built site or a live base; without one, pages, rows and links are unknown, never 0. Rows drawn in the browser are read from the folder's data files (`assets/<vis>/*.json`, inline JSON), not by running the page, so a row built from another source is not seen. The census per kind is a declared file rule (`CENSUS_RULES`) or the layer's export, recorded on each row. Counts past `--probe-limit` are unknown.",
+          "cost": "Building each layer's export in memory (minutes over a whole composition), then one request per node page and IRI: thousands against a live base."
+        }
       }
     },
     "/tools/npm": {
@@ -13237,7 +13411,7 @@
         },
         "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudicate.jsonld",
         "x-invoke": {
-          "manual": true
+          "shell": "bun run cat translation:adjudicate"
         },
         "x-install": {
           "none": true
@@ -13560,6 +13734,106 @@
         "x-satisfies": [
           "translation-manager"
         ]
+      }
+    },
+    "/tools/translation-platforms": {
+      "post": {
+        "operationId": "translation-platforms",
+        "summary": "Exchange catalogues with a translation platform",
+        "description": "For Weblate, Crowdin and Transifex: `export` writes the layout file a platform reads from the layer's declared `translation-sources` directory; `import` turns the `.po` changes a platform pushed onto the checked-out branch into CANDIDATES, never adjudications. Nothing here talks to a platform or the network. Exit 0 done, 1 `--check` found drift, 3 import found nothing to rewrite, 2 could not determine.",
+        "tags": [
+          "translation-candidate-source",
+          "translation-manager"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-platforms/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "`export` or `import`."
+                  },
+                  "platform": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "`weblate`, `crowdin` or `transifex`."
+                  },
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root. Default: the current directory."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "import: the git ref the platform's changes are compared against."
+                  },
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "export: write the platform's file rather than print it."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "export: fail when the committed file differs from what would be written."
+                  },
+                  "dry_run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "import: plan and report, write nothing."
+                  }
+                },
+                "required": [
+                  "action",
+                  "platform"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The file written or the candidates recorded."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-platforms.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation:platforms"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-candidate-source",
+          "translation-manager"
+        ],
+        "x-selection": {
+          "when": "When a layer offers its catalogues to a translation platform, and when the platform's import workflow brings its changes back as candidates.",
+          "limits": "Reads and writes files only; the platform's own push and pull happen outside it.",
+          "cost": "One read of the layer's catalogues. No network."
+        }
       }
     },
     "/tools/translation-review-page": {

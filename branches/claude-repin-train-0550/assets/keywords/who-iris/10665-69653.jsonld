@@ -1,0 +1,5282 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-69653",
+  "instance": "who-iris",
+  "about": "library/10665-69653",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "santé des",
+        "score": 30.5816,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 30.3847,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 30.3492,
+        "evidence": []
+      },
+      {
+        "term": "vaccination anti-papillomavirus",
+        "score": 29.9791,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sur les",
+        "score": 29.6106,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 29.4276,
+        "evidence": []
+      },
+      {
+        "term": "les femmes",
+        "score": 27.6911,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les pays",
+        "score": 27.5816,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 27.3256,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contre les",
+        "score": 26.8893,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 26.0046,
+        "evidence": []
+      },
+      {
+        "term": "anti-papillomavirus est",
+        "score": 25.8985,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "pour les",
+        "score": 1190.9541,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 1131.6568,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 1114.3288,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1112.9672,
+        "evidence": []
+      },
+      {
+        "term": "les femmes",
+        "score": 1072.9261,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les pays",
+        "score": 1057.8483,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 1055.6071,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contre les",
+        "score": 1036.0805,
+        "evidence": []
+      },
+      {
+        "term": "les programmes",
+        "score": 1027.2635,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "que les",
+        "score": 1019.0659,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sont les",
+        "score": 1018.7683,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 1003.4756,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 31.2055,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 30.9004,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 30.3706,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 28.7165,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 28.1665,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 27.6199,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé des",
+        "score": 27.1223,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 26.5587,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sont les",
+        "score": 24.8713,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 24.6994,
+        "evidence": []
+      },
+      {
+        "term": "vaccination des",
+        "score": 24.6043,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 24.397,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 1126.1527,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 1083.8446,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 1017.1263,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour des",
+        "score": 989.5143,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 986.3414,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 957.146,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "une des",
+        "score": 921.5422,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 919.5253,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 913.257,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 905.3426,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 903.9493,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 895.0333,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 31.2055,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 30.9004,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 30.3706,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 28.7165,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 28.1665,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 27.6199,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé des",
+        "score": 27.1223,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 26.5587,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sont les",
+        "score": 24.8713,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 24.6994,
+        "evidence": []
+      },
+      {
+        "term": "vaccination des",
+        "score": 24.6043,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 24.397,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "提供hpv",
+        "score": 1104.7779,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 934.796,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 914.3794,
+        "evidence": []
+      },
+      {
+        "term": "议程项目",
+        "score": 826.8194,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 814.192,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 801.7766,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 706.4104,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 705.8479,
+        "evidence": []
+      },
+      {
+        "term": "在一些国家",
+        "score": 691.5707,
+        "evidence": []
+      },
+      {
+        "term": "青少年",
+        "score": 691.5707,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 680.5046,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 654.4977,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé sexuelle",
+          "score": 1.6308,
+          "evidence": []
+        },
+        {
+          "term": "lutte anticancéreuse",
+          "score": 1.415,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.1032,
+          "evidence": []
+        },
+        {
+          "term": "génésique",
+          "score": 0.9551,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.9443,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé sexuelle",
+          "score": 28.9093,
+          "evidence": []
+        },
+        {
+          "term": "lutte anticancéreuse",
+          "score": 22.5064,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 18.3107,
+          "evidence": []
+        },
+        {
+          "term": "génésique",
+          "score": 18.0734,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 16.2012,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 0.6662,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.507,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4349,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3137,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.3034,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 12.4378,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 10.3765,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 8.5392,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 7.0797,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 7.0797,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 0.6662,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.507,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4349,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3137,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.3034,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 36.7792,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 36.3045,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 31.1193,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 30.122,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 30.0788,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-cancer-du-col-de-lutérus-et-infection-à-papillom": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "col",
+          "score": 4.1338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection papillomavirus",
+          "score": 3.6742,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "col utérin",
+          "score": 3.3449,
+          "evidence": []
+        },
+        {
+          "term": "lésions précancéreuses",
+          "score": 3.2117,
+          "evidence": []
+        },
+        {
+          "term": "des lésions",
+          "score": 2.7576,
+          "evidence": []
+        },
+        {
+          "term": "les lésions",
+          "score": 2.5561,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 2.5503,
+          "evidence": []
+        },
+        {
+          "term": "génotypes dits",
+          "score": 2.5403,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "col",
+          "score": 226.9227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "col utérin",
+          "score": 141.0192,
+          "evidence": []
+        },
+        {
+          "term": "des lésions",
+          "score": 110.75,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 103.4719,
+          "evidence": []
+        },
+        {
+          "term": "infection papillomavirus",
+          "score": 100.446,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des condylomes",
+          "score": 94.0718,
+          "evidence": []
+        },
+        {
+          "term": "les lésions",
+          "score": 87.0674,
+          "evidence": []
+        },
+        {
+          "term": "des études",
+          "score": 86.5552,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.5033,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.0123,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.9055,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.8293,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 1.7905,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.787,
+          "evidence": []
+        },
+        {
+          "term": "des études",
+          "score": 1.6549,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 1.6097,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 83.695,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 66.7312,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 65.917,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 62.956,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 62.3239,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 60.7956,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 60.274,
+          "evidence": []
+        },
+        {
+          "term": "des études",
+          "score": 60.2428,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.5033,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.0123,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.9055,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.8293,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 1.7905,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.787,
+          "evidence": []
+        },
+        {
+          "term": "des études",
+          "score": 1.6549,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 1.6097,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 83.7602,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 71.4581,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 64.6283,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 58.0335,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 55.4137,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 54.3447,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 51.2107,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 49.9263,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-vaccins-anti-papillomavirus": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccins prophylactiques",
+          "score": 1.6888,
+          "evidence": []
+        },
+        {
+          "term": "demande homologation",
+          "score": 1.6276,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 1.6195,
+          "evidence": []
+        },
+        {
+          "term": "deux vac",
+          "score": 1.561,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 1.5515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "efﬁcaces contre",
+          "score": 1.5169,
+          "evidence": []
+        },
+        {
+          "term": "vac cins",
+          "score": 1.511,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 1.3505,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "contre les",
+          "score": 46.6389,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 40.8102,
+          "evidence": []
+        },
+        {
+          "term": "deux vaccins",
+          "score": 32.0757,
+          "evidence": []
+        },
+        {
+          "term": "deux vac",
+          "score": 31.2957,
+          "evidence": []
+        },
+        {
+          "term": "demande homologation",
+          "score": 28.9374,
+          "evidence": []
+        },
+        {
+          "term": "vaccins prophylactiques",
+          "score": 28.1586,
+          "evidence": []
+        },
+        {
+          "term": "efﬁcaces contre",
+          "score": 25.5808,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 24.5428,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "contre les",
+          "score": 0.8135,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 0.6556,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6327,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4316,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4131,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3716,
+          "evidence": []
+        },
+        {
+          "term": "une demande",
+          "score": 0.3716,
+          "evidence": []
+        },
+        {
+          "term": "vaccins",
+          "score": 0.3667,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "contre les",
+          "score": 28.5346,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 26.7553,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 15.4224,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.9651,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 8.244,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 7.9324,
+          "evidence": []
+        },
+        {
+          "term": "une demande",
+          "score": 7.9324,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.494,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "contre les",
+          "score": 0.8135,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 0.6793,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6327,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4316,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4131,
+          "evidence": []
+        },
+        {
+          "term": "une demande",
+          "score": 0.4072,
+          "evidence": []
+        },
+        {
+          "term": "vaccins",
+          "score": 0.3667,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur",
+          "score": 0.3222,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 84.51,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 69.7999,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 66.8179,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 60.5462,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 53.572,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 53.5212,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 41.6759,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 40.77,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-populations-visées-par-la-vaccination-anti-papil": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 3.5249,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les femmes",
+          "score": 2.5475,
+          "evidence": []
+        },
+        {
+          "term": "des femmes",
+          "score": 2.3687,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 2.3472,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 2.2072,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 2.1308,
+          "evidence": []
+        },
+        {
+          "term": "femmes est",
+          "score": 2.1204,
+          "evidence": []
+        },
+        {
+          "term": "santé génésique",
+          "score": 2.0568,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les femmes",
+          "score": 131.7775,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 121.8808,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 110.1337,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 106.0742,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 104.0693,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 103.8721,
+          "evidence": []
+        },
+        {
+          "term": "les normes",
+          "score": 98.9168,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 98.4552,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.3138,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.1259,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.0347,
+          "evidence": []
+        },
+        {
+          "term": "vaccination des",
+          "score": 1.9088,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.8679,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.69,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 1.6667,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.6655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 93.0043,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 85.3771,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 83.0634,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 75.3191,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 73.4401,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 73.0663,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 72.0135,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 71.3442,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.3138,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.1259,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.0347,
+          "evidence": []
+        },
+        {
+          "term": "vaccination des",
+          "score": 1.9088,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.8679,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.69,
+          "evidence": []
+        },
+        {
+          "term": "les soins",
+          "score": 1.6667,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.6655,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 48.5472,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 42.3003,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 41.4595,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 37.1087,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 35.1555,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 35.1555,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 34.1405,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 31.2947,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-particularités-des-vaccins-anti-papillomavirus": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "particularités",
+          "score": 1.2792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins",
+          "score": 1.059,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 0.9789,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "particularités",
+          "score": 16.5515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins",
+          "score": 15.4762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 12.5372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.3392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.1783,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1143,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 7.2401,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 5.1064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 2.1628,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.3392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.1783,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.0908,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 58.4179,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 48.3265,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 45.6251,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-une-possibilité-unique": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccins anti-papillomavirus",
+          "score": 2.3749,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 2.3726,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papil",
+          "score": 2.2763,
+          "evidence": []
+        },
+        {
+          "term": "anti-papil lomavirus",
+          "score": 2.2318,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.224,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.0822,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.9628,
+          "evidence": []
+        },
+        {
+          "term": "stratégie mondiale",
+          "score": 1.9287,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les vaccins",
+          "score": 117.5668,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 107.2332,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 97.5496,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 97.1455,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 91.5748,
+          "evidence": []
+        },
+        {
+          "term": "les adolescents",
+          "score": 91.4192,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 91.0264,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 90.6487,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.4701,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.2773,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.1881,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.9498,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.9117,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.8722,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.7817,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.7188,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 96.8979,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 87.5779,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 86.0226,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 81.0447,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 78.9723,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 76.962,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 74.8373,
+          "evidence": []
+        },
+        {
+          "term": "les adolescents",
+          "score": 72.4249,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.4701,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.2773,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.1881,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.9498,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.9117,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.8722,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.7817,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.7188,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 60.0892,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 50.2529,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 47.0859,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 40.9077,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 39.0804,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 37.0142,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 34.872,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 34.056,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-un-produit-coûteux": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les pays",
+          "score": 1.573,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.5626,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.5143,
+          "evidence": []
+        },
+        {
+          "term": "est probable",
+          "score": 1.0129,
+          "evidence": []
+        },
+        {
+          "term": "sion",
+          "score": 0.7213,
+          "evidence": []
+        },
+        {
+          "term": "privé",
+          "score": 0.7033,
+          "evidence": []
+        },
+        {
+          "term": "sera",
+          "score": 0.6942,
+          "evidence": []
+        },
+        {
+          "term": "prix",
+          "score": 0.6642,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les pays",
+          "score": 41.0929,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 38.4058,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 33.3071,
+          "evidence": []
+        },
+        {
+          "term": "est probable",
+          "score": 15.5799,
+          "evidence": []
+        },
+        {
+          "term": "sera",
+          "score": 12.8882,
+          "evidence": []
+        },
+        {
+          "term": "sion",
+          "score": 11.6668,
+          "evidence": []
+        },
+        {
+          "term": "privé",
+          "score": 11.1354,
+          "evidence": []
+        },
+        {
+          "term": "prix",
+          "score": 10.5601,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.1417,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 0.9232,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.8446,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4396,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3872,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3427,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3312,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3134,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 33.0088,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 26.2692,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 20.487,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 7.9637,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.7918,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.4976,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.9864,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 5.2524,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.1417,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 0.9232,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.8446,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4396,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3872,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3312,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3134,
+          "evidence": []
+        },
+        {
+          "term": "est probable",
+          "score": 0.3109,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 35.7456,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 30.3928,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 28.9063,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 28.9063,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 25.8432,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 22.9768,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 22.8689,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 21.7692,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-les-problèmes-que-pose-linstauration-de-la-vacci": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "instauration",
+          "score": 1.643,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 1.5454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 1.4893,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 1.4447,
+          "evidence": []
+        },
+        {
+          "term": "les adolescents",
+          "score": 1.3075,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.2128,
+          "evidence": []
+        },
+        {
+          "term": "col",
+          "score": 1.0926,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 0.9789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les",
+          "score": 35.1041,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 31.6275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 31.2906,
+          "evidence": []
+        },
+        {
+          "term": "instauration",
+          "score": 26.284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les adolescents",
+          "score": 26.2259,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 23.3076,
+          "evidence": []
+        },
+        {
+          "term": "col",
+          "score": 22.6923,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 18.4071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 1.3848,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 0.7959,
+          "evidence": []
+        },
+        {
+          "term": "les adolescents",
+          "score": 0.7716,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.5894,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 0.4873,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.455,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4257,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.3717,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 37.6543,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 23.9806,
+          "evidence": []
+        },
+        {
+          "term": "les adolescents",
+          "score": 20.4531,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 9.3485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 8.2369,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 8.2369,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.9686,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.5984,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 1.3848,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 0.7959,
+          "evidence": []
+        },
+        {
+          "term": "les adolescents",
+          "score": 0.7716,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.5894,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 0.4873,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dans",
+          "score": 0.4257,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.3717,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3691,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 40.4788,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 32.6297,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 32.039,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 28.3579,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 28.1025,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 25.7748,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 25.4438,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 23.4607,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-rompre-avec-lhabitude": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des difﬁcultés",
+          "score": 2.1534,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7535,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 1.7139,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.6929,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.4712,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.3941,
+          "evidence": []
+        },
+        {
+          "term": "collaboration entre",
+          "score": 1.0224,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 0.9789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des difﬁcultés",
+          "score": 57.1934,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 52.1718,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 47.2691,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 40.375,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 39.7004,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 31.9354,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus",
+          "score": 18.4071,
+          "evidence": []
+        },
+        {
+          "term": "collaboration entre",
+          "score": 17.979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.324,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.1693,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.0637,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.9941,
+          "evidence": []
+        },
+        {
+          "term": "des difﬁcultés",
+          "score": 0.8602,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5935,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5388,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.5366,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 37.6422,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 34.3605,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 33.3282,
+          "evidence": []
+        },
+        {
+          "term": "des difﬁcultés",
+          "score": 31.1459,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 30.6711,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 12.7087,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 12.7087,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 12.0583,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.324,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.1693,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.0637,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.9941,
+          "evidence": []
+        },
+        {
+          "term": "des difﬁcultés",
+          "score": 0.8746,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5935,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5388,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.5366,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 26.603,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 21.8516,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 21.5835,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 20.8268,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 18.3872,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 17.9238,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 17.6263,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 16.5167,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-sensibilisation-information-et-communication": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les femmes",
+          "score": 2.1564,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 2.1456,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anti-papillomavirus",
+          "score": 2.1287,
+          "evidence": []
+        },
+        {
+          "term": "voie sexuelle",
+          "score": 2.0859,
+          "evidence": []
+        },
+        {
+          "term": "sont les",
+          "score": 1.9934,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.9524,
+          "evidence": []
+        },
+        {
+          "term": "activité sexuelle",
+          "score": 1.9482,
+          "evidence": []
+        },
+        {
+          "term": "papillomavirus est",
+          "score": 1.9253,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les femmes",
+          "score": 88.2544,
+          "evidence": []
+        },
+        {
+          "term": "sont les",
+          "score": 86.9303,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 84.5386,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 80.9999,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 73.4743,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 72.5955,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 70.8994,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 57.3573,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.743,
+          "evidence": []
+        },
+        {
+          "term": "sont les",
+          "score": 1.5995,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.5854,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.4974,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.3981,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.3277,
+          "evidence": []
+        },
+        {
+          "term": "plupart des",
+          "score": 1.2298,
+          "evidence": []
+        },
+        {
+          "term": "des cancers",
+          "score": 1.1972,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 62.5961,
+          "evidence": []
+        },
+        {
+          "term": "sont les",
+          "score": 61.8947,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 60.0868,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 58.5352,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 56.1183,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 55.221,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 53.0339,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 31.9793,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.743,
+          "evidence": []
+        },
+        {
+          "term": "sont les",
+          "score": 1.5995,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.5854,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.4974,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.3981,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.3277,
+          "evidence": []
+        },
+        {
+          "term": "plupart des",
+          "score": 1.2298,
+          "evidence": []
+        },
+        {
+          "term": "les types",
+          "score": 1.2023,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 75.2901,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 63.9248,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 59.7759,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 57.5927,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 49.0516,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 48.8087,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 48.8087,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 48.5926,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-mesures-à-prendre": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les prestateurs",
+          "score": 2.602,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 2.3925,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 2.2169,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 2.2119,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 2.1795,
+          "evidence": []
+        },
+        {
+          "term": "exemple les",
+          "score": 2.0874,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 2.0796,
+          "evidence": []
+        },
+        {
+          "term": "anti-papillomavirus est",
+          "score": 2.0479,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pour les",
+          "score": 122.1043,
+          "evidence": []
+        },
+        {
+          "term": "les prestateurs",
+          "score": 117.6025,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 114.798,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 111.224,
+          "evidence": []
+        },
+        {
+          "term": "exemple les",
+          "score": 108.9129,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 107.3005,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 103.7571,
+          "evidence": []
+        },
+        {
+          "term": "les pro",
+          "score": 102.4912,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 2.196,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 1.6775,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 1.5961,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.5665,
+          "evidence": []
+        },
+        {
+          "term": "exemple les",
+          "score": 1.5402,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.5069,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 1.4733,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 1.3207,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 100.6555,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 82.8328,
+          "evidence": []
+        },
+        {
+          "term": "exemple les",
+          "score": 77.8658,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 75.8143,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 75.5158,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 75.227,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 74.9202,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 74.4513,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 2.196,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 1.6775,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 1.5961,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.5665,
+          "evidence": []
+        },
+        {
+          "term": "exemple les",
+          "score": 1.5402,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.5069,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 1.4733,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 1.398,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 29.9534,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 24.2014,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 23.5847,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 20.6288,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 20.4588,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 19.1775,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 18.9336,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 18.9336,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-prestation-des-services": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prestation des",
+          "score": 4.6119,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 3.655,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les ﬁlles",
+          "score": 2.8474,
+          "evidence": []
+        },
+        {
+          "term": "vacciner les",
+          "score": 2.6693,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 2.6268,
+          "evidence": []
+        },
+        {
+          "term": "les jeunes",
+          "score": 2.5722,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 2.4961,
+          "evidence": []
+        },
+        {
+          "term": "vaccin anti-papillomavirus",
+          "score": 2.4498,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prestation des",
+          "score": 182.1104,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 160.0687,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 155.6541,
+          "evidence": []
+        },
+        {
+          "term": "les ﬁlles",
+          "score": 146.213,
+          "evidence": []
+        },
+        {
+          "term": "vacciner les",
+          "score": 145.3277,
+          "evidence": []
+        },
+        {
+          "term": "les jeunes",
+          "score": 145.3175,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 143.451,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 142.6126,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des services",
+          "score": 4.0254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prestation des",
+          "score": 3.6621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 2.8021,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.5683,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 2.2551,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 2.0633,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 2.056,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.9262,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des services",
+          "score": 153.6826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prestation des",
+          "score": 148.054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 134.5851,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 116.6329,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 107.2665,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 101.533,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 100.8551,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 100.2751,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des services",
+          "score": 4.0254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prestation des",
+          "score": 3.6621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 2.8021,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.5683,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 2.2551,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 2.0633,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 2.056,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.9262,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 42.2518,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 35.614,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 32.6199,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.7936,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 27.7992,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 27.2619,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 27.2619,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 27.1754,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-les-partenariats-entre-les-programmes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les",
+          "score": 1.6492,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 1.4148,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.2688,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.2563,
+          "evidence": []
+        },
+        {
+          "term": "partenariats",
+          "score": 0.9337,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 0.7869,
+          "evidence": []
+        },
+        {
+          "term": "programmes",
+          "score": 0.7359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "devra",
+          "score": 0.699,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les",
+          "score": 45.1339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les services",
+          "score": 30.7431,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 28.7718,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 22.8139,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 17.831,
+          "evidence": []
+        },
+        {
+          "term": "programmes",
+          "score": 12.3429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "devra",
+          "score": 11.3461,
+          "evidence": []
+        },
+        {
+          "term": "partenariats",
+          "score": 11.3461,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 1.1349,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 0.7352,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.6943,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5504,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3871,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3515,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3037,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2881,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 36.9675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 20.258,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 20.1491,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 15.7603,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.1032,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 6.8278,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.9368,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.8558,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 1.1349,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 0.7352,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.6943,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5504,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3037,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2452,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 0.2442,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2242,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 23.9718,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 19.6675,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 19.0461,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 18.8083,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 18.6511,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 18.6249,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 16.5168,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 15.1874,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-le-suivi-et-lévaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sur les",
+          "score": 1.7936,
+          "evidence": []
+        },
+        {
+          "term": "surveil lance",
+          "score": 1.7838,
+          "evidence": []
+        },
+        {
+          "term": "fréquence des",
+          "score": 1.747,
+          "evidence": []
+        },
+        {
+          "term": "effet sur",
+          "score": 1.6537,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 1.6259,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 1.5847,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 1.5741,
+          "evidence": []
+        },
+        {
+          "term": "suivi",
+          "score": 1.5185,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sur les",
+          "score": 54.9321,
+          "evidence": []
+        },
+        {
+          "term": "fréquence des",
+          "score": 42.6163,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 41.6964,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 40.9368,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 40.2455,
+          "evidence": []
+        },
+        {
+          "term": "effet sur",
+          "score": 39.6204,
+          "evidence": []
+        },
+        {
+          "term": "surveil lance",
+          "score": 28.9442,
+          "evidence": []
+        },
+        {
+          "term": "suivi",
+          "score": 24.9893,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.2557,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 1.0811,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 0.9697,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8302,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 0.8302,
+          "evidence": []
+        },
+        {
+          "term": "fréquence des",
+          "score": 0.8302,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5562,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5488,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les données",
+          "score": 37.4624,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 37.2139,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 31.829,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 29.2883,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 29.2883,
+          "evidence": []
+        },
+        {
+          "term": "fréquence des",
+          "score": 29.2883,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.6322,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 11.0673,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.2557,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 1.0811,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 0.9697,
+          "evidence": []
+        },
+        {
+          "term": "des manifestations",
+          "score": 0.8734,
+          "evidence": []
+        },
+        {
+          "term": "fréquence des",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5562,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5488,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5097,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 48.7267,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 40.5629,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 38.0534,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 36.6629,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 34.0486,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 32.9638,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 32.4091,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 32.1802,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-mesures-à-prendre": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "concevoir des",
+          "score": 2.0486,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 1.9766,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 1.7139,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7019,
+          "evidence": []
+        },
+        {
+          "term": "génésique destinés",
+          "score": 1.6822,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 1.6308,
+          "evidence": []
+        },
+        {
+          "term": "les agents",
+          "score": 1.6147,
+          "evidence": []
+        },
+        {
+          "term": "des messages",
+          "score": 1.6002,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "concevoir des",
+          "score": 63.6242,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 62.4917,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 61.19,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 58.3249,
+          "evidence": []
+        },
+        {
+          "term": "les agents",
+          "score": 58.0388,
+          "evidence": []
+        },
+        {
+          "term": "des messages",
+          "score": 53.1724,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 43.8566,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 31.9354,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.4773,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.183,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.1503,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.124,
+          "evidence": []
+        },
+        {
+          "term": "les agents",
+          "score": 1.0646,
+          "evidence": []
+        },
+        {
+          "term": "concevoir des",
+          "score": 0.9529,
+          "evidence": []
+        },
+        {
+          "term": "des messages",
+          "score": 0.9529,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6461,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 51.9506,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 45.0314,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 43.5256,
+          "evidence": []
+        },
+        {
+          "term": "les agents",
+          "score": 43.4022,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 42.2073,
+          "evidence": []
+        },
+        {
+          "term": "concevoir des",
+          "score": 39.5677,
+          "evidence": []
+        },
+        {
+          "term": "des messages",
+          "score": 39.5677,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 16.8546,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.4773,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.183,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.1503,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.124,
+          "evidence": []
+        },
+        {
+          "term": "les agents",
+          "score": 1.0646,
+          "evidence": []
+        },
+        {
+          "term": "des messages",
+          "score": 1.0061,
+          "evidence": []
+        },
+        {
+          "term": "concevoir des",
+          "score": 0.9781,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6461,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 38.4133,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 31.0221,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 30.9564,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 28.0265,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 27.1083,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 25.0596,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 24.3898,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 22.5193,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-gestion-densemble-et-ﬁnancement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﬁnancement",
+          "score": 3.2845,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins anti-papillomavirus",
+          "score": 2.7356,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 2.6444,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.4762,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 2.4655,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 2.3709,
+          "evidence": []
+        },
+        {
+          "term": "des fonds",
+          "score": 2.2936,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 2.2845,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pour les",
+          "score": 154.0998,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 130.8673,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 127.5965,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 126.5236,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 121.6086,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 117.0558,
+          "evidence": []
+        },
+        {
+          "term": "les pouvoirs",
+          "score": 113.0902,
+          "evidence": []
+        },
+        {
+          "term": "des fonds",
+          "score": 111.6219,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 2.5218,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.4067,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.1112,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.0598,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 2.0408,
+          "evidence": []
+        },
+        {
+          "term": "des autres",
+          "score": 1.8431,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.8313,
+          "evidence": []
+        },
+        {
+          "term": "cadre des",
+          "score": 1.707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 131.7635,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 122.4478,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 110.1346,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 103.9344,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 100.6169,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 96.1061,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 94.4361,
+          "evidence": []
+        },
+        {
+          "term": "les administrateurs",
+          "score": 92.2246,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 2.5218,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.4067,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.1112,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.0598,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 2.0408,
+          "evidence": []
+        },
+        {
+          "term": "des autres",
+          "score": 1.8431,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.8313,
+          "evidence": []
+        },
+        {
+          "term": "cadre des",
+          "score": 1.707,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 27.6392,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 20.0346,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 18.7626,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 17.2134,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 15.2795,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 14.4468,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 14.1797,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 13.8756,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-mesures-à-prendre": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 2.0379,
+          "evidence": []
+        },
+        {
+          "term": "des fonds",
+          "score": 2.0167,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 1.7346,
+          "evidence": []
+        },
+        {
+          "term": "vac cination",
+          "score": 1.6516,
+          "evidence": []
+        },
+        {
+          "term": "pour prévoir",
+          "score": 1.6354,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.5012,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.4905,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 1.4447,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des fonds",
+          "score": 76.0746,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 73.4777,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 64.4053,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 46.4922,
+          "evidence": []
+        },
+        {
+          "term": "pour prévoir",
+          "score": 38.9343,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 36.0781,
+          "evidence": []
+        },
+        {
+          "term": "vac cination",
+          "score": 29.2087,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 28.2777,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les pays",
+          "score": 1.2805,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 1.1246,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0982,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.0835,
+          "evidence": []
+        },
+        {
+          "term": "des fonds",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.656,
+          "evidence": []
+        },
+        {
+          "term": "pour prévoir",
+          "score": 0.656,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.594,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des services",
+          "score": 45.626,
+          "evidence": []
+        },
+        {
+          "term": "des fonds",
+          "score": 43.5057,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 43.5057,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 35.9279,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 33.8965,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 15.3425,
+          "evidence": []
+        },
+        {
+          "term": "pour prévoir",
+          "score": 15.3425,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 14.1202,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les pays",
+          "score": 1.2805,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 1.1246,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0982,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.0835,
+          "evidence": []
+        },
+        {
+          "term": "des fonds",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "pour prévoir",
+          "score": 0.6823,
+          "evidence": []
+        },
+        {
+          "term": "santé sexuelle",
+          "score": 0.594,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.586,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 24.4404,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 24.4404,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 22.4699,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 19.2122,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 16.3439,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 16.0969,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 15.9064,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 15.6071,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "néoplasie intra-épithéliale",
+          "score": 3.0393,
+          "evidence": []
+        },
+        {
+          "term": "col utérin",
+          "score": 2.5991,
+          "evidence": []
+        },
+        {
+          "term": "accès universel",
+          "score": 1.3759,
+          "evidence": []
+        },
+        {
+          "term": "papillomavirus humain",
+          "score": 1.3615,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.2954,
+          "evidence": []
+        },
+        {
+          "term": "universel aux",
+          "score": 1.2521,
+          "evidence": []
+        },
+        {
+          "term": "grades",
+          "score": 1.0625,
+          "evidence": []
+        },
+        {
+          "term": "fda",
+          "score": 0.7354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "néoplasie intra-épithéliale",
+          "score": 66.2061,
+          "evidence": []
+        },
+        {
+          "term": "col utérin",
+          "score": 61.5963,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 24.269,
+          "evidence": []
+        },
+        {
+          "term": "accès universel",
+          "score": 21.6608,
+          "evidence": []
+        },
+        {
+          "term": "papillomavirus humain",
+          "score": 21.5915,
+          "evidence": []
+        },
+        {
+          "term": "grades",
+          "score": 20.315,
+          "evidence": []
+        },
+        {
+          "term": "universel aux",
+          "score": 19.0426,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 13.6949,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les femmes",
+          "score": 0.5957,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4778,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3165,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.302,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2666,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2507,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2229,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2107,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les femmes",
+          "score": 12.8767,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 7.6437,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.8641,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 4.3931,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.2966,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 3.4319,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 3.0797,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 2.8281,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les femmes",
+          "score": 0.5957,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3165,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.302,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.21,
+          "evidence": []
+        },
+        {
+          "term": "universel aux",
+          "score": 0.2048,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 0.1756,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.12,
+          "evidence": []
+        },
+        {
+          "term": "contre",
+          "score": 0.1192,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 108.1593,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 89.8594,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 89.8038,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 83.358,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 76.5494,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 69.3621,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 69.2328,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 69.2328,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-autres-sources-dinformation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "recherche génésiques",
+          "score": 1.4933,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.8872,
+          "evidence": []
+        },
+        {
+          "term": "ethique",
+          "score": 0.6082,
+          "evidence": []
+        },
+        {
+          "term": "reproductive-health",
+          "score": 0.6082,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "recherche génésiques",
+          "score": 23.1427,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 18.1566,
+          "evidence": []
+        },
+        {
+          "term": "unfpa",
+          "score": 9.1489,
+          "evidence": []
+        },
+        {
+          "term": "ethique",
+          "score": 7.8703,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.2435,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.2315,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2214,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1829,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé",
+          "score": 9.994,
+          "evidence": []
+        },
+        {
+          "term": "numérique",
+          "score": 5.5855,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 4.9033,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 4.4339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.2315,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2214,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1829,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 0.1644,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染和宫颈癌",
+          "score": 116.4688,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 111.7984,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 111.6149,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 105.2046,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "préparatoire instauration",
+          "score": 2.4334,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anti-papillomavirus",
+          "score": 2.244,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 2.241,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 2.1555,
+          "evidence": []
+        },
+        {
+          "term": "phase préparatoire",
+          "score": 1.8417,
+          "evidence": []
+        },
+        {
+          "term": "felicity cutts",
+          "score": 1.8337,
+          "evidence": []
+        },
+        {
+          "term": "directives stratégiques",
+          "score": 1.7405,
+          "evidence": []
+        },
+        {
+          "term": "intention des",
+          "score": 1.7328,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "organisation mondiale",
+          "score": 61.0887,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-papillomavirus",
+          "score": 58.7636,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anti-papillomavirus",
+          "score": 58.426,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 51.3143,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 50.9074,
+          "evidence": []
+        },
+        {
+          "term": "préparatoire instauration",
+          "score": 49.8949,
+          "evidence": []
+        },
+        {
+          "term": "intention des",
+          "score": 45.1911,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 43.3823,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.5274,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 1.3032,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 1.2719,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 1.1126,
+          "evidence": []
+        },
+        {
+          "term": "intention des",
+          "score": 1.0082,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.8055,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 0.7698,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.7468,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 46.8293,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 40.3401,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 39.8502,
+          "evidence": []
+        },
+        {
+          "term": "intention des",
+          "score": 35.7562,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 26.1878,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 16.6288,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 12.3361,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 11.9279,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.5274,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 1.3032,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 1.2719,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 1.1126,
+          "evidence": []
+        },
+        {
+          "term": "intention des",
+          "score": 1.0311,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.8055,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 0.7698,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.7468,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可能会",
+          "score": 380.6467,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 286.2811,
+          "evidence": []
+        },
+        {
+          "term": "他重复说",
+          "score": 259.6797,
+          "evidence": []
+        },
+        {
+          "term": "具有特殊的毒性和传染性",
+          "score": 259.6797,
+          "evidence": []
+        },
+        {
+          "term": "最近被诊断为mdr-tb",
+          "score": 259.6797,
+          "evidence": []
+        },
+        {
+          "term": "医生给他",
+          "score": 259.6797,
+          "evidence": []
+        },
+        {
+          "term": "却无法联系上",
+          "score": 259.6797,
+          "evidence": []
+        },
+        {
+          "term": "周后仍未能找到他",
+          "score": 259.6797,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

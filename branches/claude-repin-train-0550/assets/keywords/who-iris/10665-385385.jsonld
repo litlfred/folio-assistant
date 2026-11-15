@@ -1,0 +1,3580 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-385385",
+  "instance": "who-iris",
+  "about": "library/10665-385385",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "chronic hepatitis",
+        "score": 29.8606,
+        "evidence": []
+      },
+      {
+        "term": "viral hepatitis",
+        "score": 29.2097,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis elimination",
+        "score": 29.0856,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hepatitis",
+        "score": 28.6091,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis infections",
+        "score": 27.949,
+        "evidence": []
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 27.6938,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis treatment",
+        "score": 27.5476,
+        "evidence": []
+      },
+      {
+        "term": "world hepatitis",
+        "score": 26.2444,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis report",
+        "score": 26.07,
+        "evidence": []
+      },
+      {
+        "term": "hcv elimination",
+        "score": 25.9685,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis virus",
+        "score": 25.9619,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis prevention",
+        "score": 25.782,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hcv infection",
+        "score": 2476.7645,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis infection",
+        "score": 2349.0704,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hbv infection",
+        "score": 2331.4168,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv treatment",
+        "score": 2166.6715,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chronic hepatitis",
+        "score": 2129.7341,
+        "evidence": []
+      },
+      {
+        "term": "hcv elimination",
+        "score": 2074.8459,
+        "evidence": []
+      },
+      {
+        "term": "global hepatitis",
+        "score": 2068.4792,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv prevalence",
+        "score": 1977.1476,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 1907.0133,
+        "evidence": []
+      },
+      {
+        "term": "hcv transmission",
+        "score": 1904.4139,
+        "evidence": []
+      },
+      {
+        "term": "viral hepatitis",
+        "score": 1894.2444,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv screening",
+        "score": 1864.4545,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "chronic hbv",
+        "score": 25.2257,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hbv infection",
+        "score": 23.9551,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chronic hepatitis",
+        "score": 23.9385,
+        "evidence": []
+      },
+      {
+        "term": "hcv elimination",
+        "score": 23.6447,
+        "evidence": []
+      },
+      {
+        "term": "hbv treatment",
+        "score": 22.8035,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hepatitis",
+        "score": 22.7532,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hbv prevalence",
+        "score": 22.1178,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral hepatitis",
+        "score": 22.1081,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 21.9799,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv transmission",
+        "score": 21.1985,
+        "evidence": []
+      },
+      {
+        "term": "hbv diagnosed",
+        "score": 20.5573,
+        "evidence": []
+      },
+      {
+        "term": "hbv infected",
+        "score": 20.4976,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hcv infection",
+        "score": 2624.3128,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hbv infection",
+        "score": 2453.6683,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv treatment",
+        "score": 2300.5691,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chronic hbv",
+        "score": 2174.7783,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv elimination",
+        "score": 2127.9438,
+        "evidence": []
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 2041.2167,
+        "evidence": []
+      },
+      {
+        "term": "hcv prevalence",
+        "score": 2027.748,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis infection",
+        "score": 1997.2064,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv screening",
+        "score": 1996.3088,
+        "evidence": []
+      },
+      {
+        "term": "hcv transmission",
+        "score": 1987.1477,
+        "evidence": []
+      },
+      {
+        "term": "hcv testing",
+        "score": 1970.2671,
+        "evidence": []
+      },
+      {
+        "term": "hcv prevention",
+        "score": 1919.0841,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "chronic hbv",
+        "score": 25.2257,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hbv infection",
+        "score": 23.9551,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chronic hepatitis",
+        "score": 23.9385,
+        "evidence": []
+      },
+      {
+        "term": "hcv elimination",
+        "score": 23.6447,
+        "evidence": []
+      },
+      {
+        "term": "hbv treatment",
+        "score": 22.8035,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hepatitis",
+        "score": 22.7532,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hbv prevalence",
+        "score": 22.1178,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral hepatitis",
+        "score": 22.1081,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 21.9799,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv transmission",
+        "score": 21.1985,
+        "evidence": []
+      },
+      {
+        "term": "hbv diagnosed",
+        "score": 20.5573,
+        "evidence": []
+      },
+      {
+        "term": "hbv infected",
+        "score": 20.4976,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "世界医学协会",
+        "score": 439.3085,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 414.5192,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 414.5192,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 387.0318,
+        "evidence": []
+      },
+      {
+        "term": "在正常情况下",
+        "score": 360.4062,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 351.8802,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 323.0114,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 310.1976,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 309.9012,
+        "evidence": []
+      },
+      {
+        "term": "澳大利亚",
+        "score": 297.5192,
+        "evidence": []
+      },
+      {
+        "term": "在世界卫生组织",
+        "score": 289.3552,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 280.888,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "diana faini",
+          "score": 3.4431,
+          "evidence": []
+        },
+        {
+          "term": "olufunmilayo lesi",
+          "score": 3.1321,
+          "evidence": []
+        },
+        {
+          "term": "katherine floyd",
+          "score": 3.0675,
+          "evidence": []
+        },
+        {
+          "term": "irwin law",
+          "score": 2.3211,
+          "evidence": []
+        },
+        {
+          "term": "muhammad shahid",
+          "score": 2.2631,
+          "evidence": []
+        },
+        {
+          "term": "mathieu bastard",
+          "score": 2.2512,
+          "evidence": []
+        },
+        {
+          "term": "daniel low-beer",
+          "score": 2.229,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 2.0425,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "diana faini",
+          "score": 108.056,
+          "evidence": []
+        },
+        {
+          "term": "katherine floyd",
+          "score": 81.042,
+          "evidence": []
+        },
+        {
+          "term": "olufunmilayo lesi",
+          "score": 76.1488,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 72.7203,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 57.442,
+          "evidence": []
+        },
+        {
+          "term": "report team",
+          "score": 51.3105,
+          "evidence": []
+        },
+        {
+          "term": "irwin law",
+          "score": 50.0691,
+          "evidence": []
+        },
+        {
+          "term": "daniel low-beer",
+          "score": 48.2346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "global hepatitis",
+          "score": 1.0348,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.9988,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.7414,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 0.733,
+          "evidence": []
+        },
+        {
+          "term": "western pacific",
+          "score": 0.7303,
+          "evidence": []
+        },
+        {
+          "term": "eastern mediterranean",
+          "score": 0.6782,
+          "evidence": []
+        },
+        {
+          "term": "south-east asia",
+          "score": 0.667,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.6481,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "global hepatitis",
+          "score": 20.7361,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 18.6845,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 15.9656,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 13.6262,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 13.224,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 11.4826,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 11.2603,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 10.2651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "global hepatitis",
+          "score": 1.0348,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.9988,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.7414,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 0.733,
+          "evidence": []
+        },
+        {
+          "term": "western pacific",
+          "score": 0.7303,
+          "evidence": []
+        },
+        {
+          "term": "eastern mediterranean",
+          "score": 0.6782,
+          "evidence": []
+        },
+        {
+          "term": "south-east asia",
+          "score": 0.667,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.6275,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "世界医学协会",
+          "score": 285.5107,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 269.8358,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 269.8358,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 262.4405,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 253.29,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 239.0331,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 227.9186,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 226.6468,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hepatitis virus",
+          "score": 1.904,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis core",
+          "score": 1.5829,
+          "evidence": []
+        },
+        {
+          "term": "core antigen",
+          "score": 1.3077,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.9248,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.7128,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.6794,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.4267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hepatitis virus",
+          "score": 47.3902,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis core",
+          "score": 39.5954,
+          "evidence": []
+        },
+        {
+          "term": "core antigen",
+          "score": 24.0256,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 13.7443,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 9.3778,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 9.2469,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 6.7751,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hepatitis virus",
+          "score": 0.5778,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis core",
+          "score": 0.4373,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 0.3711,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 0.3203,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.3083,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.3008,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.2255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hepatitis virus",
+          "score": 16.1656,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis core",
+          "score": 12.9805,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 9.2166,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 8.3263,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 7.7747,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 6.9703,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 5.8881,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hepatitis virus",
+          "score": 0.5778,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis core",
+          "score": 0.4373,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.3083,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.3008,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.2255,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.1372,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.1132,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "注意到",
+          "score": 45.0034,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 38.2326,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 36.2146,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 35.3639,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 35.2727,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 34.0671,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 33.4543,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chronic hbv",
+          "score": 3.6265,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 3.4123,
+          "evidence": []
+        },
+        {
+          "term": "hdv infection",
+          "score": 3.3361,
+          "evidence": []
+        },
+        {
+          "term": "hcv transmission",
+          "score": 3.002,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 2.9235,
+          "evidence": []
+        },
+        {
+          "term": "liver infection",
+          "score": 2.8958,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 2.829,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 2.6691,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hbv infection",
+          "score": 236.7407,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 222.0487,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 221.8308,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 179.8297,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 179.3566,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 175.4099,
+          "evidence": []
+        },
+        {
+          "term": "hdv infection",
+          "score": 169.8174,
+          "evidence": []
+        },
+        {
+          "term": "liver infection",
+          "score": 164.5104,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chronic hbv",
+          "score": 2.8343,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 2.6981,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 2.6896,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 2.3683,
+          "evidence": []
+        },
+        {
+          "term": "hcv transmission",
+          "score": 2.3628,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 2.2137,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 2.1817,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 2.1414,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hcv infection",
+          "score": 202.1507,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 187.9446,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 162.7962,
+          "evidence": []
+        },
+        {
+          "term": "hcv transmission",
+          "score": 152.044,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 127.5368,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 126.7914,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 113.4748,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 111.6256,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chronic hbv",
+          "score": 2.8343,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 2.6981,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 2.6896,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 2.3683,
+          "evidence": []
+        },
+        {
+          "term": "hcv transmission",
+          "score": 2.3628,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 2.2137,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 2.1817,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 2.1414,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 30.9352,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 22.2485,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 18.6741,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 18.3998,
+          "evidence": []
+        },
+        {
+          "term": "推动数字卫生保健知识传播",
+          "score": 18.3998,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 18.2803,
+          "evidence": []
+        },
+        {
+          "term": "生保健解决方案",
+          "score": 16.27,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 15.9624,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-2-global-commitments-strategies-and-targets": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "global targets",
+          "score": 4.1583,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global commitments",
+          "score": 3.5471,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 3.4195,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 3.4013,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infections",
+          "score": 3.0303,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 2.9881,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 2.7804,
+          "evidence": []
+        },
+        {
+          "term": "eliminating hepatitis",
+          "score": 2.7083,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "viral hepatitis",
+          "score": 323.8682,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 298.5679,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 292.7929,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infections",
+          "score": 287.85,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 274.0939,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 263.3307,
+          "evidence": []
+        },
+        {
+          "term": "eliminating hepatitis",
+          "score": 261.5991,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 256.7346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "global targets",
+          "score": 2.4496,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hbv infection",
+          "score": 1.9232,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 1.9194,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1.9018,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 1.8277,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 1.8092,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 1.7475,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 1.6799,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "viral hepatitis",
+          "score": 142.507,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infection",
+          "score": 141.7639,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 122.6633,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 122.5972,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 121.2539,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 117.3176,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 109.9173,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 109.4203,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "global targets",
+          "score": 2.4496,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hbv infection",
+          "score": 1.9232,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 1.9194,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1.9018,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 1.8277,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 1.8092,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis vaccine",
+          "score": 1.7475,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 1.6799,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 26.2713,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 22.7865,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 22.6124,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 20.83,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 20.7846,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 18.6408,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 17.9319,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 17.9175,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-3-epidemic-status-and-trends": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "region shaded",
+          "score": 5.3273,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 5.065,
+          "evidence": []
+        },
+        {
+          "term": "paciﬁc region",
+          "score": 4.9953,
+          "evidence": []
+        },
+        {
+          "term": "hcv-related deaths",
+          "score": 4.9796,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 4.7221,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 4.6316,
+          "evidence": []
+        },
+        {
+          "term": "hbv-related deaths",
+          "score": 4.5949,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 4.5772,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mediterranean region",
+          "score": 865.3372,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 857.6459,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 838.6913,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 824.1122,
+          "evidence": []
+        },
+        {
+          "term": "region shaded",
+          "score": 821.7192,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 820.3827,
+          "evidence": []
+        },
+        {
+          "term": "paciﬁc region",
+          "score": 783.8331,
+          "evidence": []
+        },
+        {
+          "term": "region achieved",
+          "score": 751.1966,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chronic hbv",
+          "score": 5.182,
+          "evidence": []
+        },
+        {
+          "term": "hcv elimination",
+          "score": 4.9361,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 4.8969,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 4.8085,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 4.6974,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 4.6865,
+          "evidence": []
+        },
+        {
+          "term": "hcv incidence",
+          "score": 4.5115,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 4.5067,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mediterranean region",
+          "score": 836.2564,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 836.0616,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 813.0663,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 802.1844,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 797.7982,
+          "evidence": []
+        },
+        {
+          "term": "region shaded",
+          "score": 774.3167,
+          "evidence": []
+        },
+        {
+          "term": "paciﬁc region",
+          "score": 760.4947,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 726.8492,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chronic hbv",
+          "score": 5.182,
+          "evidence": []
+        },
+        {
+          "term": "hcv elimination",
+          "score": 4.9361,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 4.8969,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 4.8085,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 4.6974,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 4.6865,
+          "evidence": []
+        },
+        {
+          "term": "hcv incidence",
+          "score": 4.5115,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 4.5067,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "要求总干事",
+          "score": 18.3664,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 18.0976,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 18.0976,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 17.4792,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 16.0227,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 15.8646,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 15.5286,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 15.5286,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-4-prevention-diagnosis-and-treatment": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "birth-dose hepatitis",
+          "score": 4.9369,
+          "evidence": []
+        },
+        {
+          "term": "paciﬁc region",
+          "score": 4.7151,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 4.7033,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 4.6618,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 4.5795,
+          "evidence": []
+        },
+        {
+          "term": "viremic hcv",
+          "score": 4.5158,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 4.4706,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 4.3596,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hbv infection",
+          "score": 743.8969,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 734.7947,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 660.6209,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 651.5357,
+          "evidence": []
+        },
+        {
+          "term": "hbv diagnosed",
+          "score": 628.8414,
+          "evidence": []
+        },
+        {
+          "term": "hcv screening",
+          "score": 553.682,
+          "evidence": []
+        },
+        {
+          "term": "hcv testing",
+          "score": 534.7176,
+          "evidence": []
+        },
+        {
+          "term": "hbv treated",
+          "score": 526.6737,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chronic hbv",
+          "score": 6.0677,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 5.6091,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 5.3396,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 5.295,
+          "evidence": []
+        },
+        {
+          "term": "hcv prevalence",
+          "score": 5.1897,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 5.0746,
+          "evidence": []
+        },
+        {
+          "term": "birth-dose hepatitis",
+          "score": 4.8985,
+          "evidence": []
+        },
+        {
+          "term": "hbv infected",
+          "score": 4.8614,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hcv infection",
+          "score": 788.1267,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 738.7835,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 719.7503,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 651.5353,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 628.0814,
+          "evidence": []
+        },
+        {
+          "term": "hcv screening",
+          "score": 612.2413,
+          "evidence": []
+        },
+        {
+          "term": "hcv prevalence",
+          "score": 606.1028,
+          "evidence": []
+        },
+        {
+          "term": "hcv testing",
+          "score": 601.6569,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chronic hbv",
+          "score": 6.0677,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 5.6091,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 5.3396,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 5.295,
+          "evidence": []
+        },
+        {
+          "term": "hcv prevalence",
+          "score": 5.1897,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 5.0746,
+          "evidence": []
+        },
+        {
+          "term": "birth-dose hepatitis",
+          "score": 4.8985,
+          "evidence": []
+        },
+        {
+          "term": "hbv infected",
+          "score": 4.8614,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 22.8381,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 18.4201,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 17.3588,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 15.4296,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 15.4285,
+          "evidence": []
+        },
+        {
+          "term": "推动数字卫生保健知识传播",
+          "score": 15.4285,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 13.3891,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 13.3891,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-5-the-road-to-elimination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hcv elimination",
+          "score": 4.7369,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 4.4297,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 4.2849,
+          "evidence": []
+        },
+        {
+          "term": "hcv screening",
+          "score": 4.2652,
+          "evidence": []
+        },
+        {
+          "term": "eliminate hcv",
+          "score": 4.1292,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 3.9733,
+          "evidence": []
+        },
+        {
+          "term": "eliminating hcv",
+          "score": 3.8013,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 3.5934,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hcv infection",
+          "score": 630.8158,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 604.0068,
+          "evidence": []
+        },
+        {
+          "term": "hcv elimination",
+          "score": 591.4058,
+          "evidence": []
+        },
+        {
+          "term": "hcv screening",
+          "score": 529.468,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 516.1077,
+          "evidence": []
+        },
+        {
+          "term": "eliminate hcv",
+          "score": 476.3173,
+          "evidence": []
+        },
+        {
+          "term": "eliminating hcv",
+          "score": 460.9871,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 393.8024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chronic hbv",
+          "score": 4.0204,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 3.9743,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 3.871,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 3.8126,
+          "evidence": []
+        },
+        {
+          "term": "hcv elimination",
+          "score": 3.7326,
+          "evidence": []
+        },
+        {
+          "term": "hbv testing",
+          "score": 3.5467,
+          "evidence": []
+        },
+        {
+          "term": "hbv screening",
+          "score": 3.4865,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 3.4122,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hcv infection",
+          "score": 494.6783,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 481.251,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 450.2551,
+          "evidence": []
+        },
+        {
+          "term": "hcv elimination",
+          "score": 408.9326,
+          "evidence": []
+        },
+        {
+          "term": "hcv screening",
+          "score": 404.8353,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 385.7724,
+          "evidence": []
+        },
+        {
+          "term": "hbv testing",
+          "score": 352.3114,
+          "evidence": []
+        },
+        {
+          "term": "eliminate hcv",
+          "score": 344.5122,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chronic hbv",
+          "score": 4.0204,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 3.9743,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 3.871,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 3.8126,
+          "evidence": []
+        },
+        {
+          "term": "hcv elimination",
+          "score": 3.7326,
+          "evidence": []
+        },
+        {
+          "term": "hbv testing",
+          "score": 3.5467,
+          "evidence": []
+        },
+        {
+          "term": "hbv screening",
+          "score": 3.4865,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 3.4122,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 27.2592,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 20.3155,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 20.2313,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 17.246,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 16.9314,
+          "evidence": []
+        },
+        {
+          "term": "推动数字卫生保健知识传播",
+          "score": 16.9314,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 15.7228,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 15.7228,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hepatitis elimination",
+          "score": 3.4901,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 3.3747,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 3.326,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 3.2917,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infection",
+          "score": 3.0831,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 3.0303,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 2.8845,
+          "evidence": []
+        },
+        {
+          "term": "saúde secretaria",
+          "score": 2.8802,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hepatitis elimination",
+          "score": 342.8737,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 338.1414,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 327.1755,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 320.5044,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infection",
+          "score": 319.9281,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 313.0929,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 305.7715,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis planning",
+          "score": 291.5172,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "viral hepatitis",
+          "score": 2.1987,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.1496,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 2.1385,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infection",
+          "score": 2.0823,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 2.0376,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.0264,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 1.9398,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 1.9078,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hepatitis infection",
+          "score": 237.7967,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 231.8278,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 217.731,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 217.6945,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 208.4787,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 206.8722,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 199.3202,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 195.2196,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "viral hepatitis",
+          "score": 2.1987,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.1496,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 2.1385,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis infection",
+          "score": 2.0823,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 2.0376,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.0264,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 1.9398,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 1.9078,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "注意到",
+          "score": 46.9791,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 45.2513,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 45.2513,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 44.5402,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 42.2959,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 40.6046,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 40.3081,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 32.0788,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-annex-1-methodological-notes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "modelled estimates",
+          "score": 2.6094,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 2.4035,
+          "evidence": []
+        },
+        {
+          "term": "hbv prevalence",
+          "score": 2.2957,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 2.2488,
+          "evidence": []
+        },
+        {
+          "term": "hcv cascade",
+          "score": 2.2232,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 2.2002,
+          "evidence": []
+        },
+        {
+          "term": "historical estimates",
+          "score": 2.1988,
+          "evidence": []
+        },
+        {
+          "term": "model-based estimates",
+          "score": 2.1559,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "modelled estimates",
+          "score": 123.8185,
+          "evidence": []
+        },
+        {
+          "term": "estimates published",
+          "score": 105.4229,
+          "evidence": []
+        },
+        {
+          "term": "historical estimates",
+          "score": 103.5304,
+          "evidence": []
+        },
+        {
+          "term": "model-based estimates",
+          "score": 100.4963,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 97.9006,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 93.3795,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 92.0493,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis country",
+          "score": 86.5814,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "viral hepatitis",
+          "score": 1.2291,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 1.1697,
+          "evidence": []
+        },
+        {
+          "term": "hbv prevalence",
+          "score": 1.1026,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 1.0328,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis country",
+          "score": 1.0234,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 1.0026,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 0.9681,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8605,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "viral hepatitis",
+          "score": 59.0157,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 55.7561,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 47.9926,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 47.6779,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 46.8552,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis country",
+          "score": 46.4289,
+          "evidence": []
+        },
+        {
+          "term": "hcv cascade",
+          "score": 39.187,
+          "evidence": []
+        },
+        {
+          "term": "hbv prevalence",
+          "score": 38.7527,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "viral hepatitis",
+          "score": 1.2291,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 1.1697,
+          "evidence": []
+        },
+        {
+          "term": "hbv prevalence",
+          "score": 1.1026,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 1.0328,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis country",
+          "score": 1.0234,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 1.0026,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 0.9681,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8605,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如个人",
+          "score": 15.405,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 12.0049,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 12.0049,
+          "evidence": []
+        },
+        {
+          "term": "新的背景信息要素怎样影响你对第",
+          "score": 12.0049,
+          "evidence": []
+        },
+        {
+          "term": "部分的分析",
+          "score": 12.0049,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 9.7394,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 9.7237,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 9.5986,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-annex-2-the-global-hepatitis-reporting-process": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hepatitis reporting",
+          "score": 3.893,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global hepatitis",
+          "score": 3.4552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting process",
+          "score": 2.289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 1.9847,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1.7136,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 1.6051,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.6034,
+          "evidence": []
+        },
+        {
+          "term": "data reporting",
+          "score": 1.5312,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hepatitis reporting",
+          "score": 119.8737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global hepatitis",
+          "score": 93.9193,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting process",
+          "score": 62.2613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data reporting",
+          "score": 53.7535,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 45.7953,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 42.1348,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 38.771,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 35.0141,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "global hepatitis",
+          "score": 1.4298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis reporting",
+          "score": 1.1595,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting process",
+          "score": 0.7862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 0.7211,
+          "evidence": []
+        },
+        {
+          "term": "data reporting",
+          "score": 0.7073,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.663,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.658,
+          "evidence": []
+        },
+        {
+          "term": "reported data",
+          "score": 0.6244,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "global hepatitis",
+          "score": 33.3461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis reporting",
+          "score": 26.5427,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data reporting",
+          "score": 21.4957,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 19.7571,
+          "evidence": []
+        },
+        {
+          "term": "reported data",
+          "score": 19.5059,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 18.4468,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 14.5125,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 12.7416,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "global hepatitis",
+          "score": 1.4298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis reporting",
+          "score": 1.1595,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting process",
+          "score": 0.7862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 0.7211,
+          "evidence": []
+        },
+        {
+          "term": "data reporting",
+          "score": 0.7073,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.663,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.658,
+          "evidence": []
+        },
+        {
+          "term": "reported data",
+          "score": 0.6244,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 42.2054,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 30.8853,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 28.3891,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 27.7522,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 22.2101,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 21.8089,
+          "evidence": []
+        },
+        {
+          "term": "如上所述",
+          "score": 21.0132,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 20.0794,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-annex-3-world-health-assembly-resolutions-on-vir": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "world hepatitis",
+          "score": 4.7171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 4.7054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 2.9326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "patented product",
+          "score": 2.2651,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis day",
+          "score": 2.1806,
+          "evidence": []
+        },
+        {
+          "term": "pharmaceutical product",
+          "score": 1.9715,
+          "evidence": []
+        },
+        {
+          "term": "trips agreement",
+          "score": 1.927,
+          "evidence": []
+        },
+        {
+          "term": "resolutions",
+          "score": 1.8632,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "world hepatitis",
+          "score": 206.994,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 187.8223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 100.2986,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis day",
+          "score": 86.3494,
+          "evidence": []
+        },
+        {
+          "term": "patented product",
+          "score": 54.5673,
+          "evidence": []
+        },
+        {
+          "term": "pharmaceutical product",
+          "score": 53.0872,
+          "evidence": []
+        },
+        {
+          "term": "world trade",
+          "score": 45.2725,
+          "evidence": []
+        },
+        {
+          "term": "trips agreement",
+          "score": 42.444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.9983,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world hepatitis",
+          "score": 1.9535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1.6564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health organization",
+          "score": 0.9304,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.7881,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7813,
+          "evidence": []
+        },
+        {
+          "term": "strengthen health",
+          "score": 0.7008,
+          "evidence": []
+        },
+        {
+          "term": "health problems",
+          "score": 0.5434,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world hepatitis",
+          "score": 97.1711,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 91.9233,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 75.8059,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health organization",
+          "score": 36.1633,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis day",
+          "score": 32.2048,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 26.9013,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 26.0185,
+          "evidence": []
+        },
+        {
+          "term": "health problems",
+          "score": 21.5222,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.9983,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world hepatitis",
+          "score": 1.9535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1.6564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health organization",
+          "score": 0.9304,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.7881,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7813,
+          "evidence": []
+        },
+        {
+          "term": "strengthen health",
+          "score": 0.7008,
+          "evidence": []
+        },
+        {
+          "term": "health promotion",
+          "score": 0.6084,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 46.4495,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 42.6878,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 34.6158,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 32.7599,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 30.1585,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 30.1585,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 27.5766,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 26.4464,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "global hepatitis",
+          "score": 2.0492,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 2.0127,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 2.0121,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1636,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.1335,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1279,
+          "evidence": []
+        },
+        {
+          "term": "global response",
+          "score": 1.098,
+          "evidence": []
+        },
+        {
+          "term": "health threat",
+          "score": 1.0368,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "global hepatitis",
+          "score": 74.7373,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 71.7485,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 64.9863,
+          "evidence": []
+        },
+        {
+          "term": "global response",
+          "score": 27.2972,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 24.7642,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 24.3476,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.6455,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.2076,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.0959,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0848,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0224,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8956,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8585,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7487,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 0.7219,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.7124,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "viral hepatitis",
+          "score": 35.9116,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 33.9061,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis report",
+          "score": 30.1197,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 27.1532,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 25.9015,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 15.4014,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 13.6923,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 13.5256,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.0959,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0848,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0224,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8956,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8585,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7487,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 0.7219,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.7124,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 89.7819,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 73.3583,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 63.7361,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 63.1529,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 53.4584,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 50.7607,
+          "evidence": []
+        },
+        {
+          "term": "如上所述",
+          "score": 43.0779,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 35.6405,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/attestation/kg-qa/sdlc/processes/qa-publish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "782fc37375a522e91e5673161ac96eb47392105f",
+    "pr": "3124/merge",
+    "run": "43690506333"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/attestation/kg-qa/sdlc/processes/qa-publish",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: process Process_QaPublish",
+      "description": "The kg-qa judgements recorded for process Process_QaPublish (sdlc/processes/qa-publish.bpmn), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/sdlc/processes/qa-publish.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/kg-qa/sdlc/processes/qa-publish"
+    }
+  ]
+}

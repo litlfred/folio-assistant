@@ -1,0 +1,978 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-67211",
+  "instance": "who-iris",
+  "about": "library/10665-67211",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7855,
+    "terms": 73094
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccin anti-hépb",
+        "score": 6.9658,
+        "evidence": []
+      },
+      {
+        "term": "vaccination anti-hépb",
+        "score": 6.0876,
+        "evidence": []
+      },
+      {
+        "term": "anti-hépb est",
+        "score": 5.9604,
+        "evidence": []
+      },
+      {
+        "term": "anti-hépb dans",
+        "score": 5.8945,
+        "evidence": []
+      },
+      {
+        "term": "anti-hépb monovalent",
+        "score": 5.5504,
+        "evidence": []
+      },
+      {
+        "term": "vaccins hépb",
+        "score": 5.1257,
+        "evidence": []
+      },
+      {
+        "term": "chroniques hbv",
+        "score": 5.0772,
+        "evidence": []
+      },
+      {
+        "term": "contre hépatite",
+        "score": 4.6373,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccin anti-hépatite",
+        "score": 4.4844,
+        "evidence": []
+      },
+      {
+        "term": "les calendriers",
+        "score": 4.4146,
+        "evidence": []
+      },
+      {
+        "term": "vaccin anti",
+        "score": 4.3165,
+        "evidence": []
+      },
+      {
+        "term": "les seringues",
+        "score": 4.0637,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccin anti-hépb",
+        "score": 420.6967,
+        "evidence": []
+      },
+      {
+        "term": "anti-hépb dans",
+        "score": 324.1174,
+        "evidence": []
+      },
+      {
+        "term": "vaccination anti-hépb",
+        "score": 320.9636,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 313.8041,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anti-hépb est",
+        "score": 303.904,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 301.1196,
+        "evidence": []
+      },
+      {
+        "term": "les calendriers",
+        "score": 283.9648,
+        "evidence": []
+      },
+      {
+        "term": "les seringues",
+        "score": 269.3161,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 259.2715,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les pays",
+        "score": 257.9842,
+        "evidence": []
+      },
+      {
+        "term": "anti-hépb monovalent",
+        "score": 255.0947,
+        "evidence": []
+      },
+      {
+        "term": "les infections",
+        "score": 247.1583,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dans des",
+        "score": 4.7441,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 4.6636,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 4.0786,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 3.8422,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 3.7258,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 3.4516,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chez les",
+        "score": 3.4441,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 3.2627,
+        "evidence": []
+      },
+      {
+        "term": "des infections",
+        "score": 3.2271,
+        "evidence": []
+      },
+      {
+        "term": "systématique des",
+        "score": 3.1756,
+        "evidence": []
+      },
+      {
+        "term": "les services",
+        "score": 3.1571,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les trois",
+        "score": 3.0955,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "dans les",
+        "score": 290.0864,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour les",
+        "score": 285.5871,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 246.8286,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 236.6762,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 233.2559,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 230.7353,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 226.8979,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 220.0452,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tous les",
+        "score": 215.4212,
+        "evidence": []
+      },
+      {
+        "term": "les trois",
+        "score": 212.7588,
+        "evidence": []
+      },
+      {
+        "term": "les nourrissons",
+        "score": 210.052,
+        "evidence": []
+      },
+      {
+        "term": "les services",
+        "score": 208.9026,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dans des",
+        "score": 4.7441,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 4.6636,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 4.0786,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 3.8422,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 3.7258,
+        "evidence": []
+      },
+      {
+        "term": "contre les",
+        "score": 3.4516,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chez les",
+        "score": 3.4441,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 3.2627,
+        "evidence": []
+      },
+      {
+        "term": "des infections",
+        "score": 3.2271,
+        "evidence": []
+      },
+      {
+        "term": "systématique des",
+        "score": 3.1756,
+        "evidence": []
+      },
+      {
+        "term": "les services",
+        "score": 3.1571,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les trois",
+        "score": 3.0955,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "提供hpv",
+        "score": 132.1897,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 115.8977,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 100.1726,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 98.3847,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 90.97,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 83.8035,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 83.736,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 80.4051,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 75.8773,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 75.3437,
+        "evidence": []
+      },
+      {
+        "term": "监督机制",
+        "score": 73.6031,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 73.5413,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-vaccination-contre-lhépatite-b": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "contre hépatite",
+          "score": 3.7588,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chroniques hbv",
+          "score": 2.3665,
+          "evidence": []
+        },
+        {
+          "term": "vaccin anti-hépb",
+          "score": 1.8732,
+          "evidence": []
+        },
+        {
+          "term": "infections chroniques",
+          "score": 1.7379,
+          "evidence": []
+        },
+        {
+          "term": "les infections",
+          "score": 1.2949,
+          "evidence": []
+        },
+        {
+          "term": "hépb",
+          "score": 1.0405,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.8725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "décès",
+          "score": 0.6952,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "contre hépatite",
+          "score": 75.6377,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chroniques hbv",
+          "score": 54.1599,
+          "evidence": []
+        },
+        {
+          "term": "infections chroniques",
+          "score": 32.8735,
+          "evidence": []
+        },
+        {
+          "term": "vaccin anti-hépb",
+          "score": 32.3316,
+          "evidence": []
+        },
+        {
+          "term": "les infections",
+          "score": 26.3867,
+          "evidence": []
+        },
+        {
+          "term": "hépb",
+          "score": 16.5515,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 13.9652,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 11.9198,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les infections",
+          "score": 0.7852,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6744,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.474,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4497,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3978,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3524,
+          "evidence": []
+        },
+        {
+          "term": "contre",
+          "score": 0.3413,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les infections",
+          "score": 18.6236,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 12.0932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 11.9833,
+          "evidence": []
+        },
+        {
+          "term": "vaccin anti-hépb",
+          "score": 10.3485,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 8.7045,
+          "evidence": []
+        },
+        {
+          "term": "chroniques hbv",
+          "score": 7.7669,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 7.6985,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les infections",
+          "score": 0.7852,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6744,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.474,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4497,
+          "evidence": []
+        },
+        {
+          "term": "contre hépatite",
+          "score": 0.4185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une",
+          "score": 0.3978,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.301,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 60.2409,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 56.4101,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 53.7459,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 51.4636,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 47.7797,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 47.7797,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 44.0095,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 41.0321,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-organisation-mondiale-de-la-santé-1211-genève-27": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccin anti-hépb",
+          "score": 5.0926,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-hépb",
+          "score": 4.5851,
+          "evidence": []
+        },
+        {
+          "term": "anti-hépb monovalent",
+          "score": 4.4842,
+          "evidence": []
+        },
+        {
+          "term": "anti-hépb dans",
+          "score": 4.4373,
+          "evidence": []
+        },
+        {
+          "term": "anti-hépb est",
+          "score": 4.3728,
+          "evidence": []
+        },
+        {
+          "term": "santé organisation",
+          "score": 4.3709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 4.2017,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins hépb",
+          "score": 3.7511,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin anti-hépb",
+          "score": 388.3651,
+          "evidence": []
+        },
+        {
+          "term": "anti-hépb dans",
+          "score": 302.1242,
+          "evidence": []
+        },
+        {
+          "term": "vaccination anti-hépb",
+          "score": 299.1409,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 294.8135,
+          "evidence": []
+        },
+        {
+          "term": "anti-hépb est",
+          "score": 278.4126,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 278.0761,
+          "evidence": []
+        },
+        {
+          "term": "les calendriers",
+          "score": 268.9202,
+          "evidence": []
+        },
+        {
+          "term": "les seringues",
+          "score": 254.2715,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans des",
+          "score": 3.6199,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 3.5352,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 3.5115,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 3.1145,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.9754,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.7925,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 2.6028,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 2.5875,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 265.4405,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 261.5317,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 225.9731,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 216.6305,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 213.6067,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 210.9923,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 207.6316,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 201.3216,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans des",
+          "score": 3.6199,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 3.5352,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 3.5115,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 3.1145,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.9754,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.7925,
+          "evidence": []
+        },
+        {
+          "term": "contre les",
+          "score": 2.6028,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 2.5875,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 71.9488,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 62.1518,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 54.7922,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 54.3752,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 51.9331,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 49.9379,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 48.709,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 43.9357,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

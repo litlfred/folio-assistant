@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/attestation/certification/crdm-detect-evaluation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "782fc37375a522e91e5673161ac96eb47392105f",
+    "pr": "3124/merge",
+    "run": "43690506333"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/attestation/certification/crdm-detect-evaluation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "certification attestation: test-plan crdm-detect-evaluation",
+      "description": "The certification judgements recorded for test-plan crdm-detect-evaluation (test/results/tests/crdm-detect-evaluation/crdm-detect-signals/r-3554a15543fc-54762ece6646/test-report.json), each pinned to the hash it attested.",
+      "sourceKind": "certification",
+      "sourcePath": "test/attestations/certification/crdm-detect-evaluation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/certification/crdm-detect-evaluation"
+    }
+  ]
+}
