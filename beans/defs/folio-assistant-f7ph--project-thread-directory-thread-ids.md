@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T10:55:00Z
+updated_at: 2026-11-15T08:45:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -33,3 +33,5 @@ Full thread link: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?t
 - Green the smart-ra drafts 11-12: red causes, #195 conflict card Q-RA-MRG-1, #199 resolved locally; waits on smart-ra re-pin (former memory record n4w8)
 
 _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E8Y9ccXJsk3qvGEie1X5Pr), session https://claude.ai/code/session_01Qmmkt7NmLVnjA5oNtkbv3f.
+
+_2026-11-15T08:45Z_ — qou coordinator (tracker qou#7735, bean qc15) …DeM3N13zuCshZeKt1kDnkw.
