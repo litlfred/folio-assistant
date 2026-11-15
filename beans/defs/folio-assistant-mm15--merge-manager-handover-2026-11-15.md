@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T06:35:00Z
-updated_at: 2026-11-15T06:36:00Z
+updated_at: 2026-11-15T06:38:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover
@@ -51,3 +51,13 @@ who-iris#279 conflict resolved at bb54e27d, CI running; #284's errata folded int
 - smart-trust-phw BPMN labels (memory bpmn-label-tidy-square-tasks): bootstrap-tools #87/#88 merged; Q-SQ-1 C (square = equal task boxes 120x120), Q-BPMN-FIX-1 B (phw#61 ready for owner OK, redraws in fhir-harness#388, cat-harness#1254, core#757, bootstrap#54, ihris#46). Check with cat-harness-tools scripts/bpmn-detangle.ts.
 
 _2026-11-15T06:36:00Z_ — Added IRIS status and carried the smart-ra / phw memory notes into this bean.
+
+## From the owner's stalled CLI logs (gist f2613e4bcf76c58d4f231f0fcfa592e2, via coordinator 06:31Z)
+- smart-trust#240 and smart-ips-pilgrimage#112: ready to merge after fa#3124.
+- sm8r: cat-harness#1348 declares the 9 site pages (with tools#2229, smart-immunizations#148). Two smart-base files are still open; dak.json is committed and regenerated, so it may not belong in publish outputs.
+- FHIR core vocab RDF reader is stalled on credits: 8 tests pass, 2 fail. Bean cat-tools-t6fz is open.
+- fhir-harness HL7-tarball pin PR may not have been opened (stalled on credits). The R4 definitions exist locally only.
+- fhir-harness#426 follow-ups also remove the unused igBanner code.
+- fa#3123: its merge-guard window expired. Needs main merged in plus a re-pin after fa#3124.
+
+_2026-11-15T06:38:00Z_ — Added items from the owner's stalled-session logs.
