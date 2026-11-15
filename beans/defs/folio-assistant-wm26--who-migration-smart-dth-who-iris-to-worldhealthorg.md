@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-15T19:40:00Z
-updated_at: 2026-11-15T19:40:00Z
+updated_at: 2026-11-15T21:35:00Z
 tags:
     - who-migration
     - handover
@@ -60,3 +60,5 @@ Merge-manager stable point; table covers all 37 repos (G2 done 18:40Z); every ma
 - Never recreate a repo named litlfred/dth-hrh or litlfred/who-iris (kills the redirects).
 
 _2026-11-15T19:40:00Z_ — Filed by thread "Plan migration of content repos to WHO" (session https://claude.ai/code/session_01Qmmkt56R29ju7L1jFqMEJi).
+
+_2026-11-15T21:35:00Z_ — who-iris: WHO/who-iris#298 merged 21:23Z, WHO Pages live (gh-pages 3e34c59); draft #300 moves iriBase + 19,718 IRIs to WHO staging root; still litlfred: `repository`/theme in who-iris.json and the separate repo who-iris-cdn (move decision open). litlfred/cat-harness-tools reusable workflows run under the WHO org. Pages redirect for dth-hrh and who-iris: litlfred/litlfred.github.io#2 (owner merges + enables Pages). smart-ra not yet merged in WHO (main at fork point), so no redirect yet. DTH-HRH review sheet pointed at WHO.
