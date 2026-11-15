@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 40,
+      "count": 44,
       "unit": "open beans"
     }
   },
@@ -734,7 +734,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T10:55:00Z",
+      "updatedAt": "2026-11-15T08:45:00Z",
       "preview": "Full thread link: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9<suffix>. Ids below are suffixes after `cmsg_017WNUkNK8kdDziPK58Pv6G9`.\n\n- CI emails/red mains …7hzuBmHhA1AVDQwkGAEKoK (closed). CI email alerts 11-12 …6etWUsHcNFgYZFJZ29PDz9. Umbrella …DEZk3DJmX24MEwH1cdheht. qa.json …6zELz1Am66C2Vzg5yT1cQV. Gutter …Wyw7xcUYv4wkPgN73AoVxC. Contents c",
       "file": "beans/defs/folio-assistant-f7ph--project-thread-directory-thread-ids.md"
     },
@@ -807,6 +807,20 @@
       "updatedAt": "2026-11-09T14:20:00Z",
       "preview": "Arc fs43 §4 `site` row, second half. `docs-site.yml` now MOUNTS the tip-keyed graphs before the generators run (PR #2052), so the build reads the work plan wherever it lives. What is missing is the TRIGGER: after the cutover a bean edit is a push to `cat/cat-harness/beans` and nothing rebuilds the site.\n\nAdding `branches: [main, cat/cat-harness/beans]` is NOT the fix on its own, and that is the fi",
       "file": "beans/defs/folio-assistant-fwtz--docs-site-must-rebuild-when-the-bean-branch-moves.md"
+    },
+    {
+      "id": "folio-assistant-g3ra",
+      "title": "Green smart-ra change-set PRs (backlog group G3)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:40:00Z",
+      "updatedAt": "2026-11-15T09:30:00Z",
+      "preview": "Thread \"Rebase smart-ra change set PRs\" https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MQL6jtkEQtcg1HUwUwioBc, session https://claude.ai/code/session_01Qmmkt8JHV6bzSp4tPmwei3.\n\nsmart-ra #151 #152 #156 #158 #189 #193 #194 #196 #197 #199 #203 #218 #221 were red since 11-11 (corpus-gate / upstream-pins NEW against a 4-day-old main; #221 also crashed i",
+      "file": "beans/defs/folio-assistant-g3ra--green-smart-ra-change-set-prs-g3.md"
     },
     {
       "id": "folio-assistant-gzgh",
@@ -989,6 +1003,20 @@
       "updatedAt": "2026-11-13T22:31:00Z",
       "preview": "## Why\n\nParent: `folio-assistant-95e7`. Owner, 2026-11-13: `smart-base/schemas/skills/l2-dependency-choice/input.schema.json` was meant to be in the L2 subgraph. The skill `.md` files moved (issue #359); their contracts did not.\n\nBlocked on bean `cat-tools-st4q` (merged in https://github.com/litlfred/cat-harness-tools/pull/2013): until it lands, a moved contract is not published and gets no IRI.\n\n",
       "file": "beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md"
+    },
+    {
+      "id": "folio-assistant-l1el",
+      "title": "fhir-core: HL7 published packages are the authority; derive the UML class model",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:05:00Z",
+      "updatedAt": "2026-11-15T11:20:00Z",
+      "preview": "Owner, 2026-11-15 (stalled CLI session, log gist f2613e4b): \"i want to refer to HL7 offiically published .json etc for their resources, just use fhir-harness to derived stuff (e.g. UML) that is not part of core IG publisher\" and \"reference published hl7. assets as authoratative\". Owner cards then: point to HL7 with a cache only; build the UML now; add hl7.org to allowed hosts.\n\nOwner thread: https",
+      "file": "beans/defs/folio-assistant-l1el--fhir-core-hl7-is-the-authority-uml-class-model.md"
     },
     {
       "id": "folio-assistant-lgwt",
@@ -1266,11 +1294,11 @@
       "status": "in-progress",
       "type": "task",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-15T07:15:00Z",
-      "updatedAt": "2026-11-15T07:10:00Z",
+      "updatedAt": "2026-11-15T08:52:00Z",
       "preview": "Plan to clear the open-PR backlog in the harness repos (all litlfred repos except qou, sgex, pqtorus, folio-test, fmlrunner). Owner ask 07:00Z \"for harness repos: make a plan to resolve\", then 07:01Z \"coordinate w/ merge manager. stack merges and fix issues afterwards, send agents to complete work on stalled PRs\" and 07:03Z \"dispatch siblings fix existing reds\". The merge manager (thread cmsg_017W",
       "file": "beans/defs/folio-assistant-pb15--harness-pr-backlog-plan-2026-11-15.md"
     },
@@ -1343,6 +1371,20 @@
       "updatedAt": "2026-11-08T07:07:30Z",
       "preview": "Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits bootstrap's checklists built from its own bootstrap pin, so any train that moves folio-assistant's bootstrap past cat-harness's lock fails bpmn:checklist:check. Options: (a) the train never moves bootstrap/-tools past cat-harness's lock (re-pin cat-harness first, as a cascade), or (b) build below-harness checklists at",
       "file": "beans/defs/folio-assistant-pqlh--re-pin-trains-keep-bootstrap-checklists-in-step-wi.md"
+    },
+    {
+      "id": "folio-assistant-qc15",
+      "title": "qou coordinator handover 2026-11-15 (tracker qou#7735)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T08:45:00Z",
+      "updatedAt": "2026-11-15T08:45:00Z",
+      "preview": "The qou coordinator moved from archived session_01M5GA1LmsEf8tSMxFjMkmnn (\"Lean docs loading strategy\") to project thread \"Coordinate qou quark-state and binding streams\" (…DeM3N13zuCshZeKt1kDnkw, session_01Qmmkt7kU3nfJNwqwWZ7sND). All 10 live streams were told at 08:40Z to report there. qou's own beans (qou-qs0e quark-state epic, qou-s4ws precision) stay in litlfred/qou.\n\n## Streams (sessions)\n- ",
+      "file": "beans/defs/folio-assistant-qc15--qou-coordinator-handover-2026-11-15.md"
     },
     {
       "id": "folio-assistant-r29x",
@@ -1625,6 +1667,20 @@
       "file": "beans/defs/folio-assistant-vgfp--derived-imports-closures-resolve-computed-import-v.md"
     },
     {
+      "id": "folio-assistant-vx9r",
+      "title": "Schema viewer vocabulary reader: cat-harness-tools#2276 (bean cat-tools-xfd4)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:45:00Z",
+      "updatedAt": "2026-11-15T08:42:00Z",
+      "preview": "Workstream state for the class-model vocabulary reader. It resumes the CLI session that stalled on credits (gist f2613e4b, section \"FHIR core, vocabularies, RDF reader\"). That session never committed its reader, so the reader was rebuilt from the session's design.\n\n- FHIR profiles (#2164) and FHIR core types (#2181) are merged. Bean cat-tools-t6fz is completed in #2276.\n- cat-harness-tools#2276 (d",
+      "file": "beans/defs/folio-assistant-vx9r--vocabulary-rdf-reader-cat-harness-tools-2276.md"
+    },
+    {
       "id": "folio-assistant-wl48",
       "title": "Facts and references (moved from project memory 2026-11-12)",
       "status": "in-progress",
@@ -1822,8 +1878,8 @@
         "share": 0.7936507936507936
       }
     ],
-    "orphanOpen": 26,
-    "openTotal": 40,
+    "orphanOpen": 30,
+    "openTotal": 44,
     "coveredOpen": 13,
     "duplicateIds": 0
   }

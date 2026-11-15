@@ -42521,7 +42521,7 @@
         },
         {
           "name": "instances",
-          "type": "z .array(IndexInstanceSchema) .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: \"instances:…",
+          "type": "z .array(IndexLayerSchema) .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: \"instances: a …",
           "optional": false,
           "array": true,
           "card": "0..*"
@@ -42604,7 +42604,7 @@
         "cat-harness-tools/schemas/kg/cat-harness.ts#GateExemptionsSchema",
         "cat-harness-tools/schemas/kg/index-config.ts#IndexContentTypeIdSchema",
         "cat-harness-tools/schemas/kg/index-config.ts#IndexHarnessSchema",
-        "cat-harness-tools/schemas/kg/index-config.ts#IndexInstanceSchema",
+        "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema",
         "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema"
       ],
       "unresolved": [],
@@ -42752,6 +42752,38 @@
     {
       "id": "cat-harness-tools/schemas/kg/index-config.ts#IndexInstanceSchema",
       "name": "IndexInstanceSchema",
+      "module": "cat-harness-tools/schemas/kg/index-config.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "IndexLayerSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/index-config.ts#IndexLayer",
+      "name": "IndexLayer",
+      "module": "cat-harness-tools/schemas/kg/index-config.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema",
+      "name": "IndexLayerSchema",
       "module": "cat-harness-tools/schemas/kg/index-config.ts",
       "kind": "zod-object",
       "doc": "One instantiated harness.",
@@ -132591,7 +132623,7 @@
     },
     {
       "from": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject",
-      "to": "cat-harness-tools/schemas/kg/index-config.ts#IndexInstanceSchema",
+      "to": "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema",
       "via": "instances",
       "kind": "field",
       "optional": false,
@@ -132623,6 +132655,14 @@
     },
     {
       "from": "cat-harness-tools/schemas/kg/index-config.ts#IndexInstanceSchema",
+      "to": "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema",
       "to": "cat-harness-tools/schemas/kg/index-config.ts#IndexInstanceNameSchema",
       "via": "name",
       "kind": "field",
@@ -132630,7 +132670,7 @@
       "array": false
     },
     {
-      "from": "cat-harness-tools/schemas/kg/index-config.ts#IndexInstanceSchema",
+      "from": "cat-harness-tools/schemas/kg/index-config.ts#IndexLayerSchema",
       "to": "cat-harness-tools/schemas/kg/index-config.ts#InstanceSourceSchema",
       "via": "source",
       "kind": "field",

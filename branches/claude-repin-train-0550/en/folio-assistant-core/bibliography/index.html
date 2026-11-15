@@ -119,7 +119,71 @@ s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
   <a id="fa-bib-add-gh" href="https://github.com/litlfred/folio-assistant/new/main/folio-assistant-sci/extracted-references?filename=reference.jsonld" target="_blank" rel="noopener">✍ Create standalone node on GitHub</a> ·
   <a id="fa-bib-add-dl-jsonld" download="reference.jsonld" href="data:application/ld+json;charset=utf-8,%7B%7D">Download .jsonld</a> ·
   <a id="fa-bib-add-dl-csl" download="reference.csl.json" href="data:application/vnd.citationstyles.csl+json;charset=utf-8,%5B%5D">Download .csl.json</a> ·
-  <button type="button" id="fa-bib-add-copy">Copy .jsonld</button> <span id="fa-bib-add-status" aria-live="polite"></span></p><pre id="fa-bib-add-preview"><code id="fa-bib-add-code"></code></pre></form></details><p class="fa-bib-summary">7769 references: too many to list on one page. Open a sub-graph above to read its references, or take all of them in an export.</p><style>
+  <button type="button" id="fa-bib-add-copy">Copy .jsonld</button> <span id="fa-bib-add-status" aria-live="polite"></span></p><pre id="fa-bib-add-preview"><code id="fa-bib-add-code"></code></pre></form></details><p class="fa-bib-summary">7769 references: too many to list on one page. Search them below, or open a sub-graph above to read its references, or take all of them in an export.</p><div class="fa-bib-search" data-fa-bib-index="search/" data-fa-bib-root=""><label for="fa-bib-s">Search references</label> <input id="fa-bib-s" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem" placeholder="Words of a title, an author, a year" /><p aria-live="polite" id="fa-bib-s-n"></p><div class="fa-bib-facets" id="fa-bib-s-facets"></div><ol class="fa-bib" id="fa-bib-s-hits"></ol></div><script>
+(function(){var box=document.querySelector(".fa-bib-search");if(!box)return;
+var tokens=function tokens(text) {
+  const words = String(text).normalize("NFKD").replace(/[\u0300-\u036F]/g, "").toLowerCase().match(/[\p{L}\p{N}]+/gu) || [], out = [];
+  for (const w of words)
+    if (/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(w))
+      for (let i = 0;i + 1 < w.length; i++)
+        out.push(w.slice(i, i + 2));
+    else if (w.length >= 2)
+      out.push(w);
+  return out;
+};
+var termShard=function termShard(word, shards) {
+  const p = word.slice(0, 2);
+  let h = 2166136261;
+  for (let i = 0;i < p.length; i++) {
+    h ^= p.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h % shards;
+};
+var searchIndex=async function searchIndex(query, load, opts = {}) {
+  const m = await load("manifest.json"), f = await load("facets.json"), qs = [...new Set(tokens(query))];
+  let hit;
+  if (qs.length === 0)
+    hit = [];
+  for (const q of qs) {
+    const shard = await load(`terms-${termShard(q, m.termShards)}.json`), any = new Set;
+    for (const w in shard)
+      if (w.indexOf(q) === 0)
+        for (const i of shard[w])
+          any.add(i);
+    hit = hit === void 0 ? [...any] : hit.filter((i) => any.has(i));
+    if (!hit.length)
+      break;
+  }
+  const decadeOf = (i) => f.y[i] ? Math.floor(f.y[i] / 10) * 10 : 0, all = (hit ?? []).sort((a, b) => a - b), bySubgraph = {}, byDecade = {}, inScope = all.filter((i) => opts.scope === void 0 || f.s[i] === opts.scope);
+  for (const i of all)
+    bySubgraph[f.s[i]] = (bySubgraph[f.s[i]] || 0) + 1;
+  for (const i of inScope)
+    byDecade[decadeOf(i)] = (byDecade[decadeOf(i)] || 0) + 1;
+  const kept = inScope.filter((i) => opts.decade === void 0 || decadeOf(i) === opts.decade), top = kept.slice(0, opts.limit ?? 50), hits = [];
+  for (const i of top) {
+    const refs = await load(`refs-${Math.floor(i / m.refsPer)}.json`);
+    hits.push(refs[i % m.refsPer]);
+  }
+  return { total: kept.length, hits, bySubgraph, byDecade };
+};
+var base=box.getAttribute("data-fa-bib-index"),root=box.getAttribute("data-fa-bib-root")||"",sc=box.getAttribute("data-fa-bib-scope");
+var cache={};function load(n){if(!cache[n])cache[n]=fetch(base+n).then(function(r){if(!r.ok)throw r.status;return r.json();});return cache[n];}
+var q=document.getElementById("fa-bib-s"),n=document.getElementById("fa-bib-s-n"),fx=document.getElementById("fa-bib-s-facets"),ol=document.getElementById("fa-bib-s-hits");
+var scope=sc===null?undefined:Number(sc),decade,seq=0,subs=[];load("manifest.json").then(function(m){subs=m.subgraphs;});
+function el(t,x){var e=document.createElement(t);if(x!==undefined)e.textContent=x;return e;}
+function chip(label,on,fn){var b=el("button",label);b.type="button";b.setAttribute("aria-pressed",on?"true":"false");b.style.minHeight="44px";b.onclick=fn;return b;}
+function run(){var v=q.value,my=++seq;if(!v.trim()){n.textContent="";fx.replaceChildren();ol.replaceChildren();return;}
+searchIndex(v,load,{limit:50,scope:scope,decade:decade}).then(function(r){if(my!==seq)return;
+n.textContent=r.total+" found"+(r.total>r.hits.length?", the first "+r.hits.length+" shown":"");
+var row=[];if(sc===null){Object.keys(r.bySubgraph).forEach(function(k){var i=Number(k);row.push(chip((subs[i]||k)+" ("+r.bySubgraph[k]+")",scope===i,function(){scope=scope===i?undefined:i;run();}));});}
+Object.keys(r.byDecade).forEach(function(k){var d=Number(k);row.push(chip((d?d+"s":"no year")+" ("+r.byDecade[k]+")",decade===d,function(){decade=decade===d?undefined:d;run();}));});
+fx.replaceChildren.apply(fx,row);
+ol.replaceChildren.apply(ol,r.hits.map(function(h){var li=el("li"),a=el("a",h.c);a.href=root+h.h;li.appendChild(a);li.appendChild(el("small"," "+[h.y||"",subs[h.s]||"",h.k].filter(Boolean).join(" \u00b7 ")));return li;}));
+}).catch(function(){if(my===seq)n.textContent="The search index could not be loaded.";});}
+var t;q.addEventListener("input",function(){clearTimeout(t);t=setTimeout(run,200);});
+})();
+</script><style>
 .fa-bib-panel{position:fixed;top:0;right:0;bottom:0;z-index:2147482000;width:min(420px,92vw);overflow-y:auto;box-sizing:border-box;padding:14px 18px;background:var(--body-background-color,Canvas);color:var(--body-text-color,CanvasText);box-shadow:-4px 0 16px #0003;transform:translateX(105%);transition:transform .18s ease}
 .fa-bib-panel.open{transform:none}
 @media (prefers-reduced-motion:reduce){.fa-bib-panel{transition:none}}
@@ -129,6 +193,39 @@ s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
 .fa-bib-fields dt{font-weight:600}.fa-bib-fields dd{margin:0;overflow-wrap:anywhere}
 li[data-fa-bib-href],li[data-fa-bib-inline]{cursor:pointer}
 button.fa-bib-open{background:none;border:0;padding:0;color:inherit;cursor:pointer;min-height:24px}
-</style><hr><h2 class="text-delta">Table of contents</h2><ul><li><a href="../../../en/folio-assistant-core/bibliography/cat-harness-library/">Bibliography: cat-harness-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/fhir-harness-library/">Bibliography: fhir-harness-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/folio-assistant-core-library/">Bibliography: folio-assistant-core-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/folio-assistant-sci-library/">Bibliography: folio-assistant-sci-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/sci-extracted-references/">Bibliography: sci-extracted-references</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-base-library/">Bibliography: smart-base-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-immunizations-catalogue/">Bibliography: smart-immunizations-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-immunizations-library/">Bibliography: smart-immunizations-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-trust-catalogue/">Bibliography: smart-trust-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-trust-phw-catalogue/">Bibliography: smart-trust-phw-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/who-iris-catalogue/">Bibliography: who-iris-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/who-iris-library/">Bibliography: who-iris-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/who-iris-references/">Bibliography: who-iris-references</a></li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+</style><script>
+(function(){var q=document.getElementById("fa-bib-q"),n=document.getElementById("fa-bib-n");if(q){
+function run(){var v=q.value.trim().toLowerCase(),k=0;
+document.querySelectorAll("li[data-fa-bib]").forEach(function(li){var ok=!v||(li.textContent+" "+li.getAttribute("data-fa-bib")).toLowerCase().indexOf(v)>=0;li.hidden=!ok;if(ok)k++;});n.textContent=k;}
+q.addEventListener("input",run);}
+document.querySelectorAll("details.fa-bib-deps").forEach(function(d){if(q)q.addEventListener("input",function(){if(q.value.trim())d.open=true;});});
+var ALLOWED_URL_SCHEMES=["http:","https:","mailto:","tel:"];
+function safeHref(u){if(!u)return undefined;var s=String(u).replace(/[\u0009\u000A\u000D]/g,"").trim();if(!s||s.indexOf("//")===0)return undefined;if(/^[#?./]/.test(s)||!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(s))return s;var sc=s.slice(0,s.indexOf(":")+1).toLowerCase();return ALLOWED_URL_SCHEMES.indexOf(sc)>=0?s:undefined;}
+var form=document.getElementById("fa-bib-add-form");if(!form)return;
+var val=function(id){var el=document.getElementById(id);return el?el.value.trim():"";};
+var setVal=function(id,v){var el=document.getElementById(id);if(el&&v!==undefined)el.value=v;};
+function parseAuthors(s){if(!s)return undefined;return s.split(/;|\s+and\s+/i).map(function(p){p=p.trim();if(!p)return null;var i=p.indexOf(",");if(i>=0)return{family:p.slice(0,i).trim(),given:p.slice(i+1).trim()};var t=p.split(/\s+/);return t.length>1?{family:t[t.length-1],given:t.slice(0,-1).join(" ")}:{literal:p};}).filter(Boolean);}
+function parseRaw(){var raw=val("fa-bib-add-raw");if(!raw)return;if(raw[0]==="{"||raw[0]==="["){try{var j=JSON.parse(raw);var it=Array.isArray(j)?j[0]:j;if(!it)return;setVal("fa-bib-add-key",it.id||(it["@id"]||"").replace(/^references\//,""));setVal("fa-bib-add-type",it.type||"article-journal");setVal("fa-bib-add-title",it.title||it["dcterms:title"]||"");if(Array.isArray(it.author))setVal("fa-bib-add-authors",it.author.map(function(a){return a.literal||[a.family,a.given].filter(Boolean).join(", ");}).join("; "));if(it.issued&&it.issued["date-parts"]&&it.issued["date-parts"][0])setVal("fa-bib-add-issued",it.issued["date-parts"][0].join("-"));setVal("fa-bib-add-container",it["container-title"]||it.containerTitle||"");setVal("fa-bib-add-doi",it.DOI||"");setVal("fa-bib-add-url",it.URL||"");setVal("fa-bib-add-abstract",it.abstract||"");}catch(_e){}return;}
+var m=/^@([A-Za-z]+)\s*\{\s*([^,\s]+)\s*,([\s\S]*)\}\s*$/.exec(raw);if(!m)return;setVal("fa-bib-add-key",m[2]);var tm={article:"article-journal",book:"book",techreport:"report",report:"report",inproceedings:"paper-conference",phdthesis:"thesis",mastersthesis:"thesis",online:"webpage",webpage:"webpage"};setVal("fa-bib-add-type",tm[m[1].toLowerCase()]||"document");var re=/([A-Za-z_][A-Za-z0-9_-]*)\s*=\s*(\{(?:[^{}]|\{[^{}]*\})*\}|"[^"]*"|[^,\n}]+)/g,fm;while((fm=re.exec(m[3]))!==null){var fk=fm[1].toLowerCase(),fv=fm[2].trim().replace(/^\{([\s\S]*)\}$|^"([\s\S]*)"$/,"$1$2").replace(/[{}]/g,"").trim();if(fk==="title")setVal("fa-bib-add-title",fv);else if(fk==="author")setVal("fa-bib-add-authors",fv);else if(fk==="year"||fk==="date")setVal("fa-bib-add-issued",fv);else if(fk==="journal"||fk==="booktitle")setVal("fa-bib-add-container",fv);else if(fk==="doi")setVal("fa-bib-add-doi",fv);else if(fk==="url")setVal("fa-bib-add-url",fv);else if(fk==="eprint"||fk==="arxiv")setVal("fa-bib-add-arxiv",fv);else if(fk==="abstract")setVal("fa-bib-add-abstract",fv);}}
+function build(){var rawKey=val("fa-bib-add-key").replace(/[^A-Za-z0-9._:+-]+/g,"-").replace(/^[^A-Za-z0-9]+/,"")||"reference";var tp=val("fa-bib-add-type")||"article-journal";var ti=val("fa-bib-add-title");var au=parseAuthors(val("fa-bib-add-authors"));var is=val("fa-bib-add-issued");var ct=val("fa-bib-add-container");var doi=val("fa-bib-add-doi").replace(/^https?:\/\/(?:dx\.)?doi\.org\//i,"");var arx=val("fa-bib-add-arxiv").replace(/^arxiv:/i,"");var u=safeHref(val("fa-bib-add-url")||(arx?"https://arxiv.org/abs/"+arx:doi?"https://doi.org/"+doi:undefined));var ab=val("fa-bib-add-abstract");
+var bibo={book:"bibo:Book",report:"bibo:Report",webpage:"bibo:Webpage",thesis:"bibo:Thesis",chapter:"bibo:Chapter",manuscript:"bibo:Manuscript",standard:"bibo:Standard"}[tp]||"bibo:AcademicArticle";
+var node={"@context":{"@base":"https://litlfred.github.io/folio/","dcterms":"http://purl.org/dc/terms/","bibo":"http://purl.org/ontology/bibo/","fabio":"http://purl.org/spar/fabio/","dcterms:source":{"@type":"@id"},"dcterms:hasVersion":{"@type":"@id"}},"@id":"references/"+rawKey,"@type":["fabio:Work",bibo],$schema:"folio-reference/v1",id:rawKey,type:tp,provenance:"authored"};
+if(ti){node["dcterms:title"]=ti;node.title=ti;}if(au&&au.length){node["dcterms:creator"]=au.map(function(a){return a.literal||[a.family,a.given].filter(Boolean).join(", ");});node.author=au;}if(is){var ym=/^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?/.exec(is);node.issued=ym?{"date-parts":[[ym[1],ym[2],ym[3]].filter(Boolean).map(Number)]}:{raw:is};node["dcterms:issued"]=is;}if(ct){node["dcterms:isPartOf"]=ct;node["container-title"]=ct;}if(doi){node["bibo:doi"]=doi;node.DOI=doi;}if(u){node["dcterms:identifier"]=u;node.URL=u;}if(ab){node["dcterms:abstract"]=ab;node.abstract=ab;}if(arx)node.note="arXiv:"+arx;
+var csl={id:rawKey,type:tp};if(ti)csl.title=ti;if(au&&au.length)csl.author=au;if(node.issued)csl.issued=node.issued;if(ct)csl["container-title"]=ct;if(doi)csl.DOI=doi;if(u)csl.URL=u;if(ab)csl.abstract=ab;if(arx)csl.note="arXiv:"+arx;
+var dir=form.getAttribute("data-target-dir")||"references";var pathEl=document.getElementById("fa-bib-add-path");if(pathEl)pathEl.textContent=dir+"/"+rawKey+".jsonld";
+var jsonldText=JSON.stringify(node,null,2)+"\n",cslText=JSON.stringify([csl],null,2)+"\n";
+var codeEl=document.getElementById("fa-bib-add-code");if(codeEl)codeEl.textContent=jsonldText;
+var dlLd=document.getElementById("fa-bib-add-dl-jsonld");if(dlLd){dlLd.setAttribute("download",rawKey+".jsonld");dlLd.setAttribute("href","data:application/ld+json;charset=utf-8,"+encodeURIComponent(jsonldText));}
+var dlCsl=document.getElementById("fa-bib-add-dl-csl");if(dlCsl){dlCsl.setAttribute("download",rawKey+".csl.json");dlCsl.setAttribute("href","data:application/vnd.citationstyles.csl+json;charset=utf-8,"+encodeURIComponent(cslText));}
+var repoUrl=safeHref(form.getAttribute("data-repo-url")||"https://github.com/litlfred/folio-assistant");var branch=form.getAttribute("data-branch")||"main";
+var ghUrl=repoUrl?safeHref(repoUrl+"/new/"+encodeURIComponent(branch)+"/"+dir.split("/").map(encodeURIComponent).join("/")+"?filename="+encodeURIComponent(rawKey+".jsonld")+"&value="+encodeURIComponent(jsonldText)):undefined;
+var ghEl=document.getElementById("fa-bib-add-gh");if(ghEl&&ghUrl)ghEl.setAttribute("href",ghUrl);
+return{key:rawKey,dir:dir,node:node,jsonldText:jsonldText,ghUrl:ghUrl};}
+var pb=document.getElementById("fa-bib-add-parse");if(pb)pb.addEventListener("click",function(){parseRaw();build();});
+form.addEventListener("input",build);
+var cb=document.getElementById("fa-bib-add-copy");if(cb)cb.addEventListener("click",function(){var b=build();if(navigator.clipboard)navigator.clipboard.writeText(b.jsonldText);var st=document.getElementById("fa-bib-add-status");if(st)st.textContent="Copied "+b.dir+"/"+b.key+".jsonld";});
+form.addEventListener("submit",function(ev){ev.preventDefault();var b=build();var st=document.getElementById("fa-bib-add-status");if(b.ghUrl)window.open(b.ghUrl,"_blank","noopener");if(st)st.textContent="Ready at "+b.dir+"/"+b.key+".jsonld";});
+build();})();
+</script><hr><h2 class="text-delta">Table of contents</h2><ul><li><a href="../../../en/folio-assistant-core/bibliography/cat-harness-library/">Bibliography: cat-harness-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/fhir-harness-library/">Bibliography: fhir-harness-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/folio-assistant-core-library/">Bibliography: folio-assistant-core-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/folio-assistant-sci-library/">Bibliography: folio-assistant-sci-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/sci-extracted-references/">Bibliography: sci-extracted-references</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-base-library/">Bibliography: smart-base-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-immunizations-catalogue/">Bibliography: smart-immunizations-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-immunizations-library/">Bibliography: smart-immunizations-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-trust-catalogue/">Bibliography: smart-trust-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/smart-trust-phw-catalogue/">Bibliography: smart-trust-phw-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/who-iris-catalogue/">Bibliography: who-iris-catalogue</a></li><li><a href="../../../en/folio-assistant-core/bibliography/who-iris-library/">Bibliography: who-iris-library</a></li><li><a href="../../../en/folio-assistant-core/bibliography/who-iris-references/">Bibliography: who-iris-references</a></li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -13,7 +13,7 @@ repository being scanned (bean <code>g43f</code>).</p><h2 id="the-escape-this-cl
 the checkout. In a Claude Code worktree that lands on <code>.claude/worktrees/</code>,
 whose every child is a sibling worktree declaring <code>folio-assistant</code> at its
 root. Measured 2026-10-03 from <code>agent-aefc4dcac619f2e1f</code>:
-<code>instanceRootsIn(repoRootFor(root))</code> returned <strong>ten sibling worktrees</strong> as
+<code>layerRootsIn(repoRootFor(root))</code> returned <strong>ten sibling worktrees</strong> as
 instances of this one. A caller asking for its siblings that way reads other
 sessions' uncommitted work as its own corpus.</p><p>The rule is the same one git applies: a nested checkout is not part of the
 enclosing tree unless it is a declared submodule. <code>bootstrap/</code> and
