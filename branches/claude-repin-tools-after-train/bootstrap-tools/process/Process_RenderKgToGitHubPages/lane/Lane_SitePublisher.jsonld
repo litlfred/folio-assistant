@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-after-train",
+    "sha": "c1ab2b2150149876e8d5c22998672d05ccc87c2b",
+    "pr": "3154/merge",
+    "run": "43727724644"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Site Publisher",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/role/site-publisher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-after-train/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher"
+    }
+  ]
+}
