@@ -6,7 +6,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-14T17:50:00Z
-updated_at: 2026-11-15T07:35:00Z
+updated_at: 2026-11-15T12:12:00Z
+parent: folio-assistant-v8bg
 tags:
     - ci
     - red-main
