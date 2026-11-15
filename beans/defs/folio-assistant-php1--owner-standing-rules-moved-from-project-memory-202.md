@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T12:02:00Z
+updated_at: 2026-11-15T12:20:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -75,3 +75,7 @@ _2026-11-15T11:58:00Z_ — Rule added by the merge manager thread (session_01Qmm
 - LAYER-DEPENDENCY ORDER (owner 2026-11-15 12:00Z, cmsg_017WNUkNK8kdDziPK58Pv6G9LKygNEa5Ajh3uHf4Ejsq9m: "prioritize in order of layer dependnecy so cat-harness > cat-harness-tools etc"). Merges and red fixes go in layer order: bootstrap, bootstrap-tools, cat-harness, cat-harness-tools, folio-assistant-core, fhir-harness, smart-base, then the content layers (smart-trust, smart-trust-phw, who-iris, smart-immunizations, smart-ra, dth-*), then folio-assistant, then the sites. Within a layer, finish its ready PRs and fix its main red before moving to the next layer. Exception: a re-pin that carries a lower layer's fix may land as soon as that fix is on the lower layer's main. The stable-point table in merge-manager/status/latest.md is ordered the same way.
 
 _2026-11-15T12:02:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator with the owner's message cited.
+
+- NO CONTENT REVIEW NOW (owner 2026-11-15 12:17Z, cmsg_017WNUkNK8kdDziPK58Pv6G9NeXt6MTkaqFemkYVUDmQtC: "i dont want to review the content now"). PRs labelled `content` stay drafts and out of the merge queue. Post no content review or merge cards until the owner asks for them. Reviving content drafts (merging main, re-pinning, fixing mechanical reds, labelling) goes on. Content the owner already approved before this rule, such as smart-ra#257 (11:59Z card), may still merge on green.
+
+_2026-11-15T12:20:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator with the owner's message cited.
