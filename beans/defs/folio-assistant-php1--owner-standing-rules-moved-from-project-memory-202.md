@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T12:20:00Z
+updated_at: 2026-11-15T12:25:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -79,3 +79,7 @@ _2026-11-15T12:02:00Z_ — Rule added by the merge manager thread (session_01Qmm
 - NO CONTENT REVIEW NOW (owner 2026-11-15 12:17Z, cmsg_017WNUkNK8kdDziPK58Pv6G9NeXt6MTkaqFemkYVUDmQtC: "i dont want to review the content now"). PRs labelled `content` stay drafts and out of the merge queue. Post no content review or merge cards until the owner asks for them. Reviving content drafts (merging main, re-pinning, fixing mechanical reds, labelling) goes on. Content the owner already approved before this rule, such as smart-ra#257 (11:59Z card), may still merge on green.
 
 _2026-11-15T12:20:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator with the owner's message cited.
+
+- CONTENT LABEL + REVIEW RECORD (owner 2026-11-15 12:11Z, cmsg_017WNUkNK8kdDziPK58Pv6G9UZsDKJq4h45Vx9mAMZF94G: "dont include content PRs in the the table. also update the process and skills so content PRs get a label and that indicates a context review process needs to be documented as part of making it re[ady]. label all existing content PRs as such"). A content PR changes folio content text or substance: block wording, tables, figures and their source models (ArchiMate, BPMN, DMN), glossary, references, change sets, public-comment responses, IRIS summary re-derivations; a regenerated content table or figure counts. Not content: harness or tool code, workflows, pins, beans, tests, platform docs. Every agent labels a content PR `content` (colour 0e8a16; exists in smart-ra, dth-hrh, dth-pc, dth-sc, dth-sfp, dth-phc, who-iris), keeps it a draft, and before marking it ready adds a `## Content review` section to the body that points to the review record (owner card id, committee or review-log link, editing-hci-validation instance, review page); never a made-up review step. merge:guard check 9 `content-review` enforces it (pending on a draft, failure on a ready PR), and merge:watch leaves content PRs out of the merge manager's table (cat-harness-tools#2303, skills cat-harness#1351, prepare-merge §"Content PRs"). 22 open content PRs labelled 12:15Z. Functional changes inside a content PR are split into their own non-content PR (owner 12:18Z).
+
+_2026-11-15T12:25:00Z_ — Rule added by the content-label thread (session_01Qmmkt5zDzPvBBU7QUoku32), from the owner's own message in that thread.
