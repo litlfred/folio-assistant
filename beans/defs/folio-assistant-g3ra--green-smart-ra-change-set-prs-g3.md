@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-15T07:40:00Z
-updated_at: 2026-11-15T09:05:00Z
+updated_at: 2026-11-15T09:30:00Z
 parent: folio-assistant-v8bg
 tags:
     - smart-ra
@@ -24,9 +24,12 @@ smart-ra #151 #152 #156 #158 #189 #193 #194 #196 #197 #199 #203 #218 #221 were r
 - [x] Owner 07:59Z: #152 #156 #158 #199 #218 #221 to merge manager (merging on the corpus-gate waiver); #189 #193 #194 #196 held for committee; #151 #197 #203 not yet placed.
 - [x] #156 re-merged main after #185 (head 65e94e95).
 - [x] Owner card Q-RA-G3-3 A (08:32:01Z): 40 editing-hci-validation records (editor steps actor litlfred, agent steps Claude) pushed to smart-ra cat/dpi-h-ra/beans; corpus-gate passes locally on #152 (2/2) #156 (25/25) #158 (2/2) #218 (11/11).
-- [ ] #151 #197 #203 placement (owner).
+- [x] Owner 08:48Z (coordinator card, confirmed to merge manager 08:49Z): #151 #197 #203 merge on green. #197 re-merged main (head a9e7d250). Card Q-RA-G3-4 A (08:48:50Z): 23 review records for #197 pushed to cat/dpi-h-ra/beans; corpus-gate 23/23 locally.
+- Merging is the merge manager's (cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR). Open: cat-harness-tools#2275 (Graphviz fix), then a smart-ra re-pin for #221's publish.
 - Waivers: Q-RA-VAL-2 A covered only #97 #154 #185 #190 #191 #192 #195, and php1 "FUNCTIONAL ONLY FOR smart-ra / dth-*" (11-12 09:57Z) supersedes it: these content PRs are not merged by agents. corpus-gate cannot go green without a fabricated editing-hci-validation history, so it stays red and is not a reason to push again.
 
 _2026-11-15T07:40:00Z_ — Filed.
 
 _2026-11-15T09:05:00Z_ — Owner placements, #156 re-merge, review records pushed.
+
+_2026-11-15T09:30:00Z_ — #151 #197 #203 placed; #197 records pushed.
