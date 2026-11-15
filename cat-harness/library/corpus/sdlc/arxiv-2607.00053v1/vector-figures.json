@@ -1,0 +1,532 @@
+{
+  "$schema": "folio-vector-figures/v1",
+  "doc_id": "arxiv-2607.00053v1",
+  "figures": [
+    {
+      "id": "vfig-p002",
+      "file": "figures/vfig-p002.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 1 on page 2: SWE-Router architecture overview comparing conventional prompt-only routing against value-based trajectory routing",
+        "page": 2
+      },
+      "page": 2,
+      "rotation": 0,
+      "captionLabels": [
+        "1"
+      ],
+      "region": [
+        55.44,
+        67.06,
+        541.48,
+        226.88
+      ],
+      "assembly": {
+        "drawings": 38,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              55.44,
+              67.06,
+              541.48,
+              226.88
+            ],
+            "drawings": 37,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Conventional LLM Routing",
+              "Task  𝒒",
+              "Conventional Router ො𝒓(𝒒)",
+              "Not enough information in 𝑞",
+              "→ Large Bayes error",
+              "SWE-ROUTER (proposed)",
+              "𝑲 exploration steps of code base using cheap 𝒎𝟏",
+              "Task",
+              "𝒒",
+              "Turn 1",
+              "Though",
+              "Action",
+              "Observation",
+              "Turn K",
+              "Though",
+              "Action",
+              "Observation",
+              "Partial trajectory 𝒯≤𝑲from weak model m₁",
+              "Value head ො𝒓(𝒯≤𝑲)",
+              "Continue with 𝑚1",
+              "Switch to 𝑚2",
+              "Weaker, cheaper",
+              "LLM 𝑚1",
+              "Stronger, expensive",
+              "LLM 𝑚2",
+              "⋯",
+              "Well-informed",
+              "accurate routing",
+              "Predict 𝑃𝑚1 success",
+              "High",
+              "Low"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              60.34,
+              75.86,
+              210.76,
+              221.66
+            ],
+            "parent": null,
+            "labels": [
+              "Conventional LLM Routing"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              70.48,
+              182.56,
+              203.42,
+              213.54
+            ],
+            "parent": "b0",
+            "labels": [
+              "Not enough information in 𝑞",
+              "→ Large Bayes error"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              217.97,
+              75.64,
+              533.4,
+              218.73
+            ],
+            "parent": null,
+            "labels": [
+              "SWE-ROUTER (proposed)",
+              "High",
+              "Low"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              108.04,
+              93.47,
+              160.43,
+              111.46
+            ],
+            "parent": "b0",
+            "labels": [
+              "Task  𝒒"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              87.66,
+              122.55,
+              180.8,
+              140.55
+            ],
+            "parent": "b0",
+            "labels": [
+              "Conventional Router ො𝒓(𝒒)"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              262.2,
+              95.07,
+              500.33,
+              113.95
+            ],
+            "parent": "b2",
+            "labels": [
+              "𝑲 exploration steps of code base using cheap 𝒎𝟏"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              234.04,
+              113.91,
+              270.31,
+              148.87
+            ],
+            "parent": "b2",
+            "labels": [
+              "Task",
+              "𝒒"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              285.76,
+              113.91,
+              334.13,
+              148.87
+            ],
+            "parent": "b2",
+            "labels": [
+              "Turn 1",
+              "Though",
+              "Action",
+              "Observation"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              373.76,
+              113.91,
+              422.12,
+              148.87
+            ],
+            "parent": "b2",
+            "labels": [
+              "Turn K",
+              "Though",
+              "Action",
+              "Observation"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              240.03,
+              159.29,
+              441.62,
+              173.46
+            ],
+            "parent": "b2",
+            "labels": [
+              "Partial trajectory 𝒯≤𝑲from weak model m₁"
+            ]
+          },
+          {
+            "id": "b10",
+            "bbox": [
+              441.6,
+              117.04,
+              522.21,
+              145.44
+            ],
+            "parent": "b2",
+            "labels": [
+              "Value head ො𝒓(𝒯≤𝑲)"
+            ]
+          },
+          {
+            "id": "b11",
+            "bbox": [
+              358.77,
+              188.96,
+              437.1,
+              213.01
+            ],
+            "parent": "b2",
+            "labels": [
+              "Continue with 𝑚1"
+            ]
+          },
+          {
+            "id": "b12",
+            "bbox": [
+              441.6,
+              188.96,
+              522.21,
+              212.33
+            ],
+            "parent": "b2",
+            "labels": [
+              "Switch to 𝑚2"
+            ]
+          },
+          {
+            "id": "b13",
+            "bbox": [
+              64.72,
+              153.82,
+              130.29,
+              175.64
+            ],
+            "parent": "b0",
+            "labels": [
+              "Weaker, cheaper",
+              "LLM 𝑚1"
+            ]
+          },
+          {
+            "id": "b14",
+            "bbox": [
+              135.68,
+              153.82,
+              207.12,
+              175.64
+            ],
+            "parent": "b0",
+            "labels": [
+              "Stronger, expensive",
+              "LLM 𝑚2"
+            ]
+          },
+          {
+            "id": "b15",
+            "bbox": [
+              318.63,
+              119.86,
+              389.09,
+              142.97
+            ],
+            "parent": "b2",
+            "labels": [
+              "⋯"
+            ]
+          },
+          {
+            "id": "b16",
+            "bbox": [
+              228.01,
+              182.64,
+              351.57,
+              213.62
+            ],
+            "parent": "b2",
+            "labels": [
+              "Well-informed",
+              "accurate routing"
+            ]
+          },
+          {
+            "id": "b17",
+            "bbox": [
+              475.55,
+              159.81,
+              517.59,
+              167.09
+            ],
+            "parent": "b2",
+            "labels": [
+              "Predict 𝑃𝑚1 success"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 15,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              55.44,
+              57.6,
+              541.44,
+              57.6
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 87
+      },
+      "shows": [
+        "1"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 1: SWE-Router overview diagram. The left panel shows Conventional LLM Routing, where task prompt q is classified by router r_hat(q) to weak m1 or strong m2, facing high Bayes error due to lack of trajectory context. The right panel shows SWE-Router: weak model m1 executes K exploration steps; value head r_hat(T_<=K) evaluates partial trajectory to predict m1 success, continuing with m1 if high or escalating to strong m2 restarted from q if low.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    },
+    {
+      "id": "vfig-p004",
+      "file": "figures/vfig-p004.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 2 on page 4: Cost-vs.-resolved routing curves on SWE-Bench Verified comparing SWE-Router against baselines and random assignment reference",
+        "page": 4
+      },
+      "page": 4,
+      "rotation": 0,
+      "captionLabels": [
+        "2"
+      ],
+      "region": [
+        55.44,
+        67.06,
+        541.43,
+        240.23
+      ],
+      "assembly": {
+        "drawings": 75,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              55.44,
+              67.06,
+              541.43,
+              240.23
+            ],
+            "drawings": 74,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "$0.00",
+              "$0.20",
+              "$0.40",
+              "$0.60",
+              "$0.80",
+              "Avg. cost per instance (USD)",
+              "0.60",
+              "0.65",
+              "0.70",
+              "Resolved rate",
+              "gpt-5-mini",
+              "gemini-3-pro",
+              "$0.00",
+              "$0.20",
+              "$0.40",
+              "$0.60",
+              "$0.80",
+              "Avg. cost per instance (USD)",
+              "0.60",
+              "0.65",
+              "0.70",
+              "Resolved rate",
+              "deepseek-v3.2",
+              "gemini-3-pro",
+              "SWE-Router (K = 3)",
+              "Non-temporal (K = 0)",
+              "Embed+Logistic",
+              "Embed+kNN",
+              "Embed+XGB",
+              "random assignment (mean)",
+              "random assignment (±1 )",
+              "all-weak",
+              "all-strong"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              55.44,
+              67.06,
+              541.43,
+              240.23
+            ],
+            "parent": null,
+            "labels": [
+              "$0.00",
+              "$0.20",
+              "$0.40",
+              "$0.60",
+              "$0.80",
+              "Avg. cost per instance (USD)",
+              "0.60",
+              "0.65",
+              "0.70",
+              "Resolved rate",
+              "gpt-5-mini",
+              "gemini-3-pro",
+              "$0.00",
+              "$0.20",
+              "$0.40",
+              "$0.60",
+              "$0.80",
+              "Avg. cost per instance (USD)",
+              "0.60",
+              "0.65",
+              "0.70",
+              "Resolved rate",
+              "deepseek-v3.2",
+              "gemini-3-pro"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              65.78,
+              214.34,
+              531.51,
+              235.74
+            ],
+            "parent": "b0",
+            "labels": [
+              "SWE-Router (K = 3)",
+              "Non-temporal (K = 0)",
+              "Embed+Logistic",
+              "Embed+kNN",
+              "Embed+XGB",
+              "random assignment (mean)",
+              "random assignment (±1 )",
+              "all-weak",
+              "all-strong"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 30,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              55.44,
+              57.6,
+              541.44,
+              57.6
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 72
+      },
+      "shows": [
+        "2"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 2: Cost-vs.-resolved routing curves on held-out SWE-Bench Verified across two (weak, strong) model pairs. SWE-Router (K=3, green) sits above the random-assignment gray band and prompt-only embedding baselines across the cost spectrum, achieving a Pareto frontier that retains the majority of frontier model performance at a fraction of inference cost.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of decision.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/suggest-editor/decision.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/suggest-editor/decision.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/decision.md#provenance-2"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/decision.md#provenance-3"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/decision.md#provenance-4"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/decision.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "✍ Suggest editor — decision",
+      "prov:value": "**Chosen: candidate A** (one screen, changes marked as you type). Owner, 2026-10-14, choosing from the options put to them. The blind review (`reviews/agent-blind-1.md`) recommended A independently.",
+      "cat-harness:refs": [
+        "2026-10-14"
+      ],
+      "dcterms:date": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/decision.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "✍ Suggest editor — decision",
+      "prov:value": "**Underline: left out of the toolbar.** Owner, 2026-10-14: \"Leave it out\". Markdown has no underline, and underline is the insertion mark.",
+      "cat-harness:refs": [
+        "2026-10-14"
+      ],
+      "dcterms:date": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/decision.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Why A",
+      "prov:value": "From the review:\n- It is the only candidate that marks changes *while typing*, which is what the owner asked for."
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/decision.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Deferred",
+      "prov:value": "These are tracked on the bean, not built now."
+    }
+  ]
+}

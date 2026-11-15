@@ -1,0 +1,65 @@
+{
+  "$schema": "folio-run-context/v1",
+  "platform": {
+    "commit": "95485e317787e4b16f5dec9973337e36b7310a3e"
+  },
+  "mounts": {
+    "state": "locked",
+    "lock": {
+      "file": "index.lock.json",
+      "sha256": "5df4e875f81d5c332de698be80ca24317b5f93bb8a3b1de41488384f06ebc38a"
+    },
+    "instances": [
+      {
+        "instance": "bootstrap",
+        "repository": "litlfred/bootstrap",
+        "sha": "3ce2b5d641779ca78432971abb919e6e3afdc60a"
+      },
+      {
+        "instance": "bootstrap-tools",
+        "repository": "litlfred/bootstrap-tools",
+        "sha": "fdceeca33492a0bc434edc1f80c95895180ee587"
+      },
+      {
+        "instance": "cat-harness",
+        "repository": "litlfred/cat-harness",
+        "sha": "ad64a09a7f060cf350b8b4ed7c4d163435120c30"
+      },
+      {
+        "instance": "cat-harness-tools",
+        "repository": "litlfred/cat-harness-tools",
+        "sha": "eaf4e03d99fcea9915afdb091fdf98a56ecf27b9"
+      },
+      {
+        "instance": "fhir-harness",
+        "repository": "litlfred/fhir-harness",
+        "sha": "5545d6b5f803f9b4e38b9d0d55f38da82e2f8c93"
+      },
+      {
+        "instance": "folio-assistant-core",
+        "repository": "litlfred/folio-assistant-core",
+        "sha": "be4e571d8dad29db098542ede6d0979c24c0ea13"
+      },
+      {
+        "instance": "who-iris",
+        "repository": "litlfred/who-iris",
+        "sha": "04472dc8c3a66dfef6377c45a8b24a23acf88350"
+      }
+    ]
+  },
+  "releases": [],
+  "invoker": {
+    "kind": "system",
+    "id": "smart-base/scripts/l1-recommendation-candidates.ts",
+    "script_hash": "e438ac8afe238ac51778b29d8e24fd58975263fe43166c9218f22dfa9fa62d1f"
+  },
+  "inputs": [
+    {
+      "hash": "c01e9c96343f",
+      "inputs": [
+        "smart-base/l1-extractions/9789240116191-eng/curation.yaml",
+        "who-iris/library/9789240116191-eng/structure.json"
+      ]
+    }
+  ]
+}
