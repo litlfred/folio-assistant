@@ -1,0 +1,21 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2043,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_HeadNotGreen",
+    "class": "ci-not-green",
+    "rank": 91
+  },
+  "reason": "STATUS UNKNOWN on the 13:40Z all-PR review (open, not in the queue), triaged as: CI red on its head; conflicts with main again (declared paths). LANDED 2026-10-04 17:42Z in merge train merge-train-2026-10-04a (#2113) -> c858234ad5, run by session 01VfkKoc on the owner's direct yes.",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T13:50:00Z",
+  "status": "landed",
+  "beans": [
+    "folio-assistant-1xhc",
+    "folio-assistant-87mi",
+    "folio-assistant-9ofm"
+  ]
+}
