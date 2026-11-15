@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:40:00Z
-updated_at: 2026-11-15T07:56:00Z
+updated_at: 2026-11-15T10:17:00Z
 parent: folio-assistant-pb15
 tags:
     - handover
@@ -47,3 +47,13 @@ _2026-11-15T07:55:00Z_ — Merged (stacked by the merge manager ~07:16Z): tools#
 - dth-hrh#135 (standing branch, opened by hand) merged 07:40Z. dth-phc#44 now = enable + ids rename + full re-pin, marked ready. dth-sc#32, smart-ra#249 (replaces smart-ra#255) and new `claude/repin-all-mains-2026-11-15` PRs for smart-trust-phw, smart-ips-pilgrimage, smart-immunizations (replaces #149) are being mounted.
 
 _2026-11-15T07:56:00Z_ — Owner card Q-REPIN-TOKEN = B (07:55Z): no REPIN_TOKEN; agents (the merge manager) open a PR from each pushed `repin/standing-*` branch when Actions cannot, labels `needs-repin` + `release`.
+
+_2026-11-15T10:17:00Z_ — Merged: smart-immunizations#150, smart-trust-phw#84, dth-sc#32. Gate reds on the re-pins, and their fixes:
+- `check:site-publish-caller` (new tools want `permissions.actions: read`): `bun run cat site-publish-caller --write` then `bun run cat workflow-pins`.
+- `declaration-resolution` on `smart-base.L2-collab`/`L3-collab`: those groups are declared inside smart-base's opt-in L2/L3 dirs, which folios don't mount, so they were dropped from dth-phc, dth-sc and smart-ra `enableSubgraphs` (they resolved to nothing). dth-hrh and phw still enable them and carry the same red on main.
+- dth-sc `check:l1-coverage`: `bun run l1:coverage:write` after the who-iris re-pin (section ids renamed, totals unchanged).
+- `check:subgraph-coverage` new MAJOR `fhir-core-definitions / visualiser` from fhir-harness #431: fhir-harness#439 (issue #438) exempts it (HL7 publishes the viewer). The merge manager's worker fixed pilgrimage#115 separately (archimate visualisers).
+- `check:navbar-consistency` exits 2 at tools 067776bd+ in every root (it reads gitignored cat-harness docs/_data/instance-themes.json): advisory, not a PR's.
+- smart-trust-phw main Site publish refused: stale `qa/ig-content-qa.json` after AST refresh (3 Publisher narratives, terminology.hl7.org 7.1.0→5.5.0). Re-recorded via `ig-content-qa.ts record` in smart-trust-phw#85. Delta method: scan the AST the old review read (`--ast` from the fhir-ast branch commit) to reproduce its digest, diff item shas. Other IG sites may need the same after re-pins.
+- smart-ra#249 re-pinned tools to 103bd471 (#2275 Graphviz OOM fix).
+Open: dth-phc#44, smart-ra#249, smart-ips-pilgrimage#115, smart-trust-phw#85, fhir-harness#439.
