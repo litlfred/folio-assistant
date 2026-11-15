@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T12:20:00Z
+updated_at: 2026-11-15T13:27:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -79,3 +79,19 @@ _2026-11-15T12:02:00Z_ — Rule added by the merge manager thread (session_01Qmm
 - NO CONTENT REVIEW NOW (owner 2026-11-15 12:17Z, cmsg_017WNUkNK8kdDziPK58Pv6G9NeXt6MTkaqFemkYVUDmQtC: "i dont want to review the content now"). PRs labelled `content` stay drafts and out of the merge queue. Post no content review or merge cards until the owner asks for them. Reviving content drafts (merging main, re-pinning, fixing mechanical reds, labelling) goes on. Content the owner already approved before this rule, such as smart-ra#257 (11:59Z card), may still merge on green.
 
 _2026-11-15T12:20:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator with the owner's message cited.
+
+- CONTENT LABEL + REVIEW RECORD (owner 2026-11-15 12:11Z, cmsg_017WNUkNK8kdDziPK58Pv6G9UZsDKJq4h45Vx9mAMZF94G: "dont include content PRs in the the table. also update the process and skills so content PRs get a label and that indicates a context review process needs to be documented as part of making it re[ady]. label all existing content PRs as such"). A content PR changes folio content text or substance: block wording, tables, figures and their source models (ArchiMate, BPMN, DMN), glossary, references, change sets, public-comment responses, IRIS summary re-derivations; a regenerated content table or figure counts. Not content: harness or tool code, workflows, pins, beans, tests, platform docs. Every agent labels a content PR `content` (colour 0e8a16; exists in smart-ra, dth-hrh, dth-pc, dth-sc, dth-sfp, dth-phc, who-iris), keeps it a draft, and before marking it ready adds a `## Content review` section to the body that points to the review record (owner card id, committee or review-log link, editing-hci-validation instance, review page); never a made-up review step. merge:guard check 9 `content-review` enforces it (pending on a draft, failure on a ready PR), and merge:watch leaves content PRs out of the merge manager's table (cat-harness-tools#2303, skills cat-harness#1351, prepare-merge §"Content PRs"). 22 open content PRs labelled 12:15Z. Functional changes inside a content PR are split into their own non-content PR (owner 12:18Z).
+
+_2026-11-15T12:25:00Z_ — Rule added by the content-label thread (session_01Qmmkt5zDzPvBBU7QUoku32), from the owner's own message in that thread.
+
+- MERGE PROCESS ACROSS DEPENDENT REPOS (owner 2026-11-15 12:23-12:24Z, cmsg_017WNUkNK8kdDziPK58Pv6G9YQ8CdihHMetxqXUjecrv3W, …KELTA27o7gEtBuZPw2cPGG, …TBB8QNVxZkoy1cKyiFipRk, …18XfDfjMo6XbHXPnPMCiA5: "update merge manager skills with these (say more generlally in terms of dependencies in software PRs...)", "upidate skills and processes", "and with all the improvemntes we made in this thread to process", "if we get a backlog of CI, then stack PRs and merge together/fix fallout"). The canonical text is cat-harness skill merge-manager-watcher §"Merging across dependent repositories" (cat-harness#1351), 15 rules: dependency order; CI queue re-ordered lowest first (cancel queued, never running); batching per repo + CI backlog playbook (switch in at oldest queued 60+ min with nothing landed or 3+ ready PRs each waiting on CI; stack, merge together, fix fallout; switch back under 15 min and main green); checkable stable point and per-repo report without content; content PRs drafts, functional changes split out, main-update only after dependencies stable; reviving stale drafts; no state-branch commit from a sparse checkout; one merge manager; re-pins/integration on full green; fixed-interval reports with owning thread links, held while owner away; draft register (drafts.md); no idle agents; one tappable card per question; approvals recorded durably and pre-hold approvals stand; ignored repos (qou) left out.
+
+_2026-11-15T12:30:00Z_ — Rule added by the content-label thread (session_01Qmmkt5zDzPvBBU7QUoku32), from the owner's own messages cited by the coordinator.
+
+- LOWER LAYERS NEVER WAIT ON HIGHER ONES (owner 2026-11-15 13:22Z, "why are the 2 not merged? they are lowest"). A lower-layer PR is never blocked on a higher layer's lock or pins. If its only red is a gate that also fails on main because CI mounts a higher layer's older pins (e.g. gen:jsonld:check run with the cat-harness-tools pinned in folio-assistant's lock), that red is not the PR's, and the PR merges. Longer-term fix: a layer's CI tests against its own dependencies.
+- READY AND GREEN MERGES AT ONCE, LOWEST LAYER FIRST. A ready PR that is fast-green, or red only on reds that also fail on main and that it doesn't cause, merges in the same tick, in layer order.
+- EVERY RED PR HAS AN ACTIVE FIXER. A red PR is never left waiting on something else. The merge manager names its owner thread or sends a fix agent the same tick; drafts.md/latest.md show who is fixing it.
+- STALL WATCHDOG (owner 13:23Z "things were just sitting there"). If the stable-point table in merge-manager/status/latest.md is flat for 10 minutes (no merge, no main turning green, no red count falling), the merge manager acts on the lowest stuck layer, or posts one line saying what blocks it and who is fixing it.
+Skill text: merge-manager-watcher rules 16-19 (cat-harness#1351).
+
+_2026-11-15T13:27:00Z_ — Rules added by the content-label thread (session_01Qmmkt5zDzPvBBU7QUoku32), text relayed by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11) quoting the owner.
