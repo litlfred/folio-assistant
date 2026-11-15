@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T06:35:00Z
-updated_at: 2026-11-15T06:31:00Z
+updated_at: 2026-11-15T06:36:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover
@@ -42,3 +42,12 @@ publish-on-push …GSmgusK4K8TCWBQfu5rM7S (smart-trust/uganda/imm publish); gate
 _2026-11-15T06:35:00Z_ — Filed by the merge manager thread.
 
 _2026-11-15T06:31:00Z_ — Owner chose A for tools#2199 (move tests); #2185 not taken.
+
+## IRIS source fixes (…3WQmGmifCFfexR63a3h4wh), via coordinator 06:30Z
+who-iris#279 conflict resolved at bb54e27d, CI running; #284's errata folded into #279. Needs an owner content card once green. Persian OCR card (A/B/C) still open with the owner.
+
+## Carried from project memory (owner rule: beans only)
+- smart-ra drafts (memory smart-ra-drafts-green-2026-11-12): 21 smart-ra PRs; waived set (Q-RA-VAL-2 A) #154 #185 #190 #191 #192 #195 had main merged 11-14 16:05Z. The rest are held for owner review with no pushes. #195 keeps its §1.1.4 audience items (Q-RA-MRG-1 A). #199's glossary union merge (6a194c49) exists only in a sandbox and was never pushed. #241 is superseded by re-pin #250 (merged).
+- smart-trust-phw BPMN labels (memory bpmn-label-tidy-square-tasks): bootstrap-tools #87/#88 merged; Q-SQ-1 C (square = equal task boxes 120x120), Q-BPMN-FIX-1 B (phw#61 ready for owner OK, redraws in fhir-harness#388, cat-harness#1254, core#757, bootstrap#54, ihris#46). Check with cat-harness-tools scripts/bpmn-detangle.ts.
+
+_2026-11-15T06:36:00Z_ — Added IRIS status and carried the smart-ra / phw memory notes into this bean.
