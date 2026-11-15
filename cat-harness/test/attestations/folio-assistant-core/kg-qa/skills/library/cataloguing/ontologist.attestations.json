@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "ontologist",
+    "path": "skills/library/cataloguing/ontologist.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-core/skills/library/cataloguing/ontologist.md",
+      "code": "folio-assistant-core/skills/library/cataloguing/ontologist.ts",
+      "prose_hash": "200455548038",
+      "code_hash": "d6c03718a9f2",
+      "by": "baseline"
+    }
+  ]
+}

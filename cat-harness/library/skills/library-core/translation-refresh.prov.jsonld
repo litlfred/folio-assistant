@@ -1,0 +1,46 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of translation-refresh.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/library/library-core/translation-refresh.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/library/library-core/translation-refresh.md#provenance-1"
+        },
+        {
+          "@id": "skills/library/library-core/translation-refresh.md#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "skills/library/library-core/translation-refresh.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "(top of file)",
+      "prov:value": "Owner, 2026-11-07: \"English lead should document the process and skills\" for the multi-locale translation flow the team had just run across three implementation-guide and harness instances, written generically.",
+      "cat-harness:refs": [
+        "2026-11-07"
+      ]
+    },
+    {
+      "@id": "skills/library/library-core/translation-refresh.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Per instance, in order",
+      "prov:value": "The commands it names were merged to the harness tools before this skill was written: `--instance` on translation:drift:check, translation:obsolete:check, translation:index:check and translation:status (cat-harness-tools#1598), and po-inject's use of segmentMarkdown (cat-harness-tools#1595). translation:glossary:check was in flight in cat-harness-tools#1599 and #1601.",
+      "cat-harness:refs": [
+        "cat-harness-tools#1598",
+        "cat-harness-tools#1595",
+        "cat-harness-tools#1599",
+        "cat-harness-tools#1601"
+      ]
+    }
+  ]
+}

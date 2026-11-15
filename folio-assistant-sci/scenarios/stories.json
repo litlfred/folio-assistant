@@ -1,0 +1,69 @@
+{
+  "_comment": "User stories told as the roles this instance owns: what a reader acting in the role is trying to do. Each story points at its role (`role`); the role names none of them (#1168). Moved here with their roles from the harness's scenarios/stories.json (move M4). Schema: the harness's schemas/user-story.ts.",
+  "name": "folio-assistant-sci",
+  "stories": [
+    {
+      "id": "compute-authoring-agent-1",
+      "role": {
+        "role": "compute-authoring-agent"
+      },
+      "want": "Eliminate drift between a value in the prose and the script that computes it"
+    },
+    {
+      "id": "compute-authoring-agent-2",
+      "role": {
+        "role": "compute-authoring-agent"
+      },
+      "want": "Audit a compute script for a per-element FFI round trip"
+    },
+    {
+      "id": "compute-authoring-agent-3",
+      "role": {
+        "role": "compute-authoring-agent"
+      },
+      "want": "Check a simulator against the mathematics it claims to illustrate"
+    },
+    {
+      "id": "lean-authoring-agent-1",
+      "role": {
+        "role": "lean-authoring-agent"
+      },
+      "want": "Turn a narrative theorem into a Lean declaration that elaborates"
+    },
+    {
+      "id": "lean-authoring-agent-2",
+      "role": {
+        "role": "lean-authoring-agent"
+      },
+      "want": "Get a red Lake build green without weakening a statement"
+    },
+    {
+      "id": "lean-authoring-agent-3",
+      "role": {
+        "role": "lean-authoring-agent"
+      },
+      "want": "Triage which `sorry` to discharge next"
+    },
+    {
+      "id": "proof-review-agent-1",
+      "role": {
+        "role": "proof-review-agent"
+      },
+      "want": "Find a Lean declaration that is true only because its hypotheses are unsatisfiable"
+    },
+    {
+      "id": "proof-review-agent-2",
+      "role": {
+        "role": "proof-review-agent"
+      },
+      "want": "Detect where the narrative proof and the formal proof have drifted apart"
+    },
+    {
+      "id": "proof-review-agent-3",
+      "role": {
+        "role": "proof-review-agent"
+      },
+      "want": "Consolidate propositions that say the same thing twice"
+    }
+  ]
+}
