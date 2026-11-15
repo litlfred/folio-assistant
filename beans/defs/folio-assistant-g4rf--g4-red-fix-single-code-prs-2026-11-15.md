@@ -6,8 +6,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:25:00Z
-updated_at: 2026-11-15T07:25:00Z
-parent: folio-assistant-pb15
+updated_at: 2026-11-15T12:50:00Z
+parent: folio-assistant-v8bg
 tags:
     - pr-backlog
     - handover-2026-11-15
@@ -29,3 +29,5 @@ Thread "Fix single red code PRs" (cmsg_017WNUkNK8kdDziPK58Pv6G9XQZjrypbgPBc4AKqi
 
 ## Log
 _2026-11-15T07:25Z_ — bean opened; #2229 and #2130 pushed.
+
+_2026-11-15T12:50:00Z_ — Re-parented from pb15 (a task) to v8bg so check-bean-parents passes (merge manager).
