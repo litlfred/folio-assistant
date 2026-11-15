@@ -1,0 +1,20 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2093,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_HeadNotGreen",
+    "class": "ci-not-green",
+    "rank": 91
+  },
+  "reason": "ACK: Owner-approved 2026-10-04 ~14:00Z (\"Approve all 6\"). Lands once its owed CI is green and it merges cleanly with main. UPDATE 17:08Z: signed at 71ab8f578c, guard PASS; Train B (LSI-index overlap with #1918 rules out single landing).",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T14:00:00Z",
+  "status": "active",
+  "beans": [
+    "folio-assistant-gz47",
+    "folio-assistant-z9hh"
+  ]
+}
