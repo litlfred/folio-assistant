@@ -2135,7 +2135,7 @@
     "status": "known",
     "beforeCommit": "ff4b26b6fc86f98d0f0141875d9edee352d12c44",
     "baseCommit": "ff4b26b6fc86f98d0f0141875d9edee352d12c44",
-    "measured": 42229,
+    "measured": 42225,
     "notInCone": [
       {
         "path": "api/assets/highlight.css",
@@ -19869,24 +19869,6 @@
       },
       {
         "path": "assets/js/process-index.js",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/cat-harness.idx.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/cat-harness.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/manifest.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -123009,7 +122991,6 @@
       }
     ],
     "confirmed": [
-      "assets/js/search-data.json",
       "fhir-harness/fhir/publishing.html",
       "reference/skill-instructions/ig-build-pipeline.html",
       "reference/skill-instructions/ig-render-jekyll.html",
@@ -123017,6 +122998,10 @@
       "reference/skill-instructions/prepare-merge.html"
     ],
     "unconfirmed": [
+      {
+        "path": "assets/js/search-data.json",
+        "role": "index"
+      },
       {
         "path": "fhir-harness/source/fhir-publishing/where-it-lands.html",
         "role": "content"
