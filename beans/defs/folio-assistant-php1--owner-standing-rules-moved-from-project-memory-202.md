@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T13:32:00Z
+updated_at: 2026-11-15T20:20:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -99,3 +99,7 @@ _2026-11-15T13:27:00Z_ — Rules added by the content-label thread (session_01Qm
 - READY TO MERGE, DEFINED (owner 2026-11-15 13:25Z, cmsg_017WNUkNK8kdDziPK58Pv6G9M19RShnuTHbuNDLoxMTfe3: "A lower layer never waits on a higher one. -- update processes/skills ... clarify what ready to merge means ... need generic ready and cat-harness specific processes"). Canonical text: cat-harness skill merge-queue §"What 'ready to merge' means" (cat-harness#1351). Generic, any repo: out of draft; no conflicts; CI passes (required checks finished and green against the repo's own dependencies; a red that also fails on main and isn't the PR's doesn't block, and has a fixer); description complete, no unticked box; needed approvals given. A ready PR merges right away, lowest dependency first. cat-harness layers add: content rule (`content` PRs only on the owner's ask with a Content review record, never from the queue); hand-over (`ready-to-merge`/`needs-repin` label or six-line request; only the merge manager merges); merge:guard status success; issue linked with a comment per push; pins (re-pin/integration PRs move every pin to current main, pins agree, full tier green; other PRs judged on their own layer's pins). LOWER NEVER WAITS ON HIGHER covers CI design too: a gate judges a repo against its own dependencies, never a dependent's pins of it; such a gate is a defect and its red doesn't hold the lower PR (merge-queue §"A lower repository never waits on a higher one", prepare-merge, both merge processes).
 
 _2026-11-15T13:32:00Z_ — Rule added by the content-label thread (session_01Qmmkt5zDzPvBBU7QUoku32), from the owner's message cited by the coordinator.
+
+- MAIN, NEVER MASTER (owner 2026-11-15 20:11Z, cmsg_017WNUkNK8kdDziPK58Pv6G9GsPudfewjx2Ekr5EdJhkbN: "rename master->main (why did you use master??? STOP it)", "no gh-pages"). New branches, PR bases and Pages sources use `main`, never `master`. A repo found with a `master` default gets it renamed to `main` (Settings → Branches → rename; agents cannot reach that API, so give the owner the link) before any PR targets it. The user site litlfred/litlfred.github.io serves Pages from `main`, root folder, with no `gh-pages` branch; this overrides GH-PAGES FIRST for that repo.
+
+_2026-11-15T20:20:00Z_ — Rule added by the dth-hrh WHO thread (session_01Qmmkt7hAczPtScoNPoUnBr), from the owner's message cited by the coordinator.
