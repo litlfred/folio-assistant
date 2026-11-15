@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-12T09:55:00Z
-updated_at: 2026-11-15T06:30:00Z
+updated_at: 2026-11-15T07:30:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -31,3 +31,5 @@ _2026-11-14T16:30:00Z_ — All rollout PRs merged (dth-hrh#116 closed). smart-tr
 Next: confirm each site publishes after its merge; then tell the bibliography (…G6g9EGbG9kGSg8u3W5fieF) and game threads.
 
 _2026-11-15T06:30Z_ — Status for owner roll-call. Sites green: smart-base, smart-trust-phw, smart-trust (02:06Z). Merged: smart-base#407, phw#79, smart-trust#198/#203, who-iris#247. Open, mine: smart-trust#238 (a8db4722, unstable; trustlist.jsonld syntax fix, waiting on the merge manager's owner card, possibly moot now main is green); smart-immunizations#145 (1b520ad7, CONFLICT; next: merge main + re-pin once platform gate fixes tools#2195/#2197/#2199, smart-base#410, cat-harness#1341 land); smart-immunizations-uganda#39 (dad72031, unstable; red only on freshness + platform gates; re-pin right before merge). Not mine: smart-trust#236 (merge manager). Owner-wait: only the #238 card.
+
+_2026-11-15T07:30Z_ — smart-trust#238 merged 07:02Z; main Site publish green (run 43688163588, 260e3b59). smart-immunizations#145 and smart-immunizations-uganda#39 closed by owner decision Q-PB-1; re-pins move to the merge manager after folio-assistant#3124 (plan bean folio-assistant-pb15). Nothing left open in this bean's thread.
