@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.M.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.M.Collaboration">
+    <bpmn:participant id="PHW.M.Participant" name="M. Add Consent Directives to a Shared or Issued Document" processRef="PHW.M" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.M" name="M. Add Consent Directives to a Shared or Issued Document" isExecutable="false">
+    <bpmn:documentation>Called by B (B5a) and J (J2a) when a document is shared or issued (owner, 2026-11-07). Optional: the trust domain or the holder's wallet settings say whether a document carries its consent directives. Whether the consent is explicit or implied, the directives the document is shared under are added as consent entries (PHWDocumentWithConsent) and listed in the Composition's Advance Directives section (LOINC 42348-3), before the document is signed. The copy in the document is evidence for the receiver; the Consent Registry copy is the one enforced.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.M.LaneSet">
+      <bpmn:lane id="PHW.Lane.DocumentSource" name="Document source (VHL Sharer or Certificate Issuance Service)">
+        <bpmn:documentation>Assembles the document before it is signed.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.M.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.M.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.M.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.M.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.M.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.M.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRegistry" name="PCF Consent Registry">
+        <bpmn:documentation>Holds consent directives; answers [ITI-108] Access Consent.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.M.2</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.M.Start" name="Document assembled, not yet signed">
+      <bpmn:documentation>An IPS, a certificate or another document about the holder.</bpmn:documentation>
+      <bpmn:outgoing>PHW.M.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="PHW.M.Gateway1" name="Carry consent directives?" default="PHW.M.Flow3">
+      <bpmn:documentation>Set by the trust domain, or by the holder in the wallet.</bpmn:documentation>
+      <bpmn:incoming>PHW.M.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.M.Flow2</bpmn:outgoing>
+      <bpmn:outgoing>PHW.M.Flow3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="PHW.M.1" name="M1. Search active Consents for the holder [ITI-108] Access Consent">
+      <bpmn:documentation>Explicit consents for this trust domain: policyRule in the domain's terms-of-use ValueSet.</bpmn:documentation>
+      <bpmn:incoming>PHW.M.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.M.Flow4</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="PHW.M.2" name="M2. Return the active Consents [ITI-108]">
+      <bpmn:documentation>With Consent.id and meta.versionId.</bpmn:documentation>
+      <bpmn:incoming>PHW.M.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.M.Flow5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.M.3" name="M3. Add the explicit Consents, or the trust domain's default as an implied Consent">
+      <bpmn:documentation>PHWExplicitConsent for each active explicit consent; when there is none, a PHWImpliedConsent naming the trust domain's default policy (normally an IHE PCF implicit policy) with the domain's published policy as source.</bpmn:documentation>
+      <bpmn:incoming>PHW.M.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.M.Flow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.M.4" name="M4. List them in the Advance Directives section">
+      <bpmn:documentation>Composition.section (LOINC 42348-3) entries reference each consent entry, with a human-readable summary in the section text.</bpmn:documentation>
+      <bpmn:incoming>PHW.M.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.M.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="PHW.M.End" name="Ready to sign">
+      <bpmn:documentation>The calling process signs the document.</bpmn:documentation>
+      <bpmn:incoming>PHW.M.Flow3</bpmn:incoming>
+      <bpmn:incoming>PHW.M.Flow7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.M.Flow1" sourceRef="PHW.M.Start" targetRef="PHW.M.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.M.Flow2" name="Yes" sourceRef="PHW.M.Gateway1" targetRef="PHW.M.1" />
+    <bpmn:sequenceFlow id="PHW.M.Flow3" name="No" sourceRef="PHW.M.Gateway1" targetRef="PHW.M.End" />
+    <bpmn:sequenceFlow id="PHW.M.Flow4" sourceRef="PHW.M.1" targetRef="PHW.M.2" />
+    <bpmn:sequenceFlow id="PHW.M.Flow5" sourceRef="PHW.M.2" targetRef="PHW.M.3" />
+    <bpmn:sequenceFlow id="PHW.M.Flow6" sourceRef="PHW.M.3" targetRef="PHW.M.4" />
+    <bpmn:sequenceFlow id="PHW.M.Flow7" sourceRef="PHW.M.4" targetRef="PHW.M.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.M.Diagram">
+    <bpmndi:BPMNPlane id="PHW.M.Plane" bpmnElement="PHW.M.Collaboration">
+      <bpmndi:BPMNShape id="PHW.M.Participant_di" bpmnElement="PHW.M.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="1600" height="428" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.DocumentSource_di" bpmnElement="PHW.Lane.DocumentSource" isHorizontal="true"><dc:Bounds x="150" y="60" width="1570" height="214" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRegistry_di" bpmnElement="PHW.Lane.ConsentRegistry" isHorizontal="true"><dc:Bounds x="150" y="274" width="1570" height="214" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.Start_di" bpmnElement="PHW.M.Start"><dc:Bounds x="262" y="149" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.Gateway1_di" bpmnElement="PHW.M.Gateway1" isMarkerVisible="true"><dc:Bounds x="505" y="142" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.1_di" bpmnElement="PHW.M.1"><dc:Bounds x="710" y="97" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.2_di" bpmnElement="PHW.M.2"><dc:Bounds x="910" y="311" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.3_di" bpmnElement="PHW.M.3"><dc:Bounds x="1110" y="97" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.4_di" bpmnElement="PHW.M.4"><dc:Bounds x="1310" y="97" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.M.End_di" bpmnElement="PHW.M.End"><dc:Bounds x="1562" y="149" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.M.Flow1_di" bpmnElement="PHW.M.Flow1">
+        <di:waypoint x="298" y="167" />
+        <di:waypoint x="505" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.M.Flow2_di" bpmnElement="PHW.M.Flow2">
+        <di:waypoint x="555" y="167" />
+        <di:waypoint x="710" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.M.Flow3_di" bpmnElement="PHW.M.Flow3">
+        <di:waypoint x="530" y="142" />
+        <di:waypoint x="530" y="81" />
+        <di:waypoint x="1580" y="81" />
+        <di:waypoint x="1580" y="149" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.M.Flow4_di" bpmnElement="PHW.M.Flow4">
+        <di:waypoint x="780" y="237" />
+        <di:waypoint x="780" y="381" />
+        <di:waypoint x="910" y="381" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.M.Flow5_di" bpmnElement="PHW.M.Flow5">
+        <di:waypoint x="980" y="311" />
+        <di:waypoint x="980" y="167" />
+        <di:waypoint x="1110" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.M.Flow6_di" bpmnElement="PHW.M.Flow6">
+        <di:waypoint x="1250" y="167" />
+        <di:waypoint x="1310" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.M.Flow7_di" bpmnElement="PHW.M.Flow7">
+        <di:waypoint x="1450" y="167" />
+        <di:waypoint x="1562" y="167" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
