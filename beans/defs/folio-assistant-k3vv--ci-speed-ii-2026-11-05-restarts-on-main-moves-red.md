@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:25:48Z
-updated_at: 2026-11-10T18:10:00Z
+updated_at: 2026-11-15T19:00:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -58,3 +58,8 @@ _2026-11-08T08:35:00Z_ — Progress update: 12/14 tracked child beans (`6h4p`, `
 _2026-11-09T14:20:00Z_ — Progress update (R8-Lane-6): `folio-assistant-tv20` is now `completed` (`litlfred/folio-assistant#2953` merged at `bef2b0b1a6da` on `2026-11-08T18:29:09Z`), `cat-tools-5fmc` and `cat-tools-pp9g` (under `fn8q`) are `completed` (`litlfred/cat-harness-tools#1725` `277c797958ed` on `2026-11-08T17:12:45Z`), and release-gated CI (`litlfred/cat-harness#1158`) Phases 1–4 landed across `cat-harness#1159` (`1cfec870`), `cat-harness-tools#1721` (`6571d3f4`), `cat-harness-tools#1722` (`961b4d93`), `cat-harness-tools#1741` (`5c4cd89a`), `folio-assistant#3047` (`8915622d`), and 8 layer re-pins (cutting median PR runner-minutes: `cat-harness-tools` PR `38.0 -> 1.2`, `folio-assistant` CQG PR `79.1 -> 5.3`, `folio-assistant-core` PR `4.6 -> 1.5`). 13/14 tracked items in the table and Done-when Box 1 (`(a) to (f)`) are completed; epic remains `in-progress` while `folio-assistant-9ml4` (`in-progress`) and `folio-assistant-xaa8` (`todo`, owner-deferred item g) remain open.
 
 _2026-11-10T18:10:00Z_ — Progress update (R10-Lane-1): Published all 4 staged `claude/layers-tmp-*` cache refs (`dth-sc` `0fcabff7...` @ `58a0521e`, `dth-hrh` `bf8f64cd...` @ `2c43251c`, `dth-phc` `42997551...` @ `d881b37d`, `smart-ra` `b08a7d78...` @ `ceb014a8` + `origin/main` `08f1ce9d...` @ `2fc96ae6`) to `refs/cat/layers/<sha256>` and `refs/cat/layers/main`, deleted the 4 temporary branches, checked off all 5 Phase checkboxes on `litlfred/cat-harness#1158`, and closed `litlfred/cat-harness#1158` (`#issuecomment-6774719114`).
+
+_2026-11-15T19:00:00Z_ — Progress update (`lane-43c1`, subagent `43c12887-2733-443d-b8ef-0e369f856d33`):
+- **Child completion rollup**: 18 of 20 direct children of `folio-assistant-k3vv` in `beans/defs/` are `completed` (`6h4p`, `69lr`, `711q`, `9set`, `akiq`, `asq1`, `ay33`, `fn8q`, `hd58`, `k2sg`, `mbd8`, `ohpz`, `pdsq`, `pqlh`, `tsh9`, `tv20`, `uldr`, `vgfp`, `x35i`, `yeg4`).
+- **`folio-assistant-9ml4` (`Cache-first CI`)**: `determinism-audit.yml` run `42557731048` (`2026-11-09T03:40:56Z` on `main` at `260c7a6e9f7a05ef80b7f1a035974f1b29942f48`) verified **6/6 producers 100% `DETERMINISTIC`** (`qa-working-copy` 12,470 files, `publish-pages` 13,655 files, `smart-pages` 1,452 files, `ig-index` 1,204 files, `kg-export` 4,437 files, `render-bpmn` 326 files), checking off `Done when #1`; [`litlfred/cat-harness-tools#2327`](https://github.com/litlfred/cat-harness-tools/pull/2327) (`aab37e49d68e43de5ee195c2c614c21c0fca97a2`) is open and queued for Merge Manager to retire the legacy `cat-mount-v1-*` Actions cache steps and `caches/lpc-cat-mount.cache.json` (`Done when #4`, part 1).
+- **`folio-assistant-xaa8` (`item g`)**: remains `todo` awaiting the owner's decision on moving the repository under a free GitHub organization for the real merge queue (`Done when #2`).
