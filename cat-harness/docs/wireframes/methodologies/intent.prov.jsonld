@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/methodologies/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/methodologies/intent.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/methodologies/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "What it must show (read off the generator)",
+      "prov:value": "## Observed on main (Markdown as regenerated in the working tree)\n\nThe committed page (HEAD) listed 9 methodologies and failed `gen-methodologies-viz.ts --check`, because `wiregen` was missing. During this drawing the page was regenerated in the working tree (not by this wireframe): it now lists 10 and `--check` passes. The drawing and the findings follow the regenerated page."
+    }
+  ]
+}
