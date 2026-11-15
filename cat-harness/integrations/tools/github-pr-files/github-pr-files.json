@@ -1,0 +1,55 @@
+{
+  "$schema": "tool-definition/v1",
+  "tool": {
+    "id": "github-pr-files",
+    "title": "List a pull request's changed files (GitHub)",
+    "description": "List the paths one pull request changes.",
+    "install": {
+      "cli": "gh"
+    },
+    "invoke": {
+      "shell": "gh pr diff --name-only"
+    },
+    "io": {
+      "inputs": [
+        {
+          "name": "number",
+          "schema": {
+            "$type": "ChangeProposalNumber"
+          },
+          "description": "Absent: the change proposal of the current branch.",
+          "required": false,
+          "arg": {
+            "positional": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "files",
+          "schema": {
+            "$type": "Markdown"
+          },
+          "description": "One repository path per line."
+        }
+      ]
+    },
+    "satisfies": [
+      "coordinate"
+    ],
+    "selection": {
+      "when": "The change proposals live on GitHub — the checkout's remote is a GitHub project.",
+      "limits": "GitHub only. For a GitLab project use `gitlab-mr-files`.",
+      "cost": "`gh`, authenticated (`gh auth login` or `GH_TOKEN`), and one API round trip per call."
+    },
+    "requires": {
+      "network": true
+    },
+    "remedies": [
+      {
+        "host": "api.github.com",
+        "none": "No declared Tool reaches the GitHub API another way. A session that provides the GitHub MCP server can use it instead."
+      }
+    ]
+  }
+}
