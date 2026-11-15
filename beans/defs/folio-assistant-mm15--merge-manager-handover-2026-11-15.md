@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T06:35:00Z
-updated_at: 2026-11-15T06:38:00Z
+updated_at: 2026-11-15T06:40:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover
@@ -18,7 +18,8 @@ Merge manager thread: cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR (sessi
 ## Window and rules
 - Owner card tapped 2026-11-15 06:26Z: "12h window, incl. #238". Runs to about **18:26Z 11-15**. Scope: re-pins, green non-content PRs, smart-trust#238. Content still needs its own owner card.
 - Q-LOCK-1 A (lock:coherence-only red OK on approved code PRs, comment citing it). Q-RA-VAL-2 A (smart-ra corpus-gate waived). Q-RERUN-1 B (re-run only right before merge, once per job). Full tier required (label `release` BEFORE ready).
-- A second merge session (cshk_01VQDpPffYARDQ8juksAZScf, outside this project) is also merging and is holding layer merges until train **fa#3124** lands so its pins stay fresh. Coordinate: do not merge layer PRs that move mains the train pins until #3124 is in.
+- 06:32Z owner: the other merge manager (cshk_01VQDpPffYARDQ8juksAZScf) is gone. **This thread is the only merge manager** and owns the train fa#3124, fa#3123 (needs main merged in + re-pin after #3124), fa#3127 (base = train branch), the main-red PRs, and the other session's queue: tools#2182 (just before fhir-harness#426), smart-base#405 and fhir-harness#426 (after #3124), cat-harness#1329 (re-run after #3124), cat-harness#1347 (BPMN .pot regen), core#799 and phw#78 (close and redo after #3124), smart-trust#236 and pilgrimage#109 (close and redo after #3124), tools#2130 (owner default: close; not yet confirmed), tools#1980 and smart-base#259 (owner unknown), phw#62, smart-trust#212, pilgrimage#81 and imm#139 (opt-in collab groups).
+- Owner 06:31Z: 'repin+merge all green and ready that is not content for next 12 hts' (to ~18:31Z).
 
 ## Merged since 11-14 16:00Z (by someone)
 tools #2184 #2187 #2195 #2197 #2202 #2216; cat-harness #1342 #1343; bootstrap-tools#100; fhir-harness#435; smart-base #407 #410; phw #79 #80; imm#146; pilgrimage#110; dth-hrh#133; smart-hiv#30 (me, 06:30Z).
@@ -61,3 +62,5 @@ _2026-11-15T06:36:00Z_ — Added IRIS status and carried the smart-ra / phw memo
 - fa#3123: its merge-guard window expired. Needs main merged in plus a re-pin after fa#3124.
 
 _2026-11-15T06:38:00Z_ — Added items from the owner's stalled-session logs.
+
+_2026-11-15T06:40:00Z_ — The other merge manager is gone; this thread took over its queue and the train. fa#3124 bun shards 2–4 red; the gate-fix thread (…BNSixgF4) is classifying.
