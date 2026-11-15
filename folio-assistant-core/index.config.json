@@ -1,0 +1,131 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/index.md",
+          "keep": [
+            "v0",
+            "ns",
+            "0.1.0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "d41ff7ce9916b863c30c61c5a5c7744c968793cc",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-15",
+              "ref": "d41ff7ce9916b863c30c61c5a5c7744c968793cc",
+              "evidence": "owner litlfred, 2026-11-15 16:36Z, decision card 'Re-pin core#814 to whatever is main when I push?' option A 'Yes, main at push time' (project thread cmsg_017WNUkNK8kdDziPK58Pv6G92pvwMqVLKEkd1j4fMabEkn); carries cat-harness-tools#2314 and #2316"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "1e6ea30233ee6a1164c98120c01787db32db2cd5",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-15",
+              "ref": "1e6ea30233ee6a1164c98120c01787db32db2cd5",
+              "evidence": "owner litlfred, 2026-11-15 16:36Z, decision card 'Re-pin core#814 to whatever is main when I push?' option A 'Yes, main at push time' (project thread cmsg_017WNUkNK8kdDziPK58Pv6G92pvwMqVLKEkd1j4fMabEkn); carries cat-harness-tools#2314 and #2316"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "7db8457701ebb9b99284d639128f3c82ad4fc6ea",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-15",
+              "ref": "7db8457701ebb9b99284d639128f3c82ad4fc6ea",
+              "evidence": "owner litlfred, 2026-11-15 12:16Z, decision card 'Re-pin core's four harnesses to main for core#814?' option A 'Yes, re-pin all four' (project thread cmsg_017WNUkNK8kdDziPK58Pv6G92pvwMqVLKEkd1j4fMabEkn)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "174a567db34db10b007a45b13f960f218a6b04f5",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-15",
+              "ref": "174a567db34db10b007a45b13f960f218a6b04f5",
+              "evidence": "owner litlfred, 2026-11-15 12:16Z, decision card 'Re-pin core's four harnesses to main for core#814?' option A 'Yes, re-pin all four' (project thread cmsg_017WNUkNK8kdDziPK58Pv6G92pvwMqVLKEkd1j4fMabEkn)"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "folio-assistant-core"
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}

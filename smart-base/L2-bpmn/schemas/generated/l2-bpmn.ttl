@@ -1,0 +1,208 @@
+@prefix sgkg: <http://smart.who.int/kg/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://smart.who.int/kg/l2-bpmn> a owl:Ontology ;
+  owl:imports <http://smart.who.int/kg/l2> ;
+  rdfs:label "WHO SMART Guidelines L2-BPMN ontology" ;
+  rdfs:comment "The interior of a BPMN file, as its own subgraph. Separate from the DAK component layer because the vocabulary here is OMG's rather than WHO's, the extractor reads XML rather than FSH, and the failure modes are different: a DAK component is wrong when it points at a file that does not exist, a BPMN subgraph is wrong when it misreads the file it did find. The edge that joins the two -- `business-process sourcedFrom bpmn-definitions` -- is declared HERE rather than in l2, because l2 must not import this layer (l2-bpmn already imports l2 for persona, and the reverse would be circular). Declaring an edge in the layer that can see both ends is the same thing `dak-task describes bpmn-task` does. Pairwise licensing is carried as sub-properties, because a relationship is licensed between specific class pairs while an OWL object property has one global domain and range." .
+
+### Node kinds
+
+sgkg:Artefact a owl:Class ; rdfs:label "Artefact" ; rdfs:comment "A file, addressed as a whole. Shares its IRI with the L1 reference to the same file, so opening a file does not create a second name for it." .
+sgkg:Structure a owl:Class ; rdfs:label "Structure" ; rdfs:comment "An element inside a file. It has no identity apart from the file that contains it, and its vocabulary is the file format's, not WHO's." .
+
+### Classes
+
+sgkg:BPMNFile a owl:Class ;
+  rdfs:subClassOf sgkg:Artefact ;
+  rdfs:label "BPMN File" ;
+  skos:notation "bpmn-definitions" ;
+  rdfs:subClassOf sgkg:ExternalArtefact ;
+  skos:note "Instances share the IRI of the External artefact they elaborate: one artefact, one address, described opaquely at the layer above and structurally here." ;
+  rdfs:comment "One BPMN file as a unit -- the `bpmn:definitions` root. Shares its IRI with the l1:external-artifact for the same file, so the component that points at it and the subgraph that opens it name one resource." .
+
+sgkg:BPMNProcess a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "BPMN Process" ;
+  skos:notation "bpmn-process" ;
+  rdfs:comment "One `bpmn:process`. Present as a node because a participant references it by processRef, and without it the pool-to-element attribution has nothing to travel through." .
+
+sgkg:BPMNParticipant a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "BPMN Participant" ;
+  skos:notation "bpmn-participant" ;
+  rdfs:comment "A pool: a role that owns part of the collaboration. The lifecycle BPMN has 8 and declares no laneSet at all, so the pool is the only unit of role assignment present and its @name is the sole link to a persona." .
+
+sgkg:BPMNTask a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "BPMN Task" ;
+  skos:notation "bpmn-task" ;
+  rdfs:comment "A task or sub-process. It is what a DMN usingTask href points at, what sequence flows connect, and what a DAK-level task entry describes. Sub-processes carry isSubProcess rather than getting a class of their own -- the lifecycle BPMN has exactly one." .
+
+sgkg:BPMNGateway a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "BPMN Gateway" ;
+  skos:notation "bpmn-gateway" ;
+  rdfs:comment "A branch or merge. Included for connectivity rather than for a cross-model edge: a flow through a gateway with no node would point at nothing, and every reachability question over the process would break at the first decision point." .
+
+sgkg:BPMNEvent a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "BPMN Event" ;
+  skos:notation "bpmn-event" ;
+  rdfs:comment "A start or end event. Same connectivity argument as gateway, plus one of its own: entry and exit points are what make 'is this task reachable' and 'does this path terminate' answerable at all." .
+
+### Value sets
+# Closed code lists bound to class properties. validate.ts rejects any other value.
+
+<http://smart.who.int/kg/valueset/gateway-direction> a skos:ConceptScheme ;
+  skos:notation "gateway-direction" ;
+  skos:note "source: OMG BPMN 2.0.2, Gateway.gatewayDirection" ;
+  skos:note "bound to: bpmn-gateway.direction" ;
+  rdfs:comment "BPMN 2.0's gatewayDirection. Added by the smart-base migration: smart-kg named the property without binding it." .
+<http://smart.who.int/kg/valueset/gateway-direction#Unspecified> a skos:Concept ; skos:inScheme <http://smart.who.int/kg/valueset/gateway-direction> ; skos:notation "Unspecified" ; skos:definition "No constraint on incoming and outgoing flows." .
+<http://smart.who.int/kg/valueset/gateway-direction#Converging> a skos:Concept ; skos:inScheme <http://smart.who.int/kg/valueset/gateway-direction> ; skos:notation "Converging" ; skos:definition "Many incoming flows, at most one outgoing." .
+<http://smart.who.int/kg/valueset/gateway-direction#Diverging> a skos:Concept ; skos:inScheme <http://smart.who.int/kg/valueset/gateway-direction> ; skos:notation "Diverging" ; skos:definition "At most one incoming flow, many outgoing." .
+<http://smart.who.int/kg/valueset/gateway-direction#Mixed> a skos:Concept ; skos:inScheme <http://smart.who.int/kg/valueset/gateway-direction> ; skos:notation "Mixed" ; skos:definition "Many incoming and many outgoing flows." .
+
+### Object properties
+
+sgkg:flowsTo a owl:ObjectProperty ;
+  rdfs:label "flowsTo" ;
+  rdfs:comment "A sequence flow, within one process. The qualifier carries the flow's name where it has one -- 6 of 70 in the lifecycle BPMN, all gateway branches such as \"Yes - approved\". No flow in that file carries a conditionExpression, so the label is the whole of the branch condition and nothing more is claimed. `openQualifier` says the value is free text authored in the diagram, not a term from a vocabulary, so an unseen label is not a finding." .
+
+sgkg:messageTo a owl:ObjectProperty ;
+  rdfs:label "messageTo" ;
+  rdfs:comment "A message flow, which by definition crosses participants. Kept distinct from flowsTo because a handoff between two roles is what governance and country adaptation look for, and burying 10 of them among 70 intra-process flows loses them." .
+
+sgkg:performedBy a owl:ObjectProperty ;
+  rdfs:label "performedBy" ;
+  rdfs:comment "A participant pool is performed by a persona. STRING EQUALITY between the pool's @name and an ActorDefinition's title, across two file formats with no shared identifier. Compare l2:fulfilledBy, where a requirement names a persona by Canonical() and resolves without guessing -- the mechanism exists; BPMN does not use it. Every instance carries a resolutionStatus." .
+
+### Licensed edges, as qualified sub-properties
+# One per (source class, predicate, target class) triple the layer licenses.
+# Domain and range on the sub-property is what preserves pairwise licensing: a single global
+# domain/range on the predicate would be a union of everything and would permit pairs the
+# model does not.
+
+sgkg:contains_BPMNFile_BPMNProcess a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:BPMNFile ;
+  rdfs:range sgkg:BPMNProcess ;
+  rdfs:label "BPMN File contains BPMN Process" .
+
+sgkg:contains_BPMNFile_BPMNParticipant a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:BPMNFile ;
+  rdfs:range sgkg:BPMNParticipant ;
+  rdfs:label "BPMN File contains BPMN Participant" .
+
+sgkg:contains_BPMNProcess_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:BPMNProcess ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Process contains BPMN Task" .
+
+sgkg:contains_BPMNProcess_BPMNGateway a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:BPMNProcess ;
+  rdfs:range sgkg:BPMNGateway ;
+  rdfs:label "BPMN Process contains BPMN Gateway" .
+
+sgkg:contains_BPMNProcess_BPMNEvent a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:BPMNProcess ;
+  rdfs:range sgkg:BPMNEvent ;
+  rdfs:label "BPMN Process contains BPMN Event" .
+
+sgkg:contains_BPMNTask_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:BPMNTask ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Task contains BPMN Task" .
+
+sgkg:flowsTo_BPMNEvent_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNEvent ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Event flowsTo BPMN Task" .
+
+sgkg:flowsTo_BPMNEvent_BPMNGateway a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNEvent ;
+  rdfs:range sgkg:BPMNGateway ;
+  rdfs:label "BPMN Event flowsTo BPMN Gateway" .
+
+sgkg:flowsTo_BPMNTask_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNTask ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Task flowsTo BPMN Task" .
+
+sgkg:flowsTo_BPMNTask_BPMNGateway a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNTask ;
+  rdfs:range sgkg:BPMNGateway ;
+  rdfs:label "BPMN Task flowsTo BPMN Gateway" .
+
+sgkg:flowsTo_BPMNTask_BPMNEvent a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNTask ;
+  rdfs:range sgkg:BPMNEvent ;
+  rdfs:label "BPMN Task flowsTo BPMN Event" .
+
+sgkg:flowsTo_BPMNGateway_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNGateway ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Gateway flowsTo BPMN Task" .
+
+sgkg:flowsTo_BPMNGateway_BPMNGateway a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNGateway ;
+  rdfs:range sgkg:BPMNGateway ;
+  rdfs:label "BPMN Gateway flowsTo BPMN Gateway" .
+
+sgkg:flowsTo_BPMNGateway_BPMNEvent a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:flowsTo ;
+  rdfs:domain sgkg:BPMNGateway ;
+  rdfs:range sgkg:BPMNEvent ;
+  rdfs:label "BPMN Gateway flowsTo BPMN Event" .
+
+sgkg:messageTo_BPMNTask_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:messageTo ;
+  rdfs:domain sgkg:BPMNTask ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Task messageTo BPMN Task" .
+
+sgkg:messageTo_BPMNTask_BPMNEvent a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:messageTo ;
+  rdfs:domain sgkg:BPMNTask ;
+  rdfs:range sgkg:BPMNEvent ;
+  rdfs:label "BPMN Task messageTo BPMN Event" .
+
+sgkg:messageTo_BPMNEvent_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:messageTo ;
+  rdfs:domain sgkg:BPMNEvent ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "BPMN Event messageTo BPMN Task" .
+
+sgkg:performedBy_BPMNParticipant_GenericPersona a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:performedBy ;
+  rdfs:domain sgkg:BPMNParticipant ;
+  rdfs:range sgkg:GenericPersona ;
+  rdfs:label "BPMN Participant performedBy Generic Persona" .
+
+sgkg:describes_TaskEntry_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:describes ;
+  rdfs:domain sgkg:TaskEntry ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "Task Entry describes BPMN Task" .
+
+sgkg:sourcedFrom_BusinessProcessWorkflow_BPMNFile a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:sourcedFrom ;
+  rdfs:domain sgkg:BusinessProcessWorkflow ;
+  rdfs:range sgkg:BPMNFile ;
+  rdfs:label "Business Process Workflow sourcedFrom BPMN File" .
+

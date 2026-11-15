@@ -1,0 +1,311 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/navbar/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-2"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-3"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-4"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-5"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-6"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-7"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-8"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-9"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-10"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-11"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-12"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-13"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-14"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-15"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-16"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-17"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-18"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-19"
+        },
+        {
+          "@id": "docs/wireframes/navbar/intent.md#provenance-20"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Covers",
+      "prov:value": "It no longer emits a ☰ or × control (#1762, #1808).",
+      "cat-harness:refs": [
+        "#1762",
+        "#1808"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "How this was drawn",
+      "prov:value": "Re-drawn on 2026-10-06 (bean `1q4b`) from a **built page**, not from source.",
+      "cat-harness:refs": [
+        "bean 1q4b",
+        "2026-10-06"
+      ],
+      "dcterms:date": [
+        "2026-10-06"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "How this was drawn",
+      "prov:value": "- **The build:** the published site, as CI deployed it to `gh-pages`. Its `build.json` names source `7ef9d3a` on `main` (the merge of #2287), built 2026-10-06T15:04:58Z, and the footer reads \"deployed 7ef9d3a · 2026-10-06T14:48:45Z\". The proxy here refuses the published URL, so the files were taken from the `gh-pages` branch with `git archive` (the root, without `branches/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. This is CI's own build, with the pinned remote theme, so the chrome is evidence. `preview:site` also builds here, but it uses the local theme gem, so it was not used for layout.",
+      "cat-harness:refs": [
+        "#2287",
+        "2026-10-06"
+      ],
+      "dcterms:date": [
+        "2026-10-06"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Who it is for, and what they need to do",
+      "prov:value": "The template comments quote the owner:\n- the dividers are *\"like a giant tabbed folio\"*: *\"a thing you REACH FOR\"*, not a dashboard\n- *\"harnesses should be collapsible\"*, and on 2026-09-23 *\"harnesses start closed\"*\n- closed means a strip *\"icon width thick\"*, not gone\n- home stays at the bottom\n- the glass: *\"where are the todo, fsh guts etc tiles on bottom of glass?\"*, *\"tile to change folio settings … should be able to set opactiy\"*, *\"library items need avatar (book's)\"*, *\"start with the glass being 20% opaque with a blur effect\"* (bean `zrvt`), and *\"have folio bottom strip tiles default to hidden away when folio first opened\"* (ob3m, finding 10)",
+      "cat-harness:refs": [
+        "bean zrvt",
+        "2026-09-23"
+      ],
+      "dcterms:date": [
+        "2026-09-23"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-5",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Findings",
+      "prov:value": "All twelve of bean `ob3m`'s findings, in its numbering (its 3, 4 and 5 were one finding with two bullets in the previous draw). Each verdict comes from the built page above, not from a bean note. **Fixed**: what the finding described is no longer on the page. **Ruled as-is**: the owner chose to keep it.",
+      "cat-harness:refs": [
+        "bean ob3m"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-6",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "harnesses not reachable from the strip.** **Fixed by #1805** (landed through merge train #1893). Every mark names itself in a tooltip on hover or focus, and the strip stays 56 px.",
+      "cat-harness:refs": [
+        "#1805",
+        "#1893"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-7",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Two dividers open the same page.** **Fixed by #1762.** Folio Assistant → `/#harness-folio-assistant` and C@T Harness → `/#harness-cat-harness`, two different sections.",
+      "cat-harness:refs": [
+        "#1762"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-8",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Harness descriptions leak authoring notes and formatting into the landing page.** **Fixed:** the landing half by #1762, the Stickies half by #1807. Both surfaces now show the declaration's `summary` and \"Also written\". The C@T card's authored introduction and Scope line are **ruled as-is** (#1807 keeps `bodyAppend`).",
+      "cat-harness:refs": [
+        "#1762",
+        "#1807"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-9",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Folio Assistant's description is a naming rationale with literal backticks.** **Fixed by #1762** (the `summary` field). The landing and the sticky both read \"This repository as a working instance: the platform and the folios it hosts.\" The rationale stays in `description`, for authors.",
+      "cat-harness:refs": [
+        "#1762"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-10",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Findings",
+      "prov:value": "**C@T Harness's description is alternative spellings run together on one line.** **Fixed by #1762** (`alsoWritten`). It now reads \"Computable adjudication and agentic test harness.\", then a separate \"Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness\". The owner ruled that the spellings stay visible, as a list.",
+      "cat-harness:refs": [
+        "#1762"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-11",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Each harness's navigation appears in several places, and one destination has two names.** **Fixed by #1804** (\"one name everywhere\").",
+      "cat-harness:refs": [
+        "#1804"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-12",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**The open sidebar is long even with its caps.** **Fixed by #1808.** There is one scroll region with every group unfolded (627 of 6,297 px) and no clipping.",
+      "cat-harness:refs": [
+        "#1808"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-13",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "the sidebar's own × / ☰ labels are unstyled below 800 px.** **Fixed:** the markup by #1762, the left-over rules by #1808. There are 0 `.fa-nav-head`, `.fa-nav-close` or `.fa-nav-toggle` elements, and 0 ☰ or × glyphs in the sidebar, at both 1280 and 390.",
+      "cat-harness:refs": [
+        "#1762",
+        "#1808"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-14",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**The \"▾ Folio\" handle covers the title and the glass's own content, and its glyph stays ▾.** **Fixed by #1762.** It reads ▴ while the glass is down and ▾ after Escape.",
+      "cat-harness:refs": [
+        "#1762"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-15",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**The bottom strip hides most of its tiles, and says nothing about it.** **Fixed by #1819** (pins plus \"+N more\", hidden on arrival; the earlier move of tiles behind More was dbbc2b6, through #1160).",
+      "cat-harness:refs": [
+        "#1819",
+        "#1160"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-16",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Most declared tiles wear the same glyph.** **Fixed by #1762** (commit 352227a, one drawing per graph kind with a kind fallback). The declaration half is gated by `check:navbar-consistency` (#1589), and the rendered half is asserted in `action-tiles.e2e.ts` (#1723).",
+      "cat-harness:refs": [
+        "#1762",
+        "#1589",
+        "#1723"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-17",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Two unrelated \"Settings\".** **Fixed by #1810** (ruled: rename both, and cross-link them).",
+      "cat-harness:refs": [
+        "#1810"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-18",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Seen on the build, not one of the twelve",
+      "prov:value": "#1810 recorded this as \"found, not fixed\". **Fixed by #2312** (bean `zpso`). The panel sat in the glass's flow after the 50vh shelf. Now it opens fixed in the visible glass, below the zoom bar and above the dock's visible top, with the dock shown or hidden.",
+      "cat-harness:refs": [
+        "bean zpso",
+        "#1810",
+        "#2312"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-19",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Seen on the build, not one of the twelve",
+      "prov:value": "**Fixed by #2312** (bean `v215`). The two numbers counted different things: open beans (`count.json`) against every bean ever filed (the bean index's `tile.beans`). The board's own \"open\" was a third count, because it left out drafts. Ruled: one was wrong, so they agree. Every Beans badge counts open beans (`openBeanCount`, the owner's headline under `gkv6`), and its name and tooltip say \"open beans\". On the build, the icon row, the glass tile and the launcher tile all read 540. Gated by `beans-count-agrees.e2e.ts`. The as-is drawing above keeps the 943 it was drawn with in #2295.",
+      "cat-harness:refs": [
+        "bean v215",
+        "bean gkv6",
+        "#2312",
+        "#2295"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/navbar/intent.md#provenance-20",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Seen on the build, not one of the twelve",
+      "prov:value": "## History\n\n- **#1010 (`zrvt`)** added the folio glass: the 20 % blurred sheet, movable book-avatar cards, the bottom tile strip, the Todos panel, and the glass's own settings panel.\n- **#1022 (`ka1p`)** folded On this page, Folders and Harnesses on arrival.\n- **This wireframe's first draw** was made from source on main with those two merged. It recorded the findings above.\n- **What has changed since:**\n  - #1762: the rail, findings 2, 4, 5, 8, 9 and 11, and the dividers' kinds\n  - #1804: one name everywhere\n  - #1805: tooltips, and Harnesses at rest\n  - #1807: sticky summaries\n  - #1808: the one-scroller rail\n  - #1810: two settings names, cross-linked\n  - #1819: the pinned, fitted, hidden-on-arrival dock\n  - #2312: Glass settings opens clear of the dock, and Beans has one count",
+      "cat-harness:refs": [
+        "bean ka1p",
+        "#1010",
+        "#1022",
+        "#1762",
+        "#1804",
+        "#1805",
+        "#1807",
+        "#1808",
+        "#1810",
+        "#1819",
+        "#2312"
+      ]
+    }
+  ]
+}
