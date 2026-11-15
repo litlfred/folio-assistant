@@ -1,0 +1,637 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2505.10399v1",
+ "source": {
+  "file": "arxiv-2505.10399v1.pdf",
+  "sha256": "f2ddacee8dcbab71ede4e2056c5ff65a833f72d982cbf46b1f2c82073859e20c",
+  "bytes": 2127240,
+  "pages": 12,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-08T08:52:10Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2505.10399",
+   "version": "1",
+   "primary_class": "cs.AI",
+   "stamp_date": "15 May 2025"
+  },
+  "doi": "10.1145/3715275.3732219",
+  "title": "Evaluating Model Explanations without Ground Truth",
+  "authors_raw": "Kaivalya Rawal",
+  "title_lines": [
+   "Evaluating Model Explanations without Ground Truth"
+  ],
+  "abstract": "There can be many competing and contradictory explanations for a single model prediction, making it difficult to select which one to use. Current explanation evaluation frameworks measure qual- ity by comparing against ideal \u201cground-truth\u201d explanations, or by verifying model sensitivity to important inputs. We outline the limitations of these approaches, and propose three desirable princi- ples to ground the future development of explanation evaluation strategies for local feature importance explanations. We propose a ground-truth Agnostic eXplanation Evaluation framework (AXE) for evaluating and comparing model explanations that satis- fies these principles. Unlike prior approaches, AXE does not require access to ideal ground-truth explanations for comparison, or rely on model sensitivity \u2013 providing an independent measure of expla- nation quality. We verify AXE by comparing with baselines, and show how it can be used to detect explanation fairwashing. Our code is available at https://github.com/KaiRawal/Evaluating-Model- Explanations-without-Ground-Truth. CCS Concepts \u2022 Computing methodologies \u2192Artificial intelligence; Ma- chine learning.",
+  "docinfo": {
+   "Title": "Evaluating Model Explanations without Ground Truth",
+   "Author": "Kaivalya Rawal; Zihao Fu; Eoin Delaney; Chris Russell",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:)",
+   "CreationDate": "D:20250611220310+00'00'"
+  },
+  "title_raw": "Evaluating Model Explanations without Ground Truth",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "Evaluating Model Explanations without Ground Truth",
+   "heading": "Evaluating Model Explanations without Ground Truth",
+   "outline": "Abstract",
+   "text": "Evaluating Model Explanations without Ground Truth",
+   "corroborated_by": [
+    "heading",
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Evaluating Model Explanations",
+   "page": 2,
+   "source": "outline",
+   "number": "2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Our Notation",
+   "page": 2,
+   "source": "outline",
+   "number": "2.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Three Principles for Evaluating Model Explanation Quality",
+   "page": 3,
+   "source": "outline",
+   "number": "2.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Prior Approaches",
+   "page": 4,
+   "source": "outline",
+   "number": "2.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Invariance of ground-truth Metrics to Changing Data and Models",
+   "page": 4,
+   "source": "outline",
+   "number": "2.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Inherent biases in sensitivity Metrics",
+   "page": 5,
+   "source": "outline",
+   "number": "2.5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 5,
+   "source": "outline",
+   "number": "3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "The AXE Framework",
+   "page": 5,
+   "source": "outline",
+   "number": "3.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Illustrative Example",
+   "page": 6,
+   "source": "outline",
+   "number": "3.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Experiments",
+   "page": 7,
+   "source": "outline",
+   "number": "4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Detecting Explanation Fairwashing",
+   "page": 7,
+   "source": "outline",
+   "number": "4.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Comparing AXE with Baselines",
+   "page": 8,
+   "source": "outline",
+   "number": "4.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 10,
+   "source": "outline",
+   "number": "5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Acknowledgments",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Different Explainers Yield Different Explanations: A neural network predicts diabetes on the \u201cPima Indians\u201d dataset [10]. A single positive (diabetic) prediction is explained using four explainers. These feature-importance explanations, visualized here as \u201cforce-plots\u201d, consist of a signed vector in",
+   "page": 2,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "Explanation Generation (a) and Evaluation (b): AXE measures how well a given explanation can help emulate model behavior. See section 3.1 for full algorithm",
+   "page": 2,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Explanation Evaluation Metrics: Definitions for ground-truth based explanation evaluation metrics: FA, RA, SA, SRA,",
+   "page": 3,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "Violations of local contextualization and model relativism: Plots showing explanation quality \ud835\udc5e(color) across \ud835\udc561 and \ud835\udc562",
+   "page": 4,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Synthetic Data and Model for AXE and PGI evaluations: 4 Normal distributions representing the data distribution, and neighborhoods \u0394 and \ud835\udf02for PGI and AXE respectively. The model is defined as \ud835\udc5a(x) = 1\ud835\udc4b1>0, and we compare",
+   "page": 6,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "5",
+   "title": "Comparing explanations using AXE and PGI: By definition \ud835\udc5e(e\ud835\udc4e) > \ud835\udc5e(e\ud835\udc4f), but PGI does not clearly show this. AXE correctly determines that explanation e\ud835\udc4eis better than e\ud835\udc4f, across hyperparameter values. (Both X axes on symlog scale)",
+   "page": 7,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Detecting explanation fairwashing: We replicate an adversarial fairwashing attack [54] and generate spurious explanations, which we try to then detect using quality metrics \ud835\udc5ethat do not need ground-truths: AXE , PGI, and PGU. Complete details are in section 4.1: \ud835\udc38\ud835\udf0cis a set of explanations that corre",
+   "page": 8,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "Evaluating the Quality of Explanations for Neural Networks: For a fair comparison across evaluation metrics, we",
+   "page": 9,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "7",
+   "title": "Evaluating the Quality of Explanations for Logistic Regression: For a fair comparison across evaluation metrics, we average over the entire dataset and plot their Z-score standardized values. We compare AXE with all prior metrics from table 1: FA, RA, SA, SRA, RC, PRA, PGI, and -PGU (PGU inverted so",
+   "page": 10,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 11,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 12,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 40,
+   "n_words": 5,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-000-2-evaluating-model-explanations",
+   "number": "2",
+   "title": "Evaluating Model Explanations",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 334,
+   "n_words": 35,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-001-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1564,
+   "n_words": 205,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-002-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 8050,
+   "n_words": 1175,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-003-21-our-notation",
+   "number": "2.1",
+   "title": "Our Notation",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 4,
+   "n_chars": 6815,
+   "n_words": 1073,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-004-23-prior-approaches",
+   "number": "2.3",
+   "title": "Prior Approaches",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 6148,
+   "n_words": 1025,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-005-25-inherent-biases-in-sensitivity-metrics",
+   "number": "2.5",
+   "title": "Inherent biases in sensitivity Metrics",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 2314,
+   "n_words": 369,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-006-3-methodology",
+   "number": "3",
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1064,
+   "n_words": 169,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-007-31-the-axe-framework",
+   "number": "3.1",
+   "title": "The AXE Framework",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 3732,
+   "n_words": 626,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-008-32-illustrative-example",
+   "number": "3.2",
+   "title": "Illustrative Example",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 5939,
+   "n_words": 984,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-009-4-experiments",
+   "number": "4",
+   "title": "Experiments",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 204,
+   "n_words": 30,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-010-41-detecting-explanation-fairwashing",
+   "number": "4.1",
+   "title": "Detecting Explanation Fairwashing",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 5316,
+   "n_words": 906,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-011-42-comparing-axe-with-baselines",
+   "number": "4.2",
+   "title": "Comparing AXE with Baselines",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 10,
+   "n_chars": 5892,
+   "n_words": 994,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-012-5-conclusion",
+   "number": "5",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 2133,
+   "n_words": 315,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-013-acknowledgments",
+   "number": null,
+   "title": "Acknowledgments",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 516,
+   "n_words": 76,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-014-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 16740,
+   "n_words": 2166,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 17,
+  "toc_inferred_entries": 0,
+  "figure_entries": 9,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 16,
+  "chars_total": 66801
+ }
+}
