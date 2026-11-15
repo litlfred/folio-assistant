@@ -64,3 +64,8 @@ _2026-11-15T06:36:00Z_ — Added IRIS status and carried the smart-ra / phw memo
 _2026-11-15T06:38:00Z_ — Added items from the owner's stalled-session logs.
 
 _2026-11-15T06:40:00Z_ — The other merge manager is gone; this thread took over its queue and the train. fa#3124 bun shards 2–4 red; the gate-fix thread (…BNSixgF4) is classifying.
+
+## dth content drafts (hand-off from the dth prep thread, 06:37Z)
+Waiting on one-by-one owner cards (Q-WRAP-2 C); summaries in /mnt/project-files/merge-manager/content-review/dth-content-drafts-2026-11-11.md: dth-hrh #75 #81 #82 #83 #94 #96 (#96 stacked on #94), dth-sc#7, dth-phc#4. dth-pc#7 and #10 target the merged claude/dth-pc-scaffold and need a retarget to main; #10 has the 2-block caption wording conflict (owner's call).
+
+_2026-11-15T06:40:00Z_ — Merged dth-phc#46, dth-sc#34, smart-ra#251 (Q-LOCK-1 A); smart-ra #154 #190 #191 #192 #195 (Q-RA-VAL-2 A + Q-LOCK-1 A); fa#3127 into the train branch. smart-ra#185 conflicts; the drafts thread is merging main into it.
