@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T13:19:32Z
-updated_at: 2026-11-09T14:20:00Z
+updated_at: 2026-11-15T17:38:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -23,8 +23,8 @@ Every CI step is a pure function of its inputs. The primitive is `.github/action
 
 ## Still to do
 - [x] cat-harness-tools `cache-key.ts` and the cat-harness skill `cache-first-ci` (merged in `cat-harness-tools#1519` `9afa699c60a0` and `cat-harness#1052` `7102ee5ca858`, re-pinned in `folio-assistant#2985` `da3ca528562a`).
-- [ ] Port `bundle-cache.sh`, the prepared image, the layers ref and the cone onto the primitive, each by its owner (CI cone ported in `folio-assistant#3010` `2e601643f4ba`; layers ref declared as cache node, gated by `layers:check`, & auto-mounted on fresh clone in `cat-harness-tools#1506` / `folio-assistant#2971` `c5e754827fb3` + `cat-harness-tools#1703` `dd0c48ba2964` + `folio-assistant#3038` `cc9890940e3f`; writer cone git ref in `cat-harness-tools#1707` `839ee5d71862`; `bundle-cache.sh`, `cat-mount-v1-*` fallback steps, and `layer-pr-checks-*` bespoke `actions/cache` steps remain).
-- [ ] File a bean for each non-deterministic writer the audit lists (`determinism-audit.yml` run `42344504396` cleared `smart-pages`, `ig-index`, and `render-bpmn` as byte-identical; `kg-export` `_kg/cat-harness/cat-harness.jsonld` `generatedAt` and `qa-working-copy` / `publish-pages` `block-qa` `reviewed_at` + witness sidecars still differ).
+- [ ] Port `bundle-cache.sh`, the prepared image, the layers ref and the cone onto the primitive, each by its owner (CI cone ported in `folio-assistant#3010` `2e601643f4ba`; layers ref declared as cache node, gated by `layers:check`, & auto-mounted on fresh clone in `cat-harness-tools#1506` / `folio-assistant#2971` `c5e754827fb3` + `cat-harness-tools#1703` `dd0c48ba2964` + `folio-assistant#3038` `cc9890940e3f`; writer cone git ref in `cat-harness-tools#1707` `839ee5d71862`; `cat-mount-v1-*` fallback steps & `lpc-cat-mount` retired in `cat-harness-tools#2327` `aab37e49d68e`; `bundle-cache.sh` and `layer-pr-checks-*` bespoke `actions/cache` steps remain).
+- [x] File a bean for each non-deterministic writer the audit lists (all 8 QA writers and `kg-export` converted in `cat-harness-tools#1555` `2deb8701744d`, `cat-harness-tools#1557` `fa7002275dbc`, `cat-harness-tools#1561` `032a30c780d3`, and `folio-assistant-core#653` `9c0e7244000c`; `determinism-audit.yml` run [`42557731048`](https://github.com/litlfred/folio-assistant/actions/runs/42557731048) on `main` at `260c7a6e9f7a` verified **6/6 producers 100% DETERMINISTIC** with 0 differing files across `qa-working-copy` 12,470 files, `publish-pages` 13,655 files, `smart-pages` 1,452 files, `ig-index` 1,204 files, `kg-export` 4,437 files, and `render-bpmn` 326 files).
 
 ## Done when
 - [ ] every bespoke cache is on cached-step
@@ -38,6 +38,7 @@ _2026-11-05T13:19:32Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwK
 _2026-11-08T08:38:00Z_ — Verified on `origin/main` by R5-Lane-3 (`651d2ad4-76bb-418a-96eb-f1b84e1f00e0` under `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`).
 _2026-11-08T12:04:00Z_ — Updated by R6-Lane-6 (`1a82dfeb-f7cc-4b24-8b0d-e6caf310e87e` under `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`): evicted superseded `cat-mount-v1-*` cache entries, duplicate `codeql-overlay-base-database-1-*` entries, and closed-PR merge-ref entries (`cache-report.sh --prune`) across all four repositories, bringing all four repositories well below `< 80%` of 10 GiB (`1.18%–16.45%`) and satisfying `Done when #3`. Bean remains `in-progress` pending `Done when #1` (remaining bespoke `actions/cache` steps).
 _2026-11-09T14:20:00Z_ — Updated by R8-Lane-6 (`1edc40fd-3367-4b1c-957f-2042cf547d73` under `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`): confirmed `litlfred/cat-harness-tools#1707` (`839ee5d71862`, `2026-11-08T11:59:53Z`), `litlfred/cat-harness-tools#1703` (`dd0c48ba2964`, `2026-11-08T13:25:38Z`), and `litlfred/folio-assistant#3038` (`cc9890940e3f`, `2026-11-08T13:25:41Z`) are all merged on `origin/main`, along with release-gated CI (`cat-harness#1158`: `#1159` `1cfec870`, `tools#1721` `6571d3f4`, `tools#1722` `961b4d93`, `fa#3047` `8915622d`).
+_2026-11-15T17:38:00Z_ — Updated by `lane-43c1` (`43c12887-2733-443d-b8ef-0e369f856d33` under `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`): (1) verified that `determinism-audit.yml` run [`42557731048`](https://github.com/litlfred/folio-assistant/actions/runs/42557731048) (`2026-11-09T03:40:56Z` on `main` at `260c7a6e9f7a`) passed **6/6 producers 100% DETERMINISTIC** (`qa-working-copy` 12,470 files, `publish-pages` 13,655 files, `smart-pages` 1,452 files, `ig-index` 1,204 files, `kg-export` 4,437 files, `render-bpmn` 326 files) following `cat-harness-tools#1555` (`2deb8701744d`), `cat-harness-tools#1557` (`fa7002275dbc`), `cat-harness-tools#1561` (`032a30c780d3`), and `folio-assistant-core#653` (`9c0e7244000c`), checking off `Still to do` #3; (2) opened [`litlfred/cat-harness-tools#2327`](https://github.com/litlfred/cat-harness-tools/pull/2327) (`ready: aab37e49d68e43de5ee195c2c614c21c0fca97a2`) retiring the legacy `cat-mount-v1-*` `actions/cache` steps in `ci-setup/action.yml`, `layer-pr-checks.yml`, and `pr-tests.yml` and removing `caches/lpc-cat-mount.cache.json`.
 
 ### 1. Merged PRs on `origin/main`
 
@@ -110,8 +111,13 @@ _2026-11-09T14:20:00Z_ — Updated by R8-Lane-6 (`1edc40fd-3367-4b1c-957f-2042cf
    - [`litlfred/folio-assistant#3038`](https://github.com/litlfred/folio-assistant/pull/3038) (`Fresh clone: bun run cat mounts the layers itself`, merged as `cc9890940e3f` at `2026-11-08T13:25:41Z`): wires `.github/cat.ts` so `bun run cat <script>` automatically mounts locked layers from `refs/cat/layers/<key>` on a fresh clone.
    - [`litlfred/cat-harness-tools#1707`](https://github.com/litlfred/cat-harness-tools/pull/1707) (`Writer records: re-pinner publishes them to a git ref, a gate checks them (#1702)`, merged as `839ee5d71862` at `2026-11-08T11:59:53Z`): moves `build/writer-cone/` records into `refs/cat/writer-records/<commit>` and `refs/cat/writer-records/main` (`scripts/writer-records-ref.ts`, `caches/writer-records-ref.cache.json`) with incremental recording and the `publish:writer-records` verification gate.
 2. **Retire/port remaining bespoke `actions/cache` steps (`Done when` #1)**:
-   - Remove or port the legacy `cat-mount-v1-*` `actions/cache@v6` steps in `.github/actions/ci-setup/action.yml:104,112`, `.github/workflows/jsonld-gen-check.yml:140`, `feature-staging.yml:2700,3078`, `merge-train.yml:107`, `post-merge-regen.yml:117`, `repin-train.yml:67`, `staging-publish.yml:61`, and `cat-harness-tools/.github/workflows/layer-pr-checks.yml:694` / `pr-tests.yml:176`.
+   - [`litlfred/cat-harness-tools#2327`](https://github.com/litlfred/cat-harness-tools/pull/2327) (`aab37e49d68e`, `ready-to-merge` + `release`): retires the legacy `cat-mount-v1-*` `actions/cache@v6` steps in `cat-harness-tools/.github/actions/ci-setup/action.yml`, `cat-harness-tools/.github/workflows/layer-pr-checks.yml`, and `cat-harness-tools/.github/workflows/pr-tests.yml`, and removes `caches/lpc-cat-mount.cache.json`.
    - Port `bundle-cache.sh` (`code-quality-gates.yml:776-988`) and `layer-pr-checks-*` / `pr-tests-main-v1` onto `cached-step` (or `cached-step` `phase: report`).
-3. **Non-deterministic writers from `determinism-audit.yml` (run [`42344504396`](https://github.com/litlfred/folio-assistant/actions/runs/42344504396))**:
-   - `smart-pages` (1,452 files), `ig-index` (1,196 files), and `render-bpmn` (142 files) are verified **DETERMINISTIC**.
-   - `kg-export` (1/4,113 files: `_kg/cat-harness/cat-harness.jsonld` `"generatedAt"`), `qa-working-copy` (190/9,351 files: `generatedAt` and `block-qa` `"reviewed_at"`), and `publish-pages` (78/12,533 files: `test/results/witnesses/**/*.block.json`) still differ across double builds.
+3. **Determinism Audit (`determinism-audit.yml` — ✅ 6/6 DETERMINISTIC on `main`, run [`42557731048`](https://github.com/litlfred/folio-assistant/actions/runs/42557731048))**:
+   - Following `cat-harness-tools#1555` (`2deb8701744d`), `cat-harness-tools#1557` (`fa7002275dbc`), `cat-harness-tools#1561` (`032a30c780d3`), and `folio-assistant-core#653` (`9c0e7244000c`), `determinism-audit.yml` run [`42557731048`](https://github.com/litlfred/folio-assistant/actions/runs/42557731048) (`2026-11-09T03:40:56Z` on `main` at `260c7a6e9f7a`) verified all 6 producers byte-identical across two runs (`0` differing files):
+     - `qa-working-copy`: **DETERMINISTIC** (12,470 files)
+     - `publish-pages`: **DETERMINISTIC** (13,655 files)
+     - `smart-pages`: **DETERMINISTIC** (1,452 files)
+     - `ig-index`: **DETERMINISTIC** (1,204 files)
+     - `kg-export`: **DETERMINISTIC** (4,437 files)
+     - `render-bpmn`: **DETERMINISTIC** (326 files)
