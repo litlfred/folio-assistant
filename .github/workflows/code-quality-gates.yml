@@ -215,7 +215,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -471,7 +471,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -595,7 +595,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Decide whether this tree's verdict already exists (bean qbco)
         id: decide
@@ -888,7 +888,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -943,7 +943,12 @@ jobs:
           # The whole directory: index.json names the package.tgz (and the
           # contexts/ and sidecars/) the same build writes beside it, so a
           # reader given the index without them fails on the missing file.
-          path: '*/fhir-artifact-index/'
+          # Since fhir-harness a58233b (sm8r step 2) ig-index:build writes a
+          # MOUNTED layer's index at its output root, build/layers/<layer>/;
+          # the old in-mount glob stays for the transition.
+          path: |
+            */fhir-artifact-index/
+            build/layers/*/fhir-artifact-index/
           if-no-files-found: error
           overwrite: true
           retention-days: 3
@@ -1239,7 +1244,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       # The same mount as the gates job, for the same reason one level down:
       # the test files that read the LIVE store (`bean-store-hygiene`,
@@ -1593,7 +1598,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -2097,6 +2102,37 @@ jobs:
       - name: every test has a Gherkin Scenario
         run: bun run cat check:test-gherkin
 
+      # The same gate over each layer's own tests, by the key each layer
+      # declares for it. The "no check script is unrun" test found them unrun
+      # on the re-pin train (folio-assistant#3124).
+      - name: every core test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:core
+
+      - name: every fhir-harness test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:fhir-harness
+
+      - name: every sci test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:sci
+
+      - name: every smart-base test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:smart-base
+
+      # fhir-harness's offline check of the FHIR core definitions it holds
+      # (`fhir-core/`, typology `fhir-core-definitions`): pins and manifests
+      # parse, and every materialised body matches its entry.
+      - name: the FHIR core definitions match their pins
+        run: bun run cat fhir-core:check
+
+      # cat-harness-tools' gate that every layer's graph renders to the
+      # JSON-LD it publishes.
+      - name: every layer renders to its published JSON-LD
+        run: bun run cat jsonld:site:check
+
+      # No always-on Tool or workflow names a skill only an opt-in sub-graph
+      # holds.
+      - name: no always-on reference to an opt-in-only skill
+        run: bun run cat check:optin-refs
+
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
       #
@@ -2355,7 +2391,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -2795,6 +2831,15 @@ jobs:
       # IG mounted it reports "nothing to check" rather than passing silently.
       - name: every markdown annex link resolves from the page it is appended to
         run: bun run cat check:ig-annex-links
+
+      # fhir-harness's `fhir-core-definitions` kind (fhir-harness#431): the
+      # pinned FHIR core packages and their StructureDefinition index. Reached
+      # the same way as `ig-annex` above: `audit:coverage` counts a kind as
+      # judged only when a gate CI runs declares `@covers` it, and without this
+      # step the kind is typed and judged by nothing (kinds-typed-only).
+      # Bodies not materialised are reported, not failed.
+      - name: the pinned FHIR core definitions agree with their index
+        run: bun run cat fhir-core:check
 
       # The `lean` kind arrived with folio-assistant-sci's `lean/` (sci
       # c396b5b). `audit:coverage` counts a kind as reached only when a gate
@@ -3402,7 +3447,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -3562,7 +3607,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -4775,7 +4820,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
         with:
           chromium: browser
 
@@ -4991,7 +5036,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -5196,7 +5241,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@ed3c8eb404200c1d101c99893a67d22102815587 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@382eff032f1ea748883a6aa29fe6e983e9d1d48a # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
