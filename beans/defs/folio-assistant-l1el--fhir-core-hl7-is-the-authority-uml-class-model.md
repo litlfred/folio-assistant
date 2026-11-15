@@ -2,11 +2,11 @@
 # folio-assistant-l1el
 $schema: bean/1.0.0
 title: 'fhir-core: HL7 published packages are the authority; derive the UML class model'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-15T07:05:00Z
-updated_at: 2026-11-15T11:20:00Z
+updated_at: 2026-11-15T16:10:00Z
 parent: folio-assistant-v8bg
 tags:
     - fhir-harness
@@ -33,3 +33,5 @@ _2026-11-15T07:05:00Z_ — Filed by thread "Pin fhir-harness to HL7 core package
 _2026-11-15T11:15:00Z_ — Full checks on #437 (attempt 2): the only new failure is cat-harness-tools standalone-fixture byte-equality, fixed by cat-harness-tools#2294 (green). gen:jsonld:check is red on main too. Both PRs got `ready:` comments and were handed to the merge manager thread.
 
 _2026-11-15T11:20:00Z_ — Parented under handover epic folio-assistant-v8bg at the merge manager's request (check-bean-parents).
+
+_2026-11-15T16:10:00Z_ — Done. fhir-harness#437 merged at 504736fe, co-landed with cat-harness-tools#2294 at 8f79b3b6; tools main's first run after the pair is green, including the standalone-fixture test. The publish-QA red on #437 came from folio-assistant#3124 moving kg-audit output to build/layers: fixed at source by cat-harness-tools#2308 (merged 28e6f74), with #437's publish-qa.yml re-pinned to it. Follow-ons from the same red: smart-base#414 and smart-immunizations#156 (hand re-pins of the uses: lines, plus smart-base's bun.lock, both merged), and cat-harness-tools#2316 (issue #2315) so a standing re-pin moves the uses: pins and bun.lock along with the lock.
