@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T06:35:00Z
-updated_at: 2026-11-15T06:35:00Z
+updated_at: 2026-11-15T06:31:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover
@@ -30,7 +30,8 @@ tools #2184 #2187 #2195 #2197 #2202 #2216; cat-harness #1342 #1343; bootstrap-to
 4. smart-trust#238 (trustlist.jsonld syntax; marked ready 06:30Z, full tier pending).
 5. smart-immunizations-uganda#39 re-pin: red lock + bun-pin + content-code-free (pin skew) — refresh pins after #3124, then merge.
 6. Conflicted, need refresh after #3124: smart-trust#236, smart-immunizations#145.
-- Held for owner: tools#2199 + cat-harness#1341 (move tests) vs tools#2185 (exemption) — owner choice pending. who-iris#279 then #284 (content: IRIS re-derives, WHO errata) — owner card after green; red now is pin skew (needs #3124).
+- tools#2199 then cat-harness#1341 (move tests; owner picked A 06:26Z): gate-fix thread hands them over; merge #2199 first. Close tools#2185 (exemption, not chosen).
+- Held for owner: who-iris#279 then #284 (content: IRIS re-derives, WHO errata) — owner card after green; red now is pin skew (needs #3124).
 
 ## Site publish state (render watch 05:40Z)
 Live: smart-trust (05e9d55d 11-14 23:06Z, game at /en/cat-harness/apps/onboarding-game/), smart-base, phw. Red/stale: smart-immunizations (needs #145), uganda (needs #39). Mains red on post-merge QA (core, who-iris, fhir-harness, smart-base) are pin skew that clears with fa#3124 (gate-fix thread …BNSixgF4DaasKpgTGfx9vA, bean gm5f).
@@ -39,3 +40,5 @@ Live: smart-trust (05e9d55d 11-14 23:06Z, game at /en/cat-harness/apps/onboardin
 publish-on-push …GSmgusK4K8TCWBQfu5rM7S (smart-trust/uganda/imm publish); gate fixes …BNSixgF4DaasKpgTGfx9vA (gm5f); smart-ra drafts …6fbDk8ZG5kaLTpD1m7m7RP; standing re-pin/biblio …G6g9EGbG9kGSg8u3W5fieF; IRIS source fixes …3WQmGmifCFfexR63a3h4wh (who-iris#279/#284).
 
 _2026-11-15T06:35:00Z_ — Filed by the merge manager thread.
+
+_2026-11-15T06:31:00Z_ — Owner chose A for tools#2199 (move tests); #2185 not taken.
