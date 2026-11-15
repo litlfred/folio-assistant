@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:15:00Z
-updated_at: 2026-11-15T07:15:00Z
+updated_at: 2026-11-15T07:10:00Z
 tags:
     - handover
     - pr-backlog
@@ -52,3 +52,5 @@ Plan to clear the open-PR backlog in the harness repos (all litlfred repos excep
 Q-PB-1: close the 8 G2 re-pin PRs in favour of one batched re-pin after fa#3124 (recommended A).
 
 _2026-11-15T07:15:00Z_ — Filed by thread "Plan to clear harness repo PR backlog" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9Pzsco5hgSQWpJp8bXkgHgM), session https://claude.ai/code/session_01Qmmkt6wr9MYahGh9dkaS15. Red groups G1 to G4 sent to the coordinator at 07:08Z for fix threads.
+
+_2026-11-15T07:10:00Z_ — Q-PB-1 = A (owner tap 07:07Z). Closed the 8 G2 re-pins (imm#145, uganda#39, pilgrimage#109, smart-trust#236, phw#78, smart-pcmt#6, core#799, smart-hiv#29). The merge manager re-pins each layer after fa#3124.
