@@ -1,0 +1,74 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "cat-harness",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "note": "Replaces the git submodule: the whole repository, at the pin the gitlink held.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up re-pin T1' (bootstrap moved by bootstrap#56), follow-up to Q-RA-241 A. Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      },
+      "contentType": "document"
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "0f88368db7560afac6d3e16fd905cbb974350f82",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "note": "Replaces the git submodule. Its need bootstrap is the mount above.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-13",
+              "ref": "0f88368db7560afac6d3e16fd905cbb974350f82",
+              "evidence": "owner (litlfred) cards in merge-manager session session_01EucfRpkvK7d4FJyuqypQzm, 2026-11-13: Q-BT-PIN A ~10:02Z (bootstrap-tools to main 0f88368d); cascade card A ~12:05Z (each downstream re-pin to main, merged when green); train-fix card ~16:05Z (fix the train 3111 reds)"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "cat-harness"
+    },
+    {
+      "name": "bootstrap"
+    }
+  ],
+  "site": {
+    "landing": "cat-harness"
+  }
+}

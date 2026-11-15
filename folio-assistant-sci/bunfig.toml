@@ -1,0 +1,6 @@
+# The linker the index uses for the same lockfile (its root bunfig.toml).
+# Bun's default for a workspace lockfile is the isolated linker, which in a
+# sibling layout leaves workspace members unlinked unless hoisted (bean ygge,
+# w1gy F17).
+[install]
+linker = "hoisted"
