@@ -1,0 +1,64 @@
+{
+  "$schema": "folio-library-extraction/v1",
+  "doc_id": "9789240116191-eng",
+  "kinds": {
+    "contents": {
+      "state": "found",
+      "count": 32,
+      "note": "contents from inferred (mean confidence 0.872); one listed heading, 'Creating protocols for managing change', was not found on its page, so its two steps sit under the chapter before it (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 32)",
+      "tool": "pdf-structure.py",
+      "version": "0b311238188a",
+      "at": "2026-11-14"
+    },
+    "sections": {
+      "state": "found",
+      "count": 32,
+      "tool": "pdf-structure.py",
+      "version": "0b311238188a",
+      "at": "2026-11-14"
+    },
+    "figures": {
+      "state": "found",
+      "count": 15,
+      "note": "1 raster, 14 vector; 15 caption(s) read off the pages",
+      "tool": "pdf-images.py+pdf-vector-figures.py",
+      "at": "2026-11-14"
+    },
+    "tables": {
+      "state": "partial",
+      "count": 23,
+      "note": "23 drafts written, unreviewed; by a word-split test about 17 of them are page prose cut into columns (pp. 3-11, 16-17, 26, 29, 46-50, 56), not tables; the real ones include the abbreviation list (p. 7), the reference list (p. 55) and the Annex 2 role table (pp. 57-61) (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 23)",
+      "tool": "pdf-tables.py",
+      "version": "b3b9e4012c21",
+      "at": "2026-11-14"
+    },
+    "references": {
+      "state": "found",
+      "count": 17,
+      "tool": "references-extract",
+      "version": "a00c5164027f",
+      "at": "2026-11-14"
+    },
+    "glossary": {
+      "state": "partial",
+      "note": "the entry has a Glossary section (sec-002, pp. 8-10) and an Abbreviations section (sec-001), printed one term per line with its definition below; glossary-from-source reads only Markdown tables and 'term — definition' lines, so it read none of them. The 3 candidates it did write (a table row, an ISO title, 'Unit') were noise and were not kept (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 3)",
+      "tool": "glossary-from-source",
+      "version": "0ed78cc7a54d",
+      "at": "2026-11-14"
+    },
+    "footnotes": {
+      "state": "none",
+      "count": 0,
+      "tool": "pdf-footnotes.py",
+      "at": "2026-11-14",
+      "note": "pdf-footnotes.py called no note; its 8 unlinked marks are numbered citations to the reference list (superscripts 8-17) and its 9 uncalled foot-of-page lines are figure labels and table rows, so the source has no footnotes (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 9)"
+    },
+    "summaries": {
+      "state": "partial",
+      "count": 32,
+      "note": "32 of 32 prose blocks have an English draft written after the re-split (2026-11-14); Arabic, Chinese, French, Russian and Spanish are owed again and left to the summary drain. The old per-page summaries in all six languages are kept under each block's 'superseded'",
+      "tool": "summaries",
+      "at": "2026-11-14"
+    }
+  }
+}

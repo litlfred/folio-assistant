@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.A.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.A.Collaboration">
+    <bpmn:participant id="PHW.A.Participant" name="A. Record and Manage Patient Privacy Consent" processRef="PHW.A" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.A" name="A. Record and Manage Patient Privacy Consent" isExecutable="false">
+    <bpmn:documentation>Captures, updates, or revokes a patient privacy consent directive (`IHE.PCF.consentBasic` or `IHE.PCF.consentIntermediate`) in a PCF Consent Registry using the IHE PCF Access Consent `[ITI-108]` transaction (`Post`, `Put`, `Delete`). Trust-anchor neutral: applicable across any trust network (including the WHO GDHCN or national/regional trust anchors) with no IUA claim. This is the person-side view of DSA process P9 (individual consent linked to the agreement). It applies only to agreements whose legal basis is consent (rule 1): treatment, public-health law and research waivers do not rest on consent. Where the person has recorded nothing, the jurisdiction&apos;s chosen PCF implicit default policy applies, opt-in (for example `Policy-deny`) or opt-out (for example `Policy-basic-normal` or `Policy-all-normal`) (rule 4) (owner consent rules, 2026-10-30 19:27Z).</bpmn:documentation>
+    <bpmn:laneSet id="PHW.A.LaneSet">
+      <bpmn:lane id="PHW.Lane.Holder" name="VHL Holder (Patient / Personal Health Wallet)">
+        <bpmn:documentation>Personas: VHL Holder (Patient using a Personal Health Wallet to author, update, or revoke privacy consent directives).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.A.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.A.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.A.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.A.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRecorder" name="PCF Consent Recorder (Wallet / VHL Sharer)">
+        <bpmn:documentation>System Actor: IHE PCF Consent Recorder (`https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRecorder`), initiating `[ITI-108]` Access Consent transactions.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.A.2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.A.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.A.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.A.4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRegistry" name="PCF Consent Registry">
+        <bpmn:documentation>System Actor: IHE PCF Consent Registry (`https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRegistry`), storing and versioning FHIR `Consent` and `Provenance` resources via `[ITI-108]` Access Consent.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.A.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.A.Start" name="Start consent management">
+      <bpmn:documentation>VHL Holder initiates authoring, updating, or revoking a patient privacy consent directive.</bpmn:documentation>
+      <bpmn:outgoing>PHW.A.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="PHW.A.1" name="A1. Select base policy &amp; disclosure scope (PCF Basic / Intermediate Consent)">
+      <bpmn:documentation>Holder selects the base policy URI (`Consent.policy.uri`), permitted purpose of use (`PCFPurposeOfUseVS`), authorized actors, validity period, and covered clinical data. The Holder is shown the agreement&apos;s plain-language summary, published and hashed with the agreement; that summary is what the person consents to (rule 3). `Consent.policy.uri` is the agreement&apos;s fixed-version URL, not a moving one (rule 2) (owner consent rules, 2026-10-30 19:27Z).</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="PHW.A.2" name="A2. Construct FHIR Consent &amp; Provenance (IHE.PCF.consentBasic / Intermediate)">
+      <bpmn:documentation>Consent Recorder constructs a FHIR `Consent` resource (`status: active | inactive`, `scope: patient-privacy`, `category: LOINC#59284-0`) and accompanying `IHE.PCF.provenance` resource. `Consent.policy.uri` carries the agreement&apos;s fixed-version URL, so the Consent counts only for that version (rule 2).</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.A.Gateway1" name="Create vs Update/Revoke?">
+      <bpmn:documentation>Routes new consent directives to `[ITI-108]` Post and amendments/revocations to `[ITI-108]` Put or Delete.</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow4</bpmn:outgoing>
+      <bpmn:outgoing>PHW.A.Flow5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="PHW.A.3" name="A3. Create consent directive [ITI-108] Access Consent: Post">
+      <bpmn:documentation>Initiates IHE PCF `[ITI-108]` Access Consent (`POST [base]/Consent` or transaction Bundle with `Provenance`) to record a new consent directive.</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow6</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="PHW.A.4" name="A4. Update or revoke directive [ITI-108] Access Consent: Put / Delete">
+      <bpmn:documentation>Initiates IHE PCF `[ITI-108]` Access Consent (`PUT [base]/Consent/[id]` or `DELETE [base]/Consent/[id]`) to update or revoke an existing consent directive. Withdrawal sets `Consent.status` to `inactive` (`PUT`); `DELETE` is for a directive recorded in error. If the agreement is amended to widen use, its new version needs a new Consent; an amendment that narrows use does not (rule 2). Withdrawal ends any cached registry result that holds this Consent at once (rule 4) (owner consent rules, 2026-10-30 19:27Z).</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow7</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="PHW.A.5" name="A5. Validate, version &amp; persist Consent + Provenance [ITI-108] Access Consent">
+      <bpmn:documentation>Consent Registry validates conformance to `IHE.PCF.consentBasic` / `IHE.PCF.consentIntermediate`, assigns `Consent.id` and `Consent.meta.versionId`, and persists the resource.</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow6</bpmn:incoming>
+      <bpmn:incoming>PHW.A.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:receiveTask id="PHW.A.6" name="A6. Confirm recorded Consent.id &amp; versionId [ITI-108] Access Consent response">
+      <bpmn:documentation>Holder receives confirmation of the recorded or updated `Consent.id` and `Consent.meta.versionId` from the `[ITI-108]` Access Consent response.</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.A.Flow9</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:endEvent id="PHW.A.End" name="Consent directive recorded">
+      <bpmn:documentation>Patient privacy consent directive is active, updated, or revoked in the PCF Consent Registry.</bpmn:documentation>
+      <bpmn:incoming>PHW.A.Flow9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.A.Flow1" sourceRef="PHW.A.Start" targetRef="PHW.A.1" />
+    <bpmn:sequenceFlow id="PHW.A.Flow2" sourceRef="PHW.A.1" targetRef="PHW.A.2" />
+    <bpmn:sequenceFlow id="PHW.A.Flow3" sourceRef="PHW.A.2" targetRef="PHW.A.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.A.Flow4" name="New (POST)" sourceRef="PHW.A.Gateway1" targetRef="PHW.A.3" />
+    <bpmn:sequenceFlow id="PHW.A.Flow5" name="Update / Revoke (PUT / DELETE)" sourceRef="PHW.A.Gateway1" targetRef="PHW.A.4" />
+    <bpmn:sequenceFlow id="PHW.A.Flow6" name="[ITI-108]" sourceRef="PHW.A.3" targetRef="PHW.A.5" />
+    <bpmn:sequenceFlow id="PHW.A.Flow7" name="[ITI-108]" sourceRef="PHW.A.4" targetRef="PHW.A.5" />
+    <bpmn:sequenceFlow id="PHW.A.Flow8" name="201/200 OK" sourceRef="PHW.A.5" targetRef="PHW.A.6" />
+    <bpmn:sequenceFlow id="PHW.A.Flow9" sourceRef="PHW.A.6" targetRef="PHW.A.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.A.Diagram">
+    <bpmndi:BPMNPlane id="PHW.A.Plane" bpmnElement="PHW.A.Collaboration">
+      <bpmndi:BPMNShape id="PHW.A.Participant_di" bpmnElement="PHW.A.Participant" isHorizontal="true"><dc:Bounds x="120" y="80" width="1740" height="1122" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Holder_di" bpmnElement="PHW.Lane.Holder" isHorizontal="true"><dc:Bounds x="150" y="80" width="1710" height="234" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRecorder_di" bpmnElement="PHW.Lane.ConsentRecorder" isHorizontal="true"><dc:Bounds x="150" y="314" width="1710" height="654" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRegistry_di" bpmnElement="PHW.Lane.ConsentRegistry" isHorizontal="true"><dc:Bounds x="150" y="968" width="1710" height="234" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.Start_di" bpmnElement="PHW.A.Start"><dc:Bounds x="272" y="179" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.1_di" bpmnElement="PHW.A.1"><dc:Bounds x="430" y="117" width="160" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.2_di" bpmnElement="PHW.A.2"><dc:Bounds x="430" y="561" width="160" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.Gateway1_di" bpmnElement="PHW.A.Gateway1" isMarkerVisible="true"><dc:Bounds x="755" y="616" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.3_di" bpmnElement="PHW.A.3"><dc:Bounds x="970" y="351" width="160" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.4_di" bpmnElement="PHW.A.4"><dc:Bounds x="970" y="771" width="160" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.5_di" bpmnElement="PHW.A.5"><dc:Bounds x="1190" y="1005" width="160" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.6_di" bpmnElement="PHW.A.6"><dc:Bounds x="1410" y="117" width="160" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.A.End_di" bpmnElement="PHW.A.End"><dc:Bounds x="1692" y="179" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.A.Flow1_di" bpmnElement="PHW.A.Flow1">
+        <di:waypoint x="308" y="197" />
+        <di:waypoint x="430" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow2_di" bpmnElement="PHW.A.Flow2">
+        <di:waypoint x="510" y="277" />
+        <di:waypoint x="510" y="561" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow3_di" bpmnElement="PHW.A.Flow3">
+        <di:waypoint x="590" y="641" />
+        <di:waypoint x="755" y="641" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow4_di" bpmnElement="PHW.A.Flow4">
+        <di:waypoint x="780" y="616" />
+        <di:waypoint x="780" y="431" />
+        <di:waypoint x="970" y="431" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow5_di" bpmnElement="PHW.A.Flow5">
+        <di:waypoint x="780" y="666" />
+        <di:waypoint x="780" y="851" />
+        <di:waypoint x="970" y="851" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow6_di" bpmnElement="PHW.A.Flow6">
+        <di:waypoint x="1130" y="431" />
+        <di:waypoint x="1270" y="431" />
+        <di:waypoint x="1270" y="1005" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow7_di" bpmnElement="PHW.A.Flow7">
+        <di:waypoint x="1050" y="931" />
+        <di:waypoint x="1050" y="1085" />
+        <di:waypoint x="1190" y="1085" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow8_di" bpmnElement="PHW.A.Flow8">
+        <di:waypoint x="1350" y="1085" />
+        <di:waypoint x="1490" y="1085" />
+        <di:waypoint x="1490" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.A.Flow9_di" bpmnElement="PHW.A.Flow9">
+        <di:waypoint x="1570" y="197" />
+        <di:waypoint x="1692" y="197" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

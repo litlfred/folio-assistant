@@ -1,0 +1,75 @@
+In ad,dition to the abov,"e mapping, F",ig 9 shows the,,,,,,
+relat,ionship between g,eneric produ,"cts, trade item",s and,,,,,
+regu,lated trade item u,sing HL7 FHI,R resource.,,,,,,
+,,,,,,,,,
+Fig.,9: Relationship be,tween gener,"ic product, tra",de item and re,gulat,ed trade item,,,
+,,,,,,,,,
+GE,NERIC PRODUCT,,TRA,DE ITEM,,,RE,GULATED TRADE ITE,M
+,,,,,,,,,
+i,dentifier 0..*,,id,entifier 1..*,,,,identifier 1..*,
+,,,,,,,,,
+,status 1..1,,st,atus 1..1,,,,status 1..1,
+,,,,,,,,,
+,name 1..*,,tr,adeItemName 0.,.*,,,jurisdiction 1..*,
+,,,,,,,,,
+,nameType 1..1,,,nameType 1..1,,,,authorisationHolder 1,..1
+,,,,,,,,,
+,nameValue 1..1,,,name 1..1,,,,validityPeriod 0..1,
+,,,,,,,,,
+,description 0..1,,d,escription 0..1,,,,authorisedTradeItem,1..1
+,,,,,,,,,
+,classification 0..*,,cl,assification 0..*,,,,attribute 0..*,
+,,,,,,,,,
+,unitOfUse 1..1,,m,anufacturer 0..1,,,,type 1..1,
+,,,,,,,,,
+,dosageForm 0..1,,c,ountryOfOrigin 1,..1,,,value[x] 1..1,
+,,,,,,,,,
+,strength 0..1,,s,helfLife 0..1,,,,associatedProduct 0..,*
+,,,1,,,1,,,
+,routeOfAdministratio,n 0..*,a,ssociatedGeneric,Prod,uct 0..*,,product 1..1,
+,,,,,,,,,
+,,,0..*,,,0.,.*,,
+,manufacturer 0..1,,,genericProduct 1,..1,,,relationship 1..*,
+,,,,,,,,,
+,countryOfOrigin 0..1,,,quantity 1..1,,,,quantity 1..1,
+,,,,,,,,,
+,shelfLife 0..1,,c,ontains 0..*,,,,,
+,,,,,,,,,
+,doseQuantity 0..1,,,tradeItem 1..1,,,,,
+,,,,,,,,,
+,attribute 0..*,,,quantity 1..1,,,,,
+,,,,,,,,,
+,type 1..1,,a,ttribute 0..*,,,,,
+,,,,,,,,,
+,value[x] 1..1,,,type 1..1,,,,,
+,,,,,,,,,
+,associatedProduct 0.,.*,,value[x] 1..1,,,,,
+,,,,,,,,,
+,product 1..1,,,,,,,,
+,,,,,,,,,
+,relationship 1..*,,,,,,,,
+,,,,,,,,,
+,quantity 1..1,,,,,,,,
+,,,,,,,,,
+Best,practices:,,,,,,,,
+,,,,,,,,,
+•,It is generally reco,mmended t,o avoid includi,ng product,•,The product codi,ng sys,tem should mainta,in uniform
+,classification or p,roduct chara,cteristics such,as dosage,,code lengths and,ensur,e scalability to acco,mmodate
+,and strength in th,e generic na,tional product,code.,,an increasing nu,mber,of unique products.,
+,"Instead, a system-",generated s,equential num,eric or,,,,,
+,alphanumeric cod,e should be,used.,,•,Product master d,ata st,ructures should sup,port the
+,,,,,,mapping of one g,eneri,c national product c,ode to
+•,Product character,istics such a,"s dosage, stren","gth,",,multiple corresp,ondin,g trade items. In add,"ition, the"
+,"pack size, and rou",te of admini,stration shoul,d be,,data structure sh,ould o,rganize multiple pa,ckaging
+,defined as attribu,tes and linke,d to the produ,ct codes.,,levels and quanti,ty rela,tionships across th,ose.
+,This combination,of attributes,and codes fac,ilitates,,,,,
+,comprehensive id,entification,of products.,,•,Packaging hierar,chies,and quantity conve,rsions
+,,,,,,across these leve,ls—al,ong with packagin,g variations
+•,Generic national,product cod,"es, including d",rug,,among different,brand,items—are critical,for
+,codes and medici,nal product,identifiers (wh,en,,countries to effe,ctively,manage supply ch,ain
+,using the WHO Dr,ug Dictionar,"y), should be",mapped,,operations such,as inv,entory control and,distribution.
+,to trade item-spe,cific identifie,"rs, such as GT","INs,",,Fig. 11 illustrates,pack,aging variations ac,ross brand
+,or similar unique,identifiers w,here GTINs ar,e,,items and how t,hey wi,ll link to standardiz,ed generic
+,not available.,,,,,product informa,tion.,,
+,,,,,,,,,
+20,,,,,,Instituting,data m,anagement and gove,rnance policies

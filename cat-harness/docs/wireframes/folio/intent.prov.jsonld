@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/folio/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/folio/intent.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/folio/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Folio visualiser — as-is intent",
+      "prov:value": "**What they need to do:**\n- see which nodes (\"stickies\") the folio graph holds\n- see, for each node, what it anchors to, which theme it claims, where it was declared, and the links it carries\n- see which declared directories were scanned, and whether each one is present. A declared-but-absent directory gets a row, not silence (bean `dh4f`).\n- tell an empty folio apart from a folio that could not be loaded. The page words the two states differently.",
+      "cat-harness:refs": [
+        "bean dh4f"
+      ]
+    }
+  ]
+}

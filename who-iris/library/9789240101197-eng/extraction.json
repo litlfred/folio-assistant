@@ -1,0 +1,65 @@
+{
+  "$schema": "folio-library-extraction/v1",
+  "doc_id": "9789240101197-eng",
+  "kinds": {
+    "contents": {
+      "state": "found",
+      "count": 39,
+      "note": "contents from inferred",
+      "tool": "pdf-structure.py",
+      "version": "0b311238188a",
+      "at": "2026-11-14"
+    },
+    "sections": {
+      "state": "found",
+      "count": 40,
+      "tool": "pdf-structure.py",
+      "version": "0b311238188a",
+      "at": "2026-11-14"
+    },
+    "figures": {
+      "state": "found",
+      "count": 30,
+      "note": "30 kept (1 raster, 29 vector renders, every one inspected); they show all 32 captioned figures (Figs 26-27, 28-29 and 31-32 share a page). The other 3 of the 35 caption entries read off the pages are Tables 1-3. 14 of the vector renders were inspected in the re-ingest pilot, 2026-11-14",
+      "tool": "pdf-images.py+pdf-vector-figures.py",
+      "at": "2026-11-14"
+    },
+    "tables": {
+      "state": "partial",
+      "count": 45,
+      "note": "45 drafts written, unreviewed; by a word-split test about 23 of them are page prose cut into columns, and some of the rest are lists read as tables (the reference list on p. 65) (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 45)",
+      "tool": "pdf-tables.py",
+      "version": "b3b9e4012c21",
+      "at": "2026-11-14"
+    },
+    "references": {
+      "state": "partial",
+      "count": 4,
+      "tool": "references-extract",
+      "version": "a00c5164027f",
+      "at": "2026-11-14",
+      "note": "the References section (sec-031, pp. 65-66) numbers 26 entries and Annex 6 lists 3 more; references-extract kept 1 from sec-031 (the footnote line 'All linked references were accessed on 15 October 2024', which opens the section, was read as entry 1 and the list stopped) and 3 from sec-038. Before this re-ingest the per-page split gave 29 (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 4)"
+    },
+    "glossary": {
+      "state": "partial",
+      "note": "the entry has a Glossary section (sec-002, pp. 8-11) and an 'Abbreviations and acronyms' section (sec-001), printed one term per line with its definition below; glossary-from-source reads only Markdown tables and 'term — definition' lines, read no rows, and then recorded 'none' as if no such section existed (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded none 0)",
+      "tool": "glossary-from-source",
+      "version": "0ed78cc7a54d",
+      "at": "2026-11-14"
+    },
+    "footnotes": {
+      "state": "partial",
+      "count": 1,
+      "tool": "pdf-footnotes.py",
+      "at": "2026-11-14",
+      "note": "1 footnote linked to its mark (p. 12, WHO's classification of digital interventions); footnote 2 (p. 65, 'All linked references were accessed on 15 October 2024') was read as an uncalled line, its mark not linked. The other 8 uncalled lines and 10 unlinked marks are figure labels, running heads and numbered citations (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 10)"
+    },
+    "summaries": {
+      "state": "partial",
+      "count": 40,
+      "note": "40 of 40 prose blocks have an English draft written after the re-split (2026-11-14); Arabic, Chinese, French, Russian and Spanish are owed again and left to the summary drain. The old per-page summaries in all six languages are kept under each block's 'superseded'",
+      "tool": "summaries",
+      "at": "2026-11-14"
+    }
+  }
+}
