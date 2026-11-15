@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-20T13:47:14Z
-updated_at: 2026-11-01T23:10:00Z
+updated_at: 2026-11-15T17:52:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -319,3 +319,5 @@ The owner answered "where does the background live?" on card Q-DEP-2: **A, behin
 - Box 3: every child was already `completed` or `scrapped`.
 
 **Stays `in-progress` as a container.** `supn` (box 3, owner Q-DEP-1 A: waits on R29) and `r29x` (paused) still hang here, and `check:bean-rollup` refuses a completed parent over open children. Close it when those two close or move.
+
+_2026-11-15T17:52:00Z_ — Audited all children on `cat/cat-harness/beans` and layer `main` branches: `folio-assistant-dkqd` (`completed`) and `folio-assistant-pbv1` (`completed`) are done alongside all archived children (`603s`, `6lb8`, `pb04`, `7po1`, `1ity`, `l4zi`, `w2hn`, `jbx2`, `flh4`, `cjtm`, `py74`, `pk2s`, `9poj`). Remaining open children keeping `yj32` `in-progress` as a container: `folio-assistant-bsd1` (`in-progress`: steps 1–6 and 16–23.3 merged across `cat-harness#992`, `#993`, `#1005`, `#1010`, `#1011`, `#1013`, `#1014`, `#1016` and `cat-harness-tools#1414`, `#1418`–`#1446`; remaining steps 7–12, 14–15, 23.4–27 wait on owner rulings Q8/Q9/Q10 or ITB harness tranche), `folio-assistant-r29x` (`todo`, PAUSED by owner on 2026-10-24), and rehomed `folio-assistant-supn` (`todo`: boxes 1–2 merged in `cat-harness-tools#766`, `cat-harness#711`, `folio-assistant#2724`; box 3 paused on R29).
