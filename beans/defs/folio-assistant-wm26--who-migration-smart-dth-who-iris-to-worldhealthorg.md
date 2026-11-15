@@ -50,7 +50,7 @@ Merge-manager stable point; table covers all 37 repos (G2 done 18:40Z); every ma
 - [ ] T12 Claude GitHub App on WHO repos (owner; urgent for dth-hrh, who-iris)
 - [ ] T13 per moved repo: deprecate litlfred copy, re-pin harness locks to WHO
 - [ ] T14 review sheets Config tab to WHO per moved repo
-- [ ] T15 issues and PRs of fork-moved repos: copy open issues to WHO by REST (issue transfer only works within one owner), back-links both ways, old→new map; parked content PRs re-opened from the same fork branch into WHO; cross-refs and review-sheet rows updated from the map (plan section 11; cards Q-WP-7, Q-WP-8)
+- [ ] T15 issues and PRs of fork-moved repos: copy open issues to WHO by REST (issue transfer only works within one owner), back-links both ways, old→new map; parked content PRs re-opened from the same fork branch into WHO; cross-refs and review-sheet rows updated from the map (plan section 11; Q-WP-7 = A copy + close originals, owner 19:38Z; Q-WP-8 pending)
 - [ ] H10 REPIN_TOKEN secret or "Allow GitHub Actions to create pull requests" in WHO (owner)
 
 ## Early moves (before the gate)
