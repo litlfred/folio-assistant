@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:40:00Z
-updated_at: 2026-11-15T13:40:00Z
+updated_at: 2026-11-15T17:46:00Z
 parent: folio-assistant-pb15
 tags:
     - handover
@@ -61,3 +61,5 @@ Open: dth-phc#44, smart-ra#249, smart-ips-pilgrimage#115, smart-trust-phw#85, fh
 _2026-11-15T12:10:00Z_ — All G1 re-pins merged: dth-phc#44, dth-sc#32, smart-ra#249, smart-ips-pilgrimage#115, smart-trust-phw#84 + #85 (injection QA refresh), smart-immunizations#150. pilgrimage#115 also needed check:nav-names: a `visualisers[].title` that differs from the kind title gives one destination two names; drop it. Remaining: fhir-harness#439 (fhir-core-definitions visualiser exemption, ready-to-merge, CI re-run). Not started: G1 drafts aai#64, smart-anc#8, smart-fp#13, smart-trust-tools#65.
 
 _2026-11-15T13:40:00Z_ — fhir-harness#439 merged. Owner 12:09Z card "A. Revive, close, ask" + 12:12Z "make sure revisions are aligned with current decisions and infra": revived 13 enable drafts (smart-base-clinical#20, aai-programme#64, ihris#47, smart-anc#8, smart-ccc#8, smart-dak-{ccc,pnc,smbp,srv,tb}#8, smart-dak-chud#9, smart-fp#13, smart-tuberculosis#8): default branch merged in (smart-anc and smart-fp default to `master`), every layer re-pinned to main with consent evidence citing the 12:12Z ask (these sites have no standing consent; never cite another site's standing consent), smart-base ids → `collab`, smart-base-clinical `smart-base-kg` → `smart-base-L1` (smart-base#360), canonical site-publish caller, unresolvable L2/L3-collab dropped; marked ready. These repos run no PR-check workflow, so there is no CI gate; handed to the merge manager on local verification. Script: scratchpad g2.sh (+ repin2.py).
+
+_2026-11-15T17:46:00Z_ — All 13 revived drafts merged. First Site publishes: smart-base-clinical, smart-dak-{ccc,pnc,smbp,srv,tb,chud}, smart-tuberculosis green; smart-fp and smart-anc green on master after cat-harness-tools#2320 (canonical caller triggers on `[main, master]`) and smart-fp#14 / smart-anc#9. Eight IGs were refused by fhir-harness's ig-content-qa gate (no injection review); reviews recorded on the owner's direct card taps (16:58Z, 17:10Z), 0 findings; smart-base-clinical needed `trustedScripts: ["cql.js"]`; smart-anc's `.gitignore` needed `!/qa/ig-content-qa.json`. ihris: own pages.yml, canonical caller removed (ihris#49). aai-programme: library JSON-LD regen (#66), then site:qa-validation needed GH_TOKEN in the stage step: cat-harness-tools#2322 + re-pin aai-programme#68, publish green. Open: smart-ccc first publish still building at 17:45Z. Note for owners: smart-ccc StructureMaps carry a garbled target `swrapin_entry_createtatus` (authoring defect).
