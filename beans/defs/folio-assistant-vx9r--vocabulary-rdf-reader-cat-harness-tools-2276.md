@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-15T07:45:00Z
-updated_at: 2026-11-15T07:45:00Z
+updated_at: 2026-11-15T08:42:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -22,3 +22,5 @@ Workstream state for the class-model vocabulary reader. It resumes the CLI sessi
 - Thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9ML7DLxyJX5eXJUBwAeJxeF
 
 _2026-11-15T07:45:00Z_ — Filed, with draft PR #2276 up.
+
+_2026-11-15T08:42:00Z_ — The owner chose C for schema.org: read only the classes the corpus names. That is cat-harness-tools#2284, stacked on #2276. The fast tier is green on both, and both are handed to the merge manager thread.
