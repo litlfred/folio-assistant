@@ -2,11 +2,11 @@
 # folio-assistant-bmat
 $schema: bean/1.0.0
 title: 'Document back matter: Glossary (Terms, then Acronyms) at the end of every document (handover bean)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-10T16:40:00Z
+updated_at: 2026-11-15T18:11:00Z
 parent: folio-assistant-npuo
 tags:
     - document-structure

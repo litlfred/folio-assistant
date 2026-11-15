@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T06:35:00Z
-updated_at: 2026-11-15T06:40:00Z
+updated_at: 2026-11-15T18:11:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover
@@ -69,3 +69,8 @@ _2026-11-15T06:40:00Z_ — The other merge manager is gone; this thread took ove
 Waiting on one-by-one owner cards (Q-WRAP-2 C); summaries in /mnt/project-files/merge-manager/content-review/dth-content-drafts-2026-11-11.md: dth-hrh #75 #81 #82 #83 #94 #96 (#96 stacked on #94), dth-sc#7, dth-phc#4. dth-pc#7 and #10 target the merged claude/dth-pc-scaffold and need a retarget to main; #10 has the 2-block caption wording conflict (owner's call).
 
 _2026-11-15T06:40:00Z_ — Merged dth-phc#46, dth-sc#34, smart-ra#251 (Q-LOCK-1 A); smart-ra #154 #190 #191 #192 #195 (Q-RA-VAL-2 A + Q-LOCK-1 A); fa#3127 into the train branch. smart-ra#185 conflicts; the drafts thread is merging main into it.
+
+_2026-11-15T18:11:00Z_ — End-of-window audit (Round 39):
+- **Merged on `main`**: `folio-assistant#3124` (`c6c2c6a745`, train), `folio-assistant#3123` (`ae425fb1ae`), `smart-ra#185` (`b8883738e0`) & G3 change-set PRs `#151`/`#152`/`#156`/`#158`/`#197`/`#199`/`#203`/`#218`/`#221` + `#236` (`5c8105126a`), `smart-trust#238` (`5431c1028f`), `smart-trust#240` (`046103a2d4`), `smart-trust#241` (`b0e275d19a`), `smart-ips-pilgrimage#112` (`806626a59d`), `smart-ips-pilgrimage#113` (`e9f47d9923`), `cat-harness-tools#2199` (`0cb4e0f903`) + `cat-harness#1341` (`e54565a182`, with `tools#2185` closed), `who-iris#279` (`6ae868df1e`, folding `#284`), `cat-harness-tools#1980` (`4dbb1b394f`) + `cat-harness#1288` (`2e959408e5`) + G1 opt-in family (`dth-hrh#126`, `dth-phc#44`, `dth-sc#32`, `smart-immunizations#139`, `smart-trust#212`, `smart-trust-phw#62`, `smart-ra#249`, `smart-ips-pilgrimage#81`, `aai-programme#64`, `smart-anc#8`, `smart-fp#13`, `smart-base-clinical#20`), `cat-harness#1329` (`d41ff7ce99`), `cat-harness#1347` (`2ff927a796`), `cat-harness#1348` (`e2eeea3460`), `cat-harness-tools#2130` (`3f6222dd63`), `cat-harness-tools#2229` (`496c5e95b8`), `smart-immunizations#148` (`6d7d44479a`), `smart-base#259` (`8f73764bea`), `dth-hrh#81` (`7984d5795e`), `#82` (`1152db3925`), `#83` (`9ea2aef491`), `dth-phc#47` (`a26afea6e7`), `cat-harness-tools#2276` (`361026dcb9`) & `#2284` (`382eff032f`), and `fhir-harness#437` (`504736fea0`) + `cat-harness-tools#2294`/`#2308`/`#2316` + `smart-base#414` + `smart-immunizations#156`.
+- **Closed per Q-PB-1 = A**: `smart-immunizations#145`, `smart-immunizations-uganda#39`, `smart-ips-pilgrimage#109`, `smart-trust#236`, `smart-trust-phw#78`, `smart-pcmt#6`, `folio-assistant-core#799`, `smart-hiv#29`.
+- **Remaining open in queue**: `cat-harness-tools#2182` (paired with `fhir-harness#426`), `smart-base#405`, `smart-pcmt#5`, and `smart-trust-tools#65`.
