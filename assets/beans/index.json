@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 47,
+      "count": 40,
       "unit": "open beans"
     }
   },
@@ -41,14 +41,14 @@
     {
       "id": "folio-assistant-14un",
       "title": "smart-base: move the scripts, validators and qa-checkers behind L* tool nodes into their subgraph",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-95e7",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-13T12:07:20Z",
-      "updatedAt": "2026-11-13T23:40:00Z",
+      "updatedAt": "2026-11-15T17:30:00Z",
       "preview": "## Why\n\nParent: `folio-assistant-95e7`. The tool declarations moved into L1–L4 (issue #359, \"organize tools, skills, processes the same way\"); the code they invoke did not. Examples: `L2-bpmn/tools/bpmn-to-fsh` runs `smart-base/scripts/smart-base-transform.py`; L1 tools run `smart-base/scripts/l1-*`.\n\n| now | target |\n|---|---|\n| `scripts/l1-*`, `gen-l1-extraction-pages`, `extract-smart-kg-l1`, `e",
       "file": "beans/defs/folio-assistant-14un--smart-base-move-the-scripts-validators-and-qa-chec.md"
     },
@@ -139,14 +139,14 @@
     {
       "id": "folio-assistant-3bk1",
       "title": "IG publish-on-push rollout: re-pins after the cascade, and the smart-trust injection gate",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:55:00Z",
-      "updatedAt": "2026-11-15T07:30:00Z",
+      "updatedAt": "2026-11-15T17:30:00Z",
       "preview": "Owner thread: \"Finish publish-on-push rollout PRs\" https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9GSmgusK4K8TCWBQfu5rM7S, session https://claude.ai/code/session_01Qmmkt6TSbSJzATzKNZujVV. Assigned by the merge manager via the coordinator 08:34Z: land the IG publish rollout after the re-pin cascade (folio-assistant-um0y). Never merges; reports heads ",
       "file": "beans/defs/folio-assistant-3bk1--ig-publish-on-push-rollout-re-pins-and-smart-trust-injection-gate.md"
     },
@@ -412,7 +412,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:19:32Z",
-      "updatedAt": "2026-11-09T14:20:00Z",
+      "updatedAt": "2026-11-15T17:38:00Z",
       "preview": "Every CI step is a pure function of its inputs. The primitive is `.github/actions/cached-step` (litlfred/folio-assistant#2972).\n\n- **Trust classes:**\n  - (a) entries that can be verified exactly: committers may publish them with `cache:publish`, and CI only verifies them;\n  - (b) verdicts, which go through #2957 and #2958;\n  - (c) main-only entries.\n- **Daily report:** the hit-rate and budget repo",
       "file": "beans/defs/folio-assistant-9ml4--cache-first-ci-one-cached-step-primitive-derived-k.md"
     },
@@ -594,7 +594,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T20:35:18Z",
-      "updatedAt": "2026-11-10T16:51:00Z",
+      "updatedAt": "2026-11-15T17:30:00Z",
       "preview": "Owner, 2026-10-31 (card \"A. Both\"): pass litlfred/dth-phc#1 section 9 item 2 to its owner as a bean.\n\ndth-sc, dth-pc and dth-phc each copied dth-hrh by hand. Each grew its own `seed_from_l1.py`, `pdf_tables.py`, `add_figures.py`, glossary validator and coverage adapter (`scripts/glossary/validate.ts`, `scripts/folio/check_l1_coverage.ts` in dth-phc).\n\n- [x] List what each DTH repo has locally and ",
       "file": "beans/defs/folio-assistant-cysv--one-dth-scaffold-and-seed-tool-in-the-platform-dth.md"
     },
@@ -839,14 +839,14 @@
     {
       "id": "folio-assistant-gm5f",
       "title": "Fix gate failures on platform mains (2026-11-14): five new gates on smart-immunizations#145",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-14T17:50:00Z",
-      "updatedAt": "2026-11-15T12:12:00Z",
+      "updatedAt": "2026-11-15T17:30:00Z",
       "preview": "Thread \"Fix gate failures on platform mains\" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9BNSixgF4DaasKpgTGfx9vA), dispatched by the merge manager on red-main duty. Triage: smart-immunizations#145. Rule: fix causes, never waive a gate. Green PRs go to the merge manager; it merges once the owner reopens the merge window.\n\nRoot cause of three of t",
       "file": "beans/defs/folio-assistant-gm5f--fix-gate-failures-on-platform-mains-2026-11-14.md"
     },
@@ -1049,14 +1049,14 @@
     {
       "id": "folio-assistant-l1el",
       "title": "fhir-core: HL7 published packages are the authority; derive the UML class model",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-15T07:05:00Z",
-      "updatedAt": "2026-11-15T11:20:00Z",
+      "updatedAt": "2026-11-15T16:10:00Z",
       "preview": "Owner, 2026-11-15 (stalled CLI session, log gist f2613e4b): \"i want to refer to HL7 offiically published .json etc for their resources, just use fhir-harness to derived stuff (e.g. UML) that is not part of core IG publisher\" and \"reference published hl7. assets as authoratative\". Owner cards then: point to HL7 with a cache only; build the UML now; add hl7.org to allowed hosts.\n\nOwner thread: https",
       "file": "beans/defs/folio-assistant-l1el--fhir-core-hl7-is-the-authority-uml-class-model.md"
     },
@@ -1298,7 +1298,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T18:37:00Z",
+      "updatedAt": "2026-11-15T17:42:00Z",
       "preview": "Owner chose B and said merge (09:07Z): re-pin all IGs once, then enable a 6-hourly `standing-repin.yml` in each IG. Owner thread: biblio https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9G6g9EGbG9kGSg8u3W5fieF.\n\n- [x] smart-trust#200 (first standing re-pin) merged (`30fa68a001`, `10:54:55Z`)\n- [x] smart-base#354 (standing re-pin) merged (`9946a84647`,",
       "file": "beans/defs/folio-assistant-oiah--biblio-nav-standing-6-hourly-re-pin-per-ig-q-bibna.md"
     },
@@ -1396,7 +1396,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-15T13:27:00Z",
+      "updatedAt": "2026-11-15T13:32:00Z",
       "preview": "Every agent follows these. Newest rule wins where two disagree; the owner's message in a thread wins over this list. Links `folio-assistant-xxxx` point to the detail record.\n\n- WHO MIGRATION (user 16:10Z 11-11): smart-* and dth-* repos move to WorldHealthOrganization. Q-MIG-1 = A (draft PRs removing hard-coded owner: tools#1918, smart-base#351). Q-MIG-3 = B: IRIs use staging root worldhealthorgani",
       "file": "beans/defs/folio-assistant-php1--owner-standing-rules-moved-from-project-memory-202.md"
     },
@@ -1459,15 +1459,15 @@
     {
       "id": "folio-assistant-rk1e",
       "title": "ArchiMate links back to smart-ra: merge the PR chain (owner C, OK to merge)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-14T17:08:00Z",
-      "preview": "Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RBRzWsBEvv2Z19MPdrGVRt. Owner chose C and said OK to merge. The thread merges in order as CI goes green.\n\n- [x] folio-assistant-core#764 (first)\n- [x] then dth-hrh#121 (merged 2026-11-14 17:08Z), dth-phc#41 (merged), dth-sfp#10 (merged into dth-sfp#8)\n- [x] cat-harness-tools#1950 and smar",
+      "updatedAt": "2026-11-15T17:30:00Z",
+      "preview": "Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RBRzWsBEvv2Z19MPdrGVRt. Owner chose C and said OK to merge. The thread merges in order as CI goes green.\n\n- [x] folio-assistant-core#764 (first)\n- [x] then dth-hrh#121 (merged 2026-11-14 17:08Z), dth-phc#41 (merged), dth-sfp#10 (merged into dth-sfp#8)\n- [x] cat-harness-tools#1950 (`fe72e7",
       "file": "beans/defs/folio-assistant-rk1e--archimate-links-back-to-smart-ra-merge-the-pr-chai.md"
     },
     {
@@ -1627,14 +1627,14 @@
     {
       "id": "folio-assistant-um0y",
       "title": "Merge manager: re-pin cascade core#761 → smart-base → who-iris/smart-ra → dth-hrh",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-13T20:49:00Z",
+      "updatedAt": "2026-11-15T17:30:00Z",
       "preview": "Owner thread: merge manager https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR.\n\nCascade onto cat-harness 5244c31 and cat-harness-tools 4216ebb: folio-assistant-core#761 → smart-base → who-iris / smart-ra → dth-hrh. Code-only merge window until 2026-11-12 18:05Z (owner extended \"+12hrs window\" 06:04Z). Per Q-RERUN-1 B, CI is re-r",
       "file": "beans/defs/folio-assistant-um0y--merge-manager-re-pin-cascade-core-761-smart-base-w.md"
     },
@@ -1662,7 +1662,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-15T06:35:00Z",
+      "updatedAt": "2026-11-15T17:52:00Z",
       "preview": "Coordinator's handover summary, 2026-11-12 09:32Z, one child bean per open workstream. Re-check every PR live on GitHub before acting. Append `_<UTC>_ — <change>` to the child and bump `updated_at` after each change; complete a child when its work is merged or handed off.\n\nStanding rules for this window (full list folio-assistant-php1): litlfred forks only; never bump versions or cut tags; content",
       "file": "beans/defs/folio-assistant-v8bg--handover-2026-11-12-09-32z-open-workstreams.md"
     },
@@ -1711,15 +1711,15 @@
     {
       "id": "folio-assistant-vx9r",
       "title": "Schema viewer vocabulary reader: cat-harness-tools#2276 (bean cat-tools-xfd4)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-15T07:45:00Z",
-      "updatedAt": "2026-11-15T08:42:00Z",
-      "preview": "Workstream state for the class-model vocabulary reader. It resumes the CLI session that stalled on credits (gist f2613e4b, section \"FHIR core, vocabularies, RDF reader\"). That session never committed its reader, so the reader was rebuilt from the session's design.\n\n- FHIR profiles (#2164) and FHIR core types (#2181) are merged. Bean cat-tools-t6fz is completed in #2276.\n- cat-harness-tools#2276 (d",
+      "updatedAt": "2026-11-15T17:52:00Z",
+      "preview": "Workstream state for the class-model vocabulary reader. It resumes the CLI session that stalled on credits (gist f2613e4b, section \"FHIR core, vocabularies, RDF reader\"). That session never committed its reader, so the reader was rebuilt from the session's design.\n\n- [x] FHIR profiles (#2164) and FHIR core types (#2181) are merged. Bean cat-tools-t6fz is completed in #2276.\n- [x] cat-harness-tools",
       "file": "beans/defs/folio-assistant-vx9r--vocabulary-rdf-reader-cat-harness-tools-2276.md"
     },
     {
@@ -1858,7 +1858,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T13:47:14Z",
-      "updatedAt": "2026-11-01T23:10:00Z",
+      "updatedAt": "2026-11-15T17:52:00Z",
       "preview": "Owner, 2026-09-20, verbatim — this is the largest architectural statement in\nthe session and paraphrasing it would lose the parts that constrain the design:\n\n> these avatars should aslso be the default display background for their\n> corresponding docs/ (ghpages) rendering, on which panels and folios and what\n> not renders. kindof like the shared miro board background... the harness\n> instnace disp",
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
     },
@@ -1920,8 +1920,8 @@
         "share": 0.7936507936507936
       }
     ],
-    "orphanOpen": 33,
-    "openTotal": 47,
+    "orphanOpen": 26,
+    "openTotal": 40,
     "coveredOpen": 13,
     "duplicateIds": 0
   }
