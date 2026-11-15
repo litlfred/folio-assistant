@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T07:37:00Z
+updated_at: 2026-11-15T11:55:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -58,3 +58,7 @@ _2026-11-13T20:49:00Z_ — Rule added per owner instruction (`2026-11-13T21:44:3
 - MERGE MANAGER IS NOW THE PROJECT THREAD (owner 2026-11-15 06:32Z: "there was anotehr merge manager while you stalled. no more"): the cshk_01VQDpPffYARDQ8juksAZScf session is retired. Hand merges to the Merge manager thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR. The hand-off steps above still apply.
 
 _2026-11-15T07:37:00Z_ — Two rules added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11).
+
+- STACKED FAST-GREEN MERGES FOR NON-CONTENT PRS (owner 2026-11-15 11:52Z, option C "A and B together" on the coordinator's card "How should we stack PRs to merge faster?"): (A) batch the ready non-content PRs of a repo onto one batch branch with one CI run, and split the batch when it is red; (B) merge a batch, or a single non-content PR, on fast-tier green. The full tier then runs on main, and the merge manager fixes any red on main straight away. Content PRs still need the owner's own card or words.
+
+_2026-11-15T11:55:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator.
