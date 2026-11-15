@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:40:00Z
-updated_at: 2026-11-15T12:10:00Z
+updated_at: 2026-11-15T13:40:00Z
 parent: folio-assistant-pb15
 tags:
     - handover
@@ -59,3 +59,5 @@ _2026-11-15T10:17:00Z_ — Merged: smart-immunizations#150, smart-trust-phw#84, 
 Open: dth-phc#44, smart-ra#249, smart-ips-pilgrimage#115, smart-trust-phw#85, fhir-harness#439.
 
 _2026-11-15T12:10:00Z_ — All G1 re-pins merged: dth-phc#44, dth-sc#32, smart-ra#249, smart-ips-pilgrimage#115, smart-trust-phw#84 + #85 (injection QA refresh), smart-immunizations#150. pilgrimage#115 also needed check:nav-names: a `visualisers[].title` that differs from the kind title gives one destination two names; drop it. Remaining: fhir-harness#439 (fhir-core-definitions visualiser exemption, ready-to-merge, CI re-run). Not started: G1 drafts aai#64, smart-anc#8, smart-fp#13, smart-trust-tools#65.
+
+_2026-11-15T13:40:00Z_ — fhir-harness#439 merged. Owner 12:09Z card "A. Revive, close, ask" + 12:12Z "make sure revisions are aligned with current decisions and infra": revived 13 enable drafts (smart-base-clinical#20, aai-programme#64, ihris#47, smart-anc#8, smart-ccc#8, smart-dak-{ccc,pnc,smbp,srv,tb}#8, smart-dak-chud#9, smart-fp#13, smart-tuberculosis#8): default branch merged in (smart-anc and smart-fp default to `master`), every layer re-pinned to main with consent evidence citing the 12:12Z ask (these sites have no standing consent; never cite another site's standing consent), smart-base ids → `collab`, smart-base-clinical `smart-base-kg` → `smart-base-L1` (smart-base#360), canonical site-publish caller, unresolvable L2/L3-collab dropped; marked ready. These repos run no PR-check workflow, so there is no CI gate; handed to the merge manager on local verification. Script: scratchpad g2.sh (+ repin2.py).
