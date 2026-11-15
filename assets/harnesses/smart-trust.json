@@ -5,9 +5,9 @@
     "position": "complete",
     "next": null,
     "counts": {
-      "done": 13,
+      "done": 14,
       "not-done": 0,
-      "could-not-determine": 6,
+      "could-not-determine": 7,
       "stated": 0
     },
     "steps": [
@@ -98,6 +98,21 @@
         "action": "check it in the instance's own repository"
       },
       {
+        "id": "directory:archimate",
+        "namedBy": "smart-trust",
+        "what": "declared directory archimate/ exists",
+        "state": "could-not-determine",
+        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
+        "action": "check it in the instance's own repository"
+      },
+      {
+        "id": "directory:smart-trust-findings",
+        "namedBy": "smart-trust",
+        "what": "declared directory findings/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
         "id": "asset:agent-instructions",
         "namedBy": "smart-trust",
         "what": "declared agent-instructions AGENTS.md exists",
@@ -157,7 +172,7 @@
       {
         "id": "initialization",
         "state": "unknown",
-        "label": "6 setup step(s) could not be checked from here"
+        "label": "7 setup step(s) could not be checked from here"
       },
       {
         "id": "repository",

@@ -745,6 +745,79 @@
       "heading": false
     }
   ],
+  "images": [
+    {
+      "id": "img-p003-1",
+      "file": "images/img-p003-1.png",
+      "page": 3,
+      "narratives": {
+        "en": "Figure 1 — a JSON Schema rendered as a class diagram, generated from the natural-language prompt quoted beside it. Four boxes: `root` holding `experiments: object[]`; an `experiments entry` with `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` and `product_purity: boolean`; and TWO separate leaf definitions, `metalSalt` and `ligand`, each carrying an identical `name`/`mass`/`inchi` triple. That duplication is the point of the figure — it is what the next prompt asks to be removed.",
+        "fr": "Figure 1 — un JSON Schema rendu sous forme de diagramme de classes, généré à partir du prompt en langage naturel cité à côté. Quatre boîtes : `root`, qui contient `experiments: object[]` ; une `experiments entry` avec `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` et `product_purity: boolean` ; et DEUX définitions feuilles distinctes, `metalSalt` et `ligand`, portant chacune le même triplet `name`/`mass`/`inchi`. Cette duplication est le propos de la figure — c'est ce que le prompt suivant demande de supprimer.",
+        "es": "Figura 1: un JSON Schema representado como diagrama de clases, generado a partir del prompt en lenguaje natural citado a su lado. Cuatro cajas: `root`, que contiene `experiments: object[]`; una `experiments entry` con `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` y `product_purity: boolean`; y DOS definiciones hoja separadas, `metalSalt` y `ligand`, cada una con el mismo trío `name`/`mass`/`inchi`. Esa duplicación es lo que quiere mostrar la figura: es lo que el siguiente prompt pide eliminar.",
+        "ar": "الشكل 1 — مخطط JSON Schema معروض في صورة مخطط أصناف، مُولَّد من الموجّه بلغة طبيعية المقتبس بجانبه. أربعة مربعات: `root` يحمل `experiments: object[]`؛ و`experiments entry` فيه `metal_salt: metalSalt` و`ligand: ligand` و`creator` و`date` و`temperature` و`duration` و`product_purity: boolean`؛ وتعريفان ورقيّان منفصلان، `metalSalt` و`ligand`، يحمل كلٌّ منهما الثلاثية نفسها `name`/`mass`/`inchi`. وهذا التكرار هو مقصد الشكل — فهو ما يطلب الموجّه التالي إزالته.",
+        "ru": "Рисунок 1 — JSON Schema в виде диаграммы классов, сгенерированная по приведённому рядом промпту на естественном языке. Четыре блока: `root` с полем `experiments: object[]`; `experiments entry` с полями `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` и `product_purity: boolean`; и ДВА отдельных листовых определения, `metalSalt` и `ligand`, у каждого одинаковая тройка `name`/`mass`/`inchi`. Это дублирование и есть смысл рисунка — именно его следующий промпт просит устранить.",
+        "zh": "图 1——以类图形式呈现的 JSON Schema，由旁边引用的自然语言提示生成。四个方框：`root`，包含 `experiments: object[]`；一个 `experiments entry`，含 `metal_salt: metalSalt`、`ligand: ligand`、`creator`、`date`、`temperature`、`duration` 和 `product_purity: boolean`；以及两个独立的叶子定义 `metalSalt` 和 `ligand`，各自带有完全相同的 `name`/`mass`/`inchi` 三元组。这种重复正是该图的要点——下一条提示要求消除的就是它。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p003-2",
+      "file": "images/img-p003-2.png",
+      "page": 3,
+      "narratives": {
+        "en": "Figure 2 — the same schema after a natural-language modification request. The two identical leaf definitions of Figure 1 have collapsed into ONE `compound` class carrying `name`/`mass`/`inchi`, and both `metal_salt` and `ligand` on the `experiments entry` now refer to it. The pair Fig. 1 → Fig. 2 is the paper's demonstration that a refactor can be requested in prose and applied to a validated model.",
+        "fr": "Figure 2 — le même schéma après une demande de modification en langage naturel. Les deux définitions feuilles identiques de la figure 1 ont fusionné en UNE seule classe `compound` portant `name`/`mass`/`inchi`, et `metal_salt` comme `ligand` dans l'`experiments entry` y renvoient désormais. La paire figure 1 → figure 2 est la démonstration, par l'article, qu'une refactorisation peut être demandée en prose et appliquée à un modèle validé.",
+        "es": "Figura 2: el mismo esquema tras una petición de modificación en lenguaje natural. Las dos definiciones hoja idénticas de la figura 1 se han fusionado en UNA sola clase `compound` con `name`/`mass`/`inchi`, y tanto `metal_salt` como `ligand` en la `experiments entry` remiten ahora a ella. El par figura 1 → figura 2 es la demostración del artículo de que una refactorización puede pedirse en prosa y aplicarse a un modelo validado.",
+        "ar": "الشكل 2 — المخطط نفسه بعد طلب تعديل بلغة طبيعية. اندمج التعريفان الورقيّان المتطابقان من الشكل 1 في صنف واحد `compound` يحمل `name`/`mass`/`inchi`، وصار كلٌّ من `metal_salt` و`ligand` في `experiments entry` يشير إليه. والزوج الشكل 1 → الشكل 2 هو برهان الورقة على أن إعادة الهيكلة يمكن طلبها نثرًا وتطبيقها على نموذج مُتحقَّق منه.",
+        "ru": "Рисунок 2 — та же схема после запроса на изменение на естественном языке. Два одинаковых листовых определения с рисунка 1 слились в ОДИН класс `compound` с полями `name`/`mass`/`inchi`, и теперь на него ссылаются и `metal_salt`, и `ligand` в `experiments entry`. Пара «рисунок 1 → рисунок 2» — демонстрация в статье того, что рефакторинг можно запросить прозой и применить к проверенной модели.",
+        "zh": "图 2——同一模式在一次自然语言修改请求之后的样子。图 1 中两个相同的叶子定义合并成一个带 `name`/`mass`/`inchi` 的 `compound` 类，`experiments entry` 中的 `metal_salt` 和 `ligand` 现在都引用它。图 1 → 图 2 这一对是论文的演示：重构可以用文字提出，并应用于一个经过验证的模型。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 12,
+      "note": "outline"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 12,
+      "note": "2 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 2
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p5); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 12,
+      "note": "12 of 12 sections"
+    }
+  ],
   "links": {
     "repo": "litlfred/cat-harness",
     "branch": "main",

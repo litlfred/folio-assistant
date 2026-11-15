@@ -54,7 +54,10 @@
         }
       ],
       "extract": "Messages Skills Skill authoring best practices Learn how to write effective Skills that Claude can discover and use successfully. Good Skills are concise, well-structured, and tested with real usage. This guide provides practical authoring decisions to help you write Skills that Claude can discover and use effectively. For conceptual background on how Skills work, see the Skills overview. Core principles Concise is",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-001"
+      ]
     },
     {
       "id": "page-002",
@@ -102,7 +105,10 @@
         }
       ],
       "extract": "Bad example: Too verbose (approximately 150 tokens): The concise version assumes Claude already has information about PDFs and how libraries work. Set appropriate degrees of freedom Match the level of specificity to the task's fragility and variability. High freedom (text-based instructions): Use when: Multiple approaches are valid Decisions depend on context Heuristics guide the approach Example: Medium freedom",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-002"
+      ]
     },
     {
       "id": "page-003",
@@ -138,7 +144,10 @@
         }
       ],
       "extract": "Use when: A preferred pattern exists Some variation is acceptable Configuration affects behavior Example: Low freedom (specific scripts, few or no parameters): Use when: Operations are fragile and error-prone Consistency is critical A specific sequence must be followed Example: Analogy: Think of Claude as a robot exploring a path: Narrow bridge with cliffs on both sides: There's only one safe way forward. Provide",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-003"
+      ]
     },
     {
       "id": "page-004",
@@ -186,7 +195,10 @@
         }
       ],
       "extract": "Open field with no hazards: Many paths lead to success. Give general direction and trust Claude to find the best route (high freedom). Example: code reviews where context determines the best approach. Test with all models you plan to use Skills act as additions to models, so effectiveness depends on the underlying model. Test your Skill with all the models you plan to use it with. Testing considerations by model:",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-004"
+      ]
     },
     {
       "id": "page-005",
@@ -230,7 +242,10 @@
         }
       ],
       "extract": "Skill provides. Remember that the name field must use lowercase letters, numbers, and hyphens only. Good naming examples (gerund form): processing-pdfs analyzing-spreadsheets managing-databases testing-code writing-documentation Acceptable alternatives: Noun phrases: pdf-processing , spreadsheet-analysis Action-oriented: process-pdfs , analyze-spreadsheets Avoid: Vague names: helper , utils , tools Overly generic:",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-005"
+      ]
     },
     {
       "id": "page-006",
@@ -278,7 +293,10 @@
         }
       ],
       "extract": "Be specific and include key terms. Include both what the Skill does and specific triggers/contexts for when to use it. Each Skill has exactly one description field. The description is critical for skill selection: Claude uses it to choose the right Skill from potentially 100+ available Skills. Your description must provide enough detail for Claude to know when to select this Skill, while the rest of SKILL.md",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-006"
+      ]
     },
     {
       "id": "page-007",
@@ -306,7 +324,11 @@
         }
       ],
       "extract": "Use the following patterns to organize instructions, code, and resources effectively Visual overview: From simple to complex A basic Skill starts with just a SKILL.md file containing metadata and instructions: As your Skill grows, you can bundle additional content that Claude loads only when needed: Claude Platform Docs Cookie settings We use cookies to deliver and improve our services, analyze site usage, and if",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-007",
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/figure-img-p007-1"
+      ]
     },
     {
       "id": "page-008",
@@ -338,7 +360,11 @@
         }
       ],
       "extract": "The complete Skill directory structure might look like this: pdf/ SKILL.md : Main instructions (loaded when triggered) FORMS.md : Form-filling guide (loaded as needed) reference.md : API reference (loaded as needed) examples.md : Usage examples (loaded as needed) scripts/ analyze_form.py : Utility script (executed, not loaded) fill_form.py : Form filling script validate.py : Validation script Claude Platform Docs",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-008",
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/figure-img-p008-1"
+      ]
     },
     {
       "id": "page-009",
@@ -382,7 +408,10 @@
         }
       ],
       "extract": "Pattern 1: High-level guide with references Claude loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed. Pattern 2: Domain-specific organization For Skills with multiple domains, organize content by domain to avoid loading irrelevant context. When a user asks about sales metrics, Claude only needs to read sales-related schemas, not finance or marketing data. This keeps token usage low and context focused.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-009"
+      ]
     },
     {
       "id": "page-010",
@@ -426,7 +455,10 @@
         }
       ],
       "extract": "Pattern 3: Conditional details Show basic content, link to advanced content: Claude reads REDLINING.md or OOXML.md only when the user needs those features. Avoid deeply nested references Claude may partially read files when they're referenced from other referenced files. When encountering nested references, Claude might use commands like head -100 to preview content rather than reading entire files, resulting in",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-010"
+      ]
     },
     {
       "id": "page-011",
@@ -470,7 +502,10 @@
         }
       ],
       "extract": "Bad example: Too deep: Good example: One level deep: Structure longer reference files with table of contents For reference files longer than 100 lines, include a table of contents at the top. This ensures Claude can see the full scope of available information even when previewing with partial reads. Example: Claude can then read the complete file or jump to specific sections as needed. For details on how this",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-011"
+      ]
     },
     {
       "id": "page-012",
@@ -518,7 +553,10 @@
         }
       ],
       "extract": "Workflows and feedback loops Use workflows for complex tasks Break complex operations into clear, sequential steps. For particularly complex workflows, provide a checklist that Claude can copy into its response and check off as it progresses. Example 1: Research synthesis workflow (for Skills without code): This example shows how workflows apply to analysis tasks that don't require code. The checklist pattern works",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-012"
+      ]
     },
     {
       "id": "page-013",
@@ -558,7 +596,10 @@
         }
       ],
       "extract": "Clear steps prevent Claude from skipping critical validation. The checklist helps both Claude and you track progress through multistep workflows. Implement feedback loops Common pattern: Run validator → fix errors → repeat This pattern greatly improves output quality. Example 1: Style guide compliance (for Skills without code): ## PDF form filling workflow Copy this checklist and check off items as you complete",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-013"
+      ]
     },
     {
       "id": "page-014",
@@ -606,7 +647,10 @@
         }
       ],
       "extract": "This shows the validation loop pattern using reference documents instead of scripts. The \"validator\" is STYLE_GUIDE.md, and Claude performs the check by reading and comparing. Example 2: Document editing process (for Skills with code): The validation loop catches errors early. Content guidelines Avoid time-sensitive information Don't include information that will become outdated: Bad example: Time-sensitive (will",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-014"
+      ]
     },
     {
       "id": "page-015",
@@ -646,7 +690,10 @@
         }
       ],
       "extract": "The old patterns section provides historical context without cluttering the main content. Use consistent terminology Choose one term and use it throughout the Skill: Good - Consistent: Always \"API endpoint\" Always \"field\" Always \"extract\" Bad - Inconsistent: Mix \"API endpoint\", \"URL\", \"API route\", \"path\" Mix \"field\", \"box\", \"element\", \"control\" Mix \"extract\", \"pull\", \"get\", \"retrieve\" Consistency helps Claude parse",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-015"
+      ]
     },
     {
       "id": "page-016",
@@ -678,7 +725,10 @@
         }
       ],
       "extract": "For flexible guidance (when adaptation is useful): Examples pattern For Skills where output quality depends on seeing examples, provide input/output pairs just like in regular prompting: ## Report structure ALWAYS use this exact template structure: ```markdown # [Analysis Title] ## Executive summary [One-paragraph overview of key findings] ## Key findings - Finding 1 with supporting data - Finding 2 with supporting",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-016"
+      ]
     },
     {
       "id": "page-017",
@@ -714,7 +764,10 @@
         }
       ],
       "extract": "Examples convey the desired style and level of detail to Claude more clearly than descriptions alone. Conditional workflow pattern Guide Claude through decision points: ## Commit message format Generate commit messages following these examples: **Example 1:** Input: Added user authentication with JWT tokens Output: ``` feat(auth): implement JWT-based authentication Add login endpoint and token validation middleware",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-017"
+      ]
     },
     {
       "id": "page-018",
@@ -762,7 +815,10 @@
         }
       ],
       "extract": "If workflows become large or complicated with many steps, consider pushing them into separate files and tell Claude to read the appropriate file based on the task at hand. Evaluation and iteration Build evaluations first Create evaluations BEFORE writing extensive documentation. This ensures your Skill solves real problems rather than documenting imagined ones. Evaluation-driven development: 1. Identify gaps: Run",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-018"
+      ]
     },
     {
       "id": "page-019",
@@ -810,7 +866,10 @@
         }
       ],
       "extract": "This example demonstrates a data-driven evaluation with a simple testing rubric. There is not currently a built-in way to run these evaluations. Users can create their own evaluation system. Evaluations are your source of truth for measuring Skill effectiveness. Develop Skills iteratively with Claude The most effective Skill development process involves Claude itself. Work with one instance of Claude (\"Claude A\")",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-019"
+      ]
     },
     {
       "id": "page-020",
@@ -858,7 +917,10 @@
         }
       ],
       "extract": "5. Improve information architecture: Ask Claude A to organize the content more effectively. For example: \"Organize this so the table schema is in a separate reference file. We might add more tables later.\" 6. Test on similar tasks: Use the Skill with Claude B (a fresh instance with the Skill loaded) on related use cases. Observe whether Claude B finds the right information, applies rules correctly, and handles the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-020"
+      ]
     },
     {
       "id": "page-021",
@@ -906,7 +968,10 @@
         }
       ],
       "extract": "Why this approach works: Claude A understands agent needs, you provide domain expertise, Claude B reveals gaps through real usage, and iterative refinement improves Skills based on observed behavior rather than assumptions. Observe how Claude navigates Skills As you iterate on Skills, pay attention to how Claude actually uses them in practice. Watch for: Unexpected exploration paths: Does Claude read files in an",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-021"
+      ]
     },
     {
       "id": "page-022",
@@ -954,7 +1019,10 @@
         }
       ],
       "extract": "Advanced: Skills with executable code The following sections focus on Skills that include executable scripts. If your Skill uses only markdown instructions, skip to Checklist for effective Skills. Solve, don't defer When writing scripts for Skills, handle error conditions rather than deferring to Claude. Good example: Handle errors explicitly: Bad example: Defer to Claude: **Bad example: Too many choices**",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-022"
+      ]
     },
     {
       "id": "page-023",
@@ -994,7 +1062,10 @@
         }
       ],
       "extract": "Configuration parameters should also be justified and documented to avoid \"voodoo constants\" (Ousterhout's law). If you don't know the right value, how will Claude determine it? Good example: Self-documenting: Bad example: Magic numbers: Provide utility scripts Even if Claude could write a script, pre-made scripts offer advantages: Benefits of utility scripts: More reliable than generated code Save tokens (no need",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-023"
+      ]
     },
     {
       "id": "page-024",
@@ -1030,7 +1101,11 @@
         }
       ],
       "extract": "The preceding diagram shows how executable scripts work alongside instruction files. The instruction file (forms.md) references the script, and Claude can execute it without loading its contents into context. Important distinction: Make clear in your instructions whether Claude should: Execute the script (most common): \"Run analyze_form.py to extract fields\" Read it as reference (for complex logic): \"See",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-024",
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/figure-img-p024-1"
+      ]
     },
     {
       "id": "page-025",
@@ -1066,7 +1141,10 @@
         }
       ],
       "extract": "Use visual analysis When inputs can be rendered as images, have Claude analyze them: In this example, you'd need to write the pdf_to_images.py script. Claude's vision capabilities help analyze layouts and structures. ## Utility scripts **analyze_form.py**: Extract all form fields from PDF ```bash python scripts/analyze_form.py input.pdf > fields.json ``` Output format: ```json { \"field_name\": {\"type\": \"text\", \"x\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-025"
+      ]
     },
     {
       "id": "page-026",
@@ -1114,7 +1192,10 @@
         }
       ],
       "extract": "Create verifiable intermediate outputs When Claude performs complex, open-ended tasks, it can make mistakes. The \"plan-validate- execute\" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it. Example: Imagine asking Claude to update 50 form fields in a PDF based on a spreadsheet. Without validation, Claude might reference",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-026"
+      ]
     },
     {
       "id": "page-027",
@@ -1162,7 +1243,10 @@
         }
       ],
       "extract": "How Claude accesses Skills: 1. Metadata pre-loaded: At startup, the name and description from all Skills' YAML frontmatter are loaded into the system prompt 2. Files read on-demand: Claude uses bash Read tools to access SKILL.md and other files from the filesystem when needed 3. Scripts executed efficiently: Utility scripts can be executed through bash without loading their full contents into context. Only the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-027"
+      ]
     },
     {
       "id": "page-028",
@@ -1206,7 +1290,10 @@
         }
       ],
       "extract": "model is what enables progressive disclosure. Claude can navigate and selectively load exactly what each task requires. For complete details on the technical architecture, see How Skills work in the Skills overview. MCP tool references If your Skill uses MCP (Model Context Protocol) tools, always use fully qualified tool names to avoid \"tool not found\" errors. Format: ServerName:tool_name Example: Where: BigQuery",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-028"
+      ]
     },
     {
       "id": "page-029",
@@ -1254,7 +1341,10 @@
         }
       ],
       "extract": "Technical notes YAML frontmatter requirements The SKILL.md frontmatter requires name and description fields with specific validation rules: name : Maximum 64 characters, lowercase letters/numbers/hyphens only, no XML tags, no reserved words description : Maximum 1,024 characters, non-empty, no XML tags See the Skills overview for complete structure details. Token budgets Keep SKILL.md body under 500 lines for",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-029"
+      ]
     },
     {
       "id": "page-030",
@@ -1290,7 +1380,10 @@
         }
       ],
       "extract": "Claude Platform Docs No Windows-style paths (all forward slashes) Validation/verification steps for critical operations Feedback loops included for quality-critical tasks Testing At least three evaluations created Tested with Haiku, Sonnet, and Opus Tested with real usage scenarios Team feedback incorporated (if applicable) Next steps Was this page helpful? Get started with Agent Skills Create your first Skill  Use",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-030"
+      ]
     },
     {
       "id": "page-031",
@@ -1330,7 +1423,10 @@
         }
       ],
       "extract": "Solutions AI agents Code modernization Coding Customer support Financial services Government Higher education K-12 teachers Life sciences Partners Claude on AWS Claude on Google Cloud Learn Blog Courses Use cases Connectors Customer stories Engineering at Anthropic Events Powered by Claude Service partners Startups program Company Anthropic Careers Economic Futures Research News Responsible Scaling Policy Security",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-031"
+      ]
     },
     {
       "id": "page-032",
@@ -1358,7 +1454,10 @@
         }
       ],
       "extract": "Claude Platform Docs Cookie settings We use cookies to deliver and improve our services, analyze site usage, and if you agree, to customize or personalize your experience and market our services to you. You can read our Cookie Policy here. 9/20/26, 4:40 PM Skill authoring best practices - Claude Platform Docs https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices 32/32",
-      "extractCut": false
+      "extractCut": false,
+      "blocks": [
+        "library/skill-authoring-best-practices---claude-platform-docs/blocks/prose-page-032"
+      ]
     }
   ],
   "checks": {},
@@ -1412,6 +1511,92 @@
     {
       "term": "claude models",
       "heading": false
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p007-1",
+      "file": "images/img-p007-1.png",
+      "page": 7,
+      "narratives": {
+        "en": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file.",
+        "fr": "Un diagramme intitulé « A simple SKILL.md file ». Un seul fichier, pdf/SKILL.md, partagé en deux bandes : un bloc de frontmatter YAML portant `name` et une `description` d'une ligne de la boîte à outils PDF, et en dessous un corps Markdown avec un paragraphe ## Overview et une section ## Quick Start montrant du code Python qui importe PdfReader depuis pypdf, ouvre un document et en extrait le texte page par page. Le propos de la figure est ce partage : les métadonnées en haut, les instructions en bas, dans un seul fichier.",
+        "es": "Diagrama titulado «A simple SKILL.md file». Un único archivo, pdf/SKILL.md, dividido en dos franjas: un bloque de frontmatter YAML con `name` y una `description` de una línea del kit de herramientas PDF, y debajo un cuerpo Markdown con un párrafo ## Overview y una sección ## Quick Start que muestra código Python que importa PdfReader desde pypdf, abre un documento y extrae su texto página a página. Lo que muestra la figura es esa división: los metadatos arriba, las instrucciones abajo, en un solo archivo.",
+        "ar": "مخطط بعنوان «A simple SKILL.md file». ملف واحد، pdf/SKILL.md، مقسوم إلى شريطين: كتلة frontmatter بصيغة YAML تحمل `name` و`description` من سطر واحد لمجموعة أدوات PDF، وتحتها متن Markdown فيه فقرة ## Overview وقسم ## Quick Start يعرض شيفرة Python تستورد PdfReader من pypdf وتفتح مستندًا وتستخرج نصه صفحة صفحة. ومقصد الشكل هو هذا التقسيم: البيانات الوصفية في الأعلى والتعليمات في الأسفل، في ملف واحد.",
+        "ru": "Диаграмма с заголовком «A simple SKILL.md file». Один файл, pdf/SKILL.md, разделён на две полосы: блок YAML frontmatter с `name` и однострочным `description` набора инструментов для PDF, а ниже тело Markdown с абзацем ## Overview и разделом ## Quick Start, где показан код на Python: он импортирует PdfReader из pypdf, открывает документ и постранично извлекает текст. Смысл рисунка в этом разделении: метаданные сверху, инструкции снизу, в одном файле.",
+        "zh": "标题为“A simple SKILL.md file”的示意图。单个文件 pdf/SKILL.md 分为上下两部分：一个 YAML frontmatter 块，含 `name` 和对 PDF 工具包的一行 `description`；下面是 Markdown 正文，有一段 ## Overview 和一个 ## Quick Start 部分，展示从 pypdf 导入 PdfReader、打开文档并逐页提取文本的 Python 代码。该图的要点就是这种划分：元数据在上，指令在下，同在一个文件中。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-1",
+      "file": "images/img-p008-1.png",
+      "page": 8,
+      "narratives": {
+        "en": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them.",
+        "fr": "Un diagramme intitulé « Bundling additional content ». pdf/SKILL.md à gauche, comme dans la figure précédente ; à droite, deux autres fichiers vers lesquels il pointe — pdf/reference.md (fonctions PDF avancées et bibliothèques absentes des instructions principales) et pdf/forms.md (comment distinguer un formulaire PDF remplissable d'un formulaire non remplissable). Deux flèches partent de liens relatifs surlignés dans le corps de SKILL.md, `./reference.md` et `./forms.md`, vers le fichier que chacun désigne. Le propos est qu'une skill référence ses fichiers voisins par chemin relatif au lieu de les intégrer.",
+        "es": "Diagrama titulado «Bundling additional content». pdf/SKILL.md a la izquierda, como en la figura anterior; a la derecha, otros dos archivos a los que apunta: pdf/reference.md (funciones PDF avanzadas y bibliotecas que no están en las instrucciones principales) y pdf/forms.md (cómo distinguir un formulario PDF rellenable de uno no rellenable). Dos flechas van desde enlaces relativos resaltados en el cuerpo de SKILL.md, `./reference.md` y `./forms.md`, hasta el archivo que nombra cada uno. La idea es que una skill hace referencia a sus archivos hermanos por ruta relativa en lugar de incluirlos.",
+        "ar": "مخطط بعنوان «Bundling additional content». pdf/SKILL.md على اليسار كما في الشكل السابق؛ وعلى اليمين ملفان آخران يشير إليهما — pdf/reference.md (ميزات PDF متقدمة ومكتبات غير موجودة في التعليمات الرئيسية) وpdf/forms.md (كيف يُميَّز نموذج PDF قابل للتعبئة من غير القابل). يمتد سهمان من رابطين نسبيين مُبرزين في متن SKILL.md، `./reference.md` و`./forms.md`، إلى الملف الذي يسمّيه كلٌّ منهما. والمقصد أن الـ skill تشير إلى ملفاتها المجاورة بمسار نسبي بدل تضمينها.",
+        "ru": "Диаграмма с заголовком «Bundling additional content». Слева pdf/SKILL.md, как на предыдущем рисунке; справа два других файла, на которые он ссылается, — pdf/reference.md (расширенные возможности PDF и библиотеки, не вошедшие в основные инструкции) и pdf/forms.md (как отличить заполняемую форму PDF от незаполняемой). Две стрелки идут от выделенных относительных ссылок в теле SKILL.md, `./reference.md` и `./forms.md`, к файлу, который каждая называет. Смысл в том, что skill ссылается на соседние файлы по относительному пути, а не встраивает их.",
+        "zh": "标题为“Bundling additional content”的示意图。左侧是 pdf/SKILL.md，与上一张图相同；右侧是它指向的另外两个文件——pdf/reference.md（主指令中没有的高级 PDF 功能和库）和 pdf/forms.md（如何区分可填写与不可填写的 PDF 表单）。两支箭头从 SKILL.md 正文中高亮的相对链接 `./reference.md` 和 `./forms.md` 指向各自所指的文件。要点是 skill 通过相对路径引用同级文件，而不是把它们内联进来。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p024-1",
+      "file": "images/img-p024-1.png",
+      "page": 24,
+      "narratives": {
+        "en": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose.",
+        "fr": "Un diagramme intitulé « Bundling executable scripts ». pdf/forms.md à gauche, pdf/extract_fields.py à droite, avec une flèche allant du lien surligné `./extract_fields.py` dans la prose jusqu'au script lui-même. Le script importe PdfReader depuis pypdf et définit write_field_info, qui lit les champs de formulaire d'un PDF et les écrit en JSON, avec une garde __main__ qui vérifie la longueur d'argv. Le propos est qu'une skill peut embarquer du code exécutable, pas seulement de la prose.",
+        "es": "Diagrama titulado «Bundling executable scripts». pdf/forms.md a la izquierda, pdf/extract_fields.py a la derecha, con una flecha desde el enlace resaltado `./extract_fields.py` en la prosa hasta el propio script. El script importa PdfReader desde pypdf y define write_field_info, que lee los campos de formulario de un PDF y los escribe en JSON, con una guarda __main__ que comprueba la longitud de argv. La idea es que una skill puede incluir código ejecutable, no solo prosa.",
+        "ar": "مخطط بعنوان «Bundling executable scripts». pdf/forms.md على اليسار وpdf/extract_fields.py على اليمين، مع سهم من الرابط المُبرز `./extract_fields.py` في النص إلى السكربت نفسه. يستورد السكربت PdfReader من pypdf ويعرّف write_field_info التي تقرأ حقول نموذج PDF وتكتبها بصيغة JSON، مع حارس __main__ يتحقق من طول argv. والمقصد أن الـ skill يمكن أن تضم شيفرة قابلة للتشغيل لا نثرًا فقط.",
+        "ru": "Диаграмма с заголовком «Bundling executable scripts». Слева pdf/forms.md, справа pdf/extract_fields.py, и стрелка от выделенной в тексте ссылки `./extract_fields.py` к самому скрипту. Скрипт импортирует PdfReader из pypdf и определяет write_field_info, которая читает поля формы PDF и записывает их в JSON, с проверкой __main__ на длину argv. Смысл в том, что skill может включать исполняемый код, а не только прозу.",
+        "zh": "标题为“Bundling executable scripts”的示意图。左侧是 pdf/forms.md，右侧是 pdf/extract_fields.py，一支箭头从正文中高亮的 `./extract_fields.py` 链接指向脚本本身。该脚本从 pypdf 导入 PdfReader，并定义 write_field_info，读取 PDF 的表单字段并写入 JSON，带有检查 argv 长度的 __main__ 保护。要点是 skill 可以捆绑可运行的代码，而不只是文字。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 32,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 3
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "not-extracted",
+      "count": 0,
+      "note": "0 of 32 sections"
     }
   ],
   "links": {

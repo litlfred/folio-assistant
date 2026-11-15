@@ -199,6 +199,14 @@
         "x-satisfies": [
           "fhir-validation"
         ],
+        "x-skill-contracts": {
+          "fhir-validation.input": {
+            "$ref": "#/components/schemas/skill.fhir-validation.input"
+          },
+          "fhir-validation.output": {
+            "$ref": "#/components/schemas/skill.fhir-validation.output"
+          }
+        },
         "x-selection": {
           "when": "A pull request changes an IG's CodeSystems or its translation supplements, and the IG build is not run on it.",
           "limits": "Compiles only CodeSystems, Aliases and RuleSets with the supplements: a base CodeSystem written as an Instance, or one from another package, is reported as missing.",
@@ -277,6 +285,14 @@
         "x-satisfies": [
           "fhir-questionnaire-wireframe"
         ],
+        "x-skill-contracts": {
+          "fhir-questionnaire-wireframe.input": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.input"
+          },
+          "fhir-questionnaire-wireframe.output": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output"
+          }
+        },
         "x-selection": {
           "when": "A Questionnaire was derived from an L2 wireframe and is reviewed for fidelity; or a suggested edit to either side is checked (`checkSuggestion`, the same judge in the editor-checker shape).",
           "limits": "Compares ids and order only: it says nothing about labels, answer options, enableWhen or layout quality, which `wireframe-design-review` judges. A wireframe with no `data-element` field is exit 2, not a pass.",
@@ -376,6 +392,84 @@
           "when": "packages.fhir.org is unreachable and registry.npmjs.org is not.",
           "limits": "Pinned HL7 versions are often not on npm and need `--mirror`. A template FHIR/ig-registry does not list is named with `--template-repo`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
           "cost": "One download per package; the core packages are tens of megabytes."
+        }
+      }
+    },
+    "/tools/fhir-core": {
+      "post": {
+        "operationId": "fhir-core",
+        "summary": "Load the stable FHIR releases' core StructureDefinitions as a graph keyed by canonical URL",
+        "description": "Read each stable FHIR release's core package (`hl7.fhir.r4.core#4.0.1`, `hl7.fhir.r4b.core#4.3.0`, `hl7.fhir.r5.core#5.0.0`) at the version, sha1 and sha512 `fhir-core/pins.json` pins, and keep its resources, complex and primitive types and root types (Base, Element, BackboneElement, DomainResource, Resource) under `fhir-core/<release>/`, keyed by canonical URL. `index` writes the release's manifest (each definition's kind, type, base and sha256); `materialise` writes the bodies byte for byte as the package holds them; `check` holds the two to the pins offline; `resolve` answers which file a canonical URL is kept in. A package that cannot be fetched or verified is recorded as `unread` with the reason, never as an empty graph.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "fhir-core/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The fhir-harness layer root. Default: the layer this script is in."
+                  },
+                  "release": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "One release (R4, R4B or R5). Default: every pinned release."
+                  },
+                  "tgz-dir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A directory of already-downloaded `<name>-<version>.tgz`; still hash-checked against the pin."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "definitions": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Definitions indexed or materialised per release; an unread release is named with its reason."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-core.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/fhir-core.ts <index|materialise|check|resolve <url>>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Before a reader resolves a FHIR core type by canonical URL (a class diagram of an IG's logical models or profiles), or when a pin changes.",
+          "limits": "Stable releases only. Constraint profiles, extension definitions and logical models in the core package are left out and counted.",
+          "cost": "One 13-17 MB download per release, then seconds; `check` and `resolve` are offline."
         }
       }
     },
@@ -541,7 +635,15 @@
         },
         "x-satisfies": [
           "fhir-validation"
-        ]
+        ],
+        "x-skill-contracts": {
+          "fhir-validation.input": {
+            "$ref": "#/components/schemas/skill.fhir-validation.input"
+          },
+          "fhir-validation.output": {
+            "$ref": "#/components/schemas/skill.fhir-validation.output"
+          }
+        }
       }
     },
     "/tools/ig-artifact-jsonld": {
@@ -1949,6 +2051,87 @@
         }
       }
     },
+    "/tools/ig-publisher-i18n": {
+      "post": {
+        "operationId": "ig-publisher-i18n",
+        "summary": "Put the IG Publisher's QA messages in each language an IG translates into, from the Publisher's own translations first",
+        "description": "Fetches the IG Publisher's own message bundles (`Messages_<lang>.properties` in `org.hl7.fhir.utilities-<core>.jar`, Maven Central) at exactly the core version the AST recorded, and translates each QA message by its `message-id`: the Publisher's translation where it has one whose placeholders match the English, else this layer's catalogue `translations/<locale>/publisher/messages.po` (machine translation, marked as such), else the English. `needs --merge` appends to each locale's catalogue the strings a build lacks, each with an example and deep links to the rows that print it. The site build (`ig-qa-page.ts`) calls it for every locale the IG translates its pages into and publishes `qa-messages.<locale>.json` and `i18n-usage.json` beside the QA report.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-publisher-i18n/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`fetch <core-version> <dir>`, or `needs <qa-messages.json> <bundle-dir> <translations-dir> <locale>...`."
+                  },
+                  "merge": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "With `needs`: append what each locale lacks to its catalogue."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "With `needs`: the published site's URL, so a catalogue's links open the rendered rows."
+                  }
+                },
+                "required": [
+                  "command"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "needs": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Strings each locale lacks a translation for."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-publisher-i18n.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-publisher-i18n.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "When an IG's QA report is built for its translated locales, or to see and fill what a locale's catalogue lacks.",
+          "limits": "Needs curl and unzip and Maven Central for the bundles; without them every message falls back to this layer's catalogue or English, and the build says why. Never substitutes another core version.",
+          "cost": "One jar download (about 3 MB) per core version, cached under ~/.fhir/publisher-i18n."
+        }
+      }
+    },
     "/tools/ig-release": {
       "post": {
         "operationId": "ig-release",
@@ -2661,6 +2844,14 @@
         "x-satisfies": [
           "fhir-questionnaire-wireframe"
         ],
+        "x-skill-contracts": {
+          "fhir-questionnaire-wireframe.input": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.input"
+          },
+          "fhir-questionnaire-wireframe.output": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output"
+          }
+        },
         "x-selection": {
           "when": "After SUSHI has built the IG's Questionnaires and before they are reviewed as forms; whenever a Questionnaire uses modular sub-forms, template extraction or pre-population.",
           "limits": "Only as good as the IG's fixtures: with none, extraction and population say `no-fixture` rather than pass. Nothing is fetched from a server: sub-forms resolve in the AST and population queries in the fixture. The behavioural toolkit is early and needs React and Smart Forms peers installed with the IG's tests; without them it is `could-not-determine`, a warning.",
@@ -3150,6 +3341,731 @@
         "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
         "description": "A path relative to the repository root. No `..` segments.",
         "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      },
+      "skill.fhir-questionnaire-wireframe.input": {
+        "title": "FHIR Questionnaire Wireframe Input",
+        "description": "Which built Questionnaire to render and review, against which L2 wireframe, and where the drawings and the requests for feedback go.",
+        "type": "object",
+        "required": [
+          "questionnaire"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Repository-relative path of ONE built Questionnaire JSON (`fsh-generated/resources/Questionnaire-<id>.json`), never FSH. Several Questionnaires are several runs, so each carries its own fidelity findings and review."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "render",
+              "fidelity-check",
+              "wireframe-from-questionnaire"
+            ],
+            "default": "render",
+            "description": "`render`: wireframe and form view for review. `fidelity-check`: only the field-for-field check against `wireframe`. `wireframe-from-questionnaire`: draw an L2 wireframe from a Questionnaire that has none."
+          },
+          "wireframe": {
+            "type": "string",
+            "description": "Repository-relative path of the L2 wireframe HTML the Questionnaire was derived from (the chosen `wireframe-design-review` candidate), when one exists."
+          },
+          "renderer": {
+            "type": "string",
+            "enum": [
+              "lhc-forms"
+            ],
+            "default": "lhc-forms",
+            "description": "The form-view renderer. Only the vendored NLM LHC-Forms (owner, 2026-10-14)."
+          },
+          "assetDir": {
+            "type": "string",
+            "description": "Repository-relative directory for the wireframes, captures and checks."
+          },
+          "suggest": {
+            "type": "boolean",
+            "default": true,
+            "description": "Offer ✍ suggest, in its Questionnaire mode, on the form view."
+          },
+          "issueForm": {
+            "type": "string",
+            "default": "questionnaire-change.yml",
+            "description": "The issue form change requests are opened with."
+          },
+          "channels": {
+            "type": "array",
+            "description": "Where the request for review goes: chosen by judgement, and more than one may be right (staging-review, the deep-link rule, point 5).",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "conversation",
+                    "issue",
+                    "pull-request"
+                  ]
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "branch": {
+            "type": "string",
+            "description": "The feature branch the renderings are committed on, so feature-staging publishes them."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output": {
+        "title": "FHIR Questionnaire Wireframe Output",
+        "description": "The renderings of one built Questionnaire and their review, in the output shape of cat-harness `wireframe-design-review` (candidates with source HTML, web and mobile screenshots and their staging links; the choice; the changed assets; the staging deep links), plus the renderer that drew the form view, the fidelity findings against the L2 wireframe per layout, and the change requests received.",
+        "type": "object",
+        "required": [
+          "use",
+          "topic",
+          "assetDir",
+          "candidates",
+          "renderer",
+          "changedAssets",
+          "stagingLinks"
+        ],
+        "properties": {
+          "use": {
+            "type": "string",
+            "enum": [
+              "design",
+              "as-is"
+            ]
+          },
+          "topic": {
+            "type": "string"
+          },
+          "assetDir": {
+            "type": "string",
+            "description": "Repository-relative directory holding the wireframes, the form-view captures and their checks."
+          },
+          "intent": {
+            "type": "string",
+            "description": "Repository-relative path of intent.md."
+          },
+          "candidates": {
+            "type": "array",
+            "minItems": 1,
+            "description": "At least two for Design use, exactly one (marked as-is) for as-is use.",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "source",
+                "screenshots",
+                "outcome"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Candidate id, shown to reviewers in place of its author."
+                },
+                "title": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "Repository-relative path of the candidate's mid-fidelity HTML."
+                },
+                "screenshots": {
+                  "type": "object",
+                  "required": [
+                    "web",
+                    "mobile"
+                  ],
+                  "description": "Written by wireframe-check: one per viewport. A candidate with only one does not enter review.",
+                  "properties": {
+                    "web": {
+                      "type": "string",
+                      "description": "Repository-relative path of the 1280×800 screenshot."
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "description": "Repository-relative path of the 390×844 screenshot."
+                    }
+                  }
+                },
+                "staging": {
+                  "type": "object",
+                  "description": "The candidate and its screenshots on the staging preview, as deep links.",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "web": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                },
+                "entries": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.criterionEntry"
+                  },
+                  "description": "Script and review entries, per criterion. No scores, no averages."
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "chosen",
+                    "rejected",
+                    "pending",
+                    "as-is"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Why it was chosen or why it lost. Rejected candidates stay, each with its reason."
+                }
+              }
+            }
+          },
+          "chosen": {
+            "type": "object",
+            "required": [
+              "candidate",
+              "chosenBy"
+            ],
+            "description": "Design use: the candidate the human reviewer chose. Absent until they choose; an agent never records a choice on a person's behalf.",
+            "properties": {
+              "candidate": {
+                "type": "string",
+                "description": "The chosen candidate's id."
+              },
+              "chosenBy": {
+                "type": "string",
+                "description": "The requester or BA who chose it."
+              },
+              "recordedAt": {
+                "type": "string",
+                "format": "uri",
+                "description": "Where the choice is recorded: the issue or pull request comment, or, when it was made in the conversation, the proposal section that records it."
+              }
+            }
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "The built Questionnaire JSON rendered, as in the input."
+          },
+          "renderer": {
+            "type": "object",
+            "required": [
+              "name",
+              "version"
+            ],
+            "description": "What drew the form view. The vendored build, never a CDN at runtime (owner, 2026-10-14).",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "lhc-forms"
+                ],
+                "description": "NLM LHC-Forms, the owner's choice of 2026-10-14."
+              },
+              "version": {
+                "type": "string",
+                "description": "The vendored LHC-Forms version, e.g. 44.1.0."
+              },
+              "assets": {
+                "type": "string",
+                "description": "Site-relative directory the vendored files are served from."
+              },
+              "licenceNotice": {
+                "type": "string",
+                "description": "Repository-relative path of the NLM licence notice kept with the vendored files."
+              }
+            }
+          },
+          "fidelity": {
+            "type": "array",
+            "description": "check-wireframe-questionnaire's findings, one entry per Questionnaire and wireframe layout. Absent when no L2 wireframe exists; an entry whose status is `could-not-determine` (exit 2) is never a pass.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.fidelityEntry"
+            }
+          },
+          "sdcChecks": {
+            "type": "array",
+            "description": "The SDC build checks (fhir-harness `sdc-checks`, CSIRO's libraries), one entry per Questionnaire. `not-applicable`, `no-fixture` and `could-not-determine` are never a pass; a behavioural test's failure is a warning.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.sdcCheckResult"
+            }
+          },
+          "changeRequests": {
+            "type": "array",
+            "description": "Change requests received through ✍ suggest or the questionnaire-change issue form, and where each stands.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.changeRequest"
+            }
+          },
+          "changedAssets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.changedAsset"
+            },
+            "description": "Every file the branch adds, changes or removes — wireframe HTML, form-view pages, screenshots, reviews — in the changed-assets record shape a staging preview's graph carries."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.stagingLinks"
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.changedAsset": {
+        "title": "Changed asset",
+        "description": "One file the branch adds, changes or removes, in the record shape of a staging preview graph's `changedAssets` (cat-harness-tools scripts/kg-changed-assets.ts `ChangedAsset`; glosses in schemas/vocabulary.ts: assetChange, assetKind, beforeVersion, afterVersion, assetSource, renderedPage, renderedPagesUnknown).",
+        "type": "object",
+        "required": [
+          "change"
+        ],
+        "properties": {
+          "change": {
+            "type": "string",
+            "enum": [
+              "added",
+              "changed",
+              "removed"
+            ],
+            "description": "How the asset differs from main."
+          },
+          "kind": {
+            "type": "string",
+            "description": "What the asset is, without namespace: `questionnaire-wireframe`, `questionnaire-rendering`, `questionnaire-screenshot`, or a `wireframe-design-review` kind (`wireframe-candidate`, `wireframe-screenshot`, `wireframe-intent`, `wireframe-review`)."
+          },
+          "title": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset as published on main; absent when it is new on the branch."
+          },
+          "after": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset as published in the staging preview; absent when the branch removes it."
+          },
+          "source": {
+            "type": "string",
+            "description": "The repository-relative file."
+          },
+          "pages": {
+            "type": "array",
+            "description": "The rendered pages the source maps to, as before/after pairs (StagingPageComparison rows: the item shape of stagingLinks.pages).",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "pagesUnknown": {
+            "type": "string",
+            "description": "Why the pages were not mapped one by one, when they were not; never read as 'renders no page'."
+          }
+        },
+        "$comment": "Mirrors ChangedAsset in cat-harness-tools scripts/kg-changed-assets.ts (PR #203, branch claude/staging-kg-changed-assets)."
+      },
+      "skill.fhir-questionnaire-wireframe.output.changeRequest": {
+        "type": "object",
+        "required": [
+          "issue",
+          "edited",
+          "status"
+        ],
+        "properties": {
+          "issue": {
+            "type": "string",
+            "format": "uri",
+            "description": "The issue the request arrived as."
+          },
+          "via": {
+            "type": "string",
+            "enum": [
+              "suggest",
+              "issue-form"
+            ],
+            "description": "The ✍ suggest editor's Questionnaire mode, or the questionnaire-change issue form filled by hand."
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "Canonical URL or Questionnaire/<id>."
+          },
+          "edited": {
+            "type": "string",
+            "enum": [
+              "questionnaire",
+              "wireframe"
+            ],
+            "description": "The side the requester changed. It is the source of the change; the other side is brought back in line with it (owner, 2026-10-14)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "received",
+              "triaged",
+              "applied",
+              "staged",
+              "declined"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "description": "Why it was declined, or what was applied."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.criterionEntry": {
+        "type": "object",
+        "required": [
+          "criterion",
+          "status"
+        ],
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "description": "renders, no-overflow, no-placeholder (script entries from wireframe-check); intent-fit, web-usability, mobile-usability, accessibility, alternatives (review entries)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warn",
+              "fail"
+            ]
+          },
+          "by": {
+            "type": "string",
+            "description": "`script` for a wireframe-check entry; the reviewer otherwise."
+          },
+          "note": {
+            "type": "string",
+            "description": "The reason. Required in substance for every warn and fail."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.fidelityEntry": {
+        "type": "object",
+        "required": [
+          "questionnaire",
+          "layout",
+          "status",
+          "findings"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Repository-relative path of the built Questionnaire JSON."
+          },
+          "wireframe": {
+            "type": "string",
+            "description": "Repository-relative path of the L2 wireframe HTML it was checked against."
+          },
+          "layout": {
+            "type": "string",
+            "description": "The `data-layout` name, or `(whole document)` when the wireframe has one layout."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "faithful",
+              "findings",
+              "could-not-determine"
+            ],
+            "description": "Exit 0, 1 and 2 of the checker."
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The checker's lines for this layout, verbatim."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.sdcCheckResult": {
+        "type": "object",
+        "required": [
+          "questionnaire",
+          "checks"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "The Questionnaire's id."
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "check",
+                "library",
+                "status",
+                "severity",
+                "findings"
+              ],
+              "properties": {
+                "check": {
+                  "type": "string",
+                  "enum": [
+                    "assemble",
+                    "template-extract",
+                    "populate",
+                    "behaviour"
+                  ]
+                },
+                "library": {
+                  "type": "string",
+                  "description": "The npm package and version that ran it."
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "not-applicable",
+                    "no-fixture",
+                    "could-not-determine"
+                  ]
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning"
+                  ],
+                  "description": "`warning` for the behavioural tests (questionnaire-test-toolkit is early)."
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "output": {
+                  "type": "string",
+                  "description": "The assembled Questionnaire, when it was written."
+                }
+              }
+            }
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.fhir-validation.input": {
+        "title": "FHIR Validation Input",
+        "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+        "type": "object",
+        "required": [
+          "igRoot"
+        ],
+        "properties": {
+          "igRoot": {
+            "type": "string",
+            "description": "Path to the IG repository root."
+          },
+          "validationLevel": {
+            "type": "string",
+            "enum": [
+              "sushi-only",
+              "publisher-qa",
+              "full"
+            ],
+            "default": "full",
+            "description": "Level of validation to perform."
+          },
+          "targetProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+          }
+        }
+      },
+      "skill.fhir-validation.output": {
+        "title": "FHIR Validation Output",
+        "description": "Output schema for FHIR validation results.",
+        "type": "object",
+        "required": [
+          "overallStatus"
+        ],
+        "properties": {
+          "overallStatus": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warnings",
+              "errors"
+            ]
+          },
+          "sushiResult": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "errors": {
+                "type": "integer"
+              },
+              "warnings": {
+                "type": "integer"
+              }
+            }
+          },
+          "publisherResult": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "qaHtmlPath": {
+                "type": "string"
+              },
+              "errorCount": {
+                "type": "integer"
+              },
+              "warningCount": {
+                "type": "integer"
+              },
+              "infoCount": {
+                "type": "integer"
+              }
+            }
+          },
+          "conformanceResults": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resource": {
+                  "type": "string"
+                },
+                "profile": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "conformant",
+                    "non-conformant"
+                  ]
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "Slug": {
         "type": "string",

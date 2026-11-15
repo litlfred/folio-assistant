@@ -9,9 +9,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6aab96655186e1a437f49ecce9016d06b343e78149f4076facda71d5152d7e10",
-        "bytes": 13351,
-        "sha256": "6aab96655186e1a437f49ecce9016d06b343e78149f4076facda71d5152d7e10"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7950d31fd755bc6803523288cd868882fd0cf0256a0a9ac1d9c0ce940415b754",
+        "bytes": 11637,
+        "sha256": "7950d31fd755bc6803523288cd868882fd0cf0256a0a9ac1d9c0ce940415b754"
       },
       "title": "AGENTS.md — smart-base"
     },
@@ -20,9 +20,9 @@
       "@type": "bootstrap:Asset",
       "name": "checkout-scripts",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/172f057ad7b7d94ab8e46c173a2aab1c5530607d1bfdbe03a6b3e2ca9c46e6ec",
-        "bytes": 3874,
-        "sha256": "172f057ad7b7d94ab8e46c173a2aab1c5530607d1bfdbe03a6b3e2ca9c46e6ec"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/508d0cb57a95caacc439b0788cfc36e402ff2a8d00c5e70813b1fd31fad99aaf",
+        "bytes": 5005,
+        "sha256": "508d0cb57a95caacc439b0788cfc36e402ff2a8d00c5e70813b1fd31fad99aaf"
       },
       "title": "package.json — smart-base"
     },
@@ -91,11 +91,6 @@
       "@id": "http://smart.who.int/base/directory/smart-base-findings",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-findings"
-    },
-    {
-      "@id": "http://smart.who.int/base/directory/smart-base-kg",
-      "@type": "bootstrap:Subgraph",
-      "name": "smart-base-kg"
     },
     {
       "@id": "http://smart.who.int/base/directory/smart-base-pipeline",
@@ -242,14 +237,37 @@
     }
   ],
   "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/collab/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/collab/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/",
-    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/methodologies/processes/",
-    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/"
   ],
   "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
     "cat-harness:graphTypology/library",
     "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/scenarios",

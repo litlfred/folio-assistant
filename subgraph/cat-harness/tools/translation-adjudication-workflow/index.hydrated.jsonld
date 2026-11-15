@@ -1,0 +1,64 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-adjudication-workflow/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudication-workflow.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "The tools layer's reusable `layer-translation-adjudication.yml`, called by a layer on `issues` events: runs once per issue labelled `translation-adjudication` or titled `[translation review] …`, mounts the platform's layers, runs `translation:adjudicate` on the event, and either commits the records on `translation-adjudication/issue-<n>` (authored by the issue's author) and opens a ready PR, or comments why nothing was recorded. It never merges.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "Where the layer sits in the calling repository; `.` for the root.",
+            "name": "path_in_repo",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "The folio-assistant ref whose lock mounts the platform's layers. Default `main`.",
+            "name": "index_ref",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          },
+          {
+            "description": "`lock` (the caller's lock pin of the tools layer) or a 40-hex commit.",
+            "name": "tools_ref",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The ready PR carrying the records, when anything was recorded.",
+            "name": "pull_request",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          },
+          {
+            "description": "The comment on the issue: what was recorded and what was refused.",
+            "name": "summary",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "translation-adjudication-workflow",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+      "title": "Translation adjudication workflow (reusable)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/translation-adjudication-workflow",
+  "path": "tools/translation-adjudication-workflow/"
+}

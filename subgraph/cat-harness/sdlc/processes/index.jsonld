@@ -2174,7 +2174,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Lapse",
       "@type": "bootstrap:ProcessNode",
-      "name": "Announce the hand-over or the lapse"
+      "name": "Announce the hand-over"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Read",
@@ -2480,10 +2480,6 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S15",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S16",
       "@type": "bootstrap:SequenceFlow",
       "name": "Yes"
@@ -2512,16 +2508,6 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "No"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S4",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "Yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S5",
       "@type": "bootstrap:SequenceFlow",
       "name": "No"
     },
@@ -2579,11 +2565,6 @@
       "name": "With the merge manager"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndSelf",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Own PRs landed"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwAcked",
       "@type": "bootstrap:ProcessNode",
       "name": "Acknowledged in time?"
@@ -2599,11 +2580,6 @@
       "name": "Depends on an unmerged PR?"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwNeeded",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Merge manager needed?"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwWon",
       "@type": "bootstrap:ProcessNode",
       "name": "Elected this session?"
@@ -2617,11 +2593,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Retarget",
       "@type": "bootstrap:ProcessNode",
       "name": "When the base lands, retarget"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Merge manager for its own PRs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Send",

@@ -57,7 +57,10 @@
         }
       ],
       "extract": "arXiv:0909.4061v2 [math.NA] 14 Dec 2010 FINDING STRUCTURE WITH RANDOMNESS: PROBABILISTIC ALGORITHMS FOR CONSTRUCTING APPROXIMATE MATRIX DECOMPOSITIONS N. HALKO†, P. G. MARTINSSON†, AND J. A. TROPP‡ Abstract. Low-rank matrix approximations, such as the truncated singular value decompo- sition and the rank-revealing QR decomposition, play a central role in data analysis and scientiﬁc computing. This work surveys and",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-001"
+      ]
     },
     {
       "id": "page-002",
@@ -108,7 +111,10 @@
         }
       ],
       "extract": "2 HALKO, MARTINSSON, AND TROPP highly accurate and provably correct manner. The decompositional approach to matrix computation remains fundamental, but developments in computer hardware and the emergence of new applications in the information sciences have rendered the classical algorithms for this task inadequate in many situations: • A salient feature of modern applications, especially in data mining, is that the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-002"
+      ]
     },
     {
       "id": "page-003",
@@ -159,7 +165,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 3 low-rank approximation of a given matrix: A ≈ B C, m × n m × k k × n. (1.1) The inner dimension k is sometimes called the numerical rank of the matrix. When the numerical rank is much smaller than either dimension m or n, a factorization such as (1.1) allows the matrix to be stored inexpensively and to be multiplied rapidly with vectors or other matrices. The",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-003"
+      ]
     },
     {
       "id": "page-004",
@@ -210,7 +219,10 @@
         }
       ],
       "extract": "4 HALKO, MARTINSSON, AND TROPP The task in Stage A can be executed very eﬃciently with random sampling meth- ods, and these methods are the primary subject of this work. In the next subsection, we oﬀer an overview of these ideas. The body of the paper provides details of the algorithms (§4) and a theoretical analysis of their performance (§§8–11). Stage B can be completed with well-established deterministic methods.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-004"
+      ]
     },
     {
       "id": "page-005",
@@ -261,7 +273,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 5 parameter p, we seek to construct a matrix Q with k + p orthonormal columns such that ∥A −QQ∗A∥≈ min rank(X)≤k ∥A −X∥. (1.5) Although there exists a minimizer Q that solves the ﬁxed rank problem for p = 0, the opportunity to use a small number of additional columns provides a ﬂexibility that is crucial for the eﬀectiveness of the computational methods we discuss.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-005"
+      ]
     },
     {
       "id": "page-006",
@@ -312,7 +327,10 @@
         }
       ],
       "extract": "6 HALKO, MARTINSSON, AND TROPP Proto-Algorithm: Solving the Fixed-Rank Problem Given an m × n matrix A, a target rank k, and an oversampling parameter p, this procedure computes an m × (k + p) matrix Q whose columns are orthonormal and whose range approximates the range of A. 1 Draw a random n × (k + p) test matrix Ω. 2 Form the matrix product Y = AΩ. 3 Construct a matrix Q whose columns form an orthonormal basis",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-006"
+      ]
     },
     {
       "id": "page-007",
@@ -363,7 +381,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 7 that we can reorganize this matrix multiplication for maximum eﬃciency in a variety of computational architectures. 1.4.1. A general dense matrix that ﬁts in fast memory. A standard deter- ministic technique for computing an approximate SVD is to perform a rank-revealing QR factorization of the matrix, and then to manipulate the factors to obtain the ﬁnal",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-007"
+      ]
     },
     {
       "id": "page-008",
@@ -414,7 +435,10 @@
         }
       ],
       "extract": "8 HALKO, MARTINSSON, AND TROPP singular spectrum decays slowly, but we can address this problem using very few (say, 2 to 4) additional passes over the data [112]. See §1.6 or §4.5 for more discussion. Typically, Stage B uses one additional pass over the matrix to construct the ap- proximate SVD. With slight modiﬁcations, however, the two-stage randomized scheme can be revised so that it only makes a single pass",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-008"
+      ]
     },
     {
       "id": "page-009",
@@ -465,7 +489,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 9 Prototype for Randomized SVD Given an m × n matrix A, a target number k of singular vectors, and an exponent q (say q = 1 or q = 2), this procedure computes an approximate rank-2k factorization UΣV ∗, where U and V are orthonormal, and Σ is nonnegative and diagonal. Stage A: 1 Generate an n × 2k Gaussian test matrix Ω. 2 Form Y = (AA∗)qAΩby multiplying alternately",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-009"
+      ]
     },
     {
       "id": "page-010",
@@ -516,7 +543,10 @@
         }
       ],
       "extract": "10 HALKO, MARTINSSON, AND TROPP Randomized SVD algorithm to obtain a rank-2k factorization UΣV ∗. Then E ∥A −UΣV ∗∥≤ \" 1 + 4 r 2 min{m, n} k −1 #1/(2q+1) σk+1, (1.10) where E denotes expectation with respect to the random test matrix and σk+1 is the (k + 1)th singular value of A. This result is new. Observe that the bracket in (1.10) is essentially the same as the bracket in the basic error bound (1.8). We ﬁnd that",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-010"
+      ]
     },
     {
       "id": "page-011",
@@ -567,7 +597,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 11 1. Preprocess the matrix, usually to calculate sampling probabilities. 2. Take random samples from the matrix, where the term sample refers generi- cally to a linear function of the matrix. 3. Postprocess the samples to compute a ﬁnal approximation, typically with classical techniques from numerical linear algebra. This step may require another look at the matrix.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-011"
+      ]
     },
     {
       "id": "page-012",
@@ -618,7 +651,10 @@
         }
       ],
       "extract": "12 HALKO, MARTINSSON, AND TROPP k and a parameter ε > 0, this approach samples ℓ= ℓ(k, ε) columns of the matrix to produce a rank-k approximation B that satisﬁes ∥A −B∥F ≤ A −A(k) F + ε ∥A∥F , (2.2) where ∥·∥F denotes the Frobenius norm. We note that the algorithm of [46] requires only a constant number of passes over the data. Rudelson and Vershynin later showed that the same type of column sampling method also",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-012"
+      ]
     },
     {
       "id": "page-013",
@@ -669,7 +705,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 13 Sarl´os argued in [118] that the computational costs of dimension reduction can be reduced substantially by means of the structured random maps proposed by Ailon– Chazelle [3]. Sarl´os used these ideas to develop eﬃcient randomized algorithms for least-squares problems; he also studied approximate matrix multiplication and low- rank matrix approximation. The",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-013"
+      ]
     },
     {
       "id": "page-014",
@@ -720,7 +759,10 @@
         }
       ],
       "extract": "14 HALKO, MARTINSSON, AND TROPP Tensor skeletons. Randomized column selection methods can be used to produce CUR-type decompositions of higher-order tensors [49]. Matrix multiplication. Column selection and dimension reduction techniques can be used to accelerate the multiplication of rank-deﬁcient matrices [45, 118]. See also [10]. Overdetermined linear systems. The randomized Kaczmarz algorithm is a lin- early",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-014"
+      ]
     },
     {
       "id": "page-015",
@@ -771,7 +813,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 15 rithms require fewer random samples from the matrix and use fewer computational resources than compressive sampling reconstruction algorithms. 2.2. Origins. This section attempts to identify some of the major threads of research that ultimately led to the development of the randomized techniques we discuss in this paper. 2.2.1. Random embeddings. The ﬁeld of",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-015"
+      ]
     },
     {
       "id": "page-016",
@@ -822,7 +867,10 @@
         }
       ],
       "extract": "16 HALKO, MARTINSSON, AND TROPP One of the original examples is the use of random models for arithmetical errors, which was pioneered by von Neumann and Goldstine. Their papers [135,136] stand among the ﬁrst works to study the properties of random matrices. The earliest nu- merical linear algebra algorithm that depends essentially on randomized techniques is probably Dixon’s method for estimating norms and condition",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-016"
+      ]
     },
     {
       "id": "page-017",
@@ -873,7 +921,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 17 deviate far from their mean. This work opened a new era in geometric analysis where the probabilistic method became a basic instrument. Another prominent example of measure concentration is Kashin’s computation of the Gel’fand widths of the ℓ1 ball [77], subsequently reﬁned in [59]. This work showed that a random (N−n)-dimensional projection of the N-dimensional",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-017"
+      ]
     },
     {
       "id": "page-018",
@@ -920,7 +971,10 @@
         }
       ],
       "extract": "18 HALKO, MARTINSSON, AND TROPP hold for each matrix A. We say that a matrix U is orthonormal if its columns form an orthonormal set with respect to the Hermitian inner product. An orthonormal matrix U preserves geometry in the sense that ∥Ux∥= ∥x∥for every vector x. A unitary matrix is a square orthonormal matrix, and an orthogonal matrix is a real unitary matrix. Unitary matrices satisfy the relations UU∗= U∗U =",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-018"
+      ]
     },
     {
       "id": "page-019",
@@ -971,7 +1025,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 19 The columns of U and V are called left singular vectors and right singular vectors, respectively. Singular values are connected with the approximability of matrices. For each j, the number σj+1 equals the spectral-norm discrepancy between A and an optimal rank-j approximation [97]. That is, σj+1 = min{∥A −B∥: B has rank j}. (3.1) In particular, σ1 = ∥A∥. See [61,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-019"
+      ]
     },
     {
       "id": "page-020",
@@ -1022,7 +1079,10 @@
         }
       ],
       "extract": "20 HALKO, MARTINSSON, AND TROPP columns is less than a computational tolerance ε. Letting ℓdenote the number of steps required, the process results in a partial factorization A = QR + E, (3.2) where Q is an m×ℓorthonormal matrix, R is a ℓ×n weakly upper-triangular matrix, and E is a residual that satisﬁes ∥E∥F ≤ε. The computational cost is O(ℓmn), and the number ℓof steps taken is typically close to the minimal rank",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-020"
+      ]
     },
     {
       "id": "page-021",
@@ -1073,7 +1133,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 21 Converting B and C into a partial ID is a one-step process: 1. Compute J and X such that B = B(: ,J)X. Then A ≈A(: ,J)X, but the approximation error may deteriorate from the initial estimate. For example, if we compute the ID using the Gu–Eisenstat algorithm [68] with the parameter f = 2, then the error A −A(: ,J)X ≤(1+ p 1 + 4k(n −k))·ε. Compare this bound with",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-021"
+      ]
     },
     {
       "id": "page-022",
@@ -1124,7 +1187,10 @@
         }
       ],
       "extract": "22 HALKO, MARTINSSON, AND TROPP Algorithm 4.1: Randomized Range Finder Given an m × n matrix A, and an integer ℓ, this scheme computes an m × ℓ orthonormal matrix Q whose range approximates the range of A. 1 Draw an n × ℓGaussian random matrix Ω. 2 Form the m × ℓmatrix Y = AΩ. 3 Construct an m × ℓmatrix Q whose columns form an orthonormal basis for the range of Y , e.g., using the QR factorization Y = QR. present",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-022"
+      ]
     },
     {
       "id": "page-023",
@@ -1175,7 +1241,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 23 basis that veriﬁes (4.2). We refer to this discrepancy p = ℓ−k as the oversampling parameter. The size of the oversampling parameter depends on several factors: The matrix dimensions. Very large matrices may require more oversampling. The singular spectrum. The more rapid the decay of the singular values, the less oversampling is needed. In the extreme case that",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-023"
+      ]
     },
     {
       "id": "page-024",
@@ -1226,7 +1295,10 @@
         }
       ],
       "extract": "24 HALKO, MARTINSSON, AND TROPP Lemma 4.1. Let B be a real m × n matrix. Fix a positive integer r and a real number α > 1. Draw an independent family {ω(i) : i = 1, 2, . . ., r} of standard Gaussian vectors. Then ∥B∥≤α r 2 π max i=1,...,r Bω(i) except with probability α−r. The critical point is that the error estimate (4.3) is computationally inexpensive because it requires only a small number of matrix–vector",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-024"
+      ]
     },
     {
       "id": "page-025",
@@ -1277,7 +1349,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 25 estimate, this apparent extra cost is oﬀset by the fact that Algorithm 4.1 always includes an oversampling factor. The failure probability stated for Algorithm 4.2 is pessimistic because it is derived from a simple union bound argument. In practice, the error estimator is reliable in a range of circumstances when we take r = 10. Algorithm 4.2: Adaptive Randomized",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-025"
+      ]
     },
     {
       "id": "page-026",
@@ -1328,7 +1403,10 @@
         }
       ],
       "extract": "26 HALKO, MARTINSSON, AND TROPP Algorithm 4.3: Randomized Power Iteration Given an m × n matrix A and integers ℓand q, this algorithm computes an m × ℓorthonormal matrix Q whose range approximates the range of A. 1 Draw an n × ℓGaussian random matrix Ω. 2 Form the m × ℓmatrix Y = (AA∗)qAΩvia alternating application of A and A∗. 3 Construct an m × ℓmatrix Q whose columns form an orthonormal basis for the range of Y ,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-026"
+      ]
     },
     {
       "id": "page-027",
@@ -1379,7 +1457,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 27 Algorithm 4.4: Randomized Subspace Iteration Given an m × n matrix A and integers ℓand q, this algorithm computes an m × ℓorthonormal matrix Q whose range approximates the range of A. 1 Draw an n × ℓstandard Gaussian matrix Ω. 2 Form Y0 = AΩand compute its QR factorization Y0 = Q0R0. 3 for j = 1, 2, . . . , q 4 Form eYj = A∗Qj−1 and compute its QR factorization",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-027"
+      ]
     },
     {
       "id": "page-028",
@@ -1430,7 +1511,10 @@
         }
       ],
       "extract": "28 HALKO, MARTINSSON, AND TROPP Algorithm 4.5: Fast Randomized Range Finder Given an m × n matrix A, and an integer ℓ, this scheme computes an m × ℓ orthonormal matrix Q whose range approximates the range of A. 1 Draw an n × ℓSRFT test matrix Ω, as deﬁned by (4.6). 2 Form the m × ℓmatrix Y = AΩusing a (subsampled) FFT. 3 Construct an m × ℓmatrix Q whose columns form an orthonormal basis for the range of Y , e.g.,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-028"
+      ]
     },
     {
       "id": "page-029",
@@ -1481,7 +1565,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 29 Algorithm 5.1: Direct SVD Given matrices A and Q such that (5.1) holds, this procedure computes an approximate factorization A ≈UΣV ∗, where U and V are orthonormal, and Σ is a nonnegative diagonal matrix. 1 Form the matrix B = Q∗A. 2 Compute an SVD of the small matrix: B = eUΣV ∗. 3 Form the orthonormal matrix U = Q eU. Remark 4.7. When the singular values of the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-029"
+      ]
     },
     {
       "id": "page-030",
@@ -1532,7 +1619,10 @@
         }
       ],
       "extract": "30 HALKO, MARTINSSON, AND TROPP is particularly well suited to environments where we have a fast method for computing the matrix–vector product x 7→A∗x, for example when A is sparse or structured. This approach retains a strong advantage over Krylov-subspace methods and rank- revealing QR because Step 1 can be accelerated using BLAS3, parallel processors, and so forth. Steps 2 and 3 require O(k2n) and O(k2m) ﬂops",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-030"
+      ]
     },
     {
       "id": "page-031",
@@ -1575,7 +1665,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 31 Algorithm 5.2: SVD via Row Extraction Given matrices A and Q such that (5.1) holds, this procedure computes an approximate factorization A ≈UΣV ∗, where U and V are orthonormal, and Σ is a nonnegative diagonal matrix. 1 Compute an ID Q = XQ(J,: ). (The ID is deﬁned in §3.2.3.) 2 Extract A(J,: ), and compute a QR factorization A(J,: ) = R∗W ∗. 3 Form the product Z",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-031"
+      ]
     },
     {
       "id": "page-032",
@@ -1626,7 +1719,10 @@
         }
       ],
       "extract": "32 HALKO, MARTINSSON, AND TROPP Algorithm 5.3: Direct Eigenvalue Decomposition Given an Hermitian matrix A and a basis Q such that (5.1) holds, this procedure computes an approximate eigenvalue decomposition A ≈UΛU∗, where U is orthonormal, and Λ is a real diagonal matrix. 1 Form the small matrix B = Q∗AQ. 2 Compute an eigenvalue decomposition B = V ΛV ∗. 3 Form the orthonormal matrix U = QV . Remark 5.3. As the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-032"
+      ]
     },
     {
       "id": "page-033",
@@ -1677,7 +1773,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 33 Algorithm 5.4: Eigenvalue Decomposition via Row Extraction Given an Hermitian matrix A and a basis Q such that (5.1) holds, this procedure computes an approximate eigenvalue decomposition A ≈UΛU∗, where U is orthonormal, and Λ is a real diagonal matrix. 1 Compute an ID Q = XQ(J,: ). 2 Perform a QR factorization X = V R. 3 Form the product Z = RA(J,J)R∗. 4 Compute",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-033"
+      ]
     },
     {
       "id": "page-034",
@@ -1728,7 +1827,10 @@
         }
       ],
       "extract": "34 HALKO, MARTINSSON, AND TROPP For motivation, we begin with the case where A is Hermitian. Let us recall the proto-algorithm from §1.3.3: Draw a random test matrix Ω; form the sample matrix Y = AΩ; then construct a basis Q for the range of Y . It turns out that the matrices Ω, Y , and Q contain all the information we need to approximate A. To see why, deﬁne the (currently unknown) matrix B via B = Q∗AQ. Postmul-",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-034"
+      ]
     },
     {
       "id": "page-035",
@@ -1779,7 +1881,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 35 the error resulting from the two-pass method of Section 5.3 by a factor of 1/τmin, where τmin is the minimal singular value of the matrix Q∗Ω. The situation can be improved by oversampling. Suppose that we seek a rank-k approximate eigenvalue decomposition. Pick a small oversampling parameter p. Draw an n×(k+p) random matrix Ω, and form the sample matrix Y = AΩ.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-035"
+      ]
     },
     {
       "id": "page-036",
@@ -1830,7 +1935,10 @@
         }
       ],
       "extract": "36 HALKO, MARTINSSON, AND TROPP 6.2. Matrices for which matrix–vector products can be rapidly evalu- ated. In many problems in data mining and scientiﬁc computing, the cost Tmult of performing the matrix–vector multiplication x 7→Ax is substantially smaller than the nominal cost O(mn) for the dense case. It is not uncommon that O(m + n) ﬂops suﬃce. Standard examples include (i) very sparse matrices; (ii) structured",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-036"
+      ]
     },
     {
       "id": "page-037",
@@ -1881,7 +1989,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 37 as Lanczos [61, p. 473] or Arnoldi [61, p. 499] are inherently unstable. To obtain nu- merical robustness, we must incorporate sophisticated modiﬁcations such as restarts, reorthogonalization procedures, etc. Constructing a high-quality implementation is suﬃciently hard that the authors of a popular book on “numerical recipes” qualify their treatment of spectral",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-037"
+      ]
     },
     {
       "id": "page-038",
@@ -1932,7 +2043,10 @@
         }
       ],
       "extract": "38 HALKO, MARTINSSON, AND TROPP crucial to enhance the accuracy of the randomized approach using the power scheme, Algorithm 4.3, or some other device. This approach increases the pass count some- what, but in our experience it is very rare that more than ﬁve passes are required. 6.4. Gains from parallelization. As mentioned in §§6.2–6.3, randomized meth- ods often outperform classical techniques not because they",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-038"
+      ]
     },
     {
       "id": "page-039",
@@ -1983,7 +2097,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 39 −3 −2 −1 0 1 2 3 −2.5 −2 −1.5 −1 −0.5 0 0.5 1 1.5 2 2.5 Γ1 Γ2 (a) (b) Fig. 7.1. Conﬁgurations for physical problems. (a) The contours Γ1 (red) and Γ2 (blue) for the integral operator (7.1). (b) Geometry of the lattice problem associated with matrix B in §7.1. 1. The minimum rank-ℓapproximation error σℓ+1 is determined using svd. 2. The actual error eℓ= \u0000I",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-039"
+      ]
     },
     {
       "id": "page-040",
@@ -2022,7 +2139,10 @@
         }
       ],
       "extract": "40 HALKO, MARTINSSON, AND TROPP 0 50 100 150 −18 −16 −14 −12 −10 −8 −6 −4 −2 0 2 ℓ log10(fℓ) log10(eℓ) log10(σℓ+1) Approximation errors Order of magnitude Fig. 7.2. Approximating a Laplace integral operator. One execution of Algorithm 4.2 for the 200 × 200 input matrix A described in §7.1. The number ℓof random samples varies along the horizontal axis; the vertical axis measures the base-10 logarithm of error",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-040"
+      ]
     },
     {
       "id": "page-041",
@@ -2073,7 +2193,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 41 We applied Algorithm 4.2 to the 1596 × 532 matrix B associated with a lattice in which there were 532 nodes (red) on the “inner ring” and 1596 nodes on the (blue) “outer ring.” Each application of B to a vector requires the solution of a sparse linear system of size roughly 140 000×140 000. We implemented the scheme in Matlab using the “backslash” operator for the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-041"
+      ]
     },
     {
       "id": "page-042",
@@ -2124,7 +2247,10 @@
         }
       ],
       "extract": "42 HALKO, MARTINSSON, AND TROPP Laplacian matrix L = I −D−1/2W D−1/2, where D is the diagonal matrix with entries dii = P j wij. These are the eigenvectors associated with the dominant eigenvalues of the auxiliary matrix A = D−1/2W D−1/2. The matrix A is large, and its eigenvalues decay slowly, so we use the power scheme summarized in Algorithm 4.3 to approximate it. Figure 7.5[left] illustrates how the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-042"
+      ]
     },
     {
       "id": "page-043",
@@ -2175,7 +2301,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 43 along these principal directions. To identify the subject in a new picture, we compute its decomposition in this basis and use a classiﬁcation technique, such as nearest neighbors, to select the closest image in the database [122]. We construct a data matrix A as follows: The FERET database contains 7254 images, and each 384×256 image contains 98 304 pixels.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-043"
+      ]
     },
     {
       "id": "page-044",
@@ -2226,7 +2355,10 @@
         }
       ],
       "extract": "44 HALKO, MARTINSSON, AND TROPP 0 20 40 60 80 100 10 0 10 1 10 2 0 20 40 60 80 100 10 0 10 1 10 2 Approximation error eℓ Estimated Singular Values σj Magnitude Minimal error (est) q = 0 q = 1 q = 2 q = 3 ℓ j Fig. 7.6. Computing eigenfaces. For varying exponent q, one trial of the power scheme, Algorithm 4.3, applied to the 98 304×7254 matrix A described in §7.3. (Left) Approximation errors as a function of the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-044"
+      ]
     },
     {
       "id": "page-045",
@@ -2277,7 +2409,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 45 Table 7.1 Computational times for a partial SVD. The time, in seconds, required to compute the ℓ leading components in the SVD of an n × n matrix using each of the methods from §7.4. The last row indicates the time needed to obtain a full SVD. n = 1024 n = 2048 n = 4096 ℓ direct gauss srft direct gauss srft direct gauss srft 10 1.08e-1 5.63e-2 9.06e-2 4.22e-1",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-045"
+      ]
     },
     {
       "id": "page-046",
@@ -2328,7 +2463,10 @@
         }
       ],
       "extract": "46 HALKO, MARTINSSON, AND TROPP 10 1 10 2 10 3 0 1 2 3 4 5 6 7 10 1 10 2 10 3 0 1 2 3 4 5 6 7 10 1 10 2 10 3 0 1 2 3 4 5 6 7 ℓ ℓ ℓ n = 1024 n = 2048 n = 4096 t(direct) /t(gauss) t(direct) /t(srft) t(direct) /t(svd) Acceleration factor Fig. 7.7. Acceleration factor. The relative cost of computing an ℓ-term partial SVD of an n×n Gaussian matrix using direct, a benchmark classical algorithm, versus each of the three",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-046"
+      ]
     },
     {
       "id": "page-047",
@@ -2371,7 +2509,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 47 0 0.5 1 1.5 x 10 −4 0 2 4 6 8 10 x 10 4 0 0.5 1 1.5 2 x 10 −8 0 2 4 6 8 10 12 x 10 8 0 0.5 1 1.5 x 10 −12 0 2 4 6 8 10 12 x 10 12 2 4 6 x 10 −15 0 0.5 1 1.5 2 x 10 16 Empirical density e25 e50 e75 e100 ℓ= 25 ℓ= 75 ℓ= 50 ℓ= 100 Gauss Ortho SRFT GSRFT Fig. 7.8. Empirical probability density functions for the error in Algorithm 4.1. As described in §7.4, the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-047"
+      ]
     },
     {
       "id": "page-048",
@@ -2418,7 +2559,10 @@
         }
       ],
       "extract": "48 HALKO, MARTINSSON, AND TROPP Proposition 8.2 (Perturbation of Inverses). Suppose that M ≽0. Then I −(I + M)−1 ≼M Proof. Deﬁne R = M 1/2, the psd square root of M promised by [72, Thm. 7.2.6]. We have the chain of relations I −(I + R2)−1 = (I + R2)−1R2 = R(I + R2)−1R ≼R2. The ﬁrst equality can be veriﬁed algebraically. The second holds because rational functions of a diagonalizable matrix, such as R, commute. The",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-048"
+      ]
     },
     {
       "id": "page-049",
@@ -2465,7 +2609,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 49 Since the range determines the orthogonal projector, we conclude P = PU ∗M. Proposition 8.5. Suppose range(N) ⊂range(M). Then, for each matrix A, it holds that ∥PNA∥≤∥PMA∥and that ∥(I −PM)A∥≤∥(I −PN)A∥. Proof. The projector PN ≼I, so the conjugation rule yields PMPNPM ≼PM. The hypothesis range(N) ⊂range(M) implies that PMPN = PN, which results in PMPNPM = PNPM =",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-049"
+      ]
     },
     {
       "id": "page-050",
@@ -2516,7 +2663,10 @@
         }
       ],
       "extract": "50 HALKO, MARTINSSON, AND TROPP Writing xj for the entries of x and dj for the diagonal entries of D, we ﬁnd that ∥RDR∥t = [x∗(RDR)x]t = [x∗Dx]t = hX j djx2 j it ≤ hX j dt jx2 j i = x∗Dtx = (Rx)∗Dt(Rx) ≤ RDtR . The inequality is Jensen’s, which applies because P x2 j = 1 and the function z 7→|z|t is convex for t ≥1. 9. Error bounds via linear algebra. We are now prepared to develop a de- terministic error analysis",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-050"
+      ]
     },
     {
       "id": "page-051",
@@ -2567,7 +2717,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 51 Theorem 9.1 (Deterministic error bound). Let A be an m × n matrix with singular value decomposition A = UΣV ∗, and ﬁx k ≥0. Choose a test matrix Ω, and construct the sample matrix Y = AΩ. Partition Σ as speciﬁed in (9.1), and deﬁne Ω1 and Ω2 via (9.2). Assuming that Ω1 has full row rank, the approximation error satisﬁes |||(I −PY )A|||2 ≤|||Σ2|||2 + Σ2Ω2Ω† 1 2,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-051"
+      ]
     },
     {
       "id": "page-052",
@@ -2618,7 +2771,10 @@
         }
       ],
       "extract": "52 HALKO, MARTINSSON, AND TROPP The matrix W has the same range as a related matrix formed by “ﬂattening out” the spectrum of the top block. Indeed, since Σ1Ω1 has full row rank, k range(W ) = range \u0014 I 0 \u0015 k n −k The matrix on the right-hand side has full column rank, so it is legal to apply the formula (8.3) for an orthogonal projector, which immediately yields PW = \u0014I 0 0 0 \u0015 and I −PW = \u00140 0 0 I \u0015 . (9.7) In",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-052"
+      ]
     },
     {
       "id": "page-053",
@@ -2669,7 +2825,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 53 The latter point may not seem obvious, owing to the complicated form of (9.10). In reality, the block matrix is less fearsome than it looks. Proposition 8.2, on the perturbation of inverses, shows that the top-left block veriﬁes I −(I + F ∗F )−1 ≼F ∗F . The bottom-right block satisﬁes I −F (I + F ∗F )−1F ∗≼I because the conjugation rule guarantees that F (I + F ∗F",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-053"
+      ]
     },
     {
       "id": "page-054",
@@ -2720,7 +2879,10 @@
         }
       ],
       "extract": "54 HALKO, MARTINSSON, AND TROPP Theorem 9.2 (Power scheme). Let A be an m× n matrix, and let Ωbe an n× ℓ matrix. Fix a nonnegative integer q, form B = (A∗A)qA, and compute the sample matrix Z = BΩ. Then ∥(I −PZ)A∥≤∥(I −PZ)B∥1/(2q+1) . Proof. We determine that ∥(I −PZ)A∥≤∥(I −PZ)(AA∗)qA∥1/(2q+1) = ∥(I −PZ)B∥1/(2q+1) as a direct consequence of Proposition 8.6. Let us illustrate how the power scheme interacts with the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-054"
+      ]
     },
     {
       "id": "page-055",
@@ -2771,7 +2933,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 55 because b A(k) is a best rank-k approximation to the matrix PZA, whereas PZA(k) is an undistinguished rank-k matrix. It follows that PZA −b A(k) ≤ PZ(A −A(k)) ≤ A −A(k) = σk+1. (9.13) The second inequality holds because the orthogonal projector is a contraction; the last identity follows from Mirsky’s theorem [97]. Combine (9.12) and (9.13) to reach the main",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-055"
+      ]
     },
     {
       "id": "page-056",
@@ -2822,7 +2987,10 @@
         }
       ],
       "extract": "56 HALKO, MARTINSSON, AND TROPP The ﬁrst identity is a standard result from multivariate statistics [99, p. 96]. The second follows from work of Chen and Dongarra [25]. See Proposition A.4 and A.5. To study the probability that Algorithm 4.1 produces a large error, we rely on tail bounds for functions of Gaussian matrices. The next proposition rephrases a well-known result on concentration of measure [14, Thm.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-056"
+      ]
     },
     {
       "id": "page-057",
@@ -2873,7 +3041,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 57 This theorem predicts several intriguing behaviors of Algorithm 4.1. The Eckart– Young theorem [54] shows that (P j>k σ2 j )1/2 is the minimal Frobenius-norm error when approximating A with a rank-k matrix. This quantity is the appropriate bench- mark for the performance of the algorithm. If the small singular values of A are very ﬂat, the series may be as large",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-057"
+      ]
     },
     {
       "id": "page-058",
@@ -2916,7 +3087,10 @@
         }
       ],
       "extract": "58 HALKO, MARTINSSON, AND TROPP We compute this expectation by conditioning on the value of Ω1 and applying Propo- sition 10.1 to the scaled Gaussian matrix Ω2. Thus, E Σ2Ω2Ω† 1 2 F = E \u0010 E h Σ2Ω2Ω† 1 2 F Ω1 i\u0011 = E \u0010 ∥Σ2∥2 F Ω† 1 2 F \u0011 = ∥Σ2∥2 F · E Ω† 1 2 F = k p −1 · ∥Σ2∥2 F , where the last expectation follows from relation (10.3) of Proposition 10.2. In sum- mary, E ∥(I −PY )A∥F ≤ \u0012 1 + k p −1 \u00131/2 ∥Σ2∥F .",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-058"
+      ]
     },
     {
       "id": "page-059",
@@ -2967,7 +3141,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 59 An analogous result holds for the spectral norm. Theorem 10.8 (Deviation bounds for the spectral error). Frame the hypotheses of Theorem 10.5. Assume further that p ≥4. For all u, t ≥1, ∥(I −PY )A∥ ≤ \u0014\u0010 1 + t · p 12k/p \u0011 σk+1 + t · e√k + p p + 1 \u0010X j>k σ2 j \u00111/2\u0015 + ut · e√k + p p + 1 σk+1, with failure probability at most 5t−p + e−u2/2. The bracket corresponds",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-059"
+      ]
     },
     {
       "id": "page-060",
@@ -3010,7 +3187,10 @@
         }
       ],
       "extract": "60 HALKO, MARTINSSON, AND TROPP Consider the function h(X) = Σ2XΩ† 1 . We quickly compute its Lipschitz constant L with the lower triangle inequality and some standard norm estimates: |h(X) −h(Y )| ≤ Σ2(X −Y )Ω† 1 ≤∥Σ2∥∥X −Y ∥ Ω† 1 ≤∥Σ2∥ Ω† 1 ∥X −Y ∥F . Therefore, L ≤∥Σ2∥ Ω† 1 . Relation (10.2) of Proposition 10.1 implies that E[h(Ω2) | Ω1] ≤∥Σ2∥ Ω† 1 F + ∥Σ2∥F Ω† 1 . Applying the concentration of measure",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-060"
+      ]
     },
     {
       "id": "page-061",
@@ -3061,7 +3241,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 61 Invoke Theorem 10.6 to bound the right-hand side, noting that σj(B) = σ2q+1 j . The true message of Corollary 10.10 emerges if we bound the series using its largest term σ4q+2 k+1 and draw the factor σk+1 out of the bracket: E ∥(I −PZ)A∥≤ \" 1 + s k p −1 + e√k + p p · p min{m, n} −k #1/(2q+1) σk+1. In words, as we increase the exponent q, the power scheme drives",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-061"
+      ]
     },
     {
       "id": "page-062",
@@ -3112,7 +3295,10 @@
         }
       ],
       "extract": "62 HALKO, MARTINSSON, AND TROPP Theorem 11.1 (The SRFT preserves geometry). Fix an n × k orthonormal matrix V , and draw an n × ℓSRFT matrix Ωwhere the parameter ℓsatisﬁes 4 h√ k + p 8 log(kn) i2 log(k) ≤ℓ≤n. Then 0.40 ≤σk(V ∗Ω) and σ1(V ∗Ω) ≤1.48 with failure probability at most O(k−1). In words, the kernel of an SRFT of dimension ℓ∼k log(k) is unlikely to intersect a ﬁxed k-dimensional subspace. In contrast with",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-062"
+      ]
     },
     {
       "id": "page-063",
@@ -3163,7 +3349,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 63 Construct the sample matrix Y = AΩ. Then ∥(I −PY )A∥≤ p 1 + 7n/ℓ· σk+1 and ∥(I −PY )A∥F ≤ p 1 + 7n/ℓ· \u0010X j>k σ2 j \u00111/2 with failure probability at most O(k−1). As we saw in §10.2, the quantity σk+1 is the minimal spectral-norm error possible when approximating A with a rank-k matrix. Similarly, the series in the second bound is the minimal Frobenius-norm error",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-063"
+      ]
     },
     {
       "id": "page-064",
@@ -3214,7 +3403,10 @@
         }
       ],
       "extract": "64 HALKO, MARTINSSON, AND TROPP particular, we would like to thank Mark Tygert for his insightful remarks on early drafts of this paper. The example in Section 7.2 was provided by Fran¸cois Meyer of the University of Colorado at Boulder. The example in Section 7.3 comes from the FERET database of facial images collected under the FERET program, sponsored by the DoD Counterdrug Technology Development Program Oﬃce.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-064"
+      ]
     },
     {
       "id": "page-065",
@@ -3257,7 +3449,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 65 We can use Proposition A.3 to bound the expected spectral norm of a pseudo- inverted Gaussian matrix. Proposition A.4. Let G be a m × n standard Gaussian matrix with n −m ≥1 and m ≥2. Then E G† < e√n n −m Proof. Let us make the abbreviations p = n −m and C = 1 p 2π(p + 1) \u0014 e√n p + 1 \u0015p+1 . We compute the expectation by way of a standard argument. The integral",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-065"
+      ]
     },
     {
       "id": "page-066",
@@ -3304,7 +3499,10 @@
         }
       ],
       "extract": "66 HALKO, MARTINSSON, AND TROPP Neither the precise form of Theorem A.6 nor the constants are ideal; we have focused instead on establishing a useful bound with minimal fuss. The rest of the section is devoted to the rather lengthy proof. Unfortunately, most of the standard methods for producing tail bounds fail for random variables that do not exhibit normal or exponential concentration. Our argument relies on",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-066"
+      ]
     },
     {
       "id": "page-067",
@@ -3343,7 +3541,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 67 To streamline the proof, we eliminate the gamma functions from Proposition A.8. The next result bounds the positive moments of a chi-square variate. Lemma A.9. Let Ξ be a χ2 variate with k degrees of freedom. For q ≥1, Eq(Ξ) ≤k + q. Proof. Write q = r + θ, where r = ⌊q⌋. Repeated application of the functional equation zΓ(z) = Γ(z + 1) yields Eq(Ξ) =  2θΓ(k/2 +",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-067"
+      ]
     },
     {
       "id": "page-068",
@@ -3382,7 +3583,10 @@
         }
       ],
       "extract": "68 HALKO, MARTINSSON, AND TROPP A.3.2. Proof of Theorem A.6. Let G be an m × n Gaussian matrix, where we assume that n −m ≥4. Deﬁne the random variable Z = G† 2 F . Our goal is to develop a tail bound for Z. The argument is inspired by work of Szarek [130, §6] for square Gaussian matrices. The ﬁrst step is to ﬁnd an explicit, tractable representation for the random vari- able. According to Proposition A.7, a",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-068"
+      ]
     },
     {
       "id": "page-069",
@@ -3433,7 +3637,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 69 Markov’s inequality results in P \u001a Wj ≥ 12 n −j · u \u001b ≤u−q. Select u = t · (n −j)/(n −m) to reach P \u001a Wj ≥ 12 n −m · t \u001b ≤ \u0014n −m n −j \u0015q t−q. To complete the argument, we combine these estimates by means of the union bound and clean up the resulting mess. Since Z ≤Pm−1 j=0 Wj, P \u001a Z ≥ 12m n −m · t \u001b ≤t−q m−1 X j=0 \u0014n −m n −j \u0015q . To control the sum on the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-069"
+      ]
     },
     {
       "id": "page-070",
@@ -3484,7 +3691,10 @@
         }
       ],
       "extract": "70 HALKO, MARTINSSON, AND TROPP [11] R. Bhatia, Matrix Analysis, no. 169 in GTM, Springer, Berlin, 1997. [12] ˚ A. Bj¨orck, Numerics of Gram–Schmidt orthogonalization, Linear Algebra Appl., 197–198 (1994), pp. 297–316. [13] , Numerical Methods for Least Squares Problems, SIAM, Philadelphia, PA, 1996. [14] V. Bogdanov, Gaussian Measures, American Mathematical Society, Providence, RI, 1998. [15] J. Bourgain, On",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-070"
+      ]
     },
     {
       "id": "page-071",
@@ -3535,7 +3745,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 71 [40] J. Dongarra and F. Sullivan, The top 10 algorithms, Comput. Sci. Eng., (2000), pp. 22–23. [41] D. L. Donoho, Compressed sensing, IEEE Trans. Inform. Theory, 52 (2006), pp. 1289–1306. [42] D. L. Donoho, M. Vetterli, R. A. DeVore, and I. Daubechies, Data compression and harmonic analysis, IEEE Trans. Inform. Theory, 44 (1998), pp. 2433–2452. [43] P. Drineas, A.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-071"
+      ]
     },
     {
       "id": "page-072",
@@ -3586,7 +3799,10 @@
         }
       ],
       "extract": "72 HALKO, MARTINSSON, AND TROPP cs.uiuc.edu/~sariel/research/papers/05/lrank/, 2006. [71] T. Hastie, R. Tibshirani, and J. Friedman, The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Springer, Berlin, 2nd ed., 2008. [72] R. A. Horn and C. R. Johnson, Matrix Analysis, Cambridge Univ. Press, Cambridge, 1985. [73] P. Indyk and R. Motwani, Approximate nearest neighbors: Toward removing the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-072"
+      ]
     },
     {
       "id": "page-073",
@@ -3637,7 +3853,10 @@
         }
       ],
       "extract": "PROBABILISTIC ALGORITHMS FOR MATRIX APPROXIMATION 73 2005. [101] D. Needell, Randomized Kaczmarz solver for noisy linear systems, BIT, 50 (2010), pp. 395– 403. [102] N. H. Nguyen, T. T. Do, and T. D. Tran, A fast and eﬃcient algorithm for low-rank approximation of a matrix, in STOC ’09: Proc. 41st Ann. ACM Symp. Theory of Com- puting, 2009. [103] C.-T. Pan, On the existence and computation of rank-revealing LU",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-073"
+      ]
     },
     {
       "id": "page-074",
@@ -3680,7 +3899,10 @@
         }
       ],
       "extract": "74 HALKO, MARTINSSON, AND TROPP [128] T. Strohmer and R. Vershynin, A randomized Kaczmarz algorithm with exponential con- vergence, J. Fourier Anal. Appl., 15 (2009), pp. 262–278. [129] J. Sun, Y. Xie, H. Zhang, and C. Faloutsos, Less is more: Compact matrix decomposition for large sparse graphs, Stat. Anal. Data Min., 1 (2008), pp. 6–22. [130] S. J. Szarek, Spaces with large distance from ℓn ∞and random matrices,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-0909.4061v2/blocks/prose-page-074"
+      ]
     }
   ],
   "checks": {},
@@ -3734,6 +3956,47 @@
     {
       "term": "input matrix",
       "heading": false
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 74,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p69); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 74,
+      "note": "74 of 74 sections"
     }
   ],
   "links": {

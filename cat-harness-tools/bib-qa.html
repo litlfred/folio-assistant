@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head><script data-folio-saved-scheme>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bibliography QA</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><script data-folio-saved-scheme>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bibliography QA</title><style>
     /* ── Theme ──────────────────────────────────────────── */
     :root { --ease: cubic-bezier(0.4,0,0.2,1); }
     [data-theme="dark"] {
@@ -20,7 +20,7 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: var(--bg); color: var(--fg);
-      font-family: 'Inter','Helvetica Neue',sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
       font-size: 14px; line-height: 1.5;
       min-height: 100vh; padding: 0;
     }
@@ -40,12 +40,12 @@
     }
     .top-bar .spacer { flex: 1; }
     .top-bar .meta {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .65rem; color: var(--fg-d);
     }
     .top-bar button {
       background: var(--bg-r); border: 1px solid var(--brd);
-      color: var(--fg-d); font-family: 'JetBrains Mono', monospace;
+      color: var(--fg-d); font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .6rem; padding: .2rem .6rem; border-radius: 3px;
       cursor: pointer; transition: all .15s;
     }
@@ -62,7 +62,7 @@
     }
     .card .num { font-size: 1.6rem; font-weight: 600; }
     .card .lbl {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .6rem; color: var(--fg-d); margin-top: .15rem;
     }
     .card.green .num { color: var(--grn); }
@@ -83,7 +83,7 @@
     }
     .controls input:focus { outline: none; border-color: var(--ac); }
     .filter-btn {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .6rem; padding: .25rem .6rem; border-radius: 3px;
       border: 1px solid var(--brd); background: var(--bg-r);
       color: var(--fg-d); cursor: pointer; transition: all .15s;
@@ -122,7 +122,7 @@
 
     .ref-info { min-width: 0; }
     .ref-id {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .7rem; color: var(--ac); font-weight: 500;
     }
     .ref-title {
@@ -133,7 +133,7 @@
       font-size: .75rem; color: var(--fg-d); margin-top: .1rem;
     }
     .ref-venue {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .6rem; color: var(--fg-d); margin-top: .1rem;
     }
 
@@ -142,7 +142,7 @@
       justify-content: flex-end; align-self: center;
     }
     .tag {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .55rem; padding: .15rem .4rem;
       border-radius: 3px; white-space: nowrap;
       border: 1px solid var(--brd); background: var(--bg-r);
@@ -188,7 +188,7 @@
     .tag-detail-text { color: var(--fg-d); font-size: .7rem; }
 
     .cite-list {
-      list-style: none; font-family: 'JetBrains Mono', monospace;
+      list-style: none; font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .65rem;
     }
     .cite-list li { padding: .15rem 0; color: var(--fg-d); }
@@ -198,7 +198,7 @@
       font-size: .75rem; align-items: baseline;
     }
     .meta-key {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
       font-size: .65rem; color: var(--fg-d); min-width: 60px;
     }
     .meta-val { color: var(--fg); word-break: break-all; }
@@ -233,7 +233,7 @@
     /* ── Loading / error ────────────────────────────────── */
     .loading { text-align: center; padding: 4rem; color: var(--fg-d); }
     .error { text-align: center; padding: 4rem; color: var(--red); }
-  </style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-aqm66np1dy.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script><meta name="fa-search-exclude" content="true"><script src="../assets/js/vendor/lunr.min.js" defer></script><script src="../assets/js/just-the-docs.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Plans and work","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/folio-assistant-core/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"scenarios","label":"Scenarios","path":"/en/cat-harness/scenarios/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"software-library","label":"Software libraries","note":"no viewer by design"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-aqm66np1dy","here":"/cat-harness-tools/bib-qa.html"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search this site" autocomplete="off"><label for="search-input" class="search-label"><span class="sr-only">Search this site</span></label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="top-bar"><h1>📚 Bibliography QA</h1><div class="spacer"></div><span class="meta" id="gen-time"></span> <button id="theme-btn" onclick="toggleTheme()">light</button> <button onclick="loadData()">↻ reload</button></div><div id="summary" class="summary"></div><div class="controls"><input type="text" id="search" placeholder="Search by id, title, author..."> <button class="filter-btn active" data-filter="all">all</button> <button class="filter-btn" data-filter="fail">⚠ issues</button> <button class="filter-btn" data-filter="pass">✓ clean</button> <button class="filter-btn" data-filter="uncited">uncited</button> <button class="filter-btn" data-filter="no-url">no URL</button> <button class="filter-btn" data-filter="no-img">no image</button></div><div id="ref-list" class="ref-list"><div class="loading">Loading bib-qa.json …</div></div><div class="lightbox" id="lightbox" onclick="this.classList.remove('open')"><img id="lb-img" src="" alt="Screenshot"></div><script>
+  </style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-aqm66np1dy.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script><meta name="fa-search-exclude" content="true"><script src="../assets/js/vendor/lunr.min.js" defer></script><script src="../assets/js/just-the-docs.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","qr","launcher"],"hrefs":{},"notes":{},"folders":[{"kind":"bean-defs","label":"Work items","note":"no viewer yet"},{"kind":"bean-notes","label":"Bean notes","note":"no viewer yet"},{"kind":"beans","label":"Plans and work","note":"no viewer yet"},{"kind":"block-kinds","label":"Block kinds","note":"no viewer yet"},{"kind":"cat-harness","label":"Harness graph","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"content-adapters","label":"Content adapters","note":"no viewer yet"},{"kind":"docs","label":"Docs","note":"no viewer yet"},{"kind":"folio","label":"Folio","note":"no viewer yet"},{"kind":"glossary","label":"Glossary","note":"no viewer yet"},{"kind":"health","label":"Health","note":"no viewer yet"},{"kind":"library","label":"Library","note":"no viewer yet"},{"kind":"memory","label":"Memory","note":"no viewer yet"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/folio-assistant-core/"},{"kind":"qa","label":"QA","note":"no viewer yet"},{"kind":"qa-checkers","label":"QA checkers","note":"no viewer yet"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","note":"no viewer yet"},{"kind":"skills","label":"Skills","note":"no viewer yet"},{"kind":"software-library","label":"Software libraries","note":"no viewer by design"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","note":"no viewer yet"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"voices","label":"Voices","note":"no viewer yet"},{"kind":"workflow-state","label":"Workflow state","note":"no viewer yet"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-aqm66np1dy","here":"/cat-harness-tools/bib-qa.html"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search this site" autocomplete="off"><label for="search-input" class="search-label"><span class="sr-only">Search this site</span></label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="top-bar"><h1>📚 Bibliography QA</h1><div class="spacer"></div><span class="meta" id="gen-time"></span> <button id="theme-btn" onclick="toggleTheme()">light</button> <button onclick="loadData()">↻ reload</button></div><div id="summary" class="summary"></div><div class="controls"><input type="text" id="search" placeholder="Search by id, title, author..."> <button class="filter-btn active" data-filter="all">all</button> <button class="filter-btn" data-filter="fail">⚠ issues</button> <button class="filter-btn" data-filter="pass">✓ clean</button> <button class="filter-btn" data-filter="uncited">uncited</button> <button class="filter-btn" data-filter="no-url">no URL</button> <button class="filter-btn" data-filter="no-img">no image</button></div><div id="ref-list" class="ref-list"><div class="loading">Loading bib-qa.json …</div></div><div class="lightbox" id="lightbox" onclick="this.classList.remove('open')"><img id="lb-img" src="" alt="Screenshot"></div><script>
     // ── State ───────────────────────────────────────────
     let data = null;
     let activeFilter = "all";

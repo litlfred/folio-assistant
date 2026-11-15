@@ -24,7 +24,10 @@
       },
       "keywords": [],
       "extract": null,
-      "extractCut": false
+      "extractCut": false,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple"
+      ]
     },
     {
       "id": "s002-overview-and-bibliographic-identity",
@@ -59,7 +62,10 @@
         }
       ],
       "extract": "The IHE IT Infrastructure Technical Framework Supplement: Verifiable Health Links (VHL) specifies actors, transactions, and trust-list interactions for issuing, presenting, verifying, and redeeming cryptographically verifiable links to health documents and FHIR resources across organizational and jurisdictional boundaries. Field; Value Title; IHE IT Infrastructure Technical Framework Supplement — Verifiable Health",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s002-overview-and-bibliographic-identity"
+      ]
     },
     {
       "id": "s003-volume-1-verifiable-health-links-vhl-actors-tran",
@@ -77,7 +83,10 @@
       },
       "keywords": [],
       "extract": null,
-      "extractCut": false
+      "extractCut": false,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s003-volume-1-verifiable-health-links-vhl-actors-tran"
+      ]
     },
     {
       "id": "s004-actors-and-responsibilities",
@@ -120,7 +129,10 @@
         }
       ],
       "extract": "VHL defines four core actors that participate in the issuance and redemption of a Verifiable Health Link: Actor; ActorDefinition Canonical; Role in VHL VHL Holder; https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder; Individual (or personal health wallet application acting on the individual's behalf) that requests generation of a VHL from a VHL Sharer ([ITI-YY3]) and presents the VHL to a VHL Receiver",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s004-actors-and-responsibilities"
+      ]
     },
     {
       "id": "s005-trust-anchor-neutrality",
@@ -155,7 +167,10 @@
         }
       ],
       "extract": "IHE VHL is trust-anchor neutral by design. The Trust Anchor actor represents any trust framework authority capable of accepting PKI material ([ITI-YY1]) and distributing verifiable trust lists ([ITI-YY2]). The WHO Global Digital Health Certification Network (GDHCN) is one possible Trust Anchor implementation among others (such as national health PKI roots, regional cross-border trust networks, or bilateral",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s005-trust-anchor-neutrality"
+      ]
     },
     {
       "id": "s006-composite-grouping-with-ihe-pcf-privacy-consent-",
@@ -190,7 +205,10 @@
         }
       ],
       "extract": "When a VHL Sharer is grouped with IHE PCF actors (Consent Recorder, Consent Registry, and/or Consent Authorization Server): 1. Before or during VHL issuance ([ITI-YY3]), the VHL Holder records or selects a patient privacy consent directive stored via PCF Access Consent [ITI-108], scoping which documents, purposes of use, recipients, or validity periods the VHL covers. 2. When a VHL Receiver redeems the VHL via",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s006-composite-grouping-with-ihe-pcf-privacy-consent-"
+      ]
     },
     {
       "id": "s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy",
@@ -208,7 +226,10 @@
       },
       "keywords": [],
       "extract": null,
-      "extractCut": false
+      "extractCut": false,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy"
+      ]
     },
     {
       "id": "s008-summary-of-vhl-transactions",
@@ -259,7 +280,10 @@
         }
       ],
       "extract": "Transaction Code; Transaction Name; Initiator; Responder; Description [ITI-YY1]; Submit PKI Material with DID; VHL Sharer / VHL Receiver; Trust Anchor; Submits public key material (DID document / JWK Set / X.509 certificate metadata) to the Trust Anchor for inclusion in the trust network's published key list. [ITI-YY2]; Retrieve Trust List with DID; VHL Receiver / VHL Sharer; Trust Anchor; Retrieves the signed trust",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s008-summary-of-vhl-transactions"
+      ]
     },
     {
       "id": "s009-operationdefinition-generate-vhl-generate-vhl-it",
@@ -290,7 +314,10 @@
         }
       ],
       "extract": "The GenerateVHL operation (https://profiles.ihe.net/ITI/VHL/OperationDefinition/GenerateVHL, code generate-vhl) is invoked on a VHL Sharer at the system level (POST [base]/$generate-vhl). It accepts subject identification, optional document selection or folder references, expiration / passcode parameters, and consent directive references, and returns the signed VHL payload for storage on the VHL Holder's Personal",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s009-operationdefinition-generate-vhl-generate-vhl-it"
+      ]
     },
     {
       "id": "s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-",
@@ -325,7 +352,10 @@
         }
       ],
       "extract": "ResourceType; ID; Title; Canonical URL ImplementationGuide; ihe.iti.vhl; Verifiable Health Links (VHL); https://profiles.ihe.net/ITI/VHL/ImplementationGuide/ihe.iti.vhl ActorDefinition; VHLHolder; VHL Holder; https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder ActorDefinition; VHLSharer; VHL Sharer; https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLSharer ActorDefinition; VHLReceiver; VHL Receiver;",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-"
+      ]
     }
   ],
   "checks": {},
@@ -378,6 +408,47 @@
     {
       "term": "ihe pcf",
       "heading": true
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "none",
+      "note": "no outline in the PDF and none inferred"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 10,
+      "note": "3 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 10,
+      "note": "10 of 10 sections"
     }
   ],
   "links": {

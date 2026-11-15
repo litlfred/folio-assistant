@@ -386,9 +386,21 @@
             }
           }
         },
+        "catalogues": {
+          "type": "string",
+          "minLength": 1
+        },
         "optIn": {
           "type": "boolean",
           "const": true
+        },
+        "requires": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "tile": {
           "type": "object",

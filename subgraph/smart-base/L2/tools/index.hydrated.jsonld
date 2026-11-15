@@ -1,0 +1,282 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/dak-config-from-sushi/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/dak-config-from-sushi.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Derive the DAK configuration from `sushi-config.yaml` plus repository and branch context.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/generate_dak_from_sushi.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "`sushi-config.yaml` at the IG root.",
+                "name": "sushiConfig",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Sanitised branch name, for the publication and preview URLs.",
+                "name": "branch",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`index.config.json` (`contentTypes.dak`).",
+                "name": "dakConfig",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "dak-config-from-sushi",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+          "title": "sushi-config.yaml → index.config.json#contentTypes.dak"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L2/tools/dak-config-from-sushi",
+      "path": "L2/tools/dak-config-from-sushi/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/extract-dak/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/extract-dak.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Run WHO's `extract_dak.py` in a DAK or IG repository. It reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes DMN decision tables, CPG recommendation PlanDefinitions with citations, CQL library skeletons, Requirements and logical-model FSH. Per the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`), an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 $SMART_BASE_HOME/input/scripts/extract_dak.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The working directory: a DAK or IG repository with `input/decision-logic/`, `input/system-requirements/` and `input/dictionary/` spreadsheets in the DAK template layout.",
+                "name": "dakRepository",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Decision tables in the DAK DMN format (namespace `https://www.omg.org/spec/DMN/20240513/MODEL/`), each with an `Annotations` and a `Reference(s)` output.",
+                "name": "dmn",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "PlanDefinition, ActivityDefinition, Requirements and logical-model FSH, for SUSHI to compile.",
+                "name": "fsh",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "CQL library skeletons, one per decision table, with the definitions already present in `input/cql/` carried over.",
+                "name": "cql",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "extract-dak",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+          "title": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L2/tools/extract-dak",
+      "path": "L2/tools/extract-dak/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/kg-extract-dak/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/kg-extract-dak.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2/schemas/extract-dak.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--dak"
+                },
+                "description": "The dak.json with the kit's metadata (canonicalUrl, title, version).",
+                "name": "dak",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--fsh"
+                },
+                "description": "The FSH instance tree (e.g. `input/fsh`).",
+                "name": "fsh",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--bpmn-dir"
+                },
+                "description": "A BPMN directory; its files are listed as business-process orphans when no component declares them.",
+                "name": "bpmnDir",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--dmn-dir"
+                },
+                "description": "A DMN directory; its files are listed as decision-logic orphans when no component declares them.",
+                "name": "dmnDir",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where the graph document goes; stdout when absent.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The L2 DAK component graph document, with coverage across all nine components on stderr.",
+                "name": "graph",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "kg-extract-dak",
+          "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+          "title": "dak.json + FSH tree → L2 DAK component graph"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L2/tools/kg-extract-dak",
+      "path": "L2/tools/kg-extract-dak/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/l1-recommendation-scenarios/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/l1-recommendation-scenarios.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "From an agent's `l1-scenario-mapping/v1`, write one smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by smart-kg L2's existing edges. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/l1-recommendation-scenarios.ts --l1 <l1.json|yaml> --vocabulary <guide.json> [--generic <generic.json>] --mapping <mapping.yaml> --out <dir> [--check]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The recommendations: `l1-recommendation-candidates`' L1 3.0 graph, or an authored L1 YAML.",
+                "name": "l1",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The target guide's personas and processes (`l1-scenario-vocabulary/v1`).",
+                "name": "vocabulary",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "smart-base's generic personas (second rung).",
+                "name": "generic",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The agent's persona, process, act, outcome and domain per recommendation, each with a source and a basis.",
+                "name": "mapping",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`scenario-candidates.l2.json`.",
+                "name": "graph",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`scenario-warnings.md` — processes not determined, personas that are glossary candidates.",
+                "name": "warnings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`run-context.json`, cat-harness `folio-run-context/v1`.",
+                "name": "runContext",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "l1-recommendation-scenarios",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/recommendation-scenarios",
+          "title": "L1 recommendations → L2 user-scenario candidates"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L2/tools/l1-recommendation-scenarios",
+      "path": "L2/tools/l1-recommendation-scenarios/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2/tools",
+  "path": "L2/tools/"
+}

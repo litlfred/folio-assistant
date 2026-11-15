@@ -38,6 +38,9 @@
       "name": "build-pdf"
     },
     {
+      "name": "cache-first-ci"
+    },
+    {
       "name": "ci-health"
     },
     {
@@ -101,16 +104,7 @@
       "name": "document-intake"
     },
     {
-      "name": "dsa-catalogue-status"
-    },
-    {
       "name": "dsa-checksum"
-    },
-    {
-      "name": "dsa-dcat-record"
-    },
-    {
-      "name": "dsa-odrl-source"
     },
     {
       "name": "dublin-core-renderings"
@@ -186,6 +180,12 @@
     },
     {
       "name": "kg-subgraph-layout"
+    },
+    {
+      "name": "kg-to-portal"
+    },
+    {
+      "name": "kg-viewer"
     },
     {
       "name": "l1-coverage"
@@ -287,6 +287,9 @@
       "name": "publish-extracted-statements"
     },
     {
+      "name": "publish-verification"
+    },
+    {
       "name": "qa-reports"
     },
     {
@@ -296,13 +299,13 @@
       "name": "recommendation-scenarios"
     },
     {
+      "name": "ref-stewardship"
+    },
+    {
       "name": "remote-mount"
     },
     {
       "name": "render-kg-to-cdn"
-    },
-    {
-      "name": "render-kg-to-github-pages"
     },
     {
       "name": "render-logging"
@@ -362,10 +365,19 @@
       "name": "task-authorization"
     },
     {
+      "name": "test-engineer"
+    },
+    {
       "name": "todo-manager"
     },
     {
       "name": "transcription-verbatim"
+    },
+    {
+      "name": "translation-adjudication"
+    },
+    {
+      "name": "translation-candidate-source"
     },
     {
       "name": "translation-manager"
@@ -1952,6 +1964,84 @@
         }
       }
     },
+    "/tools/bpmn-graphviz-layout": {
+      "post": {
+        "operationId": "bpmn-graphviz-layout",
+        "summary": "BPMN → Diagram Interchange, laid out by Graphviz",
+        "description": "Lay out a BPMN that carries no Diagram Interchange (`bpmn_to_svg.py` beside this file, moved from `.github/skills/bpmn_layout/` by bean folio-assistant-tgaj): one Graphviz cluster per participant, the coordinates written back into the BPMN as `<bpmndi:BPMNDiagram>`, and Graphviz's own SVG. cat-harness-tools' `render:bpmn` draws only the DI a file already has (bpmn-js does not lay out), so this is the step before it for a DAK process written, or imported, without one.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/bpmn-graphviz-layout/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A BPMN 2.0 file, with or without DI."
+                  }
+                },
+                "required": [
+                  "bpmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bpmn": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The BPMN with a Graphviz-placed `<bpmndi:BPMNDiagram>` (`--bpmn`)."
+                    },
+                    "svg": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "Graphviz's drawing (`--svg`); not bpmn-js's, so not the published picture."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/bpmn-graphviz-layout.jsonld",
+        "x-invoke": {
+          "shell": "python3 smart-base/L2-bpmn/tools/bpmn-graphviz-layout/bpmn_to_svg.py <file.bpmn> [--bpmn <out.bpmn>] [--svg <out.svg>] [--dot <out.dot>]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3",
+            "graphviz"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A BPMN has no Diagram Interchange, so `render:bpmn` would draw it blank, and a first layout is wanted before an author tidies it (`bpmn:detangle`).",
+          "limits": "A first layout, not the finished one: it does not meet `bpmn-authoring`'s readability rules (fixed task size, label placement, lane order); run `bun run cat bpmn:detangle --write` and look at `render:bpmn`'s picture after it. It parses with the standard library's ElementTree, so it is for files an author holds, not untrusted input.",
+          "cost": "Seconds; needs Graphviz `dot` on the PATH."
+        }
+      }
+    },
     "/tools/bpmn-render": {
       "post": {
         "operationId": "bpmn-render",
@@ -2087,6 +2177,84 @@
           "when": "An L2 business process is to reach L3 as a computable artefact, not only a picture.",
           "limits": "Requires a `smart-base` checkout at `SMART_BASE_HOME`; without one the capability is ABSENT, not a clean run.",
           "cost": "Seconds, plus the upstream checkout."
+        }
+      }
+    },
+    "/tools/bpmn-validate": {
+      "post": {
+        "operationId": "bpmn-validate",
+        "summary": "BPMN structure, vendor namespaces and lane → actor",
+        "description": "Check a DAK's BPMN (`validate.ts` beside this file; bean folio-assistant-tgaj, which replaced four Python validators with it): well-formed XML whose root is `<bpmn:definitions>`, no Camunda or Zeebe namespace, no duplicate id, at least one process, no bpmn-moddle (bpmn-js) import warning; every process has a `<laneSet>`, every flow node sits in a lane, and lane ids are unique and valid FSH ids; and every innermost lane names its actor by id: its `partitionElementRef` (a top-level `<bpmn:resource>`), else its own id, matched exactly against the `Instance:` ids of the ActorDefinitions in the IG's FSH (or JSON) and, for a harness process, the role ids of the mounted layers' `scenarios/roles.json`. Never by file name or title. With no file named it reads the declared process directories, `smart-base/**/processes/` and an IG's `input/bpmn/`.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/bpmn-validate/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .bpmn files to check; when absent, every .bpmn under the declared process directories (or, with `--changed <ref>`, those the branch changed)."
+                  },
+                  "fsh": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Directories of ActorDefinition FSH or JSON; default `input/fsh` and `input/resources`."
+                  },
+                  "roles": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`scenarios/roles.json` files whose role ids a harness lane may bind; default those of smart-base and the mounted cat-harness, fhir-harness and folio-assistant-core."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "One `✗` line per error and `!` per warning, then a count. Exit 0 no error, 1 an error, 2 nothing to check (not a pass). `--json` prints the findings as data."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/bpmn-validate.jsonld",
+        "x-invoke": {
+          "shell": "bun run smart-base/L2-bpmn/tools/bpmn-validate/validate.ts [file.bpmn ...] [--root <repo>] [--fsh <dir>]... [--roles <roles.json>]... [--changed <git ref>] [--json] [--verbose]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DAK's business process (L2, BPMN) is added or edited, before review (skill `l2-component-edit-review`, the BPMN row's checker), and on every pull request that changes a `.bpmn`.",
+          "limits": "An ActorDefinition a dependency IG declares is found only when its FSH or JSON directory is passed with `--fsh`. Reads lanes, not pools: a participant whose process has no lanes is reported as a process with no laneSet. A lane bound to a harness role is accepted here; whether that role is equipped is cat-harness's `role-model` check (`kg:audit`). A published DAK whose processes are still Visio figures is crosswalked against its personas by `smart-base/scripts/dak-swimlanes.ts` (always on, beside the `web-annex` kind's `dak-swimlanes/v1` validator), not by this Tool. It does not draw the diagram (`render:bpmn` does) or check DI completeness.",
+          "cost": "Seconds, no network."
         }
       }
     },
@@ -2619,10 +2787,7 @@
         "summary": "Verify Data Sharing Agreement hash, citation, and vocabulary terms",
         "description": "Verify a Data Sharing Agreement (DSA) directory or single version: checks that every JSON-LD term in `agreement.jsonld` and `dcat.jsonld` is defined in the SHA-256-pinned official W3C ODRL 2.2, W3C DCAT 3 (with SPDX 2.2.2 and ADMS), or DCMI Metadata Terms contexts; checks that the ODRL 2.2 Agreement's `uid` is the version's fixed-version URL and its `dcterms:source` cites the DCAT 3 `dcat:Distribution` whose `spdx:checksum` is checked; verifies that the SHA-256 digest of `agreement.md` matches `spdx:checksumValue`; and checks `dcat:previousVersion` and hash distinctness across versions.",
         "tags": [
-          "dsa-checksum",
-          "dsa-odrl-source",
-          "dsa-dcat-record",
-          "dsa-catalogue-status"
+          "dsa-checksum"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2677,10 +2842,7 @@
           "network": false
         },
         "x-satisfies": [
-          "dsa-checksum",
-          "dsa-odrl-source",
-          "dsa-dcat-record",
-          "dsa-catalogue-status"
+          "dsa-checksum"
         ],
         "x-selection": {
           "when": "Verifying a Data Sharing Agreement's checksum, ODRL citation, DCAT 3 record and `dcat:previousVersion` chain, or `adms:status`.",
@@ -2811,6 +2973,14 @@
         "x-satisfies": [
           "fhir-validation"
         ],
+        "x-skill-contracts": {
+          "fhir-validation.input": {
+            "$ref": "#/components/schemas/skill.fhir-validation.input"
+          },
+          "fhir-validation.output": {
+            "$ref": "#/components/schemas/skill.fhir-validation.output"
+          }
+        },
         "x-selection": {
           "when": "A pull request changes an IG's CodeSystems or its translation supplements, and the IG build is not run on it.",
           "limits": "Compiles only CodeSystems, Aliases and RuleSets with the supplements: a base CodeSystem written as an Instance, or one from another package, is reported as missing.",
@@ -2889,6 +3059,14 @@
         "x-satisfies": [
           "fhir-questionnaire-wireframe"
         ],
+        "x-skill-contracts": {
+          "fhir-questionnaire-wireframe.input": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.input"
+          },
+          "fhir-questionnaire-wireframe.output": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output"
+          }
+        },
         "x-selection": {
           "when": "A Questionnaire was derived from an L2 wireframe and is reviewed for fidelity; or a suggested edit to either side is checked (`checkSuggestion`, the same judge in the editor-checker shape).",
           "limits": "Compares ids and order only: it says nothing about labels, answer options, enableWhen or layout quality, which `wireframe-design-review` judges. A wireframe with no `data-element` field is exit 2, not a pass.",
@@ -2976,7 +3154,7 @@
         "summary": "Publish bootstrap-tools' site",
         "description": "Dispatch bootstrap-tools' `pages.yml`: stage the README site and graph with `scripts/site.ts` and commit them onto `gh-pages`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "render-kg-to-github-pages"
+          "kg-to-portal"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -3035,7 +3213,7 @@
           "network": true
         },
         "x-satisfies": [
-          "render-kg-to-github-pages"
+          "kg-to-portal"
         ],
         "x-selection": {
           "when": "Running the `pages.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -3126,8 +3304,7 @@
         "summary": "Build and publish the platform docs site",
         "description": "Dispatch the index's `docs-site.yml`: security gate, regenerate, compose each layer's site, build, export the graph, verify, restore previews, publish to gh-pages, judge the built site. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "render-kg-to-cdn",
-          "docs-generation"
+          "render-kg-to-cdn"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -3186,8 +3363,7 @@
           "network": true
         },
         "x-satisfies": [
-          "render-kg-to-cdn",
-          "docs-generation"
+          "render-kg-to-cdn"
         ],
         "x-selection": {
           "when": "Running the `docs-site.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -3576,7 +3752,7 @@
         "summary": "Run a layer's PR checks",
         "description": "Dispatch the layer's `harness-pr-checks.yml`, which calls the tools layer's reusable `layer-pr-checks.yml` (mount the pinned layers, run every gate of the layer's dependency harness, compare head against base) and, on main, `layer-main-qa.yml`. The workflow is the Tool: its helper scripts (run-gates, compare-gates, main-verdict, …) are its steps. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "platform-gates"
+          "cache-first-ci"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -3635,7 +3811,7 @@
           "network": true
         },
         "x-satisfies": [
-          "platform-gates"
+          "cache-first-ci"
         ],
         "x-selection": {
           "when": "Running the `harness-pr-checks.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -3650,7 +3826,7 @@
         "summary": "Run the tools layer's own test suite",
         "description": "Dispatch the tools layer's `pr-tests.yml`: the unit and standalone tests, sharded, with the failures compared against main's. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "platform-gates"
+          "test-engineer"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -3709,7 +3885,7 @@
           "network": true
         },
         "x-satisfies": [
-          "platform-gates"
+          "test-engineer"
         ],
         "x-selection": {
           "when": "Running the `pr-tests.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -3946,7 +4122,7 @@
         "summary": "Publish staged previews",
         "description": "Dispatch the index's `staging-publish.yml`: push the previews staged by feature-staging runs to gh-pages. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "feature-staging"
+          "ref-stewardship"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -4005,7 +4181,7 @@
           "network": true
         },
         "x-satisfies": [
-          "feature-staging"
+          "ref-stewardship"
         ],
         "x-selection": {
           "when": "Running the `staging-publish.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -4020,7 +4196,7 @@
         "summary": "Run a layer's standing re-pin",
         "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "upstream-version-adoption"
+          "remote-mount"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -4079,7 +4255,7 @@
           "network": true
         },
         "x-satisfies": [
-          "upstream-version-adoption"
+          "remote-mount"
         ],
         "x-selection": {
           "when": "Running the `standing-repin.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -4094,8 +4270,7 @@
         "summary": "Run the 15-minute sweeps",
         "description": "Dispatch the index's `sweeps.yml`: ask each sweep (staging publish, preview verify, re-pin train verdict, cache report) whether there is work, and start the workflow concerned only when there is. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "feature-staging",
-          "upstream-version-adoption"
+          "publish-verification"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -4154,8 +4329,7 @@
           "network": true
         },
         "x-satisfies": [
-          "feature-staging",
-          "upstream-version-adoption"
+          "publish-verification"
         ],
         "x-selection": {
           "when": "Running the `sweeps.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -5876,6 +6050,84 @@
         }
       }
     },
+    "/tools/fhir-core": {
+      "post": {
+        "operationId": "fhir-core",
+        "summary": "Load the stable FHIR releases' core StructureDefinitions as a graph keyed by canonical URL",
+        "description": "Read each stable FHIR release's core package (`hl7.fhir.r4.core#4.0.1`, `hl7.fhir.r4b.core#4.3.0`, `hl7.fhir.r5.core#5.0.0`) at the version, sha1 and sha512 `fhir-core/pins.json` pins, and keep its resources, complex and primitive types and root types (Base, Element, BackboneElement, DomainResource, Resource) under `fhir-core/<release>/`, keyed by canonical URL. `index` writes the release's manifest (each definition's kind, type, base and sha256); `materialise` writes the bodies byte for byte as the package holds them; `check` holds the two to the pins offline; `resolve` answers which file a canonical URL is kept in. A package that cannot be fetched or verified is recorded as `unread` with the reason, never as an empty graph.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "fhir-harness/fhir-core/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The fhir-harness layer root. Default: the layer this script is in."
+                  },
+                  "release": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "One release (R4, R4B or R5). Default: every pinned release."
+                  },
+                  "tgz-dir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A directory of already-downloaded `<name>-<version>.tgz`; still hash-checked against the pin."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "definitions": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Definitions indexed or materialised per release; an unread release is named with its reason."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-core.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/fhir-core.ts <index|materialise|check|resolve <url>>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Before a reader resolves a FHIR core type by canonical URL (a class diagram of an IG's logical models or profiles), or when a pin changes.",
+          "limits": "Stable releases only. Constraint profiles, extension definitions and logical models in the core package are left out and counted.",
+          "cost": "One 13-17 MB download per release, then seconds; `check` and `resolve` are offline."
+        }
+      }
+    },
     "/tools/fhir-package-mirror": {
       "post": {
         "operationId": "fhir-package-mirror",
@@ -6892,7 +7144,15 @@
         },
         "x-satisfies": [
           "fhir-validation"
-        ]
+        ],
+        "x-skill-contracts": {
+          "fhir-validation.input": {
+            "$ref": "#/components/schemas/skill.fhir-validation.input"
+          },
+          "fhir-validation.output": {
+            "$ref": "#/components/schemas/skill.fhir-validation.output"
+          }
+        }
       }
     },
     "/tools/gates": {
@@ -7282,6 +7542,75 @@
           "when": "The CDN target is GitHub Pages: this repository's docs site and its review previews, and every layer whose declaration names a GitHub `repository`.",
           "limits": "GitHub only. Pages cannot serve server-side redirects or custom headers, and a full-replace push to the `gh-pages` branch deletes what the build did not produce unless the caller restores it first (`docs-site-publish`). Another CDN is another Tool satisfying `render-kg-to-cdn`.",
           "cost": "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served."
+        }
+      }
+    },
+    "/tools/github": {
+      "post": {
+        "operationId": "github",
+        "summary": "GitHub (issues, Actions, pull requests)",
+        "description": "GitHub as a Tool: the forge that carries an adjudication as an issue, runs the workflow that records it on Actions, and holds the record as a pull request for a maintainer to merge. One forge among possible others; the process names the skill, never GitHub.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/github/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository holding the catalogues. Default: the current one."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The issue, workflow run or pull request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github.jsonld",
+        "x-invoke": {
+          "shell": "gh",
+          "manual": true
+        },
+        "x-install": {
+          "cli": "gh (optional; the web interface needs nothing)",
+          "service": "github.com"
+        },
+        "x-requires": {
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-adjudication"
+        ],
+        "x-selection": {
+          "when": "The layer's repository is on GitHub: the review page files issues there, and its caller workflow runs on Actions.",
+          "limits": "GitHub only. Identity is GitHub's `author_association`, so a reviewer must be an owner, member or collaborator of the repository. A PR opened with the workflow's token starts no other workflows. Another forge carrying the same `translation-adjudication/v1` record would be another Tool satisfying `translation-adjudication`.",
+          "cost": "Free for a public repository: issues, pull requests and the Actions minutes of one short job per adjudication."
         }
       }
     },
@@ -8510,7 +8839,7 @@
       "post": {
         "operationId": "glossary-table",
         "summary": "Glossary and acronyms tables",
-        "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
+        "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes; acronyms (notation and prefLabel); or element types, the placeholder types an ArchiMate metamodel view shows, with each term's definition and skos:example. The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
         "tags": [
           "graph-rendering"
         ],
@@ -8577,9 +8906,9 @@
           "graph-rendering"
         ],
         "x-selection": {
-          "when": "A document's glossary or acronyms tables should come from its SKOS glossaries. For a References list use references-render.",
+          "when": "A document's glossary, acronyms or element-types tables should come from its SKOS glossaries (and, for element types, its ArchiMate metamodel view). For a References list use references-render.",
           "limits": "Only the tables `glossary/glossary-tables.json` names; captions and footnotes are left alone.",
-          "cost": "Milliseconds per table; reads the instance's glossary schemes, no network."
+          "cost": "Milliseconds per table; reads the instance's glossary schemes and, for element types, one Archi model; no network."
         }
       }
     },
@@ -10285,6 +10614,87 @@
         }
       }
     },
+    "/tools/ig-publisher-i18n": {
+      "post": {
+        "operationId": "ig-publisher-i18n",
+        "summary": "Put the IG Publisher's QA messages in each language an IG translates into, from the Publisher's own translations first",
+        "description": "Fetches the IG Publisher's own message bundles (`Messages_<lang>.properties` in `org.hl7.fhir.utilities-<core>.jar`, Maven Central) at exactly the core version the AST recorded, and translates each QA message by its `message-id`: the Publisher's translation where it has one whose placeholders match the English, else this layer's catalogue `translations/<locale>/publisher/messages.po` (machine translation, marked as such), else the English. `needs --merge` appends to each locale's catalogue the strings a build lacks, each with an example and deep links to the rows that print it. The site build (`ig-qa-page.ts`) calls it for every locale the IG translates its pages into and publishes `qa-messages.<locale>.json` and `i18n-usage.json` beside the QA report.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "fhir-harness/ig-publisher-i18n/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`fetch <core-version> <dir>`, or `needs <qa-messages.json> <bundle-dir> <translations-dir> <locale>...`."
+                  },
+                  "merge": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "With `needs`: append what each locale lacks to its catalogue."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "With `needs`: the published site's URL, so a catalogue's links open the rendered rows."
+                  }
+                },
+                "required": [
+                  "command"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "needs": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Strings each locale lacks a translation for."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-publisher-i18n.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-publisher-i18n.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "When an IG's QA report is built for its translated locales, or to see and fill what a locale's catalogue lacks.",
+          "limits": "Needs curl and unzip and Maven Central for the bundles; without them every message falls back to this layer's catalogue or English, and the build says why. Never substitutes another core version.",
+          "cost": "One jar download (about 3 MB) per core version, cached under ~/.fhir/publisher-i18n."
+        }
+      }
+    },
     "/tools/ig-release": {
       "post": {
         "operationId": "ig-release",
@@ -11612,6 +12022,382 @@
         ]
       }
     },
+    "/tools/kg-extract-bpmn": {
+      "post": {
+        "operationId": "kg-extract-bpmn",
+        "summary": "BPMN → L2-BPMN knowledge graph",
+        "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/kg-extract-bpmn/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .bpmn file to read."
+                  },
+                  "personas": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A directory of ActorDefinition FSH; a pool's @name is matched against their titles. When absent, every pool -> persona join is recorded unresolved."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "bpmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L2-BPMN graph document (nodes, edges, provenance)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-bpmn.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-bpmn/schemas/extract-bpmn.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A BPMN file's interior is to be read into the knowledge graph as the L2-BPMN subgraph, with its pool -> persona joins recorded and their resolution status made queryable.",
+          "limits": "Parses the OMG BPMN serialisation with regular expressions, as smart-kg did; it reads tasks, sub-processes, exclusive gateways, start/end events, sequence and message flows, and does not interpret diagram layout. A pool -> persona match is exact string equality on a display title, so it does not survive a rename.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-citations": {
+      "post": {
+        "operationId": "kg-extract-citations",
+        "summary": "DMN reference column → L1 citations",
+        "description": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/kg-extract-citations/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .dmn file to read."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; also echoed to stdout when absent."
+                  }
+                },
+                "required": [
+                  "dmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The citation graph document (an L2 document: the table as an external artefact and its L1 citation nodes), plus a coverage report on stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-citations.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-citations.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DMN decision table carries an L1 reference column and its citations are to be turned into graph nodes, with coverage counted rather than assumed.",
+          "limits": "Copies each reference string verbatim and never resolves it to a publication — resolution is a judgement the schema requires evidence for. '[Add appropriate reference]' is recorded as a placeholder, which coverage counts apart from a blank. The reference column is found by its description.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-dak": {
+      "post": {
+        "operationId": "kg-extract-dak",
+        "summary": "dak.json + FSH tree → L2 DAK component graph",
+        "description": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor).",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/kg-extract-dak/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dak": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The dak.json with the kit's metadata (canonicalUrl, title, version)."
+                  },
+                  "fsh": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The FSH instance tree (e.g. `input/fsh`)."
+                  },
+                  "bpmnDir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A BPMN directory; its files are listed as business-process orphans when no component declares them."
+                  },
+                  "dmnDir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A DMN directory; its files are listed as decision-logic orphans when no component declares them."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "dak",
+                  "fsh"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L2 DAK component graph document, with coverage across all nine components on stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-dak.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2/schemas/extract-dak.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DAK's component layer is to be read into the knowledge graph from dak.json and the committed FSH instances, with the gaps (components with no instance, files no component declares) made visible.",
+          "limits": "Reads the FSH instance tree, not the DAK spreadsheets; it covers personas and requirements, the components the estate commits as instances. Kit membership is inferred from presence in the input tree, since dak.json declares no component arrays. The `fulfilledBy` join resolves by canonical reference and does not depend on a display title.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-dmn": {
+      "post": {
+        "operationId": "kg-extract-dmn",
+        "summary": "DMN → L2-DMN knowledge graph",
+        "description": "Extract the interior of one DMN decision table as the L2-DMN subgraph (`smart-base/L2-dmn/schemas/extract-dmn.ts`, ported from WHO smart-kg `tools/extract-dmn.mjs`): a `dmn-definitions` node and its decisions, decision tables, input and output clauses and rules, the `reads` edges to the data elements recovered from input expressions, the `citesSource` edges to the L1 citations each rule's reference column names, and the `invokedBy` edge to the BPMN task the `usingTask` href names. Pass `--bpmn` to resolve that task by name instead of recording it unresolved.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/kg-extract-dmn/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .dmn file to read."
+                  },
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A BPMN file; the `usingTask` href fragment is matched against its task @name to resolve `invokedBy`."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "dmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L2-DMN graph document. Its `citesSource` edges reach L1 citations minted by kg-extract-citations from the same strings."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-dmn.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-dmn.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DMN decision table's interior is to be read into the knowledge graph as the L2-DMN subgraph, joining its rules to the L1 sources they cite and to the BPMN task that invokes the decision.",
+          "limits": "Parses the DMN serialisation with regular expressions, as smart-kg did. A data element recovered from an input expression carries only the name that was referenced, never a definition, and is left unresolved. The reference column is found by its description, and the outputEntry/annotationEntry split is read from the first rule.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-l3": {
+      "post": {
+        "operationId": "kg-extract-l3",
+        "summary": "FHIR IG → L3 knowledge graph",
+        "description": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-base/kg-extract-l3/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ig": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG root (holds `sushi-config.yaml` and `input/`)."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "ig"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L3 graph document; each node carries the SHA-256 of the file it came from."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-l3.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L3/schemas/extract-l3.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A built or source IG's FHIR artefacts are to be indexed as the L3 subgraph and tied back to the L2 components and L1 recommendations they implement.",
+          "limits": "Reads the FSH/FML/JSON source, not a built package; the L2 joins are the SOP's Title-and-id conventions (no back-pointer extension exists), so they are recorded unresolved with the rule that matched them. Only artefact types with committed instances are modelled; ExampleScenario, TestPlan and TestScript are reported absent.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
     "/tools/kg-graph-export": {
       "post": {
         "operationId": "kg-graph-export",
@@ -11990,7 +12776,7 @@
       "post": {
         "operationId": "l1-coverage",
         "summary": "L1 extraction coverage",
-        "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
+        "description": "Of the normative sentences in a publication (the closed marker list of the methodology `l1-coverage` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
         "tags": [
           "l1-coverage"
         ],
@@ -12154,7 +12940,7 @@
       "post": {
         "operationId": "l1-recommendation-candidates",
         "summary": "L1 guideline → recommendation candidates (L1 3.0)",
-        "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `kg/src/validate.ts`) with coverage and proposed, unsigned exclusions.",
+        "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `L1/schemas/validate.ts`) with coverage and proposed, unsigned exclusions.",
         "tags": [
           "recommendation-candidates"
         ],
@@ -12222,7 +13008,7 @@
         },
         "x-tool-iri": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
         "x-invoke": {
-          "shell": "bun run smart-base/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
+          "shell": "bun run smart-base/L1/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
         },
         "x-install": {
           "none": true
@@ -12486,7 +13272,7 @@
         },
         "x-tool-iri": "http://smart.who.int/base/tools/l1-transcription-verbatim.jsonld",
         "x-invoke": {
-          "shell": "bun run smart-base/scripts/l1-transcription-verbatim.ts --dir <dir of *.l1.yaml> [--root <repo>]"
+          "shell": "bun run smart-base/L1/scripts/l1-transcription-verbatim.ts --dir <dir of *.l1.yaml> [--root <repo>]"
         },
         "x-install": {
           "none": true
@@ -14377,6 +15163,95 @@
         ]
       }
     },
+    "/tools/merge-guard": {
+      "post": {
+        "operationId": "merge-guard",
+        "summary": "Judge whether a pull request may land",
+        "description": "The enforced merge guard: asks GitHub's live facts about one pull request whether it is finished (its checks, its tier, the session that marked it ready) before it reaches its base, and lands it only when every check passes. With `--status` it posts the verdict as the `merge-guard` commit status on the head, which is what the layer's merge-guard workflow does.",
+        "tags": [
+          "ci-health"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/merge-guard/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pr": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "The pull request number."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository holding the pull request. Default: the checkout's own."
+                  },
+                  "merge": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Land the pull request, only if every check passes. Needs `--session`."
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Post the verdict as the `merge-guard` commit status on the head."
+                  },
+                  "full_tier": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Require the full (release) tier of checks, not the fast tier a draft runs."
+                  }
+                },
+                "required": [
+                  "pr"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "Each check with its verdict; exit 0 when the pull request may land."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-guard.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat merge:guard"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ci-health"
+        ],
+        "x-selection": {
+          "when": "Before a pull request lands on its base, by the merge manager or a steward, and on every pull request event through the merge-guard workflow.",
+          "limits": "Reads GitHub's live facts about one pull request; it judges no declared graph.",
+          "cost": "A few GitHub REST calls."
+        }
+      }
+    },
     "/tools/merge-leftover": {
       "post": {
         "operationId": "merge-leftover",
@@ -15050,6 +15925,88 @@
         "x-satisfies": [
           "graph-rendering"
         ]
+      }
+    },
+    "/tools/node-view-coverage": {
+      "post": {
+        "operationId": "node-view-coverage",
+        "summary": "Does every node have an IRI, a .jsonld, a page and a row?",
+        "description": "For each node a declared directory holds, per layer × folder × kind: whether it has an IRI in its layer's export (extensionless), its JSON-LD at `<iri>.jsonld` (and `.json` where its source is JSON), a view page at `<locale>/<harness>/<vis>/<instance>/<id>/`, and a row on its folder page that links to it; plus the folder page's dead links and raw-repository links, and whether a viewer is declared. Folder pages are read with their data files, so rows drawn by JavaScript count. Writes `node-view-coverage/v1`, one file per layer, under `test/results/node-views/`.",
+        "tags": [
+          "kg-viewer"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/node-view-coverage/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`--site <dir>`: a built site (`_site`, or a preview's `branches/<slug>/`). With `--site-url`, the URL that directory is served at."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "`--base <url>`: a live site to probe instead of a directory. Optional; one of `site` or `base` is needed, or pages, rows and links are unknown."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "`--check` (`node-views:judge`): write nothing and judge. Exit 0 when no finding is new, 1 when one is new against the baseline, 2 when the run could not ask (JUDGEMENT_EXIT)."
+                  },
+                  "against": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "`--against <ref>`: the `qa-reports` entry to judge against (`main`, `main/<sha>`, `pr/<n>/<sha>`). Absent, the working copy; a missing baseline is UNKNOWN and not gated."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<layer qa home>/node-views/<layer>.node-views.qa.json` (`node-view-coverage/v1`), and a Markdown summary table on stdout. Always exit 0: reports, never gates. Published to `qa-reports` by `qa:publish`, and read by each layer's QA page."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/node-view-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat node-views:report"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "kg-viewer"
+        ],
+        "x-selection": {
+          "when": "After a site build, before the review of a preview: to see which nodes of which folders have no IRI, no .jsonld, no page or no row, and which folder links are dead or point at the raw repository.",
+          "limits": "It needs a built site or a live base; without one, pages, rows and links are unknown, never 0. Rows drawn in the browser are read from the folder's data files (`assets/<vis>/*.json`, inline JSON), not by running the page, so a row built from another source is not seen. The census per kind is a declared file rule (`CENSUS_RULES`) or the layer's export, recorded on each row. Counts past `--probe-limit` are unknown.",
+          "cost": "Building each layer's export in memory (minutes over a whole composition), then one request per node page and IRI: thousands against a live base."
+        }
       }
     },
     "/tools/npm": {
@@ -17835,7 +18792,8 @@
         "summary": "release-please (declared, not configured here)",
         "description": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository.",
         "tags": [
-          "package-release"
+          "package-release",
+          "npm-kg-distribution"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -17898,7 +18856,8 @@
           "network": true
         },
         "x-satisfies": [
-          "package-release"
+          "package-release",
+          "npm-kg-distribution"
         ],
         "x-selection": {
           "when": "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
@@ -18704,6 +19663,14 @@
         "x-satisfies": [
           "fhir-questionnaire-wireframe"
         ],
+        "x-skill-contracts": {
+          "fhir-questionnaire-wireframe.input": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.input"
+          },
+          "fhir-questionnaire-wireframe.output": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output"
+          }
+        },
         "x-selection": {
           "when": "After SUSHI has built the IG's Questionnaires and before they are reviewed as forms; whenever a Questionnaire uses modular sub-forms, template extraction or pre-population.",
           "limits": "Only as good as the IG's fixtures: with none, extraction and population say `no-fixture` rather than pass. Nothing is fetched from a server: sub-forms resolve in the AST and population queries in the fixture. The behavioural toolkit is early and needs React and Smart Forms peers installed with the IG's tests; without them it is `could-not-determine`, a warning.",
@@ -21408,7 +22375,7 @@
                   "properties": {
                     "result": {
                       "$ref": "#/components/schemas/RepoPath",
-                      "description": "Result JSON conforming to `schemas/skills/classify-and-code-content/output.schema.json`."
+                      "description": "Result JSON conforming to `L1/schemas/skills/classify-and-code-content/output.schema.json`."
                     }
                   }
                 }
@@ -21974,6 +22941,10 @@
                   "site": {
                     "$ref": "#/components/schemas/RepoPath",
                     "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount."
+                  },
+                  "scope": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "A scoped site build: the comma-separated instances whose per-layer Tools pages this writer writes; every other layer's Tools pages are linked on the platform's site, not copied (owner, 2026-11-13: \"other harnesses should be referenced not included\"). The combined index and API documents are still written. Passed by the tools layer's `visualiser-writers.ts`. Absent: every instance."
                   }
                 },
                 "additionalProperties": false
@@ -22244,6 +23215,232 @@
         }
       }
     },
+    "/tools/translation-adjudicate": {
+      "post": {
+        "operationId": "translation-adjudicate",
+        "summary": "Record a translation adjudication",
+        "description": "Turn one translation-review issue into the recorded adjudication: read the `issues` event (never the body from a shell variable), refuse an author who is not an owner, member or collaborator, refuse an item whose catalogue hash changed since the page showed it, then write the translation node's sign-off, the fuzzy suggestions and an append-only `translation-qa` attestation, and leave a Markdown summary. Exit 0 recorded, 3 nothing recorded, 2 could not determine.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/translation-adjudicate/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root holding the catalogues. Default: the current directory."
+                  },
+                  "event": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The `issues` event file GitHub wrote. Absent: `$GITHUB_EVENT_PATH`, which is how the workflow passes it."
+                  },
+                  "dry_run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Plan and report, write nothing."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The files written: catalogues, translation nodes and attestations under the layer's translations and attestation directories."
+                    },
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "What was recorded and what was refused, with each reason — the issue comment and the PR body."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudicate.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation:adjudicate"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-adjudication"
+        ]
+      }
+    },
+    "/tools/translation-adjudication-workflow": {
+      "post": {
+        "operationId": "translation-adjudication-workflow",
+        "summary": "Translation adjudication workflow (reusable)",
+        "description": "The tools layer's reusable `layer-translation-adjudication.yml`, called by a layer on `issues` events: runs once per issue labelled `translation-adjudication` or titled `[translation review] …`, mounts the platform's layers, runs `translation:adjudicate` on the event, and either commits the records on `translation-adjudication/issue-<n>` (authored by the issue's author) and opens a ready PR, or comments why nothing was recorded. It never merges.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/translation-adjudication-workflow/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "path_in_repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the layer sits in the calling repository; `.` for the root."
+                  },
+                  "index_ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The folio-assistant ref whose lock mounts the platform's layers. Default `main`."
+                  },
+                  "tools_ref": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`lock` (the caller's lock pin of the tools layer) or a 40-hex commit."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pull_request": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The ready PR carrying the records, when anything was recorded."
+                    },
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The comment on the issue: what was recorded and what was refused."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudication-workflow.jsonld",
+        "x-invoke": {
+          "manual": true
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-adjudication"
+        ]
+      }
+    },
+    "/tools/translation-candidates-agent": {
+      "post": {
+        "operationId": "translation-candidates-agent",
+        "summary": "Candidate translations — agent model",
+        "description": "An agent model proposes a translation for each string of a layer's catalogues, with the locale term base and the string's source context in front of it, and appends them to each catalogue's candidates sidecar with `source.kind: agent` and the model's id. Seeds an empty `msgstr` with the first candidate, fuzzy.",
+        "tags": [
+          "translation-candidate-source"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/translation-candidates-agent/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root whose catalogues to propose for. Default: the current layer."
+                  },
+                  "locales": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "The target locales. Absent: every locale the layer declares."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "candidates": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), appended to; each candidate carries `source: {kind: \"agent\", id: <model>}`."
+                    },
+                    "catalogues": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The `.po` catalogues whose empty `msgstr` got the first candidate, `#, fuzzy`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates-agent.jsonld",
+        "x-invoke": {
+          "manual": true
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-candidate-source"
+        ],
+        "x-selection": {
+          "when": "Prose that needs the surrounding meaning — paragraphs, diagram labels whose sense depends on the process, terms the locale term base fixes — and an agent session is already running.",
+          "limits": "Not reproducible run to run, and its output is as unreviewed as any engine's. For many short, literal strings an open machine-translation model (OPUS-MT, LibreTranslate / Argos, through `translation:candidates`) is cheaper and repeatable.",
+          "cost": "Model tokens per string, in a session that has a model; nothing to install."
+        }
+      }
+    },
     "/tools/translation-extract": {
       "post": {
         "operationId": "translation-extract",
@@ -22401,6 +23598,241 @@
         },
         "x-satisfies": [
           "translation-manager"
+        ]
+      }
+    },
+    "/tools/translation-platforms": {
+      "post": {
+        "operationId": "translation-platforms",
+        "summary": "Exchange catalogues with a translation platform",
+        "description": "For Weblate, Crowdin and Transifex: `export` writes the layout file a platform reads from the layer's declared `translation-sources` directory; `import` turns the `.po` changes a platform pushed onto the checked-out branch into CANDIDATES, never adjudications. Nothing here talks to a platform or the network. Exit 0 done, 1 `--check` found drift, 3 import found nothing to rewrite, 2 could not determine.",
+        "tags": [
+          "translation-candidate-source",
+          "translation-manager"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/translation-platforms/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "`export` or `import`."
+                  },
+                  "platform": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "`weblate`, `crowdin` or `transifex`."
+                  },
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root. Default: the current directory."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "import: the git ref the platform's changes are compared against."
+                  },
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "export: write the platform's file rather than print it."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "export: fail when the committed file differs from what would be written."
+                  },
+                  "dry_run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "import: plan and report, write nothing."
+                  }
+                },
+                "required": [
+                  "action",
+                  "platform"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The file written or the candidates recorded."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-platforms.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation:platforms"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-candidate-source",
+          "translation-manager"
+        ],
+        "x-selection": {
+          "when": "When a layer offers its catalogues to a translation platform, and when the platform's import workflow brings its changes back as candidates.",
+          "limits": "Reads and writes files only; the platform's own push and pull happen outside it.",
+          "cost": "One read of the layer's catalogues. No network."
+        }
+      }
+    },
+    "/tools/translation-qa-prune": {
+      "post": {
+        "operationId": "translation-qa-prune",
+        "summary": "Prune round-trip rulings of removed strings",
+        "description": "Drop the translation-semantic-roundtrip rulings of strings the catalogues no longer hold, and renumber the rest to catalogue order. Rulings are paired with strings by the hash of their msgid, so removing strings invalidates none and needs no agent re-run; this is the upkeep that follows. It only drops or renumbers: a verdict is never changed or invented, and a ruling for a string the ref's history never held (one recorded ahead of its PR) is kept.",
+        "tags": [
+          "translation-manager"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "who-iris/translation-qa-prune/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Apply the change to test/attestations/translation-qa/. Absent, it is a dry run that prints each dropped ruling and the renumbered spans."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "Whose catalogues decide what was removed. Default origin/main: the state branch serves main and every branch, so a ruling goes only once main no longer holds its string."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "attestations": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "With --write, the rewritten `test/attestations/translation-qa/<catalogue>.<locale>.attestations.json`, to be pushed to `cat/who-iris/attestations`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/translation-qa-prune.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation-qa:prune"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-manager"
+        ]
+      }
+    },
+    "/tools/translation-review-page": {
+      "post": {
+        "operationId": "translation-review-page",
+        "summary": "Translation review page",
+        "description": "The page a reviewer adjudicates on: `review.html` beside the translation status page, showing every catalogue × locale with its state (machine, flagged, reviewed, stale, official), each string's candidates, and the hash of the catalogue's bytes. Submitting opens GitHub's new-issue form prefilled with a `translation-adjudication/v1` record, or copies the body when it is too long for a URL.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/translation-review-page/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "The review page, `review.html` beside the translation status page of the published site."
+                  }
+                },
+                "required": [
+                  "page"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issue": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The new-issue form, prefilled; filing it is the adjudication."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-review-page.jsonld",
+        "x-invoke": {
+          "manual": true
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-adjudication"
         ]
       }
     },
@@ -22632,9 +24064,10 @@
       "post": {
         "operationId": "translation-status-viewer",
         "summary": "Translation status viewer",
-        "description": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+        "description": "Render the translation status of every declared translation-sources directory, per locale, as one page, and beside it the review page (`review.html`, with `assets/translation-status/review.json`) a reviewer adjudicates on.",
         "tags": [
-          "graph-rendering"
+          "graph-rendering",
+          "translation-adjudication"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -22693,7 +24126,8 @@
           "network": false
         },
         "x-satisfies": [
-          "graph-rendering"
+          "graph-rendering",
+          "translation-adjudication"
         ]
       }
     },
@@ -26237,6 +27671,731 @@
           }
         },
         "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.fhir-questionnaire-wireframe.input": {
+        "title": "FHIR Questionnaire Wireframe Input",
+        "description": "Which built Questionnaire to render and review, against which L2 wireframe, and where the drawings and the requests for feedback go.",
+        "type": "object",
+        "required": [
+          "questionnaire"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Repository-relative path of ONE built Questionnaire JSON (`fsh-generated/resources/Questionnaire-<id>.json`), never FSH. Several Questionnaires are several runs, so each carries its own fidelity findings and review."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "render",
+              "fidelity-check",
+              "wireframe-from-questionnaire"
+            ],
+            "default": "render",
+            "description": "`render`: wireframe and form view for review. `fidelity-check`: only the field-for-field check against `wireframe`. `wireframe-from-questionnaire`: draw an L2 wireframe from a Questionnaire that has none."
+          },
+          "wireframe": {
+            "type": "string",
+            "description": "Repository-relative path of the L2 wireframe HTML the Questionnaire was derived from (the chosen `wireframe-design-review` candidate), when one exists."
+          },
+          "renderer": {
+            "type": "string",
+            "enum": [
+              "lhc-forms"
+            ],
+            "default": "lhc-forms",
+            "description": "The form-view renderer. Only the vendored NLM LHC-Forms (owner, 2026-10-14)."
+          },
+          "assetDir": {
+            "type": "string",
+            "description": "Repository-relative directory for the wireframes, captures and checks."
+          },
+          "suggest": {
+            "type": "boolean",
+            "default": true,
+            "description": "Offer ✍ suggest, in its Questionnaire mode, on the form view."
+          },
+          "issueForm": {
+            "type": "string",
+            "default": "questionnaire-change.yml",
+            "description": "The issue form change requests are opened with."
+          },
+          "channels": {
+            "type": "array",
+            "description": "Where the request for review goes: chosen by judgement, and more than one may be right (staging-review, the deep-link rule, point 5).",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "conversation",
+                    "issue",
+                    "pull-request"
+                  ]
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "branch": {
+            "type": "string",
+            "description": "The feature branch the renderings are committed on, so feature-staging publishes them."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output": {
+        "title": "FHIR Questionnaire Wireframe Output",
+        "description": "The renderings of one built Questionnaire and their review, in the output shape of cat-harness `wireframe-design-review` (candidates with source HTML, web and mobile screenshots and their staging links; the choice; the changed assets; the staging deep links), plus the renderer that drew the form view, the fidelity findings against the L2 wireframe per layout, and the change requests received.",
+        "type": "object",
+        "required": [
+          "use",
+          "topic",
+          "assetDir",
+          "candidates",
+          "renderer",
+          "changedAssets",
+          "stagingLinks"
+        ],
+        "properties": {
+          "use": {
+            "type": "string",
+            "enum": [
+              "design",
+              "as-is"
+            ]
+          },
+          "topic": {
+            "type": "string"
+          },
+          "assetDir": {
+            "type": "string",
+            "description": "Repository-relative directory holding the wireframes, the form-view captures and their checks."
+          },
+          "intent": {
+            "type": "string",
+            "description": "Repository-relative path of intent.md."
+          },
+          "candidates": {
+            "type": "array",
+            "minItems": 1,
+            "description": "At least two for Design use, exactly one (marked as-is) for as-is use.",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "source",
+                "screenshots",
+                "outcome"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Candidate id, shown to reviewers in place of its author."
+                },
+                "title": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "Repository-relative path of the candidate's mid-fidelity HTML."
+                },
+                "screenshots": {
+                  "type": "object",
+                  "required": [
+                    "web",
+                    "mobile"
+                  ],
+                  "description": "Written by wireframe-check: one per viewport. A candidate with only one does not enter review.",
+                  "properties": {
+                    "web": {
+                      "type": "string",
+                      "description": "Repository-relative path of the 1280×800 screenshot."
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "description": "Repository-relative path of the 390×844 screenshot."
+                    }
+                  }
+                },
+                "staging": {
+                  "type": "object",
+                  "description": "The candidate and its screenshots on the staging preview, as deep links.",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "web": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                },
+                "entries": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.criterionEntry"
+                  },
+                  "description": "Script and review entries, per criterion. No scores, no averages."
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "chosen",
+                    "rejected",
+                    "pending",
+                    "as-is"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Why it was chosen or why it lost. Rejected candidates stay, each with its reason."
+                }
+              }
+            }
+          },
+          "chosen": {
+            "type": "object",
+            "required": [
+              "candidate",
+              "chosenBy"
+            ],
+            "description": "Design use: the candidate the human reviewer chose. Absent until they choose; an agent never records a choice on a person's behalf.",
+            "properties": {
+              "candidate": {
+                "type": "string",
+                "description": "The chosen candidate's id."
+              },
+              "chosenBy": {
+                "type": "string",
+                "description": "The requester or BA who chose it."
+              },
+              "recordedAt": {
+                "type": "string",
+                "format": "uri",
+                "description": "Where the choice is recorded: the issue or pull request comment, or, when it was made in the conversation, the proposal section that records it."
+              }
+            }
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "The built Questionnaire JSON rendered, as in the input."
+          },
+          "renderer": {
+            "type": "object",
+            "required": [
+              "name",
+              "version"
+            ],
+            "description": "What drew the form view. The vendored build, never a CDN at runtime (owner, 2026-10-14).",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "lhc-forms"
+                ],
+                "description": "NLM LHC-Forms, the owner's choice of 2026-10-14."
+              },
+              "version": {
+                "type": "string",
+                "description": "The vendored LHC-Forms version, e.g. 44.1.0."
+              },
+              "assets": {
+                "type": "string",
+                "description": "Site-relative directory the vendored files are served from."
+              },
+              "licenceNotice": {
+                "type": "string",
+                "description": "Repository-relative path of the NLM licence notice kept with the vendored files."
+              }
+            }
+          },
+          "fidelity": {
+            "type": "array",
+            "description": "check-wireframe-questionnaire's findings, one entry per Questionnaire and wireframe layout. Absent when no L2 wireframe exists; an entry whose status is `could-not-determine` (exit 2) is never a pass.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.fidelityEntry"
+            }
+          },
+          "sdcChecks": {
+            "type": "array",
+            "description": "The SDC build checks (fhir-harness `sdc-checks`, CSIRO's libraries), one entry per Questionnaire. `not-applicable`, `no-fixture` and `could-not-determine` are never a pass; a behavioural test's failure is a warning.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.sdcCheckResult"
+            }
+          },
+          "changeRequests": {
+            "type": "array",
+            "description": "Change requests received through ✍ suggest or the questionnaire-change issue form, and where each stands.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.changeRequest"
+            }
+          },
+          "changedAssets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.changedAsset"
+            },
+            "description": "Every file the branch adds, changes or removes — wireframe HTML, form-view pages, screenshots, reviews — in the changed-assets record shape a staging preview's graph carries."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.stagingLinks"
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.changedAsset": {
+        "title": "Changed asset",
+        "description": "One file the branch adds, changes or removes, in the record shape of a staging preview graph's `changedAssets` (cat-harness-tools scripts/kg-changed-assets.ts `ChangedAsset`; glosses in schemas/vocabulary.ts: assetChange, assetKind, beforeVersion, afterVersion, assetSource, renderedPage, renderedPagesUnknown).",
+        "type": "object",
+        "required": [
+          "change"
+        ],
+        "properties": {
+          "change": {
+            "type": "string",
+            "enum": [
+              "added",
+              "changed",
+              "removed"
+            ],
+            "description": "How the asset differs from main."
+          },
+          "kind": {
+            "type": "string",
+            "description": "What the asset is, without namespace: `questionnaire-wireframe`, `questionnaire-rendering`, `questionnaire-screenshot`, or a `wireframe-design-review` kind (`wireframe-candidate`, `wireframe-screenshot`, `wireframe-intent`, `wireframe-review`)."
+          },
+          "title": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset as published on main; absent when it is new on the branch."
+          },
+          "after": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset as published in the staging preview; absent when the branch removes it."
+          },
+          "source": {
+            "type": "string",
+            "description": "The repository-relative file."
+          },
+          "pages": {
+            "type": "array",
+            "description": "The rendered pages the source maps to, as before/after pairs (StagingPageComparison rows: the item shape of stagingLinks.pages).",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "pagesUnknown": {
+            "type": "string",
+            "description": "Why the pages were not mapped one by one, when they were not; never read as 'renders no page'."
+          }
+        },
+        "$comment": "Mirrors ChangedAsset in cat-harness-tools scripts/kg-changed-assets.ts (PR #203, branch claude/staging-kg-changed-assets)."
+      },
+      "skill.fhir-questionnaire-wireframe.output.changeRequest": {
+        "type": "object",
+        "required": [
+          "issue",
+          "edited",
+          "status"
+        ],
+        "properties": {
+          "issue": {
+            "type": "string",
+            "format": "uri",
+            "description": "The issue the request arrived as."
+          },
+          "via": {
+            "type": "string",
+            "enum": [
+              "suggest",
+              "issue-form"
+            ],
+            "description": "The ✍ suggest editor's Questionnaire mode, or the questionnaire-change issue form filled by hand."
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "Canonical URL or Questionnaire/<id>."
+          },
+          "edited": {
+            "type": "string",
+            "enum": [
+              "questionnaire",
+              "wireframe"
+            ],
+            "description": "The side the requester changed. It is the source of the change; the other side is brought back in line with it (owner, 2026-10-14)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "received",
+              "triaged",
+              "applied",
+              "staged",
+              "declined"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "description": "Why it was declined, or what was applied."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.criterionEntry": {
+        "type": "object",
+        "required": [
+          "criterion",
+          "status"
+        ],
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "description": "renders, no-overflow, no-placeholder (script entries from wireframe-check); intent-fit, web-usability, mobile-usability, accessibility, alternatives (review entries)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warn",
+              "fail"
+            ]
+          },
+          "by": {
+            "type": "string",
+            "description": "`script` for a wireframe-check entry; the reviewer otherwise."
+          },
+          "note": {
+            "type": "string",
+            "description": "The reason. Required in substance for every warn and fail."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.fidelityEntry": {
+        "type": "object",
+        "required": [
+          "questionnaire",
+          "layout",
+          "status",
+          "findings"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Repository-relative path of the built Questionnaire JSON."
+          },
+          "wireframe": {
+            "type": "string",
+            "description": "Repository-relative path of the L2 wireframe HTML it was checked against."
+          },
+          "layout": {
+            "type": "string",
+            "description": "The `data-layout` name, or `(whole document)` when the wireframe has one layout."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "faithful",
+              "findings",
+              "could-not-determine"
+            ],
+            "description": "Exit 0, 1 and 2 of the checker."
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The checker's lines for this layout, verbatim."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.sdcCheckResult": {
+        "type": "object",
+        "required": [
+          "questionnaire",
+          "checks"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "The Questionnaire's id."
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "check",
+                "library",
+                "status",
+                "severity",
+                "findings"
+              ],
+              "properties": {
+                "check": {
+                  "type": "string",
+                  "enum": [
+                    "assemble",
+                    "template-extract",
+                    "populate",
+                    "behaviour"
+                  ]
+                },
+                "library": {
+                  "type": "string",
+                  "description": "The npm package and version that ran it."
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "not-applicable",
+                    "no-fixture",
+                    "could-not-determine"
+                  ]
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning"
+                  ],
+                  "description": "`warning` for the behavioural tests (questionnaire-test-toolkit is early)."
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "output": {
+                  "type": "string",
+                  "description": "The assembled Questionnaire, when it was written."
+                }
+              }
+            }
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.fhir-validation.input": {
+        "title": "FHIR Validation Input",
+        "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+        "type": "object",
+        "required": [
+          "igRoot"
+        ],
+        "properties": {
+          "igRoot": {
+            "type": "string",
+            "description": "Path to the IG repository root."
+          },
+          "validationLevel": {
+            "type": "string",
+            "enum": [
+              "sushi-only",
+              "publisher-qa",
+              "full"
+            ],
+            "default": "full",
+            "description": "Level of validation to perform."
+          },
+          "targetProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+          }
+        }
+      },
+      "skill.fhir-validation.output": {
+        "title": "FHIR Validation Output",
+        "description": "Output schema for FHIR validation results.",
+        "type": "object",
+        "required": [
+          "overallStatus"
+        ],
+        "properties": {
+          "overallStatus": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warnings",
+              "errors"
+            ]
+          },
+          "sushiResult": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "errors": {
+                "type": "integer"
+              },
+              "warnings": {
+                "type": "integer"
+              }
+            }
+          },
+          "publisherResult": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "qaHtmlPath": {
+                "type": "string"
+              },
+              "errorCount": {
+                "type": "integer"
+              },
+              "warningCount": {
+                "type": "integer"
+              },
+              "infoCount": {
+                "type": "integer"
+              }
+            }
+          },
+          "conformanceResults": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resource": {
+                  "type": "string"
+                },
+                "profile": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "conformant",
+                    "non-conformant"
+                  ]
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "skill.public-comment.input": {
         "title": "Public Comment Input",

@@ -1,0 +1,259 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/dak-api-hub/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/dak-api-hub.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Generate `dak-api.html`, the DAK API's entry page, and the per-artefact `.openapi.json` / `.displays.json` sidecars.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/generate_dak_api_hub.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "name": "igOutput",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`dak-api.html`.",
+                "name": "hub",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`.openapi.json` and `.displays.json` under `schemas/`.",
+                "name": "sidecars",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "dak-api-hub",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": [
+            "http://smart.who.int/base/skill/dak-postprocessing",
+            "http://smart.who.int/base/skill/ig-artifact-ingestion"
+          ],
+          "title": "DAK API hub"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L3/tools/dak-api-hub",
+      "path": "L3/tools/dak-api-hub/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/kg-extract-l3/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/kg-extract-l3.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L3/schemas/extract-l3.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--ig"
+                },
+                "description": "The IG root (holds `sushi-config.yaml` and `input/`).",
+                "name": "ig",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where the graph document goes; stdout when absent.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The L3 graph document; each node carries the SHA-256 of the file it came from.",
+                "name": "graph",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "kg-extract-l3",
+          "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+          "title": "FHIR IG → L3 knowledge graph"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L3/tools/kg-extract-l3",
+      "path": "L3/tools/kg-extract-l3/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/smart-liquid-variables/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/smart-liquid-variables.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 input/scripts/generate_smart_liquid.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The Publisher's `output/`, the script's source of truth.",
+                "name": "igOutput",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Repository root, where `input/` lives. Defaults to `.`.",
+                "name": "igRoot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`input/includes/smart.liquid`, copied to `output/smart.liquid`.",
+                "name": "include",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`url__canonical`, `url__page`, `url__json`, `text__display`, `link__html`, `elements__<key>`.",
+                "name": "categories",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "smart-liquid-variables",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/dak-postprocessing",
+          "title": "IG metadata → Liquid variables"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L3/tools/smart-liquid-variables",
+      "path": "L3/tools/smart-liquid-variables/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/terminology-lookup/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/terminology-lookup.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Look up a concept or code token for a semantic slot across the four reuse-first rungs of the `terminology-coding` methodology: (1) the target guide's `l1-scenario-vocabulary/v1`; (2) smart-base's generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and the `guideline-domain` SKOS glossary; (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`); (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`), or `could-not-determine` for `business-process`.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/terminology-lookup.ts --slot <slot> --query <query> [--vocabulary <guide.json>] [--generic <generic.json>] [--scheme <scheme>] [--out <out.json>]"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The slot to code (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`).",
+                "name": "slot",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "description": "The term, identifier or code token to look up.",
+                "name": "query",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+              },
+              {
+                "description": "The target guide's personas and business processes (`l1-scenario-vocabulary/v1`), rung 1.",
+                "name": "vocabulary",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "smart-base's generic personas (`l1-scenario-vocabulary/v1`), rung 2.",
+                "name": "generic",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Restrict to one scheme (e.g. `guideline-domain`, `ISCO08`, `CDHIv2`, `grade-recommendation-strength`).",
+                "name": "scheme",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+              },
+              {
+                "description": "Where to write the result JSON.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Result JSON conforming to `L1/schemas/skills/classify-and-code-content/output.schema.json`.",
+                "name": "result",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "terminology-lookup",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "http://smart.who.int/base/skill/classify-and-code-content",
+          "title": "Reuse-first terminology and code-list lookup"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L3/tools/terminology-lookup",
+      "path": "L3/tools/terminology-lookup/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L3/tools",
+  "path": "L3/tools/"
+}

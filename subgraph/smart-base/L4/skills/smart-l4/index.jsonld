@@ -1,0 +1,134 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/skills/smart-l4/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/activate-accepted-guidance",
+      "@type": "bootstrap:Skill",
+      "name": "activate-accepted-guidance",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/63fa8a50943a441b3f983d14608b588afb800e3b4d0ee156cb82e3c325559fd8",
+        "bytes": 2049,
+        "sha256": "63fa8a50943a441b3f983d14608b588afb800e3b4d0ee156cb82e3c325559fd8"
+      },
+      "title": "Activate accepted guidance"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/apply-decision-support",
+      "@type": "bootstrap:Skill",
+      "name": "apply-decision-support",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/16723cd2ede029f1c4921eb4598531f035cf4a1ab079a5a7f191a9dff4c1cdf3",
+        "bytes": 2573,
+        "sha256": "16723cd2ede029f1c4921eb4598531f035cf4a1ab079a5a7f191a9dff4c1cdf3"
+      },
+      "title": "Apply decision support"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+      "@type": "bootstrap:Skill",
+      "name": "complete-sdc-questionnaire",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9839e255ec293f556921af9d89aff321f4a450c864000814c29177a510ad4805",
+        "bytes": 3895,
+        "sha256": "9839e255ec293f556921af9d89aff321f4a450c864000814c29177a510ad4805"
+      },
+      "title": "Complete an SDC questionnaire"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/extract-questionnaire-response",
+      "@type": "bootstrap:Skill",
+      "name": "extract-questionnaire-response",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/42f6c54333a4c696163135490393aaf212e561dbeaaf68c1c42e8a3f64009d4a",
+        "bytes": 2799,
+        "sha256": "42f6c54333a4c696163135490393aaf212e561dbeaaf68c1c42e8a3f64009d4a"
+      },
+      "title": "Extract resources from a questionnaire response"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/inform-client",
+      "@type": "bootstrap:Skill",
+      "name": "inform-client",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4177d3fb0db18da8e854e8b0d9272b8a263c5bc703b6f7b9bd9bb9bc0ca69e21",
+        "bytes": 1747,
+        "sha256": "4177d3fb0db18da8e854e8b0d9272b8a263c5bc703b6f7b9bd9bb9bc0ca69e21"
+      },
+      "title": "Inform the client"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l4-application-brief",
+      "@type": "bootstrap:Skill",
+      "name": "l4-application-brief",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4a552420518b6202f97b319e31e2a52176625e28e499b99094158e9c07ae808f",
+        "bytes": 3078,
+        "sha256": "4a552420518b6202f97b319e31e2a52176625e28e499b99094158e9c07ae808f"
+      },
+      "title": "l4-application-brief"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l4-application-build",
+      "@type": "bootstrap:Skill",
+      "name": "l4-application-build",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a07751f406423401584d6e4d6f87369aa1a1135c8dd259c0c358672debe552b7",
+        "bytes": 2584,
+        "sha256": "a07751f406423401584d6e4d6f87369aa1a1135c8dd259c0c358672debe552b7"
+      },
+      "title": "l4-application-build"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l4-application-run-local",
+      "@type": "bootstrap:Skill",
+      "name": "l4-application-run-local",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/edc1ce2b9b7c71c819603327bc91350950b512cfd08a7c38838f822a36299458",
+        "bytes": 1545,
+        "sha256": "edc1ce2b9b7c71c819603327bc91350950b512cfd08a7c38838f822a36299458"
+      },
+      "title": "l4-application-run-local"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/record-decision-rationale",
+      "@type": "bootstrap:Skill",
+      "name": "record-decision-rationale",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d4cedebc11fa2a204047eaf14db8c8c1e44e3999dac990d7e9c6e5d4dc4d1b24",
+        "bytes": 3413,
+        "sha256": "d4cedebc11fa2a204047eaf14db8c8c1e44e3999dac990d7e9c6e5d4dc4d1b24"
+      },
+      "title": "Record a decision rationale (optional)"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/review-client-history",
+      "@type": "bootstrap:Skill",
+      "name": "review-client-history",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a21f95c2f51b8f0cc2377b277fa00017d5ade3a52a47449ee14fbb84a9900dc",
+        "bytes": 2009,
+        "sha256": "0a21f95c2f51b8f0cc2377b277fa00017d5ade3a52a47449ee14fbb84a9900dc"
+      },
+      "title": "Review the client's history"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/review-decision-support-guidance",
+      "@type": "bootstrap:Skill",
+      "name": "review-decision-support-guidance",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b524c53d6836debd4d28e354c34af642c862694072dd0712f546be657bc7592b",
+        "bytes": 2643,
+        "sha256": "b524c53d6836debd4d28e354c34af642c862694072dd0712f546be657bc7592b"
+      },
+      "title": "Review decision-support guidance"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "L4/skills/smart-l4",
+  "path": "L4/skills/smart-l4/"
+}

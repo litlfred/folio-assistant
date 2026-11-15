@@ -180,15 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "stale",
-        "text": "Summarises the screen-and-treat recommendations, beginning with advice against cold knife conization so that all strategies use cryotherapy, or LEEP when cryotherapy is unsuitable. It sets out the panel's suggested preferences between strategies based on HPV testing, VIA and cytology with colposcopy, including options for resource-limited settings and countries with existing quality cytology programmes. The section also begins the background, describing how CIN is graded by the thickness of abnormal epithelium.",
+        "status": "draft",
+        "text": "Summarizes the expert panel's recommendations on screen-and-treat strategies for cervical precancer, advising against cold knife conization and favouring cryotherapy, or LEEP when cryotherapy is unsuitable, and setting out paired preferences that generally favour an HPV test (alone or followed by VIA) over VIA alone or cytology with colposcopy, while allowing VIA in low-resource settings and existing quality cytology programmes. It also presents a decision-making flowchart that guides programme managers to a strategy based on existing programmes, resources and quality, with details referred to the annexes.",
         "state": "draft",
         "draftedBy": {
           "kind": "agent",
           "id": "claude-code",
           "model": "not-disclosed"
         },
-        "draftedAt": "2026-11-11"
+        "draftedAt": "2026-11-12"
       }
     },
     {
@@ -207,15 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "stale",
-        "text": "Introduces the goal of a screen-and-treat programme: reducing cervical cancer and deaths with few adverse events, linked to treatment and referral for invasive cancer. It explains how single tests and sequences of tests are used and how women with discordant results are managed. It notes that the recommendations rest on evidence about test accuracy and the benefits and harms of treatment.",
+        "status": "draft",
+        "text": "Introduces WHO guidelines on screening and treatment of precancerous cervical lesions, explaining that CIN2+ can progress to cancer and that cytology-based screening with colposcopy and biopsy is costly and hard to sustain in low- and middle-income countries, which makes a screen-and-treat approach attractive. It describes the components of such programmes, including HPV testing, cytology and VIA used alone or in sequence, and treatment with cryotherapy, LEEP or cold knife conization. It explains that the guideline compares benefits and harms of strategies to support countries with or without existing programmes, relates it to other WHO guidance and the updated C4-GEP, and stresses considering downstream outcomes rather than test accuracy alone.",
         "state": "draft",
         "draftedBy": {
           "kind": "agent",
           "id": "claude-code",
           "model": "not-disclosed"
         },
-        "draftedAt": "2026-11-11"
+        "draftedAt": "2026-11-12"
       }
     },
     {
@@ -369,7 +369,7 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "draft",
+        "status": "stale",
         "text": "Explains that few randomized trials link screening strategies to treatment and patient outcomes, so the evidence came mostly from separate studies of test accuracy and of outcomes after treatment. It describes the systematic reviews, pooling of data and use of GRADE to rate evidence quality. It adds that evidence-to-recommendation tables were prepared summarising benefits, harms, values, resource use and feasibility.",
         "state": "draft",
         "draftedBy": {
@@ -462,6 +462,40 @@
       }
     },
     {
+      "id": "library/10665-94830/blocks/table-001",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 1. Interpretation of strong and conditional recommendations",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../tables/table-1.csv",
+      "narrative": "draft",
+      "content": "The table explains what a strong (“We recommend…”) and a conditional (“We suggest…”) recommendation imply for patients, for clinicians and for policy-makers.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-94830/blocks/table-002",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 1. Interpretation of strong and conditional recommendations",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../tables/table-2.csv",
+      "narrative": null,
+      "content": null,
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
       "id": "library/10665-94830/blocks/prose-sec-016",
       "types": [
         "folio-assistant-core:Prose",
@@ -504,15 +538,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "stale",
-        "text": "Sets out considerations that apply to all the recommendations, which target women aged 30 and over with priority for those aged 30–49, noting that even one screening in a lifetime is beneficial. It gives specific guidance for women living with HIV or of unknown status in high-prevalence areas, including screening once sexually active. It also covers screening intervals and follow-up one year after treatment.",
+        "status": "draft",
+        "text": "Sets out considerations that apply to all screen-and-treat recommendations: they target women aged 30 and over, with priority for ages 30–49, while women living with HIV should be screened once sexually active after an HIV-positive result, and VIA is suited to women whose transformation zone is visible, usually under 50. Cryotherapy is the first-choice treatment, with LEEP for women ineligible under the C4-GEP criteria, and all screen-positive women should undergo VIA by a trained provider to determine treatment eligibility and exclude large lesions or suspected cancer.",
         "state": "draft",
         "draftedBy": {
           "kind": "agent",
           "id": "claude-code",
           "model": "not-disclosed"
         },
-        "draftedAt": "2026-11-11"
+        "draftedAt": "2026-11-12"
       }
     },
     {
@@ -532,14 +566,14 @@
       "provenance": "ingested",
       "summary": {
         "status": "stale",
-        "text": "Presents the detailed screen-and-treat recommendations, each with remarks, an evidence summary and the panel's reasoning. It begins with a strong recommendation against cold knife conization because its harms, such as major bleeding, outweigh a small reduction in recurrence. Later recommendations compare HPV testing, VIA and cytology followed by colposcopy, favouring HPV testing where resources permit and VIA over cytology-based strategies. The section ends by comparing sequential strategies, such as an HPV test followed by colposcopy or VIA; in the extracted text the evidence-quality ratings appear to be missing from the recommendation statements.",
+        "text": "Sets out the first screen-and-treat recommendations of the WHO cervical precancer guideline, each with remarks and a summary of evidence: a strong recommendation against cold knife conization because harms such as major bleeding and premature delivery outweigh similar benefits, and a conditional preference for an HPV test over VIA where resources permit, with VIA where HPV testing is not feasible. It goes on to prefer an HPV test over cytology followed by colposcopy, while allowing either where a high-quality cytology programme already exists, citing lower resource needs and fewer visits. It explains how the HPV-test and HPV-test-then-VIA strategies decide who is treated and gives rescreening intervals: three to five years after a negative VIA or cytology, at least five years after a negative HPV test, within three years for women living with HIV, and follow-up one year after treatment. The section ends with the comparison of an HPV test followed by colposcopy versus an HPV test followed by VIA, weighing fewer missed CIN2+ cases against more overtreatment, resource demands and acceptability; the evidence-quality ratings are missing from the extracted text.",
         "state": "draft",
         "draftedBy": {
           "kind": "agent",
           "id": "claude-code",
           "model": "not-disclosed"
         },
-        "draftedAt": "2026-11-11"
+        "draftedAt": "2026-11-12"
       }
     },
     {

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 34,
+      "count": 47,
       "unit": "open beans"
     }
   },
@@ -37,6 +37,20 @@
       "updatedAt": "2026-11-01T21:00:00Z",
       "preview": "Held finding of the 2026-10-31 security review, filed after its fix merged (owner Q-SEC-1 A, 2026-11-01 20:57Z: held findings are filed as completed beans once fixed). Method: cat-harness `skills/conduct/security/`, the 16 rules of `voices/secure-code-authoring`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`.\n\n**Category:** security · **Severity:** major\n\nlitlfred/fhir-harnes",
       "file": "beans/defs/folio-assistant-10rg--build-ig-site-include-names-write-outside-includes.md"
+    },
+    {
+      "id": "folio-assistant-14un",
+      "title": "smart-base: move the scripts, validators and qa-checkers behind L* tool nodes into their subgraph",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-95e7",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-13T23:40:00Z",
+      "preview": "## Why\n\nParent: `folio-assistant-95e7`. The tool declarations moved into L1–L4 (issue #359, \"organize tools, skills, processes the same way\"); the code they invoke did not. Examples: `L2-bpmn/tools/bpmn-to-fsh` runs `smart-base/scripts/smart-base-transform.py`; L1 tools run `smart-base/scripts/l1-*`.\n\n| now | target |\n|---|---|\n| `scripts/l1-*`, `gen-l1-extraction-pages`, `extract-smart-kg-l1`, `e",
+      "file": "beans/defs/folio-assistant-14un--smart-base-move-the-scripts-validators-and-qa-chec.md"
     },
     {
       "id": "folio-assistant-17iw",
@@ -121,6 +135,20 @@
       "updatedAt": "2026-11-12T09:45:00Z",
       "preview": "Questions waiting on the owner at 2026-11-12 09:32Z. Each needs the full written question + tappable card (see folio-assistant-php1). Record answers in folio-assistant-1b7t.\n\n- [ ] Q-GLD-4 — CDE/NHWA (thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9WwtQiEUvdGPQ4efY1dCDAo)\n- [ ] Q-L1T-1 — if still open\n- [ ] Q-TODO-1 — if still open (memory li",
       "file": "beans/defs/folio-assistant-34c1--open-owner-questions-at-handover-q-gld-4-q-l1t-1-q.md"
+    },
+    {
+      "id": "folio-assistant-3bk1",
+      "title": "IG publish-on-push rollout: re-pins after the cascade, and the smart-trust injection gate",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-12T09:55:00Z",
+      "updatedAt": "2026-11-15T07:30:00Z",
+      "preview": "Owner thread: \"Finish publish-on-push rollout PRs\" https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9GSmgusK4K8TCWBQfu5rM7S, session https://claude.ai/code/session_01Qmmkt6TSbSJzATzKNZujVV. Assigned by the merge manager via the coordinator 08:34Z: land the IG publish rollout after the re-pin cascade (folio-assistant-um0y). Never merges; reports heads ",
+      "file": "beans/defs/folio-assistant-3bk1--ig-publish-on-push-rollout-re-pins-and-smart-trust-injection-gate.md"
     },
     {
       "id": "folio-assistant-3v2t",
@@ -221,6 +249,20 @@
       "file": "beans/defs/folio-assistant-6fez--library-sources-regroup-into-library-group-slug.md"
     },
     {
+      "id": "folio-assistant-6gnn",
+      "title": "WorldHealthOrganization/smart-base: port the .github/skills clean-up and the BPMN validator fixes upstream",
+      "status": "todo",
+      "type": "task",
+      "priority": "low",
+      "parent": "folio-assistant-95e7",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-13T12:07:20Z",
+      "preview": "## Why\n\nParent: `folio-assistant-95e7`. WorldHealthOrganization/smart-base `main` has the same `.github/skills/` library and the same defects: validators glob `input/business-processes/*.bpmn` while its BPMN is in `input/bpmn/`; the actor-file convention matches no file; `/validate` only dispatches `ghbuild.yml`, which never calls the skills. Its downstream DAKs fetch only `input/scripts/` (curl f",
+      "file": "beans/defs/folio-assistant-6gnn--worldhealthorganization-smart-base-port-the-github.md"
+    },
+    {
       "id": "folio-assistant-6h4p",
       "title": "CI speed II (a): merge-main restarts full CI on every labelled clean PR when main moves",
       "status": "completed",
@@ -303,6 +345,20 @@
       "updatedAt": "2026-11-02T11:02:00Z",
       "preview": "No Harness PR checks run on fhir-harness main has finished since 2026-11-01 21:34Z: every later run ends cancelled. Findings so far (06:50Z):\n- Main's gates and tests PASS in those runs (run 41395643928: 4 shards and \"No new failures\" green). The run ends cancelled because the job \"Record main's page-build scripts (bean fwtz)\" runs 20+ min and is cancelled with \"Canceling since a higher priority w",
       "file": "beans/defs/folio-assistant-8bm7--fhir-harness-main-finish-one-green-run.md"
+    },
+    {
+      "id": "folio-assistant-95e7",
+      "title": "smart-base: move skill/tool source out of .github/ and the root dirs into the KG subgraphs; .github/ keeps only generated links",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-14T00:26:00Z",
+      "preview": "## Why\n\nOwner, 2026-11-13: \"why are skills/tools buried under .github? the src code should be transparent in the KG and then .github just calls as needed\" and \"I thought things like `smart-base/schemas/skills/l2-dependency-choice/input.schema.json` were to be migrated into smart-base/L2 subgraph\".\n\nThe platform already says so: skills and tools are KG content found through declared directories, in",
+      "file": "beans/defs/folio-assistant-95e7--smart-base-move-skill-tool-source-out-of-github-an.md"
     },
     {
       "id": "folio-assistant-98p4",
@@ -585,6 +641,20 @@
       "file": "beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md"
     },
     {
+      "id": "folio-assistant-dtda",
+      "title": "smart-base: .github/skills and .claude/skills generated by install-skills only; gate hand-written files there",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-95e7",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-14T00:50:00Z",
+      "preview": "## Why\n\nParent: `folio-assistant-95e7`. cat-harness-tools `scripts/install-skills.ts --host copilot|claude` already writes `<host dir>/<prefix>-<name>/SKILL.md` with `INSTALLED_MARKER` and has `--check` for drift (bean `cat-tools-0nxe`). Nothing stops a hand-written file appearing beside them, which is how `.github/skills/` became a code library.\n\nBlocked on bean `folio-assistant-hhkw` (the hand-w",
+      "file": "beans/defs/folio-assistant-dtda--smart-base-github-skills-and-claude-skills-generat.md"
+    },
+    {
       "id": "folio-assistant-dthl",
       "title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
       "status": "in-progress",
@@ -664,7 +734,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T10:55:00Z",
+      "updatedAt": "2026-11-15T08:45:00Z",
       "preview": "Full thread link: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9<suffix>. Ids below are suffixes after `cmsg_017WNUkNK8kdDziPK58Pv6G9`.\n\n- CI emails/red mains …7hzuBmHhA1AVDQwkGAEKoK (closed). CI email alerts 11-12 …6etWUsHcNFgYZFJZ29PDz9. Umbrella …DEZk3DJmX24MEwH1cdheht. qa.json …6zELz1Am66C2Vzg5yT1cQV. Gutter …Wyw7xcUYv4wkPgN73AoVxC. Contents c",
       "file": "beans/defs/folio-assistant-f7ph--project-thread-directory-thread-ids.md"
     },
@@ -739,6 +809,48 @@
       "file": "beans/defs/folio-assistant-fwtz--docs-site-must-rebuild-when-the-bean-branch-moves.md"
     },
     {
+      "id": "folio-assistant-g3ra",
+      "title": "Green smart-ra change-set PRs (backlog group G3)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:40:00Z",
+      "updatedAt": "2026-11-15T09:30:00Z",
+      "preview": "Thread \"Rebase smart-ra change set PRs\" https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MQL6jtkEQtcg1HUwUwioBc, session https://claude.ai/code/session_01Qmmkt8JHV6bzSp4tPmwei3.\n\nsmart-ra #151 #152 #156 #158 #189 #193 #194 #196 #197 #199 #203 #218 #221 were red since 11-11 (corpus-gate / upstream-pins NEW against a 4-day-old main; #221 also crashed i",
+      "file": "beans/defs/folio-assistant-g3ra--green-smart-ra-change-set-prs-g3.md"
+    },
+    {
+      "id": "folio-assistant-g4rf",
+      "title": "G4 red-fix: single code PRs with real new failures (2026-11-15)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:25:00Z",
+      "updatedAt": "2026-11-15T12:50:00Z",
+      "preview": "Thread \"Fix single red code PRs\" (cmsg_017WNUkNK8kdDziPK58Pv6G9XQZjrypbgPBc4AKqiSzVWB), group G4 of bean pb15. Owner direction: stack merges, fix afterwards; merge main, never force-push. The merge manager (bean mm15) does every merge.\n\n## State 07:25Z\n\n| PR | Cause | Action | Waits on |\n|---|---|---|---|\n| tools#2229 (sm8r item 9) | regen-writers render:bpmn:check red control: the PR's render:bpm",
+      "file": "beans/defs/folio-assistant-g4rf--g4-red-fix-single-code-prs-2026-11-15.md"
+    },
+    {
+      "id": "folio-assistant-gm5f",
+      "title": "Fix gate failures on platform mains (2026-11-14): five new gates on smart-immunizations#145",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-14T17:50:00Z",
+      "updatedAt": "2026-11-15T12:12:00Z",
+      "preview": "Thread \"Fix gate failures on platform mains\" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9BNSixgF4DaasKpgTGfx9vA), dispatched by the merge manager on red-main duty. Triage: smart-immunizations#145. Rule: fix causes, never waive a gate. Green PRs go to the merge manager; it merges once the owner reopens the merge window.\n\nRoot cause of three of t",
+      "file": "beans/defs/folio-assistant-gm5f--fix-gate-failures-on-platform-mains-2026-11-14.md"
+    },
+    {
       "id": "folio-assistant-gzgh",
       "title": "Phase 4: watch owned harness PRs land and close paired issues",
       "status": "completed",
@@ -779,6 +891,34 @@
       "updatedAt": "2026-11-01T21:00:00Z",
       "preview": "Four findings of the group C review describe how to attack a build or a published site. They are held out of this public store (project file `security-review-2026-10-31/held-findings-fhir-smart.md`) until the owner decides how to disclose them.\n\n## Done when\n- [x] the owner has decided how to disclose the four held findings\n- [x] each held finding is filed (or recorded as fixed) the way the owner ",
       "file": "beans/defs/folio-assistant-hf33--held-security-findings-fhir-smart-owner-disclosure-decision.md"
+    },
+    {
+      "id": "folio-assistant-hhkw",
+      "title": "smart-base: delete the dead parts of .github/skills/ and repair or remove the workflows that cannot fire",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-95e7",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-13T22:15:00Z",
+      "preview": "## Why\n\nParent: `folio-assistant-95e7`. Measured on litlfred/smart-base@f369501: nothing in `ghbuild.yml` or any build path calls `.github/skills/`. The five workflows that do (`classify-issue`, `skill-l1-review`, `skill-l2-dak`, `skill-l3-review`, `skill-translation`) are `workflow_dispatch`-only but gate on `github.event.label` / `github.event.issue`, so they never do work. `pr-validate-slash.ym",
+      "file": "beans/defs/folio-assistant-hhkw--smart-base-delete-the-dead-parts-of-github-skills.md"
+    },
+    {
+      "id": "folio-assistant-hrfr",
+      "title": "DPI-H public-comment log watcher: state at the 2026-11-15 owner check-in",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T06:45:00Z",
+      "updatedAt": "2026-11-15T06:45:00Z",
+      "preview": "Thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9VZ4HJjDbGFC5aMakt3gA63 (routine trig_01DechUHZmPMigmBSvqdDuiu, \"Watch DPI-H PC log\").\n\nStanding job: watch the DPI-H Public Comment Master Log for human text or categorisation changes, write agent proposals to the grey cells, archive the log nightly to smart-ra branch claude/review-log-archive ",
+      "file": "beans/defs/folio-assistant-hrfr--dpi-h-public-comment-log-watcher-state.md"
     },
     {
       "id": "folio-assistant-i15r",
@@ -893,6 +1033,34 @@
       "file": "beans/defs/folio-assistant-k6dz--split-oversized-bpmn-diagrams.md"
     },
     {
+      "id": "folio-assistant-kjea",
+      "title": "smart-base: move 21 skill I/O contracts from schemas/skills/ into their L1..L4 subgraphs",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-95e7",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-13T22:31:00Z",
+      "preview": "## Why\n\nParent: `folio-assistant-95e7`. Owner, 2026-11-13: `smart-base/schemas/skills/l2-dependency-choice/input.schema.json` was meant to be in the L2 subgraph. The skill `.md` files moved (issue #359); their contracts did not.\n\nBlocked on bean `cat-tools-st4q` (merged in https://github.com/litlfred/cat-harness-tools/pull/2013): until it lands, a moved contract is not published and gets no IRI.\n\n",
+      "file": "beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md"
+    },
+    {
+      "id": "folio-assistant-l1el",
+      "title": "fhir-core: HL7 published packages are the authority; derive the UML class model",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:05:00Z",
+      "updatedAt": "2026-11-15T11:20:00Z",
+      "preview": "Owner, 2026-11-15 (stalled CLI session, log gist f2613e4b): \"i want to refer to HL7 offiically published .json etc for their resources, just use fhir-harness to derived stuff (e.g. UML) that is not part of core IG publisher\" and \"reference published hl7. assets as authoratative\". Owner cards then: point to HL7 with a cache only; build the UML now; add hl7.org to allowed hosts.\n\nOwner thread: https",
+      "file": "beans/defs/folio-assistant-l1el--fhir-core-hl7-is-the-authority-uml-class-model.md"
+    },
+    {
       "id": "folio-assistant-lgwt",
       "title": "Review-log watcher: standing rules, how to watch, current state (handover bean)",
       "status": "in-progress",
@@ -993,6 +1161,20 @@
       "updatedAt": "2026-11-08T07:20:00Z",
       "preview": "`node-kind-index.ts` statically imports `src/auth/gateway.ts`. That one edge keeps the 142 shared-closure gates from using the input-hash cone after the harness-config `traced` change (cat-harness-tools#1499, \"CI speed 8\"). Move what node-kind-index needs into `schemas/` and drop the import.\n\n## Done when\n- [x] node-kind-index.ts no longer imports src/auth/gateway.ts\n- [x] the 142 gates are shown ",
       "file": "beans/defs/folio-assistant-mbd8--cut-node-kind-indexts-srcauthgatewayts-static-impo.md"
+    },
+    {
+      "id": "folio-assistant-mm15",
+      "title": "Merge manager handover 2026-11-15 06:35Z",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T06:35:00Z",
+      "updatedAt": "2026-11-15T06:40:00Z",
+      "preview": "Merge manager thread: cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR (session_01Qmmkt6te9q7bF3KBT2Qq11). Helpers: /mnt/project-files/merge-manager/handover/ (m.sh, lk.sh, render-watch.sh, HANDOVER.md running log). Re-check every PR live before acting.\n\n## Window and rules\n- Owner card tapped 2026-11-15 06:26Z: \"12h window, incl. #238\". Runs to about **18:26Z 11-15**. Scope: re-pins, green non",
+      "file": "beans/defs/folio-assistant-mm15--merge-manager-handover-2026-11-15.md"
     },
     {
       "id": "folio-assistant-n6ny",
@@ -1149,6 +1331,20 @@
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
     {
+      "id": "folio-assistant-pb15",
+      "title": "Harness PR backlog plan 2026-11-15",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:15:00Z",
+      "updatedAt": "2026-11-15T08:52:00Z",
+      "preview": "Plan to clear the open-PR backlog in the harness repos (all litlfred repos except qou, sgex, pqtorus, folio-test, fmlrunner). Owner ask 07:00Z \"for harness repos: make a plan to resolve\", then 07:01Z \"coordinate w/ merge manager. stack merges and fix issues afterwards, send agents to complete work on stalled PRs\" and 07:03Z \"dispatch siblings fix existing reds\". The merge manager (thread cmsg_017W",
+      "file": "beans/defs/folio-assistant-pb15--harness-pr-backlog-plan-2026-11-15.md"
+    },
+    {
       "id": "folio-assistant-pbv1",
       "title": "BEANS BY PROCESS: processed-beans and processed-bean visualiser pages (BPMN with bean markers, filters, stalled search)",
       "status": "completed",
@@ -1200,7 +1396,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T10:55:00Z",
+      "updatedAt": "2026-11-15T13:27:00Z",
       "preview": "Every agent follows these. Newest rule wins where two disagree; the owner's message in a thread wins over this list. Links `folio-assistant-xxxx` point to the detail record.\n\n- WHO MIGRATION (user 16:10Z 11-11): smart-* and dth-* repos move to WorldHealthOrganization. Q-MIG-1 = A (draft PRs removing hard-coded owner: tools#1918, smart-base#351). Q-MIG-3 = B: IRIs use staging root worldhealthorgani",
       "file": "beans/defs/folio-assistant-php1--owner-standing-rules-moved-from-project-memory-202.md"
     },
@@ -1217,6 +1413,20 @@
       "updatedAt": "2026-11-08T07:07:30Z",
       "preview": "Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits bootstrap's checklists built from its own bootstrap pin, so any train that moves folio-assistant's bootstrap past cat-harness's lock fails bpmn:checklist:check. Options: (a) the train never moves bootstrap/-tools past cat-harness's lock (re-pin cat-harness first, as a cascade), or (b) build below-harness checklists at",
       "file": "beans/defs/folio-assistant-pqlh--re-pin-trains-keep-bootstrap-checklists-in-step-wi.md"
+    },
+    {
+      "id": "folio-assistant-qc15",
+      "title": "qou coordinator handover 2026-11-15 (tracker qou#7735)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T08:45:00Z",
+      "updatedAt": "2026-11-15T08:45:00Z",
+      "preview": "The qou coordinator moved from archived session_01M5GA1LmsEf8tSMxFjMkmnn (\"Lean docs loading strategy\") to project thread \"Coordinate qou quark-state and binding streams\" (…DeM3N13zuCshZeKt1kDnkw, session_01Qmmkt7kU3nfJNwqwWZ7sND). All 10 live streams were told at 08:40Z to report there. qou's own beans (qou-qs0e quark-state epic, qou-s4ws precision) stay in litlfred/qou.\n\n## Streams (sessions)\n- ",
+      "file": "beans/defs/folio-assistant-qc15--qou-coordinator-handover-2026-11-15.md"
     },
     {
       "id": "folio-assistant-r29x",
@@ -1256,8 +1466,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T12:50:00Z",
-      "preview": "Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RBRzWsBEvv2Z19MPdrGVRt. Owner chose C and said OK to merge. The thread merges in order as CI goes green.\n\n- [x] folio-assistant-core#764 (first)\n- [ ] then dth-hrh#121 (blocked on lock/pins), dth-phc#41 (merged), dth-sfp#10 (merged into dth-sfp#8)\n- [x] cat-harness-tools#1950 and smart-tr",
+      "updatedAt": "2026-11-14T17:08:00Z",
+      "preview": "Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RBRzWsBEvv2Z19MPdrGVRt. Owner chose C and said OK to merge. The thread merges in order as CI goes green.\n\n- [x] folio-assistant-core#764 (first)\n- [x] then dth-hrh#121 (merged 2026-11-14 17:08Z), dth-phc#41 (merged), dth-sfp#10 (merged into dth-sfp#8)\n- [x] cat-harness-tools#1950 and smar",
       "file": "beans/defs/folio-assistant-rk1e--archimate-links-back-to-smart-ra-merge-the-pr-chai.md"
     },
     {
@@ -1345,6 +1555,20 @@
       "file": "beans/defs/folio-assistant-sdd0--check-the-onboarding-game-page-loads-after-the-sma.md"
     },
     {
+      "id": "folio-assistant-tgaj",
+      "title": "smart-base: one BPMN swimlane/actor validator in L2-bpmn/tools/, replacing four",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-95e7",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-13T23:40:00Z",
+      "preview": "## Why\n\nParent: `folio-assistant-95e7`. Four overlapping validators, none wired into CI:\n\n| validator | checks | defect |\n|---|---|---|\n| `.github/skills/bpmn_author/validators/swimlane_validator.py` | laneSet present, orphan nodes, duplicate/FSH-invalid lane ids | callers are CLI-only |\n| `.github/skills/bpmn_import/validators/swimlane_actor_validator.py` | lane → actor | expects `input/fsh/actor",
+      "file": "beans/defs/folio-assistant-tgaj--smart-base-one-bpmn-swimlane-actor-validator-in-l2.md"
+    },
+    {
       "id": "folio-assistant-tsh9",
       "title": "CI speed II (b): red-main cycle from a layer rename; two-phase move rule",
       "status": "completed",
@@ -1410,7 +1634,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T19:47:00Z",
+      "updatedAt": "2026-11-13T20:49:00Z",
       "preview": "Owner thread: merge manager https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR.\n\nCascade onto cat-harness 5244c31 and cat-harness-tools 4216ebb: folio-assistant-core#761 → smart-base → who-iris / smart-ra → dth-hrh. Code-only merge window until 2026-11-12 18:05Z (owner extended \"+12hrs window\" 06:04Z). Per Q-RERUN-1 B, CI is re-r",
       "file": "beans/defs/folio-assistant-um0y--merge-manager-re-pin-cascade-core-761-smart-base-w.md"
     },
@@ -1438,7 +1662,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T19:47:00Z",
+      "updatedAt": "2026-11-15T06:35:00Z",
       "preview": "Coordinator's handover summary, 2026-11-12 09:32Z, one child bean per open workstream. Re-check every PR live on GitHub before acting. Append `_<UTC>_ — <change>` to the child and bump `updated_at` after each change; complete a child when its work is merged or handed off.\n\nStanding rules for this window (full list folio-assistant-php1): litlfred forks only; never bump versions or cut tags; content",
       "file": "beans/defs/folio-assistant-v8bg--handover-2026-11-12-09-32z-open-workstreams.md"
     },
@@ -1483,6 +1707,20 @@
       "updatedAt": "2026-11-08T07:20:00Z",
       "preview": "From \"CI speed 8\" (litlfred/cat-harness-tools#1499): narrowing showed that the 142 gates sharing one closure are held there by real imports. Computed imports (the kind-validator and harness-config tables) are matched today by static globs, which pull in far more than they read.\n\nFix: work out the verdicts of those computed imports from the declarations at fingerprint time, so each gate's closure i",
       "file": "beans/defs/folio-assistant-vgfp--derived-imports-closures-resolve-computed-import-v.md"
+    },
+    {
+      "id": "folio-assistant-vx9r",
+      "title": "Schema viewer vocabulary reader: cat-harness-tools#2276 (bean cat-tools-xfd4)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T07:45:00Z",
+      "updatedAt": "2026-11-15T08:42:00Z",
+      "preview": "Workstream state for the class-model vocabulary reader. It resumes the CLI session that stalled on credits (gist f2613e4b, section \"FHIR core, vocabularies, RDF reader\"). That session never committed its reader, so the reader was rebuilt from the session's design.\n\n- FHIR profiles (#2164) and FHIR core types (#2181) are merged. Bean cat-tools-t6fz is completed in #2276.\n- cat-harness-tools#2276 (d",
+      "file": "beans/defs/folio-assistant-vx9r--vocabulary-rdf-reader-cat-harness-tools-2276.md"
     },
     {
       "id": "folio-assistant-wl48",
@@ -1682,8 +1920,8 @@
         "share": 0.7936507936507936
       }
     ],
-    "orphanOpen": 20,
-    "openTotal": 34,
+    "orphanOpen": 33,
+    "openTotal": 47,
     "coveredOpen": 13,
     "duplicateIds": 0
   }

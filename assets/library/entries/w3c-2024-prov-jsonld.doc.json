@@ -49,7 +49,10 @@
         }
       ],
       "extract": "The PROV- JSONLD Serialization A JSON-LD Representation for the PROV Data Model W3C Member Submission 25 August 2024 More details about this document This version: https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/ Latest published version: https://www.w3.org/submissions/prov-jsonld/ Latest editor's draft: https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/ History:",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-001"
+      ]
     },
     {
       "id": "page-002",
@@ -96,7 +99,10 @@
         }
       ],
       "extract": "1. 2. 2.1 3. Linked Data applications, to offer a natural encoding of provenance for its targeted audience, and to allow for fast processing. The following files are available: The JSON Schema for PROV-JSONLD schema.json The JSONLD Context for PROV-JSONLD context.jsonld OWL Ontology Extension to support PROV-JSONLD provext.ttl Status of This Document This section describes the status of this document at the time of",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-002"
+      ]
     },
     {
       "id": "page-003",
@@ -131,7 +137,10 @@
         }
       ],
       "extract": "4. 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8 4.9 4.10 4.11 4.12 4.13 4.14 4.15 4.16 4.17 4.18 4.19 4.20 5. 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8 5.9 5.10 5.11 5.12 5.13 5.14 5.15 Schema Preliminary Definitions prov:Entity prov:Activity prov:Agent prov:Derivation prov:Attribution prov:Association prov:Delegation prov:Usage prov:Generation prov:Invalidation prov:Start prov:End prov:Communication prov:Influence prov:Specialization",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-003"
+      ]
     },
     {
       "id": "page-004",
@@ -170,7 +179,10 @@
         }
       ],
       "extract": "5.16 5.17 5.18 5.19 6. A. B. C. D. E. E.1 E.2 Influence Specialization Alternate Membership Interoperability Considerations JSON Schema for PROV-JSONLD JSON-LD Context for PROV-JSONLD PROVEXT: PROV Ontology Extension for PROV-JSONLD Acknowledgements References Normative references Informative references As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-004"
+      ]
     },
     {
       "id": "page-005",
@@ -221,7 +233,10 @@
         }
       ],
       "extract": "Ontology [PROV-O]. The latter is most suitable for Linked Data [LINKED-DATA], given that it can readily be consumed by existing Semantic Web tools and comes with the semantic grounding provided by PROV-O [PROV-O]. Subsequently, the PROV-JSON [PROV-JSON] serialization has gained traction, despite simply being a member submission, and not having gone through the various stages of a standardization activity. We",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-005"
+      ]
     },
     {
       "id": "page-006",
@@ -272,7 +287,10 @@
         }
       ],
       "extract": "1.1 [JSON-LD11] and is a key enabler of this specification, allowing for the same natural PROV property names to be used in different contexts while still maintaining their correct mappings to the appropriate RDF properties. Thus, this specification proposes PROV-JSONLD, a PROV serialization compatible with [PROV-DM] that addresses all of our 4 key requirements. It is, first and foremost, a JSON structure supporting",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-006"
+      ]
     },
     {
       "id": "page-007",
@@ -319,7 +337,10 @@
         }
       ],
       "extract": "This section is non-normative. We assume the reader to be familiar with PROV, JSON, and JSON-LD. To illustrate the PROV-JSONLD serialization, we consider a subset of the example of [PROV- PRIMER], depicted below. It can be paraphrased as follows: agent Derek was responsible for composing an article based on an existing dataset. compose dataSet1 use derek assoc article1 gen der title: Crime rises in cities@EN type:",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-007"
+      ]
     },
     {
       "id": "page-008",
@@ -354,7 +375,10 @@
         }
       ],
       "extract": "PROV expressions can be enriched with various properties. Some properties are predefined by PROV- JSONLD such as activity and agent in a Association. Further PROV attributes are allowed, for instance type with an array of further types, to better describe the resource. Others may be defined in a different namespace such as foaf:givenName, for which we expect the prefix foaf to be declared in the @context property.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-008"
+      ]
     },
     {
       "id": "page-009",
@@ -385,7 +409,10 @@
         }
       ],
       "extract": "EXAMPLE 1 { \"@context\" : [ { \"xsd\" : \"http://www.w3.org/2001/XMLSchema#\", \"dcterms\" : \"http://purl.org/dc/terms/\", \"ex\" : \"http://example/\", \"prov\" : \"http://www.w3.org/ns/prov#\", \"foaf\" : \"http://xmlns.com/foaf/0.1/\" }, \"https://openprovenance.org/prov-jsonld/context.jsonld\" ], \"@graph\" : [ { \"@type\" : \"Entity\", \"@id\" : \"ex:dataSet1\" }, { \"@type\" : \"Entity\", \"@id\" : \"ex:article1\", \"dcterms:title\" : [ { \"@value\" :",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-009"
+      ]
     },
     {
       "id": "page-010",
@@ -420,7 +447,10 @@
         }
       ],
       "extract": "This section provides an overview of the JSON schema [JSON-SCHEMA] for PROV-JSONLD; its full details are in Appendix A. For each object property identified in the JSON schema, we provide the corresponding normative attribute definition in [PROV-DM]. Some primitive types occur in PROV serializations, namely DateTime and QualifiedName. We define their schemas as follows. { \"DateTime\": { \"$id\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-010"
+      ]
     },
     {
       "id": "page-011",
@@ -455,7 +485,10 @@
         }
       ],
       "extract": "\"default\": \"\", \"pattern\": \"(^[A-Za-z0-9_]+:)?(.*)$\" } } EDITOR'S NOTE The production rules for qualified names are more complex than the simple regular expression outlined here. A post- processor will need to check that qualified names comply with the definition in [PROV-N]. Typed values (typed_value) are JSON objects with properties @value and @type. String values (lang_string) are JSON objects with properties",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-011"
+      ]
     },
     {
       "id": "page-012",
@@ -494,7 +527,10 @@
         }
       ],
       "extract": "\"additionalProperties\": false } } We also define general types for property values, which can be arrays of values ArrayOfValues or arrays of labels ArrayOfLabelValues. { \"ArrayOfValues\": { \"$id\": \"#/definitions/ArrayOfValues\", \"type\": \"array\", \"items\": { \"anyOf\": [ { \"$ref\": \"#/definitions/QualifiedN { \"$ref\": \"#/definitions/typed_valu { \"$ref\": \"#/definitions/lang_strin ] } } } { \"ArrayOfLabelValues\": { \"$id\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-012"
+      ]
     },
     {
       "id": "page-013",
@@ -537,7 +573,10 @@
         }
       ],
       "extract": "PROV-DM prov:label), or other properties with an explicit prefix (see PROV-DM entity attributes). (The presence of a colon \":\" in the patternProperties element forces all other properties to have the structure of a prefix, a colon, and a local name.) Schema for prov:Entity { \"prov:Entity\": { \"type\": \"object\", \"required\": [ \"@type\", \"@id\" ], \"properties\": { \"@type\": { \"pattern\": \"Entity\" }, \"@id\": { \"$ref\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-013"
+      ]
     },
     {
       "id": "page-014",
@@ -580,7 +619,10 @@
         }
       ],
       "extract": "\"required\": [ \"@type\", \"@id\" ], \"properties\": { \"@type\": { \"pattern\": \"Activity\" }, \"@id\": { \"$ref\": \"#/definitions/Qual \"startTime\": { \"$ref\": \"#/definitions/Date \"endTime\": { \"$ref\": \"#/definitions/Date \"type\": { \"$ref\": \"#/definitions/Arra \"location\": { \"$ref\": \"#/definitions/Arra \"label\": { \"$ref\": \"#/definitions/Arra }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini },",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-014"
+      ]
     },
     {
       "id": "page-015",
@@ -623,7 +665,10 @@
         }
       ],
       "extract": "\"additionalProperties\": false } } In the Schema for prov:Derivation, a derivation MUST contain a property @type with value Derivation. It SHOULD contain a generated entity (property generatedEntity, see PROV-DM generatedEntity) and used entity (property usedEntity, see PROV-DM usedEntity). It MAY contain an identifier (property @id), an activity (property activity, see PROV-DM activity), a generation (property",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-015"
+      ]
     },
     {
       "id": "page-016",
@@ -662,7 +707,10 @@
         }
       ],
       "extract": "\"additionalProperties\": false } } In the Schema for prov:Attribution, attribution MUST contain a property @type with value Attribution. It SHOULD contain the entity that is the subject of the attribution (property entity, see PROV-DM entity) and the associated agent (property agent, see PROV-DM agent). It MAY contain an identifier (property @id), further type information (property type, see PROV-DM prov:type), a",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-016"
+      ]
     },
     {
       "id": "page-017",
@@ -705,7 +753,10 @@
         }
       ],
       "extract": "In the Schema for prov:Association, an association MUST contain a property @type with value Association. It SHOULD contain an activity (property activity, see PROV-DM activity) and its associated agent (property agent, see PROV-DM agent). It MAY contain an identifier (property @id), a plan (property plan, see PROV-DM plan), a location (property location, see PROV-DM prov:location), a role (property role, see PROV-DM",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-017"
+      ]
     },
     {
       "id": "page-018",
@@ -744,7 +795,10 @@
         }
       ],
       "extract": "In the Schema for prov:Delegation, a delegation MUST contain a property @type with value Delegation. It SHOULD contain a delegate agent (property delegate, see PROV-DM delegate) and a responsible agent (property responsible, see PROV-DM responsible). It MAY contain an identifier (property @id), an activity (property activity, see PROV-DM activity), further type information (property type, see PROV-DM prov:type), a",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-018"
+      ]
     },
     {
       "id": "page-019",
@@ -787,7 +841,10 @@
         }
       ],
       "extract": "In the Schema for prov:Usage, a usage MUST contain a property @type with value Usage. It SHOULD contain an activity (property activity, see PROV-DM activity) and an entity (property entity, see PROV-DM entity). It MAY contain an identifier (property @id), a time (property time, see PROV- DM time), a location (property location, see PROV-DM prov:location), a role (property role, see PROV-DM prov:role), further type",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-019"
+      ]
     },
     {
       "id": "page-020",
@@ -830,7 +887,10 @@
         }
       ],
       "extract": "In the Schema for prov:Generation, a generation MUST contain a property @type with value Generation. It SHOULD contain an entity (property entity, see PROV-DM entity) and an activity (property activity, see PROV-DM activity). It MAY contain an identifier (property @id), a time (property time, see PROV-DM time), a location (property location, see PROV-DM prov:location), a role (property role, see PROV-DM prov:role),",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-020"
+      ]
     },
     {
       "id": "page-021",
@@ -873,7 +933,10 @@
         }
       ],
       "extract": "In the Schema for prov:Invalidation, an invalidation MUST contain a property @type with value Invalidation. It SHOULD contain an entity (property entity, see PROV-DM entity) and an activity (property activity, see PROV-DM activity). It MAY contain an identifier (property @id), a time (property time, see PROV-DM time), a location (property location, see PROV-DM prov:location), a role (property role, see PROV-DM",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-021"
+      ]
     },
     {
       "id": "page-022",
@@ -920,7 +983,10 @@
         }
       ],
       "extract": "In the Schema for prov:Start, a start MUST contain a property @type with value Start. It SHOULD contain an activity that was started (property activity, see PROV-DM activity); it MAY contain a starter activity (property starter, see PROV-DM starter) and a triggering entity (property trigger, see PROV- DM trigger). It MAY also contain an identifier (property @id), a time (property time, see PROV-DM time), a location",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-022"
+      ]
     },
     {
       "id": "page-023",
@@ -967,7 +1033,10 @@
         }
       ],
       "extract": "In the Schema for prov:End, an end MUST contain a property @type with value End. It SHOULD contain an activity that was ended (property activity, see PROV-DM activity); it MAY contain an ender activity (property ender, see PROV-DM ender) and a triggering entity (property trigger, see PROV- DM trigger). It MAY also contain an identifier (property @id), a time (property time, see PROV-DM time), a location (property",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-023"
+      ]
     },
     {
       "id": "page-024",
@@ -1010,7 +1079,10 @@
         }
       ],
       "extract": "In the Schema for prov:Communication, a communication MUST contain a property @type with value Communication. It SHOULD contain an informed activity (property informed, see PROV-DM informed) and an informant activity (property informant, see PROV-DM informant). It MAY contain an identifier (property @id), further type information (property type, see PROV-DM prov:type), a label (property label, see PROV-DM",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-024"
+      ]
     },
     {
       "id": "page-025",
@@ -1053,7 +1125,10 @@
         }
       ],
       "extract": "(property influencer, see PROV-DM influencer). It MAY contain an identifier (property @id), further type information (property type, see PROV-DM prov:type), a label (property label, see PROV-DM prov:label), or other properties with an explicit prefix (see PROV-DM influence attributes). Schema for prov:Influence { \"prov:Influence\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-025"
+      ]
     },
     {
       "id": "page-026",
@@ -1092,7 +1167,10 @@
         }
       ],
       "extract": "Schema for prov:Specialization { \"prov:Specialization\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"Specializa \"@id\": { \"$ref\": \"#/definitions \"generalEntity\": { \"$ref\": \"#/definitions \"specificEntity\": { \"$ref\": \"#/definitions \"type\": { \"$ref\": \"#/definitions \"label\": { \"$ref\": \"#/definitions }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini },",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-026"
+      ]
     },
     {
       "id": "page-027",
@@ -1135,7 +1213,10 @@
         }
       ],
       "extract": "], \"properties\": { \"@type\": { \"pattern\": \"Alternate\" }, \"@id\": { \"$ref\": \"#/definitions/Qual \"alternate1\": { \"$ref\": \"#/definitions/Qual \"alternate2\": { \"$ref\": \"#/definitions/Qual \"type\": { \"$ref\": \"#/definitions/Arra \"label\": { \"$ref\": \"#/definitions/Arra }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini }, \"additionalProperties\": false } } In the Schema for prov:Membership, a membership MUST",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-027"
+      ]
     },
     {
       "id": "page-028",
@@ -1170,7 +1251,10 @@
         }
       ],
       "extract": "}, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini }, \"additionalProperties\": false } } { \"QualifiedName+\": { \"$id\": \"#/definitions/QualifiedName+\", \"oneOf\": [ { \"$ref\": \"#/definitions/QualifiedName\" }, { \"type\": \"array\", \"items\": { \"$ref\": \"#/definitions/Q } ] } } In the Schemas for prov:Bundle and prov:Document, a bundle and a document MUST contain a property @type with value Bundle and Document",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-028"
+      ]
     },
     {
       "id": "page-029",
@@ -1209,7 +1293,10 @@
         }
       ],
       "extract": "\"@graph\": { \"type\": \"array\", \"items\": { \"$ref\": \"#/definitions/p } }, \"additionalProperties\": false } } { \"prov:Document\": { \"type\": \"object\", \"required\": [ \"@context\", \"@graph\" ], \"properties\": { \"@type\": { \"pattern\": \"Document\" }, \"@context\": { \"$ref\": \"#/definitions/Con \"@graph\": { \"type\": \"array\", \"items\": { \"$ref\": \"#/definitions/p } }, \"additionalProperties\": false } } Bundles contain statements (definition",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-029"
+      ]
     },
     {
       "id": "page-030",
@@ -1248,7 +1335,10 @@
         }
       ],
       "extract": "{ \"$ref\": \"#/definitions/prov:Association\" { \"$ref\": \"#/definitions/prov:Delegation\" } { \"$ref\": \"#/definitions/prov:Invalidation\" { \"$ref\": \"#/definitions/prov:Start\" }, { \"$ref\": \"#/definitions/prov:End\" }, { \"$ref\": \"#/definitions/prov:Derivation\" } { \"$ref\": \"#/definitions/prov:Alternate\" }, { \"$ref\": \"#/definitions/prov:Specializatio { \"$ref\": \"#/definitions/prov:Membership\" } { \"$ref\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-030"
+      ]
     },
     {
       "id": "page-031",
@@ -1287,7 +1377,10 @@
         }
       ],
       "extract": "\"oneOf\": [ { \"type\": \"string\", \"format\": \"uri\" }, { \"type\": \"object\", \"title\": \"The Items Schema\" \"additionalProperties\": { \" } ] } } } In this section, we provide a description of the JSON-LD context to map the PROV-JSON structures to linked data. Full details of the context can be found in Appendix B. The Ontology PROV-O [PROV-O] defines the Qualification Pattern, which restates a binary property between two",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-031"
+      ]
     },
     {
       "id": "page-032",
@@ -1326,7 +1419,10 @@
         }
       ],
       "extract": "e) f) c) a) b) prov:activity prov:atTime prov:qualifiedInvalidation xsd:dateTime Invalidation prov:wasInvalidatedBy Entity Activity prov:entity prov:atTime prov:qualifiedUsage xsd:dateTime prov:activity prov:atTime prov:qualifiedGeneration xsd:dateTime Usage prov:used Activity Entity Generation prov:wasGeneratedBy Entity Activity d) g) h) prov:entity prov:qualifiedDerivation prov:wasDerivedFrom Entity Entity",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-032"
+      ]
     },
     {
       "id": "page-033",
@@ -1369,7 +1465,10 @@
         }
       ],
       "extract": "prov:agent prov:qualifiedDelegation prov:actedOnBehalfOf Delegation j) prov:agent prov:qualifiedAssociation prov:wasAssociatedWith prov:agent prov:qualifiedAttribution Entity Attribution prov:wasAttributedTo Activity prov:hadRole Role Plan prov:hadPlan Association Agent Agent Agent Agent Figure 2 (taken from [PROV-O]): Illustration of the properties and classes to use (in blue) to qualify the binary influence",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-033"
+      ]
     },
     {
       "id": "page-034",
@@ -1404,7 +1503,10 @@
         }
       ],
       "extract": "The following JSON properties have the same meaning in all contexts of a PROV-JSONLD document: role, type, label and location respectively map to the RDF properties prov:hadRole, rdf:type, rdfs:label, and prov:atLocation. { \"role\": { \"@id\": \"prov:hadRole\", \"@type\": \"@id\" }, \"type\": { \"@id\": \"rdf:type\", \"@type\": \"@id\" }, \"label\": { \"@id\": \"rdfs:label\" }, \"location\": { \"@id\": \"prov:atLocation\", \"@type\": \"@id\" } } In",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-034"
+      ]
     },
     {
       "id": "page-035",
@@ -1435,7 +1537,10 @@
         }
       ],
       "extract": "In the mapping Context for Activity, the JSON properties startTime and endTime map to the RDF data properties prov:startedAtTime and prov:endedAtType, respectively, and have a value coerced to datatype xsd:dateTime. Context for Activity { \"Activity\": { \"@id\": \"prov:Activity\", \"@context\" : { \"startTime\": { \"@id\": \"prov:startedAtTime\", \"@type\": \"xsd:dateTime\" }, \"endTime\": { \"@id\": \"prov:endedAtTime\", \"@type\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-035"
+      ]
     },
     {
       "id": "page-036",
@@ -1466,7 +1571,10 @@
         }
       ],
       "extract": "The mapping Context for Derivation supports the Qualification Pattern of Figure 2, g. Each of the JSON properties generatedEntity, usedEntity, activity, generation, and usage maps to an object property: namely, prov:qualifiedDerivation, prov:entity, prov:hadActivity, prov:hadGeneration, and prov:hadUsage, respectively. Context for Derivation { \"Derivation\": { \"@id\": \"prov:Derivation\", \"@context\": {",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-036"
+      ]
     },
     {
       "id": "page-037",
@@ -1501,7 +1609,10 @@
         }
       ],
       "extract": "The mapping Context for Attribution supports the Qualification Pattern of Figure 2, i. The JSON property entity maps to the object property prov:qualifiedAttribution. Context for Attribution { \"Attribution\": { \"@id\": \"prov:Attribution\", \"@context\": { \"entity\": { \"@reverse\" : \"prov:qualifiedAttribution\", \"@type\" : \"@id\" } } } } The mapping Context for Association supports the Qualification Pattern of Figure 2, j. The",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-037"
+      ]
     },
     {
       "id": "page-038",
@@ -1532,7 +1643,10 @@
         }
       ],
       "extract": "\"@id\": \"prov:hadPlan\", \"@type\": \"@id\" } } } } The mapping Context for Delegation supports the Qualification Pattern of Figure 2, h. The JSON properties responsible, delegate and activity map to the object properties prov:agent, prov:qualifiedDelegation and prov:hadActivity, respectively. Context for Delegation { \"Delegation\": { \"@id\": \"prov:Delegation\", \"@context\": { \"responsible\": { \"@id\": \"prov:agent\", \"@type\" :",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-038"
+      ]
     },
     {
       "id": "page-039",
@@ -1571,7 +1685,10 @@
         }
       ],
       "extract": "The mapping Context for Usage supports the Qualification Pattern of Figure 2, a. The JSON properties activity and time map to the object property prov:qualifiedUsage and the data property prov:atTime, respectively. The value of the latter is coerced to datatype xsd:dateTime. Context for Usage { \"Usage\": { \"@id\": \"prov:Usage\", \"@context\": { \"activity\": { \"@reverse\" : \"prov:qualifiedUsage\", \"@type\" : \"@id\" }, \"time\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-039"
+      ]
     },
     {
       "id": "page-040",
@@ -1602,7 +1719,10 @@
         }
       ],
       "extract": "\"entity\": { \"@reverse\" : \"prov:qualifiedGeneration\", \"@type\" : \"@id\" }, \"time\": { \"@id\": \"prov:atTime\", \"@type\": \"xsd:dateTime\" } } } } The mapping Context for Invalidation supports the Qualification Pattern of Figure 2, c. The JSON properties entity and time map to the object property prov:qualifiedInvalidation and the data property prov:atTime, respectively. The value of the latter is coerced to datatype",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-040"
+      ]
     },
     {
       "id": "page-041",
@@ -1641,7 +1761,10 @@
         }
       ],
       "extract": "The mapping Context for Start supports the Qualification Pattern of Figure 2, e. The JSON properties activity, trigger, starter, and time map to the object properties prov:qualifiedStart, prov:entity, prov:hadActivity, and the data property prov:atTime, respectively. The value of the latter is coerced to datatype xsd:dateTime. Context for Start { \"Start\": { \"@id\": \"prov:Start\", \"@context\": { \"activity\": {",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-041"
+      ]
     },
     {
       "id": "page-042",
@@ -1672,7 +1795,10 @@
         }
       ],
       "extract": "prov:hadActivity, and the data property prov:atTime, respectively. The value of the latter is coerced to datatype xsd:dateTime. Context for End { \"End\": { \"@id\": \"prov:End\", \"@context\": { \"activity\": { \"@reverse\": \"prov:qualifiedEnd\", \"@type\": \"@id\" }, \"trigger\": { \"@id\": \"prov:entity\", \"@type\": \"@id\" }, \"ender\": { \"@id\": \"prov:hadActivity\", \"@type\": \"@id\" }, \"time\": { \"@id\": \"prov:atTime\", \"@type\": \"xsd:dateTime\" }",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-042"
+      ]
     },
     {
       "id": "page-043",
@@ -1703,7 +1829,10 @@
         }
       ],
       "extract": "Context for Communication { \"Communication\": { \"@id\": \"prov:Communication\", \"@context\": { \"informed\": { \"@reverse\" : \"prov:qualifiedCommunication\", \"@type\" : \"@id\" }, \"informant\": { \"@id\": \"prov:activity\", \"@type\": \"@id\" } } } } In the mapping Context for Influence, the JSON properties influencee and influencer map to the object properties prov:qualifiedInfluence and prov:influencer, respectively. Context for",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-043"
+      ]
     },
     {
       "id": "page-044",
@@ -1738,7 +1867,10 @@
         }
       ],
       "extract": "} } } While [PROV-O] does not define a Qualification Pattern for Specialization, for uniformity and usability reasons, we adopt a similar mapping as other PROV relations, via a Qualification Pattern (see Definition Context for Specialization). However, the mapping is to new classes and properties in the PROV extension namespace (denoted by the prefix provext). See Section 6 for interoperability considerations. The",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-044"
+      ]
     },
     {
       "id": "page-045",
@@ -1777,7 +1909,10 @@
         }
       ],
       "extract": "Definition Context for Alternate). However, the mapping is to new classes and properties in the PROV extension namespace (denoted by the prefix provext). See Section 6 for interoperability considerations. The JSON properties alternate1 and alternate2 map to the object properties provext:qualifiedAlternate and provext:alternate, respectively. Context for Alternate { \"Alternate\": { \"@id\": \"provext:Alternate\",",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-045"
+      ]
     },
     {
       "id": "page-046",
@@ -1824,7 +1959,10 @@
         }
       ],
       "extract": "Context for Membership { \"Membership\": { \"@id\": \"provext:Membership\", \"@context\": { \"collection\": { \"@reverse\" : \"provext:qualifiedMembership\", \"@type\" : \"@id\" }, \"entity\": { \"@id\": \"provext:member\", \"@type\": \"@id\" } } } } IC1: There are differences between PROV-DM and PROV-O in terms of the level of requirements set on some expressions. For instance, PROV-DM mandates the presence of an entity in a generation,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-046"
+      ]
     },
     {
       "id": "page-047",
@@ -1867,7 +2005,10 @@
         }
       ],
       "extract": "three relations are encoded using the same pattern as for other relations. Therefore, their mapping to RDF via the JSON-LD context relies on a PROV extension namespace (denoted by the prefix provext) in which classes for Specialization, Alternate and Membership are defined. The PROV- JSONLD serialization also allows for identifier and properties to be encoded for these relations. IC3: The notion of a PROV document",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-047"
+      ]
     },
     {
       "id": "page-048",
@@ -1910,7 +2051,10 @@
         }
       ],
       "extract": "encoding such subtypes and subrelations, alongside specialized structures. We opted for this single approach to ensure simplicity and efficiency of parsers. IC5: The interoperability of the PROV-JSONLD serialization can be tested in different ways: 1. In a roundtrip testing, consisting of the serialization of an internal representation in some programming language to PROV-JSONLD, followed by deserialization from",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-048"
+      ]
     },
     {
       "id": "page-049",
@@ -1945,7 +2089,10 @@
         }
       ],
       "extract": "1. The first roundtrip testing is implemented in https://github.com/lucmoreau/ProvToolbox/blob/ProvToolbox-1.0.0/modules- core/prov- jsonld/src/test/java/org/openprovenance/prov/core/RoundTripFromJavaJSONLD11Test .java 2. The second roundtrip testing is implemented in https://github.com/lucmoreau/ProvToolbox/blob/ProvToolbox-1.0.0/modules-",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-049"
+      ]
     },
     {
       "id": "page-050",
@@ -1976,7 +2123,10 @@
         }
       ],
       "extract": "\"^[A-Za-z0-9_]+:(.*)$\": {} } }, \"typed_value\": { \"type\": \"object\", \"required\": [ \"@value\", \"@type\"], \"properties\": { \"@value\": { \"type\": \"string\" }, \"@type\": { \"type\": \"string\" } }, \"additionalProperties\": false }, \"lang_string\": { \"type\": \"object\", \"required\": [ \"@value\" ], \"properties\": { \"@value\": { \"type\": \"string\" }, \"@language\": { \"type\": \"string\" } }, \"additionalProperties\": false }, \"ArrayOfValues\": { \"$id\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-050"
+      ]
     },
     {
       "id": "page-051",
@@ -2015,7 +2165,10 @@
         }
       ],
       "extract": "\"items\": { \"$ref\": \"#/definitions/lang_string\" } }, \"Context\": { \"$id\": \"#/definitions/Context\", \"type\": \"array\", \"title\": \"The @context Schema\", \"items\": { \"oneOf\": [ { \"type\": \"string\", \"format\": \"uri\" }, { \"type\": \"object\", \"title\": \"The Items Schema\" \"additionalProperties\": { \"t } ] } }, \"prov:StatementOrBundle\": { \"oneOf\": [ { \"$ref\": \"#/definitions/prov:Statement\" }, { \"$ref\": \"#/definitions/prov:Bundle\" } ]",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-051"
+      ]
     },
     {
       "id": "page-052",
@@ -2054,7 +2207,10 @@
         }
       ],
       "extract": "{ \"$ref\": \"#/definitions/prov:Membership\" } { \"$ref\": \"#/definitions/prov:Influence\" }, { \"$ref\": \"#/definitions/prov:Communication\" ] }, \"prov:Entity\": { \"type\": \"object\", \"required\": [ \"@type\", \"@id\" ], \"properties\": { \"@type\": { \"pattern\": \"Entity\" }, \"@id\": { \"$ref\": \"#/definitions/Qual \"type\": { \"$ref\": \"#/definitions/Array \"value\": { \"$ref\": \"#/definitions/Array \"location\": { \"$ref\": \"#/definitions/Array",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-052"
+      ]
     },
     {
       "id": "page-053",
@@ -2097,7 +2253,10 @@
         }
       ],
       "extract": "\"endTime\": { \"$ref\": \"#/definitions/DateT \"type\": { \"$ref\": \"#/definitions/Array \"location\": { \"$ref\": \"#/definitions/Array \"label\": { \"$ref\": \"#/definitions/Array }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit }, \"additionalProperties\": false }, \"prov:Usage\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"Usage\" }, \"@id\": { \"$ref\": \"#/definitions/Qual",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-053"
+      ]
     },
     {
       "id": "page-054",
@@ -2140,7 +2299,10 @@
         }
       ],
       "extract": "\"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit }, \"additionalProperties\": false }, \"prov:Invalidation\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"Invalidation\" } \"@id\": { \"$ref\": \"#/definitions/Qual \"entity\": { \"$ref\": \"#/definitions/Qual \"activity\": { \"$ref\": \"#/definitions/Qual \"time\": { \"$ref\": \"#/definitions/DateT \"type\": { \"$ref\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-054"
+      ]
     },
     {
       "id": "page-055",
@@ -2179,7 +2341,10 @@
         }
       ],
       "extract": "}, \"additionalProperties\": false }, \"prov:End\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"End\" }, \"@id\": { \"$ref\": \"#/definitions/Qual \"activity\": { \"$ref\": \"#/definitions/Qual \"ender\" : { \"$ref\": \"#/definitions/Qual \"trigger\": { \"$ref\": \"#/definitions/Qual \"time\": { \"$ref\": \"#/definitions/DateT \"type\": { \"$ref\": \"#/definitions/Array \"role\": { \"$ref\": \"#/definitions/Array",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-055"
+      ]
     },
     {
       "id": "page-056",
@@ -2218,7 +2383,10 @@
         }
       ],
       "extract": "\"prov:Association\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"Association\" }, \"@id\": { \"$ref\": \"#/definitions/Qual \"activity\": { \"$ref\": \"#/definitions/Qual \"agent\" : { \"$ref\": \"#/definitions/Qual \"plan\" : { \"$ref\": \"#/definitions/Qual \"type\": { \"$ref\": \"#/definitions/Array \"role\": { \"$ref\": \"#/definitions/Array \"label\": { \"$ref\": \"#/definitions/Array }, \"patternProperties\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-056"
+      ]
     },
     {
       "id": "page-057",
@@ -2257,7 +2425,10 @@
         }
       ],
       "extract": "], \"properties\": { \"@type\": { \"pattern\": \"Derivation\" \"@id\": { \"$ref\": \"#/definitions/ \"activity\": { \"$ref\": \"#/definitions/ \"generation\": { \"$ref\": \"#/definitions/ \"usage\": { \"$ref\": \"#/definitions/ \"generatedEntity\": { \"$ref\": \"#/definitions/ \"usedEntity\": { \"$ref\": \"#/definitions/ \"type\": { \"$ref\": \"#/definitions/ \"label\": { \"$ref\": \"#/definitions/ }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-057"
+      ]
     },
     {
       "id": "page-058",
@@ -2296,7 +2467,10 @@
         }
       ],
       "extract": "\"generalEntity\": { \"$ref\": \"#/definitions/ \"specificEntity\": { \"$ref\": \"#/definitions/ \"type\": { \"$ref\": \"#/definitions/ \"label\": { \"$ref\": \"#/definitions/ }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit }, \"additionalProperties\": false }, \"prov:Membership\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"Membership\" }, \"@id\": { \"$ref\": \"#/definitions/Qua",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-058"
+      ]
     },
     {
       "id": "page-059",
@@ -2331,7 +2505,10 @@
         }
       ],
       "extract": "}, \"additionalProperties\": false }, \"prov:Communication\": { \"type\": \"object\", \"required\": [ \"@type\" ], \"properties\": { \"@type\": { \"pattern\": \"Communication\" } \"@id\": { \"$ref\": \"#/definitions/Qual \"informant\": { \"$ref\": \"#/definitions/Qual \"informed\": { \"$ref\": \"#/definitions/Qual \"type\": { \"$ref\": \"#/definitions/Array \"label\": { \"$ref\": \"#/definitions/Array }, \"patternProperties\": { \"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-059"
+      ]
     },
     {
       "id": "page-060",
@@ -2362,7 +2539,10 @@
         }
       ],
       "extract": "\"@type\": { \"pattern\": \"Document\" }, \"@context\": { \"$ref\": \"#/definitions/Cont \"@graph\": { \"type\": \"array\", \"items\": { \"$ref\": \"#/definitions/p } }, \"additionalProperties\": false } }, \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"$id\": \"https://openprovenance.org/prov-jsonld/schema.json\", \"$ref\": \"#/definitions/prov:Document\" } { \"@context\": { \"@version\": 1.1, \"prov\": \"http://www.w3.org/ns/prov#\", \"provext\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-060"
+      ]
     },
     {
       "id": "page-061",
@@ -2393,7 +2573,10 @@
         }
       ],
       "extract": "\"entity\": { \"@id\": \"prov:entity\", \"@type\": \"@id\" }, \"activity\": { \"@id\": \"prov:activity\", \"@type\": \"@id\" }, \"agent\": { \"@id\": \"prov:agent\", \"@type\": \"@id\" }, \"Activity\": { \"@id\": \"prov:Activity\", \"@context\" : { \"startTime\": { \"@id\": \"prov:startedAtTime\", \"@type\": \"xsd:dateTime\" }, \"endTime\": { \"@id\": \"prov:endedAtTime\", \"@type\": \"xsd:dateTime\" } } }, \"Entity\": { \"@id\": \"prov:Entity\", \"@context\" : { \"value\": { \"@id\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-061"
+      ]
     },
     {
       "id": "page-062",
@@ -2424,7 +2607,10 @@
         }
       ],
       "extract": "\"@id\": \"prov:Delegation\", \"@context\": { \"responsible\": { \"@id\": \"prov:agent\", \"@type\" : \"@id\" }, \"delegate\": { \"@reverse\": \"prov:qualifiedDelegation\", \"@type\": \"@id\" }, \"activity\": { \"@id\" : \"prov:hadActivity\", \"@type\" : \"@id\" } } }, \"Usage\": { \"@id\": \"prov:Usage\", \"@context\": { \"activity\": { \"@reverse\" : \"prov:qualifiedUsage\", \"@type\" : \"@id\" }, \"time\": { \"@id\": \"prov:atTime\", \"@type\": \"xsd:dateTime\" } } },",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-062"
+      ]
     },
     {
       "id": "page-063",
@@ -2455,7 +2641,10 @@
         }
       ],
       "extract": "} } }, \"Invalidation\": { \"@id\": \"prov:Invalidation\", \"@context\": { \"entity\": { \"@reverse\" : \"prov:qualifiedInvalidation\", \"@type\" : \"@id\" }, \"time\": { \"@id\": \"prov:atTime\", \"@type\": \"xsd:dateTime\" } } }, \"Attribution\": { \"@id\": \"prov:Attribution\", \"@context\": { \"entity\": { \"@reverse\" : \"prov:qualifiedAttribution\", \"@type\" : \"@id\" } } }, \"Association\": { \"@id\": \"prov:Association\", \"@context\": { \"activity\": {",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-063"
+      ]
     },
     {
       "id": "page-064",
@@ -2486,7 +2675,10 @@
         }
       ],
       "extract": "}, \"Communication\": { \"@id\": \"prov:Communication\", \"@context\": { \"informed\": { \"@reverse\" : \"prov:qualifiedCommunication\", \"@type\" : \"@id\" }, \"informant\": { \"@id\": \"prov:activity\", \"@type\": \"@id\" } } }, \"Influence\": { \"@id\": \"prov:Influence\", \"@context\": { \"influencee\": { \"@reverse\" : \"prov:qualifiedInfluence\", \"@type\" : \"@id\" }, \"influencer\": { \"@id\": \"prov:influencer\", \"@type\": \"@id\" } } }, \"Derivation\": { \"@id\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-064"
+      ]
     },
     {
       "id": "page-065",
@@ -2517,7 +2709,10 @@
         }
       ],
       "extract": "\"@type\": \"@id\" }, \"activity\": { \"@id\": \"prov:hadActivity\", \"@type\": \"@id\" }, \"usage\": { \"@id\": \"prov:hadUsage\", \"@type\": \"@id\" } } }, \"Start\": { \"@id\": \"prov:Start\", \"@context\": { \"activity\": { \"@reverse\": \"prov:qualifiedStart\", \"@type\": \"@id\" }, \"trigger\": { \"@id\": \"prov:entity\", \"@type\": \"@id\" }, \"starter\": { \"@id\": \"prov:hadActivity\", \"@type\": \"@id\" }, \"time\": { \"@id\": \"prov:atTime\", \"@type\": \"xsd:dateTime\" } }",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-065"
+      ]
     },
     {
       "id": "page-066",
@@ -2548,7 +2743,10 @@
         }
       ],
       "extract": "\"@id\": \"prov:entity\", \"@type\": \"@id\" }, \"ender\": { \"@id\": \"prov:hadActivity\", \"@type\": \"@id\" }, \"time\": { \"@id\": \"prov:atTime\", \"@type\": \"xsd:dateTime\" } } }, \"Specialization\": { \"@id\": \"provext:Specialization\", \"@context\": { \"specificEntity\": { \"@reverse\" : \"provext:qualifiedSpecialization\", \"@type\" : \"@id\" }, \"generalEntity\": { \"@id\": \"provext:generalEntity\", \"@type\": \"@id\" } } }, \"Membership\": { \"@id\":",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-066"
+      ]
     },
     {
       "id": "page-067",
@@ -2583,7 +2781,10 @@
         }
       ],
       "extract": "\"Alternate\": { \"@id\": \"provext:Alternate\", \"@context\": { \"alternate1\": { \"@reverse\" : \"provext:qualifiedAlternate\", \"@type\" : \"@id\" }, \"alternate2\": { \"@id\": \"provext:alternate\", \"@type\": \"@id\" } } } } } We provide here a minimal definition of the classes and properties introduced in provext in the context of PROV-JSONLD. They allow the qualification pattern to be applied to Membership, Specialization and Alternate.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-067"
+      ]
     },
     {
       "id": "page-068",
@@ -2622,7 +2823,10 @@
         }
       ],
       "extract": "owl:TransitiveProperty . :qualifiedMembership rdf:type owl:ObjectProperty ; rdfs:domain prov:Entity ; rdfs:range :Membership . :qualifiedSpecialization rdf:type owl:ObjectProperty ; rdfs:domain prov:Entity ; rdfs:range :Specialization . :qualifiedAlternate rdf:type owl:ObjectProperty ; rdfs:domain prov:Entity ; rdfs:range :Alternate . :member rdf:type owl:ObjectProperty ; rdfs:domain :Membership ; rdfs:range :Entity",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-068"
+      ]
     },
     {
       "id": "page-069",
@@ -2657,7 +2861,10 @@
         }
       ],
       "extract": "prov:specializationOf owl:propertyChainAxiom (:qualifiedSpecialization :generalEntity ) . prov:alternateOf owl:propertyChainAxiom (:qualifiedAlternate :alternate ) . prov:hadMember owl:propertyChainAxiom (:qualifiedMembership :member ) . Thank you to Pierre-Antoine Champin for his input on JSONLD and to Denis Ah-Kang for his assistance with the Respec tool. [JSON-LD] JSON-LD 1.0. Manu Sporny; Gregg Kellogg; Markus",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-069"
+      ]
     },
     {
       "id": "page-070",
@@ -2708,7 +2915,10 @@
         }
       ],
       "extract": "[LINKED-DATA] Linked Data Design Issues. Tim Berners-Lee. W3C. 27 July 2006. W3C-Internal Document. URL: https://www.w3.org/DesignIssues/LinkedData.html [PROV-DM] PROV-DM: The PROV Data Model. Luc Moreau; Paolo Missier. W3C. 30 April 2013. W3C Recommendation. URL: https://www.w3.org/TR/prov-dm/ [PROV-N] PROV-N: The Provenance Notation. Luc Moreau; Paolo Missier. W3C. 30 April 2013. W3C Recommendation. URL:",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-070"
+      ]
     },
     {
       "id": "page-071",
@@ -2739,7 +2949,10 @@
         }
       ],
       "extract": "[IPAW-POSTER] PROV-JSONLD: A JSON and Linked Data Representation for PROV (POSTER). Springer Verlag. Poster at IPAW'16. URL: https://eprints.soton.ac.uk/395985/ [PROV-JSON] The PROV-JSON Serialization. A JSON Representation for the PROV Data Model. W3C. W3C Member Submission 24 April 2013. URL: https://www.w3.org/submissions/prov-json/ [PROV-OVERVIEW] PROV-Overview. Paul Groth; Luc Moreau. W3C. 30 April 2013. W3C",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/w3c-2024-prov-jsonld/blocks/prose-page-071"
+      ]
     }
   ],
   "checks": {},
@@ -2793,6 +3006,47 @@
     {
       "term": "generation prov",
       "heading": false
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 71,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p4); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 71,
+      "note": "71 of 71 sections"
     }
   ],
   "links": {

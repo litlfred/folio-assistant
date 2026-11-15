@@ -16,7 +16,7 @@ A REUSABLE SUB-PROCESS, never an entry point.
 
 - Who: the `Agent` lane.
 - Skill: `human-agent-discussion`.
-- What: Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the instance's `<name>.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person 
+- What: Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the layer's `<name>.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person ear
 - Record it: `workflow_complete` with `node: "A_DetermineContext"`.
 - next: → `A_DetermineRoles` (Determine the roles: which you act as, and the person's)
 

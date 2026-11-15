@@ -264,6 +264,44 @@
           "title": "Term disagreement — the extractor and the terminology disagree"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A person's verdict on a machine translation, carried from the translation review page to the record: the reviewer accepts a catalogue, or flags a mistranslation and picks a candidate or writes their own text; the verdict is filed as a `translation-adjudication/v1` issue; a workflow checks the author and the catalogue's hash, writes the records and opens a PR; a maintainer merges it. Use for \"review the translations\", \"this string is mistranslated\", \"why was my review not recorded\", and when wiring a layer for review. Locale sign-off is a separate act, not this one.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+          "instructionLines": 132,
+          "instructionsPath": "library/skills/library-core/translation-adjudication.md",
+          "name": "translation-adjudication",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d58eff901d0a9f3c4c7a28d6b68f575398920e8150097c6407631bee35eba538",
+            "bytes": 7165,
+            "sha256": "d58eff901d0a9f3c4c7a28d6b68f575398920e8150097c6407631bee35eba538"
+          },
+          "title": "Translation adjudication — the review loop"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-candidate-source",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The one interface every candidate-translation engine meets: for a layer's catalogues, append candidate translations per string to the `translation-candidates/v1` sidecar, each carrying its source, and seed an empty `msgstr` with the first candidate marked fuzzy. An agent model and the open machine-translation engines (OPUS-MT, LibreTranslate / Argos) are interchangeable behind it. Use when adding an engine, choosing one, or producing candidates for review.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+          "instructionLines": 76,
+          "instructionsPath": "library/skills/library-core/translation-candidate-source.md",
+          "name": "translation-candidate-source",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7dd9c3778f57e72660f47cbdd08ae47512be2d8bdb92776a8299963abccbd67c",
+            "bytes": 3816,
+            "sha256": "7dd9c3778f57e72660f47cbdd08ae47512be2d8bdb92776a8299963abccbd67c"
+          },
+          "title": "Translation candidate source — one interface, many engines"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -272,13 +310,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-          "instructionLines": 986,
+          "instructionLines": 1019,
           "instructionsPath": "library/skills/library-core/translation-manager.md",
           "name": "translation-manager",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ef06af5c242abbcc6563fda7164b30a06d300387cb86336ebdce9285f8f7e5b",
-            "bytes": 47812,
-            "sha256": "3ef06af5c242abbcc6563fda7164b30a06d300387cb86336ebdce9285f8f7e5b"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9fc01eb06aa6b4093da5ec1fce4b113c4c591da8549d5a15c8f58b61efca6d09",
+            "bytes": 50045,
+            "sha256": "9fc01eb06aa6b4093da5ec1fce4b113c4c591da8549d5a15c8f58b61efca6d09"
           },
           "title": "Translation manager"
         },
@@ -291,13 +329,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-          "instructionLines": 212,
+          "instructionLines": 241,
           "instructionsPath": "library/skills/library-core/translation-refresh.md",
           "name": "translation-refresh",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57071957ac5d9b8405e21553b8a549de1c89dc5a95d095617673d4e3518ad8b2",
-            "bytes": 10203,
-            "sha256": "57071957ac5d9b8405e21553b8a549de1c89dc5a95d095617673d4e3518ad8b2"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/04d4035fdc8d9b165c81df361965deb738ac26bec99cb5e8aa6c8878def23fb8",
+            "bytes": 11869,
+            "sha256": "04d4035fdc8d9b165c81df361965deb738ac26bec99cb5e8aa6c8878def23fb8"
           },
           "title": "Translation refresh — the watcher"
         },

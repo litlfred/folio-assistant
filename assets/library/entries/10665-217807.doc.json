@@ -1,7 +1,7 @@
 {
   "$schema": "folio-library-document/v1",
   "id": "10665-217807",
-  "title": "YELLOW-FEVER VACCINATING CENTRES _x000D_FOR INTERNATIONAL TRAVEL = CENTRES DE VACCINATION CONTRE LA FIÈVRE JAUNE POUR LES VOYAGES INTERNATIONAUX",
+  "title": "YELLOW-FEVER VACCINATING CENTRES FOR INTERNATIONAL TRAVEL = CENTRES DE VACCINATION CONTRE LA FIÈVRE JAUNE POUR LES VOYAGES INTERNATIONAUX",
   "variant": "pdf",
   "pages": 1,
   "tocSource": "none",
@@ -37,7 +37,10 @@
         }
       ],
       "extract": "YELLOW-FEVER VACCINATING CENTRES CENTRES DE VACCINATION CONTRE LA FIÈVRE JAUNE FOR INTERNATIONAL TRAVEL POUR LES VOYAGES INTERNATIONAUX Amendments to 1970 publication Amendements à la publication de 1970 Federal Republic of Germany République fédérale d’Allemagne Delete: \\ Supprimer: Bad-Godesberg: Dr Erich Martin, Weststrasse 10 (Vaccinating Centre No. 10) and insert: | et insérer: Duisburg: Dr W. Altvater,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/10665-217807/blocks/prose-page-001"
+      ]
     }
   ],
   "checks": {
@@ -71,6 +74,47 @@
     }
   ],
   "figures": [],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 1,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 1,
+      "note": "1 of 1 sections"
+    }
+  ],
   "links": {
     "repo": "litlfred/who-iris",
     "branch": "main",

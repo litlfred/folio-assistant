@@ -57,7 +57,10 @@
         }
       ],
       "extract": "Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data Yan Liua, Abhinav K. Jhaa,b,* aDepartment of Biomedical Engineering, Washington University in St. Louis, St. Louis, MO, USA; bMallinckrodt Institute of Radiology, Washington University in St. Louis, St. Louis, MO, USA ABSTRACT Objective evaluation of quantitative imaging (QI)",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-260327124v1/blocks/prose-page-001"
+      ]
     },
     {
       "id": "page-002",
@@ -108,7 +111,10 @@
         }
       ],
       "extract": "ing metabolic tumor volume18. These applications demonstrate the promise of RWT to evaluate QI methods in the absence of ground truth. Despite the promise of RWT techniques, a major challenge for broader applications of these techniques is the requirement for large patient cohorts12. This requirement arises because the RWT techniques involve estimation of many parameters. For example, when evaluating 3 QI methods,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-260327124v1/blocks/prose-page-002"
+      ]
     },
     {
       "id": "page-003",
@@ -159,7 +165,10 @@
         }
       ],
       "extract": "the true values of the 𝑃 patients and given that the patient data and physical phantom data are independent, we can use an ML approach to estimate the values of {𝚯, 𝚺, 𝛀}. The ML estimate of {𝚯, 𝚺, 𝛀} is given by {𝚯, 𝚺, 𝛀}ெ௅= arg max൛log pr ൫𝓐෡|𝚯, 𝚺, 𝛀൯+ log pr ൫𝓓෡|𝚯, 𝚺, 𝐃൯ൟ. (4) Same as in the RWT technique10,11, after the estimation of the linear-relationship parameters, the ratio of estimated",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-260327124v1/blocks/prose-page-003"
+      ]
     },
     {
       "id": "page-004",
@@ -210,7 +219,13 @@
         }
       ],
       "extract": "QI methods. We note that the proposed approach achieved nearly 100% accuracy in identifying the most precise method using only 10 known-ground-truth samples and 10 patient samples (Figure 2(B)), where the ground truth is unavailable. The numerical studies conducted in this manuscript are in controlled settings where the assumptions made by the technique were satisfied. However, in clinically realistic scenarios, the",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-260327124v1/blocks/prose-page-004",
+        "library/arxiv-260327124v1/blocks/figure-img-p004-1",
+        "library/arxiv-260327124v1/blocks/figure-img-p004-2",
+        "library/arxiv-260327124v1/blocks/figure-vfig-p004"
+      ]
     },
     {
       "id": "page-005",
@@ -261,7 +276,10 @@
         }
       ],
       "extract": "ACKNOWLEDGEMENTS This work was supported by the National Institute of Biomedical Imaging and Bioengineering of the National Institute of Health under grants R01-EB031051, R01-EB031962 and NSF CAREER Award 2239707. REFERENCES [1] Rosenkrantz, A. B., Mendiratta-Lala, M., Bartholmai, B. J., Ganeshan, D., Abramson, R. G., Burton, K. R., Yu, J.-P. J., Scalzetti, E. M., Yankeelov, T. E., Subramaniam, R. M. and Lenchik,",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-260327124v1/blocks/prose-page-005"
+      ]
     },
     {
       "id": "page-006",
@@ -296,7 +314,10 @@
         }
       ],
       "extract": "[17] Yan, L., Ziping, L., Zekun, L., Jingqin, L., Daniel L. J., T., Barry A., S. and Abhinav K., J., “NGSE-Corr: A technique for objective clinical evaluation of quantitative-imaging methods without a gold standard,” IEEE Trans. Med. Imaging In review. [18] Jha, A. K., Mena, E., Caffo, B., Ashrafinia, S., Rahmim, A., Frey, E. and Subramaniam, R. M., “Practical no-gold- standard evaluation framework for quantitative",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-260327124v1/blocks/prose-page-006"
+      ]
     }
   ],
   "checks": {},
@@ -350,6 +371,87 @@
     {
       "term": "known-ground-truth samples",
       "heading": false
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p004-1",
+      "file": "images/img-p004-1.png",
+      "page": 4,
+      "narratives": {
+        "en": "Figure 1 displays average absolute normalized bias (A) and normalized standard deviation (B) in NSR estimation.",
+        "fr": "La figure 1 présente le biais normalisé absolu moyen (A) et l'écart-type normalisé (B) dans l'estimation du NSR.",
+        "es": "La figura 1 muestra el sesgo normalizado absoluto medio (A) y la desviación estándar normalizada (B) en la estimación del NSR.",
+        "ar": "يعرض الشكل 1 متوسط الانحياز المطلق المُطبَّع (A) والانحراف المعياري المُطبَّع (B) في تقدير NSR.",
+        "ru": "На рисунке 1 показаны среднее абсолютное нормированное смещение (A) и нормированное стандартное отклонение (B) при оценке NSR.",
+        "zh": "图 1 展示了 NSR 估计中的平均绝对归一化偏差（A）和归一化标准差（B）。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p004-2",
+      "file": "images/img-p004-2.png",
+      "page": 4,
+      "narratives": {
+        "en": "Figure 2 shows percentage of correctly ranking all QI methods (A) and identifying the most precise method (B).",
+        "fr": "La figure 2 montre le pourcentage de classements corrects de toutes les méthodes QI (A) et d'identification de la méthode la plus précise (B).",
+        "es": "La figura 2 muestra el porcentaje de veces que se ordenan correctamente todos los métodos QI (A) y que se identifica el método más preciso (B).",
+        "ar": "يُظهر الشكل 2 نسبة الترتيب الصحيح لجميع طرق QI (A) ونسبة تحديد الطريقة الأكثر دقة (B).",
+        "ru": "На рисунке 2 показана доля случаев, когда все методы QI ранжированы верно (A) и когда верно определён наиболее точный метод (B).",
+        "zh": "图 2 展示了对所有 QI 方法正确排序的百分比（A）以及识别出最精确方法的百分比（B）。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "vfig-p004",
+      "file": "figures/vfig-p004.png",
+      "page": 4,
+      "narratives": {
+        "en": "Vector figure render of Figures 1 and 2 on page 4 showing estimation bias and ranking accuracy."
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 6,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 3
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p5); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 6,
+      "note": "6 of 6 sections"
     }
   ],
   "links": {

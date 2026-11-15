@@ -1,0 +1,1232 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/collab/processes/content/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning",
+      "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/SGAuthoring.DAKLifecycle.svg",
+      "description": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
+      "enforcement": "strict",
+      "flowCount": 8,
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "Phase 1: Planning",
+      "nodeCount": 9,
+      "sourcePath": "collab/processes/content/SGAuthoring.DAKLifecycle.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/collab/processes/content/SGAuthoring.DAKLifecycle.bpmn",
+      "startNode": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning",
+      "summary": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle."
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P6",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "to": "http://smart.who.int/base/process/Process_Planning/node/End_Planning"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "Programme Manager",
+      "partOf": "http://smart.who.int/base/process/Process_Planning"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/End_Planning",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8",
+      "name": "Planning Complete",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "DAK Development Initiated",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7",
+      "name": "Assign work and begin sprint cycle",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P3",
+      "name": "Establish development process (Agile/Scrum) and tooling",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P4",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P2",
+      "name": "Form DAK development team and define RASCI matrix",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P3",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/raci",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P4",
+      "name": "Gather source documents (guidelines, registers, policies)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P5",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/dak-l1-library",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P6",
+      "name": "Plan SME consultation schedule and format",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P5",
+      "name": "Draft project roadmap, backlog, and sprint cadence",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P6",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-epic-planning",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1",
+      "name": "Define DAK scope, purpose, and target audience",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P2",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/smart-guideline-end-to-end.svg",
+      "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming application the requester describes. Adjudication follows every stage as QA, not as a gate, but the order is strict: no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested (Gateway_L3Ready). Each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. Each stage runs the skill named on its activity, with its own input and output contract (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6), and its output is the next stage's input. The smart-guideline-end-to-end skill orchestrates the stages and says who adjudicates each.",
+      "enforcement": "advisory",
+      "flowCount": 38,
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "SMART Guideline end to end",
+      "nodeCount": 37,
+      "sourcePath": "collab/processes/content/smart-guideline-end-to-end.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/collab/processes/content/smart-guideline-end-to-end.bpmn",
+      "startNode": "http://smart.who.int/base/process/Process_SgEndToEnd/node/StartEvent_Need",
+      "summary": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming ap…"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/StartEvent_Need",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeUseCase"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL1"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IngestKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E07",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E08",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IngestKg",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E13",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E14",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E15",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E16",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E17",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E18",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E19",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E20",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E21",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E22",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E23",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E24",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_WireframeApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E25",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_BuildApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E26",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_BuildApp",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E27",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E28",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/EndEvent_AppBuilt"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E29",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL1",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL1"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E30",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjKg",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E31",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjDepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E32",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL2",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E33",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjDepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E34",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL3",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E35",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjApp",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E36",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E37",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E38",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "Human adjudicators",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "Requester (country team / implementer)",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/EndEvent_AppBuilt",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E28",
+      "name": "L4 application built",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E35",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjDepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E31",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjDepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E33",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E30",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E29",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E32",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/End_AdjL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E34",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_App",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E26",
+      "name": "Fork_App",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E27",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E28"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E12",
+      "name": "Fork_DepsL2",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E13",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E14"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E18",
+      "name": "Fork_DepsL3",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E19",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E20"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_Kg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E08",
+      "name": "Fork_Kg",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E09",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E10"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E03",
+      "name": "Fork_L1",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E04",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E05"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E15",
+      "name": "Fork_L2",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E16",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E17"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Fork_L3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E21",
+      "name": "Fork_L3",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E22",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E23"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_InKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E05",
+      "name": "All sources in an L1 KG?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E06",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E07"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E07",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E10"
+      ],
+      "name": "Gateway_KgMerge",
+      "nodeKind": "exclusive",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E11",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E38",
+      "name": "L1 extraction and L2 assets exist, review requested?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E36",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E37"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/StartEvent_Need",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "name": "Use case to support",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E01",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E27",
+      "name": "Adjudicate the L4 wireframes and application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E35",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E13",
+      "name": "Adjudicate L2 dependencies",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E31",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E19",
+      "name": "Adjudicate L3 dependencies",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E33",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E09",
+      "name": "Adjudicate the L1 KG",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E30",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "http://smart.who.int/base/skill/recommendation-extraction"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E04",
+      "name": "Adjudicate the L1 source list",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E29",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E16",
+      "name": "Review each L2 asset (before / after if adapted)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E32",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_AdjL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E22",
+      "name": "Review each L3 asset (before / after if adapted)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E34",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-ast-delta",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/fhir-questionnaire-wireframe"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_BuildApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E25",
+      "name": "8b · L4: build the consuming application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E26",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l4-application-build",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E11",
+      "name": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E12",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dependency-choice",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E17",
+      "name": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E18",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l3-dependency-choice",
+        "http://smart.who.int/base/skill/ig-artifact-ingestion",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E23",
+      "name": "7 · L4: describe the consuming application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E24",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l4-application-brief",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E01",
+      "name": "0 · Describe the use case",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E02",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/guideline-use-case",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E02",
+      "name": "1 · Identify L1 guidelines and recommendations",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E03",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/dak-l1-library",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IngestKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E06",
+      "name": "2 · Ingest into the L1 KG",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E08",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/recommendation-extraction",
+        "http://smart.who.int/base/skill/dak-l1-library"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E14",
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E37"
+      ],
+      "name": "4 · Create / adapt L2 DAK assets",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E15",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "http://smart.who.int/base/skill/dak-preprocessing",
+        "http://smart.who.int/base/skill/dak-postprocessing",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E36",
+      "name": "6 · Produce L3 assets",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E21",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
+        "http://smart.who.int/base/skill/l2-dak-authoring",
+        "http://smart.who.int/base/skill/smart-base-tools",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E20",
+      "name": "Check L3 readiness",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E38",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/l3-readiness",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab",
+      "incoming": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E24",
+      "name": "8a · L4: wireframe the application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E25",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
+      "touchesWorkPlan": false
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "collab/processes/content",
+  "path": "collab/processes/content/"
+}

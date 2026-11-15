@@ -367,16 +367,16 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
-  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceCommitSha": "c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceTree": "7ac7366db3fb26551e0a610d1c88737daaa6ce86",
+  "sourceCommitAt": "2026-11-15T14:29:41+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 10,
+    "GraphTypology": 11,
     "Role": 13,
-    "Subgraph": 9,
+    "Subgraph": 10,
     "Asset": 2
   },
   "@graph": [
@@ -421,6 +421,13 @@
       "name": "document-kinds",
       "renderable": false,
       "summary": "Document kinds — named structures of sections (fixed or semi-fixed) that a document authored with a harness follows, one `document-kind/1.0.0` JSON each, plus computed `document-kind-coverage/1.0.0` reports of how a subject realises one. Every kind and section names its sources; `computedFrom` names the declared graphs a section derives from."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index",
@@ -652,7 +659,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index"
       ],
-      "description": "The artefact index for smart-trust-phw. fhir-harness's `ig-index:build` writes `index.json`, `menu.json`, `releases.json` and `package.tgz` at publish from the IG's AST; they are not committed. `ig-identity.json` and the README are.",
+      "description": "The artefact index for smart-trust-phw. fhir-harness's `ig-index:build` writes `index.json`, `menu.json`, `releases.json` and `package.tgz` at publish from the IG's AST; they are not committed. Only the README is.",
       "readmePath": "fhir-artifact-index/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-artifact-index"
@@ -775,6 +782,21 @@
       "readmePath": "scenarios/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/scenarios"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-translations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-trust-phw-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/translation-sources"
+      ],
+      "description": "The harness side of this IG's translations. The catalogues themselves stay where smart-base's injector reads them, one per locale per source directory: input/pagecontent/, input/images/ and input/images-source/translations/<locale>.po, from the .pot templates smart-base's extract_translations.py writes beside them (`catalogues` names that pattern). This directory holds what the harness keeps per layer: glossary-sense.json, the adjudicator's sense verdicts for translation:glossary:check. Agent translations are unofficial until a person signs them off; FHIR terms use CodeSystem supplements in input/fsh/translations/<locale>.fsh.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-translations"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/asset/agent-instructions",

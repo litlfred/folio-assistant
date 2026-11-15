@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/kg-extract-dmn/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/kg-extract-dmn.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "kg-extract-dmn",
+      "title": "DMN → L2-DMN knowledge graph"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-dmn/tools/kg-extract-dmn",
+  "path": "L2-dmn/tools/kg-extract-dmn/"
+}

@@ -111,6 +111,23 @@
       }
     },
     {
+      "id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p003",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../figures/vfig-p003.png",
+      "narrative": "draft",
+      "content": "Figure 1: Motivating example comparing Individual Exploration vs Competitive Debate on Django issue 11999. Under Individual Exploration, the agent focuses on django/db/models/base.py:_get_FIELD_display (lines 939-944) attempting runtime fallback display logic (marked \"Wrong place!\"). Under Competitive Debate, the debate identifies and modifies db/models/fields/__init__.py:Field.contribute_to_class (lines 765-767) to check for an existing method before attaching default implementation, exactly matching the Golden Patch (marked \"Correct place!\").",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
       "id": "library/arxiv-2507.23348v1/blocks/prose-sec-003",
       "types": [
         "folio-assistant-core:Prose",
@@ -217,6 +234,23 @@
         },
         "draftedAt": "2026-10-24"
       }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p004",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../figures/vfig-p004.png",
+      "narrative": "draft",
+      "content": "Figure 2: Overview of the SWE-Debate framework showing three interconnected stages: (1) Fault Propagation Traces Proposal, which extracts initial entities from the issue description (e.g., get_foo_bar_display, FooBar, get_FIELD_display) and traverses the static dependency graph along Contain, Inherit, Import, and Invoke edges to generate localization chains 1..N; (2) Multi-Agent Debate, consisting of Round 1 Localization Chain Selection via competitive ranking/voting to choose the Best Chain, Round 2 Modification Plan Proposal & Competitive Refinement where N=5 agents debate alternative strategies, and Round 3 Synthesizing a concrete <plan> via a discriminator; and (3) Patch Generation via Monte Carlo Tree Search (MCTS), where Search, Plan, and Edit actions navigate repository states to produce the final patch.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/arxiv-2507.23348v1/blocks/prose-sec-007",
@@ -516,6 +550,23 @@
       }
     },
     {
+      "id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p008",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../figures/vfig-p008.png",
+      "narrative": "draft",
+      "content": "Figure 3: Impact of Chain Depth on file-level localization accuracy Acc@1(File) evaluated on SWE-Bench-Verified-S (75 instances). Acc@1(File) increases from 70.7% at depth 1, to 72.0% at depth 3, peaking at 86.7% at depth 5, before declining to 82.7% at depth 7 due to extraneous noise in excessively long dependency chains.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
       "id": "library/arxiv-2507.23348v1/blocks/prose-sec-018",
       "types": [
         "folio-assistant-core:Prose",
@@ -622,6 +673,23 @@
         },
         "draftedAt": "2026-10-24"
       }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p009",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../figures/vfig-p009.png",
+      "narrative": "draft",
+      "content": "Figure 4: Case study of SWE-Debate resolving SymPy issue 13974 regarding powers of TensorProduct expressions. Five localization chains are evaluated; Chain 2 correctly identifies physics/quantum/tensorproduct.py. The debate synthesizes a 4-stage modification plan: (1) update tensor_product_simp, (2) update tensor_product_simp_Mul, (3) extend _eval_expand_tensorproduct, and (4) add _eval_power to TensorProduct. The patch diff in sympy/physics/quantum/tensorproduct.py shows adding _eval_power (distributing exponent over args) and handling Pow in tensor_product_simp.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/arxiv-2507.23348v1/blocks/prose-sec-022",

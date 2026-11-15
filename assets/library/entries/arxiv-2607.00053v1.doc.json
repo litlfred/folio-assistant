@@ -384,7 +384,10 @@
       },
       "keywords": [],
       "extract": "SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks Seongho Son 1 Sangwoong Yoon 2 Jiahua Tang 3 Shuhan Wang 1 Lorenz Wolf 1 Ilija Bogunovic 1 4",
-      "extractCut": false
+      "extractCut": false,
+      "blocks": [
+        "library/arxiv-2607.00053v1/blocks/prose-sec-front-matter"
+      ]
     },
     {
       "id": "sec-000-abstract",
@@ -1420,6 +1423,76 @@
         "referenced",
         "in-sequence"
       ]
+    }
+  ],
+  "images": [
+    {
+      "id": "vfig-p002",
+      "file": "figures/vfig-p002.png",
+      "page": 2,
+      "shows": [
+        "1"
+      ],
+      "narratives": {
+        "en": "Figure 1: SWE-Router overview diagram. The left panel shows Conventional LLM Routing, where task prompt q is classified by router r_hat(q) to weak m1 or strong m2, facing high Bayes error due to lack of trajectory context. The right panel shows SWE-Router: weak model m1 executes K exploration steps; value head r_hat(T_<=K) evaluates partial trajectory to predict m1 success, continuing with m1 if high or escalating to strong m2 restarted from q if low."
+      },
+      "state": "draft"
+    },
+    {
+      "id": "vfig-p004",
+      "file": "figures/vfig-p004.png",
+      "page": 4,
+      "shows": [
+        "2"
+      ],
+      "narratives": {
+        "en": "Figure 2: Cost-vs.-resolved routing curves on held-out SWE-Bench Verified across two (weak, strong) model pairs. SWE-Router (K=3, green) sits above the random-assignment gray band and prompt-only embedding baselines across the cost spectrum, achieving a Pareto frontier that retains the majority of frontier model performance at a fraction of inference cost."
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 24,
+      "note": "inferred"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 24,
+      "note": "2 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 2
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted",
+      "note": "2 captioned in the text"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p5); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "partial",
+      "count": 22,
+      "note": "22 of 24 sections"
     }
   ],
   "links": {

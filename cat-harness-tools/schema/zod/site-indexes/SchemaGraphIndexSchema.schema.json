@@ -106,6 +106,13 @@
                   "interface",
                   "type-alias",
                   "json-schema",
+                  "fhir-logical",
+                  "fhir-profile",
+                  "owl-class",
+                  "rdfs-class",
+                  "rdf-property-set",
+                  "moddle-class",
+                  "moddle-enum",
                   "undetermined"
                 ]
               },
@@ -131,6 +138,24 @@
                     },
                     "array": {
                       "type": "boolean"
+                    },
+                    "card": {
+                      "type": "string"
+                    },
+                    "utype": {
+                      "type": "string"
+                    },
+                    "constraint": {
+                      "type": "string"
+                    },
+                    "links": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
                     },
                     "doc": {
                       "type": "string"
@@ -174,6 +199,24 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "zod",
+                  "typescript",
+                  "json-schema",
+                  "fhir",
+                  "fhir:profile",
+                  "skill",
+                  "owl",
+                  "rdfs",
+                  "rdf",
+                  "moddle"
+                ]
+              },
+              "canonical": {
+                "type": "string"
               },
               "exported": {
                 "type": "boolean"
@@ -234,6 +277,12 @@
               "array"
             ],
             "additionalProperties": false
+          }
+        },
+        "unread": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         },
         "nodeKinds": {

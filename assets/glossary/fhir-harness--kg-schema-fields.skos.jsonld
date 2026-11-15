@@ -660,6 +660,215 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.coredefinitionschema.derivation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoreDefinitionSchema.derivation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent on a root type: `Element` and `Resource` in R4/R4B, `Base` in R5."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.derivation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.coredefinitionschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoreDefinitionSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The materialised file, relative to the release directory."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.coredefinitionschema.sha256",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoreDefinitionSchema.sha256"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha256 of the file's bytes, which are the package's bytes."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.sha256",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.coredefinitionschema.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoreDefinitionSchema.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The SD's own `version`, which is the release's FHIR version."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.countsschema.excluded",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CountsSchema.excluded"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "StructureDefinitions in the package the selection left out (profiles, extensions, logical models)."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CountsSchema.excluded",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepackageschema.tarball",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCorePackageSchema.tarball"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "packages.fhir.org's URL for the exact version."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.tarball",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepinsobject.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCorePinsObject.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a reviewer needs to re-check the pins by hand."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePinsObject.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.counts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreReleaseObject.counts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`read` only."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.counts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.definitions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreReleaseObject.definitions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`read` only, and never empty. An `unread` release has NO `definitions`: unread is not empty."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.definitions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreReleaseObject.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`unread` only: why the package could not be read."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.selection",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreReleaseObject.selection"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The rule {@link isCoreDefinition} applies, in words."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.selection",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-annexes.igannexrecordschema.columns",
       "@type": "skos:Concept",
       "skos:inScheme": {

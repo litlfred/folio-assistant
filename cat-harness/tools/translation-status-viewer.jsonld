@@ -367,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "translation-status-viewer",
       "title": "Translation status viewer",
-      "description": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+      "description": "Render the translation status of every declared translation-sources directory, per locale, as one page, and beside it the review page (`review.html`, with `assets/translation-status/review.json`) a reviewer adjudicates on.",
       "install": {
         "none": true
       },
@@ -410,7 +410,8 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication"
       ]
     }
   ]

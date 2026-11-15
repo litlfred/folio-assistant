@@ -138,6 +138,23 @@
       }
     },
     {
+      "id": "library/arxiv-2607.00053v1/blocks/figure-vfig-p002",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../figures/vfig-p002.png",
+      "narrative": "draft",
+      "content": "Figure 1: SWE-Router overview diagram. The left panel shows Conventional LLM Routing, where task prompt q is classified by router r_hat(q) to weak m1 or strong m2, facing high Bayes error due to lack of trajectory context. The right panel shows SWE-Router: weak model m1 executes K exploration steps; value head r_hat(T_<=K) evaluates partial trajectory to predict m1 success, continuing with m1 if high or escalating to strong m2 restarted from q if low.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
       "id": "library/arxiv-2607.00053v1/blocks/prose-sec-004",
       "types": [
         "folio-assistant-core:Prose",
@@ -344,6 +361,23 @@
         },
         "draftedAt": "2026-10-26"
       }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/figure-vfig-p004",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../figures/vfig-p004.png",
+      "narrative": "draft",
+      "content": "Figure 2: Cost-vs.-resolved routing curves on held-out SWE-Bench Verified across two (weak, strong) model pairs. SWE-Router (K=3, green) sits above the random-assignment gray band and prompt-only embedding baselines across the cost spectrum, achieving a Pareto frontier that retains the majority of frontier model performance at a fraction of inference cost.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/arxiv-2607.00053v1/blocks/prose-sec-012",

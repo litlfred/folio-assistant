@@ -1,7 +1,7 @@
 {
   "$schema": "folio-library-document/v1",
   "id": "10665-218508",
-  "title": "VACCINATION CERTIFICATE REQUIREMENTS FOR INTERNATIONAL TRAVEL = CERTIFICATS DE VACCINATION EXIGÉS_x000D_DANS LES VOYACES INTERNATIONAUX",
+  "title": "VACCINATION CERTIFICATE REQUIREMENTS FOR INTERNATIONAL TRAVEL = CERTIFICATS DE VACCINATION EXIGÉS DANS LES VOYACES INTERNATIONAUX",
   "variant": "pdf",
   "pages": 1,
   "tocSource": "undetermined",
@@ -41,7 +41,10 @@
         }
       ],
       "extract": "VACCINATION CERTIFICATE REQUIREMENTS FOR INTERNATIONAL TRAVEL Amenameits to 1971 publuauon CERTIFICATS DE VACCINATION EXIGÉS DANS LES VOYACES INTERNATIONAUX Amaideoums a lu pubticunon de Greece Grece Insert — Insérer Choiera. — Certificate required from all arrivals from Spam * Cholera. — Certificat exigé de tous les voyageurs venant d’Espagne * Ireland Irlande Insert Choiera. ® Insérer Choiera Saudi Arabia Arabie",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/10665-218508/blocks/prose-page-001"
+      ]
     }
   ],
   "checks": {
@@ -79,6 +82,47 @@
     }
   ],
   "figures": [],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 1,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 1,
+      "note": "1 of 1 sections"
+    }
+  ],
   "links": {
     "repo": "litlfred/who-iris",
     "branch": "main",

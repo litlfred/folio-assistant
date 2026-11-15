@@ -5651,7 +5651,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_20",
-      "name": "Announce the hand-over or the lapse",
+      "name": "Announce the hand-over",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_21",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
@@ -6379,12 +6379,12 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/merge-request.svg",
-      "description": "The sibling's side of merging. A coding agent whose work depends on an unmerged PR stacks on it rather than waiting, and retargets when it lands. With a PR ready to merge it does not know whether a merge manager exists, so it checks: if one is active and live, it sends the six-line merge request; if none is, it measures whether one is needed, and either runs the merge manager loop for its own PRs or elects one with its siblings by the fixed rule, the winner announcing itself to all and taking the lane. Any agent may stall, the merge manager included: a request not acknowledged within the stall window sends the sibling to stalled-agent triage and a re-election without the stalled session. The merge manager's own loop is Process_MergeManagerWatch. Source: owner rulings, 2026-11-07.",
+      "description": "The sibling's side of merging. A coding agent whose work depends on an unmerged PR stacks on it rather than waiting, and retargets when it lands. With a PR ready to merge it does not know whether a merge manager exists, so it checks: if one is active and live, it sends the six-line merge request; if none is, it elects one with its siblings by the fixed rule (a lone session is elected alone), the winner announcing itself to all and taking the lane. Only the merge manager merges and re-pins (owner rulings, 2026-11-13): no other session merges, and a PR green except for a re-pin is sent as repin+merge. Any agent may stall, the merge manager included: a request not acknowledged within the stall window sends the sibling to stalled-agent triage and a re-election without the stalled session. The merge manager's own loop is Process_MergeManagerWatch. Source: owner rulings, 2026-11-07 and 2026-11-13.",
       "enforcement": "strict",
-      "flowCount": 20,
+      "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "name": "Merge request: find or elect the merge manager",
-      "nodeCount": 18,
+      "nodeCount": 15,
       "sourcePath": "sdlc/processes/merge-request.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/merge-request.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Start",
@@ -6439,14 +6439,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndHolds"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S15",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndSelf"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S16",
@@ -6506,25 +6498,7 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "name": "No",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwNeeded"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S4",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwNeeded",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "name": "Yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Elect"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S5",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwNeeded",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "name": "No",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S6",
@@ -6623,7 +6597,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S4",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S3",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S12"
       ],
       "name": "Elect the merge manager with the siblings",
@@ -6657,20 +6631,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S10",
       "name": "With the merge manager",
-      "nodeKind": "end",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndSelf",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:EndEvent",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S15",
-      "name": "Own PRs landed",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
@@ -6735,25 +6695,6 @@
       "touchesWorkPlan": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwNeeded",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S3",
-      "name": "Merge manager needed?",
-      "nodeKind": "exclusive",
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S4",
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S5"
-      ],
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
-      "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
-      "touchesWorkPlan": false
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwWon",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
@@ -6805,22 +6746,6 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
-      "touchesWorkPlan": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:CallActivity",
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S5",
-      "name": "Merge manager for its own PRs",
-      "nodeKind": "activity",
-      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S15",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
-      "relaxable": true,
       "touchesWorkPlan": false
     },
     {

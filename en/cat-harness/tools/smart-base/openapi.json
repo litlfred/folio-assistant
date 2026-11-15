@@ -45,6 +45,84 @@
     }
   ],
   "paths": {
+    "/tools/bpmn-graphviz-layout": {
+      "post": {
+        "operationId": "bpmn-graphviz-layout",
+        "summary": "BPMN → Diagram Interchange, laid out by Graphviz",
+        "description": "Lay out a BPMN that carries no Diagram Interchange (`bpmn_to_svg.py` beside this file, moved from `.github/skills/bpmn_layout/` by bean folio-assistant-tgaj): one Graphviz cluster per participant, the coordinates written back into the BPMN as `<bpmndi:BPMNDiagram>`, and Graphviz's own SVG. cat-harness-tools' `render:bpmn` draws only the DI a file already has (bpmn-js does not lay out), so this is the step before it for a DAK process written, or imported, without one.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "bpmn-graphviz-layout/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A BPMN 2.0 file, with or without DI."
+                  }
+                },
+                "required": [
+                  "bpmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bpmn": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The BPMN with a Graphviz-placed `<bpmndi:BPMNDiagram>` (`--bpmn`)."
+                    },
+                    "svg": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "Graphviz's drawing (`--svg`); not bpmn-js's, so not the published picture."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/bpmn-graphviz-layout.jsonld",
+        "x-invoke": {
+          "shell": "python3 smart-base/L2-bpmn/tools/bpmn-graphviz-layout/bpmn_to_svg.py <file.bpmn> [--bpmn <out.bpmn>] [--svg <out.svg>] [--dot <out.dot>]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3",
+            "graphviz"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A BPMN has no Diagram Interchange, so `render:bpmn` would draw it blank, and a first layout is wanted before an author tidies it (`bpmn:detangle`).",
+          "limits": "A first layout, not the finished one: it does not meet `bpmn-authoring`'s readability rules (fixed task size, label placement, lane order); run `bun run cat bpmn:detangle --write` and look at `render:bpmn`'s picture after it. It parses with the standard library's ElementTree, so it is for files an author holds, not untrusted input.",
+          "cost": "Seconds; needs Graphviz `dot` on the PATH."
+        }
+      }
+    },
     "/tools/bpmn-to-fsh": {
       "post": {
         "operationId": "bpmn-to-fsh",
@@ -114,6 +192,84 @@
           "when": "An L2 business process is to reach L3 as a computable artefact, not only a picture.",
           "limits": "Requires a `smart-base` checkout at `SMART_BASE_HOME`; without one the capability is ABSENT, not a clean run.",
           "cost": "Seconds, plus the upstream checkout."
+        }
+      }
+    },
+    "/tools/bpmn-validate": {
+      "post": {
+        "operationId": "bpmn-validate",
+        "summary": "BPMN structure, vendor namespaces and lane → actor",
+        "description": "Check a DAK's BPMN (`validate.ts` beside this file; bean folio-assistant-tgaj, which replaced four Python validators with it): well-formed XML whose root is `<bpmn:definitions>`, no Camunda or Zeebe namespace, no duplicate id, at least one process, no bpmn-moddle (bpmn-js) import warning; every process has a `<laneSet>`, every flow node sits in a lane, and lane ids are unique and valid FSH ids; and every innermost lane names its actor by id: its `partitionElementRef` (a top-level `<bpmn:resource>`), else its own id, matched exactly against the `Instance:` ids of the ActorDefinitions in the IG's FSH (or JSON) and, for a harness process, the role ids of the mounted layers' `scenarios/roles.json`. Never by file name or title. With no file named it reads the declared process directories, `smart-base/**/processes/` and an IG's `input/bpmn/`.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "bpmn-validate/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .bpmn files to check; when absent, every .bpmn under the declared process directories (or, with `--changed <ref>`, those the branch changed)."
+                  },
+                  "fsh": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Directories of ActorDefinition FSH or JSON; default `input/fsh` and `input/resources`."
+                  },
+                  "roles": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`scenarios/roles.json` files whose role ids a harness lane may bind; default those of smart-base and the mounted cat-harness, fhir-harness and folio-assistant-core."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "One `✗` line per error and `!` per warning, then a count. Exit 0 no error, 1 an error, 2 nothing to check (not a pass). `--json` prints the findings as data."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/bpmn-validate.jsonld",
+        "x-invoke": {
+          "shell": "bun run smart-base/L2-bpmn/tools/bpmn-validate/validate.ts [file.bpmn ...] [--root <repo>] [--fsh <dir>]... [--roles <roles.json>]... [--changed <git ref>] [--json] [--verbose]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DAK's business process (L2, BPMN) is added or edited, before review (skill `l2-component-edit-review`, the BPMN row's checker), and on every pull request that changes a `.bpmn`.",
+          "limits": "An ActorDefinition a dependency IG declares is found only when its FSH or JSON directory is passed with `--fsh`. Reads lanes, not pools: a participant whose process has no lanes is reported as a process with no laneSet. A lane bound to a harness role is accepted here; whether that role is equipped is cat-harness's `role-model` check (`kg:audit`). A published DAK whose processes are still Visio figures is crosswalked against its personas by `smart-base/scripts/dak-swimlanes.ts` (always on, beside the `web-annex` kind's `dak-swimlanes/v1` validator), not by this Tool. It does not draw the diagram (`render:bpmn` does) or check DI completeness.",
+          "cost": "Seconds, no network."
         }
       }
     },
@@ -593,6 +749,382 @@
         }
       }
     },
+    "/tools/kg-extract-bpmn": {
+      "post": {
+        "operationId": "kg-extract-bpmn",
+        "summary": "BPMN → L2-BPMN knowledge graph",
+        "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "kg-extract-bpmn/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .bpmn file to read."
+                  },
+                  "personas": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A directory of ActorDefinition FSH; a pool's @name is matched against their titles. When absent, every pool -> persona join is recorded unresolved."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "bpmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L2-BPMN graph document (nodes, edges, provenance)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-bpmn.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-bpmn/schemas/extract-bpmn.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A BPMN file's interior is to be read into the knowledge graph as the L2-BPMN subgraph, with its pool -> persona joins recorded and their resolution status made queryable.",
+          "limits": "Parses the OMG BPMN serialisation with regular expressions, as smart-kg did; it reads tasks, sub-processes, exclusive gateways, start/end events, sequence and message flows, and does not interpret diagram layout. A pool -> persona match is exact string equality on a display title, so it does not survive a rename.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-citations": {
+      "post": {
+        "operationId": "kg-extract-citations",
+        "summary": "DMN reference column → L1 citations",
+        "description": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "kg-extract-citations/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .dmn file to read."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; also echoed to stdout when absent."
+                  }
+                },
+                "required": [
+                  "dmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The citation graph document (an L2 document: the table as an external artefact and its L1 citation nodes), plus a coverage report on stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-citations.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-citations.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DMN decision table carries an L1 reference column and its citations are to be turned into graph nodes, with coverage counted rather than assumed.",
+          "limits": "Copies each reference string verbatim and never resolves it to a publication — resolution is a judgement the schema requires evidence for. '[Add appropriate reference]' is recorded as a placeholder, which coverage counts apart from a blank. The reference column is found by its description.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-dak": {
+      "post": {
+        "operationId": "kg-extract-dak",
+        "summary": "dak.json + FSH tree → L2 DAK component graph",
+        "description": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor).",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "kg-extract-dak/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dak": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The dak.json with the kit's metadata (canonicalUrl, title, version)."
+                  },
+                  "fsh": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The FSH instance tree (e.g. `input/fsh`)."
+                  },
+                  "bpmnDir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A BPMN directory; its files are listed as business-process orphans when no component declares them."
+                  },
+                  "dmnDir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A DMN directory; its files are listed as decision-logic orphans when no component declares them."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "dak",
+                  "fsh"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L2 DAK component graph document, with coverage across all nine components on stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-dak.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2/schemas/extract-dak.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DAK's component layer is to be read into the knowledge graph from dak.json and the committed FSH instances, with the gaps (components with no instance, files no component declares) made visible.",
+          "limits": "Reads the FSH instance tree, not the DAK spreadsheets; it covers personas and requirements, the components the estate commits as instances. Kit membership is inferred from presence in the input tree, since dak.json declares no component arrays. The `fulfilledBy` join resolves by canonical reference and does not depend on a display title.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-dmn": {
+      "post": {
+        "operationId": "kg-extract-dmn",
+        "summary": "DMN → L2-DMN knowledge graph",
+        "description": "Extract the interior of one DMN decision table as the L2-DMN subgraph (`smart-base/L2-dmn/schemas/extract-dmn.ts`, ported from WHO smart-kg `tools/extract-dmn.mjs`): a `dmn-definitions` node and its decisions, decision tables, input and output clauses and rules, the `reads` edges to the data elements recovered from input expressions, the `citesSource` edges to the L1 citations each rule's reference column names, and the `invokedBy` edge to the BPMN task the `usingTask` href names. Pass `--bpmn` to resolve that task by name instead of recording it unresolved.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "kg-extract-dmn/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The .dmn file to read."
+                  },
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A BPMN file; the `usingTask` href fragment is matched against its task @name to resolve `invokedBy`."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "dmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L2-DMN graph document. Its `citesSource` edges reach L1 citations minted by kg-extract-citations from the same strings."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-dmn.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-dmn.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DMN decision table's interior is to be read into the knowledge graph as the L2-DMN subgraph, joining its rules to the L1 sources they cite and to the BPMN task that invokes the decision.",
+          "limits": "Parses the DMN serialisation with regular expressions, as smart-kg did. A data element recovered from an input expression carries only the name that was referenced, never a definition, and is left unresolved. The reference column is found by its description, and the outputEntry/annotationEntry split is read from the first rule.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
+    "/tools/kg-extract-l3": {
+      "post": {
+        "operationId": "kg-extract-l3",
+        "summary": "FHIR IG → L3 knowledge graph",
+        "description": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "kg-extract-l3/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ig": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG root (holds `sushi-config.yaml` and `input/`)."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the graph document goes; stdout when absent."
+                  }
+                },
+                "required": [
+                  "ig"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The L3 graph document; each node carries the SHA-256 of the file it came from."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/kg-extract-l3.jsonld",
+        "x-invoke": {
+          "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L3/schemas/extract-l3.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A built or source IG's FHIR artefacts are to be indexed as the L3 subgraph and tied back to the L2 components and L1 recommendations they implement.",
+          "limits": "Reads the FSH/FML/JSON source, not a built package; the L2 joins are the SOP's Title-and-id conventions (no back-pointer extension exists), so they are recorded unresolved with the rule that matched them. Only artefact types with committed instances are modelled; ExampleScenario, TestPlan and TestScript are reported absent.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
     "/tools/l1-extraction-pages": {
       "post": {
         "operationId": "l1-extraction-pages",
@@ -675,7 +1207,7 @@
       "post": {
         "operationId": "l1-recommendation-candidates",
         "summary": "L1 guideline → recommendation candidates (L1 3.0)",
-        "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `kg/src/validate.ts`) with coverage and proposed, unsigned exclusions.",
+        "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `L1/schemas/validate.ts`) with coverage and proposed, unsigned exclusions.",
         "tags": [
           "recommendation-candidates"
         ],
@@ -743,7 +1275,7 @@
         },
         "x-tool-iri": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
         "x-invoke": {
-          "shell": "bun run smart-base/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
+          "shell": "bun run smart-base/L1/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
         },
         "x-install": {
           "none": true
@@ -1007,7 +1539,7 @@
         },
         "x-tool-iri": "http://smart.who.int/base/tools/l1-transcription-verbatim.jsonld",
         "x-invoke": {
-          "shell": "bun run smart-base/scripts/l1-transcription-verbatim.ts --dir <dir of *.l1.yaml> [--root <repo>]"
+          "shell": "bun run smart-base/L1/scripts/l1-transcription-verbatim.ts --dir <dir of *.l1.yaml> [--root <repo>]"
         },
         "x-install": {
           "none": true
@@ -1259,7 +1791,7 @@
                   "properties": {
                     "result": {
                       "$ref": "#/components/schemas/RepoPath",
-                      "description": "Result JSON conforming to `schemas/skills/classify-and-code-content/output.schema.json`."
+                      "description": "Result JSON conforming to `L1/schemas/skills/classify-and-code-content/output.schema.json`."
                     }
                   }
                 }

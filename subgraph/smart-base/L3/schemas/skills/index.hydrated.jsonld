@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/skills/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/skills/l3-dependency-choice/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L3/schemas/skills/l3-dependency-choice",
+      "path": "L3/schemas/skills/l3-dependency-choice/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/skills/l3-readiness/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L3/schemas/skills/l3-readiness",
+      "path": "L3/schemas/skills/l3-readiness/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L3/schemas/skills",
+  "path": "L3/schemas/skills/"
+}

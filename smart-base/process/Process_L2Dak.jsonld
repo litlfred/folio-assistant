@@ -11,15 +11,15 @@
       "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. Each of the six authoring tracks calls l2-component-edit-review.bpmn (Process_L2ComponentEditReview): the agent edits, checks, renders and stages the component and hands it on, while a person in the component's reviewing role reviews it alongside, never as a gate. Each track's renderer, checker and reviewer are tabled in the skill l2-component-edit-review.",
       "enforcement": "advisory",
-      "sourcePath": "processes/content/l2-dak-authoring.bpmn",
-      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
+      "sourcePath": "L2/collab/processes/l2-dak-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L2/collab/processes/l2-dak-authoring.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
       "startNode": [
         "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline"
       ],
       "nodeCount": 25,
       "flowCount": 30,
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B01",
@@ -27,7 +27,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_ScopeDak",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B02",
@@ -35,7 +35,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_ScopeDak",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
@@ -43,7 +43,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
@@ -51,7 +51,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B03",
@@ -59,7 +59,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B04",
@@ -67,7 +67,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B05",
@@ -75,7 +75,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Personas",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B06",
@@ -83,7 +83,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Bpmn",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B08",
@@ -91,7 +91,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_DataDict",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B09",
@@ -99,7 +99,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Indicators",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B10",
@@ -107,7 +107,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Terminology",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B07",
@@ -115,7 +115,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Dmn",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B11",
@@ -123,7 +123,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Personas",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B12",
@@ -131,7 +131,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Bpmn",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B14",
@@ -139,7 +139,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_DataDict",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B15",
@@ -147,7 +147,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Indicators",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B16",
@@ -155,7 +155,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Terminology",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B13",
@@ -163,7 +163,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Dmn",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B17",
@@ -171,7 +171,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_ReviewFork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B23",
@@ -179,7 +179,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SmeValidate",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B24",
@@ -187,7 +187,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_AssembleDak",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B18",
@@ -195,7 +195,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SmeValidate",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B19",
@@ -204,7 +204,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B20",
@@ -213,7 +213,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B21",
@@ -221,7 +221,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_AssembleDak",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
@@ -230,7 +230,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2",
@@ -238,7 +238,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3",
@@ -247,7 +247,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/End_BeanNotYours",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4",
@@ -255,7 +255,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5",
@@ -263,7 +263,7 @@
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     }
   ]
 }

@@ -511,12 +511,7 @@
               "bun"
             ]
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
-            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
-            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
-            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status"
-          ],
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
           "title": "Verify Data Sharing Agreement hash, citation, and vocabulary terms"
         }
       ],
@@ -792,94 +787,6 @@
       ],
       "name": "tools/folio-block-qa-summary",
       "path": "tools/folio-block-qa-summary/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-block-screenshots/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-block-screenshots.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Drives Chromium through Playwright.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat block:screenshots"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--changeset"
-                },
-                "description": "The preview's `changeset.json`: which blocks changed, and their kind on each side.",
-                "name": "changeset",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--base"
-                },
-                "description": "The published main site, as a directory (the publish branch's root).",
-                "name": "base",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--head"
-                },
-                "description": "The staging build's site directory.",
-                "name": "head",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--out"
-                },
-                "description": "Where to write `visual-diff.json` and `visual/`: the site root, so the review page finds them.",
-                "name": "out",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--count"
-                },
-                "description": "Print how many changed blocks would be pictured, and stop, so a caller installs a browser only when there is work.",
-                "name": "count",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "`<out>/visual-diff.json` and `<out>/visual/*.png`. A per-block summary goes to stderr.",
-                "name": "visual-diff",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              }
-            ]
-          },
-          "name": "folio-block-screenshots",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bun",
-              "chromium"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
-          "title": "Folio block screenshots"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/folio-block-screenshots",
-      "path": "tools/folio-block-screenshots/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-changeset/",
@@ -1576,7 +1483,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-table.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
+          "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes; acronyms (notation and prefLabel); or element types, the placeholder types an ArchiMate metamodel view shows, with each term's definition and skos:example. The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
           "install": {
             "none": true
           },
@@ -1636,7 +1543,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
+          "description": "Of the normative sentences in a publication (the closed marker list of the methodology `l1-coverage` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
           "install": {
             "none": true
           },

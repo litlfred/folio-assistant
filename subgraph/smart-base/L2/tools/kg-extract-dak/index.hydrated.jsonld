@@ -1,0 +1,83 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/kg-extract-dak/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/kg-extract-dak.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2/schemas/extract-dak.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--dak"
+            },
+            "description": "The dak.json with the kit's metadata (canonicalUrl, title, version).",
+            "name": "dak",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--fsh"
+            },
+            "description": "The FSH instance tree (e.g. `input/fsh`).",
+            "name": "fsh",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--bpmn-dir"
+            },
+            "description": "A BPMN directory; its files are listed as business-process orphans when no component declares them.",
+            "name": "bpmnDir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--dmn-dir"
+            },
+            "description": "A DMN directory; its files are listed as decision-logic orphans when no component declares them.",
+            "name": "dmnDir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where the graph document goes; stdout when absent.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The L2 DAK component graph document, with coverage across all nine components on stderr.",
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "kg-extract-dak",
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "dak.json + FSH tree → L2 DAK component graph"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2/tools/kg-extract-dak",
+  "path": "L2/tools/kg-extract-dak/"
+}

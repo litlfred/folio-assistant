@@ -29,6 +29,9 @@
       "name": "bootstrap-graph-publication"
     },
     {
+      "name": "cache-first-ci"
+    },
+    {
       "name": "ci-health"
     },
     {
@@ -113,6 +116,12 @@
       "name": "kg-subgraph-layout"
     },
     {
+      "name": "kg-to-portal"
+    },
+    {
+      "name": "kg-viewer"
+    },
+    {
       "name": "library-ingestion"
     },
     {
@@ -158,16 +167,19 @@
       "name": "process-state"
     },
     {
+      "name": "publish-verification"
+    },
+    {
       "name": "qa-reports"
+    },
+    {
+      "name": "ref-stewardship"
     },
     {
       "name": "remote-mount"
     },
     {
       "name": "render-kg-to-cdn"
-    },
-    {
-      "name": "render-kg-to-github-pages"
     },
     {
       "name": "render-logging"
@@ -200,7 +212,16 @@
       "name": "task-authorization"
     },
     {
+      "name": "test-engineer"
+    },
+    {
       "name": "todo-manager"
+    },
+    {
+      "name": "translation-adjudication"
+    },
+    {
+      "name": "translation-candidate-source"
     },
     {
       "name": "translation-manager"
@@ -1813,7 +1834,7 @@
         "summary": "Publish bootstrap-tools' site",
         "description": "Dispatch bootstrap-tools' `pages.yml`: stage the README site and graph with `scripts/site.ts` and commit them onto `gh-pages`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "render-kg-to-github-pages"
+          "kg-to-portal"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -1872,7 +1893,7 @@
           "network": true
         },
         "x-satisfies": [
-          "render-kg-to-github-pages"
+          "kg-to-portal"
         ],
         "x-selection": {
           "when": "Running the `pages.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -1963,8 +1984,7 @@
         "summary": "Build and publish the platform docs site",
         "description": "Dispatch the index's `docs-site.yml`: security gate, regenerate, compose each layer's site, build, export the graph, verify, restore previews, publish to gh-pages, judge the built site. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "render-kg-to-cdn",
-          "docs-generation"
+          "render-kg-to-cdn"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2023,8 +2043,7 @@
           "network": true
         },
         "x-satisfies": [
-          "render-kg-to-cdn",
-          "docs-generation"
+          "render-kg-to-cdn"
         ],
         "x-selection": {
           "when": "Running the `docs-site.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -2413,7 +2432,7 @@
         "summary": "Run a layer's PR checks",
         "description": "Dispatch the layer's `harness-pr-checks.yml`, which calls the tools layer's reusable `layer-pr-checks.yml` (mount the pinned layers, run every gate of the layer's dependency harness, compare head against base) and, on main, `layer-main-qa.yml`. The workflow is the Tool: its helper scripts (run-gates, compare-gates, main-verdict, …) are its steps. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "platform-gates"
+          "cache-first-ci"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2472,7 +2491,7 @@
           "network": true
         },
         "x-satisfies": [
-          "platform-gates"
+          "cache-first-ci"
         ],
         "x-selection": {
           "when": "Running the `harness-pr-checks.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -2487,7 +2506,7 @@
         "summary": "Run the tools layer's own test suite",
         "description": "Dispatch the tools layer's `pr-tests.yml`: the unit and standalone tests, sharded, with the failures compared against main's. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "platform-gates"
+          "test-engineer"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2546,7 +2565,7 @@
           "network": true
         },
         "x-satisfies": [
-          "platform-gates"
+          "test-engineer"
         ],
         "x-selection": {
           "when": "Running the `pr-tests.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -2783,7 +2802,7 @@
         "summary": "Publish staged previews",
         "description": "Dispatch the index's `staging-publish.yml`: push the previews staged by feature-staging runs to gh-pages. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "feature-staging"
+          "ref-stewardship"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2842,7 +2861,7 @@
           "network": true
         },
         "x-satisfies": [
-          "feature-staging"
+          "ref-stewardship"
         ],
         "x-selection": {
           "when": "Running the `staging-publish.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -2857,7 +2876,7 @@
         "summary": "Run a layer's standing re-pin",
         "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "upstream-version-adoption"
+          "remote-mount"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2916,7 +2935,7 @@
           "network": true
         },
         "x-satisfies": [
-          "upstream-version-adoption"
+          "remote-mount"
         ],
         "x-selection": {
           "when": "Running the `standing-repin.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -2931,8 +2950,7 @@
         "summary": "Run the 15-minute sweeps",
         "description": "Dispatch the index's `sweeps.yml`: ask each sweep (staging publish, preview verify, re-pin train verdict, cache report) whether there is work, and start the workflow concerned only when there is. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
-          "feature-staging",
-          "upstream-version-adoption"
+          "publish-verification"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -2991,8 +3009,7 @@
           "network": true
         },
         "x-satisfies": [
-          "feature-staging",
-          "upstream-version-adoption"
+          "publish-verification"
         ],
         "x-selection": {
           "when": "Running the `sweeps.yml` workflow on demand instead of waiting for its trigger, or finding which workflow a CI step belongs to.",
@@ -4562,6 +4579,75 @@
           "when": "The CDN target is GitHub Pages: this repository's docs site and its review previews, and every layer whose declaration names a GitHub `repository`.",
           "limits": "GitHub only. Pages cannot serve server-side redirects or custom headers, and a full-replace push to the `gh-pages` branch deletes what the build did not produce unless the caller restores it first (`docs-site-publish`). Another CDN is another Tool satisfying `render-kg-to-cdn`.",
           "cost": "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served."
+        }
+      }
+    },
+    "/tools/github": {
+      "post": {
+        "operationId": "github",
+        "summary": "GitHub (issues, Actions, pull requests)",
+        "description": "GitHub as a Tool: the forge that carries an adjudication as an issue, runs the workflow that records it on Actions, and holds the record as a pull request for a maintainer to merge. One forge among possible others; the process names the skill, never GitHub.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "github/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository holding the catalogues. Default: the current one."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The issue, workflow run or pull request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github.jsonld",
+        "x-invoke": {
+          "shell": "gh",
+          "manual": true
+        },
+        "x-install": {
+          "cli": "gh (optional; the web interface needs nothing)",
+          "service": "github.com"
+        },
+        "x-requires": {
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-adjudication"
+        ],
+        "x-selection": {
+          "when": "The layer's repository is on GitHub: the review page files issues there, and its caller workflow runs on Actions.",
+          "limits": "GitHub only. Identity is GitHub's `author_association`, so a reviewer must be an owner, member or collaborator of the repository. A PR opened with the workflow's token starts no other workflows. Another forge carrying the same `translation-adjudication/v1` record would be another Tool satisfying `translation-adjudication`.",
+          "cost": "Free for a public repository: issues, pull requests and the Actions minutes of one short job per adjudication."
         }
       }
     },
@@ -7560,6 +7646,95 @@
         ]
       }
     },
+    "/tools/merge-guard": {
+      "post": {
+        "operationId": "merge-guard",
+        "summary": "Judge whether a pull request may land",
+        "description": "The enforced merge guard: asks GitHub's live facts about one pull request whether it is finished (its checks, its tier, the session that marked it ready) before it reaches its base, and lands it only when every check passes. With `--status` it posts the verdict as the `merge-guard` commit status on the head, which is what the layer's merge-guard workflow does.",
+        "tags": [
+          "ci-health"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "merge-guard/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pr": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "The pull request number."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository holding the pull request. Default: the checkout's own."
+                  },
+                  "merge": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Land the pull request, only if every check passes. Needs `--session`."
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Post the verdict as the `merge-guard` commit status on the head."
+                  },
+                  "full_tier": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Require the full (release) tier of checks, not the fast tier a draft runs."
+                  }
+                },
+                "required": [
+                  "pr"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "Each check with its verdict; exit 0 when the pull request may land."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-guard.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat merge:guard"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ci-health"
+        ],
+        "x-selection": {
+          "when": "Before a pull request lands on its base, by the merge manager or a steward, and on every pull request event through the merge-guard workflow.",
+          "limits": "Reads GitHub's live facts about one pull request; it judges no declared graph.",
+          "cost": "A few GitHub REST calls."
+        }
+      }
+    },
     "/tools/merge-leftover": {
       "post": {
         "operationId": "merge-leftover",
@@ -8156,6 +8331,88 @@
         "x-satisfies": [
           "graph-rendering"
         ]
+      }
+    },
+    "/tools/node-view-coverage": {
+      "post": {
+        "operationId": "node-view-coverage",
+        "summary": "Does every node have an IRI, a .jsonld, a page and a row?",
+        "description": "For each node a declared directory holds, per layer × folder × kind: whether it has an IRI in its layer's export (extensionless), its JSON-LD at `<iri>.jsonld` (and `.json` where its source is JSON), a view page at `<locale>/<harness>/<vis>/<instance>/<id>/`, and a row on its folder page that links to it; plus the folder page's dead links and raw-repository links, and whether a viewer is declared. Folder pages are read with their data files, so rows drawn by JavaScript count. Writes `node-view-coverage/v1`, one file per layer, under `test/results/node-views/`.",
+        "tags": [
+          "kg-viewer"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "node-view-coverage/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`--site <dir>`: a built site (`_site`, or a preview's `branches/<slug>/`). With `--site-url`, the URL that directory is served at."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "`--base <url>`: a live site to probe instead of a directory. Optional; one of `site` or `base` is needed, or pages, rows and links are unknown."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "`--check` (`node-views:judge`): write nothing and judge. Exit 0 when no finding is new, 1 when one is new against the baseline, 2 when the run could not ask (JUDGEMENT_EXIT)."
+                  },
+                  "against": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "`--against <ref>`: the `qa-reports` entry to judge against (`main`, `main/<sha>`, `pr/<n>/<sha>`). Absent, the working copy; a missing baseline is UNKNOWN and not gated."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<layer qa home>/node-views/<layer>.node-views.qa.json` (`node-view-coverage/v1`), and a Markdown summary table on stdout. Always exit 0: reports, never gates. Published to `qa-reports` by `qa:publish`, and read by each layer's QA page."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/node-view-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat node-views:report"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "kg-viewer"
+        ],
+        "x-selection": {
+          "when": "After a site build, before the review of a preview: to see which nodes of which folders have no IRI, no .jsonld, no page or no row, and which folder links are dead or point at the raw repository.",
+          "limits": "It needs a built site or a live base; without one, pages, rows and links are unknown, never 0. Rows drawn in the browser are read from the folder's data files (`assets/<vis>/*.json`, inline JSON), not by running the page, so a row built from another source is not seen. The census per kind is a declared file rule (`CENSUS_RULES`) or the layer's export, recorded on each row. Counts past `--probe-limit` are unknown.",
+          "cost": "Building each layer's export in memory (minutes over a whole composition), then one request per node page and IRI: thousands against a live base."
+        }
       }
     },
     "/tools/npm": {
@@ -9985,7 +10242,8 @@
         "summary": "release-please (declared, not configured here)",
         "description": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository.",
         "tags": [
-          "package-release"
+          "package-release",
+          "npm-kg-distribution"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -10048,7 +10306,8 @@
           "network": true
         },
         "x-satisfies": [
-          "package-release"
+          "package-release",
+          "npm-kg-distribution"
         ],
         "x-selection": {
           "when": "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
@@ -12817,6 +13076,10 @@
                   "site": {
                     "$ref": "#/components/schemas/RepoPath",
                     "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount."
+                  },
+                  "scope": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "A scoped site build: the comma-separated instances whose per-layer Tools pages this writer writes; every other layer's Tools pages are linked on the platform's site, not copied (owner, 2026-11-13: \"other harnesses should be referenced not included\"). The combined index and API documents are still written. Passed by the tools layer's `visualiser-writers.ts`. Absent: every instance."
                   }
                 },
                 "additionalProperties": false
@@ -13087,6 +13350,232 @@
         }
       }
     },
+    "/tools/translation-adjudicate": {
+      "post": {
+        "operationId": "translation-adjudicate",
+        "summary": "Record a translation adjudication",
+        "description": "Turn one translation-review issue into the recorded adjudication: read the `issues` event (never the body from a shell variable), refuse an author who is not an owner, member or collaborator, refuse an item whose catalogue hash changed since the page showed it, then write the translation node's sign-off, the fuzzy suggestions and an append-only `translation-qa` attestation, and leave a Markdown summary. Exit 0 recorded, 3 nothing recorded, 2 could not determine.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-adjudicate/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root holding the catalogues. Default: the current directory."
+                  },
+                  "event": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The `issues` event file GitHub wrote. Absent: `$GITHUB_EVENT_PATH`, which is how the workflow passes it."
+                  },
+                  "dry_run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Plan and report, write nothing."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The files written: catalogues, translation nodes and attestations under the layer's translations and attestation directories."
+                    },
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "What was recorded and what was refused, with each reason — the issue comment and the PR body."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudicate.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation:adjudicate"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-adjudication"
+        ]
+      }
+    },
+    "/tools/translation-adjudication-workflow": {
+      "post": {
+        "operationId": "translation-adjudication-workflow",
+        "summary": "Translation adjudication workflow (reusable)",
+        "description": "The tools layer's reusable `layer-translation-adjudication.yml`, called by a layer on `issues` events: runs once per issue labelled `translation-adjudication` or titled `[translation review] …`, mounts the platform's layers, runs `translation:adjudicate` on the event, and either commits the records on `translation-adjudication/issue-<n>` (authored by the issue's author) and opens a ready PR, or comments why nothing was recorded. It never merges.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-adjudication-workflow/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "path_in_repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the layer sits in the calling repository; `.` for the root."
+                  },
+                  "index_ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The folio-assistant ref whose lock mounts the platform's layers. Default `main`."
+                  },
+                  "tools_ref": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`lock` (the caller's lock pin of the tools layer) or a 40-hex commit."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pull_request": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The ready PR carrying the records, when anything was recorded."
+                    },
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The comment on the issue: what was recorded and what was refused."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudication-workflow.jsonld",
+        "x-invoke": {
+          "manual": true
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-adjudication"
+        ]
+      }
+    },
+    "/tools/translation-candidates-agent": {
+      "post": {
+        "operationId": "translation-candidates-agent",
+        "summary": "Candidate translations — agent model",
+        "description": "An agent model proposes a translation for each string of a layer's catalogues, with the locale term base and the string's source context in front of it, and appends them to each catalogue's candidates sidecar with `source.kind: agent` and the model's id. Seeds an empty `msgstr` with the first candidate, fuzzy.",
+        "tags": [
+          "translation-candidate-source"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-candidates-agent/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root whose catalogues to propose for. Default: the current layer."
+                  },
+                  "locales": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "The target locales. Absent: every locale the layer declares."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "candidates": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), appended to; each candidate carries `source: {kind: \"agent\", id: <model>}`."
+                    },
+                    "catalogues": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The `.po` catalogues whose empty `msgstr` got the first candidate, `#, fuzzy`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates-agent.jsonld",
+        "x-invoke": {
+          "manual": true
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-candidate-source"
+        ],
+        "x-selection": {
+          "when": "Prose that needs the surrounding meaning — paragraphs, diagram labels whose sense depends on the process, terms the locale term base fixes — and an agent session is already running.",
+          "limits": "Not reproducible run to run, and its output is as unreviewed as any engine's. For many short, literal strings an open machine-translation model (OPUS-MT, LibreTranslate / Argos, through `translation:candidates`) is cheaper and repeatable.",
+          "cost": "Model tokens per string, in a session that has a model; nothing to install."
+        }
+      }
+    },
     "/tools/translation-extract": {
       "post": {
         "operationId": "translation-extract",
@@ -13244,6 +13733,171 @@
         },
         "x-satisfies": [
           "translation-manager"
+        ]
+      }
+    },
+    "/tools/translation-platforms": {
+      "post": {
+        "operationId": "translation-platforms",
+        "summary": "Exchange catalogues with a translation platform",
+        "description": "For Weblate, Crowdin and Transifex: `export` writes the layout file a platform reads from the layer's declared `translation-sources` directory; `import` turns the `.po` changes a platform pushed onto the checked-out branch into CANDIDATES, never adjudications. Nothing here talks to a platform or the network. Exit 0 done, 1 `--check` found drift, 3 import found nothing to rewrite, 2 could not determine.",
+        "tags": [
+          "translation-candidate-source",
+          "translation-manager"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-platforms/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "`export` or `import`."
+                  },
+                  "platform": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "`weblate`, `crowdin` or `transifex`."
+                  },
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root. Default: the current directory."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "import: the git ref the platform's changes are compared against."
+                  },
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "export: write the platform's file rather than print it."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "export: fail when the committed file differs from what would be written."
+                  },
+                  "dry_run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "import: plan and report, write nothing."
+                  }
+                },
+                "required": [
+                  "action",
+                  "platform"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The file written or the candidates recorded."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-platforms.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation:platforms"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-candidate-source",
+          "translation-manager"
+        ],
+        "x-selection": {
+          "when": "When a layer offers its catalogues to a translation platform, and when the platform's import workflow brings its changes back as candidates.",
+          "limits": "Reads and writes files only; the platform's own push and pull happen outside it.",
+          "cost": "One read of the layer's catalogues. No network."
+        }
+      }
+    },
+    "/tools/translation-review-page": {
+      "post": {
+        "operationId": "translation-review-page",
+        "summary": "Translation review page",
+        "description": "The page a reviewer adjudicates on: `review.html` beside the translation status page, showing every catalogue × locale with its state (machine, flagged, reviewed, stale, official), each string's candidates, and the hash of the catalogue's bytes. Submitting opens GitHub's new-issue form prefilled with a `translation-adjudication/v1` record, or copies the body when it is too long for a URL.",
+        "tags": [
+          "translation-adjudication"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-review-page/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "The review page, `review.html` beside the translation status page of the published site."
+                  }
+                },
+                "required": [
+                  "page"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issue": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The new-issue form, prefilled; filing it is the adjudication."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-review-page.jsonld",
+        "x-invoke": {
+          "manual": true
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-adjudication"
         ]
       }
     },
@@ -13475,9 +14129,10 @@
       "post": {
         "operationId": "translation-status-viewer",
         "summary": "Translation status viewer",
-        "description": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+        "description": "Render the translation status of every declared translation-sources directory, per locale, as one page, and beside it the review page (`review.html`, with `assets/translation-status/review.json`) a reviewer adjudicates on.",
         "tags": [
-          "graph-rendering"
+          "graph-rendering",
+          "translation-adjudication"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -13536,7 +14191,8 @@
           "network": false
         },
         "x-satisfies": [
-          "graph-rendering"
+          "graph-rendering",
+          "translation-adjudication"
         ]
       }
     },

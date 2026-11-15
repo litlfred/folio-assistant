@@ -5,7 +5,7 @@
     "position": "complete",
     "next": null,
     "counts": {
-      "done": 23,
+      "done": 25,
       "not-done": 0,
       "could-not-determine": 3,
       "stated": 0
@@ -96,6 +96,13 @@
         "detail": "holds processes"
       },
       {
+        "id": "directory:collab",
+        "namedBy": "fhir-harness",
+        "what": "declared directory collab/ exists",
+        "state": "done",
+        "detail": "holds cat-harness"
+      },
+      {
         "id": "directory:fhir-harness-caches",
         "namedBy": "fhir-harness",
         "what": "declared directory caches/ exists",
@@ -129,6 +136,13 @@
         "what": "declared directory libraries/ exists",
         "state": "done",
         "detail": "holds software-library"
+      },
+      {
+        "id": "directory:fhir-core-definitions",
+        "namedBy": "fhir-harness",
+        "what": "declared directory fhir-core/ exists",
+        "state": "done",
+        "detail": "holds fhir-core-definitions"
       },
       {
         "id": "directory:glossary",

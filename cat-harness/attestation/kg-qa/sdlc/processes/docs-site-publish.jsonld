@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/kg-qa/sdlc/processes/docs-site-publish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/kg-qa/sdlc/processes/docs-site-publish",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: process Process_DocsSite",
+      "description": "The kg-qa judgements recorded for process Process_DocsSite (sdlc/processes/docs-site-publish.bpmn), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/sdlc/processes/docs-site-publish.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations"
+    }
+  ]
+}

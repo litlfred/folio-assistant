@@ -32,6 +32,26 @@
       "skos:notation": "iris-pages",
       "dcterms:source": "who-iris/tools/iris-pages/iris-pages.ts#iris-pages",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/who-iris/v0/ns/glossary/kg-tools/translation-qa-prune",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/who-iris/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Prune round-trip rulings of removed strings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drop the translation-semantic-roundtrip rulings of strings the catalogues no longer hold, and renumber the rest to catalogue order. Rulings are paired with strings by the hash of their msgid, so removing strings invalidates none and needs no agent re-run; this is the upkeep that follows. It only drops or renumbers: a verdict is never changed or invented, and a ruling for a string the ref's history never held (one recorded ahead of its PR) is kept."
+        }
+      ],
+      "skos:notation": "translation-qa-prune",
+      "dcterms:source": "who-iris/tools/translation-qa-prune/translation-qa-prune.ts#translation-qa-prune",
+      "skos:note": "candidate"
     }
   ]
 }

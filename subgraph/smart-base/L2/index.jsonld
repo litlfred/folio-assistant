@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L2",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-L2",
+      "title": "L2 — what a DAK declares"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/schemas/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/scripts/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L2",
+  "path": "L2/",
+  "title": "L2 — what a DAK declares"
+}

@@ -110,6 +110,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_4b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_5",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -155,6 +159,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Ground",
       "@type": "bootstrap:ProcessNode",
       "name": "Resolve each harness's page ground"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_NodeViews",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Report node-view coverage"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Propose",

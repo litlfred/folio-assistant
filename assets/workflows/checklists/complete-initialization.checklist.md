@@ -4,7 +4,7 @@
 
 > **Generated, and not the authority.** This is `bootstrap/processes/complete-initialization.bpmn` (process `Process_CompleteInitialization`) walked as a state machine. The diagram and the workflow engine decide; this list only reads them. Follow the `next:` line of each step rather than the order on the page, and record each step with the call it names, so the engine's committed state — not this list — says which edge was taken.
 
-A SUB-PROCESS of initialize-harness, called after a harness is installed and also when the location turns out to be an instance of the chosen harness already.
+A SUB-PROCESS of initialize-harness, called after a harness is installed and also when the location turns out to be a layer instantiating the chosen harness already.
 
 ## Begin — A harness is installed here (`Start_CompleteInitialization`)
 
@@ -115,4 +115,4 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 
 ## Done — Open steps recorded, each with what to do (`End_OpenStepsRecorded`)
 
-- The instance completes here: Not a failure of the harness: the repository is an instance, and the report says what is left and who does it. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
+- The instance completes here: Not a failure of the harness: the repository is a layer, and the report says what is left and who does it. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.

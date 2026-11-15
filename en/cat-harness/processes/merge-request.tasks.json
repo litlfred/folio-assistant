@@ -3,18 +3,6 @@
  "process": "Process_MergeRequest",
  "markers": [
   {
-   "id": "Sib_Self",
-   "name": "Merge manager for its own PRs",
-   "left": 31.15,
-   "top": 70.63,
-   "box": {
-    "left": 25.2,
-    "top": 85.71,
-    "width": 1.97,
-    "height": 3.81
-   }
-  },
-  {
    "id": "Sib_Elect",
    "name": "Elect the merge manager with the siblings",
    "left": 42.21,
@@ -113,32 +101,6 @@
  ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
  "tasks": {
-  "Sib_Self": {
-   "id": "Sib_Self",
-   "name": "Merge manager for its own PRs",
-   "type": "bpmn:CallActivity",
-   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self",
-   "stepHref": "merge-request.html#step-Sib_Self",
-   "lane": "Sibling session",
-   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
-   "skills": [],
-   "calls": {
-    "name": "Merge manager watch: wake, read the queue live, route",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
-    "diagram": "merge-manager-watch.html"
-   },
-   "role": {
-    "name": "sibling-session",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
-    "title": "Sibling session",
-    "skills": [
-     {
-      "name": "bean-coordination",
-      "href": "../../../reference/skill-instructions/bean-coordination.html"
-     }
-    ]
-   }
-  },
   "Sib_Elect": {
    "id": "Sib_Elect",
    "name": "Elect the merge manager with the siblings",

@@ -38,13 +38,13 @@ THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS.
 
 - Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `bootstrap-kg-navigation`.
-- What: Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself.
+- What: Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY a layer, and it says so itself.
 - Record it: `workflow_complete` with `node: "A_ReadLocation"`.
 - next: → `GW_AlreadyInitialized` (Already initialized?)
 
 ## Done — Failed (`End_Failed`)
 
-- The instance completes here: Three ways in, and all are logged rather than retried: no harness was chosen, a location is already an instance of something else, or the instructions were not at the predetermined spot. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
+- The instance completes here: Three ways in, and all are logged rather than retried: no harness was chosen, a location is already a layer instantiating something else, or the instructions were not at the predetermined spot. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
 
 ### Decide — Already initialized? (`GW_AlreadyInitialized`)
 
@@ -100,6 +100,6 @@ THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS.
 
 - Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `root-readme`.
-- What: The repository now IS an instance of something, and nothing at its root says so.
+- What: The repository now IS a layer instantiating a harness, and nothing at its root says so.
 - Record it: `workflow_complete` with `node: "A_WriteRootReadme"`.
 - next: → `A_CompleteInitialization` (Make sure every step is done)

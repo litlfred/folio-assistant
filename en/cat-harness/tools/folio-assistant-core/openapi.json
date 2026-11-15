@@ -17,16 +17,7 @@
       "name": "document-intake"
     },
     {
-      "name": "dsa-catalogue-status"
-    },
-    {
       "name": "dsa-checksum"
-    },
-    {
-      "name": "dsa-dcat-record"
-    },
-    {
-      "name": "dsa-odrl-source"
     },
     {
       "name": "dublin-core-renderings"
@@ -525,10 +516,7 @@
         "summary": "Verify Data Sharing Agreement hash, citation, and vocabulary terms",
         "description": "Verify a Data Sharing Agreement (DSA) directory or single version: checks that every JSON-LD term in `agreement.jsonld` and `dcat.jsonld` is defined in the SHA-256-pinned official W3C ODRL 2.2, W3C DCAT 3 (with SPDX 2.2.2 and ADMS), or DCMI Metadata Terms contexts; checks that the ODRL 2.2 Agreement's `uid` is the version's fixed-version URL and its `dcterms:source` cites the DCAT 3 `dcat:Distribution` whose `spdx:checksum` is checked; verifies that the SHA-256 digest of `agreement.md` matches `spdx:checksumValue`; and checks `dcat:previousVersion` and hash distinctness across versions.",
         "tags": [
-          "dsa-checksum",
-          "dsa-odrl-source",
-          "dsa-dcat-record",
-          "dsa-catalogue-status"
+          "dsa-checksum"
         ],
         "externalDocs": {
           "description": "The Tool's page",
@@ -583,10 +571,7 @@
           "network": false
         },
         "x-satisfies": [
-          "dsa-checksum",
-          "dsa-odrl-source",
-          "dsa-dcat-record",
-          "dsa-catalogue-status"
+          "dsa-checksum"
         ],
         "x-selection": {
           "when": "Verifying a Data Sharing Agreement's checksum, ODRL citation, DCAT 3 record and `dcat:previousVersion` chain, or `adms:status`.",
@@ -1669,7 +1654,7 @@
       "post": {
         "operationId": "glossary-table",
         "summary": "Glossary and acronyms tables",
-        "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
+        "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes; acronyms (notation and prefLabel); or element types, the placeholder types an ArchiMate metamodel view shows, with each term's definition and skos:example. The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
         "tags": [
           "graph-rendering"
         ],
@@ -1736,9 +1721,9 @@
           "graph-rendering"
         ],
         "x-selection": {
-          "when": "A document's glossary or acronyms tables should come from its SKOS glossaries. For a References list use references-render.",
+          "when": "A document's glossary, acronyms or element-types tables should come from its SKOS glossaries (and, for element types, its ArchiMate metamodel view). For a References list use references-render.",
           "limits": "Only the tables `glossary/glossary-tables.json` names; captions and footnotes are left alone.",
-          "cost": "Milliseconds per table; reads the instance's glossary schemes, no network."
+          "cost": "Milliseconds per table; reads the instance's glossary schemes and, for element types, one Archi model; no network."
         }
       }
     },
@@ -1746,7 +1731,7 @@
       "post": {
         "operationId": "l1-coverage",
         "summary": "L1 extraction coverage",
-        "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
+        "description": "Of the normative sentences in a publication (the closed marker list of the methodology `l1-coverage` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
         "tags": [
           "l1-coverage"
         ],

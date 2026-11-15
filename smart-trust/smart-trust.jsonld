@@ -367,15 +367,15 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
-  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceCommitSha": "c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceTree": "7ac7366db3fb26551e0a610d1c88737daaa6ce86",
+  "sourceCommitAt": "2026-11-15T14:29:41+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 11,
-    "Subgraph": 10,
+    "GraphTypology": 12,
+    "Subgraph": 12,
     "Asset": 2
   },
   "@graph": [
@@ -420,6 +420,13 @@
       "name": "openapi",
       "renderable": false,
       "summary": "OpenAPI 3 documents a layer holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the layer's docs."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "archimate",
+      "renderable": false,
+      "summary": "ArchiMate models a layer holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index",
@@ -486,7 +493,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index"
       ],
-      "description": "The IG's artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are not committed: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`sidecars/` through smart-base's `ig-site:sidecars` step). `ig-identity.json` and `README.md` are committed. `index.json` carries a `provenance` block naming the AST or config file each field came from.",
+      "description": "The IG's artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are not committed: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`sidecars/` through smart-base's `ig-site:sidecars` step). Only `README.md` is committed. `index.json` carries a `provenance` block naming the AST or config file each field came from.",
       "readmePath": "fhir-artifact-index/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-artifact-index"
@@ -624,6 +631,38 @@
       ],
       "description": "The GDHCN onboarding game, \"Join the Network\" (Vite, TypeScript, three.js; Apache-2.0, from carlsbox/gdhcn-onboarding-game, see NOTICE). Declared by web-app.json and built and published by the harness's `apps` visualiser (Tool web-app-build) at <locale>/<harness>/apps/onboarding-game/, with no site chrome; nothing else on the site loads it. Its UI strings are translated through translations/<locale>/apps/ (smart-trust#176, Q-GAME-5).",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/directory/onboarding-game"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/directory/archimate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "archimate",
+      "path": "archimate/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate"
+      ],
+      "description": "The GDHCN trust network as ArchiMate (cat-harness's archimate subgraph): this guide's actors (input/fsh/actors/actors.fsh), the public keys and the trust list, and the three steps onboard, distribute and verify, as the home page's figure (input/images/trust_network.png) in a view with every box where the figure draws it. Built by archimate/build.py (`check:archimate` fails when the committed model is stale); the archimate-pages visualiser draws the view as SVG, and archimate/pretty.py draws it again in the original figure's style (input/includes/trust-network-pretty.svg). The home page and the Concepts page toggle between the two (input/includes/trust-network-figure.html).",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/directory/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-findings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-trust-findings",
+      "path": "findings/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
+      ],
+      "description": "Authored findings about this instance's own pages, kept for the owner rather than built: `wireframes/` holds the as-is wireframes of the visualisers smart-trust declares (today `archimate`), each with its `intent.md`, its candidate HTML and the `checks/report.json` that `wireframe:check` writes at web and mobile sizes. `check:wireframes` reads the `wireframes/` of every declared `docs` directory; it is here, the shape of smart-base's `findings/`, because `docs/` is built at publish and commits nothing.",
+      "readmePath": "findings/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-findings"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust/asset/agent-instructions",

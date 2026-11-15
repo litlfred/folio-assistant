@@ -26,8 +26,52 @@
                 "type": "string",
                 "enum": [
                   "terms",
-                  "acronyms"
+                  "acronyms",
+                  "element-types"
                 ]
+              },
+              "archimate": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "view": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "model",
+                  "view"
+                ],
+                "additionalProperties": false
+              },
+              "rows": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Za-z]+$"
+                    },
+                    "term": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "icon": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "additionalProperties": false
+                }
               }
             },
             "required": [

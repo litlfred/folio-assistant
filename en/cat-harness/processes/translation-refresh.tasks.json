@@ -121,6 +121,18 @@
     "width": 1.78,
     "height": 4.53
    }
+  },
+  {
+   "id": "Task_TR_PruneRulings",
+   "name": "Prune the rulings of removed strings",
+   "left": 80.37,
+   "top": 70.75,
+   "box": {
+    "left": 75,
+    "top": 88.68,
+    "width": 1.78,
+    "height": 4.53
+   }
   }
  ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh",
@@ -385,6 +397,36 @@
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Merge",
    "stepHref": "translation-refresh.html#step-Task_TR_Merge",
+   "lane": "Source-language lead (watcher)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+   "skills": [
+    {
+     "name": "translation-refresh",
+     "href": "../../../reference/skill-instructions/translation-refresh.html"
+    }
+   ],
+   "role": {
+    "name": "translation-source-lead",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+    "title": "Source-language lead",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "translation-refresh",
+      "href": "../../../reference/skill-instructions/translation-refresh.html"
+     }
+    ]
+   }
+  },
+  "Task_TR_PruneRulings": {
+   "id": "Task_TR_PruneRulings",
+   "name": "Prune the rulings of removed strings",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_PruneRulings",
+   "stepHref": "translation-refresh.html#step-Task_TR_PruneRulings",
    "lane": "Source-language lead (watcher)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
    "skills": [

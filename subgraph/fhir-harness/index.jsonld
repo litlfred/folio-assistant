@@ -5,6 +5,11 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "cat-harness:graphTypology/fhir-core-definitions",
+      "@type": "bootstrap:GraphTypology",
+      "name": "fhir-core-definitions"
+    },
+    {
       "@id": "cat-harness:graphTypology/pipeline-plugins",
       "@type": "bootstrap:GraphTypology",
       "name": "pipeline-plugins"
@@ -19,9 +24,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9b59606924a14bc0752a969bb066f22e6f952ba3d1ae0e5a5063556f22047928",
-        "bytes": 10594,
-        "sha256": "9b59606924a14bc0752a969bb066f22e6f952ba3d1ae0e5a5063556f22047928"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d465977bef8fe42f12215fff097c66adcf57d1d1e11a4194a0abc8ea5bd926a5",
+        "bytes": 10976,
+        "sha256": "d465977bef8fe42f12215fff097c66adcf57d1d1e11a4194a0abc8ea5bd926a5"
       },
       "title": "AGENTS.md — fhir-harness"
     },
@@ -46,6 +51,12 @@
         "sha256": "a91b194235c13ceb652a103737c45d346609d81d8c36d2a6ed51bf5c2ef23355"
       },
       "title": "Unkinded families — fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-core-definitions",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-core-definitions",
+      "title": "FHIR core definitions"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-caches",
@@ -119,6 +130,12 @@
       "@type": "cat-harness:Schema",
       "name": "fhir-artifact-index",
       "title": "fhir-artifact-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-core",
+      "@type": "cat-harness:Schema",
+      "name": "fhir-core",
+      "title": "fhir-core"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-annexes",
@@ -206,6 +223,8 @@
     }
   ],
   "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/collab/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/",
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/scenarios/",
@@ -213,6 +232,7 @@
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/"
   ],
   "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
     "cat-harness:graphTypology/library",
     "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/scenarios",

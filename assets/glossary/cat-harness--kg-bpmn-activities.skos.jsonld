@@ -1146,7 +1146,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Component 4b, in its own lane: the FHIR IG layer's IG AST cache, `Process_IgAstCache` (declared by that layer), integrated, not replaced. It is drawn as a task because this layer may not name a process of a layer above it; the steps are that process's. RESTORE: read the cached AST from its branch store and judge it — that process's \"valid for this commit?\" IS this component's verify (class a: the AST is judged against this commit's IG sources and tooling); valid → the site is built from it. SAVE: that process's own path, not `cached-step` — a miss dispatches an AST refresh on a Java runner with 10 GB, which rewrites the branch store. The branch store is a `cache` node (`ig-ast`). Owner: CI speed 12, the IG layers' session. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+          "@value": "Component 4b, in its own lane: the FHIR IG layer's IG AST cache, `Process_IgAstCache` (declared by that layer), integrated, not replaced. It is drawn as a task because this layer may not name a process of a layer above it; the steps are that process's. RESTORE: read the cached AST from its branch store and judge it — that process's \"valid for this commit?\" IS this component's verify (class a: the AST is judged against this commit's IG sources and tooling); valid → the site is built from it. SAVE: that process's own path, not `cached-step` — a miss dispatches an AST refresh on a Java runner with 10 GB, which rewrites the branch store. The branch store is a `cache` node (`fhir-ast`, fhir-harness `caches/fhir-ast.cache.json`). Owner: CI speed 12, the IG layers' session. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
         }
       ],
       "skos:notation": "Task_IgAst",
@@ -1306,7 +1306,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
+          "@value": "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card \"A. Collapse into one job\"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health)."
         }
       ],
       "skos:notation": "Task_Check",
@@ -4109,6 +4109,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_harnessrendering.a_nodeviews",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report node-view coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Tool `node-view-coverage` (`bun run cat node-views:report -- --site <built site>`) counts, per layer, folder and kind, which nodes have an IRI, a `.jsonld`, a page and a row on their folder page, and which folder links are dead or point at the raw repository. A QA report, not a gate: it always exits 0 and feeds no gateway, and its results go to `test/results/node-views/` and on to the `qa-reports` branch. A graph with no viewer is still shown inert and labelled by the tile step; this says how many of its nodes are owed a page."
+        }
+      ],
+      "skos:notation": "A_NodeViews",
+      "dcterms:source": "cat-harness/processes/ui/harness-default-rendering.bpmn#A_NodeViews",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_harnessrendering.a_propose",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5851,12 +5871,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Announce the hand-over or the lapse"
+          "@value": "Announce the hand-over"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Tell every sibling and the owner, and update the durable note: either the session that holds the lane now, or that the lane lapses and each session merges its own green PRs with the owner's approval, still sending the six-line merge request."
+          "@value": "Tell every sibling and the owner, and update the durable note with the session that holds the lane now. Nobody merges between holders."
         }
       ],
       "skos:notation": "Task_Lapse",
@@ -5876,7 +5896,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, each PR owner's last push or comment, and every harness repository's open main-red issue with its newest failed runs on main and gh-pages, whether or not the lane holds a PR there (gh api repos/<owner>/<repo>/actions/runs?branch=<default>&event=push: the latest completed push run per workflow, conclusion failure). One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
+          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, each PR owner's last push or comment, and every harness repository's open main-red issue with its newest failed runs on main and gh-pages, whether or not the lane holds a PR there (gh api repos/<owner>/<repo>/actions/runs?branch=<default>&event=push: the latest completed push run per workflow, conclusion failure). One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one. A repin+merge: request is re-pinned by the merge manager itself, as its own re-pin PR in a re-pin train, before the requested PR lands; only the merge manager merges or re-pins, and a scheduled routine never merges (owner rulings, 2026-11-13)."
         }
       ],
       "skos:notation": "Task_Read",
@@ -6266,31 +6286,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "Retarget the PR onto main and merge main in; across layers, re-pin to the dependency's merge commit on main, so pins only move forward. Never merge the stacked PR into its base branch, and never mark it ready while it pins an unmerged commit."
+          "@value": "Retarget the PR onto main and merge main in; across layers, send repin+merge: the merge manager re-pins to the dependency's merge commit on main, so pins only move forward (owner ruling, 2026-11-13). Never merge the stacked PR into its base branch, and never mark it ready while it pins an unmerged commit."
         }
       ],
       "skos:notation": "Sib_Retarget",
       "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Retarget",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_self",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Merge manager for its own PRs"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "No merge manager is needed (a lone session, or a lapsed lane): the session is its own merge manager for its own PRs only, so it runs the merge manager loop for them. It does not announce itself to the others; it posts the six lines in its own chat and asks the owner by card."
-        }
-      ],
-      "skos:notation": "Sib_Self",
-      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Self",
       "skos:note": "candidate"
     },
     {
@@ -6306,7 +6306,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "To the merge manager: the PR URL and full head SHA, the session URL, 1-3 sentences on the change, the rendered preview URL or no preview with a reason, what to look for, and full tier green as judged (owner ruling, 2026-11-07). Never merge it yourself, and never push to another session's branch."
+          "@value": "To the merge manager: the PR URL and full head SHA, the session URL, 1-3 sentences on the change, the rendered preview URL or no preview with a reason, what to look for, and full tier green as judged (owner ruling, 2026-11-07). Never merge it yourself, and never push to another session's branch. A PR green except for a re-pin is sent as repin+merge: <owner/repo>#<n> <sha> with the same six lines; never re-pin it yourself, and never merge (owner ruling, 2026-11-13)."
         }
       ],
       "skos:notation": "Sib_Send",
@@ -11759,6 +11759,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_prunerulings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Prune the rulings of removed strings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drop the round-trip rulings of strings main no longer holds, with the layer's prune command (its AGENTS.md names it, by convention `translation-qa:prune`), once the PR is on main. Only a layer that keeps per-string rulings on an attestations state branch has one. Run it as a dry run first: it lists each ruling whose msgid main no longer holds but once did, and the indices it renumbers to catalogue order. Push the result (`--write`, then the state-branch push) only when the diff is purely dropped and renumbered rulings. It never changes or invents a verdict, and it keeps a ruling recorded ahead of a PR that has not merged. Never run it before the removal is on main: the state branch serves main too, and main would be left with strings that have no ruling. Nothing to prune is the usual result, and this step then writes nothing."
+        }
+      ],
+      "skos:notation": "Task_TR_PruneRulings",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_PruneRulings",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_report",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -11836,6 +11856,226 @@
       ],
       "skos:notation": "Task_TR_Translate",
       "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Translate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_candidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Produce candidate translations (any engine)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One or more candidate sources write alternatives per string to `translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), each candidate carrying its source: an agent model, an open machine-translation model, a web service, or a person. The engines are interchangeable behind one skill, `translation-candidate-source`: whichever runs, the same sidecar comes out. Writers append; a candidate is never a verdict."
+        }
+      ],
+      "skos:notation": "Task_TRA_Candidates",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Candidates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_choose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Pick a candidate or write your own"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For each wrong string: pick one of the candidates (its source is recorded with the suggestion) or type the text. The suggestion carries the text the reviewer saw (`current`), so a catalogue that changed under them is caught."
+        }
+      ],
+      "skos:notation": "Task_TRA_Choose",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Choose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_fileissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "File the adjudication issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Submit opens GitHub's new-issue form prefilled with a readable summary and a `translation-adjudication/v1` JSON block, labelled `translation-adjudication` and titled `[translation review] …`. When the record is too long for a URL the page copies the body for pasting instead. Filing it is the act of adjudicating."
+        }
+      ],
+      "skos:notation": "Task_TRA_FileIssue",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_FileIssue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the PR; merge or close"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The maintainer checks that the PR writes down what the issue decided and nothing else, lets the layer's checks run, and merges or closes it."
+        }
+      ],
+      "skos:notation": "Task_TRA_Merge",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_openpr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open a ready PR and comment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Commit on `translation-adjudication/issue-<n>`, authored by the issue's author, open a ready pull request that names the issue, and comment the summary on the issue: what was recorded and what was refused."
+        }
+      ],
+      "skos:notation": "Task_TRA_OpenPR",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_OpenPR",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Plan the records (translation:adjudicate)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation:adjudicate` reads the `issues` event GitHub wrote, never the body from a shell variable: the body is untrusted and is only parsed as JSON. It decides every write before making any, and refuses rather than guesses."
+        }
+      ],
+      "skos:notation": "Task_TRA_Plan",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Plan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_refuse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Comment why nothing was recorded"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every refusal, with its reason, as a comment on the issue (exit 3). No pull request is opened. A refusal is never a partial record dressed as a whole one; a new review is a new issue and a new instance of this process."
+        }
+      ],
+      "skos:notation": "Task_TRA_Refuse",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Refuse",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read the catalogue on the review page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The reviewer opens the review page and reads one catalogue's strings against their source, with the candidates beside each."
+        }
+      ],
+      "skos:notation": "Task_TRA_Review",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Review",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_reviewpage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the review page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation:status` writes `review.html` beside the status page, with `assets/translation-status/review.json`: every catalogue × locale, its state (`machine`, `flagged`, `reviewed`, `stale`, `official`), the candidates per string, and the hash of the catalogue's bytes. That hash is what the verdict is pinned to."
+        }
+      ],
+      "skos:notation": "Task_TRA_ReviewPage",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_ReviewPage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_seedfuzzy",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the first candidate as a fuzzy msgstr"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Candidates are never a barrier to having a translation. The first candidate becomes the `msgstr`, marked `#, fuzzy`: the page shows it, the status page counts it as needing review, and it stays the default until a person adjudicates the catalogue."
+        }
+      ],
+      "skos:notation": "Task_TRA_SeedFuzzy",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_SeedFuzzy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_write",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the records"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Acceptable: the catalogue's translation node gets `signedOffBy` / `signedOffAt`. Mistranslation: each suggestion replaces its `msgstr`, marked `#, fuzzy`. Either way an entry is appended to the catalogue's `translation-qa` attestation (criterion `human-adjudication`) naming the issue and the hash the person saw; the attestation is append-only and checked against `qa-attestations/v1` before it is written. The PO header `X-Folio-Official` and the locale's `status.json` are never touched."
+        }
+      ],
+      "skos:notation": "Task_TRA_Write",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Write",
       "skos:note": "candidate"
     },
     {

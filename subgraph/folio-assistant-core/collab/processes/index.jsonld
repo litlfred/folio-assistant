@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/collab/processes/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/globalTask/GT_SeedWorkPlan",
+      "@type": "bootstrap:Task",
+      "name": "Seed the work plan"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/collab/processes/conduct/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/collab/processes/content/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/collab/processes/library/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "collab/processes",
+  "path": "collab/processes/"
+}

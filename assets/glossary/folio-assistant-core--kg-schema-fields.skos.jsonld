@@ -1572,6 +1572,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.termschema.example",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.example"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An instance of the concept (`skos:example`), such as \"The Client Registry\" for Application Component. A table drawn from the glossary prints it in its own column (smart-ra Q-RAC-7 A, Table 3.1)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.example",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.termschema.focus",
       "@type": "skos:Concept",
       "skos:inScheme": {

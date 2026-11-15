@@ -14,6 +14,25 @@
       "dcterms:source": "Schema fields of smart-base"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/compare-extract.comparison.findings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Comparison.findings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What moved, one line each; empty when the two match."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/compare-extract.ts#Comparison.findings",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-annexes.dakdatadictionaryannexschema.idcolumn",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -638,6 +657,329 @@
         }
       ],
       "dcterms:source": "smart-base/schemas/dak.ts#DakDeclaration.publicationUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/extract-bpmn.bpmnstats.tasknames",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BpmnStats.taskNames"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Task name -> task IRI; null when the name is not unique in the file."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#BpmnStats.taskNames",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/fsh.fshfile.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FshFile.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path relative to the smart-base repository root."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/fsh.ts#FshFile.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/layers.heldlayer.dir",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HeldLayer.dir"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The schemas directory that holds it, relative to the repository root."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/layers.ts#HeldLayer.dir",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/layers.heldlayer.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HeldLayer.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The source file, relative to the repository root, for generated banners."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/layers.ts#HeldLayer.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/layers.heldlayer.key",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HeldLayer.key"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The layer's id as a document names it: `l1`, `l1-library`, `l2-bpmn`, …"
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/layers.ts#HeldLayer.key",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.classspec.correspondsto",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ClassSpec.correspondsTo"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An existing smart-base model this class corresponds to without deriving from it, and why not."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#ClassSpec.correspondsTo",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.classspec.elaborates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ClassSpec.elaborates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The class of a lower layer this one describes the interior of, at the same IRI (smart-kg `elaborates`)."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#ClassSpec.elaborates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.classspec.properties",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ClassSpec.properties"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Insertion order is the order smart-kg lists them in, and is kept."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#ClassSpec.properties",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.layerspec.profilenote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerSpec.profileNote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L3's note on profiles (smart-kg l3.json `profileNote`)."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#LayerSpec.profileNote",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.parentmodel.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ParentModel.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "FSH name or FHIR type: `DublinCore` (smart-base), `Coding` (FHIR core)."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#ParentModel.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.propertyspec.binding",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PropertySpec.binding"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A value set id from the layer, for `fhir: \"code\"`."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.binding",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.propertyspec.children",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PropertySpec.children"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For `fhir: \"BackboneElement\"`: its child elements."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.children",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.propertyspec.inherited",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PropertySpec.inherited"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Set when the class's {@link ClassSpec.parent} already defines this element."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.inherited",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.propertyspec.max",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PropertySpec.max"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`\"*\"` when the element repeats (FHIR `0..*`)."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.max",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/ontology.propertyspec.schema",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PropertySpec.schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The value's schema. Every L1 property is optional on an instance."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/vocab.codelist.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CodeList.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "FSH name of the CodeSystem; its all-codes ValueSet is `<name>VS`."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/vocab.ts#CodeList.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/vocab.codelist.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CodeList.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the list came from, so a reviewer can check the migration."
+        }
+      ],
+      "dcterms:source": "smart-base/L1/schemas/vocab.ts#CodeList.source",
       "skos:note": "candidate"
     }
   ]

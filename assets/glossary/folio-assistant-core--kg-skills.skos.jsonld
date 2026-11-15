@@ -395,7 +395,7 @@
         }
       ],
       "skos:notation": "dsa-checksum",
-      "dcterms:source": "folio-assistant-core/dsa/skills/dsa/dsa-checksum.md",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/dsa-checksum.md",
       "skos:note": "candidate"
     },
     {
@@ -611,7 +611,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The content-folio half of the harness's getting-started skill: binds processes/conduct/getting-started.bpmn and decisions/folio-intent.dmn, interprets describeRepository() content-type markers (folio, harness, dak, sushi), and routes new-content and specialised IG/DAK creation requests."
+          "@value": "The content-folio half of the harness's getting-started skill: binds collab/processes/conduct/getting-started.bpmn and decisions/folio-intent.dmn, interprets describeRepository() content-type markers (folio, harness, dak, sushi), and routes new-content and specialised IG/DAK creation requests."
         }
       ],
       "skos:notation": "folio-getting-started",
@@ -686,7 +686,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract."
+          "@value": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements the methodology l1-coverage, the report contract."
         }
       ],
       "skos:notation": "l1-coverage",

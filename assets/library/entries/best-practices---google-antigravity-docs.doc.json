@@ -54,7 +54,10 @@
         }
       ],
       "extract": "Get Started CLI Best Practices Best practices for Antigravity CLI Master the workflows, prompt architectures, and local configuration choices to maximize agent velocity while maintaining robust control. Establish verification loops The single most effective way to ensure reliable, correct modifications from an autonomous agent is to provide the agent with a local verification mechanism (such as unit tests, build",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/best-practices---google-antigravity-docs/blocks/prose-page-001"
+      ]
     },
     {
       "id": "page-002",
@@ -102,7 +105,10 @@
         }
       ],
       "extract": "Enrich your prompting context Give local agents high-fidelity indicators to narrow down reasoning boundaries and minimize token overhead. Target file autocompletion Type @ within your prompt box to trigger the Interactive Path Suggestion overlay. Highlighting and selecting a path imports the absolute workspace file path directly into your prompt. This helps the agent target its code searches. Attaching visual",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/best-practices---google-antigravity-docs/blocks/prose-page-002"
+      ]
     },
     {
       "id": "page-003",
@@ -146,7 +152,10 @@
         }
       ],
       "extract": "proceed-in-sandbox: Restricts all terminal executions to a secure sandbox containment ring. Safe commands execute autonomously, while risky commands prompt for reviews. strict: Always prompts for all non-read operations, providing complete line-by-line transparency. Manage TUI sessions proactively Use active session navigation tools to recover from engineering dead-ends or course-correct intermediate agent loops.",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/best-practices---google-antigravity-docs/blocks/prose-page-003"
+      ]
     },
     {
       "id": "page-004",
@@ -186,7 +195,10 @@
         }
       ],
       "extract": "Automate and script Antigravity CLI is designed to operate seamlessly within standard shell pipeline tools. Run non-interactive commands (-p) To automate quick queries or integrate agents into git hooks, use the one-shot prompt flag -p: Fan out using parallel subagents For large-scale sweeps or multi-file refactoring, direct the primary agent to spawn concurrent background subagents. The agent manager handles",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/best-practices---google-antigravity-docs/blocks/prose-page-004"
+      ]
     }
   ],
   "checks": {},
@@ -240,6 +252,47 @@
     {
       "term": "prompt box",
       "heading": false
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 4,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "not-extracted",
+      "count": 0,
+      "note": "0 of 4 sections"
     }
   ],
   "links": {

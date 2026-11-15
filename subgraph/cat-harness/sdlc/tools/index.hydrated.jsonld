@@ -357,7 +357,7 @@
               "gh"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/cache-first-ci",
           "title": "Run a layer's PR checks"
         }
       ],
@@ -417,7 +417,7 @@
               "gh"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-engineer",
           "title": "Run the tools layer's own test suite"
         }
       ],
@@ -537,7 +537,7 @@
               "gh"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ref-stewardship",
           "title": "Publish staged previews"
         }
       ],
@@ -597,7 +597,7 @@
               "gh"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount",
           "title": "Run a layer's standing re-pin"
         }
       ],
@@ -657,10 +657,7 @@
               "gh"
             ]
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption"
-          ],
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-verification",
           "title": "Run the 15-minute sweeps"
         }
       ],
@@ -1121,7 +1118,10 @@
               "release-please"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution"
+          ],
           "title": "release-please (declared, not configured here)"
         }
       ],

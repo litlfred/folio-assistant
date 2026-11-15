@@ -1,0 +1,366 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/processes/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/classify-and-code-content.svg",
+      "description": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, GRADE ratings), following the terminology-coding methodology and the classify-and-code-content skill. The authoring agent runs terminology-lookup down the four-rung reuse-first ladder, records provenance (declared, context, inferred) and candidate status, and stages the result. A person in the l1-extraction-reviewer lane signs or rejects each exclusion proposed in exclusions.proposed.json against the printed page (sections/page-NNN.md). A person in the terminologist / ontologist lane then adjudicates the candidate codings, SKOS match precision (exactMatch vs closeMatch) and any Rung 4 local glossary candidates.",
+      "enforcement": "advisory",
+      "flowCount": 13,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "Classify and code content",
+      "nodeCount": 11,
+      "sourcePath": "L1/processes/classify-and-code-content.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L1/processes/classify-and-code-content.bpmn",
+      "startNode": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "summary": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, GRADE ratings), following…"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "reject-exclusion",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "signed",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "request-changes",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "approve",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "L1 extraction reviewer (person)",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "Terminologist / ontologist reviewer (person)",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+      "name": "Content classified, coded and signed off",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+      "name": "Exclusions signed?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+      "name": "Proposed exclusions?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12"
+      ],
+      "name": "Gateway_Rework",
+      "nodeKind": "exclusive",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+      "name": "Coding verdict?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13"
+      ],
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "L1 extraction or L2 component ready to classify and code",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+      "name": "Identify slots and proposed exclusions",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/recommendation-extraction"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+      "name": "Run reuse-first lookup and record candidates",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/recommendation-scenarios",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+      ],
+      "name": "Adjudicate slot codings and glossary candidates",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ontologist",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+      "name": "Check exclusions against page and sign",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/recommendation-extraction",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+      "name": "Stage codings, warnings and exclusions for review",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "L1/processes",
+  "path": "L1/processes/"
+}

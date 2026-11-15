@@ -1,0 +1,90 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/bpmn-validate/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/bpmn-validate.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Check a DAK's BPMN (`validate.ts` beside this file; bean folio-assistant-tgaj, which replaced four Python validators with it): well-formed XML whose root is `<bpmn:definitions>`, no Camunda or Zeebe namespace, no duplicate id, at least one process, no bpmn-moddle (bpmn-js) import warning; every process has a `<laneSet>`, every flow node sits in a lane, and lane ids are unique and valid FSH ids; and every innermost lane names its actor by id: its `partitionElementRef` (a top-level `<bpmn:resource>`), else its own id, matched exactly against the `Instance:` ids of the ActorDefinitions in the IG's FSH (or JSON) and, for a harness process, the role ids of the mounted layers' `scenarios/roles.json`. Never by file name or title. With no file named it reads the declared process directories, `smart-base/**/processes/` and an IG's `input/bpmn/`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run smart-base/L2-bpmn/tools/bpmn-validate/validate.ts [file.bpmn ...] [--root <repo>] [--fsh <dir>]... [--roles <roles.json>]... [--changed <git ref>] [--json] [--verbose]"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The .bpmn files to check; when absent, every .bpmn under the declared process directories (or, with `--changed <ref>`, those the branch changed).",
+            "name": "bpmn",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--fsh"
+            },
+            "description": "Directories of ActorDefinition FSH or JSON; default `input/fsh` and `input/resources`.",
+            "name": "fsh",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--roles"
+            },
+            "description": "`scenarios/roles.json` files whose role ids a harness lane may bind; default those of smart-base and the mounted cat-harness, fhir-harness and folio-assistant-core.",
+            "name": "roles",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One `✗` line per error and `!` per warning, then a count. Exit 0 no error, 1 an error, 2 nothing to check (not a pass). `--json` prints the findings as data.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "bpmn-validate",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "BPMN structure, vendor namespaces and lane → actor"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/bpmn-validate/fixtures/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/bpmn-validate/fixtures/fsh/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L2-bpmn/tools/bpmn-validate/fixtures/fsh",
+          "path": "L2-bpmn/tools/bpmn-validate/fixtures/fsh/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L2-bpmn/tools/bpmn-validate/fixtures",
+      "path": "L2-bpmn/tools/bpmn-validate/fixtures/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-bpmn/tools/bpmn-validate",
+  "path": "L2-bpmn/tools/bpmn-validate/"
+}

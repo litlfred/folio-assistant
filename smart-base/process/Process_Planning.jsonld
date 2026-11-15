@@ -11,15 +11,15 @@
       "summary": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
       "description": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
       "enforcement": "strict",
-      "sourcePath": "processes/content/SGAuthoring.DAKLifecycle.bpmn",
-      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/SGAuthoring.DAKLifecycle.bpmn",
+      "sourcePath": "collab/processes/content/SGAuthoring.DAKLifecycle.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/collab/processes/content/SGAuthoring.DAKLifecycle.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/SGAuthoring.DAKLifecycle.svg",
       "startNode": [
         "http://smart.who.int/base/process/Process_Planning/node/Start_Planning"
       ],
       "nodeCount": 9,
       "flowCount": 8,
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1",
@@ -27,7 +27,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P2",
@@ -35,7 +35,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P3",
@@ -43,7 +43,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P4",
@@ -51,7 +51,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P5",
@@ -59,7 +59,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P6",
@@ -67,7 +67,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7",
@@ -75,7 +75,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8",
@@ -83,7 +83,7 @@
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
       "to": "http://smart.who.int/base/process/Process_Planning/node/End_Planning",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
     }
   ]
 }

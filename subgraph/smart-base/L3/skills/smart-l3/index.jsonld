@@ -1,0 +1,68 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/skills/smart-l3/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/dak-postprocessing",
+      "@type": "bootstrap:Skill",
+      "name": "dak-postprocessing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2bdaab65910911eb7c009ae252ee342f2bd91f3b4e2dd288311cbbe2cfdcdf74",
+        "bytes": 9896,
+        "sha256": "2bdaab65910911eb7c009ae252ee342f2bd91f3b4e2dd288311cbbe2cfdcdf74"
+      },
+      "title": "dak-postprocessing"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/dak-preprocessing",
+      "@type": "bootstrap:Skill",
+      "name": "dak-preprocessing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f112310d7de864bd438d9363d6a264d75cbf68f52ec43c2c13364cd7093fdb7f",
+        "bytes": 16090,
+        "sha256": "f112310d7de864bd438d9363d6a264d75cbf68f52ec43c2c13364cd7093fdb7f"
+      },
+      "title": "dak-preprocessing"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/ig-artifact-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "ig-artifact-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7c4484f45b4544be6e0be7f03ac15e546f03926d4074dc63ab77dbdfb29f1fd5",
+        "bytes": 8726,
+        "sha256": "7c4484f45b4544be6e0be7f03ac15e546f03926d4074dc63ab77dbdfb29f1fd5"
+      },
+      "title": "ig-artifact-ingestion"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l3-dependency-choice",
+      "@type": "bootstrap:Skill",
+      "name": "l3-dependency-choice",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/824c638b3d295a69edccc3c8ac954fc21103c5e985ab2a937a9840b4f2753b82",
+        "bytes": 3195,
+        "sha256": "824c638b3d295a69edccc3c8ac954fc21103c5e985ab2a937a9840b4f2753b82"
+      },
+      "title": "l3-dependency-choice"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l3-readiness",
+      "@type": "bootstrap:Skill",
+      "name": "l3-readiness",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/533402074879177096a4668faac3efc32284586479637e54cb79f3f01a64026b",
+        "bytes": 3277,
+        "sha256": "533402074879177096a4668faac3efc32284586479637e54cb79f3f01a64026b"
+      },
+      "title": "l3-readiness"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "L3/skills/smart-l3",
+  "path": "L3/skills/smart-l3/"
+}

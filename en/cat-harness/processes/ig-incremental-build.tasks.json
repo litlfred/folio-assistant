@@ -236,17 +236,22 @@
   "Task_Restore": {
    "id": "Task_Restore",
    "name": "Restore derived state",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Restore",
    "stepHref": "ig-incremental-build.html#step-Task_Restore",
    "lane": "Incremental build (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
    "skills": [
     {
-     "name": "ig-publication",
-     "href": "../../../reference/skill-instructions/ig-publication.html"
+     "name": "cache-first-ci",
+     "href": "../../../reference/skill-instructions/cache-first-ci.html"
     }
    ],
+   "calls": {
+    "name": "The cache process: restore and save every cache a run can use",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache",
+    "diagram": "cache.html"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -311,6 +316,14 @@
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
      },
      {
       "name": "translation-manager",
@@ -481,6 +494,14 @@
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
      },
      {
       "name": "translation-manager",
@@ -673,6 +694,14 @@
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
+     },
+     {
       "name": "translation-manager",
       "href": "../../../reference/skill-instructions/translation-manager.html"
      },
@@ -765,6 +794,14 @@
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
      },
      {
       "name": "translation-manager",
@@ -979,6 +1016,14 @@
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
+     },
+     {
       "name": "translation-manager",
       "href": "../../../reference/skill-instructions/translation-manager.html"
      },
@@ -1071,6 +1116,14 @@
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
      },
      {
       "name": "translation-manager",
@@ -1175,6 +1228,14 @@
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
+     },
+     {
       "name": "translation-manager",
       "href": "../../../reference/skill-instructions/translation-manager.html"
      },
@@ -1267,6 +1328,14 @@
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
      },
      {
       "name": "translation-manager",

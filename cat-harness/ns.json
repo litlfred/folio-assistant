@@ -129,6 +129,21 @@
       "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/agentic-harness.html"
     },
     {
+      "@id": "cat-harness:QaAttestation",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "QaAttestation",
+      "comment": "One subject's QA judgements — pair attestations, voice reviews, agent and human verdicts, bibliography verifications — kept as one `qa-attestations/v1` file in a layer's attestations store, each judgement pinned to the hash it attested so a stale one is detectable. The judgement half of a QA verdict: unlike a derived result, it cannot be regenerated.",
+      "prefLabel": "QaAttestation",
+      "definition": "One subject's QA judgements — pair attestations, voice reviews, agent and human verdicts, bibliography verifications — kept as one `qa-attestations/v1` file in a layer's attestations store, each judgement pinned to the hash it attested so a stale one is detectable. The judgement half of a QA verdict: unlike a derived result, it cannot be regenerated.",
+      "notation": "cat-harness:QaAttestation",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:Requirement",
       "@type": [
         "rdfs:Class",
@@ -820,6 +835,21 @@
       "prefLabel": "fhir-artifact-index",
       "definition": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the IG API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes them. No IG publishes such an index itself, so every field records which file it came out of.",
       "notation": "cat-harness:graphTypology/fhir-artifact-index",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/fhir-core-definitions",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "fhir-core-definitions",
+      "comment": "The FHIR core specification's StructureDefinitions for each stable release (R4 4.0.1, R4B 4.3.0, R5 5.0.0): resources, complex and primitive datatypes and the root types, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>). A pins node says which hl7.fhir.<release>.core package each is read from, by version, sha1 and sha512; a manifest per release lists every definition with its kind, base and the sha256 of its bytes; the bodies are the package's own files.",
+      "prefLabel": "fhir-core-definitions",
+      "definition": "The FHIR core specification's StructureDefinitions for each stable release (R4 4.0.1, R4B 4.3.0, R5 5.0.0): resources, complex and primitive datatypes and the root types, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>). A pins node says which hl7.fhir.<release>.core package each is read from, by version, sha1 and sha512; a manifest per release lists every definition with its kind, base and the sha256 of its bytes; the bodies are the package's own files.",
+      "notation": "cat-harness:graphTypology/fhir-core-definitions",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
       "layer": "harness"

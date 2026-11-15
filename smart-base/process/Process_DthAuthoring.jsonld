@@ -11,15 +11,15 @@
       "summary": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), str…",
       "description": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), structured drafting (M3 zero draft), working-group feedback (M4), public comment (M5 released, M6 dispositioned), and finalise and publish (M7).\nMilestones are recorded checkpoints, not gates: each is written as a note on the handbook's epic bean (which milestone, when, evidence), so the site can show stage and progress. Review runs beside drafting as QA, as in smart-guideline-end-to-end.bpmn.\nStructured drafting uses the smart-base DAK block kinds for personas, scenarios, processes, decisions, data elements, indicators and requirements, and each track calls Process_L2ComponentEditReview, as l2-dak-authoring.bpmn does. Contributor feedback from the contributor log sheet and from GitHub pc: comments lands in one review store.\nHandbooks ingested from a published WHO PDF (PHC, SC, PC, SFP) enter at stage 1 with their library built and their outline given by the publication; dth-hrh, authored natively, is the pilot. Steps with no platform subprocess are marked as placeholders in their documentation.\nEmpirical content (figures, statistics, country examples) stays as cited narrative blocks and never enters formal content.",
       "enforcement": "advisory",
-      "sourcePath": "processes/content/dth-authoring.bpmn",
-      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/dth-authoring.bpmn",
+      "sourcePath": "L2/collab/processes/dth-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L2/collab/processes/dth-authoring.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dth-authoring.svg",
       "startNode": [
         "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested"
       ],
       "nodeCount": 45,
       "flowCount": 53,
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F01",
@@ -27,7 +27,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Scope",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F02",
@@ -35,7 +35,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Scope",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Team",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F03",
@@ -43,7 +43,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Team",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Scaffold",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F04",
@@ -51,7 +51,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Scaffold",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_SeedBeans",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F05",
@@ -59,7 +59,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_SeedBeans",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M0",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F06",
@@ -67,7 +67,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M0",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Ingest",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F07",
@@ -75,7 +75,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Ingest",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_L1",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F08",
@@ -83,7 +83,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_L1",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Coverage",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09",
@@ -91,7 +91,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Coverage",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b",
@@ -99,7 +99,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M1",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F10",
@@ -107,7 +107,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M1",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Outline",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F11",
@@ -115,7 +115,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Outline",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Intro",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F12",
@@ -123,7 +123,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Intro",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_GlossaryCandidates",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F13",
@@ -131,7 +131,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_GlossaryCandidates",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Inventory",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F14",
@@ -139,7 +139,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Inventory",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_OutlineReview",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F15",
@@ -147,7 +147,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_OutlineReview",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M2",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F16",
@@ -155,7 +155,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M2",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftMerge",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F17",
@@ -163,7 +163,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftMerge",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F18",
@@ -171,7 +171,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Personas",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F19",
@@ -179,7 +179,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Scenarios",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F20",
@@ -187,7 +187,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Bpmn",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F21",
@@ -195,7 +195,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Dmn",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F22",
@@ -203,7 +203,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Data",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F23",
@@ -211,7 +211,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Steps",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F24",
@@ -219,7 +219,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Archimate",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F25",
@@ -227,7 +227,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Glossary",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F26",
@@ -235,7 +235,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Personas",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F27",
@@ -243,7 +243,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Scenarios",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F28",
@@ -251,7 +251,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Bpmn",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F29",
@@ -259,7 +259,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Dmn",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F30",
@@ -267,7 +267,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Data",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F31",
@@ -275,7 +275,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Steps",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F32",
@@ -283,7 +283,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Archimate",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F33",
@@ -291,7 +291,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Glossary",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F34",
@@ -299,7 +299,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F35",
@@ -307,7 +307,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Validate",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F36",
@@ -315,7 +315,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_ArchReview",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F37",
@@ -323,7 +323,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Validate",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F38",
@@ -331,7 +331,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_ArchReview",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewJoin",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F39",
@@ -339,7 +339,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewJoin",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M3",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F40",
@@ -347,7 +347,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M3",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Comments",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F41",
@@ -355,7 +355,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Comments",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Import",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F42",
@@ -363,7 +363,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Import",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_WgDone",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F43",
@@ -372,7 +372,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_WgDone",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M4",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F44",
@@ -381,7 +381,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_WgDone",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftMerge",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F45",
@@ -389,7 +389,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M4",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_OpenPublic",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F46",
@@ -397,7 +397,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_OpenPublic",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M5",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F47",
@@ -405,7 +405,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M5",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_PublicComments",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F48",
@@ -413,7 +413,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_PublicComments",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Disposition",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F49",
@@ -421,7 +421,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Disposition",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M6",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F50",
@@ -429,7 +429,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/M6",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Qa",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F51",
@@ -437,7 +437,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Qa",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Publish",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F52",
@@ -445,7 +445,7 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Publish",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_Published",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     }
   ]
 }

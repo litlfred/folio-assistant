@@ -1,0 +1,56 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/bpmn-graphviz-layout/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/bpmn-graphviz-layout.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Lay out a BPMN that carries no Diagram Interchange (`bpmn_to_svg.py` beside this file, moved from `.github/skills/bpmn_layout/` by bean folio-assistant-tgaj): one Graphviz cluster per participant, the coordinates written back into the BPMN as `<bpmndi:BPMNDiagram>`, and Graphviz's own SVG. cat-harness-tools' `render:bpmn` draws only the DI a file already has (bpmn-js does not lay out), so this is the step before it for a DAK process written, or imported, without one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 smart-base/L2-bpmn/tools/bpmn-graphviz-layout/bpmn_to_svg.py <file.bpmn> [--bpmn <out.bpmn>] [--svg <out.svg>] [--dot <out.dot>]"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "A BPMN 2.0 file, with or without DI.",
+            "name": "bpmn",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The BPMN with a Graphviz-placed `<bpmndi:BPMNDiagram>` (`--bpmn`).",
+            "name": "bpmn",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "Graphviz's drawing (`--svg`); not bpmn-js's, so not the published picture.",
+            "name": "svg",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "bpmn-graphviz-layout",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3",
+          "graphviz"
+        ]
+      },
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "BPMN → Diagram Interchange, laid out by Graphviz"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-bpmn/tools/bpmn-graphviz-layout",
+  "path": "L2-bpmn/tools/bpmn-graphviz-layout/"
+}

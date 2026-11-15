@@ -229,6 +229,7 @@
     "Process_TranslationRefresh": [
       "Process_TranslationRoundTrip"
     ],
+    "Process_TranslationReviewAdjudication": [],
     "Process_TranslationRoundTrip": [],
     "Process_Translation": [
       "Process_Adjudication"
@@ -443,22 +444,19 @@
       "Process_BeanOpen",
       "Process_OptionsAnalysis"
     ],
-    "Process_IgAstCache": [],
     "Process_IgAstDeltaReview": [],
-    "Process_IgIncremental": [],
-    "Process_IgRelease": [],
+    "Process_IgIncremental": [
+      "Process_Cache"
+    ],
     "Process_L3Fhir": [
       "Process_PublishExtractedStatements"
     ],
+    "Process_IgAstCache": [],
+    "Process_IgRelease": [],
     "Process_QuestionnaireWireframeReview": [
       "Process_WireframeDesignReview"
     ],
     "Process_IgDocsSiteCompose": [],
-    "Process_DsaDocumentLifecycle": [
-      "Process_BeanClose",
-      "Process_BeanOpen",
-      "Process_PublicComment"
-    ],
     "Process_GettingStarted": [
       "Process_AskThePerson",
       "Process_BeanClose",
@@ -493,7 +491,6 @@
       "Process_Editing",
       "Process_Publication"
     ],
-    "Process_ContributorFeedback": [],
     "Process_Publication": [
       "Process_BeanClose",
       "Process_BeanOpen",
@@ -507,9 +504,6 @@
       "Process_OptionsAnalysis"
     ],
     "Process_EvidenceRetrieval": [],
-    "Process_FolioReviewPublish": [
-      "Process_ContributorFeedback"
-    ],
     "Process_GuidelineUpdates": [
       "Process_ContentChangeReview"
     ],
@@ -521,6 +515,26 @@
     ],
     "Process_PublicComment": [
       "Process_PublicCommentChange"
+    ],
+    "Process_L1DocumentIngestion": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
+      "Process_BuildL1Kg",
+      "Process_DeriveContent",
+      "Process_ExtractStructure",
+      "Process_IngestTheme",
+      "Process_Ingestion",
+      "Process_L1Gate",
+      "Process_PublishExtractedStatements"
+    ],
+    "Process_DsaDocumentLifecycle": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
+      "Process_PublicComment"
+    ],
+    "Process_ContributorFeedback": [],
+    "Process_FolioReviewPublish": [
+      "Process_ContributorFeedback"
     ],
     "Process_RecordAgentStep": [],
     "Process_ReviewLogWatch": [
@@ -534,41 +548,21 @@
     "Process_L1Gate": [
       "Process_Adjudication"
     ],
-    "Process_L1DocumentIngestion": [
-      "Process_BeanClose",
-      "Process_BeanOpen",
-      "Process_BuildL1Kg",
-      "Process_DeriveContent",
-      "Process_ExtractStructure",
-      "Process_IngestTheme",
-      "Process_Ingestion",
-      "Process_L1Gate",
-      "Process_PublishExtractedStatements"
-    ],
     "Process_PublishExtractedStatements": [],
     "Process_BoardOpenClose": [],
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],
-    "Process_AtomicMassDrift": [
-      "Process_GeneratedFileDrift"
-    ],
     "Process_PaperAuthoring": [
       "Process_BeanClose",
       "Process_BeanOpen",
       "Process_FolioReviewPublish",
       "Process_PublishExtractedStatements"
     ],
+    "Process_AtomicMassDrift": [
+      "Process_GeneratedFileDrift"
+    ],
     "Process_LeanDocsPublish": [],
-    "Process_DIIG": [
-      "Process_BeanClose",
-      "Process_BeanOpen"
-    ],
-    "Process_Planning": [],
-    "Process_ActOnDecisionSupport": [],
     "Process_ClassifyAndCodeContent": [],
-    "Process_DakL3Ig": [
-      "Process_L3Fhir"
-    ],
     "Process_DthAuthoring": [
       "Process_L2ComponentEditReview",
       "Process_PublishExtractedStatements"
@@ -582,9 +576,18 @@
       "Process_L2ComponentEditReview",
       "Process_PublishExtractedStatements"
     ],
+    "Process_DakL3Ig": [
+      "Process_L3Fhir"
+    ],
+    "Process_ActOnDecisionSupport": [],
     "Process_QuestionnaireDataCapture": [],
+    "Process_Planning": [],
     "Process_SgEndToEnd": [
       "Process_Review"
+    ],
+    "Process_DIIG": [
+      "Process_BeanClose",
+      "Process_BeanOpen"
     ],
     "Process_IrisCdnInitialLoad": [
       "Process_IrisCdnSignPublish",

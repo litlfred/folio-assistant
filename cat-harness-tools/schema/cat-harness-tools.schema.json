@@ -750,6 +750,9 @@
     "zod/index-config/IndexInstanceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexInstanceSchema.schema.json"
     },
+    "zod/index-config/IndexLayerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexLayerSchema.schema.json"
+    },
     "zod/index-config/IndexSiteSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexSiteSchema.schema.json"
     },
@@ -1121,6 +1124,12 @@
     },
     "zod/code-list/CodeSourceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/code-list/CodeSourceSchema.schema.json"
+    },
+    "zod/entry-extraction/EntryExtractionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/entry-extraction/EntryExtractionSchema.schema.json"
+    },
+    "zod/entry-extraction/ExtractionStepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/entry-extraction/ExtractionStepSchema.schema.json"
     },
     "zod/glossary-ledger/LedgerEntrySchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/glossary-ledger/LedgerEntrySchema.schema.json"
@@ -1733,6 +1742,24 @@
     },
     "zod/merge-review/WouldHaveBlockedRecordSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/WouldHaveBlockedRecordSchema.schema.json"
+    },
+    "zod/node-view-coverage/CountSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/CountSchema.schema.json"
+    },
+    "zod/node-view-coverage/CoverageRowSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/CoverageRowSchema.schema.json"
+    },
+    "zod/node-view-coverage/NodeLackSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/NodeLackSchema.schema.json"
+    },
+    "zod/node-view-coverage/NodeRowSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/NodeRowSchema.schema.json"
+    },
+    "zod/node-view-coverage/NodeViewCoverageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/NodeViewCoverageSchema.schema.json"
+    },
+    "zod/node-view-coverage/ViewerStateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/ViewerStateSchema.schema.json"
     },
     "zod/python-deps/PythonDepSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/python-deps/PythonDepSchema.schema.json"

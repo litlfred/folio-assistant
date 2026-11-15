@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/node-view-coverage.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/node-view-coverage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "node-view-coverage",
+      "title": "node-view-coverage",
+      "summary": "The node-view coverage report: for each node a declared directory holds,",
+      "module": "schemas/sdlc/node-view-coverage.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/schemas"
+    }
+  ]
+}

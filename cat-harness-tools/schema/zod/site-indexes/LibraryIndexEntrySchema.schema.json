@@ -66,6 +66,11 @@
           "minimum": 0,
           "maximum": 9007199254740991
         },
+        "figures": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
         "ocrPages": {
           "type": "integer",
           "minimum": 0,
@@ -126,6 +131,18 @@
             "pdf",
             "image"
           ]
+        },
+        "lang": {
+          "type": "string"
+        },
+        "titles": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
         },
         "pageStart": {
           "anyOf": [

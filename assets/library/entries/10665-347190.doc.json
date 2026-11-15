@@ -57,7 +57,10 @@
         }
       ],
       "extract": "* Second dose +6M ** repeats every 20 years until age 65, thereafter every 10 years Routine immunization profile Switzerland Progress towards achieving European Vaccine Action Plan goals, 2017 Goal Indicator Status Goal Indicator Status 1 Sustain polio-free statusa (Current risk) Yes (Low) 4 Meets vaccination coverage targets DTP3 national immunization coverage ≥95%d ≥90% DTP3 coverage achieved in ≥90% of districtse",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/10665-347190/blocks/prose-page-001"
+      ]
     },
     {
       "id": "page-002",
@@ -108,7 +111,13 @@
         }
       ],
       "extract": "Routine immunization profile Switzerland Vaccine coverage estimates, 2013-2017d Number of reported cases of vaccine-preventable diseases, 2013-2017e,i 2013 2014 2015 2016 2017 Measles 175 23 35 65 105 Mumps ND ND ND ND ND Rubella 6 4 3 0 1 Congenital rubella syndrome 0 0 0 0 0 Diphtheria ND 0 0 ND 1 Tetanus ND ND ND ND ND Pertussis* 10 094 9349 6970 8276 8833 Hepatitis A 62 56 46 43 110 Varicella ND ND ND ND ND DTP3",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/10665-347190/blocks/prose-page-002",
+        "library/10665-347190/blocks/figure-img-p002-1",
+        "library/10665-347190/blocks/figure-img-p002-2",
+        "library/10665-347190/blocks/figure-img-p002-3"
+      ]
     },
     {
       "id": "page-003",
@@ -159,7 +168,10 @@
         }
       ],
       "extract": "Routine immunization profile Switzerland Number of reported measles, mumps and rubella casese and MCV coverage estimatesd, 2013-2017 DTP1-DTP3 dropout rate, 2013-2017d Note: Dropout rate is calculated using WUENIC Number of reported diphtheria, tetanus and pertussis casese and DTP3 coverage estimatesd, 2013-2017 Immunization system characteristics, 2017 Sustained access to WHO accredited polio, measles, and rubella",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/10665-347190/blocks/prose-page-003"
+      ]
     },
     {
       "id": "page-004",
@@ -210,7 +222,10 @@
         }
       ],
       "extract": "Routine immunization profile Switzerland Abbreviations Data sources a European Regional Commission for Certification of Poliomyelitis eradication (RCC) meeting report: www.euro.who.int/32ndRCC b European Regional Verification Commission for Measles and Rubella Elimination (RVC) meeting report: www.euro.who.int/7thRVC c European Vaccine Action Plan 2015-2020 Midterm report d WHO/UNICEF Estimates of National",
-      "extractCut": true
+      "extractCut": true,
+      "blocks": [
+        "library/10665-347190/blocks/prose-page-004"
+      ]
     }
   ],
   "checks": {
@@ -340,6 +355,48 @@
         "ru": "Карта Швейцарии по кантонам — одна из трех карт на странице с данными об охвате вакцинацией по субнациональным территориям в 2017 г. (АКДС3, MCV2 и MCV1; легенда на странице: ≥95%, 90–94%, 80–89%, <80%). Большая центрально-западная территория, а также один центральный и один восточный кантон окрашены в оранжевый цвет, а небольшой северный кантон и северо-западная территория — в светло-синий. Большинство кантонов окрашены в серый цвет."
       },
       "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 4,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 3
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "glossary",
+      "state": "not-extracted",
+      "note": "a glossary section is in the text (p4); its entries are not extracted"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 4,
+      "note": "4 of 4 sections"
     }
   ],
   "links": {

@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-publisher-i18n/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-publisher-i18n.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "ig-publisher-i18n",
+      "title": "Put the IG Publisher's QA messages in each language an IG translates into, from the Publisher's own translations first"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ig-publisher-i18n",
+  "path": "tools/ig-publisher-i18n/"
+}

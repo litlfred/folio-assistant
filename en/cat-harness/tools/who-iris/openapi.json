@@ -9,6 +9,9 @@
   "tags": [
     {
       "name": "graph-rendering"
+    },
+    {
+      "name": "translation-manager"
     }
   ],
   "paths": {
@@ -80,10 +83,87 @@
           "graph-rendering"
         ]
       }
+    },
+    "/tools/translation-qa-prune": {
+      "post": {
+        "operationId": "translation-qa-prune",
+        "summary": "Prune round-trip rulings of removed strings",
+        "description": "Drop the translation-semantic-roundtrip rulings of strings the catalogues no longer hold, and renumber the rest to catalogue order. Rulings are paired with strings by the hash of their msgid, so removing strings invalidates none and needs no agent re-run; this is the upkeep that follows. It only drops or renumbers: a verdict is never changed or invented, and a ruling for a string the ref's history never held (one recorded ahead of its PR) is kept.",
+        "tags": [
+          "translation-manager"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-qa-prune/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Apply the change to test/attestations/translation-qa/. Absent, it is a dry run that prints each dropped ruling and the renumbered spans."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "Whose catalogues decide what was removed. Default origin/main: the state branch serves main and every branch, so a ruling goes only once main no longer holds its string."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "attestations": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "With --write, the rewritten `test/attestations/translation-qa/<catalogue>.<locale>.attestations.json`, to be pushed to `cat/who-iris/attestations`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/translation-qa-prune.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation-qa:prune"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-manager"
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
+      "Branch": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+        "description": "A git branch name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+      },
       "Flag": {
         "type": "boolean",
         "description": "A boolean switch — projects to a bare flag, with no value word",

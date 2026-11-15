@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L4",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-L4",
+      "title": "L4 — the application"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/schemas/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L4/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L4",
+  "path": "L4/",
+  "title": "L4 — the application"
+}

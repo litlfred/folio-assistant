@@ -230,7 +230,7 @@
         }
       ],
       "skos:notation": "folio-block-screenshots",
-      "dcterms:source": "folio-assistant-core/tools/folio-block-screenshots/folio-block-screenshots.ts#folio-block-screenshots",
+      "dcterms:source": "folio-assistant-core/collab/tools/folio-block-screenshots/folio-block-screenshots.ts#folio-block-screenshots",
       "skos:note": "candidate"
     },
     {
@@ -386,7 +386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale."
+          "@value": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes; acronyms (notation and prefLabel); or element types, the placeholder types an ArchiMate metamodel view shows, with each term's definition and skos:example. The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale."
         }
       ],
       "skos:notation": "glossary-table",
@@ -406,7 +406,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for."
+          "@value": "Of the normative sentences in a publication (the closed marker list of the methodology `l1-coverage` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for."
         }
       ],
       "skos:notation": "l1-coverage",

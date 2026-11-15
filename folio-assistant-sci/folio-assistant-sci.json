@@ -367,22 +367,23 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
-  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceCommitSha": "c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceTree": "7ac7366db3fb26551e0a610d1c88737daaa6ce86",
+  "sourceCommitAt": "2026-11-15T14:29:41+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 71,
-    "Decision": 1,
     "Process": 3,
     "SequenceFlow": 27,
     "Lane": 8,
     "ProcessNode": 28,
-    "GraphTypology": 24,
+    "Decision": 1,
+    "GraphTypology": 25,
+    "QaAttestation": 20,
     "Role": 4,
-    "Subgraph": 25,
+    "Subgraph": 26,
     "Asset": 3,
     "Tool": 26,
     "Schema": 5
@@ -1311,14 +1312,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/decision/lean-build-gate/Decision_LeanBuildGate",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
-      "name": "Build green, no sorries?",
-      "hitPolicy": "FIRST",
-      "sourcePath": "processes/content/decisions/lean-build-gate.dmn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Publish a folio's Lean render with the harness chrome",
@@ -1667,21 +1660,29 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/decision/lean-build-gate/Decision_LeanBuildGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Build green, no sorries?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "collab/processes/content/decisions/lean-build-gate.dmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Authoring a paper",
       "summary": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting.",
       "description": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering. Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
       "enforcement": "advisory",
-      "sourcePath": "processes/content/authoring-a-paper.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn",
+      "sourcePath": "collab/processes/content/authoring-a-paper.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/collab/processes/content/authoring-a-paper.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/authoring-a-paper.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/StartEvent_NewPaper"
       ],
       "nodeCount": 17,
       "flowCount": 18,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A01",
@@ -1689,7 +1690,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/StartEvent_NewPaper",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02",
@@ -1697,7 +1698,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A03",
@@ -1705,7 +1706,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A04",
@@ -1714,7 +1715,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_SeedPlan",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A05",
@@ -1723,7 +1724,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A06",
@@ -1731,7 +1732,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_SeedPlan",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Scaffold",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A07",
@@ -1739,7 +1740,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Scaffold",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A08",
@@ -1747,7 +1748,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A09",
@@ -1755,7 +1756,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Gateway_LeanGreen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A10",
@@ -1764,7 +1765,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Gateway_LeanGreen",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A11",
@@ -1773,7 +1774,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Gateway_LeanGreen",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12",
@@ -1781,7 +1782,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b",
@@ -1789,7 +1790,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A13",
@@ -1797,7 +1798,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14",
@@ -1805,7 +1806,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_Published",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A15",
@@ -1814,7 +1815,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_Published",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A16",
@@ -1822,7 +1823,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A17",
@@ -1831,7 +1832,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_Published",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
@@ -1839,7 +1840,7 @@
       "name": "Author (person)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
@@ -1847,7 +1848,7 @@
       "name": "Work plan (beans)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
@@ -1855,7 +1856,7 @@
       "name": "Authoring agent (system)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
@@ -1863,7 +1864,7 @@
       "name": "Lean toolchain (lean-mcp)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
@@ -1871,7 +1872,7 @@
       "name": "Build pipeline",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/StartEvent_NewPaper",
@@ -1889,7 +1890,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A01"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan",
@@ -1911,7 +1912,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/End_BeanNotYours",
@@ -1929,7 +1930,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A05"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
@@ -1951,7 +1952,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A03"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_BeanYours",
@@ -1972,7 +1973,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A04",
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A05"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_SeedPlan",
@@ -1995,7 +1996,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A06"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Scaffold",
@@ -2017,7 +2018,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A07"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks",
@@ -2040,7 +2041,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A08"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize",
@@ -2064,7 +2065,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A09"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Gateway_LeanGreen",
@@ -2087,7 +2088,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A10",
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A11"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
@@ -2109,7 +2110,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
@@ -2131,7 +2132,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
@@ -2153,7 +2154,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A13"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish",
@@ -2175,7 +2176,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/GW_Published",
@@ -2196,7 +2197,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A15",
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A17"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
@@ -2218,7 +2219,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A16"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published",
@@ -2236,7 +2237,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A16"
       ],
       "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/typologies",
@@ -2287,6 +2288,14 @@
       "renderable": false,
       "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
       "validatorRef": "schemas/tools/tool.ts#ToolDefinitionSchema"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "cat-harness",
+      "renderable": false,
+      "summary": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
+      "validatorNotApplicable": "it holds several node kinds typed in different places — skills, workflows, roles, actors. `schema` above already says why one pointer here would be a lie of precision, and that applies to a validator with more force: a runnable one would silently grade 51 JSON files against whichever single shape it named. Each family is validated where it is declared."
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills",
@@ -2416,6 +2425,186 @@
       "validatorNotApplicable": "a member is Lean 4 source — a Lake package (`lakefile.toml` / `lakefile.lean`, `lean-toolchain`), its modules (`*.lean`) and their declarations — or a template the Lean tooling fills (`*.lean.tmpl`). Its validator is the Lean elaborator itself (`lake build`, or `lean`-direct against a restored cache), never a Zod schema: a file that parses as JSON tells you nothing about whether it typechecks."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/before-you-start",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/before-you-start",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/before-you-start (docs/source/guides-writing-a-paper/before-you-start), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/before-you-start.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/step-4-formalize-in-lean",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/step-4-formalize-in-lean (docs/source/guides-writing-a-paper/step-4-formalize-in-lean), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/step-5-validate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/step-5-validate",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/step-5-validate (docs/source/guides-writing-a-paper/step-5-validate), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/step-5-validate.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "block-qa attestation: block docs/source/guides-writing-a-paper/where-to-go-deeper",
+      "description": "The block-qa judgements recorded for block docs/source/guides-writing-a-paper/where-to-go-deeper (docs/source/guides-writing-a-paper/where-to-go-deeper), each pinned to the hash it attested.",
+      "sourceKind": "block-qa",
+      "sourcePath": "test/attestations/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/processes/content/atomic-mass-drift-check",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: process Process_AtomicMassDrift",
+      "description": "The kg-qa judgements recorded for process Process_AtomicMassDrift (processes/content/atomic-mass-drift-check.bpmn), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/processes/content/atomic-mass-drift-check.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/category-theory",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill category-theory",
+      "description": "The kg-qa judgements recorded for skill category-theory (skills/content/folio-paper-adapter/category-theory.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/category-theory.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/chapter-analysis",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill chapter-analysis",
+      "description": "The kg-qa judgements recorded for skill chapter-analysis (skills/content/folio-paper-adapter/chapter-analysis.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/chapter-analysis.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/content-block-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill content-block-review",
+      "description": "The kg-qa judgements recorded for skill content-block-review (skills/content/folio-paper-adapter/content-block-review.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/content-block-review.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/content-validation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill content-validation",
+      "description": "The kg-qa judgements recorded for skill content-validation (skills/content/folio-paper-adapter/content-validation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/content-validation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/critical-path-analysis",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill critical-path-analysis",
+      "description": "The kg-qa judgements recorded for skill critical-path-analysis (skills/content/folio-paper-adapter/critical-path-analysis.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/critical-path-analysis.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/formalizer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill formalizer",
+      "description": "The kg-qa judgements recorded for skill formalizer (skills/content/folio-paper-adapter/formalizer.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/formalizer.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/latex-compilation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill latex-compilation",
+      "description": "The kg-qa judgements recorded for skill latex-compilation (skills/content/folio-paper-adapter/latex-compilation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/latex-compilation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/latex-validation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill latex-validation",
+      "description": "The kg-qa judgements recorded for skill latex-validation (skills/content/folio-paper-adapter/latex-validation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/latex-validation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-environment-setup",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill lean-environment-setup",
+      "description": "The kg-qa judgements recorded for skill lean-environment-setup (skills/content/folio-paper-adapter/lean-environment-setup.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/lean-environment-setup.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-generation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill lean-generation",
+      "description": "The kg-qa judgements recorded for skill lean-generation (skills/content/folio-paper-adapter/lean-generation.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/lean-generation.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/lean-proof-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill lean-proof-review",
+      "description": "The kg-qa judgements recorded for skill lean-proof-review (skills/content/folio-paper-adapter/lean-proof-review.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/lean-proof-review.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/paper-importer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill paper-importer",
+      "description": "The kg-qa judgements recorded for skill paper-importer (skills/content/folio-paper-adapter/paper-importer.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/paper-importer.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-simplifier",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill proof-simplifier",
+      "description": "The kg-qa judgements recorded for skill proof-simplifier (skills/content/folio-paper-adapter/proof-simplifier.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/proof-simplifier.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-status-tracking",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill proof-status-tracking",
+      "description": "The kg-qa judgements recorded for skill proof-status-tracking (skills/content/folio-paper-adapter/proof-status-tracking.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/proof-status-tracking.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/skills/content/folio-paper-adapter/proof-triage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill proof-triage",
+      "description": "The kg-qa judgements recorded for skill proof-triage (skills/content/folio-paper-adapter/proof-triage.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/skills/content/folio-paper-adapter/proof-triage.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
       "prefLabel": "Lean authoring agent",
@@ -2519,7 +2708,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
       ],
-      "description": "This instance's own reader-facing pages: the guide to writing a paper, which documents this instance's own process (`processes/content/authoring-a-paper.bpmn`). Composed THROUGH just-the-docs (`composed: true`, as the content core's own docs directory is), so its pages land in the platform's site under this instance's name with the sidebar, search and layout. `docs.json` here declares the `docs-source` the platform's one docs-page run reads: each `source/<group>-<slug>/` renders into `<group>/<slug>.md` beside it, and `compose-docs` leaves `source/` itself out.",
+      "description": "This instance's own reader-facing pages: the guide to writing a paper, which documents this instance's own process (`collab/processes/content/authoring-a-paper.bpmn`, opt-in `folio-assistant-sci.collab`). Composed THROUGH just-the-docs (`composed: true`, as the content core's own docs directory is), so its pages land in the platform's site under this instance's name with the sidebar, search and layout. `docs.json` here declares the `docs-source` the platform's one docs-page run reads: each `source/<group>-<slug>/` renders into `<group>/<slug>.md` beside it, and `compose-docs` leaves `source/` itself out.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-docs"
     },
@@ -2859,10 +3048,26 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
-      "description": "The BPMN and DMN this layer OWNS: the paper's content processes, grouped by concern exactly as the harness groups its own (`processes/<group>/`, a DMN in `processes/<group>/decisions/`). `content/authoring-a-paper.bpmn` with `content/decisions/lean-build-gate.dmn`, `content/atomic-mass-drift-check.bpmn` and `content/lean-docs-publish.bpmn`. They name Lean and paper skills that live here, which cat-harness cannot reach. Their calls and skill refs that stay generic point DOWN through core to the harness.",
+      "description": "The BPMN and DMN this layer OWNS: the paper's content processes, grouped by concern exactly as the harness groups its own (`processes/<group>/`, a DMN in `processes/<group>/decisions/`). `content/atomic-mass-drift-check.bpmn` and `content/lean-docs-publish.bpmn`. They name Lean and paper skills that live here, which cat-harness cannot reach. Their calls and skill refs that stay generic point DOWN through core to the harness. `authoring-a-paper.bpmn` and its `lean-build-gate.dmn` run on the work plan, so they moved to the opt-in `collab/` sub-graph (owner, 2026-11-13).",
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "collab",
+      "path": "collab/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The collaborative-development sub-graph — a NAMED SUB-GRAPH of this layer on the pattern of folio-assistant-core's `collab/`, and OPT-IN: off in every layer, this one included, unless that layer lists `folio-assistant-sci.collab` in its own `enableSubgraphs` (owner, 2026-11-13, check:optin-refs follow-up). It holds the paper process that runs on the work plan and the delivery process — it claims and closes a bean (cat-harness's `Process_BeanOpen` / `Process_BeanClose`) and names `bean-coordination` and `todo-manager` (cat-harness's `work-plan`): `authoring-a-paper.bpmn`, with its checklist, SVG and the decision table it evaluates (`decisions/lean-build-gate.dmn`). It `requires` `cat-harness.sdlc`, which requires `cat-harness.work-plan`, so switching it on switches both on. The graphs inside it are declared FROM WITHIN, in `collab/graph.json`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/collab"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/scenarios",

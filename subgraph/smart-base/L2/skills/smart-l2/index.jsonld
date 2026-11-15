@@ -1,0 +1,68 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/skills/smart-l2/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/dth-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "dth-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b4e1cb3fcc9fd275f0080a544f2425770bbcb9e85916a08f0870e8e61eeef689",
+        "bytes": 4493,
+        "sha256": "b4e1cb3fcc9fd275f0080a544f2425770bbcb9e85916a08f0870e8e61eeef689"
+      },
+      "title": "dth-authoring"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/dth-l1-to-l2-ingest",
+      "@type": "bootstrap:Skill",
+      "name": "dth-l1-to-l2-ingest",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd",
+        "bytes": 7446,
+        "sha256": "f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd"
+      },
+      "title": "dth-l1-to-l2-ingest"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l2-component-edit-review",
+      "@type": "bootstrap:Skill",
+      "name": "l2-component-edit-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bbe792cb1c82dc5c3d7581ae00a1d9ffb2ff7af3373f5ec0615aa2b11b0ceb0d",
+        "bytes": 8640,
+        "sha256": "bbe792cb1c82dc5c3d7581ae00a1d9ffb2ff7af3373f5ec0615aa2b11b0ceb0d"
+      },
+      "title": "l2-component-edit-review"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l2-dak-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "l2-dak-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/18564d3300336fbcab94420426d4d0afa8d3f627be7ba8ba9ddac077886498dc",
+        "bytes": 5614,
+        "sha256": "18564d3300336fbcab94420426d4d0afa8d3f627be7ba8ba9ddac077886498dc"
+      },
+      "title": "l2-dak-authoring"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/l2-dependency-choice",
+      "@type": "bootstrap:Skill",
+      "name": "l2-dependency-choice",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa35d142b2df680d877429ba92189faf11240b0dd94f7170c8d25d3746d870db",
+        "bytes": 4975,
+        "sha256": "fa35d142b2df680d877429ba92189faf11240b0dd94f7170c8d25d3746d870db"
+      },
+      "title": "l2-dependency-choice"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "L2/skills/smart-l2",
+  "path": "L2/skills/smart-l2/"
+}

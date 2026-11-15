@@ -266,6 +266,13 @@
                   "label"
                 ],
                 "additionalProperties": false
+              },
+              "blocks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               }
             },
             "required": [
@@ -578,6 +585,49 @@
         },
         "withheld": {
           "type": "boolean"
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "contents",
+                  "sections",
+                  "figures",
+                  "tables",
+                  "references",
+                  "glossary",
+                  "footnotes",
+                  "summaries"
+                ]
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "found",
+                  "partial",
+                  "none",
+                  "not-extracted"
+                ]
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "state"
+            ],
+            "additionalProperties": false
+          }
         },
         "links": {
           "type": "object",

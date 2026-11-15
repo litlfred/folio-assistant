@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of smart-base"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/bpmn-graphviz-layout",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BPMN → Diagram Interchange, laid out by Graphviz"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lay out a BPMN that carries no Diagram Interchange (`bpmn_to_svg.py` beside this file, moved from `.github/skills/bpmn_layout/` by bean folio-assistant-tgaj): one Graphviz cluster per participant, the coordinates written back into the BPMN as `<bpmndi:BPMNDiagram>`, and Graphviz's own SVG. cat-harness-tools' `render:bpmn` draws only the DI a file already has (bpmn-js does not lay out), so this is the step before it for a DAK process written, or imported, without one."
+        }
+      ],
+      "skos:notation": "bpmn-graphviz-layout",
+      "dcterms:source": "smart-base/L2-bpmn/tools/bpmn-graphviz-layout/bpmn-graphviz-layout.ts#bpmn-graphviz-layout",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/bpmn-to-fsh",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -30,7 +50,27 @@
         }
       ],
       "skos:notation": "bpmn-to-fsh",
-      "dcterms:source": "smart-base/tools/bpmn-to-fsh/bpmn-to-fsh.ts#bpmn-to-fsh",
+      "dcterms:source": "smart-base/L2-bpmn/tools/bpmn-to-fsh/bpmn-to-fsh.ts#bpmn-to-fsh",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/bpmn-validate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BPMN structure, vendor namespaces and lane → actor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Check a DAK's BPMN (`validate.ts` beside this file; bean folio-assistant-tgaj, which replaced four Python validators with it): well-formed XML whose root is `<bpmn:definitions>`, no Camunda or Zeebe namespace, no duplicate id, at least one process, no bpmn-moddle (bpmn-js) import warning; every process has a `<laneSet>`, every flow node sits in a lane, and lane ids are unique and valid FSH ids; and every innermost lane names its actor by id: its `partitionElementRef` (a top-level `<bpmn:resource>`), else its own id, matched exactly against the `Instance:` ids of the ActorDefinitions in the IG's FSH (or JSON) and, for a harness process, the role ids of the mounted layers' `scenarios/roles.json`. Never by file name or title. With no file named it reads the declared process directories, `smart-base/**/processes/` and an IG's `input/bpmn/`."
+        }
+      ],
+      "skos:notation": "bpmn-validate",
+      "dcterms:source": "smart-base/L2-bpmn/tools/bpmn-validate/bpmn-validate.ts#bpmn-validate",
       "skos:note": "candidate"
     },
     {
@@ -50,7 +90,7 @@
         }
       ],
       "skos:notation": "dak-api-hub",
-      "dcterms:source": "smart-base/tools/dak-api-hub/dak-api-hub.ts#dak-api-hub",
+      "dcterms:source": "smart-base/L3/tools/dak-api-hub/dak-api-hub.ts#dak-api-hub",
       "skos:note": "candidate"
     },
     {
@@ -70,7 +110,7 @@
         }
       ],
       "skos:notation": "dak-config-from-sushi",
-      "dcterms:source": "smart-base/tools/dak-config-from-sushi/dak-config-from-sushi.ts#dak-config-from-sushi",
+      "dcterms:source": "smart-base/L2/tools/dak-config-from-sushi/dak-config-from-sushi.ts#dak-config-from-sushi",
       "skos:note": "candidate"
     },
     {
@@ -90,7 +130,7 @@
         }
       ],
       "skos:notation": "dmn-to-html",
-      "dcterms:source": "smart-base/tools/dmn-to-html/dmn-to-html.ts#dmn-to-html",
+      "dcterms:source": "smart-base/L2-dmn/tools/dmn-to-html/dmn-to-html.ts#dmn-to-html",
       "skos:note": "candidate"
     },
     {
@@ -110,7 +150,7 @@
         }
       ],
       "skos:notation": "dmn-to-questionnaire",
-      "dcterms:source": "smart-base/tools/dmn-to-questionnaire/dmn-to-questionnaire.ts#dmn-to-questionnaire",
+      "dcterms:source": "smart-base/L2-dmn/tools/dmn-to-questionnaire/dmn-to-questionnaire.ts#dmn-to-questionnaire",
       "skos:note": "candidate"
     },
     {
@@ -130,7 +170,7 @@
         }
       ],
       "skos:notation": "extract-dak",
-      "dcterms:source": "smart-base/tools/extract-dak/extract-dak.ts#extract-dak",
+      "dcterms:source": "smart-base/L2/tools/extract-dak/extract-dak.ts#extract-dak",
       "skos:note": "candidate"
     },
     {
@@ -150,7 +190,107 @@
         }
       ],
       "skos:notation": "immz-schedule-app-local",
-      "dcterms:source": "smart-base/tools/immz-schedule-app-local/immz-schedule-app-local.ts#immz-schedule-app-local",
+      "dcterms:source": "smart-base/L4/tools/immz-schedule-app-local/immz-schedule-app-local.ts#immz-schedule-app-local",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/kg-extract-bpmn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BPMN → L2-BPMN knowledge graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`."
+        }
+      ],
+      "skos:notation": "kg-extract-bpmn",
+      "dcterms:source": "smart-base/L2-bpmn/tools/kg-extract-bpmn/kg-extract-bpmn.ts#kg-extract-bpmn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/kg-extract-citations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DMN reference column → L1 citations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document."
+        }
+      ],
+      "skos:notation": "kg-extract-citations",
+      "dcterms:source": "smart-base/L2-dmn/tools/kg-extract-citations/kg-extract-citations.ts#kg-extract-citations",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/kg-extract-dak",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "dak.json + FSH tree → L2 DAK component graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor)."
+        }
+      ],
+      "skos:notation": "kg-extract-dak",
+      "dcterms:source": "smart-base/L2/tools/kg-extract-dak/kg-extract-dak.ts#kg-extract-dak",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/kg-extract-dmn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DMN → L2-DMN knowledge graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract the interior of one DMN decision table as the L2-DMN subgraph (`smart-base/L2-dmn/schemas/extract-dmn.ts`, ported from WHO smart-kg `tools/extract-dmn.mjs`): a `dmn-definitions` node and its decisions, decision tables, input and output clauses and rules, the `reads` edges to the data elements recovered from input expressions, the `citesSource` edges to the L1 citations each rule's reference column names, and the `invokedBy` edge to the BPMN task the `usingTask` href names. Pass `--bpmn` to resolve that task by name instead of recording it unresolved."
+        }
+      ],
+      "skos:notation": "kg-extract-dmn",
+      "dcterms:source": "smart-base/L2-dmn/tools/kg-extract-dmn/kg-extract-dmn.ts#kg-extract-dmn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/kg-extract-l3",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FHIR IG → L3 knowledge graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type."
+        }
+      ],
+      "skos:notation": "kg-extract-l3",
+      "dcterms:source": "smart-base/L3/tools/kg-extract-l3/kg-extract-l3.ts#kg-extract-l3",
       "skos:note": "candidate"
     },
     {
@@ -186,11 +326,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `kg/src/validate.ts`) with coverage and proposed, unsigned exclusions."
+          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `L1/schemas/validate.ts`) with coverage and proposed, unsigned exclusions."
         }
       ],
       "skos:notation": "l1-recommendation-candidates",
-      "dcterms:source": "smart-base/tools/l1-recommendation-candidates/l1-recommendation-candidates.ts#l1-recommendation-candidates",
+      "dcterms:source": "smart-base/L1/tools/l1-recommendation-candidates/l1-recommendation-candidates.ts#l1-recommendation-candidates",
       "skos:note": "candidate"
     },
     {
@@ -210,7 +350,7 @@
         }
       ],
       "skos:notation": "l1-recommendation-scenarios",
-      "dcterms:source": "smart-base/tools/l1-recommendation-scenarios/l1-recommendation-scenarios.ts#l1-recommendation-scenarios",
+      "dcterms:source": "smart-base/L2/tools/l1-recommendation-scenarios/l1-recommendation-scenarios.ts#l1-recommendation-scenarios",
       "skos:note": "candidate"
     },
     {
@@ -230,7 +370,7 @@
         }
       ],
       "skos:notation": "l1-statement-lists",
-      "dcterms:source": "smart-base/tools/l1-statement-lists/l1-statement-lists.ts#l1-statement-lists",
+      "dcterms:source": "smart-base/L1/tools/l1-statement-lists/l1-statement-lists.ts#l1-statement-lists",
       "skos:note": "candidate"
     },
     {
@@ -250,7 +390,7 @@
         }
       ],
       "skos:notation": "l1-transcription-verbatim",
-      "dcterms:source": "smart-base/tools/l1-transcription-verbatim/l1-transcription-verbatim.ts#l1-transcription-verbatim",
+      "dcterms:source": "smart-base/L1/tools/l1-transcription-verbatim/l1-transcription-verbatim.ts#l1-transcription-verbatim",
       "skos:note": "candidate"
     },
     {
@@ -290,7 +430,7 @@
         }
       ],
       "skos:notation": "smart-liquid-variables",
-      "dcterms:source": "smart-base/tools/smart-liquid-variables/smart-liquid-variables.ts#smart-liquid-variables",
+      "dcterms:source": "smart-base/L3/tools/smart-liquid-variables/smart-liquid-variables.ts#smart-liquid-variables",
       "skos:note": "candidate"
     },
     {
@@ -310,7 +450,7 @@
         }
       ],
       "skos:notation": "terminology-lookup",
-      "dcterms:source": "smart-base/tools/terminology-lookup/terminology-lookup.ts#terminology-lookup",
+      "dcterms:source": "smart-base/L3/tools/terminology-lookup/terminology-lookup.ts#terminology-lookup",
       "skos:note": "candidate"
     }
   ]

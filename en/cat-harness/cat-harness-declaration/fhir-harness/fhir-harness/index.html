@@ -38,8 +38,9 @@
     "pagesWithTranslations": 49,
     "complete": true
   },
-  "statusSrc":"../../../../../assets/translation-status/index.json"
-}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../folio-assistant-core/","jsonld":"../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../../../assets/css/docs-ui.css?v=5386a6134c28"><link rel="stylesheet" href="../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../assets/css/work-plan.css?v=bd8c73337b01"><link rel="stylesheet" href="../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../assets/css/avatars.css?v=20cca864903d"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../assets/js/navbar-row.js?v=cc1885e41c70" defer></script><script src="../../../../../assets/js/docs-ui.js?v=829c614a8b9d" defer></script><script src="../../../../../assets/js/edit-links.js?v=b4f948dbab24" defer></script><script src="../../../../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><script src="../../../../../assets/js/work-plan.js" defer></script><script src="../../../../../assets/js/process-index.js" defer></script><style>
+  "statusSrc":"../../../../../assets/translation-status/index.json",
+  "reviewSrc":"../../../../../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../folio-assistant-core/","jsonld":"../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../../../../../assets/css/docs-ui.css?v=cc59a4b4ce11"><link rel="stylesheet" href="../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../../../../../assets/js/docs-ui.js?v=480a3c3c0d42" defer></script><script src="../../../../../assets/js/edit-links.js?v=7b072444cbb5" defer></script><script src="../../../../../assets/js/translation-review.js?v=1902d883e072" defer></script><script src="../../../../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
   .folio-landing { position: relative; margin: 0 0 2rem; }
 
   /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
@@ -178,9 +179,21 @@
     &quot;id&quot;: &quot;fhir-harness-processes&quot;,
     &quot;path&quot;: &quot;processes/&quot;,
     &quot;dependents&quot;: &quot;skip&quot;,
-    &quot;description&quot;: &quot;The BPMN this layer OWNS, grouped by concern as the harness groups its own (`processes/&lt;group&gt;/`): in `content/`, the FHIR IG pipeline (`l3-fhir-pipeline.bpmn`), its incremental build (`ig-incremental-build.bpmn`), the IG AST cache and delta review (`ig-ast-cache.bpmn`, `ig-ast-delta-review.bpmn`), the IG release, its owner&#39;s tag and its catch-up (`ig-release.bpmn`) and the Questionnaire wireframe review (`questionnaire-wireframe-review.bpmn`), beside the IG skills they bind.&quot;,
+    &quot;description&quot;: &quot;The BPMN this layer OWNS, grouped by concern as the harness groups its own (`processes/&lt;group&gt;/`): in `content/`, the IG AST cache (`ig-ast-cache.bpmn`), the IG release, its owner&#39;s tag and its catch-up (`ig-release.bpmn`) and the Questionnaire wireframe review (`questionnaire-wireframe-review.bpmn`), beside the IG skills they bind. The FHIR IG pipeline, its incremental build and the IG AST delta review keep the work plan, so they are in the opt-in `collab/` (owner, 2026-11-13).&quot;,
     &quot;graphTypologies&quot;: [
       &quot;processes&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;collab&quot;,
+    &quot;path&quot;: &quot;collab/&quot;,
+    &quot;optIn&quot;: true,
+    &quot;requires&quot;: [
+      &quot;cat-harness.sdlc&quot;
+    ],
+    &quot;description&quot;: &quot;The collaborative-development sub-graph — a NAMED SUB-GRAPH of this layer, OPT-IN: off in every layer, this one included, unless that layer lists `fhir-harness.collab` in its own `enableSubgraphs` (owner, 2026-11-13, check:optin-refs follow-up). It holds the FHIR IG processes that keep the work plan — the L3 pipeline (`l3-fhir-pipeline.bpmn`), the incremental build (`ig-incremental-build.bpmn`) and the IG AST delta review (`ig-ast-delta-review.bpmn`), each of which names `todo-manager`. It `requires` `cat-harness.sdlc`, which requires `cat-harness.work-plan`, so switching it on switches both on. The graph inside it is declared FROM WITHIN, in `collab/graph.json`.&quot;,
+    &quot;graphTypologies&quot;: [
+      &quot;cat-harness&quot;
     ]
   },
   {
@@ -241,6 +254,15 @@
     ]
   },
   {
+    &quot;id&quot;: &quot;fhir-core-definitions&quot;,
+    &quot;path&quot;: &quot;fhir-core/&quot;,
+    &quot;title&quot;: &quot;FHIR core definitions&quot;,
+    &quot;description&quot;: &quot;The FHIR core specification&#39;s StructureDefinitions for each STABLE release, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/&lt;id&gt;): R4 from `hl7.fhir.r4.core#4.0.1`, R4B from `hl7.fhir.r4b.core#4.3.0`, R5 from `hl7.fhir.r5.core#5.0.0`, each pinned in `pins.json` by its packages.fhir.org URL, sha1 and sha512. `&lt;release&gt;/manifest.json` lists every resource, complex and primitive type and root type (Base in R5; Element, BackboneElement, DomainResource, Resource) with its kind, base and the sha256 of its bytes; constraint profiles, extension definitions and logical models are left out and counted. The bodies are the package&#39;s own files, written beside the manifest by `fhir-core.ts materialise` and not committed (12 MB); `fhir-core.ts check` holds them to the manifests and `resolve` answers which file a canonical is kept in. A release whose package could not be read is `unread` with the reason, never an empty graph (owner, 2026-11-14).&quot;,
+    &quot;graphTypologies&quot;: [
+      &quot;fhir-core-definitions&quot;
+    ]
+  },
+  {
     &quot;id&quot;: &quot;glossary&quot;,
     &quot;path&quot;: &quot;glossary/&quot;,
     &quot;description&quot;: &quot;FHIR Harness&#39;s generated glossary (`glossary/generated/fhir-harness/`): candidate `folio-glossary/v1` schemes extracted from this layer&#39;s tools, skills, BPMN activities and schema fields by core&#39;s `glossary:page`. A scheme is keyed by (instance, scheme), and each layer holds its own glossary.&quot;,
@@ -272,6 +294,8 @@
   }
 ]</pre></dd><dt>_needs_comment</dt><dd>It sits directly on core. NOT on cat-harness: the harness layer is inherited through core rather than declared twice, in the same shape folio-assistant-core uses. Owner&#39;s ordering, 2026-09-20: bootstrap, cat-harness, f-a-core, then the layers above.</dd><dt>needs</dt><dd><pre>[
   &quot;folio-assistant-core&quot;
+]</pre></dd><dt>enableSubgraphs</dt><dd><pre>[
+  &quot;fhir-harness.collab&quot;
 ]</pre></dd><dt>liquid</dt><dd><pre>{
   &quot;prefix&quot;: &quot;site.data&quot;,
   &quot;passThrough&quot;: true

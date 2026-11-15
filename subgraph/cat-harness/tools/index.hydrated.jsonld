@@ -1094,7 +1094,7 @@
               "gh"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/render-kg-to-github-pages",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-to-portal",
           "title": "Publish bootstrap-tools' site"
         }
       ],
@@ -1154,10 +1154,7 @@
               "gh"
             ]
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation"
-          ],
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
           "title": "Build and publish the platform docs site"
         }
       ],
@@ -2639,6 +2636,56 @@
       ],
       "name": "tools/gh-pages",
       "path": "tools/gh-pages/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "GitHub as a Tool: the forge that carries an adjudication as an issue, runs the workflow that records it on Actions, and holds the record as a pull request for a maintainer to merge. One forge among possible others; the process names the skill, never GitHub.",
+          "install": {
+            "cli": "gh (optional; the web interface needs nothing)",
+            "service": "github.com"
+          },
+          "invoke": {
+            "manual": true,
+            "shell": "gh"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "-R"
+                },
+                "description": "The repository holding the catalogues. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The issue, workflow run or pull request.",
+                "name": "url",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              }
+            ]
+          },
+          "name": "github",
+          "requirements": {
+            "network": true
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+          "title": "GitHub (issues, Actions, pull requests)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/github",
+      "path": "tools/github/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/handover-screen/",
@@ -4197,6 +4244,93 @@
       "path": "tools/memory-recall/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/merge-guard/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-guard.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The enforced merge guard: asks GitHub's live facts about one pull request whether it is finished (its checks, its tier, the session that marked it ready) before it reaches its base, and lands it only when every check passes. With `--status` it posts the verdict as the `merge-guard` commit status on the head, which is what the layer's merge-guard workflow does.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat merge:guard"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The pull request number.",
+                "name": "pr",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              },
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository holding the pull request. Default: the checkout's own.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--merge"
+                },
+                "description": "Land the pull request, only if every check passes. Needs `--session`.",
+                "name": "merge",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--status"
+                },
+                "description": "Post the verdict as the `merge-guard` commit status on the head.",
+                "name": "status",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--full-tier"
+                },
+                "description": "Require the full (release) tier of checks, not the fast tier a draft runs.",
+                "name": "full_tier",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Each check with its verdict; exit 0 when the pull request may land.",
+                "name": "verdict",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "merge-guard",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
+          "title": "Judge whether a pull request may land"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/merge-guard",
+      "path": "tools/merge-guard/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/methodologies-viewer/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -4504,6 +4638,84 @@
       ],
       "name": "tools/node-kind-pages",
       "path": "tools/node-kind-pages/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/node-view-coverage/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/node-view-coverage.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "For each node a declared directory holds, per layer × folder × kind: whether it has an IRI in its layer's export (extensionless), its JSON-LD at `<iri>.jsonld` (and `.json` where its source is JSON), a view page at `<locale>/<harness>/<vis>/<instance>/<id>/`, and a row on its folder page that links to it; plus the folder page's dead links and raw-repository links, and whether a viewer is declared. Folder pages are read with their data files, so rows drawn by JavaScript count. Writes `node-view-coverage/v1`, one file per layer, under `test/results/node-views/`.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat node-views:report"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "`--site <dir>`: a built site (`_site`, or a preview's `branches/<slug>/`). With `--site-url`, the URL that directory is served at.",
+                "name": "site",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "`--base <url>`: a live site to probe instead of a directory. Optional; one of `site` or `base` is needed, or pages, rows and links are unknown.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "`--check` (`node-views:judge`): write nothing and judge. Exit 0 when no finding is new, 1 when one is new against the baseline, 2 when the run could not ask (JUDGEMENT_EXIT).",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--against"
+                },
+                "description": "`--against <ref>`: the `qa-reports` entry to judge against (`main`, `main/<sha>`, `pr/<n>/<sha>`). Absent, the working copy; a missing baseline is UNKNOWN and not gated.",
+                "name": "against",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<layer qa home>/node-views/<layer>.node-views.qa.json` (`node-view-coverage/v1`), and a Markdown summary table on stdout. Always exit 0: reports, never gates. Published to `qa-reports` by `qa:publish`, and read by each layer's QA page.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "node-view-coverage",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer",
+          "title": "Does every node have an IRI, a .jsonld, a page and a row?"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/node-view-coverage",
+      "path": "tools/node-view-coverage/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/npm/",
@@ -8369,6 +8581,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose per-layer Tools pages this writer writes; every other layer's Tools pages are linked on the platform's site, not copied (owner, 2026-11-13: \"other harnesses should be referenced not included\"). The combined index and API documents are still written. Passed by the tools layer's `visualiser-writers.ts`. Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -8573,6 +8794,195 @@
       "path": "tools/transcribe-whisper-cpp/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-adjudicate/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudicate.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Turn one translation-review issue into the recorded adjudication: read the `issues` event (never the body from a shell variable), refuse an author who is not an owner, member or collaborator, refuse an item whose catalogue hash changed since the page showed it, then write the translation node's sign-off, the fuzzy suggestions and an append-only `translation-qa` attestation, and leave a Markdown summary. Exit 0 recorded, 3 nothing recorded, 2 could not determine.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat translation:adjudicate"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--root"
+                },
+                "description": "The layer root holding the catalogues. Default: the current directory.",
+                "name": "root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The `issues` event file GitHub wrote. Absent: `$GITHUB_EVENT_PATH`, which is how the workflow passes it.",
+                "name": "event",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              },
+              {
+                "arg": {
+                  "flag": "--dry-run"
+                },
+                "description": "Plan and report, write nothing.",
+                "name": "dry_run",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The files written: catalogues, translation nodes and attestations under the layer's translations and attestation directories.",
+                "name": "records",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "What was recorded and what was refused, with each reason — the issue comment and the PR body.",
+                "name": "summary",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "translation-adjudicate",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+          "title": "Record a translation adjudication"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/translation-adjudicate",
+      "path": "tools/translation-adjudicate/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-adjudication-workflow/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-adjudication-workflow.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The tools layer's reusable `layer-translation-adjudication.yml`, called by a layer on `issues` events: runs once per issue labelled `translation-adjudication` or titled `[translation review] …`, mounts the platform's layers, runs `translation:adjudicate` on the event, and either commits the records on `translation-adjudication/issue-<n>` (authored by the issue's author) and opens a ready PR, or comments why nothing was recorded. It never merges.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "manual": true
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "Where the layer sits in the calling repository; `.` for the root.",
+                "name": "path_in_repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The folio-assistant ref whose lock mounts the platform's layers. Default `main`.",
+                "name": "index_ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "description": "`lock` (the caller's lock pin of the tools layer) or a 40-hex commit.",
+                "name": "tools_ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The ready PR carrying the records, when anything was recorded.",
+                "name": "pull_request",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "description": "The comment on the issue: what was recorded and what was refused.",
+                "name": "summary",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "translation-adjudication-workflow",
+          "requirements": {
+            "network": true
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+          "title": "Translation adjudication workflow (reusable)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/translation-adjudication-workflow",
+      "path": "tools/translation-adjudication-workflow/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-candidates-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates-agent.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "An agent model proposes a translation for each string of a layer's catalogues, with the locale term base and the string's source context in front of it, and appends them to each catalogue's candidates sidecar with `source.kind: agent` and the model's id. Seeds an empty `msgstr` with the first candidate, fuzzy.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "manual": true
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The layer root whose catalogues to propose for. Default: the current layer.",
+                "name": "instance",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The target locales. Absent: every locale the layer declares.",
+                "name": "locales",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), appended to; each candidate carries `source: {kind: \"agent\", id: <model>}`.",
+                "name": "candidates",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The `.po` catalogues whose empty `msgstr` got the first candidate, `#, fuzzy`.",
+                "name": "catalogues",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "translation-candidates-agent",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-candidate-source",
+          "title": "Candidate translations — agent model"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/translation-candidates-agent",
+      "path": "tools/translation-candidates-agent/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-extract/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -8706,6 +9116,159 @@
       ],
       "name": "tools/translation-inject",
       "path": "tools/translation-inject/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-platforms/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-platforms.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "For Weblate, Crowdin and Transifex: `export` writes the layout file a platform reads from the layer's declared `translation-sources` directory; `import` turns the `.po` changes a platform pushed onto the checked-out branch into CANDIDATES, never adjudications. Nothing here talks to a platform or the network. Exit 0 done, 1 `--check` found drift, 3 import found nothing to rewrite, 2 could not determine.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat translation:platforms"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "`export` or `import`.",
+                "name": "action",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--platform"
+                },
+                "description": "`weblate`, `crowdin` or `transifex`.",
+                "name": "platform",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--root"
+                },
+                "description": "The layer root. Default: the current directory.",
+                "name": "root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "import: the git ref the platform's changes are compared against.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "arg": {
+                  "flag": "--write"
+                },
+                "description": "export: write the platform's file rather than print it.",
+                "name": "write",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "export: fail when the committed file differs from what would be written.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--dry-run"
+                },
+                "description": "import: plan and report, write nothing.",
+                "name": "dry_run",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The file written or the candidates recorded.",
+                "name": "summary",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "translation-platforms",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-candidate-source",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager"
+          ],
+          "title": "Exchange catalogues with a translation platform"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/translation-platforms",
+      "path": "tools/translation-platforms/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-review-page/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-review-page.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The page a reviewer adjudicates on: `review.html` beside the translation status page, showing every catalogue × locale with its state (machine, flagged, reviewed, stale, official), each string's candidates, and the hash of the catalogue's bytes. Submitting opens GitHub's new-issue form prefilled with a `translation-adjudication/v1` record, or copies the body when it is too long for a URL.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "manual": true
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The review page, `review.html` beside the translation status page of the published site.",
+                "name": "page",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The new-issue form, prefilled; filing it is the adjudication.",
+                "name": "issue",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              }
+            ]
+          },
+          "name": "translation-review-page",
+          "requirements": {
+            "network": true
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+          "title": "Translation review page"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/translation-review-page",
+      "path": "tools/translation-review-page/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-roundtrip-record/",
@@ -8842,7 +9405,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-status-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+          "description": "Render the translation status of every declared translation-sources directory, per locale, as one page, and beside it the review page (`review.html`, with `assets/translation-status/review.json`) a reviewer adjudicates on.",
           "install": {
             "none": true
           },
@@ -8885,7 +9448,10 @@
               "bun"
             ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication"
+          ],
           "title": "Translation status viewer"
         }
       ],

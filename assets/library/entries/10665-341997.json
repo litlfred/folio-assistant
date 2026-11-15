@@ -284,6 +284,23 @@
       }
     },
     {
+      "id": "library/10665-341997/blocks/table-001",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 1. Components of a digital adaptation kit",
+      "pageStart": 15,
+      "pageEnd": 17,
+      "target": "../tables/table-1.csv",
+      "narrative": "draft",
+      "content": "The table lists the eight components of the digital adaptation kit (DAK), from health interventions and recommendations to functional and non-functional requirements. For each component it gives a description, its purpose, the outputs it provides and the adaptation needed for a specific context.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
       "id": "library/10665-341997/blocks/prose-sec-005",
       "types": [
         "folio-assistant-core:Prose",
@@ -326,8 +343,8 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "stale",
-        "text": "Covers the bulk of the family planning digital adaptation kit, starting with a figure placing the kit within the wider digital health ecosystem and the phases of national digital health planning. The headings in the table of contents show it then sets out the eight components for family planning: health interventions and recommendations, generic personas, user scenarios, business processes and workflows, core data elements, decision-support logic, indicators and performance metrics, and functional and non-functional requirements. It also includes a glossary and annexes with detailed personas, guidance on amending the data dictionary and method-specific guidance. The block ends with the reference list, citing family planning guidance, indicator sources and data standards such as ICD and HL7 FHIR.",
+        "status": "draft",
+        "text": "Places digital adaptation kits within the wider digital health ecosystem, with a figure mapping WHO and partner resources, such as the WHO–ITU national eHealth strategy toolkit, TOGAF and Open HIE, to seven phases running from assessing the current state to implementing and scaling. It advises that DAKs be used once a health ministry has a strategic vision for digital systems, and otherwise to consult the eHealth strategy toolkit, the WHO digital interventions guideline and the digital implementation investment guide first.",
         "state": "draft",
         "draftedBy": {
           "kind": "agent",
@@ -353,7 +370,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Lists the contraception and family planning interventions covered by this digital adaptation kit, drawn from the WHO universal health coverage compendium, including screening and counselling, provision and removal of contraceptive methods, and emergency contraception for survivors of sexual violence. It names the WHO guidance the kit reflects, notably the medical eligibility criteria, selected practice recommendations, contraceptive eligibility for women at high risk of HIV and the family planning handbook for providers, plus several other WHO guidelines. It closes by introducing personas as generic depictions of system end-users that need adapting to each setting.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
     },
     {
@@ -389,8 +414,50 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Describes the generic personas of the family planning digital adaptation kit, with auxiliary nurse midwives and midwives as the primary users, and a table giving each role's description, alternative names and ISCO code. Reproduces WHO's task-sharing chart showing which cadres of health workers can typically provide each contraceptive method, followed by a table of related personas such as clients, lay and community health workers, pharmacists and physicians. Closes with factors for adapting personas to local settings, including demographics, working environment, actual versus expected roles, challenges and motivations.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-002",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 2. Descriptions of key generic personas",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../tables/table-2.csv",
+      "narrative": "draft",
+      "content": "The table describes the three key generic personas targeted by the family planning digital adaptation kit (auxiliary nurse midwife, midwife and nurse). For each occupational title it gives a description, other names used for the role and the corresponding ISCO occupation code.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-003",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 3. Descriptions of related personas",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../tables/table-3.csv",
+      "narrative": "draft",
+      "content": "The table describes personas related to the targeted auxiliary nurse midwife: the client, lay health worker, community health worker, pharmacist and physician. For each it gives a description, other names where relevant and the ISCO occupation code where relevant.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-009",
@@ -408,8 +475,33 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents two user scenarios for family planning services: a nurse who registers and counsels a breastfeeding mother during her baby's immunization visit and starts her on progestogen-only pills, and a 16-year-old who seeks help after a condom slipped. The adolescent scenario shows confidential registration, a HEADSS assessment, emergency contraception and dual protection with combined pills and condoms, with SMS follow-up reminders in both cases. Explains how such scenarios reveal data elements, decision logic, functional requirements and adolescent-specific considerations, illustrated in a table interpreting the adolescent case.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-004",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 4. Interpretation of the adolescent user scenario",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "target": "../tables/table-4.csv",
+      "narrative": "draft",
+      "content": "The table interprets the adolescent user scenario for system design. Its columns list the data elements to be collected, the decision logic to be embedded, the functional and non-functional requirements, and the adolescent-specific considerations to be triggered when the client’s age is 19 years or younger.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-010",
@@ -427,8 +519,118 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines business processes and workflows for the family planning digital adaptation kit and summarizes five key processes: registration, family planning counselling, service provision, referral, and aggregate reporting and data use. Lists processes left out because they depend heavily on context, such as billing, dispensing, configuration and follow-up, and explains the standard business process notation symbols used in the diagrams. The workflows are described as roughly 80% generic, with the remainder to be completed through human-centred design and validation with the targeted personas. The section ends by introducing the core data elements component, which sets out the minimum data needed for service delivery, decision support and indicators, with a fuller data dictionary in Web Annex A.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-005",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 5. Overview of key family planning module business processes",
+      "pageStart": 35,
+      "pageEnd": 36,
+      "target": "../tables/table-5.csv",
+      "narrative": "draft",
+      "content": "The table gives an overview of the five key business processes of the family planning module (A–E: registration, family planning counselling, service provision, referral, and aggregate reporting and data use). For each process it lists the process ID, the personas involved, the objectives and the task set, starting from a defined starting point.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-006",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 6. Business process symbols used in workflows",
+      "pageStart": 36,
+      "pageEnd": 37,
+      "target": "../tables/table-6.csv",
+      "narrative": "draft",
+      "content": "The table explains the standard business process notation symbols used in the workflow diagrams, from pools and swim lanes to events, activities, flows, gateways, links and ad hoc subprocesses. For each symbol it gives its name and a description of how it is used.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/figure-vfig-p038",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 38,
+      "pageEnd": 38,
+      "target": "../figures/vfig-p038.webp",
+      "narrative": "draft",
+      "content": "Fig. 5, a swimlane diagram of key family planning processes across three lanes: Health facility, Pharmacy and Health facility management. From Start, the flow runs through A. Registration and B. FP counselling to a 'Referral needed?' decision: No leads to C. FP service provision, Yes leads to D. Referral; both then pass to Billing and Dispensing before End. Configuration, Follow-up and Aggregate reporting sit in the management lane.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/figure-vfig-p039",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 39,
+      "pageEnd": 39,
+      "target": "../figures/vfig-p039.webp",
+      "narrative": "draft",
+      "content": "Fig. 6, a swimlane workflow of the registration business process with Client and Clerk lanes in a health facility. The client arrives; the clerk gathers client details, searches for the client and checks 'Match found?': Yes leads to a 'Validate client details' subprocess (review socio-demographic data, update if needed), No leads to 'Create client record'; both end with 'Check in client' and hand off to B. Counselling. Source: adapted from PATH.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/figure-vfig-p053",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 53,
+      "pageEnd": 53,
+      "target": "../figures/vfig-p053.webp",
+      "narrative": "draft",
+      "content": "Fig. 10, a swimlane workflow of the referral business process with lanes for the client and healthcare provider at the health facility and the health-care provider at the referral health facility. After counselling, an 'Emergency referral?' decision leads either to an emergency subprocess (stabilize client and give pre-referral treatment, check if stable enough to transport, organize transport) or to identifying and contacting a referral facility; once the referral facility confirms it can accommodate, the provider gives information, discusses questions and a backup method, and the client goes to the referral facility, which receives the client for C. Service provision.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/figure-vfig-p056",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 56,
+      "pageEnd": 56,
+      "target": "../figures/vfig-p056.webp",
+      "narrative": "draft",
+      "content": "Fig. 11, a swimlane workflow of the aggregate reporting business process with lanes for facility staff, facility in charge and district health officer/staff. Facility staff check data quality, correct fixable issues, generate and check aggregate reports; if in-charge review is needed, the facility in charge reviews and either provides feedback (looping back to data checks) or submits data electronically. The district reviews submitted data and either ends the process or provides feedback to the facility.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-011",
@@ -446,8 +648,67 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Presents a simplified table of core data elements for the family planning digital adaptation kit, a snapshot of the full data dictionary in Web Annex A that is considered about 80% generic and open to country adaptation. The table is organized by business process and activity, listing identifiers, names and definitions for items such as visit date, unique identifier, date of birth, marital status, contact details and communication preferences at registration, and reason for visit and pregnancy intention during counselling. Many activities are marked as recording no new data. The block ends with facility-level contextual elements, including administrative areas, catchment population, available laboratory tests and guidance on how pregnancy test sensitivity affects workflow, before introducing the decision-support logic component.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-007",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 7. Workflow core data elements for identified business processes",
+      "pageStart": 60,
+      "pageEnd": 64,
+      "target": "../tables/table-7.csv",
+      "narrative": "draft",
+      "content": "The table lists the core data elements for each activity in the family planning business processes (registration, counselling, service provision and referral). For each activity it gives the data element IDs, names and descriptions, or notes that no data are recorded during that activity.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-008",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 8. Calculated data elements",
+      "pageStart": 64,
+      "pageEnd": 64,
+      "target": "../tables/table-8.csv",
+      "narrative": "draft",
+      "content": "The table lists derived data elements that are calculated from core data elements: body mass index, postpartum status and recent miscarriage or abortion. For each it names the core data elements used as variables and gives the calculation formula.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-009",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 9. Characteristics for local customization and configuration",
+      "pageStart": 65,
+      "pageEnd": 65,
+      "target": "../tables/table-9.csv",
+      "narrative": "draft",
+      "content": "The table lists points of customization and configuration that each implementation should review against national guidelines and local context, such as unique IDs, services and methods provided, facility details, administrative areas, available lab tests and pregnancy test sensitivity. Each point is paired with a description of what to consider.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-012",
@@ -465,8 +726,84 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gives an overview of the decision-support tables and algorithms for the family planning module, structured on an adaptation of the Decision Model and Notation standard. The tables cover reason for visit, HEADSS, STI and intimate partner violence assessments, method concerns and client preferences, and medical eligibility criteria for each contraceptive method, each linked to its WHO source guidance. A further list sets out scheduling logic for follow-up visits by method, from implants and injectables to pills, vaginal rings and sterilization.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-010",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 10. Overview of decision-support tables for family planning module",
+      "pageStart": 67,
+      "pageEnd": 69,
+      "target": "../tables/table-10.csv",
+      "narrative": "draft",
+      "content": "The table gives an overview of the decision-support tables for the family planning module. For each workflow activity it lists the decision-support table ID, a description of the table (such as reason for visit, risk assessments and medical eligibility criteria for each method) and the WHO reference or source it is based on.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-011",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 11. Components of the decision-support tables",
+      "pageStart": 70,
+      "pageEnd": 70,
+      "target": "../tables/table-11.csv",
+      "narrative": "draft",
+      "content": "The table explains the components of the decision-support tables: the decision ID, business rule and trigger, and the inputs, output, action and annotations columns. It defines each component and how multiple inputs on the same row (AND) or on different rows (OR) are read.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-012",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 12. Example decision-support logic table for medical eligibility for copper-bearing intrauterine devices (Cu-IUDs)",
+      "pageStart": 71,
+      "pageEnd": 71,
+      "target": "../tables/table-12.csv",
+      "narrative": "draft",
+      "content": "The table is an example decision-support logic table for medical eligibility for copper-bearing intrauterine devices, giving its decision ID, business rule and trigger. Each row combines input conditions (method requested, health condition, method at intake) with the resulting medical eligibility category and eligibility output, the action for the health worker, an annotation and the references.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-013",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 13. Overview of scheduling logic",
+      "pageStart": 72,
+      "pageEnd": 72,
+      "target": "../tables/table-13.csv",
+      "narrative": "draft",
+      "content": "The table gives an overview of the scheduling logic for follow-up of family planning clients. For each scheduling logic ID it describes the follow-up or removal visit for a given contraceptive method and the WHO reference or source.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-013",
@@ -484,8 +821,33 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Sets out a minimum set of indicators and performance metrics for family planning that can be aggregated from the core data elements and fed automatically into a digital health management information system such as DHIS2. For each indicator, the table gives a definition, numerator, denominator, disaggregations such as age, method and service site, and source references, with full details in Web Annex C. The indicators include new and continuing users of modern contraception, number of visits, method switching and discontinuation, receipt of the chosen method, and post-abortion and postpartum contraception.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-014",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 14. Indicators and performance metrics",
+      "pageStart": 73,
+      "pageEnd": 74,
+      "target": "../tables/table-14.csv",
+      "narrative": "draft",
+      "content": "The table lists the minimum set of family planning indicators and performance metrics that can be aggregated from routine digital data, such as new and continuing users, method switching and discontinuation, and post-abortion and postpartum contraception. For each indicator it gives the ID, name, definition, numerator and denominator descriptions, disaggregations and references.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-014",
@@ -503,8 +865,50 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Provides illustrative functional and non-functional requirements to start designing or adapting a digital tracking and decision-support system for family planning. Functional requirements are written as user stories stating the role, what is wanted and why, starting with registration needs such as urgent-case bypass, client search with at least two identifiers, duplicate avoidance and mandatory fields, with the complete set in Web Annex D. Non-functional requirements describe general system qualities, including multiple languages, usability on small screens, reliability, central configuration of business rules, and interoperability through mediators and APIs. The lists are described as not exhaustive and meant to be adapted to context and user needs, ending with synchronization across facilities even when connectivity is intermittent.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
+    },
+    {
+      "id": "library/10665-341997/blocks/table-015",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 15. Functional requirementsᵃ",
+      "pageStart": 75,
+      "pageEnd": 78,
+      "target": "../tables/table-15.csv",
+      "narrative": "draft",
+      "content": "The table lists key functional requirements for the registration, counselling and service provision business processes, written as user stories. For each requirement ID it gives the activity, the user (“As a…”), what they want the system to do (“I want…”) and why (“So that…”).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/10665-341997/blocks/table-016",
+      "types": [
+        "folio-assistant-core:Table",
+        "doco:Table"
+      ],
+      "kind": "table",
+      "title": "Table 16. Non-functional requirements",
+      "pageStart": 78,
+      "pageEnd": 80,
+      "target": "../tables/table-16.csv",
+      "narrative": "draft",
+      "content": "The table lists the non-functional requirements of the digital system, grouped by category such as security (confidentiality, authentication, audit trail and logs, user management) and system requirements (general, scalability, usability, configuration, interoperability, hardware and connectivity). Each row gives a requirement ID, its category and the requirement.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/10665-341997/blocks/prose-sec-015",
@@ -522,7 +926,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The glossary of the family planning digital adaptation kit defines its key terms, among them business process, data dictionary, data element, decision-support logic and tables, digital health, digital tracking, and functional and non-functional requirements. It also explains health information systems, interoperability, personas, standards, tasks, terminologies and workflows, noting which terms are themselves defined in the glossary.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
     },
     {
@@ -575,7 +987,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Annex 2 of the family planning digital adaptation kit gives an additional user scenario in which a community health worker visits a young mother three weeks after birth and uses her app to counsel her on spacing the next pregnancy. Because the client's blood pressure is slightly high, the worker advises against injectables, the client chooses progestogen-only pills, and the worker issues a referral and later follows up, illustrating the counselling and referral business processes.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
     },
     {
@@ -594,7 +1014,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gives guidance for adding or amending data elements when adapting the data dictionary of the family planning digital adaptation kit, for example to match existing paper registers or local reporting needs, while keeping standard terminology codes accurate. A table explains what to record for each element, including activity and form identifiers, labels, names, definitions, data types aligned with FHIR, input options, calculations, validation, editability and whether the field is required. Further columns cover the reason data are required, skip logic, links to aggregate indicators, notes and mappings to concept dictionaries such as ICD-11 or SNOMED.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
     },
     {
@@ -613,7 +1041,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "An annex to the family planning digital adaptation kit gives method-by-method information, drawn from the 2018 Family planning global handbook for providers, to support further decision-support logic and counselling aids. For each contraceptive, starting with the copper-bearing and levonorgestrel-releasing intrauterine devices, it sets out what the method is, how effective it is, who can use it and how. It also covers side-effects, known health benefits and risks, how to advise on side-effects, clinical judgement in special cases and help for continuing users. The section ends with withdrawal, described as one of the least effective methods as commonly used, with no medical restrictions and no protection against sexually transmitted infections.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
     },
     {
@@ -632,7 +1068,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "The reference list of the family planning digital adaptation kit.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-11-11"
       }
     },
     {

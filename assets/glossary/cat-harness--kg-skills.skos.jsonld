@@ -2815,7 +2815,7 @@
         }
       ],
       "skos:notation": "nquads-distribution",
-      "dcterms:source": "cat-harness/kg-ops/skills/kg-ops/nquads-distribution.md",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/nquads-distribution.md",
       "skos:note": "candidate"
     },
     {
@@ -4396,6 +4396,46 @@
       ],
       "skos:notation": "tool-authoring",
       "dcterms:source": "cat-harness/skills/tools/folio-core/tool-authoring.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/translation-adjudication",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "translation-adjudication"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A person's verdict on a machine translation, carried from the translation review page to the record: the reviewer accepts a catalogue, or flags a mistranslation and picks a candidate or writes their own text; the verdict is filed as a `translation-adjudication/v1` issue; a workflow checks the author and the catalogue's hash, writes the records and opens a PR; a maintainer merges it. Use for \"review the translations\", \"this string is mistranslated\", \"why was my review not recorded\", and when wiring a layer for review. Locale sign-off is a separate act, not this one."
+        }
+      ],
+      "skos:notation": "translation-adjudication",
+      "dcterms:source": "cat-harness/library/skills/library-core/translation-adjudication.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/translation-candidate-source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "translation-candidate-source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The one interface every candidate-translation engine meets: for a layer's catalogues, append candidate translations per string to the `translation-candidates/v1` sidecar, each carrying its source, and seed an empty `msgstr` with the first candidate marked fuzzy. An agent model and the open machine-translation engines (OPUS-MT, LibreTranslate / Argos) are interchangeable behind it. Use when adding an engine, choosing one, or producing candidates for review."
+        }
+      ],
+      "skos:notation": "translation-candidate-source",
+      "dcterms:source": "cat-harness/library/skills/library-core/translation-candidate-source.md",
       "skos:note": "candidate"
     },
     {

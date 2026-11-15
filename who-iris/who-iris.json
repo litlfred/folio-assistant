@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
-  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
-  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceCommitSha": "c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
+  "sourceTree": "7ac7366db3fb26551e0a610d1c88737daaa6ce86",
+  "sourceCommitAt": "2026-11-15T14:29:41+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -380,10 +380,11 @@
     "Lane": 10,
     "ProcessNode": 53,
     "GraphTypology": 19,
+    "QaAttestation": 10,
     "Role": 6,
     "Subgraph": 20,
     "Asset": 2,
-    "Tool": 1
+    "Tool": 2
   },
   "@graph": [
     {
@@ -432,7 +433,7 @@
       "title": "Oxigraph multi-graph search for WHO IRIS",
       "description": "How to build WHO IRIS catalogue and Qualified Dublin Core metadata into partitioned N-Quads, and query it with Oxigraph — in Bun on the build side, in WebAssembly in the browser — including cross-graph joins and facet counts.",
       "instructionsPath": "skills/iris-oxigraph.md",
-      "instructionLines": 205,
+      "instructionLines": 218,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2274,6 +2275,96 @@
       "summary": "Bibliographic references, one folio-reference/v1 node per work: a CSL-JSON item at `references/<key>`, the IRI every `\\cite{key}` already points at, read as Dublin Core and BIBO through its JSON-LD."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/glossary/who-iris--who-terms.po.ar",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue glossary/who-iris--who-terms.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue glossary/who-iris--who-terms.po (translations/ar/glossary/who-iris--who-terms.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/glossary/who-iris--who-terms.po.ar.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/glossary/who-iris--who-terms.po.es",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue glossary/who-iris--who-terms.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue glossary/who-iris--who-terms.po (translations/es/glossary/who-iris--who-terms.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/glossary/who-iris--who-terms.po.es.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/glossary/who-iris--who-terms.po.fr",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue glossary/who-iris--who-terms.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue glossary/who-iris--who-terms.po (translations/fr/glossary/who-iris--who-terms.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/glossary/who-iris--who-terms.po.fr.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/glossary/who-iris--who-terms.po.ru",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue glossary/who-iris--who-terms.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue glossary/who-iris--who-terms.po (translations/ru/glossary/who-iris--who-terms.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/glossary/who-iris--who-terms.po.ru.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/glossary/who-iris--who-terms.po.zh",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue glossary/who-iris--who-terms.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue glossary/who-iris--who-terms.po (translations/zh/glossary/who-iris--who-terms.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/glossary/who-iris--who-terms.po.zh.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/site/iris-site.po.ar",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue site/iris-site.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue site/iris-site.po (translations/ar/site/iris-site.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/site/iris-site.po.ar.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/site/iris-site.po.es",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue site/iris-site.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue site/iris-site.po (translations/es/site/iris-site.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/site/iris-site.po.es.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/site/iris-site.po.fr",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue site/iris-site.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue site/iris-site.po (translations/fr/site/iris-site.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/site/iris-site.po.fr.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/site/iris-site.po.ru",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue site/iris-site.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue site/iris-site.po (translations/ru/site/iris-site.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/site/iris-site.po.ru.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/attestation/translation-qa/site/iris-site.po.zh",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "translation-qa attestation: translation-catalogue site/iris-site.po",
+      "description": "The translation-qa judgements recorded for translation-catalogue site/iris-site.po (translations/zh/site/iris-site.po), each pinned to the hash it attested.",
+      "sourceKind": "translation-qa",
+      "sourcePath": "test/attestations/translation-qa/site/iris-site.po.zh.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
       "prefLabel": "IRIS CDN owner",
@@ -2671,7 +2762,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
       ],
-      "description": "who-iris's Tool nodes: `iris-pages`, the generator that renders the catalogue visualiser (its `renderedBy`). Discovered by graph typology, never imported by name.",
+      "description": "who-iris's Tool nodes: `iris-pages`, the generator that renders the catalogue visualiser (its `renderedBy`), and `translation-qa-prune`, which drops the round-trip rulings of removed strings. Discovered by graph typology, never imported by name.",
       "readmePath": "tools/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-tools"
@@ -2780,6 +2871,58 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/translation-qa-prune.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "translation-qa-prune",
+      "title": "Prune round-trip rulings of removed strings",
+      "description": "Drop the translation-semantic-roundtrip rulings of strings the catalogues no longer hold, and renumber the rest to catalogue order. Rulings are paired with strings by the hash of their msgid, so removing strings invalidates none and needs no agent re-run; this is the upkeep that follows. It only drops or renumbers: a verdict is never changed or invented, and a ruling for a string the ref's history never held (one recorded ahead of its PR) is kept.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat translation-qa:prune"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "write",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Apply the change to test/attestations/translation-qa/. Absent, it is a dry run that prints each dropped ruling and the renumbered spans.",
+            "required": false,
+            "arg": {
+              "flag": "--write"
+            }
+          },
+          {
+            "name": "ref",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch",
+            "description": "Whose catalogues decide what was removed. Default origin/main: the state branch serves main and every branch, so a ruling goes only once main no longer holds its string.",
+            "required": false,
+            "arg": {
+              "flag": "--ref"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "attestations",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "With --write, the rewritten `test/attestations/translation-qa/<catalogue>.<locale>.attestations.json`, to be pushed to `cat/who-iris/attestations`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager"
       ]
     }
   ]
