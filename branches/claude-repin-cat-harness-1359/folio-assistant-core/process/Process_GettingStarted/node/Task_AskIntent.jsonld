@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1359",
+    "sha": "75b5ca55963f8c09d07ae73769a53950e7c91055",
+    "pr": "3159/merge",
+    "run": "43748649174"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Choose from the offered options",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/process/Process_GettingStarted#flow/Flow_ask"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/process/Process_GettingStarted#flow/Flow_answer"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/folio-assistant-core/directory/collab",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent"
+    }
+  ]
+}

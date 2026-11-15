@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/TranslatableFormat",
+  "definitions": {
+    "TranslatableFormat": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "smartBaseScript": {
+          "type": "string"
+        },
+        "smartBaseExtractRef": {
+          "type": "string"
+        },
+        "smartBaseInjectRef": {
+          "type": "string"
+        },
+        "extractModule": {
+          "type": "string"
+        },
+        "injectModule": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "extensions"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation-tools/TranslatableFormatSchema.schema.json",
+  "title": "TranslatableFormatSchema",
+  "description": "Generated from `TranslatableFormatSchema` in schemas/library/translation-tools.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1359",
+    "sha": "75b5ca55963f8c09d07ae73769a53950e7c91055",
+    "pr": "3159/merge",
+    "run": "43748649174"
+  }
+}

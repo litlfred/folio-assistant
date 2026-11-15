@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/smart-base/schema/dak-annexes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1359/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/dak-annexes.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1359",
+    "sha": "75b5ca55963f8c09d07ae73769a53950e7c91055",
+    "pr": "3159/merge",
+    "run": "43748649174"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/dak-annexes",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-annexes",
+      "title": "dak-annexes",
+      "summary": "The two formats of the `web-annex` kind (`typologies/web-annex.json`): a WHO",
+      "module": "schemas/dak-annexes.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dak-annexes/DakAnnexSheetSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dak-annexes/DakDataDictionaryAnnexSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dak-annexes/DakSwimlaneMapSchema.schema.json"
+      ]
+    }
+  ]
+}

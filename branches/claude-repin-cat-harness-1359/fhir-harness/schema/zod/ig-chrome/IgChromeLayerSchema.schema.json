@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/IgChromeLayer",
+  "definitions": {
+    "IgChromeLayer": {
+      "type": "object",
+      "properties": {
+        "package": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "of": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 7
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readAt": {
+          "type": "string",
+          "minLength": 4
+        }
+      },
+      "required": [
+        "package",
+        "version",
+        "of",
+        "ref",
+        "path",
+        "readAt"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeLayerSchema.schema.json",
+  "title": "IgChromeLayerSchema",
+  "description": "Generated from `IgChromeLayerSchema` in schemas/ig-chrome.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1359",
+    "sha": "75b5ca55963f8c09d07ae73769a53950e7c91055",
+    "pr": "3159/merge",
+    "run": "43748649174"
+  }
+}

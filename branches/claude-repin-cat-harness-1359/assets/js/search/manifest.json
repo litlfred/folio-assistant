@@ -1,0 +1,187 @@
+{
+  "$schema": "folio-search-manifest/v1",
+  "source": {
+    "path": "assets/js/search-data.json",
+    "sha256": "be5f0677d0cc176d5b278f85c6433cea050a198f67f1aac0be286fd1d9f6d1b5",
+    "entries": 40164,
+    "bytes": 54648644
+  },
+  "scopes": [
+    {
+      "id": "_platform",
+      "kind": "platform",
+      "path": "assets/js/search/_platform.json",
+      "entries": 181,
+      "bytes": 296558
+    },
+    {
+      "id": "bootstrap",
+      "kind": "instance",
+      "path": "assets/js/search/bootstrap.json",
+      "entries": 7,
+      "bytes": 7396
+    },
+    {
+      "id": "cat-harness",
+      "kind": "instance",
+      "path": "assets/js/search/cat-harness.json",
+      "entries": 8159,
+      "bytes": 14947912,
+      "index": {
+        "path": "assets/js/search/cat-harness.idx.json",
+        "bytes": 42752557
+      }
+    },
+    {
+      "id": "cat-harness-tools",
+      "kind": "instance",
+      "path": "assets/js/search/cat-harness-tools.json",
+      "entries": 697,
+      "bytes": 3699850,
+      "index": {
+        "path": "assets/js/search/cat-harness-tools.idx.json",
+        "bytes": 6826011
+      }
+    },
+    {
+      "id": "fhir-harness",
+      "kind": "instance",
+      "path": "assets/js/search/fhir-harness.json",
+      "entries": 100,
+      "bytes": 483298
+    },
+    {
+      "id": "folio-assistant-core",
+      "kind": "instance",
+      "path": "assets/js/search/folio-assistant-core.json",
+      "entries": 24384,
+      "bytes": 17008880,
+      "index": {
+        "path": "assets/js/search/folio-assistant-core.idx.json",
+        "bytes": 52891104
+      }
+    },
+    {
+      "id": "folio-assistant-sci",
+      "kind": "instance",
+      "path": "assets/js/search/folio-assistant-sci.json",
+      "entries": 42,
+      "bytes": 27046
+    },
+    {
+      "id": "locale-ar",
+      "kind": "locale",
+      "path": "assets/js/search/locale-ar.json",
+      "entries": 16,
+      "bytes": 92505
+    },
+    {
+      "id": "locale-es",
+      "kind": "locale",
+      "path": "assets/js/search/locale-es.json",
+      "entries": 16,
+      "bytes": 85076
+    },
+    {
+      "id": "locale-fr",
+      "kind": "locale",
+      "path": "assets/js/search/locale-fr.json",
+      "entries": 13,
+      "bytes": 31075
+    },
+    {
+      "id": "locale-ru",
+      "kind": "locale",
+      "path": "assets/js/search/locale-ru.json",
+      "entries": 13,
+      "bytes": 46335
+    },
+    {
+      "id": "locale-zh",
+      "kind": "locale",
+      "path": "assets/js/search/locale-zh.json",
+      "entries": 13,
+      "bytes": 25429
+    },
+    {
+      "id": "section-proposals",
+      "kind": "section",
+      "path": "assets/js/search/section-proposals.json",
+      "entries": 466,
+      "bytes": 1289048,
+      "index": {
+        "path": "assets/js/search/section-proposals.idx.json",
+        "bytes": 4657670
+      }
+    },
+    {
+      "id": "section-reference",
+      "kind": "section",
+      "path": "assets/js/search/section-reference.json",
+      "entries": 4340,
+      "bytes": 5617091,
+      "index": {
+        "path": "assets/js/search/section-reference.idx.json",
+        "bytes": 19056990
+      }
+    },
+    {
+      "id": "section-uml",
+      "kind": "section",
+      "path": "assets/js/search/section-uml.json",
+      "entries": 1054,
+      "bytes": 1545392,
+      "index": {
+        "path": "assets/js/search/section-uml.idx.json",
+        "bytes": 3843860
+      }
+    },
+    {
+      "id": "smart-base",
+      "kind": "instance",
+      "path": "assets/js/search/smart-base.json",
+      "entries": 187,
+      "bytes": 474729
+    },
+    {
+      "id": "smart-immunizations",
+      "kind": "instance",
+      "path": "assets/js/search/smart-immunizations.json",
+      "entries": 55,
+      "bytes": 132617
+    },
+    {
+      "id": "smart-trust",
+      "kind": "instance",
+      "path": "assets/js/search/smart-trust.json",
+      "entries": 343,
+      "bytes": 7374913,
+      "index": {
+        "path": "assets/js/search/smart-trust.idx.json",
+        "bytes": 12674360
+      }
+    },
+    {
+      "id": "smart-trust-phw",
+      "kind": "instance",
+      "path": "assets/js/search/smart-trust-phw.json",
+      "entries": 73,
+      "bytes": 136993
+    },
+    {
+      "id": "who-iris",
+      "kind": "instance",
+      "path": "assets/js/search/who-iris.json",
+      "entries": 5,
+      "bytes": 55226
+    }
+  ],
+  "remote": [
+    {
+      "id": "who-iris",
+      "kind": "id-lookup",
+      "href": "id-lookup/?index=who-iris/",
+      "entries": 53
+    }
+  ]
+}
