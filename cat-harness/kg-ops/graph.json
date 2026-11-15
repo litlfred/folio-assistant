@@ -1,0 +1,33 @@
+{
+  "_comment": "The graphs inside cat-harness's `kg-ops` sub-graph, declared FROM WITHIN (#980) on the pattern of `work-plan/graph.json`. Paths are relative to THIS directory. OPT-IN (`optIn: true` on its entry): off in every layer unless that layer lists `cat-harness.kg-ops` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 2).",
+  "name": "kg-ops",
+  "directories": [
+    {
+      "id": "kg-ops-skills",
+      "path": "skills/",
+      "subgraph": true,
+      "description": "The `kg-ops` skill package.",
+      "graphTypologies": [
+        "skills"
+      ]
+    },
+    {
+      "id": "kg-ops-processes",
+      "path": "processes/",
+      "subgraph": true,
+      "description": "The N-Quads distribution and named-query execution processes.",
+      "graphTypologies": [
+        "processes"
+      ]
+    },
+    {
+      "id": "kg-ops-tools",
+      "path": "tools/",
+      "subgraph": true,
+      "description": "`witness-parity`, the witness reproduction check.",
+      "graphTypologies": [
+        "tools"
+      ]
+    }
+  ]
+}
