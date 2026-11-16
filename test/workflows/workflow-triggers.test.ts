@@ -39,7 +39,7 @@ import { join } from "path";
  */
 function workflowRunList(src: string): RegExpExecArray | null {
   return (
-    /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src) ??
+    /^  workflow_run:[ \t]*\n(?:[ \t]*#.*\n|[ \t]*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src) ??
     /^  workflow_run:\s*\{[^}]*?\bworkflows:\s*\[(.+?)\]/m.exec(src)
   );
 }
