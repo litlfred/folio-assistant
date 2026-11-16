@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "critical-path-analysis",
+    "path": "skills/content/folio-paper-adapter/critical-path-analysis.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/critical-path-analysis.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/critical-path-analysis.ts",
+      "prose_hash": "a068467371c5",
+      "code_hash": "48e4b4143c0b",
+      "by": "baseline"
+    }
+  ]
+}
