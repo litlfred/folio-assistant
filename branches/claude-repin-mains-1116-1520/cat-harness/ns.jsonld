@@ -175,6 +175,21 @@
       "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/process/crdm-methodology.html"
     },
     {
+      "@id": "cat-harness:TranslationSource",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "TranslationSource",
+      "comment": "One gettext source of a layer's translations: a `.po` catalogue of one locale's translated strings, or the `.pot` template it is made from. The input to injection; the rendered output declares its own `lang`.",
+      "prefLabel": "TranslationSource",
+      "definition": "One gettext source of a layer's translations: a `.po` catalogue of one locale's translated strings, or the `.pot` template it is made from. The input to injection; the rendered output declares its own `lang`.",
+      "notation": "cat-harness:TranslationSource",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:Lane",
       "@type": [
         "rdfs:Class",
@@ -234,6 +249,21 @@
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/skills.html"
+    },
+    {
+      "@id": "cat-harness:SoftwareLibrary",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "SoftwareLibrary",
+      "comment": "An outside software package a layer's code imports, as its lockfile pins it: the version, the registry tarball and its digest, the SPDX licence, and the files that import it.",
+      "prefLabel": "SoftwareLibrary",
+      "definition": "An outside software package a layer's code imports, as its lockfile pins it: the version, the registry tarball and its digest, the SPDX licence, and the files that import it.",
+      "notation": "cat-harness:SoftwareLibrary",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
     },
     {
       "@id": "cat-harness:Tool",

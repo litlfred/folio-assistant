@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness-tools/softwareLibrary/ajv.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/softwareLibrary/ajv.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-1520",
+    "sha": "e63752aa1f97424d06d09c93b76c7352e0c0d647",
+    "pr": "3180/merge",
+    "run": "43904931425"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/softwareLibrary/ajv",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SoftwareLibrary",
+      "title": "ajv@6.15.0",
+      "description": "The outside library ajv 6.15.0 (a dev dependency), licensed MIT, as the layer's lockfile pins it.",
+      "sourceKind": "software-library",
+      "sourcePath": "libraries/ajv.library.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-libraries"
+    }
+  ]
+}

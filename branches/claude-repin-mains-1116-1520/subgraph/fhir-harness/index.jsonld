@@ -1,0 +1,529 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "cat-harness:graphTypology/fhir-core-definitions",
+      "@type": "bootstrap:GraphTypology",
+      "name": "fhir-core-definitions"
+    },
+    {
+      "@id": "cat-harness:graphTypology/pipeline-plugins",
+      "@type": "bootstrap:GraphTypology",
+      "name": "pipeline-plugins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary",
+      "@type": "bootstrap:GraphTypology",
+      "name": "glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/agent-instructions",
+      "@type": "bootstrap:Asset",
+      "name": "agent-instructions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6dc674dcd79f8869658e82ae27e30d6ce41113a8b4f3ad7ef2ad32d54a4f05bb",
+        "bytes": 11315,
+        "sha256": "6dc674dcd79f8869658e82ae27e30d6ce41113a8b4f3ad7ef2ad32d54a4f05bb"
+      },
+      "title": "AGENTS.md — fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/instance-readme",
+      "@type": "bootstrap:Asset",
+      "name": "instance-readme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/24183d14cee9b7da8cf4f5f7408f1029ccac26603771e3baab3afbd264757fb4",
+        "bytes": 3609,
+        "sha256": "24183d14cee9b7da8cf4f5f7408f1029ccac26603771e3baab3afbd264757fb4"
+      },
+      "title": "fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/asset/unkinded-baseline",
+      "@type": "bootstrap:Asset",
+      "name": "unkinded-baseline",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5381a035d13c0434b85bed0da743262a3660e9d71d2b5d7421b15317f80b480c",
+        "bytes": 707,
+        "sha256": "5381a035d13c0434b85bed0da743262a3660e9d71d2b5d7421b15317f80b480c"
+      },
+      "title": "Unkinded families — fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-core-definitions",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-core-definitions",
+      "title": "FHIR core definitions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-caches",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-caches",
+      "title": "CI caches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-docs",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-libraries",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-libraries",
+      "title": "Software libraries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-pipeline-plugins",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-pipeline-plugins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-plugin-slots",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-plugin-slots"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-translations",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-typologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-typologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-validators",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-validators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-scripts",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-ig-scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/glossary",
+      "@type": "bootstrap:Subgraph",
+      "name": "glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/qa",
+      "@type": "bootstrap:Subgraph",
+      "name": "qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "@type": "bootstrap:Role",
+      "title": "FHIR modeller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "@type": "bootstrap:Role",
+      "title": "IG publisher + validator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-artifact-index",
+      "@type": "cat-harness:Schema",
+      "name": "fhir-artifact-index",
+      "title": "fhir-artifact-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-core",
+      "@type": "cat-harness:Schema",
+      "name": "fhir-core",
+      "title": "fhir-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-annexes",
+      "@type": "cat-harness:Schema",
+      "name": "ig-annexes",
+      "title": "ig-annexes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-artifact-jsonld",
+      "@type": "cat-harness:Schema",
+      "name": "ig-artifact-jsonld",
+      "title": "ig-artifact-jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-ast",
+      "@type": "cat-harness:Schema",
+      "name": "ig-ast",
+      "title": "ig-ast"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-ast-lock",
+      "@type": "cat-harness:Schema",
+      "name": "ig-ast-lock",
+      "title": "ig-ast-lock"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-chrome",
+      "@type": "cat-harness:Schema",
+      "name": "ig-chrome",
+      "title": "ig-chrome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-content-type",
+      "@type": "cat-harness:Schema",
+      "name": "ig-content-type",
+      "title": "ig-content-type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-menu",
+      "@type": "cat-harness:Schema",
+      "name": "ig-menu",
+      "title": "ig-menu"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-metadata-index",
+      "@type": "cat-harness:Schema",
+      "name": "ig-metadata-index",
+      "title": "ig-metadata-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-releases",
+      "@type": "cat-harness:Schema",
+      "name": "ig-releases",
+      "title": "ig-releases"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/iti-108-consent-client",
+      "@type": "cat-harness:Schema",
+      "name": "iti-108-consent-client",
+      "title": "iti-108-consent-client"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/odrl-to-fhir-r5-permission",
+      "@type": "cat-harness:Schema",
+      "name": "odrl-to-fhir-r5-permission",
+      "title": "odrl-to-fhir-r5-permission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/pcf-consent",
+      "@type": "cat-harness:Schema",
+      "name": "pcf-consent",
+      "title": "pcf-consent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/vocab-mapping-fhir",
+      "@type": "cat-harness:Schema",
+      "name": "vocab-mapping-fhir",
+      "title": "vocab-mapping-fhir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/aehrc__sdc-assemble",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "@aehrc/sdc-assemble@2.0.3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/aehrc__sdc-populate",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "@aehrc/sdc-populate@4.7.2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/aehrc__sdc-template-extract",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "@aehrc/sdc-template-extract@1.0.16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/ajv",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "ajv@6.15.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/formbuilder-lhcforms-12.9.0.vendored",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "formbuilder-lhcforms@12.9.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/jquery-3.6.0.vendored",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "jquery@3.6.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/lforms-44.1.0.vendored",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "lforms@44.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/lhncbc__ucum-lhc-8.0.0.vendored",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "@lhncbc/ucum-lhc@8.0.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/liquidjs",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "liquidjs@10.30.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/playwright",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "playwright@1.63.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/types__fhir",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "@types/fhir@0.0.44"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/yaml",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "yaml@2.9.1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/zod",
+      "@type": "cat-harness:SoftwareLibrary",
+      "title": "zod@4.6.7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/generated-pages/ig-qa-page.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "generated-pages/ig-qa-page (ar)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/ig-ast-cache.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-cache (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/ig-ast-delta-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-delta-review (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/ig-docs-site-compose.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-docs-site-compose (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/ig-incremental-build.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-incremental-build (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/ig-release.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-release (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/l3-fhir-pipeline.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/l3-fhir-pipeline (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/processes/questionnaire-wireframe-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/questionnaire-wireframe-review (ar, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ar/publisher/messages.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "publisher/messages (ar)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/generated-pages/ig-qa-page.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "generated-pages/ig-qa-page (es)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/ig-ast-cache.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-cache (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/ig-ast-delta-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-delta-review (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/ig-docs-site-compose.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-docs-site-compose (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/ig-incremental-build.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-incremental-build (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/ig-release.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-release (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/l3-fhir-pipeline.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/l3-fhir-pipeline (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/processes/questionnaire-wireframe-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/questionnaire-wireframe-review (es, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/es/publisher/messages.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "publisher/messages (es)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/generated-pages/ig-qa-page.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "generated-pages/ig-qa-page (fr)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/ig-ast-cache.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-cache (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/ig-ast-delta-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-delta-review (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/ig-docs-site-compose.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-docs-site-compose (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/ig-incremental-build.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-incremental-build (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/ig-release.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-release (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/l3-fhir-pipeline.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/l3-fhir-pipeline (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/processes/questionnaire-wireframe-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/questionnaire-wireframe-review (fr, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/fr/publisher/messages.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "publisher/messages (fr)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/generated-pages/ig-qa-page.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "generated-pages/ig-qa-page (ru)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/ig-ast-cache.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-cache (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/ig-ast-delta-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-delta-review (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/ig-docs-site-compose.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-docs-site-compose (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/ig-incremental-build.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-incremental-build (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/ig-release.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-release (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/l3-fhir-pipeline.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/l3-fhir-pipeline (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/processes/questionnaire-wireframe-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/questionnaire-wireframe-review (ru, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/ru/publisher/messages.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "publisher/messages (ru)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/generated-pages/ig-qa-page.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "generated-pages/ig-qa-page (zh)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/ig-ast-cache.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-cache (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/ig-ast-delta-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-ast-delta-review (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/ig-docs-site-compose.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-docs-site-compose (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/ig-incremental-build.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-incremental-build (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/ig-release.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/ig-release (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/l3-fhir-pipeline.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/l3-fhir-pipeline (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/processes/questionnaire-wireframe-review.pot",
+      "@type": "cat-harness:TranslationSource",
+      "title": "processes/questionnaire-wireframe-review (zh, template)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/translationSource/zh/publisher/messages.po",
+      "@type": "cat-harness:TranslationSource",
+      "title": "publisher/messages (zh)"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/collab/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/scenarios/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
+    "cat-harness:graphTypology/library",
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/scenarios",
+    "bootstrap:graphTypology/skills",
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "fhir-harness",
+  "path": "./",
+  "title": "FHIR IG Harness"
+}
