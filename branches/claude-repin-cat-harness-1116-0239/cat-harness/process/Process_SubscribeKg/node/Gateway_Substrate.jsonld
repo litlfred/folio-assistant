@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg/node/Gateway_Substrate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg/node/Gateway_Substrate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "A substrate at this pin?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg#flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg#flow/Flow_4",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_SubscribeKg#flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_Substrate"
+    }
+  ]
+}

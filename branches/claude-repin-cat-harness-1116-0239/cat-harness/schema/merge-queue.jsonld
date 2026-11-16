@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/schema/merge-queue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/schema/merge-queue",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "merge-queue",
+      "title": "merge-queue",
+      "summary": "The MERGE QUEUE — what the merge steward DECIDED about each open pull",
+      "module": "schemas/sdlc/merge-queue.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-queue"
+    }
+  ]
+}

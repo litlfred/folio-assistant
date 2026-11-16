@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/WithheldGate",
+  "definitions": {
+    "WithheldGate": {
+      "type": "object",
+      "properties": {
+        "gate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdict": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "gate",
+        "verdict"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/withheld/WithheldGateSchema.schema.json",
+  "title": "WithheldGateSchema",
+  "description": "Generated from `WithheldGateSchema` in schemas/content/withheld.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  }
+}

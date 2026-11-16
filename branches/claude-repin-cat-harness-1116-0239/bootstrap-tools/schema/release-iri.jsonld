@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/bootstrap-tools/schema/release-iri.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/bootstrap-tools/schema/release-iri",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "release-iri",
+      "title": "release-iri",
+      "summary": "A layer's release addresses: where its identifiers live for the major",
+      "module": "schemas/release-iri.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/release-iri"
+    }
+  ]
+}

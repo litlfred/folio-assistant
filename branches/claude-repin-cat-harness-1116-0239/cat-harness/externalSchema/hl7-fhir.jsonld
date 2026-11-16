@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/externalSchema/hl7-fhir.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/externalSchema/hl7-fhir",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "hl7-fhir",
+      "title": "HL7 FHIR",
+      "authority": "HL7",
+      "specVersion": "unpinned",
+      "specUse": "reads",
+      "specUrl": "https://hl7.org/fhir/",
+      "namespace": [
+        "http://hl7.org/fhir/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/hl7-fhir"
+    }
+  ]
+}

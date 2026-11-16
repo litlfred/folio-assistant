@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/skill/compiled-artefact-cache.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/skill/compiled-artefact-cache",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "compiled-artefact-cache",
+      "title": "Compiled Artefact Cache",
+      "description": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
+      "instructionLines": 99,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache"
+    }
+  ]
+}

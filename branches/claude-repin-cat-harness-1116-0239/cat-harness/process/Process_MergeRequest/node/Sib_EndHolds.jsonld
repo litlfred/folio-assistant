@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_MergeRequest/node/Sib_EndHolds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_MergeRequest/node/Sib_EndHolds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Lane handed over or lapsed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_MergeRequest",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/process/Process_MergeRequest#flow/Flow_S14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndHolds"
+    }
+  ]
+}

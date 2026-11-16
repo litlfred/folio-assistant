@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/HarnessSite",
+  "definitions": {
+    "HarnessSite": {
+      "type": "object",
+      "properties": {
+        "landing": {
+          "type": "boolean"
+        },
+        "build": {
+          "type": "object",
+          "properties": {
+            "home": {
+              "type": "string"
+            },
+            "pre": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+              }
+            },
+            "sourceSteps": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+              }
+            },
+            "siteSteps": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+              }
+            },
+            "rootIndex": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessSiteSchema.schema.json",
+  "title": "HarnessSiteSchema",
+  "description": "Generated from `HarnessSiteSchema` in schemas/kg/harness-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  }
+}

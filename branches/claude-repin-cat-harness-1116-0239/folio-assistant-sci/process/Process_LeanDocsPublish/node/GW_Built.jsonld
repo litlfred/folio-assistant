@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Built.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Built",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Is there a render?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/role/lean-toolchain",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_2",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Built"
+    }
+  ]
+}

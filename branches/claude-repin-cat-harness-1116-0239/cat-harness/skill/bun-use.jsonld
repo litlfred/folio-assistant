@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/skill/bun-use.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/skill/bun-use",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bun-use",
+      "title": "Bun Runtime, Toolchain, and Multi-Repo Conventions",
+      "description": "How Bun is used as the JavaScript/TypeScript execution runtime, test runner, package manager, and tarball packager across separated repositories: standalone subgraph configuration (bunfig.toml, package.json, tsconfig.json), test preloads, dependency resolution without rootDir pitfalls, packaging with bun pm pack, and coordinator vs standalone execution models.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/bun-use.md",
+      "instructionLines": 137,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bun-use"
+    }
+  ]
+}

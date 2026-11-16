@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-trust-phw/role/data-recipient-system.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-trust-phw/role/data-recipient-system",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Data Recipient System",
+      "title": "Data Recipient System",
+      "notation": "data-recipient-system",
+      "description": "A server that accesses data under a data sharing agreement (OAuth client) and performs the agreement's duties.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/data-recipient-system"
+    }
+  ]
+}

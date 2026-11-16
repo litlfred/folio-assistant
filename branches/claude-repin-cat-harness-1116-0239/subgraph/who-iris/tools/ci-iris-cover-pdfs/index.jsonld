@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/ci-iris-cover-pdfs/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cover-pdfs.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "ci-iris-cover-pdfs",
+      "title": "Fetch IRIS cover PDFs"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ci-iris-cover-pdfs",
+  "path": "tools/ci-iris-cover-pdfs/"
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/skill/crdm-recorded-walkthrough.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/skill/crdm-recorded-walkthrough",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "crdm-recorded-walkthrough",
+      "title": "Requirements from a recorded walkthrough",
+      "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/package/crdm"
+      ],
+      "instructionsPath": "skills/process/crdm/crdm-recorded-walkthrough.md",
+      "instructionLines": 84,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough"
+    }
+  ]
+}

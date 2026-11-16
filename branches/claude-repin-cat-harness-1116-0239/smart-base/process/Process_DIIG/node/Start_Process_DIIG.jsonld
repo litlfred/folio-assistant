@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/process/Process_DIIG/node/Start_Process_DIIG.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/Start_Process_DIIG",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "A health programme needs digital support",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
+    }
+  ]
+}

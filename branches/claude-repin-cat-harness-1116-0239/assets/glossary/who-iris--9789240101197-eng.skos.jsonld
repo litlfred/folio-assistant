@@ -1,0 +1,1005 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
+  "@graph": [
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng",
+      "@type": "skos:ConceptScheme",
+      "skos:prefLabel": "Digital transformation handbook for health supply chain architecture"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/deployment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "deployment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Making a software system available for use beyond testing purposes."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L12",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digital-health",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "digital health"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The systematic application of information and communications technologies, computer science and data to support informed decision-making by individuals, the health workforce and health systems, to strengthen resilience to disease and improve health and wellness (1, 2)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L14",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digital-health-supply-chain-intervention",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "digital health supply chain intervention"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An intervention that involves the use of digital technologies to improve the management and operation of health supply chains. It aims to enhance the efficiency and effectiveness of health supply chain processes such as planning, procurement, distribution and warehouse management."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L18",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digital-transformation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "digital transformation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the health context, using digital technologies to fundamentally change and improve how health services are delivered and accessed across all health programme areas (3, 4, 5). The process involves using innovation, analytics and feedback mechanisms to achieve systems-level changes."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L24",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digitalization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "digitalization"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the health context, the process of digitally automating and simplifying processes to streamline individual health programmes and reduce manual efforts for greater efficiency. Digitalization is the second step in digital transformation (3, 6)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L29",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digitization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "digitization"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The process of converting and organizing data from manual paper records into a digital format for easier entry, storage and retrieval. Digitization is the initial step in digital transformation (3, 7)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L33",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/end-users",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "end users"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "People who will be using the digital systems."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L36",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/enterprise-architecture",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "enterprise architecture"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A blueprint of business processes, data, systems and technologies that helps planners, software developers and managers design increasingly complex systems to support the workflow and roles of people in a large enterprise such as a health system (1)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L38",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/features",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "features"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The characteristics of a system that include look and feel as well as what the system can do (e.g., “order processing” can be a feature of an order management solution)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L43",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/functional-requirements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "functional requirements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A description of what the digital system needs to do to support the tasks that make up the business process and address the identified challenges."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L46",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/functions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "functions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Business processes within a system that help the system perform (e.g., “receiving inventory” and “picking inventory” are functions of the “warehousing” feature of a warehouse management system)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L50",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/health-supply-chain-information-system",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "health supply chain information system"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A paper-based or software tool that supports the management and/or operations of the health supply chain. Such software tools (e.g., for order management or warehouse management) are also commonly referred to as electronic logistics management information systems."
+        }
+      ],
+      "skos:notation": "HSCIS",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L54",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/interoperability",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "interoperability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The ability of different applications to access, exchange, integrate and use data in a coordinated and consistent manner, through the use of shared application interfaces, value sets, concepts and standards within and across organizational, regional and national boundaries. In the health context, this provides timely, safe and seamless portability of information to help ensure good health outcomes (1)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L59",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/nonfunctional-requirements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "nonfunctional requirements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A description of how the digital system needs to operate and perform in order to support the tasks that make up the business process."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L65",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/open-source-software",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "open-source software"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Software with source code that is published and made freely available to the public so anyone can inspect, modify and enhance the code within set guidelines (8). While the source code is open to everyone, the implementation of the software is not necessarily without costs. Open-source software must have a license approved by the Open Source Initiative (9)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L69",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/open-standards",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "open standards"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Standards that are documented and made freely available to the public. Open standards are developed, approved and maintained via a collaborative and consensus-driven process. Open standards facilitate interoperability and data exchange and are intended for widespread adoption (10)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L74",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/order-management",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "order management"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The planning, directing, monitoring and controlling of the processes related to customer or requisition orders. Order management includes order promising; order entry; order pick, pack and ship; billing; and reconciliation of the customer account (11)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L79",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/order-management-system",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "order management system"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A paper-based or software tool that supports the processes for fulfilling requisition orders (e.g., a software tool that supports entry and processing of requisition orders from health facilities to regional or central warehouses to replenish inventory)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L83",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/organogram",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "organogram"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A visual representation of an organization’s structure that shows the hierarchy of various roles and reporting relationships."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L88",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/registry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "registry"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A governed, authoritative and centralized information system that captures, stores and maintains the unique attributes and identifiers of health facilities, health service users, health products and/or the health workforce using a predefined canonical minimum data set."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L91",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/smart-guidelines",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SMART Guidelines"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The WHO guidelines for developing Standards-based, Machine-readable, Adaptive, Requirements-based and Testable components for implementing digital health capabilities. The components include interoperability standards, code libraries, algorithms, and technical and operational specifications. The SMART Guidelines provide a five-step pathway to advance the adoption of best clinical and data practices, even if a country is not yet fully digital (12, 13)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L95",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/stakeholder",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "stakeholder"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the context of digital health transformation, anyone who is affected by or interested in the consequences of the efforts, including the planning team, end users, beneficiaries and funders."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L101",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/systems-architecture",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "systems architecture"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A technical framework based on a conceptual model that defines how the system should be structured and how its elements should be connected."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L104",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/total-cost-of-ownership",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "total cost of ownership"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The resources required to support a digital health intervention throughout its life cycle."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L107",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/traceability",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "traceability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The ability to trace something. In some cases, it is interpreted as the ability to verify the history, location or application of an item by means of documented identification (14)."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L110",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/use-case",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "use case"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An example scenario of how the end user will use a system."
+        }
+      ],
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L113",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/warehouse-management-system",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "warehouse management system"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A computer application that manages and optimizes workflows and the storage of goods within a warehouse. It often interfaces with automated data capture and enterprise resource planning systems (11)."
+        }
+      ],
+      "skos:notation": "WMS",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-002-glossary.md#L115",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digital-health-and-interoperability-working-group",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Digital Health and Interoperability Working Group"
+        }
+      ],
+      "skos:notation": "DH&I WG",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L12",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digital-health-supply-chain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "digital health supply chain"
+        }
+      ],
+      "skos:notation": "DHSC",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L14",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/digital-implementation-investment-guide",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Digital Implementation Investment Guide"
+        }
+      ],
+      "skos:notation": "DIIG",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L16",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/electronic-regulatory-information-system",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Electronic Regulatory Information System"
+        }
+      ],
+      "skos:notation": "eRIS",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L18",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/enterprise-resource-planning",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "enterprise resource planning"
+        }
+      ],
+      "skos:notation": "ERP",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L20",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/full-time-equivalent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "full-time equivalent"
+        }
+      ],
+      "skos:notation": "FTE",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L22",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/global-family-planning-visibility-and-analytics-network",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Global Family Planning Visibility and Analytics Network"
+        }
+      ],
+      "skos:notation": "GFPVAN",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L24",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/global-health-supply-chain-program-procurement-and-supply-management",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Global Health Supply Chain Program–Procurement and Supply Management"
+        }
+      ],
+      "skos:notation": "GHSC-PSM",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L26",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/health-technical-support-services",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Health Technical Support Services"
+        }
+      ],
+      "skos:notation": "HTSS",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L30",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/information-and-communications-technology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "information and communications technology"
+        }
+      ],
+      "skos:notation": "ICT",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L32",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/information-technology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "information technology"
+        }
+      ],
+      "skos:notation": "IT",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L34",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/international-telecommunication-union",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "International Telecommunication Union"
+        }
+      ],
+      "skos:notation": "ITU",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L36",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/key-performance-indicator",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "key performance indicator"
+        }
+      ],
+      "skos:notation": "KPI",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L38",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/ministry-of-health",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ministry of health"
+        }
+      ],
+      "skos:notation": "MOH",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L40",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/national-product-catalog",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "National Product Catalog"
+        }
+      ],
+      "skos:notation": "NPC",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L42",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/national-supply-chain-assessment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "National Supply Chain Assessment"
+        }
+      ],
+      "skos:notation": "NSCA",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L44",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/open-health-information-exchange",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open Health Information Exchange"
+        }
+      ],
+      "skos:notation": "OpenHIE",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L46",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/quality-assurance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "quality assurance"
+        }
+      ],
+      "skos:notation": "QA",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L48",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/request-for-proposal",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "request for proposal"
+        }
+      ],
+      "skos:notation": "RFP",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L50",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/request-for-quotation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "request for quotation"
+        }
+      ],
+      "skos:notation": "RFQ",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L52",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/supply-chain-information-system-maturity-model",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Supply Chain Information System Maturity Model"
+        }
+      ],
+      "skos:notation": "SCISMM",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L54",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/supply-chain-systems-architecture",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Supply Chain Systems Architecture"
+        }
+      ],
+      "skos:notation": "SCSA",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L56",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/standards-based-machine-readable-adaptive-requirements-based-and-testable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Standards-based, Machine-readable, Adaptive, Requirements-based and Testable"
+        }
+      ],
+      "skos:notation": "SMART",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L58",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/the-open-group-architecture-framework",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "The Open Group Architecture Framework"
+        }
+      ],
+      "skos:notation": "TOGAF",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L60",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/target-software-standards",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Target Software Standards"
+        }
+      ],
+      "skos:notation": "TSS",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L62",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/technical-working-group",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "technical working group"
+        }
+      ],
+      "skos:notation": "TWG",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L64",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/united-states-agency-for-international-development",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "United States Agency for International Development"
+        }
+      ],
+      "skos:notation": "USAID",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L66",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng/world-health-organization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/9789240101197-eng"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "World Health Organization"
+        }
+      ],
+      "skos:notation": "WHO",
+      "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
+      "dcterms:source": "library/9789240101197-eng/sections/sec-001-abbreviations-and-acronyms.md#L68",
+      "skos:note": "candidate"
+    }
+  ]
+}

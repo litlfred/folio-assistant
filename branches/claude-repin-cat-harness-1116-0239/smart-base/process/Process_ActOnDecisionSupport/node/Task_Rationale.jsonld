@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/process/Process_ActOnDecisionSupport/node/Task_Rationale.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Note the reason (optional)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [
+        "http://smart.who.int/base/skill/record-decision-rationale"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}

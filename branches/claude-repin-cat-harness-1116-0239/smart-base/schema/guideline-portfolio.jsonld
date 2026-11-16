@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/schema/guideline-portfolio.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/guideline-portfolio.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/guideline-portfolio",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "guideline-portfolio",
+      "title": "guideline-portfolio",
+      "summary": "The WHO SMART Guidelines portfolio: the umbrella knowledge graph that links",
+      "module": "schemas/guideline-portfolio.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/guideline-portfolio/GuidelinePortfolioSchema.schema.json"
+      ]
+    }
+  ]
+}

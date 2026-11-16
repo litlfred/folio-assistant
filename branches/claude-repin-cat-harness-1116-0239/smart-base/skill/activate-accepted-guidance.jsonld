@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/skill/activate-accepted-guidance.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-cat-harness-1116-0239/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/activate-accepted-guidance.jsonld",
+  "staging": {
+    "branch": "claude/repin-cat-harness-1116-0239",
+    "sha": "cfd4deb170f420641ac5abd2320045493da1033b",
+    "pr": "3168/merge",
+    "run": "43794086490"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/activate-accepted-guidance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "activate-accepted-guidance",
+      "title": "Activate accepted guidance",
+      "description": "The point-of-care system carries out the health worker's decisions on decision-support guidance: each accepted action's request becomes active (intent plan or order) and joins the client's CarePlan; a declined action is not written. Input is the guidance and the decisions; output is the transaction Bundle saved.",
+      "instructionsPath": "L4/skills/smart-l4/activate-accepted-guidance.md",
+      "instructionLines": 46,
+      "inputSchema": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}
