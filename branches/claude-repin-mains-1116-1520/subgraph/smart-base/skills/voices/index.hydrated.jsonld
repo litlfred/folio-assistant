@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/voices/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/voices/who-digital-health/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/voice/who-digital-health",
+          "@type": "cat-harness:Voice",
+          "description": "The controlled vocabulary WHO uses to describe digital health implementations: what a digital health intervention is against the software that delivers it, what separates a bottleneck from a health system challenge, and how the two editions of the classification name themselves — including the first edition's title, which WHO says was wrong. Derived rule by rule from the ingested publications; every rule cites the section it was read from.",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/who-digital-health/voice.json",
+          "title": "WHO digital health terminology"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/who-digital-health",
+      "path": "skills/voices/who-digital-health/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/voices/who-digital-transformation-handbook/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/voice/who-digital-transformation-handbook",
+          "@type": "cat-harness:Voice",
+          "description": "The register of WHO's Digital Transformation Handbooks (DTHs) — the guidance publications that take one area of a health system from paper to digital within the DIIG process: the order of digitization, digitalization and digital transformation, what a registry is against a register, what master data excludes, and how the draft DPI-H Reference Architecture names its own layers. Derived rule by rule from the three DTHs and the draft Reference Architecture ingested in smart-base/library; every rule cites the section it was read from, and a rule resting on the DRAFT says so.",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/who-digital-transformation-handbook/voice.json",
+          "title": "WHO Digital Transformation Handbook"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/who-digital-transformation-handbook",
+      "path": "skills/voices/who-digital-transformation-handbook/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/voices",
+  "path": "skills/voices/"
+}

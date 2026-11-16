@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/skill/readability-editing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-1520",
+    "sha": "dcfc556aa94383eb342719b785a84c4f62c497f7",
+    "pr": "3180/merge",
+    "run": "43896809217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/skill/readability-editing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "readability-editing",
+      "title": "Readability Editing Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/package/editorial-audits"
+      ],
+      "instructionsPath": "editorial/skills/editorial-audits/readability-editing.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/directory/editorial",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readability-editing"
+    }
+  ]
+}

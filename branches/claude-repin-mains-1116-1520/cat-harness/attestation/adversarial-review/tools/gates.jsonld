@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/attestation/adversarial-review/tools/gates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-1520",
+    "sha": "dcfc556aa94383eb342719b785a84c4f62c497f7",
+    "pr": "3180/merge",
+    "run": "43896809217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/attestation/adversarial-review/tools/gates",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "adversarial-review attestation: tool gates",
+      "description": "The adversarial-review judgements recorded for tool gates, each pinned to the hash it attested.",
+      "sourceKind": "adversarial-review",
+      "sourcePath": "test/attestations/adversarial-review/tools/gates.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/adversarial-review/tools/gates"
+    }
+  ]
+}

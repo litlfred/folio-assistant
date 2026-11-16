@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/who-iris/role/iris-cdn-owner.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-1520",
+    "sha": "dcfc556aa94383eb342719b785a84c4f62c497f7",
+    "pr": "3180/merge",
+    "run": "43896809217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/who-iris/role/iris-cdn-owner",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "IRIS CDN owner",
+      "title": "IRIS CDN owner",
+      "notation": "iris-cdn-owner",
+      "description": "A person: decides the export's scope, budget and storage target. Nothing downstream widens what the owner approved.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/who-iris/skill/iris-cdn-exporter"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner"
+    }
+  ]
+}

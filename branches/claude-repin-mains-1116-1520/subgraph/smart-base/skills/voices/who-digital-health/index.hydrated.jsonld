@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/voices/who-digital-health/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/voice/who-digital-health",
+      "@type": "cat-harness:Voice",
+      "description": "The controlled vocabulary WHO uses to describe digital health implementations: what a digital health intervention is against the software that delivers it, what separates a bottleneck from a health system challenge, and how the two editions of the classification name themselves — including the first edition's title, which WHO says was wrong. Derived rule by rule from the ingested publications; every rule cites the section it was read from.",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/who-digital-health/voice.json",
+      "title": "WHO digital health terminology"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/voices/who-digital-health",
+  "path": "skills/voices/who-digital-health/"
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/who-publication-design/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/voice/who-publication-design",
+      "@type": "cat-harness:Voice",
+      "description": "The visual conventions around the prose rather than the prose itself: logo use, palette, typography, pagination and figure accessibility, as set out in the WHO Western Pacific Region publication and information products style guide. This is the one voice whose rules mostly do not touch a block's text, which is why it is a separate voice rather than more rules on who-editorial — a folio can want WHO's editorial register without WPRO's brand.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/who-publication-design/voice.json",
+      "title": "WHO publication design (Western Pacific Region)"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/voices/who-publication-design",
+  "path": "skills/voices/who-publication-design/"
+}

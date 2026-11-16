@@ -1,0 +1,693 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-adjudicator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-adjudicator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Adjudicator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-adjudicator/voice.json",
+          "title": "Addressing the Adjudicator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-adjudicator",
+      "path": "skills/voices/address-adjudicator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-administrator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-administrator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Administrator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-administrator/voice.json",
+          "title": "Addressing the Administrator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-administrator",
+      "path": "skills/voices/address-administrator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-author/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-author",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Author. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-author/voice.json",
+          "title": "Addressing the Author"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-author",
+      "path": "skills/voices/address-author/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-authoring-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-authoring-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-authoring-agent/voice.json",
+          "title": "Addressing the Authoring agent"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-authoring-agent",
+      "path": "skills/voices/address-authoring-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-business-analyst/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-business-analyst",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Business analyst. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-business-analyst/voice.json",
+          "title": "Addressing the Business analyst"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-business-analyst",
+      "path": "skills/voices/address-business-analyst/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-clinical-sme/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-clinical-sme",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Clinical / scientific SME. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-clinical-sme/voice.json",
+          "title": "Addressing the Clinical / scientific SME"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-clinical-sme",
+      "path": "skills/voices/address-clinical-sme/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-code-reviewer/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-code-reviewer",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Code reviewer. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-code-reviewer/voice.json",
+          "title": "Addressing the Code reviewer"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-code-reviewer",
+      "path": "skills/voices/address-code-reviewer/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-deep-researcher/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-deep-researcher",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Deep researcher. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-deep-researcher/voice.json",
+          "title": "Addressing the Deep researcher"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-deep-researcher",
+      "path": "skills/voices/address-deep-researcher/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-docs-authoring-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-docs-authoring-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Docs authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-docs-authoring-agent/voice.json",
+          "title": "Addressing the Docs authoring agent"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-docs-authoring-agent",
+      "path": "skills/voices/address-docs-authoring-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-editor/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-editor",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Editor. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-editor/voice.json",
+          "title": "Addressing the Editor"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-editor",
+      "path": "skills/voices/address-editor/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-editorial-authoring-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-editorial-authoring-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Editorial authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-editorial-authoring-agent/voice.json",
+          "title": "Addressing the Editorial authoring agent"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-editorial-authoring-agent",
+      "path": "skills/voices/address-editorial-authoring-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-evidence-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-evidence-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Evidence agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-evidence-agent/voice.json",
+          "title": "Addressing the Evidence agent"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-evidence-agent",
+      "path": "skills/voices/address-evidence-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-feedback-provider/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-feedback-provider",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Feedback provider. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-feedback-provider/voice.json",
+          "title": "Addressing the Feedback provider"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-feedback-provider",
+      "path": "skills/voices/address-feedback-provider/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-ingestion-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-ingestion-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Ingestion engine. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-ingestion-agent/voice.json",
+          "title": "Addressing the Ingestion engine"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-ingestion-agent",
+      "path": "skills/voices/address-ingestion-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-integration-watcher/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-integration-watcher",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Integration watcher. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-integration-watcher/voice.json",
+          "title": "Addressing the Integration watcher"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-integration-watcher",
+      "path": "skills/voices/address-integration-watcher/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-librarian/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-librarian",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Librarian. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-librarian/voice.json",
+          "title": "Addressing the Librarian"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-librarian",
+      "path": "skills/voices/address-librarian/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-narrative-reviewer/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-narrative-reviewer",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Narrative reviewer. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-narrative-reviewer/voice.json",
+          "title": "Addressing the Narrative reviewer"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-narrative-reviewer",
+      "path": "skills/voices/address-narrative-reviewer/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-onboarding-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-onboarding-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Onboarding agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-onboarding-agent/voice.json",
+          "title": "Addressing the Onboarding agent"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-onboarding-agent",
+      "path": "skills/voices/address-onboarding-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-platform-authoring-agent/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-platform-authoring-agent",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Platform authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-platform-authoring-agent/voice.json",
+          "title": "Addressing the Platform authoring agent"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-platform-authoring-agent",
+      "path": "skills/voices/address-platform-authoring-agent/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-programme-manager/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-programme-manager",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Programme manager. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-programme-manager/voice.json",
+          "title": "Addressing the Programme manager"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-programme-manager",
+      "path": "skills/voices/address-programme-manager/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-publication-manager/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-publication-manager",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Publication manager. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-publication-manager/voice.json",
+          "title": "Addressing the Publication manager"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-publication-manager",
+      "path": "skills/voices/address-publication-manager/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-qc-reviewer/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-qc-reviewer",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as QC reviewer. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-qc-reviewer/voice.json",
+          "title": "Addressing the QC reviewer"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-qc-reviewer",
+      "path": "skills/voices/address-qc-reviewer/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-review-coordinator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-review-coordinator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Review coordinator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-review-coordinator/voice.json",
+          "title": "Addressing the Review coordinator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-review-coordinator",
+      "path": "skills/voices/address-review-coordinator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-reviewer/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-reviewer",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Reviewer / SME. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-reviewer/voice.json",
+          "title": "Addressing the Reviewer / SME"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-reviewer",
+      "path": "skills/voices/address-reviewer/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-session-coordinator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-session-coordinator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Session coordinator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-session-coordinator/voice.json",
+          "title": "Addressing the Session coordinator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-session-coordinator",
+      "path": "skills/voices/address-session-coordinator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-sibling-session/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-sibling-session",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Sibling session. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-sibling-session/voice.json",
+          "title": "Addressing the Sibling session"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-sibling-session",
+      "path": "skills/voices/address-sibling-session/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-stakeholder/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-stakeholder",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Stakeholder. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-stakeholder/voice.json",
+          "title": "Addressing the Stakeholder"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-stakeholder",
+      "path": "skills/voices/address-stakeholder/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-terminologist/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-terminologist",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Terminologist. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-terminologist/voice.json",
+          "title": "Addressing the Terminologist"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-terminologist",
+      "path": "skills/voices/address-terminologist/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translation-adjudicator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-translation-adjudicator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Translation adjudicator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-translation-adjudicator/voice.json",
+          "title": "Addressing the Translation adjudicator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-translation-adjudicator",
+      "path": "skills/voices/address-translation-adjudicator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translation-coordinator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-translation-coordinator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Translation coordinator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-translation-coordinator/voice.json",
+          "title": "Addressing the Translation coordinator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-translation-coordinator",
+      "path": "skills/voices/address-translation-coordinator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translator/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-translator",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as Human translator. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-translator/voice.json",
+          "title": "Addressing the Human translator"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-translator",
+      "path": "skills/voices/address-translator/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-user/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-user",
+          "@type": "cat-harness:Voice",
+          "description": "How to write for a reader acting as User. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/address-user/voice.json",
+          "title": "Addressing the User"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/address-user",
+      "path": "skills/voices/address-user/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/linked-data/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/linked-data",
+          "@type": "cat-harness:Voice",
+          "description": "The voice for a coding agent writing or reviewing code that EMITS JSON-LD: what makes the output linked data a processor can follow, rather than JSON that merely carries an @context. Six rules, each read from a held W3C text. Owner, 2026-10-01: \"make sure that these issues are part of the one voice for jsonld\" and \"it is a voice for a coding agent, in a code authoring or review task\". Every rule was found broken or fragile in this repository before it was written down (beans jcet, 9y9j): the PROV-O QA/QC reports carried prov:agent, prov:hadRole and prov:hadPlan as plain strings in all 100 activities, and the content context's @base resolves only because jsonld.js applies @base from a remote context.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/linked-data/voice.json",
+          "title": "Linked data — how a coding agent emits and reviews JSON-LD"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/linked-data",
+      "path": "skills/voices/linked-data/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/technical-writer/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/technical-writer",
+          "@type": "cat-harness:Voice",
+          "description": "The voice for technical documentation of standards, software and knowledge assets, written as an SDO writes (W3C, IHE). Requirement levels are RFC 2119's, read from the ingested RFC rather than from memory, and constrained by RFC 8174: only UPPERCASE usage carries the defined meaning. Applies to drafting AND to review QA. Nine rules; five cite the two ingested RFCs, three cite the `technical-documentation` skill, a node of this layer's own knowledge graph, because a rule that cites a document it was not read from is the false provenance this schema exists to prevent.",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "sourceKind": "voices",
+          "sourcePath": "skills/voices/technical-writer/voice.json",
+          "title": "Technical Writer — SDO register with RFC 2119 requirement levels"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/technical-writer",
+      "path": "skills/voices/technical-writer/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/voices",
+  "path": "skills/voices/"
+}

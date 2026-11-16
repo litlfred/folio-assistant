@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/voices/who-digital-transformation-handbook/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/voice/who-digital-transformation-handbook",
+      "@type": "cat-harness:Voice",
+      "description": "The register of WHO's Digital Transformation Handbooks (DTHs) — the guidance publications that take one area of a health system from paper to digital within the DIIG process: the order of digitization, digitalization and digital transformation, what a registry is against a register, what master data excludes, and how the draft DPI-H Reference Architecture names its own layers. Derived rule by rule from the three DTHs and the draft Reference Architecture ingested in smart-base/library; every rule cites the section it was read from, and a rule resting on the DRAFT says so.",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/who-digital-transformation-handbook/voice.json",
+      "title": "WHO Digital Transformation Handbook"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/voices/who-digital-transformation-handbook",
+  "path": "skills/voices/who-digital-transformation-handbook/"
+}

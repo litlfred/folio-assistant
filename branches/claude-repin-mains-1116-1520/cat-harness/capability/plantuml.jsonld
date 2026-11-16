@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/capability/plantuml.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-1520",
+    "sha": "dcfc556aa94383eb342719b785a84c4f62c497f7",
+    "pr": "3180/merge",
+    "run": "43896809217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/capability/plantuml",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "plantuml",
+      "name": "PlantUML",
+      "description": "PlantUML diagram generator for UML, BPMN, and other diagram types.",
+      "detection": {
+        "method": "command",
+        "command": "plantuml -version"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/capability/java-runtime",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/capability/graphviz"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/plantuml"
+    }
+  ]
+}

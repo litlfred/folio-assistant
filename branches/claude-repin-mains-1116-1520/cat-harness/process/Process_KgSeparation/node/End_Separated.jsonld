@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/process/Process_KgSeparation/node/End_Separated.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-1520",
+    "sha": "dcfc556aa94383eb342719b785a84c4f62c497f7",
+    "pr": "3180/merge",
+    "run": "43896809217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/process/Process_KgSeparation/node/End_Separated",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Separated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/process/Process_KgSeparation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/role/administrator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/process/Process_KgSeparation/lane/Lane_Admin",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/process/Process_KgSeparation#flow/F18"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/End_Separated"
+    }
+  ]
+}
