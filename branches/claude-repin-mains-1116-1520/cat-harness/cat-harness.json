@@ -367,10 +367,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e63752aa1f97424d06d09c93b76c7352e0c0d647",
-  "sourceCommitSha": "e63752aa1f97424d06d09c93b76c7352e0c0d647",
-  "sourceTree": "28292739d2b2822560e9335e098c09e8f8aa65c4",
-  "sourceCommitAt": "2026-11-16T16:12:33Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5ff3e43209a0994aa14c7d45dea46b394eed6839",
+  "sourceCommitSha": "5ff3e43209a0994aa14c7d45dea46b394eed6839",
+  "sourceTree": "887fdffb419bfe59058f1c3b8de42de7c2b59ff4",
+  "sourceCommitAt": "2026-11-16T21:13:47Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -70637,6 +70637,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per layer rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared layer made its old home CREATE a `skills/` directory holding no skills in each of the six layers that have none. Its registration in `graph-typology-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/sdlc/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-1520/cat-harness/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/qa"
     },
@@ -71217,8 +71218,8 @@
   ],
   "staging": {
     "branch": "claude/repin-mains-1116-1520",
-    "sha": "e63752aa1f97424d06d09c93b76c7352e0c0d647",
+    "sha": "5ff3e43209a0994aa14c7d45dea46b394eed6839",
     "pr": "3180/merge",
-    "run": "43904931425"
+    "run": "43957926612"
   }
 }

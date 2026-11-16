@@ -9096,6 +9096,14 @@
           "array": false,
           "card": "0..1",
           "doc": "Where `archimate-blocks` writes the view as SVG, relative to the"
+        },
+        {
+          "name": "asDrawn",
+          "type": "z .string() .regex(/\\.svg$/, \"an .svg file\") .refine((f) => !f.startsWith(\"/\") && !f.split(\"/\").includes(\"..\"), \"relati…",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "doc": "The figure as the source publication drew it, redrawn as SVG, relative"
         }
       ],
       "extendsNames": [],

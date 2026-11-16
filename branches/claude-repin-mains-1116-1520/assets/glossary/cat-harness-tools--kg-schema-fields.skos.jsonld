@@ -166,6 +166,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/archimate.archimateconfigfigureschema.asdrawn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.asDrawn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The figure as the source publication drew it, redrawn as SVG, relative to the layer root. Present, the view's page offers a two-way switch, \"As drawn\" (this SVG, inlined so its links work; checked first) and \"ArchiMate\" (the model's view), and the site build copies the file beside the view's drawing as `<view id>.as-drawn.svg`. Its links resolve from the view's page, so `../../element/<slug>/` reaches an element. Absent, the page shows the model's view alone."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.asDrawn",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/archimate.archimateconfigfigureschema.basis",
       "@type": "skos:Concept",
       "skos:inScheme": {
