@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/role/terminologist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-own-reds",
+    "sha": "cfb30da384c4bc7e45193df0a7476b6755d7ee18",
+    "pr": "claude/fa-main-own-reds",
+    "run": "43959629880"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/role/terminologist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Terminologist",
+      "title": "Terminologist",
+      "notation": "terminologist",
+      "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/skill/code-lists",
+        "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/skill/vocabulary-authority"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist"
+    }
+  ]
+}

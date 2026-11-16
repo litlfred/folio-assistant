@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/CatalogueNodeRead",
+  "definitions": {
+    "CatalogueNodeRead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "materialization": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "referenced",
+                "materialized"
+              ]
+            },
+            "provenance": {
+              "type": "object",
+              "properties": {
+                "upstream": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "required": [
+            "state"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "materialization"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/CatalogueNodeReadSchema.schema.json",
+  "title": "CatalogueNodeReadSchema",
+  "description": "Generated from `CatalogueNodeReadSchema` in schemas/kg/id-lookup.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fa-main-own-reds",
+    "sha": "cfb30da384c4bc7e45193df0a7476b6755d7ee18",
+    "pr": "claude/fa-main-own-reds",
+    "run": "43959629880"
+  }
+}

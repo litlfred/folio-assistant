@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-own-reds",
+    "sha": "cfb30da384c4bc7e45193df0a7476b6755d7ee18",
+    "pr": "claude/fa-main-own-reds",
+    "run": "43959629880"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Owner",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/role/iris-cdn-owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner"
+    }
+  ]
+}

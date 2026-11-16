@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-fa-main-own-reds/cat-harness/tool-types/Login.schema.json",
+  "title": "Login",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$",
+  "description": "A GitHub account name, e.g. litlfred",
+  "staging": {
+    "branch": "claude/fa-main-own-reds",
+    "sha": "cfb30da384c4bc7e45193df0a7476b6755d7ee18",
+    "pr": "claude/fa-main-own-reds",
+    "run": "43959629880"
+  }
+}

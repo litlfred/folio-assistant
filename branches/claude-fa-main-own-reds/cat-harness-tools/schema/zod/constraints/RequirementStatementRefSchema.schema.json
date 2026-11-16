@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementStatementRef",
+  "definitions": {
+    "RequirementStatementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9-]+#[a-z0-9-]+$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RequirementStatementRefSchema.schema.json",
+  "title": "RequirementStatementRefSchema",
+  "description": "Generated from `RequirementStatementRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fa-main-own-reds",
+    "sha": "cfb30da384c4bc7e45193df0a7476b6755d7ee18",
+    "pr": "claude/fa-main-own-reds",
+    "run": "43959629880"
+  }
+}
