@@ -31,6 +31,20 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 
+/**
+ * The inline `workflows: [...]` list of an `on.workflow_run:` trigger, in the
+ * block-mapping form or the flow-mapping form
+ * (`workflow_run: { workflows: [...], ... }`, which the merge-guard caller
+ * uses); null when neither matches.
+ */
+function workflowRunList(src: string): RegExpExecArray | null {
+  return (
+    /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src) ??
+    /^  workflow_run:\s*\{[^}]*?\bworkflows:\s*\[(.+?)\]/m.exec(src)
+  );
+}
+
+
 // `.github/` belongs to this index repository, two levels above here.
 const DIR = join(import.meta.dir, "../../.github/workflows");
 const FILES = readdirSync(DIR).filter((f) => f.endsWith(".yml"));
@@ -255,11 +269,13 @@ describe("workflow triggers match what their headers claim", () => {
     const dangling: string[] = [];
     for (const f of FILES) {
       const src = readFileSync(join(DIR, f), "utf-8");
-      // The `workflows:` list inside an `on.workflow_run:` block. Inline-array
-      // form only, which is what every one here uses; a block-sequence form
-      // would read as no names, so it is asserted against rather than assumed
-      // away — a silent zero is the thing this test exists to refuse.
-      const m = /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src);
+      // The `workflows:` list inside an `on.workflow_run:` block, as an inline
+      // array, in either the block-mapping form or the flow-mapping form
+      // (`workflow_run: { workflows: [...], ... }`, which the merge-guard
+      // caller uses). A block-sequence form would read as no names, so it is
+      // asserted against rather than assumed away — a silent zero is the thing
+      // this test exists to refuse.
+      const m = workflowRunList(src);
       if (!/^  workflow_run:/m.test(src)) continue;
       expect({ f, parsedItsWorkflowList: m !== null }).toEqual({ f, parsedItsWorkflowList: true });
       for (const raw of m![1].split(",")) {
@@ -288,7 +304,7 @@ describe("workflow triggers match what their headers claim", () => {
     const unfireable: string[] = [];
     for (const f of FILES) {
       const src = readFileSync(join(DIR, f), "utf-8");
-      const m = /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src);
+      const m = workflowRunList(src);
       if (m === null) continue;
       // A `workflow_run` filtered to branches that exclude the default branch
       // waits on no default-branch run, so the premise does not apply
