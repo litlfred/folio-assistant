@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Ingestion Engine (agent, runs unattended)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/folio-assistant-core/process/Process_DeriveContent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0"
+    }
+  ]
+}

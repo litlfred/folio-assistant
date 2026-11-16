@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementStatementRef",
+  "definitions": {
+    "RequirementStatementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9-]+#[a-z0-9-]+$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RequirementStatementRefSchema.schema.json",
+  "title": "RequirementStatementRefSchema",
+  "description": "Generated from `RequirementStatementRefSchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  }
+}

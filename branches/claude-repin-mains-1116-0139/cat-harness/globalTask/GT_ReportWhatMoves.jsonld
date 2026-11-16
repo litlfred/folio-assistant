@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/globalTask/GT_ReportWhatMoves.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/globalTask/GT_ReportWhatMoves",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
+      "name": "Report what would move — sizes, and what breaks",
+      "summary": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback.",
+      "description": "The agent reports and waits: what would move, how large, what in the parent breaks, and the rollback. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/skill/deletion-requires-confirmation"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_ReportWhatMoves"
+    }
+  ]
+}

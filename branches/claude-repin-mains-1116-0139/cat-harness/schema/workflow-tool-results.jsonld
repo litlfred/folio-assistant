@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/schema/workflow-tool-results.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/schema/workflow-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "workflow-tool-results",
+      "title": "workflow-tool-results",
+      "summary": "Typed results of the workflow engine's tools.",
+      "module": "schemas/tools/workflow-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/workflow-tool-results"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/smart-base/process/Process_QuestionnaireDataCapture/lane/Lane_System.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Point-of-care system",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "bindsRole": "http://smart.who.int/base/role/point-of-care-system",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}

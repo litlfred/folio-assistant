@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain/node/Task_Eject.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain/node/Task_Eject",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Eject the culprit, record why",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/skill/merge-queue"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain#flow/t15",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain#flow/t25",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain#flow/t27"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/process/Process_MergeTrain#flow/t30"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Eject"
+    }
+  ]
+}

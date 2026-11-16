@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/PublishingProfile",
+  "definitions": {
+    "PublishingProfile": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "_comment": {
+          "type": "string"
+        },
+        "stagingRoot": {
+          "type": "string",
+          "pattern": "^https?:\\/\\/[^\\s/]+(?:\\/[^\\s]*)?$"
+        },
+        "iriRoot": {
+          "type": "string",
+          "pattern": "^https?:\\/\\/[^\\s/]+(?:\\/[^\\s]*)?$"
+        },
+        "publishedRoot": {
+          "type": "string",
+          "pattern": "^https?:\\/\\/[^\\s/]+(?:\\/[^\\s]*)?$"
+        }
+      },
+      "required": [
+        "stagingRoot",
+        "iriRoot",
+        "publishedRoot"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/publishing-profile/PublishingProfileSchema.schema.json",
+  "title": "PublishingProfileSchema",
+  "description": "Generated from `PublishingProfileSchema` in schemas/kg/publishing-profile.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/skill/communication-language.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0139",
+    "sha": "cd19da86ccd34ce77601baaebf3a44b7833b993a",
+    "pr": "3167/merge",
+    "run": "43788154222"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/skill/communication-language",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "communication-language",
+      "title": "The language you communicate in",
+      "description": "Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/package/conduct-core"
+      ],
+      "instructionsPath": "skills/conduct/conduct-core/communication-language.md",
+      "instructionLines": 120,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0139/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/communication-language"
+    }
+  ]
+}
