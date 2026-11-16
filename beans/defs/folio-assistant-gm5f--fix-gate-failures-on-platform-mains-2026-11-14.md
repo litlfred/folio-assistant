@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-11-14T17:50:00Z
-updated_at: 2026-11-15T17:30:00Z
+updated_at: 2026-11-16T08:45:00Z
 parent: folio-assistant-v8bg
 tags:
     - ci
@@ -47,3 +47,5 @@ _2026-11-15T06:27:49Z_ — Handover status. Merged: tools#2195, #2197, #2216; ca
 _2026-11-15T07:35Z_ — Train fa#3124: merged tools#2199, #2234, #2273 and cat-harness#1341. Re-pinned the train at cac052f (cat-harness 2ff927a7, tools 23778b48, core c48d9bd1) and at 7298fa7 (tools 8cf561ed). who-iris gen:jsonld:check passes at the train's pins, so it is pin skew and needs no regen. Last fix: tools#2279 (foreign-site-scope and nav-names follow the 11-13 navbar row), issue tools#2233. Known exception: smart-base smartTrustKeepsDraftWatermark. Next: re-pin the train after #2279 merges, then report fa and smart-base green mains to the MVP close-out thread (for fa#2894).
 
 _2026-11-15T17:30Z_ — All PRs for this bean have merged to `main`: `cat-harness-tools#2184` (`4eb3e4b1`), `#2185` (`48a32485`), `#2195` (`f918cb6c`), `#2197` (`699bc3a3`), `#2199` (`0a53c060`), `#2216` (`c03ba4ba`), `#2234` (`fe688302`), `#2273` (`8cf561ed`), `#2279` (`58de3828`); `cat-harness#1341` (`c624d31c`), `#1342` (`78f1f029`), `#1343` (`4c19233c`); `bootstrap-tools#100` (`174a567d`); `fhir-harness#435` (`5bf5ff95`); `smart-base#410` (`f04123f5`); `folio-assistant#3127` (`aa473bdc`, merged `2026-11-15T06:38:32Z`); and the re-pin train `folio-assistant#3124` (`c6c2c6a7`, merged `2026-11-15T13:29:42Z`). Completed.
+
+_2026-11-16T08:45Z_ — 11-16 round (coordinator 03:42Z). Merged: tools#2312, cat-harness#1355/#1357/#1359, fa#3154, fhir-harness#440, smart-base#420, smart-base#430 (issue #429, ig-pages-committed reads the index through the overlay; smart-base main green at ebf19f23), smart-pcmt#9 (owner card C: main judges only smart-pcmt:* gates; part A follows). Open: smart-pcmt#13 (ig-ast-refresh caller; MM merges then dispatches once), fa PR for workflow-triggers flow-mapping parse, wt3x parent fix (this PR). fa main Code-quality at 104e05e3 also red on ig-pages-committed via smart-base@bdf771ec pin, cleared by MM cascade to smart-base d0704862.
