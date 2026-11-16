@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-16T00:40:00Z
-updated_at: 2026-11-16T00:40:00Z
+updated_at: 2026-11-16T00:46:00Z
 tags:
     - who-migration
 ---
@@ -28,9 +28,10 @@ Machine-readable copy: `/mnt/project-files/who-migration-plan/issues/smart-ra.js
 - DPI-H review sheet (1TNr5VP…): Config CFG `REPO_URL` → WHO; Agent - Change Sets C204 → WHO pull/74, C209 → pull/81, E209 issue link → WHO issues/68; the Document/Repository line in B1 of both Agent tabs, both Review tabs and Public Comment Source → WHO. Merged/closed PR links (fork numbers) left on litlfred, they stay valid. Staging preview links left on litlfred.github.io (WHO has no branch previews yet).
 
 ## Still to do
-- [ ] Fork side (needs a session with litlfred/smart-ra attached: one session cannot hold both repos named smart-ra): dump comments of the 24 issues and review state of the 8 PRs; comment `Moved to WorldHealthOrganization/smart-ra#M` on each original and close (issues as not planned). Do NOT delete the fork branches until the WHO PRs merge.
-- [ ] Append the original comments to the WHO copies (from the dump).
+- [ ] Fork side (dump DONE 00:17Z by a helper thread with the fork attached: `/mnt/project-files/who-migration-plan/issues/smart-ra-fork-comments.json`; closing originals in progress there) (needs a session with litlfred/smart-ra attached: one session cannot hold both repos named smart-ra): dump comments of the 24 issues and review state of the 8 PRs; comment `Moved to WorldHealthOrganization/smart-ra#M` on each original and close (issues as not planned). Do NOT delete the fork branches until the WHO PRs merge.
+- [x] Append the original comments to the WHO copies (from the dump): done 00:45Z, 39 issue comments as a quoted block under "Comments on the original", @mentions escaped; PRs got a "Review state on the original" section (no reviews, 4 comments).
 - [ ] Open beans/to-dos that link moved items: append the new link (plan step 4).
 
 ## Log
 _2026-11-16T00:40Z_ — created; WHO side and sheet done, fork side pending.
+_2026-11-16T00:46Z_ — original comments appended to the WHO copies.
