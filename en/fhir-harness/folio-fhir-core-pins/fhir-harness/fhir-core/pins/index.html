@@ -98,39 +98,66 @@
 </h1><p class="m">A <a href="../../../">folio-fhir-core-pins</a> node held by <a href="../../">fhir-harness</a>, at <code>fhir-harness/fhir-core/pins.json</code>.</p><h2 id="fields"><a href="#fields" class="anchor-heading" aria-labelledby="fields"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fields
   
   
-</h2><dl><dt>$schema</dt><dd>folio-fhir-core-pins/v1</dd><dt>registry</dt><dd>https://packages.fhir.org</dd><dt>note</dt><dd>The stable FHIR releases only: no ballot, snapshot or preview. Each package is the HL7 core package packages.fhir.org serves at the exact version; `shasum` is the sha1 the registry&#39;s metadata (https://packages.fhir.org/&lt;name&gt;) records for that version, and `integrity` is the sha512 of the same bytes, computed when the pin was written (2026-11-14). `bun run fhir-harness/scripts/fhir-core.ts index` refuses bytes that differ from either.</dd><dt>releases</dt><dd><pre>[
+</h2><dl><dt>$schema</dt><dd>folio-fhir-core-pins/v2</dd><dt>authority</dt><dd>https://hl7.org/fhir</dd><dt>note</dt><dd>HL7&#39;s publication is the authority. Each release is read from HL7&#39;s own core package at the URL the specification publishes it (https://hl7.org/fhir/&lt;release&gt;/hl7.fhir.&lt;r&gt;.core.tgz); `shasum` (sha1) and `integrity` (sha512) are of HL7&#39;s bytes, computed when the pin was written (2026-11-15). `bun run fhir-harness/scripts/fhir-core.ts index` refuses bytes that differ from either. A `mirrors` entry is a copy elsewhere, pinned by its own hashes; it is never read for the manifest or the class model, only to fill the local cache.</dd><dt>releases</dt><dd><pre>[
   {
     &quot;release&quot;: &quot;R4&quot;,
     &quot;fhirVersion&quot;: &quot;4.0.1&quot;,
+    &quot;spec&quot;: &quot;https://hl7.org/fhir/R4/&quot;,
     &quot;package&quot;: {
       &quot;name&quot;: &quot;hl7.fhir.r4.core&quot;,
       &quot;version&quot;: &quot;4.0.1&quot;,
-      &quot;tarball&quot;: &quot;https://packages.fhir.org/hl7.fhir.r4.core/4.0.1&quot;,
-      &quot;shasum&quot;: &quot;0e4b8d99f7918587557682c8b47df605424547a5&quot;,
-      &quot;integrity&quot;: &quot;sha512-mbj/pjYrpclK5G+EbRV9BUzk05iIOpnIYyRfGW7N7dHQkj2gD9lF6713W+RoMtpjkdZewjiD893ZMqMbyHniEA==&quot;
-    }
+      &quot;tarball&quot;: &quot;https://hl7.org/fhir/R4/hl7.fhir.r4.core.tgz&quot;,
+      &quot;shasum&quot;: &quot;6365eef32ca8852c73298e596b1a7c00021b34cf&quot;,
+      &quot;integrity&quot;: &quot;sha512-CYHlLbP/2f7eKAkFnWPGeyg35cnXSeXg8WIpwXhPF4ABYWqa9lw0Vy8qdMWih/47T0gBKXRH3rPay5rUi4G1hA==&quot;
+    },
+    &quot;mirrors&quot;: [
+      {
+        &quot;tarball&quot;: &quot;https://packages.fhir.org/hl7.fhir.r4.core/4.0.1&quot;,
+        &quot;shasum&quot;: &quot;0e4b8d99f7918587557682c8b47df605424547a5&quot;,
+        &quot;integrity&quot;: &quot;sha512-mbj/pjYrpclK5G+EbRV9BUzk05iIOpnIYyRfGW7N7dHQkj2gD9lF6713W+RoMtpjkdZewjiD893ZMqMbyHniEA==&quot;,
+        &quot;note&quot;: &quot;The FHIR package registry&#39;s copy: a different tarball from HL7&#39;s, carrying 3 more non-core StructureDefinitions (449 left out against HL7&#39;s 446); the 209 core StructureDefinitions are byte-identical to HL7&#39;s (every sha256 equal), checked 2026-11-15. It may fill the cache only, file by file against the manifest&#39;s sha256.&quot;
+      }
+    ]
   },
   {
     &quot;release&quot;: &quot;R4B&quot;,
     &quot;fhirVersion&quot;: &quot;4.3.0&quot;,
+    &quot;spec&quot;: &quot;https://hl7.org/fhir/R4B/&quot;,
     &quot;package&quot;: {
       &quot;name&quot;: &quot;hl7.fhir.r4b.core&quot;,
       &quot;version&quot;: &quot;4.3.0&quot;,
-      &quot;tarball&quot;: &quot;https://packages.fhir.org/hl7.fhir.r4b.core/4.3.0&quot;,
+      &quot;tarball&quot;: &quot;https://hl7.org/fhir/R4B/hl7.fhir.r4b.core.tgz&quot;,
       &quot;shasum&quot;: &quot;7795a9c811b1e8e34eb110bb38355433d2c8b88c&quot;,
       &quot;integrity&quot;: &quot;sha512-lDrDN2zS/KlNdcJuQ/JgnBknI9GAJAsZdRfD3LdXzCWMcnpvacyn+C9/x1QHeeltGi7sF/+ASJRbeTFbAaFpMw==&quot;
-    }
+    },
+    &quot;mirrors&quot;: [
+      {
+        &quot;tarball&quot;: &quot;https://packages.fhir.org/hl7.fhir.r4b.core/4.3.0&quot;,
+        &quot;shasum&quot;: &quot;7795a9c811b1e8e34eb110bb38355433d2c8b88c&quot;,
+        &quot;integrity&quot;: &quot;sha512-lDrDN2zS/KlNdcJuQ/JgnBknI9GAJAsZdRfD3LdXzCWMcnpvacyn+C9/x1QHeeltGi7sF/+ASJRbeTFbAaFpMw==&quot;,
+        &quot;note&quot;: &quot;The FHIR package registry&#39;s copy: byte-identical to HL7&#39;s package (same sha1 and sha512), checked 2026-11-15.&quot;
+      }
+    ]
   },
   {
     &quot;release&quot;: &quot;R5&quot;,
     &quot;fhirVersion&quot;: &quot;5.0.0&quot;,
+    &quot;spec&quot;: &quot;https://hl7.org/fhir/R5/&quot;,
     &quot;package&quot;: {
       &quot;name&quot;: &quot;hl7.fhir.r5.core&quot;,
       &quot;version&quot;: &quot;5.0.0&quot;,
-      &quot;tarball&quot;: &quot;https://packages.fhir.org/hl7.fhir.r5.core/5.0.0&quot;,
+      &quot;tarball&quot;: &quot;https://hl7.org/fhir/R5/hl7.fhir.r5.core.tgz&quot;,
       &quot;shasum&quot;: &quot;9cf2c82eea74c336b68dc9f6558d51c5685ecc0e&quot;,
       &quot;integrity&quot;: &quot;sha512-LZYFA7ZtmhdiPjY0OEKfHsyka9yND5TfpN17WGjS8yhRfJabkb0N+TiYF2KfPDE7FRhqSdda7y9Gs/Tmj32/ug==&quot;
-    }
+    },
+    &quot;mirrors&quot;: [
+      {
+        &quot;tarball&quot;: &quot;https://packages.fhir.org/hl7.fhir.r5.core/5.0.0&quot;,
+        &quot;shasum&quot;: &quot;9cf2c82eea74c336b68dc9f6558d51c5685ecc0e&quot;,
+        &quot;integrity&quot;: &quot;sha512-LZYFA7ZtmhdiPjY0OEKfHsyka9yND5TfpN17WGjS8yhRfJabkb0N+TiYF2KfPDE7FRhqSdda7y9Gs/Tmj32/ug==&quot;,
+        &quot;note&quot;: &quot;The FHIR package registry&#39;s copy: byte-identical to HL7&#39;s package (same sha1 and sha512), checked 2026-11-15.&quot;
+      }
+    ]
   }
 ]</pre></dd></dl></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed

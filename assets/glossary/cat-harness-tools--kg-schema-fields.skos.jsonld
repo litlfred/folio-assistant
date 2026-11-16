@@ -28951,6 +28951,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/publishing-profile.layerpublishschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerPublishSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The layer's path under `publishedRoot` (for an IG, the id in its canonical)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/publishing-profile.ts#LayerPublishSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/publishing-profile.layerpublishschema.profile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerPublishSchema.profile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The profile file, checkout-relative (usually in a mounted layer)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/publishing-profile.ts#LayerPublishSchema.profile",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/publishing-profile.layerpublishschema.stage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerPublishSchema.stage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`staging` until the layer is published; then `published`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/publishing-profile.ts#LayerPublishSchema.stage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/publishing-profile.publishingprofileschema.iriroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublishingProfileSchema.iriRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The fixed root IRIs are minted under while a layer is staged."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/publishing-profile.ts#PublishingProfileSchema.iriRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/publishing-profile.publishingprofileschema.publishedroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublishingProfileSchema.publishedRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The root a published layer's IRIs and site move to."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/publishing-profile.ts#PublishingProfileSchema.publishedRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/publishing-profile.publishingprofileschema.stagingroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublishingProfileSchema.stagingRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The checkout's own staging site root; `{owner}` is replaced by the checkout's owner."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/publishing-profile.ts#PublishingProfileSchema.stagingRoot",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/python-deps.pythondepschema.distribution",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -31285,6 +31399,44 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMountSchema.overrides",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/remote-mount.remotemountschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`owner/name`, or a bare `name`: a SAME-OWNER name, resolved to the owner of the checkout that declares it (`schemas/kg/repo-owner.ts`, cat-harness-tools#2337). Readers ({@link readMountLock}, `readDeclaredMounts`) hand callers the resolved `owner/name` with `sameOwner: true`; writers put the bare name back."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMountSchema.repository",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/remote-mount.remotemountschema.sameowner",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.sameOwner"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In memory: `repository` was declared without an owner. Accepted on disk; written as a bare name."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMountSchema.sameOwner",
       "skos:note": "candidate"
     },
     {

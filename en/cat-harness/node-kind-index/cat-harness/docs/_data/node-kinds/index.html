@@ -438,6 +438,20 @@
     ]
   },
   {
+    &quot;id&quot;: &quot;folio-fhir-core-class-model&quot;,
+    &quot;parents&quot;: [],
+    &quot;subclasses&quot;: [],
+    &quot;declaredBy&quot;: &quot;fhir-harness&quot;,
+    &quot;module&quot;: &quot;fhir-harness/schemas/fhir-core.ts&quot;,
+    &quot;exportName&quot;: &quot;FhirCoreClassModelKind&quot;,
+    &quot;holdings&quot;: [
+      {
+        &quot;typology&quot;: &quot;fhir-core-definitions&quot;,
+        &quot;family&quot;: &quot;folio-fhir-core-class-model/v1&quot;
+      }
+    ]
+  },
+  {
     &quot;id&quot;: &quot;folio-fhir-core-pins&quot;,
     &quot;parents&quot;: [],
     &quot;subclasses&quot;: [],
@@ -447,7 +461,7 @@
     &quot;holdings&quot;: [
       {
         &quot;typology&quot;: &quot;fhir-core-definitions&quot;,
-        &quot;family&quot;: &quot;folio-fhir-core-pins/v1&quot;
+        &quot;family&quot;: &quot;folio-fhir-core-pins/v2&quot;
       }
     ]
   },
@@ -461,7 +475,7 @@
     &quot;holdings&quot;: [
       {
         &quot;typology&quot;: &quot;fhir-core-definitions&quot;,
-        &quot;family&quot;: &quot;folio-fhir-core-release/v1&quot;
+        &quot;family&quot;: &quot;folio-fhir-core-release/v2&quot;
       }
     ]
   },
@@ -519,7 +533,11 @@
         &quot;typology&quot;: &quot;references&quot;,
         &quot;family&quot;: &quot;folio-reference/v1&quot;
       }
-    ]
+    ],
+    &quot;pages&quot;: {
+      &quot;module&quot;: &quot;folio-assistant-core/scripts/reference-pages.ts&quot;,
+      &quot;exportName&quot;: &quot;ReferencePages&quot;
+    }
   },
   {
     &quot;id&quot;: &quot;folio-run-context/v1&quot;,
@@ -1093,12 +1111,6 @@
     &quot;family&quot;: &quot;folio-ig-chrome/v2&quot;,
     &quot;reason&quot;: &quot;zod-schema&quot;,
     &quot;ref&quot;: &quot;fhir-harness:schemas/ig-chrome.ts#IgChromeSchema&quot;
-  },
-  {
-    &quot;typology&quot;: &quot;fhir-artifact-index&quot;,
-    &quot;family&quot;: &quot;folio-ig-identity/v1&quot;,
-    &quot;reason&quot;: &quot;zod-schema&quot;,
-    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-identity.ts#IgIdentitySchema&quot;
   },
   {
     &quot;typology&quot;: &quot;fhir-artifact-index&quot;,

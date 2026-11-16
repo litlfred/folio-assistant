@@ -45,6 +45,10 @@
           "format": "starts_with",
           "pattern": "^http:\\/\\/hl7\\.org\\/fhir\\/StructureDefinition\\/.*"
         },
+        "published": {
+          "type": "string",
+          "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/[a-z0-9\\-.]+\\.profile\\.json$"
+        },
         "file": {
           "type": "string",
           "pattern": "^StructureDefinition-[A-Za-z0-9\\-.]+\\.json$"
@@ -62,6 +66,7 @@
         "kind",
         "type",
         "abstract",
+        "published",
         "file",
         "sha256"
       ],

@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ff4b26b6fc86f98d0f0141875d9edee352d12c44",
-  "sourceCommitSha": "ff4b26b6fc86f98d0f0141875d9edee352d12c44",
-  "sourceTree": "2ef5a2b54a72ef0a66ebda2b5e9a73a1f3a31f0e",
-  "sourceCommitAt": "2026-11-15T18:52:45+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f425b87b816acb3b45bf71c7287f861da8e46024",
+  "sourceCommitSha": "f425b87b816acb3b45bf71c7287f861da8e46024",
+  "sourceTree": "9bd330b1ed31b23dff23aa7a93c59d4ff7448551",
+  "sourceCommitAt": "2026-11-16T02:36:46Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -384,7 +384,7 @@
     "Role": 6,
     "Subgraph": 20,
     "Asset": 2,
-    "Tool": 2
+    "Tool": 4
   },
   "@graph": [
     {
@@ -2821,6 +2821,108 @@
       "assetRole": "instance-readme",
       "title": "who-iris",
       "description": "What is here, what is only referenced, and how to tell."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cdn.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "ci-iris-cdn",
+      "title": "Run the IRIS CDN export",
+      "description": "Dispatch `iris-cdn.yml`: the nightly change ingest or the weekly reconciliation of the IRIS CDN (`scripts/iris-cdn/run.ts`), then verify the signed release. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh workflow run iris-cdn.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "The repository whose workflow is run. Default: the current one.",
+            "required": false,
+            "arg": {
+              "flag": "--repo"
+            }
+          },
+          {
+            "name": "ref",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch to run it on. Default: the default branch.",
+            "required": false,
+            "arg": {
+              "flag": "--ref"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "run",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "gh"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cover-pdfs.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "ci-iris-cover-pdfs",
+      "title": "Fetch IRIS cover PDFs",
+      "description": "Dispatch `iris-cover-pdfs.yml`: fetch the PDFs the replica's home page references (`scripts/iris-covers/fetch-referenced-pdfs.py`) and render their cover previews (`scripts/iris-covers/render-previews.py`). Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh workflow run iris-cover-pdfs.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "The repository whose workflow is run. Default: the current one.",
+            "required": false,
+            "arg": {
+              "flag": "--repo"
+            }
+          },
+          {
+            "name": "ref",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch to run it on. Default: the default branch.",
+            "required": false,
+            "arg": {
+              "flag": "--ref"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "run",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "gh"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/iris-pages.jsonld",

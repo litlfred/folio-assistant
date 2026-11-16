@@ -6,7 +6,7 @@
       "properties": {
         "$schema": {
           "type": "string",
-          "const": "folio-fhir-core-release/v1"
+          "const": "folio-fhir-core-release/v2"
         },
         "release": {
           "type": "string",
@@ -19,6 +19,10 @@
         "fhirVersion": {
           "type": "string",
           "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "spec": {
+          "type": "string",
+          "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/$"
         },
         "package": {
           "type": "object",
@@ -33,7 +37,7 @@
             },
             "tarball": {
               "type": "string",
-              "pattern": "^https:\\/\\/packages\\.fhir\\.org\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\/\\d+\\.\\d+\\.\\d+$"
+              "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\.tgz$"
             },
             "shasum": {
               "type": "string",
@@ -147,6 +151,10 @@
                 "format": "starts_with",
                 "pattern": "^http:\\/\\/hl7\\.org\\/fhir\\/StructureDefinition\\/.*"
               },
+              "published": {
+                "type": "string",
+                "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/[a-z0-9\\-.]+\\.profile\\.json$"
+              },
               "file": {
                 "type": "string",
                 "pattern": "^StructureDefinition-[A-Za-z0-9\\-.]+\\.json$"
@@ -164,6 +172,7 @@
               "kind",
               "type",
               "abstract",
+              "published",
               "file",
               "sha256"
             ],
@@ -175,6 +184,7 @@
         "$schema",
         "release",
         "fhirVersion",
+        "spec",
         "package",
         "selection",
         "status"

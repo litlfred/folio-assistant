@@ -69,11 +69,26 @@
     "zod/fhir-artifact-index/UnboundSidecarSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/UnboundSidecarSchema.schema.json"
     },
+    "zod/fhir-core/AttributeTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/AttributeTypeSchema.schema.json"
+    },
+    "zod/fhir-core/ClassAttributeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/ClassAttributeSchema.schema.json"
+    },
+    "zod/fhir-core/ClassStereotypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/ClassStereotypeSchema.schema.json"
+    },
     "zod/fhir-core/CoreDefinitionSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/CoreDefinitionSchema.schema.json"
     },
     "zod/fhir-core/CountsSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/CountsSchema.schema.json"
+    },
+    "zod/fhir-core/FhirCoreClassModelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCoreClassModelSchema.schema.json"
+    },
+    "zod/fhir-core/FhirCoreMirrorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCoreMirrorSchema.schema.json"
     },
     "zod/fhir-core/FhirCorePackageSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCorePackageSchema.schema.json"
@@ -92,6 +107,9 @@
     },
     "zod/fhir-core/SdKindSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/SdKindSchema.schema.json"
+    },
+    "zod/fhir-core/UmlClassSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/UmlClassSchema.schema.json"
     },
     "zod/ig-annexes/IgAnnexRecordSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-annexes/IgAnnexRecordSchema.schema.json"
@@ -155,9 +173,6 @@
     },
     "zod/ig-chrome/IgChromeTokenSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeTokenSchema.schema.json"
-    },
-    "zod/ig-identity/IgIdentitySchema": {
-      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-identity/IgIdentitySchema.schema.json"
     },
     "zod/ig-menu/IgMenuGroupSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-menu/IgMenuGroupSchema.schema.json"

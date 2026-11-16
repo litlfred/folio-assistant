@@ -660,6 +660,1203 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.affectedroleiris",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.affectedRoleIris"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Persona or governance-role IRIs affected by this barrier."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.affectedRoleIris",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.archimateassessmentiri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.archimateAssessmentIri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional `smart-ra` ArchiMate Motivation `Assessment` or `Driver` element IRI."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.archimateAssessmentIri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.barrier",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.barrier"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Statement of the barrier or root cause identified in the handbook."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.barrier",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.barrierid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.barrierId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the barrier entry (e.g. `\"SFP-BAR-01\"` or `\"PHC-BAR-01\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.barrierId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.candidatesolutions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.candidateSolutions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Candidate digital or operational solutions addressing this barrier."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.candidateSolutions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.category",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.category"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Barrier category (e.g. `\"Awareness and reporting culture\"`, `\"Connectivity\"`, `\"Feedback loop\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.category",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.relatedrequirementids",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.relatedRequirementIds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Identifiers of functional or non-functional requirements that realise the candidate solutions."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.relatedRequirementIds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionentryschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionEntrySchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional row-level L1 handbook citation."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionmapschema.entries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionMapSchema.entries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Barrier-to-candidate-solution mapping entries."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.entries",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionmapschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionMapSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the barrier-solution map."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionmapschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionMapSchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L1 handbook citation for the barrier map."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.barriersolutionmapschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BarrierSolutionMapSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable title of the barrier-solution map."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.dthstructuredsourcerefschema.libraryid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DthStructuredSourceRefSchema.libraryId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Publication identifier in `who-iris/library/`, e.g. `\"9789240120747-eng\"`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.libraryId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.dthstructuredsourcerefschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DthStructuredSourceRefSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Printed page range in the source handbook, e.g. `\"14-17\"`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.pages",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.dthstructuredsourcerefschema.quote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DthStructuredSourceRefSchema.quote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional verbatim quote from the L1 source passage."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.quote",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.dthstructuredsourcerefschema.sectionid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DthStructuredSourceRefSchema.sectionId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Section identifier in the ingested L1 entry, e.g. `\"sec-008\"`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.sectionId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.dthstructuredsourcerefschema.tableorannex",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DthStructuredSourceRefSchema.tableOrAnnex"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Table, figure, section, or annex label, e.g. `\"Table 5\"` or `\"Annex 4\"`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.tableOrAnnex",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.archimateelementiri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.archimateElementIri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Link to the corresponding `smart-ra` ArchiMate Business Role, Actor, or Collaboration IRI."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.archimateElementIri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.chairorleadroleiri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.chairOrLeadRoleIri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "IRI of the chairing or leading role/actor."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.chairOrLeadRoleIri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.decisionrights",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.decisionRights"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Explicit decision rights or approval authorities held by this body/role."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.decisionRights",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the governance role or body (e.g. `\"SFP-GOV-01\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.mandate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.mandate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mandate, terms of reference, or core responsibility statement."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.mandate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.meetingcadence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.meetingCadence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stated meeting cadence or review frequency (e.g. `\"Quarterly\"`, `\"Monthly during rollout\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.meetingCadence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.memberroleiris",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.memberRoleIris"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "IRIs of constituent member roles or stakeholder organisations."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.memberRoleIris",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable name of the governance body or leadership role."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.roletype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.roleType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Classification of the governance body or leadership role."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.roleType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.governanceroleschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GovernanceRoleSchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L1 handbook citation from which this governance role was extracted."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.raciactivityschema.activity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciActivitySchema.activity"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Description of the activity, deliverable, or decision task."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.activity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.raciactivityschema.activityid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciActivitySchema.activityId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the activity row (e.g. `\"SFP-RACI-ACT-01\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.activityId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.raciactivityschema.assignments",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciActivitySchema.assignments"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Map from `roleId` (or role IRI) to one or more RACI codes (`\"R\"`, `\"A\"`, `\"C\"`, `\"I\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.assignments",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.raciactivityschema.phase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciActivitySchema.phase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Implementation or DIIG phase name/number (e.g. `\"Phase 1: Assess current state\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.phase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racimatrixschema.activities",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciMatrixSchema.activities"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sequenced activities with per-role RACI assignments."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.activities",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racimatrixschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciMatrixSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the RACI matrix (e.g. `\"SFP-RACI-ANNEX-04\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racimatrixschema.mode",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciMatrixSchema.mode"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether this matrix is fully populated (`\"populated\"`) or a blank/partial worksheet template (`\"template\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.mode",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racimatrixschema.roles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciMatrixSchema.roles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Declared roles (persona IRIs or governance-role IRIs) participating in the matrix."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.roles",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racimatrixschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciMatrixSchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L1 handbook citation for the RACI matrix."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racimatrixschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciMatrixSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable title of the RACI matrix."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racirolecolumnschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciRoleColumnSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Display label for the role column header."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciRoleColumnSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racirolecolumnschema.roleid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciRoleColumnSchema.roleId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Short role key used as a key in `activity.assignments` (e.g. `\"nmra-lead\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciRoleColumnSchema.roleId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.racirolecolumnschema.roleiri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RaciRoleColumnSchema.roleIri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Formal persona or governance-role IRI."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciRoleColumnSchema.roleIri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskentryschema.category",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskEntrySchema.category"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Risk category or domain (e.g. `\"Governance\"`, `\"Technical\"`, `\"Data privacy\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.category",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskentryschema.impact",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskEntrySchema.impact"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Qualitative impact rating, optional when unstated in L1."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.impact",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskentryschema.likelihood",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskEntrySchema.likelihood"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Qualitative likelihood rating, optional when unstated in L1."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.likelihood",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskentryschema.priority",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskEntrySchema.priority"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Qualitative overall priority rating."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.priority",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskentryschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskEntrySchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional row-level L1 handbook citation."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskregisterschema.entries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskRegisterSchema.entries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Risk and mitigation entries (must be non-empty when `mode === \"populated\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.entries",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskregisterschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskRegisterSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the risk register (e.g. `\"PC-RISK-REG-CH02\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskregisterschema.mode",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskRegisterSchema.mode"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether this register is populated with concrete risks or is a worksheet template."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.mode",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskregisterschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskRegisterSchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L1 handbook citation for the risk register."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.riskregisterschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RiskRegisterSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable title of the risk register."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderanalysisschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderAnalysisSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the stakeholder analysis table."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderanalysisschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderAnalysisSchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L1 handbook citation for the stakeholder analysis table."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderanalysisschema.stakeholders",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderAnalysisSchema.stakeholders"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stakeholder mapping rows."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.stakeholders",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderanalysisschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderAnalysisSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable title of the stakeholder analysis table."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.archimatestakeholderiri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.archimateStakeholderIri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional link to the `smart-ra` ArchiMate Motivation `Stakeholder` or Business `Actor`/`Role` IRI."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.archimateStakeholderIri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.engagementmechanism",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.engagementMechanism"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mechanism or channel for engaging this stakeholder across DIIG phases."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.engagementMechanism",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.interestorinfluence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.interestOrInfluence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Statement of the stakeholder's interest, motivation, or influence in the digital transformation."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.interestOrInfluence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Name of the stakeholder group or institution (e.g. `\"National Medicines Regulatory Authority (NMRA)\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.roleinsystem",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.roleInSystem"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Description of the stakeholder's functional role in the health/regulatory system."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.roleInSystem",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.roleiri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.roleIri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional link to a DAK persona or `GovernanceRole` IRI when this stakeholder also acts in a workflow lane or governance body."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.roleIri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.sector",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.sector"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sector classification (e.g. `\"Public health & regulation\"`, `\"Law enforcement & customs\"`, `\"Supply chain & industry\"`, `\"Civil society & patients\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.sector",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.sourceref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.sourceRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional row-level L1 handbook citation."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.sourceRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dth-planning-schemas.stakeholderentryschema.stakeholderid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StakeholderEntrySchema.stakeholderId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier for the stakeholder entry (e.g. `\"SFP-STK-01\"`)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.stakeholderId",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/extract-bpmn.bpmnstats.tasknames",
       "@type": "skos:Concept",
       "skos:inScheme": {

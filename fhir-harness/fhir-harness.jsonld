@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ff4b26b6fc86f98d0f0141875d9edee352d12c44",
-  "sourceCommitSha": "ff4b26b6fc86f98d0f0141875d9edee352d12c44",
-  "sourceTree": "2ef5a2b54a72ef0a66ebda2b5e9a73a1f3a31f0e",
-  "sourceCommitAt": "2026-11-15T18:52:45+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f425b87b816acb3b45bf71c7287f861da8e46024",
+  "sourceCommitSha": "f425b87b816acb3b45bf71c7287f861da8e46024",
+  "sourceTree": "9bd330b1ed31b23dff23aa7a93c59d4ff7448551",
+  "sourceCommitAt": "2026-11-16T02:36:46Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -384,7 +384,7 @@
     "Subgraph": 18,
     "Asset": 3,
     "Tool": 39,
-    "Schema": 16
+    "Schema": 15
   },
   "@graph": [
     {
@@ -3813,7 +3813,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "fhir-core-definitions",
       "renderable": false,
-      "summary": "The FHIR core specification's StructureDefinitions for each stable release (R4 4.0.1, R4B 4.3.0, R5 5.0.0): resources, complex and primitive datatypes and the root types, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>). A pins node says which hl7.fhir.<release>.core package each is read from, by version, sha1 and sha512; a manifest per release lists every definition with its kind, base and the sha256 of its bytes; the bodies are the package's own files."
+      "summary": "The FHIR core specification's definitions for each stable release (R4 4.0.1, R4B 4.3.0, R5 5.0.0), with HL7's publication as the authority: resources, complex and primitive datatypes and the root types, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>). A pins node names HL7's own hl7.fhir.<release>.core package at its hl7.org URL, by sha1 and sha512; a manifest per release lists every definition with HL7's published URL for it, its kind, base and the sha256 of its bytes in HL7's package; a class model per release is the UML derived from that package, which HL7 publishes only as pictures, citing the definition and element of every class and attribute."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary",
@@ -4140,7 +4140,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-core-definitions"
       ],
       "title": "FHIR core definitions",
-      "description": "The FHIR core specification's StructureDefinitions for each STABLE release, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>): R4 from `hl7.fhir.r4.core#4.0.1`, R4B from `hl7.fhir.r4b.core#4.3.0`, R5 from `hl7.fhir.r5.core#5.0.0`, each pinned in `pins.json` by its packages.fhir.org URL, sha1 and sha512. `<release>/manifest.json` lists every resource, complex and primitive type and root type (Base in R5; Element, BackboneElement, DomainResource, Resource) with its kind, base and the sha256 of its bytes; constraint profiles, extension definitions and logical models are left out and counted. The bodies are the package's own files, written beside the manifest by `fhir-core.ts materialise` and not committed (12 MB); `fhir-core.ts check` holds them to the manifests and `resolve` answers which file a canonical is kept in. A release whose package could not be read is `unread` with the reason, never an empty graph (owner, 2026-11-14).",
+      "description": "The FHIR core specification's definitions for each STABLE release, with HL7's publication as the authority (owner, 2026-11-15): one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>). `pins.json` pins HL7's own package for each release at the URL HL7 publishes it (https://hl7.org/fhir/R4/hl7.fhir.r4.core.tgz, R4B, R5) by sha1 and sha512; a registry mirror is pinned by its own hashes and only ever fills the cache. `<release>/manifest.json` lists every resource, complex and primitive type and root type with HL7's published JSON for it (https://hl7.org/fhir/R4/patient.profile.json), its kind, base and the sha256 of its bytes in HL7's package; constraint profiles, extension definitions and logical models are left out and counted. `<release>/class-model.json` is the UML class model derived from HL7's package (`fhir-core.ts uml`), which HL7 publishes only as pictures: a class per type and backbone element, with generalization and attributes, each citing its definition and element. Local copies of the bodies are a labelled cache (`<release>/cache/`, `fhir-core.ts materialise`), never committed. `fhir-core.ts check` holds all of it to the pins, `resolve` answers with HL7's URL, and `diagram` prints a type's class diagram. A release whose package could not be read is `unread` with the reason, never an empty graph.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-core-definitions"
     },
@@ -4433,13 +4433,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-core.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "fhir-core",
-      "title": "Load the stable FHIR releases' core StructureDefinitions as a graph keyed by canonical URL",
-      "description": "Read each stable FHIR release's core package (`hl7.fhir.r4.core#4.0.1`, `hl7.fhir.r4b.core#4.3.0`, `hl7.fhir.r5.core#5.0.0`) at the version, sha1 and sha512 `fhir-core/pins.json` pins, and keep its resources, complex and primitive types and root types (Base, Element, BackboneElement, DomainResource, Resource) under `fhir-core/<release>/`, keyed by canonical URL. `index` writes the release's manifest (each definition's kind, type, base and sha256); `materialise` writes the bodies byte for byte as the package holds them; `check` holds the two to the pins offline; `resolve` answers which file a canonical URL is kept in. A package that cannot be fetched or verified is recorded as `unread` with the reason, never as an empty graph.",
+      "title": "Refer to HL7's published FHIR core definitions by canonical URL, and derive their UML class model",
+      "description": "Read HL7's own core package for each stable FHIR release (`https://hl7.org/fhir/R4/hl7.fhir.r4.core.tgz`, R4B, R5) at the sha1 and sha512 `fhir-core/pins.json` pins, and keep, under `fhir-core/<release>/`, only what refers to it or is derived from it: `index` writes the manifest (each resource, complex, primitive and root type by canonical URL, with HL7's published JSON for it, its kind, base and the sha256 of its bytes in HL7's package); `uml` derives the UML class model HL7 publishes only as pictures, citing the definition and element of every class and attribute; `materialise` fills a labelled local cache, never committed; `check` holds all of it to the pins offline; `resolve` answers with HL7's URL for a canonical (`--cache` for the cached copy); `diagram` prints a type's Mermaid class diagram. HL7's publication is the authority: a mirror may only fill the cache. A package that cannot be fetched or verified is recorded as `unread` with the reason, never as an empty graph.",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "bun run fhir-harness/scripts/fhir-core.ts <index|materialise|check|resolve <url>>"
+        "shell": "bun run fhir-harness/scripts/fhir-core.ts <index|uml|materialise|check|resolve <url>|diagram <Type>>"
       },
       "io": {
         "inputs": [
@@ -4455,7 +4455,7 @@
           {
             "name": "release",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "One release (R4, R4B or R5). Default: every pinned release.",
+            "description": "One release (R4, R4B or R5). Default: every pinned release (R4 for resolve and diagram).",
             "required": false,
             "arg": {
               "flag": "--release"
@@ -4464,7 +4464,7 @@
           {
             "name": "tgz-dir",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "A directory of already-downloaded `<name>-<version>.tgz`; still hash-checked against the pin.",
+            "description": "A directory holding an already-downloaded copy of HL7's package (`hl7.fhir.<r>.core.tgz` or `<name>-<version>.tgz`); still hash-checked against the pin.",
             "required": false,
             "arg": {
               "flag": "--tgz-dir"
@@ -4475,7 +4475,7 @@
           {
             "name": "definitions",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
-            "description": "Definitions indexed or materialised per release; an unread release is named with its reason."
+            "description": "Definitions indexed, classes derived or files cached per release; an unread release is named with its reason."
           }
         ]
       },
@@ -6407,14 +6407,6 @@
       "title": "ig-content-type",
       "summary": "The `ig` content type: a repository declares itself the source of a FHIR",
       "module": "schemas/ig-content-type.ts"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-identity",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
-      "name": "ig-identity",
-      "title": "ig-identity",
-      "summary": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
-      "module": "schemas/ig-identity.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/ig-menu",

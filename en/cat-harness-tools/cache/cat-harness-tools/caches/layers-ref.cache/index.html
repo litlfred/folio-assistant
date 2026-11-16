@@ -113,7 +113,7 @@
   &quot;scripts/mount-from-lock.ts:974 publishLayers (writer)&quot;,
   &quot;scripts/mount-from-lock.ts:1086 layersSummaryLine (hit/warm/miss)&quot;,
   &quot;scripts/remote-mount.ts:2186 the committer&#39;s publish after a lock change&quot;
-]</pre></dd><dt>notes</dt><dd>Supersedes lpc-cat-mount and the other cat-mount Actions caches. Untrusted but exactly verified, so a stale or tampered ref only costs time. Measured on folio-assistant&#39;s lock (12 layers, ~32k files): 69 s per repository against 27 s on a hit with every byte verified. Every target needs it (it is the root of every needs closure), so it carries no `materializes`.</dd><dt>stateInputs</dt><dd><pre>{
+]</pre></dd><dt>notes</dt><dd>Supersedes the retired cat-mount-v1-* Actions caches. Untrusted but exactly verified, so a stale or tampered ref only costs time. Measured on folio-assistant&#39;s lock (12 layers, ~32k files): 69 s per repository against 27 s on a hit with every byte verified. Every target needs it (it is the root of every needs closure), so it carries no `materializes`.</dd><dt>stateInputs</dt><dd><pre>{
   &quot;reads&quot;: &quot;none&quot;,
   &quot;how&quot;: &quot;by construction: the ref holds every locked directory with no state mounts (mount-from-lock layDownFrom), and its key is the lock alone&quot;
 }</pre></dd></dl></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">

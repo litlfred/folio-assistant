@@ -62,9 +62,21 @@
                         "type": "object",
                         "properties": {
                           "repository": {
-                            "type": "string",
-                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
-                            "description": "A forge repository's full name, owner/name"
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                                "description": "A forge repository's full name, owner/name"
+                              },
+                              {
+                                "type": "string",
+                                "description": "A repository name with no owner: the declaring checkout's owner is used"
+                              }
+                            ]
+                          },
+                          "sameOwner": {
+                            "type": "boolean",
+                            "const": true
                           },
                           "ref": {
                             "type": "string",

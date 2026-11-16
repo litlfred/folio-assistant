@@ -24,6 +24,126 @@
   ],
   "hasSubgraph": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/ci-iris-cdn/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cdn.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch `iris-cdn.yml`: the nightly change ingest or the weekly reconciliation of the IRIS CDN (`scripts/iris-cdn/run.ts`), then verify the signed release. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run iris-cdn.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-iris-cdn",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
+          "title": "Run the IRIS CDN export"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-iris-cdn",
+      "path": "tools/ci-iris-cdn/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/ci-iris-cover-pdfs/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cover-pdfs.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch `iris-cover-pdfs.yml`: fetch the PDFs the replica's home page references (`scripts/iris-covers/fetch-referenced-pdfs.py`) and render their cover previews (`scripts/iris-covers/render-previews.py`). Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run iris-cover-pdfs.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-iris-cover-pdfs",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
+          "title": "Fetch IRIS cover PDFs"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-iris-cover-pdfs",
+      "path": "tools/ci-iris-cover-pdfs/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/iris-pages/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [

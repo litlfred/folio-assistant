@@ -11,10 +11,164 @@
       "name": "graph-rendering"
     },
     {
+      "name": "iris-cdn-exporter"
+    },
+    {
+      "name": "iris-dspace"
+    },
+    {
       "name": "translation-manager"
     }
   ],
   "paths": {
+    "/tools/ci-iris-cdn": {
+      "post": {
+        "operationId": "ci-iris-cdn",
+        "summary": "Run the IRIS CDN export",
+        "description": "Dispatch `iris-cdn.yml`: the nightly change ingest or the weekly reconciliation of the IRIS CDN (`scripts/iris-cdn/run.ts`), then verify the signed release. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+        "tags": [
+          "iris-cdn-exporter"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ci-iris-cdn/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository whose workflow is run. Default: the current one."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The branch to run it on. Default: the default branch."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "run": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cdn.jsonld",
+        "x-invoke": {
+          "shell": "gh workflow run iris-cdn.yml"
+        },
+        "x-install": {
+          "cli": "gh"
+        },
+        "x-requires": {
+          "runtime": [
+            "gh"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "iris-cdn-exporter"
+        ],
+        "x-selection": {
+          "when": "Running the IRIS CDN nightly ingest or reconciliation on demand instead of waiting for its schedule. Pass the mode with `-f mode=nightly` or `-f mode=reconcile`.",
+          "limits": "Needs a token that may dispatch workflows (actions: write) on the repository.",
+          "cost": "A CI run on GitHub's runners."
+        }
+      }
+    },
+    "/tools/ci-iris-cover-pdfs": {
+      "post": {
+        "operationId": "ci-iris-cover-pdfs",
+        "summary": "Fetch IRIS cover PDFs",
+        "description": "Dispatch `iris-cover-pdfs.yml`: fetch the PDFs the replica's home page references (`scripts/iris-covers/fetch-referenced-pdfs.py`) and render their cover previews (`scripts/iris-covers/render-previews.py`). Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+        "tags": [
+          "iris-dspace"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ci-iris-cover-pdfs/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The repository whose workflow is run. Default: the current one."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The branch to run it on. Default: the default branch."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "run": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/ci-iris-cover-pdfs.jsonld",
+        "x-invoke": {
+          "shell": "gh workflow run iris-cover-pdfs.yml"
+        },
+        "x-install": {
+          "cli": "gh"
+        },
+        "x-requires": {
+          "runtime": [
+            "gh"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "iris-dspace"
+        ],
+        "x-selection": {
+          "when": "Refreshing the replica's cover previews on demand. Pass `-f only=<slugs>` to limit it to some items.",
+          "limits": "Needs a token that may dispatch workflows (actions: write) on the repository.",
+          "cost": "A CI run on GitHub's runners."
+        }
+      }
+    },
     "/tools/iris-pages": {
       "post": {
         "operationId": "iris-pages",
@@ -169,12 +323,25 @@
         "description": "A boolean switch — projects to a bare flag, with no value word",
         "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
       },
+      "RepoFullName": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "A forge repository's full name, owner/name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+      },
       "RepoPath": {
         "type": "string",
         "minLength": 1,
         "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
         "description": "A path relative to the repository root. No `..` segments.",
         "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      },
+      "Text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 400,
+        "description": "A short single-line human string. Not admissible as a command-line argument.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
       }
     }
   }

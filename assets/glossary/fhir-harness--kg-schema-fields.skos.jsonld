@@ -166,6 +166,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG's own publication status (`draft`, `active`, `retired`), from its ImplementationGuide resource."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.status",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-artifact-index.fhirartifactschema.canonical",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -660,6 +679,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.attributetypeschema.code",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttributeTypeSchema.code"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`type.code`, verbatim (a core type, or a FHIRPath system type URL on a primitive's value)."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#AttributeTypeSchema.code",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.attributetypeschema.targets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttributeTypeSchema.targets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The classes a `Reference`/`canonical` may point to, from `type.targetProfile`, by core type name."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#AttributeTypeSchema.targets",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.classattributeschema.contentreference",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ClassAttributeSchema.contentReference"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ElementDefinition.contentReference`'s target, as a class name (`Questionnaire.item`)."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#ClassAttributeSchema.contentReference",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.classattributeschema.element",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ClassAttributeSchema.element"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The element's id in the definition the class cites: the attribute's source."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#ClassAttributeSchema.element",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.classattributeschema.types",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ClassAttributeSchema.types"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent when the element re-uses another's structure ({@link contentReference}), or when it only prohibits an inherited element (`max` 0, as `xhtml.extension`)."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#ClassAttributeSchema.types",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.coredefinitionschema.derivation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -691,10 +805,29 @@
       ],
       "skos:definition": [
         {
-          "@value": "The materialised file, relative to the release directory."
+          "@value": "The file in HL7's package (under `package/`) the definition was read from; a cached copy has the same name."
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.coredefinitionschema.published",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CoreDefinitionSchema.published"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "HL7's published JSON of this definition ({@link publishedDefinition}): where a reader is sent."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.published",
       "skos:note": "candidate"
     },
     {
@@ -710,7 +843,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "sha256 of the file's bytes, which are the package's bytes."
+          "@value": "sha256 of that file's bytes in HL7's package."
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.sha256",
@@ -755,6 +888,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircoreclassmodelobject.derivation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreClassModelObject.derivation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The rule the writer applies, in words."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreClassModelObject.derivation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircoreclassmodelobject.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreClassModelObject.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "HL7's package every class is read from, by URL and sha1."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreClassModelObject.derivedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircoremirrorschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreMirrorSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How this copy relates to HL7's bytes, as checked when the mirror was pinned."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreMirrorSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepackageschema.integrity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCorePackageSchema.integrity"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha512 of HL7's bytes."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.integrity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepackageschema.shasum",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCorePackageSchema.shasum"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha1 of HL7's bytes, hex."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.shasum",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepackageschema.tarball",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -767,10 +995,48 @@
       ],
       "skos:definition": [
         {
-          "@value": "packages.fhir.org's URL for the exact version."
+          "@value": "HL7's own URL for the package: `https://hl7.org/fhir/<release>/hl7.fhir.<r>.core.tgz`."
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.tarball",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepinobject.spec",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCorePinObject.spec"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "HL7's published specification for this release."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePinObject.spec",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorepinsobject.authority",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCorePinsObject.authority"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whose publication the definitions are: HL7's, always."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePinsObject.authority",
       "skos:note": "candidate"
     },
     {
@@ -831,6 +1097,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.package",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreReleaseObject.package"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "HL7's package the manifest was read from: always HL7's own bytes, never a mirror's."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.package",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.reason",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -866,6 +1151,139 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.selection",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.fhircorereleaseobject.spec",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirCoreReleaseObject.spec"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "HL7's published specification for this release: the authority."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.spec",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.umlclassschema.definition",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UmlClassSchema.definition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The canonical URL of the HL7 definition this class is read from."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.definition",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.umlclassschema.element",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UmlClassSchema.element"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The element id in that definition this class is: the type itself, or the backbone element."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.element",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.umlclassschema.generalization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UmlClassSchema.generalization"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The class it specialises: the base definition's type, or the backbone element's own type. Absent on a root type."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.generalization",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.umlclassschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UmlClassSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The type's name, or `<Type>.<path>` for a backbone element's class."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.umlclassschema.owner",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UmlClassSchema.owner"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Backbone classes only: the class whose attribute this structure is."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.owner",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-core.umlclassschema.published",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UmlClassSchema.published"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "HL7's published JSON of that definition."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.published",
       "skos:note": "candidate"
     },
     {
@@ -1337,7 +1755,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The chain's TOP layer — the template package an IG names — e.g. `who.template.root`. v1 put the id of the IG it was ingested beside here; v2 keys the chrome by the template, because every IG building with that chain wears it. An IG's own id and status are `ig-identity.json`'s."
+          "@value": "The chain's TOP layer — the template package an IG names — e.g. `who.template.root`. v1 put the id of the IG it was ingested beside here; v2 keys the chrome by the template, because every IG building with that chain wears it. An IG's own id and status are its artefact index's."
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.id",
@@ -1512,82 +1930,6 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-content-type.ts#IgSection.trustedSvgs",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-identity.igidentityschema.id",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "IgIdentitySchema.id"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it."
-        }
-      ],
-      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.id",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-identity.igidentityschema.readat",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "IgIdentitySchema.readAt"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "When it was read. A status is a fact at a moment, not forever."
-        }
-      ],
-      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.readAt",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-identity.igidentityschema.readfrom",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "IgIdentitySchema.readFrom"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Where it was read: a repository and file, so the claim can be re-checked."
-        }
-      ],
-      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.readFrom",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-identity.igidentityschema.status",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "IgIdentitySchema.status"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`draft`, `active`, `retired` … — what selects the template's watermark."
-        }
-      ],
-      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.status",
       "skos:note": "candidate"
     },
     {

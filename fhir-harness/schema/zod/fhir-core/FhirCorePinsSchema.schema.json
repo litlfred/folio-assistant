@@ -6,11 +6,11 @@
       "properties": {
         "$schema": {
           "type": "string",
-          "const": "folio-fhir-core-pins/v1"
+          "const": "folio-fhir-core-pins/v2"
         },
-        "registry": {
+        "authority": {
           "type": "string",
-          "const": "https://packages.fhir.org"
+          "const": "https://hl7.org/fhir"
         },
         "note": {
           "type": "string",
@@ -34,6 +34,10 @@
                 "type": "string",
                 "pattern": "^\\d+\\.\\d+\\.\\d+$"
               },
+              "spec": {
+                "type": "string",
+                "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/$"
+              },
               "package": {
                 "type": "object",
                 "properties": {
@@ -47,7 +51,7 @@
                   },
                   "tarball": {
                     "type": "string",
-                    "pattern": "^https:\\/\\/packages\\.fhir\\.org\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\/\\d+\\.\\d+\\.\\d+$"
+                    "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\.tgz$"
                   },
                   "shasum": {
                     "type": "string",
@@ -66,11 +70,43 @@
                   "integrity"
                 ],
                 "additionalProperties": false
+              },
+              "mirrors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "tarball": {
+                      "type": "string",
+                      "pattern": "^https:\\/\\/[a-z0-9.-]+\\/\\S+$"
+                    },
+                    "shasum": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{40}$"
+                    },
+                    "integrity": {
+                      "type": "string",
+                      "pattern": "^sha512-[A-Za-z0-9+/]{86}==$"
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "tarball",
+                    "shasum",
+                    "integrity",
+                    "note"
+                  ],
+                  "additionalProperties": false
+                }
               }
             },
             "required": [
               "release",
               "fhirVersion",
+              "spec",
               "package"
             ],
             "additionalProperties": false
@@ -79,7 +115,7 @@
       },
       "required": [
         "$schema",
-        "registry",
+        "authority",
         "note",
         "releases"
       ],
