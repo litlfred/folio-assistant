@@ -1,0 +1,19 @@
+{
+  "name": "library-extras",
+  "version": "0.1.0",
+  "description": "Library skills a layer reaches for rarely: audio transcription, the bibliography photo-ingestion watcher and Oxigraph catalogue search. Moved out of `ingestion`, `cataloguing` and `catalogue` into the opt-in `library-extras` sub-graph (owner, 2026-11-10, card Q-SG-1 C, wave 3).",
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": []
+  },
+  "providesCapabilities": [],
+  "requiresCapabilities": [],
+  "lifecycleStages": [
+    "author"
+  ],
+  "skills": [
+    "audio-transcription",
+    "bib-photo-ingestion-watcher",
+    "oxigraph-catalogue-search"
+  ]
+}
