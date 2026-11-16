@@ -1,0 +1,329 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2601.22554v1",
+  "summaries": [
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-000",
+      "source": "sections/sec-000-introduction.md",
+      "source_hash": "a1074416644e4e282c540da133a96db7e2a1754b2921e2d930172e1c1ee8242c",
+      "narrative": [
+        {
+          "text": "Introduces the role of dependency-graph blueprints in scaling collaborative Lean formalizations and identifies two core limitations of existing workflows: manual duplication between LaTeX documents and Lean source files, and the lack of a Lean-native interface for AI theorem provers. Summarizes LeanArchitect's contributions in unifying formal declarations with blueprint metadata, automatically inferring dependencies and sorry-free status, integrating with leanblueprint, and validating the workflow on existing projects and a human–AI formalization study.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-001",
+      "source": "sections/sec-001-related-work.md",
+      "source_hash": "333f651185fa73c2bee8a9a645c0245737ddd778dd61632e11a6167fb6e5aeac",
+      "narrative": [
+        {
+          "text": "Reviews related work across three areas: Lean blueprint tooling (Massot's plasTeX-based leanblueprint and Jauslin and Kontorovich's comment-based leanblueprint-extract), Lean data extraction tools (doc-gen4 and ntp-toolkit), and neural theorem provers and benchmarks (miniF2F, miniCTX, formal-conjectures, RLMEval), positioning LeanArchitect as the bridge that exposes dependency-rich blueprint structure directly inside Lean.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-002",
+      "source": "sections/sec-002-methods.md",
+      "source_hash": "35efc6ded4e13f29a8d86e4f33294be0f59fcaaf3a56b538f9e34e60e3ae4f44",
+      "narrative": [
+        {
+          "text": "Section header stub introducing Section 3.1 of the Methods chapter.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-003",
+      "source": "sections/sec-003-overview.md",
+      "source_hash": "4623ad8503d17371116a99a6a2627b6b79c6c8c9f14b7f6c10eaa9d50d313463",
+      "narrative": [
+        {
+          "text": "Provides an architectural overview of LeanArchitect, which treats Lean source code as the authoritative source for formalized blueprint nodes via the @[blueprint] attribute while automatically inferring inter-declaration dependencies and sorry-free formalization status.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-004",
+      "source": "sections/sec-004-environment-extension.md",
+      "source_hash": "a21bf5ee4cf7fa430864c3bc02638eab955f07c64920f84b10374c3dce371c2c",
+      "narrative": [
+        {
+          "text": "Explains that LeanArchitect exports LaTeX fragments imported into leanblueprint documents via macros such as \\inputleannode, allowing informal exposition and formal proofs to evolve together without manual synchronization.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-005",
+      "source": "sections/sec-005-blueprint-attribute.md",
+      "source_hash": "cc5450ebb9ea6135ba1d32afe4f45834eaec0a13af7b15ce4a1c57cfea919180",
+      "narrative": [
+        {
+          "text": "Illustrates the @[blueprint] attribute syntax and workflow diagram (Figure 1) contrasting manual LaTeX-Lean synchronization with LeanArchitect's automated extraction, and describes how Section 3.3's blueprintExt environment extension recursively traverses constants in declaration types and values to construct internal Node records with inferred uses and leanOk flags.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-006",
+      "source": "sections/sec-006-latex-export.md",
+      "source_hash": "a41c5773c02d7e098f74a62ed13611c7613b761004ec2647b04c96354587ca03",
+      "narrative": [
+        {
+          "text": "Describes LeanArchitect's deterministic, incremental Lake build-time export mechanism, showing how \\inputleannode{thm:add-comm} expands into LaTeX theorem and proof environments populated with \\label, \\lean, \\leanok, and \\uses macros ready for leanblueprint rendering.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-007",
+      "source": "sections/sec-007-project-management-using-leanarchitect.md",
+      "source_hash": "1cea78752091e3c958888d80cf6b117cf4f85f70a0ecba78773c5d0debac5475",
+      "narrative": [
+        {
+          "text": "Outlines a five-step project management workflow for large Lean formalizations using LeanArchitect—from drafting an Overleaf LaTeX blueprint to tagging sorry-stubbed Lean translations with @[blueprint] and replacing LaTeX nodes with \\inputleannode—and introduces the blueprintConvert script for automating migration.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-008",
+      "source": "sections/sec-008-case-studies.md",
+      "source_hash": "c614ad60334bbfc589ca3e0762fe6e0d3757949beb3b89432b9c71a6a32c17bb",
+      "narrative": [
+        {
+          "text": "Running header and section number stub introducing Section 4.1 of the Case Studies chapter.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-009",
+      "source": "sections/sec-009-primenumbertheoremand.md",
+      "source_hash": "06f192bc6c07b6939f81f9cffcbc4cb59a57e689408666d06119a4d137b7bcc9",
+      "narrative": [
+        {
+          "text": "Presents a case study on migrating Kontorovich and Tao's PrimeNumberTheoremAnd project from leanblueprint-extract comments to LeanArchitect in January 2026 in roughly one day of work, highlighting automatic inference of \\lean, \\leanok, \\uses, and \\mathlibok tags and noting how inferred dependency visualization exposed a semantically flawed AI-generated lemma statement (Erdős 392) that failed to use surrounding lemmas.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-010",
+      "source": "sections/sec-010-converting-existing-projects-to-leanarchitect-fo.md",
+      "source_hash": "72aa477edfa97746a776fdaeb8f4ee426cf0ab780aa384daf244efb1cd94c183",
+      "narrative": [
+        {
+          "text": "Reports results of running blueprintConvert across five major Lean 4.25.0 blueprint projects (Carleson, Brownian Motion, Infinity Cosmos, Fermat's Last Theorem, and PrimeNumberTheoremAnd), detailing latent discrepancies uncovered in the original hand-written blueprints such as unused isolated nodes, missing dependency edges, unannotated Mathlib theorems, and statement-only dependency tracking.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-011",
+      "source": "sections/sec-011-blueprint-based-autoformalization.md",
+      "source_hash": "089fb86444e5ebbcb453d432305c08f8e5ce1a7640bfb2e228fe3598f4266bb3",
+      "narrative": [
+        {
+          "text": "Evaluates LeanArchitect in a human–AI collaborative autoformalization of the multivariate Taylor theorem in integral form for Fréchet derivatives over normed spaces (frechet_taylor_integral), combining GPT-5 Pro for blueprint drafting and refinement with Aristotle in sorry-filling mode and targeted human fixes (replacing deriv with derivWithin on [a, b]) to localize failures and track compositional progress.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-012",
+      "source": "sections/sec-012-limitations.md",
+      "source_hash": "9a03f2fe1e3aae6b334e4740f889345313aa3a6e3f7919d3c91cb4989dddeaf8",
+      "narrative": [
+        {
+          "text": "Discusses current limitations of LeanArchitect—unergonomic LaTeX editing inside .lean files, many-to-one rather than many-to-many mapping from Lean declarations to blueprint nodes, deeper Lake build pipelines, and manual management of purely informal nodes—followed by acknowledgements and the paper's 26 bibliographic references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-013",
+      "source": "sections/sec-013-technical-details.md",
+      "source_hash": "edc0aee4ff7ef3b6c2fc474a91bb07be301dcd6879dc9b305d7d2e31b0f7bf8b",
+      "narrative": [
+        {
+          "text": "Appendix section header stub introducing Section A.1 of the Technical Details appendix.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-014",
+      "source": "sections/sec-014-example.md",
+      "source_hash": "401327692ca140ae2d3e0cbe29198676bc4a8bccfab2932c6930bb0936b09a4e",
+      "narrative": [
+        {
+          "text": "Provides a complete illustrative Lean 4 example defining a custom MyNat inductive type with addition (add) and @[blueprint]-annotated lemmas zero_add, succ_add (with sorry), and add_comm (using tactic docstrings and sorry_using), together with the resulting blueprint document and dependency graph in Figure 3.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-015",
+      "source": "sections/sec-015-implementation.md",
+      "source_hash": "b14be2f93577a1dd1e53422fada61bb3aca2fe7e86d221737462fb519cfca60a",
+      "narrative": [
+        {
+          "text": "Details the internal Lean 4 implementation of LeanArchitect: the NodePart and Node structures, the blueprintExt environment extension and multi-declaration label merging (e.g., for @[to_additive]), all @[blueprint] attribute options, tactic docstring concatenation and sorry_using, the exact LaTeX conversion rules for \\uses, \\leanok, and \\mathlibok, the \\inputleannode and \\inputleanmodule macros, Lake module/library/package facets via extract_blueprint, and the Python/Lean blueprintConvert migration script.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2601.22554v1/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "634942e6cf27b059f10fb1398a10041a22e902618667f4440dd37b9ce267fb4b",
+      "narrative": [
+        {
+          "text": "Presents the title, authors (Thomas Zhu, Pietro Monticone, Jeremy Avigad, and Sean Welleck), and abstract for LeanArchitect, a Lean 4 package that attaches declarative @[blueprint] metadata directly to formal declarations, automatically infers dependencies and proof completion status, and exports synchronized LaTeX blueprint fragments to eliminate manual duplication and support human–AI collaborative formalization.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    }
+  ]
+}
