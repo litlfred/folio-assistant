@@ -62,6 +62,13 @@ Feature: Workflow triggers match what their headers claim
     Then its inline workflows: list can be parsed
     And every name in it is a declared workflow name
 
+  @test:test/workflows/workflow-triggers.test.ts::workflow_triggers_match_what_their_headers_claim::a_`workflow_run`_list_is_read_in_its_block_form_and_in_its_one-line_flow_form
+  Scenario: A workflow_run list is read in its block form and in its one-line flow form
+    Given a workflow_run whose workflows: list is an indented line under it
+    And a workflow_run written as a one-line flow mapping "{ workflows: [...], types: [...] }"
+    Then the names are read from both
+    And a block-sequence list reads as unparsed, not as no names
+
   @test:test/workflows/workflow-triggers.test.ts::workflow_triggers_match_what_their_headers_claim::a_workflow_named_by_`workflow_run`_can_actually_produce_runs_on_the_default_branch
   Scenario: A workflow named by workflow_run can actually produce runs on the default branch
     Given every workflow_run whose branches filter, if any, admits main
