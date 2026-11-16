@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-16T00:40:00Z
-updated_at: 2026-11-16T00:46:00Z
+updated_at: 2026-11-16T00:30:00Z
 tags:
     - who-migration
 ---
@@ -35,3 +35,4 @@ Machine-readable copy: `/mnt/project-files/who-migration-plan/issues/smart-ra.js
 ## Log
 _2026-11-16T00:40Z_ — created; WHO side and sheet done, fork side pending.
 _2026-11-16T00:46Z_ — original comments appended to the WHO copies.
+_2026-11-16T00:30Z_ — fork thread merged WHO main (bff9597) into the six conflicting branches; WHO #74 #77 #79 #80 #81 #82 all mergeable, push comments posted. #77 flagged: ICD-11/WHO-FIC definitions must go into glossary/dpi-h-ra.glossary.json (table is regenerated). Owner card open: close #83 (litlfred re-pin) as superseded by T4.
