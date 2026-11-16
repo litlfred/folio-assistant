@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0519/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0519/cat-harness/schema/instance-repositories.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0519/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1116-0519",
+    "sha": "44ff02be8886571ce373232358c68ca907a3aece",
+    "pr": "3169/merge",
+    "run": "43810798859"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0519/cat-harness/schema/instance-repositories",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "instance-repositories",
+      "title": "instance-repositories",
+      "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand.",
+      "module": "schemas/kg/instance-repositories.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1116-0519/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/instance-repositories"
+    }
+  ]
+}
