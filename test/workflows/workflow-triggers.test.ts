@@ -30,6 +30,7 @@
 import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
+import { parse } from "yaml";
 
 // `.github/` belongs to this index repository, two levels above here.
 const DIR = join(import.meta.dir, "../../.github/workflows");
@@ -90,6 +91,20 @@ function unbackedClaims(src: string): string[] {
   )
     out.push("workflow_run");
   return out;
+}
+
+/**
+ * The names in an `on.workflow_run.workflows` list, read by parsing the file
+ * as YAML, so every spelling of the list reads alike: the block form, the
+ * one-line flow mapping `merge-guard.yml` uses
+ * (`workflow_run: { workflows: [...], types: [...] }`) and a block sequence.
+ * Null when there is no `workflow_run` trigger, or when it has no list of
+ * names to read: a list it cannot read is a failure, never zero names.
+ */
+function workflowRunList(src: string): string[] | null {
+  const doc = parse(src) as { on?: { workflow_run?: { workflows?: unknown } | null } } | null;
+  const names = doc?.on?.workflow_run?.workflows;
+  return Array.isArray(names) && names.length > 0 && names.every((n) => typeof n === "string") ? names : null;
 }
 
 describe("workflow triggers match what their headers claim", () => {
@@ -259,15 +274,26 @@ describe("workflow triggers match what their headers claim", () => {
       // form only, which is what every one here uses; a block-sequence form
       // would read as no names, so it is asserted against rather than assumed
       // away — a silent zero is the thing this test exists to refuse.
-      const m = /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src);
+      const list = workflowRunList(src);
       if (!/^  workflow_run:/m.test(src)) continue;
-      expect({ f, parsedItsWorkflowList: m !== null }).toEqual({ f, parsedItsWorkflowList: true });
-      for (const raw of m![1].split(",")) {
-        const name = raw.trim().replace(/^["']|["']$/g, "");
+      expect({ f, parsedItsWorkflowList: list !== null }).toEqual({ f, parsedItsWorkflowList: true });
+      for (const name of list!) {
         if (!declared.has(name)) dangling.push(`${f} -> ${JSON.stringify(name)}`);
       }
     }
     expect(dangling).toEqual([]);
+  });
+
+  test("a `workflow_run` list is read in its block form and in its one-line flow form", () => {
+    const block = 'on:\n  workflow_run:\n    # why\n    workflows: ["A", "B"]\n    types: [completed]\njobs: {}\n';
+    const flow = 'on:\n  workflow_run: { workflows: ["Code-quality gates"], types: [completed] }\njobs: {}\n';
+    const sequence = "on:\n  workflow_run:\n    workflows:\n      - A\njobs: {}\n";
+    const none = "on:\n  workflow_run:\n    types: [completed]\njobs: {}\n";
+    expect(workflowRunList(block)).toEqual(["A", "B"]);
+    expect(workflowRunList(flow)).toEqual(["Code-quality gates"]);
+    expect(workflowRunList(sequence)).toEqual(["A"]);
+    // No list to read is null, so the test above fails on it rather than reading no names.
+    expect(workflowRunList(none)).toBeNull();
   });
 
   test("a workflow named by `workflow_run` can actually produce runs on the default branch", () => {
@@ -288,16 +314,15 @@ describe("workflow triggers match what their headers claim", () => {
     const unfireable: string[] = [];
     for (const f of FILES) {
       const src = readFileSync(join(DIR, f), "utf-8");
-      const m = /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src);
-      if (m === null) continue;
+      const list = workflowRunList(src);
+      if (list === null) continue;
       // A `workflow_run` filtered to branches that exclude the default branch
       // waits on no default-branch run, so the premise does not apply
       // (`repin-train-verdict.yml`: `repin-train/**` only).
       const block = src.slice(src.indexOf("  workflow_run:")).split(/\n  [a-z_]+:/)[0]!;
       const br = /^\s+branches:\s*\[(.+?)\]/m.exec(block);
       if (br && !br[1]!.split(",").some((b) => /^['"]?(main|\*\*?)['"]?$/.test(b.trim()))) continue;
-      for (const raw of m[1]!.split(",")) {
-        const name = raw.trim().replace(/^["']|["']$/g, "");
+      for (const name of list) {
         const file = byName.get(name);
         // A name resolving to no file is the OTHER test's finding; not repeated
         // here, so one defect does not fail two tests and look like two.
