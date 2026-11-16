@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-15T19:40:00Z
-updated_at: 2026-11-16T00:19:00Z
+updated_at: 2026-11-16T00:24:00Z
 tags:
     - who-migration
     - handover
@@ -64,3 +64,5 @@ _2026-11-15T19:40:00Z_ — Filed by thread "Plan migration of content repos to W
 _2026-11-15T21:35:00Z_ — who-iris: WHO/who-iris#298 merged 21:23Z, WHO Pages live (gh-pages 3e34c59); draft #300 moves iriBase + 19,718 IRIs to WHO staging root; still litlfred: `repository`/theme in who-iris.json and the separate repo who-iris-cdn (move decision open). litlfred/cat-harness-tools reusable workflows run under the WHO org. Pages redirect for dth-hrh and who-iris: litlfred/litlfred.github.io#2 (owner merges + enables Pages). smart-ra not yet merged in WHO (main at fork point), so no redirect yet. DTH-HRH review sheet pointed at WHO.
 
 _2026-11-16T00:19:00Z_ — smart-ra T15 fork side done: comments of the 24 original issues and 8 PRs dumped to project file who-migration-plan/issues/smart-ra-fork-comments.json; each original commented "Moved to WorldHealthOrganization/smart-ra#M"; issues closed not_planned, PRs closed, all source branches kept. DPI-H sheet REPO_URL and open-PR links already on WHO.
+
+_2026-11-16T00:24:00Z_ — smart-ra: WHO main (bff9597) merged by merge commit into the fork branches of WHO PRs #74 (8b0525c), #77 (7615bb7), #79 (41aa3fd), #80 (7832699), #81 (d34b26b), #82 (aba3eca); conflicts resolved, no rebase or force-push. #82 model re-derived with archimate-from-glossary --write (check clean). #83 left to the merge manager re-pin.
