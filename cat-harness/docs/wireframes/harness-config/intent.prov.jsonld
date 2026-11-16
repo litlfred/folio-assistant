@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/harness-config/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/harness-config/intent.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/harness-config/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Harness config panel, and associated harnesses: intent",
+      "prov:value": "Issue #1146. Owner, 2026-09-23:\n> \"we need a good mechanism for 'associated' harnessed KGs. it should be an optional list property of any harness inheriting cat-harness (including itself). should add to cat-harness harness visualize a config panel/popup which shows properties of cat-harness and other instances. add in to render appropriate edit skills as well.\"",
+      "cat-harness:refs": [
+        "#1146",
+        "2026-09-23"
+      ],
+      "dcterms:date": [
+        "2026-09-23"
+      ]
+    }
+  ]
+}
