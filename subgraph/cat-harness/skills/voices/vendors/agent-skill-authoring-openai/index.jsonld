@@ -3,6 +3,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-openai/",
   "@type": "bootstrap:Subgraph",
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/voice/agent-skill-authoring-openai",
+      "@type": "cat-harness:Voice",
+      "title": "Agent skill authoring — OpenAI override"
+    }
+  ],
   "holdsGraph": [
     "bootstrap:graphTypology/skills"
   ],

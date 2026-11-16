@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/who-iris/theme/iris-web.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/theme/iris-web",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Theme",
+      "title": "IRIS",
+      "description": "The WHO IRIS repository's own web theme, read off the captured DSpace stylesheet.",
+      "sourceKind": "themes",
+      "sourcePath": "themes/themes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-themes"
+    }
+  ]
+}

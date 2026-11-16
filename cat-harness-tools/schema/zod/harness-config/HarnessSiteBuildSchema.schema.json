@@ -7,6 +7,10 @@
         "home": {
           "type": "string"
         },
+        "extends": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
         "pre": {
           "default": [],
           "type": "array",

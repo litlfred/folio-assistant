@@ -3,6 +3,17 @@
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/technical-writer/",
   "@type": "bootstrap:Subgraph",
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/technical-writer",
+      "@type": "cat-harness:Voice",
+      "description": "The voice for technical documentation of standards, software and knowledge assets, written as an SDO writes (W3C, IHE). Requirement levels are RFC 2119's, read from the ingested RFC rather than from memory, and constrained by RFC 8174: only UPPERCASE usage carries the defined meaning. Applies to drafting AND to review QA. Nine rules; five cite the two ingested RFCs, three cite the `technical-documentation` skill, a node of this layer's own knowledge graph, because a rule that cites a document it was not read from is the false provenance this schema exists to prevent.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/technical-writer/voice.json",
+      "title": "Technical Writer — SDO register with RFC 2119 requirement levels"
+    }
+  ],
   "holdsGraph": [
     "bootstrap:graphTypology/skills"
   ],

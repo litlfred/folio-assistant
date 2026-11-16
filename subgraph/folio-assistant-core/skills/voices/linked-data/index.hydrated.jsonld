@@ -3,6 +3,17 @@
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/linked-data/",
   "@type": "bootstrap:Subgraph",
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/linked-data",
+      "@type": "cat-harness:Voice",
+      "description": "The voice for a coding agent writing or reviewing code that EMITS JSON-LD: what makes the output linked data a processor can follow, rather than JSON that merely carries an @context. Six rules, each read from a held W3C text. Owner, 2026-10-01: \"make sure that these issues are part of the one voice for jsonld\" and \"it is a voice for a coding agent, in a code authoring or review task\". Every rule was found broken or fragile in this repository before it was written down (beans jcet, 9y9j): the PROV-O QA/QC reports carried prov:agent, prov:hadRole and prov:hadPlan as plain strings in all 100 activities, and the content context's @base resolves only because jsonld.js applies @base from a remote context.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/linked-data/voice.json",
+      "title": "Linked data — how a coding agent emits and reviews JSON-LD"
+    }
+  ],
   "holdsGraph": [
     "bootstrap:graphTypology/skills"
   ],

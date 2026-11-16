@@ -1,0 +1,17 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/theme/who-smart-ig.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/theme/who-smart-ig.jsonld",
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/theme/who-smart-ig",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Theme",
+      "title": "WHO SMART IG",
+      "description": "The WHO SMART implementation-guide template's web theme, read off who.template.root's own stylesheet. Colour and geometry only — the top navbar is deliberately not reproduced.",
+      "sourceKind": "themes",
+      "sourcePath": "themes/themes.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-themes"
+    }
+  ]
+}

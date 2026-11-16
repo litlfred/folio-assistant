@@ -1511,6 +1511,17 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/voices/address-compute-authoring-agent/",
           "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/voice/address-compute-authoring-agent",
+              "@type": "cat-harness:Voice",
+              "description": "How to write for a reader acting as Compute authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "sourceKind": "voices",
+              "sourcePath": "skills/voices/address-compute-authoring-agent/voice.json",
+              "title": "Addressing the Compute authoring agent"
+            }
+          ],
           "holdsGraph": [
             "bootstrap:graphTypology/skills"
           ],
@@ -1520,6 +1531,17 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/voices/address-lean-authoring-agent/",
           "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/voice/address-lean-authoring-agent",
+              "@type": "cat-harness:Voice",
+              "description": "How to write for a reader acting as Lean authoring agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "sourceKind": "voices",
+              "sourcePath": "skills/voices/address-lean-authoring-agent/voice.json",
+              "title": "Addressing the Lean authoring agent"
+            }
+          ],
           "holdsGraph": [
             "bootstrap:graphTypology/skills"
           ],
@@ -1529,6 +1551,17 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/voices/address-proof-review-agent/",
           "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/voice/address-proof-review-agent",
+              "@type": "cat-harness:Voice",
+              "description": "How to write for a reader acting as Proof review agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "sourceKind": "voices",
+              "sourcePath": "skills/voices/address-proof-review-agent/voice.json",
+              "title": "Addressing the Proof review agent"
+            }
+          ],
           "holdsGraph": [
             "bootstrap:graphTypology/skills"
           ],
@@ -1538,6 +1571,17 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/voices/milnor/",
           "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/voice/milnor",
+              "@type": "cat-harness:Voice",
+              "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/skills",
+              "sourceKind": "voices",
+              "sourcePath": "skills/voices/milnor/voice.json",
+              "title": "Milnor exposition standard"
+            }
+          ],
           "holdsGraph": [
             "bootstrap:graphTypology/skills"
           ],
