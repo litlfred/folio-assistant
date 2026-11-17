@@ -1,0 +1,262 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_SubscribeKg",
+    "path": "library/processes/subscribe-kg.bpmn"
+  },
+  "source_hash": "sha256:ca8ab891fc76b9429c1e5207acfa835201e055143fb8ee6d8262cb89c50c871c",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Pin",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Refuse",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Record",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Refresh",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RePin",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Review",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Choose",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Materialize",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Instantiate",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Summarise",
+          "detail": "names skill \"kg-subscription\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Instantiate",
+          "detail": "needs skill \"index-config\", but its lane's role \"ingestion-agent\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Instantiate",
+          "detail": "task \"Instantiate the harness: write its config\" requires skill \"index-config\", which role \"ingestion-agent\" (named by lane \"Ingestion Engine (agent, runs unattended)\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_SubscribeKg",
+          "detail": "no rendered diagram at subscribe-kg.svg — run `bun run cat render:bpmn`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_SubscribeKg",
+          "detail": "23 flow nodes, past the 20 at which bpmn-authoring asks for a split by phase into call activities."
+        }
+      ]
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 32,
+    "fail": 5,
+    "n/a": 8,
+    "unknown": 0
+  }
+}
