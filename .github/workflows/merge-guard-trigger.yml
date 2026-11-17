@@ -7,6 +7,10 @@
 # worst that does is that no signal comes, and the status stays unposted.
 # Why not `pull_request_target`: the header of cat-harness-tools'
 # `.github/workflows/layer-merge-guard.yml`.
+#
+# TRIGGERS, ACTUAL: `pull_request` only, by the owner's decision of 2026-11-17
+# (no `pull_request_target`). The `workflow_run` named above is the
+# caller's trigger, not this file's.
 
 name: Merge guard trigger
 run-name: "Merge guard trigger #${{ github.event.pull_request.number }}"

@@ -319,9 +319,14 @@ describe("workflow triggers match what their headers claim", () => {
       // A `workflow_run` filtered to branches that exclude the default branch
       // waits on no default-branch run, so the premise does not apply
       // (`repin-train-verdict.yml`: `repin-train/**` only).
+      // So does one that ignores the default branch (`branches-ignore: [main]`):
+      // `merge-guard.yml` waits on PR runs only, through the permissionless
+      // `Merge guard trigger`, which has no reason to run on `main`.
       const block = src.slice(src.indexOf("  workflow_run:")).split(/\n  [a-z_]+:/)[0]!;
       const br = /^\s+branches:\s*\[(.+?)\]/m.exec(block);
       if (br && !br[1]!.split(",").some((b) => /^['"]?(main|\*\*?)['"]?$/.test(b.trim()))) continue;
+      const ign = /branches-ignore:\s*\[(.+?)\]/.exec(block);
+      if (ign && ign[1]!.split(",").some((b) => /^['"]?main['"]?$/.test(b.trim()))) continue;
       for (const name of list) {
         const file = byName.get(name);
         // A name resolving to no file is the OTHER test's finding; not repeated
