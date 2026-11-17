@@ -8,8 +8,8 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-11-16T07:02:49.514Z",
-  "verdict": "unknown",
+  "updated_at": "2026-11-17T06:49:04.263Z",
+  "verdict": "findings",
   "checks": [
     {
       "id": "staging-preview-size",
@@ -27,7 +27,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 2798913996,
+          "value": 1889263581,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
@@ -84,7 +84,7 @@
       "measurements": [
         {
           "metric": "special-branch-bytes:qa-reports",
-          "value": 524207425,
+          "value": 515116677,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
@@ -123,7 +123,7 @@
     },
     {
       "id": "pages-publish-health",
-      "state": "unknown",
+      "state": "ok",
       "summary": "What the published site served, as the CI pages-serving observation recorded it — read offline from `qa-reports`, so the sweep never reaches the network itself.",
       "thresholds": [
         {
@@ -148,9 +148,33 @@
           "severity": "major"
         }
       ],
-      "measurements": [],
-      "findings": [],
-      "reason": "no pages-serving observation could be read: qa-reports:main/104e05e333f5c252fd6ebb472fed521a3f91ca2f — miss: no entry main/104e05e333f5c252fd6ebb472fed521a3f91ca2f"
+      "measurements": [
+        {
+          "metric": "pages-serving-instruments",
+          "value": 1,
+          "unit": "count",
+          "command": "qa:fetch main/5b7aaa32f48924d5b60597348bc611f681841864 health/pages-serving.json"
+        },
+        {
+          "metric": "pages-serving-observation-age-days",
+          "value": 0,
+          "unit": "days",
+          "command": "qa:fetch main/5b7aaa32f48924d5b60597348bc611f681841864 health/pages-serving.json"
+        },
+        {
+          "metric": "pages-serving-urls",
+          "value": 41,
+          "unit": "count",
+          "command": "qa:fetch main/5b7aaa32f48924d5b60597348bc611f681841864 health/pages-serving.json"
+        },
+        {
+          "metric": "pages-serving-failing",
+          "value": 0,
+          "unit": "count",
+          "command": "qa:fetch main/5b7aaa32f48924d5b60597348bc611f681841864 health/pages-serving.json"
+        }
+      ],
+      "findings": []
     },
     {
       "id": "remote-mounts",
@@ -269,34 +293,24 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 3,
+          "value": 1,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 2070259927,
+          "value": 677721325,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 2,
+          "value": 4,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
       "findings": [
-        {
-          "summary": "`branches/repin-train-20261113-1024` (660.2 MB, 27927 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261113-1024` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261113-1024` and `cleanup_confirm: repin-train-20261113-1024`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`branches/repin-train-20261113-1424` (667.8 MB, 28368 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261113-1424` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261113-1424` and `cleanup_confirm: repin-train-20261113-1424`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
         {
           "summary": "`branches/repin-train-20261113-1824` (646.3 MB, 28629 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
@@ -404,19 +418,19 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 99263197,
+          "value": 99263917,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1510473044,
+          "value": 1514590490,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 1222069248,
+          "value": 1226000384,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
@@ -428,14 +442,14 @@
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 15.22,
+          "value": 15.26,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 1.41 GB against 94.7 MB of tracked content — 15.2x, in 3 pack(s).",
+          "summary": "`.git` is 1.41 GB against 94.7 MB of tracked content — 15.3x, in 3 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -537,7 +551,7 @@
         },
         {
           "metric": "bean-stale-in-progress",
-          "value": 0,
+          "value": 1,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -561,7 +575,7 @@
         },
         {
           "metric": "bean-quiet-claims-parenting-live-work",
-          "value": 2,
+          "value": 1,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -622,37 +636,43 @@
       ],
       "findings": [
         {
-          "summary": "`folio-assistant-lgwt` has been `in-progress` with no change for 192 hours (\"Review-log watcher: standing rules, how to watch, current state (handover bean)\") — 6 of 23 claims are quiet.",
+          "summary": "`folio-assistant-dthl` has been `in-progress` for 15 days (\"DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)\").",
+          "metric": "bean-stale-in-progress",
+          "severity": "minor",
+          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
+        },
+        {
+          "summary": "`folio-assistant-lgwt` has been `in-progress` with no change for 215 hours (\"Review-log watcher: standing rules, how to watch, current state (handover bean)\") — 6 of 23 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-1b7t` has been `in-progress` with no change for 92 hours (\"Decision cards: open and answered\") — 6 of 23 claims are quiet.",
+          "summary": "`folio-assistant-1b7t` has been `in-progress` with no change for 115 hours (\"Decision cards: open and answered\") — 6 of 23 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-drnh` has been `in-progress` with no change for 93 hours (\"Merge-window drain to 2026-11-03 00:40Z: PRs, re-pin train, open cards (handover bean)\") — 6 of 23 claims are quiet.",
+          "summary": "`folio-assistant-drnh` has been `in-progress` with no change for 117 hours (\"Merge-window drain to 2026-11-03 00:40Z: PRs, re-pin train, open cards (handover bean)\") — 6 of 23 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-bsd1` has been `in-progress` with no change for 240 hours (\"BEAN STORE BEHIND ANY TOOL + STATE MACHINE STARTS ANY MODEL''S AGENT: proposal (WHO Assured AI / Gemini benchmarking context)\") — 6 of 23 claims are quiet.",
+          "summary": "`folio-assistant-bsd1` has been `in-progress` with no change for 264 hours (\"BEAN STORE BEHIND ANY TOOL + STATE MACHINE STARTS ANY MODEL''S AGENT: proposal (WHO Assured AI / Gemini benchmarking context)\") — 6 of 23 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-wl48` has been `in-progress` with no change for 93 hours (\"Facts and references (moved from project memory 2026-11-12)\") — 6 of 23 claims are quiet.",
+          "summary": "`folio-assistant-wl48` has been `in-progress` with no change for 117 hours (\"Facts and references (moved from project memory 2026-11-12)\") — 6 of 23 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-fwtz` has been `in-progress` with no change for 160 hours (\"docs-site must rebuild when the bean branch moves (ref + concurrency)\") — 6 of 23 claims are quiet.",
+          "summary": "`folio-assistant-fwtz` has been `in-progress` with no change for 184 hours (\"docs-site must rebuild when the bean branch moves (ref + concurrency)\") — 6 of 23 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
