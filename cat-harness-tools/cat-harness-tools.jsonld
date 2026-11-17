@@ -367,15 +367,15 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5b7aaa32f48924d5b60597348bc611f681841864",
-  "sourceCommitSha": "5b7aaa32f48924d5b60597348bc611f681841864",
-  "sourceTree": "887fdffb419bfe59058f1c3b8de42de7c2b59ff4",
-  "sourceCommitAt": "2026-11-16T23:23:57+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f1f3f0ca8bf9a664ccf5216c0ff3e35da82eb9db",
+  "sourceCommitSha": "f1f3f0ca8bf9a664ccf5216c0ff3e35da82eb9db",
+  "sourceTree": "859e4592e832b905d2ee98471122fc546a1eb00f",
+  "sourceCommitAt": "2026-11-17T20:36:53+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "GraphTypology": 12,
-    "Subgraph": 24,
+    "GraphTypology": 13,
+    "Subgraph": 25,
     "Asset": 3,
     "Tool": 1,
     "Schema": 198,
@@ -396,6 +396,13 @@
       "renderable": false,
       "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/tool"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "docs",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
@@ -884,6 +891,24 @@
       "description": "Repository health reports for THIS repository: the one `health-report/v1` document `bun run cat-harness-tools/test/health/run.ts --instance <this instance>` writes. Each repository carries its own report. The graph typology is cat-harness's; its `health` entry says what separates a health report (about the repository) from a `qa` verdict (about an artefact). It sits at the root, not under `test/`, because `test/` is declared as code and a declared directory may not nest inside another; at the root a state graph's path equals its id, as `beans/` does.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/health"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "cat-harness-tools-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
+      ],
+      "title": "Wireframes of the writers' pages",
+      "description": "The wireframes of the pages this layer's writers draw for other layers' visualisers, under `wireframes/`: an `index.json`, and one directory per wireframe holding `intent.md`, an as-is candidate `.html`, and `checks/report.json` with its screenshots from `bun run cat wireframe:check`. A wireframe here covers a writer by `renderedBy:<tool>`, so every declared visualiser that Tool draws inherits it (`check:wireframes`; owner, 2026-11-17, option b: one shared ArchiMate wireframe). It is this layer's site directory, and declaring it is what makes a mount of this layer bring it, so `check:wireframes` reads it wherever this layer is mounted.",
+      "readmePath": "docs/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-docs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/asset/agent-instructions",
@@ -2778,6 +2803,9 @@
       "module": "schemas/process/workshop.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
       "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopCanvasFieldSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopCanvasSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopCanvasSheetSchema.schema.json",
         "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopLabSchema.schema.json",
         "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopLabStepSchema.schema.json",
         "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopMatrixCellSchema.schema.json",

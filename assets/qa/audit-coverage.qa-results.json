@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/audit-coverage.ts",
-    "script_hash": "dfa83f0da295"
+    "script_hash": "77a5b4026dd5"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,13 +10,15 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 98 of 98 declared kind(s), 281 gate(s), 108 criteria.",
-      "count": 98,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 99 of 99 declared kind(s), 288 gate(s), 108 criteria.",
+      "count": 99,
       "entries": [
         {
           "kind": "archimate",
-          "state": "no-directory",
-          "directories": [],
+          "state": "unknown",
+          "directories": [
+            "smart-trust/archimate"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
@@ -45,19 +47,10 @@
         },
         {
           "kind": "auto-docs",
-          "state": "covered",
+          "state": "unknown",
           "directories": [
             "cat-harness/docs/assets/img/uml/overview",
             "cat-harness/docs/cat-harness/auto-docs",
-            "cat-harness/docs/cat-harness/auto-docs/glossary",
-            "cat-harness/docs/cat-harness/auto-docs/index/dmn",
-            "cat-harness/docs/cat-harness/auto-docs/index/docs",
-            "cat-harness/docs/cat-harness/auto-docs/index/processes",
-            "cat-harness/docs/cat-harness/auto-docs/index/roles",
-            "cat-harness/docs/cat-harness/auto-docs/index/schemas",
-            "cat-harness/docs/cat-harness/auto-docs/index/skills",
-            "cat-harness/docs/cat-harness/auto-docs/index/tasks",
-            "cat-harness/docs/cat-harness/auto-docs/index/tools",
             "cat-harness/docs/uml/overview"
           ],
           "criteria": [],
@@ -67,7 +60,7 @@
           ],
           "typed": false,
           "adversarial": "never",
-          "hasFiles": true
+          "hasFiles": false
         },
         {
           "kind": "basic-cdn-site",
@@ -278,13 +271,25 @@
             "cat-harness/schemas",
             "cat-harness/sdlc",
             "cat-harness/work-plan",
+            "fhir-harness/collab",
             "fhir-harness/schemas",
             "folio-assistant-core/board",
+            "folio-assistant-core/collab",
             "folio-assistant-core/dsa",
             "folio-assistant-core/library",
             "folio-assistant-core/library-extras",
             "folio-assistant-core/schemas",
+            "folio-assistant-sci/collab",
             "folio-assistant-sci/schemas",
+            "smart-base/L1",
+            "smart-base/L2",
+            "smart-base/L2-bpmn",
+            "smart-base/L2-dmn",
+            "smart-base/L2/collab",
+            "smart-base/L3",
+            "smart-base/L3/collab",
+            "smart-base/L4",
+            "smart-base/collab",
             "smart-base/schemas"
           ],
           "criteria": [
@@ -463,6 +468,14 @@
             "folio-assistant-sci/adapters",
             "folio-assistant-sci/scripts",
             "folio-assistant-sci/templates",
+            "smart-base/L1/schemas",
+            "smart-base/L1/scripts",
+            "smart-base/L2-bpmn/schemas",
+            "smart-base/L2-bpmn/scripts",
+            "smart-base/L2-dmn/schemas",
+            "smart-base/L2/schemas",
+            "smart-base/L2/scripts",
+            "smart-base/L3/schemas",
             "smart-base/pipeline",
             "smart-base/platform",
             "smart-base/schemas",
@@ -495,6 +508,10 @@
             "bun run cat check:python-deps",
             "bun run cat check:secret-leaks",
             "bun run cat check:test-gherkin",
+            "bun run cat check:test-gherkin:core",
+            "bun run cat check:test-gherkin:fhir-harness",
+            "bun run cat check:test-gherkin:sci",
+            "bun run cat check:test-gherkin:smart-base",
             "bun run cat deps:python:check",
             "bun run check:tools-closure"
           ],
@@ -608,6 +625,7 @@
             "smart-base/site-docs/source",
             "smart-trust-phw/docs",
             "smart-trust/docs",
+            "smart-trust/findings",
             "who-iris/docs",
             "who-iris/site"
           ],
@@ -737,6 +755,21 @@
             "bun run cat smart-base:pages:check",
             "bun run cat smart:pages",
             "bun run smart:pages"
+          ],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": true
+        },
+        {
+          "kind": "fhir-core-definitions",
+          "state": "covered",
+          "directories": [
+            "fhir-harness/fhir-core"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run cat fhir-core:check"
           ],
           "typed": true,
           "adversarial": "never",
@@ -1166,12 +1199,18 @@
             "cat-harness/library/processes",
             "cat-harness/processes",
             "cat-harness/sdlc/processes",
+            "fhir-harness/collab/processes",
             "fhir-harness/processes",
+            "folio-assistant-core/collab/processes",
             "folio-assistant-core/dsa/processes",
             "folio-assistant-core/processes",
+            "folio-assistant-sci/collab/processes",
             "folio-assistant-sci/processes",
-            "smart-base/methodologies/processes",
-            "smart-base/processes",
+            "smart-base/L1/processes",
+            "smart-base/L2/collab/processes",
+            "smart-base/L3/collab/processes",
+            "smart-base/L4/processes",
+            "smart-base/collab/processes",
             "who-iris/processes"
           ],
           "criteria": [
@@ -1232,6 +1271,7 @@
             "bun run cat bpmn:checklist:check",
             "bun run cat check:bean-calls",
             "bun run cat check:lane-documentation:check",
+            "bun run cat check:optin-refs",
             "bun run cat check:process-bindings",
             "bun run cat check:process-documentation",
             "bun run cat check:process-index",
@@ -1445,6 +1485,12 @@
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
             "folio-assistant-sci/sources",
+            "smart-base/L1/schemas",
+            "smart-base/L2-bpmn/schemas",
+            "smart-base/L2-dmn/schemas",
+            "smart-base/L2/schemas",
+            "smart-base/L3/schemas",
+            "smart-base/L4/schemas",
             "smart-base/schemas",
             "who-iris/sources"
           ],
@@ -1518,6 +1564,10 @@
             "folio-assistant-sci/skills",
             "folio-assistant-sci/skills/data",
             "folio-assistant-sci/skills/lean",
+            "smart-base/L1/skills",
+            "smart-base/L2/skills",
+            "smart-base/L3/skills",
+            "smart-base/L4/skills",
             "smart-base/skills",
             "who-iris/skills"
           ],
@@ -1544,6 +1594,7 @@
             "bun run cat check:agents-xref:strict",
             "bun run cat check:bean-restates-skill",
             "bun run cat check:escaped-markup:source",
+            "bun run cat check:optin-refs",
             "bun run cat check:process-bindings",
             "bun run cat check:remote-skills",
             "bun run cat check:skills",
@@ -1801,8 +1852,15 @@
             "cat-harness/tools",
             "cat-harness/work-plan/tools",
             "fhir-harness/tools",
+            "folio-assistant-core/collab/tools",
             "folio-assistant-core/tools",
             "folio-assistant-sci/tools",
+            "smart-base/L1/tools",
+            "smart-base/L2-bpmn/tools",
+            "smart-base/L2-dmn/tools",
+            "smart-base/L2/tools",
+            "smart-base/L3/tools",
+            "smart-base/L4/tools",
             "smart-base/tools",
             "who-iris/tools"
           ],
@@ -1820,6 +1878,7 @@
             "tool"
           ],
           "gates": [
+            "bun run cat check:optin-refs",
             "bun run cat check:tools",
             "bun run cat check:workflow-tools",
             "bun run cat kg:audit:all:check",
@@ -1842,6 +1901,7 @@
             "folio-assistant-core/translations",
             "folio-assistant-sci/translations",
             "smart-base/translations",
+            "smart-trust-phw/translations",
             "smart-trust/translations",
             "who-iris/translations"
           ],
@@ -2106,13 +2166,8 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 22,
+      "count": 21,
       "entries": [
-        {
-          "kind": "archimate",
-          "criteria": 0,
-          "gates": []
-        },
         {
           "kind": "binary-release",
           "criteria": 0,
@@ -2228,14 +2283,28 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 281 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 288 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
     "kinds-unknown": {
       "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
-      "count": 1,
+      "count": 3,
       "entries": [
+        {
+          "kind": "archimate",
+          "directories": [
+            "smart-trust/archimate"
+          ]
+        },
+        {
+          "kind": "auto-docs",
+          "directories": [
+            "cat-harness/docs/assets/img/uml/overview",
+            "cat-harness/docs/cat-harness/auto-docs",
+            "cat-harness/docs/uml/overview"
+          ]
+        },
         {
           "kind": "web-app",
           "directories": [
@@ -2245,5 +2314,5 @@
       ]
     }
   },
-  "total": 122
+  "total": 124
 }

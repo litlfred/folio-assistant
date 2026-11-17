@@ -164,6 +164,12 @@ digraph "cat_harness_tools" {
     "grid_pkg_cat_harness_tools_health_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_tools_health_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_tools_cat_harness_tools_docs" {
+    label=<<b>cat-harness-tools/cat-harness-tools-docs</b><br/><i>«docs»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_tools_cat_harness_tools_docs_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (19 named)</i></td></tr></table>>];
+    "grid_pkg_cat_harness_tools_cat_harness_tools_docs_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_tools_cat_harness_tools_docs_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_tools_defs" {
     label=<<b>cat-harness-tools/defs</b><br/><i>«bean-defs»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "cat_harness_tools_defs_BeanKind" [fillcolor="#f6eedf", class="fa_uml_kind_bean_defs", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>BeanKind</b></td></tr><tr><td><i>«json: BeanKind»</i></td></tr><tr><td align="left">id [0..1] : string</td></tr><tr><td align="left">title [0..1] : string</td></tr><tr><td align="left">tags [0..*] : string[]</td></tr><tr><td align="left">created_at [0..1] : string</td></tr><tr><td align="left">updated_at [0..1] : string</td></tr><tr><td align="left">status [0..1] : string</td></tr><tr><td align="left">type [0..1] : string</td></tr><tr><td align="left">priority [0..1] : string</td></tr><tr><td align="left">parent [0..1] : string</td></tr><tr><td align="left">blocking [0..*] : string[]</td></tr><tr><td align="left">blocked_by [0..*] : string[]</td></tr><tr><td align="left">issue [0..1] : integer | string</td></tr><tr><td align="left">targets [0..1] : string[] | string</td></tr><tr><td align="left">$schema [1] : string</td></tr></table>>];
@@ -268,6 +274,8 @@ digraph "cat_harness_tools" {
   "cat_harness_tools_health_Finding" -> "grid_pkg_cat_harness_tools_health_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_tools_health_Check" -> "grid_pkg_cat_harness_tools_health_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_tools_health_HealthReport" -> "grid_pkg_cat_harness_tools_health_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_docs_top" -> "n_cat_harness_tools_cat_harness_tools_docs_docs" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_tools_cat_harness_tools_docs_docs" -> "grid_pkg_cat_harness_tools_cat_harness_tools_docs_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_defs_top" -> "cat_harness_tools_defs_BeanKind" [style=invis, class="kg-graph-anchor"];
   "cat_harness_tools_defs_BeanKind" -> "grid_pkg_cat_harness_tools_defs_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_notes_top" -> "cat_harness_tools_notes_bean_notes_shape" [style=invis, class="kg-graph-anchor"];
@@ -296,8 +304,9 @@ digraph "cat_harness_tools" {
   "grid_pkg_cat_harness_tools_cat_harness_tools_deploy_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_upstream_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_schemas_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_bottom" -> "grid_pkg_cat_harness_tools_health_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_schemas_bottom" -> "grid_pkg_cat_harness_tools_defs_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_bottom" -> "grid_pkg_cat_harness_tools_notes_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_schemas_bottom" -> "grid_pkg_cat_harness_tools_workflows_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_tools_health_bottom" -> "grid_pkg_cat_harness_tools_marks_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_archimate_schemas_bottom" -> "grid_pkg_cat_harness_tools_cat_harness_tools_docs_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_bottom" -> "grid_pkg_cat_harness_tools_defs_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_openapi_schemas_bottom" -> "grid_pkg_cat_harness_tools_notes_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_health_bottom" -> "grid_pkg_cat_harness_tools_workflows_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_tools_cat_harness_tools_docs_bottom" -> "grid_pkg_cat_harness_tools_marks_top" [style=invis, class="kg-graph-anchor"];
 }

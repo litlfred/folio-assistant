@@ -356,7 +356,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-13T12:07:20Z",
-      "updatedAt": "2026-11-15T18:22:00Z",
+      "updatedAt": "2026-11-17T07:06:00Z",
       "preview": "## Why\n\nOwner, 2026-11-13: \"why are skills/tools buried under .github? the src code should be transparent in the KG and then .github just calls as needed\" and \"I thought things like `smart-base/schemas/skills/l2-dependency-choice/input.schema.json` were to be migrated into smart-base/L2 subgraph\".\n\nThe platform already says so: skills and tools are KG content found through declared directories, in",
       "file": "beans/defs/folio-assistant-95e7--smart-base-move-skill-tool-source-out-of-github-an.md"
     },
@@ -916,7 +916,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-13T12:07:20Z",
-      "updatedAt": "2026-11-13T22:15:00Z",
+      "updatedAt": "2026-11-17T07:06:00Z",
       "preview": "## Why\n\nParent: `folio-assistant-95e7`. Measured on litlfred/smart-base@f369501: nothing in `ghbuild.yml` or any build path calls `.github/skills/`. The five workflows that do (`classify-issue`, `skill-l1-review`, `skill-l2-dak`, `skill-l3-review`, `skill-translation`) are `workflow_dispatch`-only but gate on `github.event.label` / `github.event.issue`, so they never do work. `pr-validate-slash.ym",
       "file": "beans/defs/folio-assistant-hhkw--smart-base-delete-the-dead-parts-of-github-skills.md"
     },
@@ -1056,7 +1056,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-13T12:07:20Z",
-      "updatedAt": "2026-11-13T22:31:00Z",
+      "updatedAt": "2026-11-17T07:06:00Z",
       "preview": "## Why\n\nParent: `folio-assistant-95e7`. Owner, 2026-11-13: `smart-base/schemas/skills/l2-dependency-choice/input.schema.json` was meant to be in the L2 subgraph. The skill `.md` files moved (issue #359); their contracts did not.\n\nBlocked on bean `cat-tools-st4q` (merged in https://github.com/litlfred/cat-harness-tools/pull/2013): until it lands, a moved contract is not published and gets no IRI.\n\n",
       "file": "beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md"
     },

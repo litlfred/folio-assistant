@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "e081e4ba7968"
+    "script_hash": "615f7e13646a"
   },
   "subject": {
     "kind": "graph",
@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 4,
+      "count": 37,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -38,6 +38,138 @@
         {
           "module": "../bootstrap-tools/schemas/subgraph-export.ts",
           "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/compare-extract.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/context.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/emit.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/exports.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/extract-doc.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/fsh.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/graph.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/index.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/kgid.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/l1-library.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/l1-queries.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/l1.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/layers.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/loader.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/ontology.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/props.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/shape-text.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/validate.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L1/schemas/vocab.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2/schemas/extract-dak.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2/schemas/index.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2/schemas/kgid-l2.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2/schemas/l2.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-bpmn/schemas/extract-bpmn.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-bpmn/schemas/index.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-bpmn/schemas/l2-bpmn.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-dmn/schemas/extract-citations.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-dmn/schemas/extract-dmn.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-dmn/schemas/index.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L2-dmn/schemas/l2-dmn.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L3/schemas/extract-l3.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L3/schemas/index.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../smart-base/L3/schemas/l3.ts",
+          "why": "no-tag"
         }
       ]
     },
@@ -47,5 +179,5 @@
       "entries": []
     }
   },
-  "total": 4
+  "total": 37
 }

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-lane-documentation.ts",
-    "script_hash": "7fd85f0e99ac"
+    "script_hash": "b9108b3e0020"
   },
   "subject": {
     "kind": "corpus",
@@ -25,7 +25,7 @@
       "entries": []
     },
     "undocumented-lane": {
-      "summary": "A lane containing at least one activity, carrying a `name` but no `<bpmn:documentation>`. A reader meeting the task cannot learn what the lane is, and the glossary has a label with no definition.",
+      "summary": "A lane containing at least one activity, carrying a `name` but no `<bpmn:documentation>`, and no `partitionElementRef` to a content block with non-empty prose (a persona that defines it). A reader meeting the task cannot learn what the lane is, and the glossary has a label with no definition.",
       "count": 0,
       "entries": []
     }
