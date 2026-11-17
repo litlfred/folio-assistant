@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p181-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p181-1.png",
+  "pageStart": 181,
+  "pageEnd": 181,
+  "narrative": [
+    {
+      "text": "UML class diagram of the two licensing profiles. Simple Licensing: the abstract AnyLicenseInfo specialises Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) specialises it, and SimpleLicensingText (licenseText[1]) specialises Element directly. Expanded Licensing: ConjunctiveLicenseSet and DisjunctiveLicenseSet (each with members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) and the abstract ExtendableLicense all specialise AnyLicenseInfo. ExtendableLicense is specialised by the abstract License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), with subclasses ListedLicense (deprecatedVersion, listVersionAdded) and CustomLicense, and by OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) specialises Element, with subclasses ListedLicenseException and CustomLicenseAddition.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML des deux profils de licence. Simple Licensing : la classe abstraite AnyLicenseInfo spécialise Core/Element ; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) la spécialise, et SimpleLicensingText (licenseText[1]) spécialise directement Element. Expanded Licensing : ConjunctiveLicenseSet et DisjunctiveLicenseSet (chacune avec members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) et la classe abstraite ExtendableLicense spécialisent toutes AnyLicenseInfo. ExtendableLicense est spécialisée par la classe abstraite License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), avec les sous-classes ListedLicense (deprecatedVersion, listVersionAdded) et CustomLicense, et par OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) spécialise Element, avec les sous-classes ListedLicenseException et CustomLicenseAddition.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML de los dos perfiles de licencias. Simple Licensing: la clase abstracta AnyLicenseInfo especializa Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) la especializa, y SimpleLicensingText (licenseText[1]) especializa Element directamente. Expanded Licensing: ConjunctiveLicenseSet y DisjunctiveLicenseSet (cada una con members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) y la clase abstracta ExtendableLicense especializan AnyLicenseInfo. ExtendableLicense la especializan la clase abstracta License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), con las subclases ListedLicense (deprecatedVersion, listVersionAdded) y CustomLicense, y OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) especializa Element, con las subclases ListedLicenseException y CustomLicenseAddition.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط أصناف UML لملفَّي تعريف الترخيص. Simple Licensing: الصنف المجرّد AnyLicenseInfo يخصّص Core/Element؛ ويخصّصه LicenseExpression (customIdToUri، licenseExpression string[1]، licenseListVersion SemVer)، ويخصّص SimpleLicensingText (licenseText[1]) الصنفَ Element مباشرة. Expanded Licensing: يخصّص AnyLicenseInfo كلٌّ من ConjunctiveLicenseSet وDisjunctiveLicenseSet (لكلٍّ منهما members) وIndividualLicensingInfo وWithAdditionOperator (subjectExtendableLicense، subjectAddition) والصنف المجرّد ExtendableLicense. ويخصّص ExtendableLicense الصنفُ المجرّد License (licenseText، isDeprecatedLicenseId، isFsfLibre، isOsiApproved، licenseXml، obsoletedBy، seeAlso، standardLicenseHeader، standardLicenseTemplate) مع صنفيه الفرعيين ListedLicense (deprecatedVersion، listVersionAdded) وCustomLicense، وكذلك OrLaterOperator (subjectLicense). ويخصّص LicenseAddition (additionText[1]، …) الصنفَ Element، مع صنفيه الفرعيين ListedLicenseException وCustomLicenseAddition.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Диаграмма классов UML двух профилей лицензирования. Simple Licensing: абстрактный AnyLicenseInfo специализирует Core/Element; его специализирует LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer), а SimpleLicensingText (licenseText[1]) напрямую специализирует Element. Expanded Licensing: ConjunctiveLicenseSet и DisjunctiveLicenseSet (каждый с members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) и абстрактный ExtendableLicense специализируют AnyLicenseInfo. ExtendableLicense специализируют абстрактный License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate) с подклассами ListedLicense (deprecatedVersion, listVersionAdded) и CustomLicense, а также OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) специализирует Element, с подклассами ListedLicenseException и CustomLicenseAddition.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "两个许可配置文件的 UML 类图。Simple Licensing：抽象类 AnyLicenseInfo 特化 Core/Element；LicenseExpression（customIdToUri、licenseExpression string[1]、licenseListVersion SemVer）特化它，SimpleLicensingText（licenseText[1]）直接特化 Element。Expanded Licensing：ConjunctiveLicenseSet 和 DisjunctiveLicenseSet（各有 members）、IndividualLicensingInfo、WithAdditionOperator（subjectExtendableLicense、subjectAddition）以及抽象类 ExtendableLicense 都特化 AnyLicenseInfo。特化 ExtendableLicense 的有抽象类 License（licenseText、isDeprecatedLicenseId、isFsfLibre、isOsiApproved、licenseXml、obsoletedBy、seeAlso、standardLicenseHeader、standardLicenseTemplate）及其子类 ListedLicense（deprecatedVersion、listVersionAdded）和 CustomLicense，以及 OrLaterOperator（subjectLicense）。LicenseAddition（additionText[1]、…）特化 Element，子类为 ListedLicenseException 和 CustomLicenseAddition。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-325",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/omg-2024-spdx-3-0",
+  "provenance": "ingested"
+}

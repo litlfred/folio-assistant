@@ -1,0 +1,47 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/voices/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/voices/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/voices/intent.md#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/voices/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Voices visualiser — as-is intent",
+      "prov:value": "**Covers** four declared refs that share one template:\n- `cat-harness/docs/cat-harness/voices/index.html` (declared by `agent-skills/agent-skills.json`)\n- `cat-harness/docs/cat-harness/voices/<content-core>/index.html` (the content core's `<content-core>.json`)\n- `cat-harness/docs/cat-harness/voices/<science-layer>/index.html` (the science layer's `<science-layer>.json`)\n- `cat-harness/docs/cat-harness/voices/<iris-replica>/index.html` (the IRIS replica's `skills/skills.json`; this was `voices/who-style-guide/`, declared by `who-style-guide/who-style-guide.json`, until the style guide was folded into the IRIS replica on 2026-10-01, bean `qsx4`. The observations below were made on the `who-style-guide` page and are kept as made)",
+      "cat-harness:refs": [
+        "bean qsx4",
+        "2026-10-01"
+      ],
+      "dcterms:date": [
+        "2026-10-01"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/voices/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Voices visualiser — as-is intent",
+      "prov:value": "every rule \"carries the page and the quote it was read from … and until this page, unreadable by a person without opening JSON\". The owner's ask (bean `bu2q`) was *\"shoulld show list of voices defined\"*.",
+      "cat-harness:refs": [
+        "bean bu2q"
+      ]
+    }
+  ]
+}

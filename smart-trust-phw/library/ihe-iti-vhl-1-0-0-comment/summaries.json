@@ -1,0 +1,196 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "ihe-iti-vhl-1-0-0-comment",
+  "summaries": [
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple",
+      "source": "sections/s001-ihe-it-infrastructure-technical-framework-supple.md",
+      "source_hash": "a20cb6cfabd4a1487aecac0a930c94803697bb613d2d51a3295ab06aebb6d745",
+      "narrative": [
+        {
+          "text": "Title heading of the library snapshot of the IHE IT Infrastructure Technical Framework Supplement on Verifiable Health Links (VHL); it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s002-overview-and-bibliographic-identity",
+      "source": "sections/s002-overview-and-bibliographic-identity.md",
+      "source_hash": "2b1788255480cdef99a0237979f04226b070e2a9ea1e86c5f0f8c7ee4bcc0c6b",
+      "narrative": [
+        {
+          "text": "Describes VHL as specifying the actors, transactions and trust-list interactions for issuing, presenting, verifying and redeeming cryptographically verifiable links to health documents and FHIR resources across organisational and jurisdictional boundaries, and tabulates its identity: canonical URL https://profiles.ihe.net/ITI/VHL, version 1.0.0-comment (Public Comment / Trial Implementation; NPM package built 2026-06-14), FHIR 4.0.1, published by the IHE IT Infrastructure Technical Committee under CC-BY-4.0.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s003-volume-1-verifiable-health-links-vhl-actors-tran",
+      "source": "sections/s003-volume-1-verifiable-health-links-vhl-actors-tran.md",
+      "source_hash": "6c25dbc981b8ad9632d5dad27b500ec8fdb444f6f51fa958cee5c4790e1018fb",
+      "narrative": [
+        {
+          "text": "Heading that opens Volume 1, on VHL actors, transactions and trust-anchor neutrality; it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s004-actors-and-responsibilities",
+      "source": "sections/s004-actors-and-responsibilities.md",
+      "source_hash": "2fab776c23952fd7064522b70cce01904ec90a7fad2421aaf7b31e38ae232eae",
+      "narrative": [
+        {
+          "text": "Defines VHL's four actors with their ActorDefinition canonicals: the VHL Holder (an individual or their personal health wallet) requests a VHL from a Sharer and presents it to a Receiver; the VHL Sharer publishes its signing material to a Trust Anchor, generates signed VHL payloads and serves the manifest and documents; the VHL Receiver verifies the VHL against the Trust Anchor's trust list and retrieves the manifest and documents; the Trust Anchor accepts participants' public keys and distributes signed trust lists such as DID documents or X.509/JWKS lists.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s005-trust-anchor-neutrality",
+      "source": "sections/s005-trust-anchor-neutrality.md",
+      "source_hash": "5bc13db0a2b6f579731095d220b52d80a213188a7fff2e461c2be9da07cac906",
+      "narrative": [
+        {
+          "text": "States that VHL is trust-anchor neutral by design: the Trust Anchor actor stands for any trust framework authority that accepts PKI material and distributes trust lists, the WHO Global Digital Health Certification Network (GDHCN) being one possible implementation among others such as national PKI roots, regional cross-border networks or bilateral federation anchors. No transaction hardcodes a trust network host; keys are resolved through the configured Trust Anchor's [ITI-YY2] trust list.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s006-composite-grouping-with-ihe-pcf-privacy-consent-",
+      "source": "sections/s006-composite-grouping-with-ihe-pcf-privacy-consent-.md",
+      "source_hash": "01e661e66ce7469592bac30e6075db788dcdb3aebfb70f254bf56d0a5ea5a6db",
+      "narrative": [
+        {
+          "text": "Describes grouping a VHL Sharer with IHE PCF actors: before or during issuance the Holder records or selects a consent directive via PCF [ITI-108] that scopes the documents, purposes, recipients or validity period the VHL covers, and when a Receiver redeems the VHL through Retrieve Manifest [ITI-YY5] the Sharer evaluates the active Consent directives against the requester, purpose, documents and time before returning anything.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy",
+      "source": "sections/s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy.md",
+      "source_hash": "4bd557953c813246a9ad532a3e3edbc3b4ccc09346777cbcdcdbdb5aa25d2b5d",
+      "narrative": [
+        {
+          "text": "Heading that opens Volume 2, the VHL transactions [ITI-YY1] to [ITI-YY5]; it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s008-summary-of-vhl-transactions",
+      "source": "sections/s008-summary-of-vhl-transactions.md",
+      "source_hash": "5bae4209a68052fb1b2a959354d0928e6fefe44ff5849d15ba988545b00ca217",
+      "narrative": [
+        {
+          "text": "Tabulates the five VHL transactions with initiator and responder: [ITI-YY1] Submit PKI Material with DID (Sharer or Receiver to Trust Anchor); [ITI-YY2] Retrieve Trust List with DID, used to verify VHL signatures and mutual TLS; [ITI-YY3] Generate VHL (Holder to Sharer, via $generate-vhl, optionally bound to a PCF Consent and selective-disclosure parameters, returning a signed payload such as HCERT, CWT or a SMART Health Link URI); [ITI-YY4] Provide VHL (Holder to Receiver by QR code, deep link or near-field exchange); and [ITI-YY5] Retrieve Manifest (Receiver to Sharer, returning a Bundle of DocumentReference entries).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s009-operationdefinition-generate-vhl-generate-vhl-it",
+      "source": "sections/s009-operationdefinition-generate-vhl-generate-vhl-it.md",
+      "source_hash": "e408997fd25776caa02b52dff1e6102d1151e259306edeb5fd15ce9147f95f15",
+      "narrative": [
+        {
+          "text": "Describes the GenerateVHL operation ($generate-vhl, [ITI-YY3]), invoked at system level on a VHL Sharer with POST [base]/$generate-vhl: it takes subject identification, optional document or folder selection, expiry and passcode parameters and consent directive references, and returns the signed VHL payload to be stored in the Holder's Personal Health Wallet.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-",
+      "source": "sections/s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-.md",
+      "source_hash": "3bf1f481f5807c322938b1f6b5fd5c9bdc1b9bdf4d6b7698efd4ad68e79cf8f8",
+      "narrative": [
+        {
+          "text": "Inventories the conformance artefacts in ihe.iti.vhl@1.0.0-comment with their canonical URLs: the ImplementationGuide; ActorDefinitions for the Holder, Sharer, Receiver and Trust Anchor; CapabilityStatements for the Sharer, Receiver and Trust Anchor; the GenerateVHL OperationDefinition; twelve Requirements resources covering mTLS, audit events, publishing, receiving, retrieving and updating PKI material, recording access, requesting VHL documents and utilising a VHL; and test plans for the Sharer, Receiver and Trust Anchor.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    }
+  ]
+}
