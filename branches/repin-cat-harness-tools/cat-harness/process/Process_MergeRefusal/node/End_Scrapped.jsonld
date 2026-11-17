@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/process/Process_MergeRefusal/node/End_Scrapped.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-cat-harness-tools",
+    "sha": "aa37842ecffbd095afa95aa8d6768729c35c123c",
+    "pr": "3184/merge",
+    "run": "44141543245"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/process/Process_MergeRefusal/node/End_Scrapped",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "PR closed unmerged",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/process/Process_MergeRefusal/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/process/Process_MergeRefusal#flow/SF_Bean_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal/node/End_Scrapped"
+    }
+  ]
+}

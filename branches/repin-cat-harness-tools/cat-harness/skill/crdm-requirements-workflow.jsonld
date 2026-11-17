@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/skill/crdm-requirements-workflow.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-cat-harness-tools",
+    "sha": "aa37842ecffbd095afa95aa8d6768729c35c123c",
+    "pr": "3184/merge",
+    "run": "44141543245"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/skill/crdm-requirements-workflow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "crdm-requirements-workflow",
+      "title": "CRDM requirements workflow",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/package/crdm"
+      ],
+      "instructionsPath": "skills/process/crdm/crdm-requirements-workflow.md",
+      "instructionLines": 560,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow"
+    }
+  ]
+}

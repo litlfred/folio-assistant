@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/schema/document-image.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-cat-harness-tools",
+    "sha": "aa37842ecffbd095afa95aa8d6768729c35c123c",
+    "pr": "3184/merge",
+    "run": "44141543245"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/schema/document-image",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "document-image",
+      "title": "document-image",
+      "summary": "An image placed on a page of an ingested document.",
+      "module": "schemas/content/document-image.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-image"
+    }
+  ]
+}

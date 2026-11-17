@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/fhir-harness/softwareLibrary/aehrc__sdc-assemble.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-cat-harness-tools/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/aehrc__sdc-assemble.jsonld",
+  "staging": {
+    "branch": "repin-cat-harness-tools",
+    "sha": "aa37842ecffbd095afa95aa8d6768729c35c123c",
+    "pr": "3184/merge",
+    "run": "44141543245"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/softwareLibrary/aehrc__sdc-assemble",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SoftwareLibrary",
+      "title": "@aehrc/sdc-assemble@2.0.3",
+      "description": "The outside library @aehrc/sdc-assemble 2.0.3, licensed Apache-2.0, as the layer's lockfile pins it.",
+      "sourceKind": "software-library",
+      "sourcePath": "libraries/aehrc__sdc-assemble.library.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-libraries"
+    }
+  ]
+}
