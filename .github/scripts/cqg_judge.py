@@ -26,7 +26,9 @@ so no upload step can follow it.
 - On `pull_request`, a failure passes only when the same job's record from
   the newest completed push run on `main` that has one lists it as failing
   too. A failure that passes on main, or that main did not record, is NEW and
-  fails the job.
+  fails the job. A sharded job (`…, shard k/n`) is judged against the union
+  of all n shards' records from one main run, since a test file can move
+  between shards.
 - On every other event (push, merge_group, workflow_dispatch) any failure
   fails the job, so `main` stays honestly red.
 - Could-not-determine is never green: an incomplete record on head, a step
@@ -297,22 +299,61 @@ def gh(path, raw=False):
     return r.stdout if raw else json.loads(r.stdout)
 
 
+SHARD = re.compile(r"^(?P<base>.+), shard (?P<k>[0-9]+)/(?P<n>[0-9]+)$")
+
+
+def shard_family(job_name):
+    """Every job of a sharded matrix this job belongs to, or just this job.
+
+    A test file lands in whichever shard the split puts it, and the split
+    moves when files are added or removed. So a failure main already has can
+    sit in main's shard 2 and in this run's shard 4. Judged against main's
+    shard 4 alone, it reads as new (#3186, 2026-11-18: four failures main
+    already had were reported as new).
+    """
+    m = SHARD.match(job_name)
+    if not m:
+        return [job_name]
+    n = int(m.group("n"))
+    return [f"{m.group('base')}, shard {i}/{n}" for i in range(1, n + 1)]
+
+
+def merge_records(records):
+    """One record holding every item of the given ones; an item fails if it fails in any."""
+    items = {}
+    for rec in records:
+        for k, v in rec["items"].items():
+            if k not in items or (items[k].get("exit", 0) == 0 and v.get("exit", 0) != 0):
+                items[k] = v
+    return {"complete": all(r.get("complete") for r in records), "undetermined": [], "items": items}
+
+
 def main_record(repo, job_name):
-    """(record, run url) from the newest completed push run on main with a complete record, or (None, why)."""
+    """(record, run url) from the newest completed push run on main with a complete record, or (None, why).
+
+    For a sharded job, the record is the union of every shard's record from
+    ONE run, and that run must hold a complete record for every shard: a
+    shard missing its record could be the one holding the failure.
+    """
+    family = shard_family(job_name)
     runs = gh(f"repos/{repo}/actions/workflows/{WORKFLOW}/runs?event=push&branch=main&status=completed"
               f"&per_page={RUNS_SCANNED}")["workflow_runs"]
     seen = []
     for run in runs:
         jobs = gh(f"repos/{repo}/actions/runs/{run['id']}/jobs?per_page=100")["jobs"]
-        job = next((j for j in jobs if j["name"] == job_name and j.get("conclusion") in ("success", "failure")), None)
-        if not job:
+        found = [next((j for j in jobs if j["name"] == name and j.get("conclusion") in ("success", "failure")), None)
+                 for name in family]
+        if not any(found):
             continue
-        rec = record_from_log(gh(f"repos/{repo}/actions/jobs/{job['id']}/logs", raw=True))
-        if rec and rec.get("complete"):
-            return rec, run["html_url"]
+        records = [record_from_log(gh(f"repos/{repo}/actions/jobs/{j['id']}/logs", raw=True)) if j else None
+                   for j in found]
+        if all(r and r.get("complete") for r in records):
+            where = run["html_url"] + (f" (all {len(family)} shards)" if len(family) > 1 else "")
+            return merge_records(records), where
         seen.append(str(run["id"]))
+    what = f"`{job_name}`" if len(family) == 1 else f"every shard of `{job_name}`"
     return None, (f"none of the {len(runs)} newest completed push runs on main holds a complete record for "
-                  f"`{job_name}` (job logs read: {', '.join(seen) or 'none'})")
+                  f"{what} (job logs read: {', '.join(seen) or 'none'})")
 
 
 # ---------------------------------------------------------------- verdict

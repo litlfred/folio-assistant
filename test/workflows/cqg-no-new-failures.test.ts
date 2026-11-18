@@ -32,7 +32,7 @@ const wf = parse(readFileSync(WORKFLOW, "utf8")) as { jobs: Record<string, Job> 
 const JUDGED = ["typescript-test", "gates-kg", "gates-docs", "gates-standalone", "gates-unrun", "e2e-shard"];
 
 /** A sandbox: a state dir, a stand-in gate-shell that runs the step with `bash -e`, and a `gh` serving `mainLog`. */
-function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string; ghFails?: boolean; refusesEscapes?: boolean } = {}) {
+function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string; ghFails?: boolean; refusesEscapes?: boolean; mainJobs?: Array<{ name: string; log: string }> } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "cqg-"));
   const state = join(dir, "state");
   const bin = join(dir, "bin");
@@ -41,8 +41,14 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
   writeFileSync(gateShell, '#!/usr/bin/env bash\nbash -e "$1"\n');
   const jobName = opts.jobName ?? "Repository gates — x (hard)";
   writeFileSync(join(dir, "runs.json"), JSON.stringify({ workflow_runs: [{ id: 7, html_url: "https://example/runs/7" }] }));
-  writeFileSync(join(dir, "jobs.json"), JSON.stringify({ jobs: [{ id: 70, name: jobName, conclusion: opts.conclusion ?? "failure" }] }));
+  // `mainJobs`: main's run holds several jobs (a sharded matrix), each with its own log, served by job id.
+  const mainJobs = opts.mainJobs?.map((j, i) => ({ id: 71 + i, ...j }));
+  writeFileSync(
+    join(dir, "jobs.json"),
+    JSON.stringify({ jobs: mainJobs?.map((j) => ({ id: j.id, name: j.name, conclusion: "failure" })) ?? [{ id: 70, name: jobName, conclusion: opts.conclusion ?? "failure" }] }),
+  );
   writeFileSync(join(dir, "job.log"), mainLog ?? "no record here\n");
+  for (const j of mainJobs ?? []) writeFileSync(join(dir, `job-${j.id}.log`), j.log);
   writeFileSync(
     join(bin, "gh"),
     opts.ghFails
@@ -50,7 +56,7 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
       : opts.refusesEscapes
         ? // Newer gh refuses a body with terminal escapes unless it is passed --allow-escape-sequences.
           `#!/bin/sh\nif [ "$2" = --allow-escape-sequences ]; then shift; elif case "$2" in *"/logs") true ;; *) false ;; esac; then echo "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway" >&2; exit 1; fi\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`
-        : `#!/bin/sh\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
+        : `#!/bin/sh\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") id=$(echo "$2" | sed 's#.*/jobs/\\([0-9]*\\)/logs#\\1#'); if [ -f '${dir}/job-'"$id"'.log' ]; then cat '${dir}/job-'"$id"'.log'; else cat '${dir}/job.log'; fi ;;\n  *) exit 1 ;;\nesac\n`,
   );
   chmodSync(join(bin, "gh"), 0o755);
   const summary = join(dir, "summary.md");
@@ -366,6 +372,48 @@ describe("bun test is judged per test", () => {
     sb.begin();
     testStep(sb, "bun", BUN_JUNIT(PASS("old")), summaryOut(0), 1);
     expect(sb.verdict("pull_request").status).toBe(1);
+  });
+});
+
+describe("a sharded job is judged against every shard of main's run, since a test file can change shards (#3186)", () => {
+  const SHARD = (k: number) => `TypeScript — bun test, shard ${k}/2`;
+  const out = (fail: number) => `\n 10 pass\n ${fail} fail\nRan 11 tests across 1 file.\n`;
+  /** Main's log for one shard whose bun step fails `failing` (or passes when it is empty). */
+  const shardLog = (failing: string[]) => {
+    const sb = sandbox();
+    sb.begin();
+    testStep(sb, "bun", BUN_JUNIT(failing.map(FAIL).join("") + PASS("ok")), out(failing.length), failing.length ? 1 : 0);
+    return `x ${/CQG-REPORT-V1 \S+/.exec(sb.verdict("push").stdout)![0]}\n`;
+  };
+  // On main, "moved" failed in shard 1; shard 2 failed nothing.
+  const mainJobs = [
+    { name: SHARD(1), log: shardLog(["moved"]) },
+    { name: SHARD(2), log: shardLog([]) },
+  ];
+
+  test("a failure main has in another shard is known, not new", () => {
+    const sb = sandbox(undefined, { jobName: SHARD(2), mainJobs });
+    sb.begin();
+    testStep(sb, "bun", BUN_JUNIT(FAIL("moved") + PASS("ok")), out(1), 1);
+    expect(sb.verdict("pull_request").status).toBe(0);
+    expect(sb.summary()).toContain("(all 2 shards)");
+    expect(sb.summary()).toContain("failing on main too");
+  });
+
+  test("a failure no shard of main has is still new", () => {
+    const sb = sandbox(undefined, { jobName: SHARD(2), mainJobs });
+    sb.begin();
+    testStep(sb, "bun", BUN_JUNIT(FAIL("fresh") + PASS("ok")), out(1), 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).toContain("a.test.ts > grp > fresh");
+  });
+
+  test("a main run missing a shard's record is not used, since that shard could hold the failure", () => {
+    const sb = sandbox(undefined, { jobName: SHARD(2), mainJobs: [mainJobs[0], { name: SHARD(2), log: "no record here\n" }] });
+    sb.begin();
+    testStep(sb, "bun", BUN_JUNIT(FAIL("moved") + PASS("ok")), out(1), 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).toContain("every shard of");
   });
 });
 
