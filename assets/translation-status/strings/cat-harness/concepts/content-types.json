@@ -1,0 +1,718 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "cat-harness",
+ "repository": "litlfred/cat-harness",
+ "translations": "translations",
+ "catalogue": "concepts/content-types",
+ "hashes": {
+  "ar": "143ea71cd67df5b4",
+  "es": "d37b53f35c77f213",
+  "fr": "7c4bee2c135ae544",
+  "ru": "72d53f83ec25da5a",
+  "zh": "65083021da70d5b1"
+ },
+ "strings": [
+  {
+   "msgid": "Content types",
+   "hash": "94e965b711aa064c",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أنواع المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tipos de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Types de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Типы содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容类型",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "On this page",
+   "hash": "3eaf2267edd897d6",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "في هذه الصفحة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En esta página",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Sur cette page",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "На этой странице",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页目录",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "folio-assistant is content-agnostic: the platform knows nothing about any particular paper or guideline. Each kind of content is supported by a content adapter (code that knows how to validate/build/render that kind) and a skill package (the authoring formalism — what an author and the LLM do).",
+   "hash": "681124bec640d5c6",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إن folio-assistant مستقل عن المحتوى: فالمنصة لا تعرف شيئًا عن أي ورقة بحثية أو دليل إرشادي بعينه. ويتم دعم كل نوع من أنواع المحتوى عبر محول محتوى (شفرة برمجية تعرف كيفية التحقق من ذلك النوع وبنائه وعرضه) و حزمة مهارات (الصياغة الرسمية للتأليف — ما يقوم به المؤلف والنموذج اللغوي الكبير).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "folio-assistant es independiente del contenido: la plataforma no sabe nada sobre ningún artículo o guía en particular. Cada tipo de contenido está respaldado por un adaptador de contenido (código que sabe cómo validar, compilar y renderizar ese tipo) y un paquete de habilidades (el formalismo de autoría: lo que hacen un autor y el LLM).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "folio-assistant est indépendant du contenu : la plateforme ne sait rien d'un article ou d'une directive en particulier. Chaque genre de contenu est pris en charge par un adaptateur de contenu (du code qui sait comment valider/construire/restituer ce genre) et un ensemble de compétences (le formalisme de rédaction — ce qu'un auteur et le LLM font).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "folio-assistant не зависит от содержимого: платформе ничего не известно о какой-либо конкретной статье или руководстве. Каждый вид содержимого поддерживается адаптером содержимого (код, который умеет валидировать, собирать и отображать этот вид) и пакетом навыков (формализм создания — то, что делают автор и LLM).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "folio-assistant 是与内容无关的：该平台对任何特定的论文或指南一无所知。每一种（kind）内容都由一个内容适配器（content adapter，懂得如何验证/构建/渲染该种内容的代码）和一个技能包（skill package，创作形式化体系——作者与大语言模型所做的工作）提供支持。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This page describes the formalism of each content type. It is intentionally kept separate from any concrete content; concrete artifacts live in their own content repository.",
+   "hash": "89e104b288a9eaad",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تصف هذه الصفحة الصياغة الرسمية لكل نوع محتوى. وقد تم فصلها عمدًا عن أي محتوى ملموس؛ حيث تعيش المخرجات الملموسة في مستودع المحتوى الخاص بها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esta página describe el formalismo de cada tipo de contenido. Se mantiene intencionalmente separada de cualquier contenido concreto; los artefactos concretos residen en su propio repositorio de contenido.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cette page décrit le formalisme de chaque type de contenu. Elle est intentionnellement gardée séparée de tout contenu concret ; les artefacts concrets résident dans leur propre dépôt de contenu.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "На этой странице описан формализм каждого типа содержимого. Он намеренно отделен от какого-либо конкретного содержимого; конкретные артефакты располагаются в собственном репозитории содержимого.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页面描述了每种内容类型的形式化体系（formalism）。它特意与任何具体内容保持独立；具体的制品存放在它们各自的内容仓库中。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Scientific papers & books",
+   "hash": "4918f63a7c228bf6",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأوراق والكتب العلمية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Artículos científicos y libros",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Articles scientifiques et livres",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Научные статьи и книги",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "科学论文与专著",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Rigorous scientific papers and books where prose and mathematics are backed by a machine-checked Lean 4 formalization and rendered through LaTeX.",
+   "hash": "7666308abe1ea657",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأوراق والكتب العلمية الدقيقة حيث يُدعم النثر والرياضيات بصياغة رسمية يتم التحقق منها آليًا عبر Lean 4 وتُصيَّر باستخدام LaTeX.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Artículos científicos y libros rigurosos donde la prosa y las matemáticas están respaldadas por una formalización en Lean 4 verificada por máquina y renderizadas mediante LaTeX.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Articles scientifiques et livres rigoureux où la prose et les mathématiques sont appuyées par une formalisation Lean 4 vérifiée par machine et restituées via LaTeX.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Строгие научные статьи и книги, где текст и математические выкладки подкреплены формализацией в Lean 4, проверенной машиной, и сверстаны с помощью LaTeX.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "严谨的科学论文与专著，其中的散文和数学内容均有机器校验的 Lean 4 形式化作为后盾，并通过 LaTeX 进行排版渲染。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The seven kinds a document folio does not get, and the eight it shares:",
+   "hash": "32e6a19d242f700b",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأنواع السبعة التي لا يحصل عليها الـ folio الخاص بالمستند، والأنواع الثمانية التي يشترك فيها:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los siete tipos que un folio de documento no recibe, y los ocho que comparte:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les sept genres qu'un folio de type document ne reçoit pas, et les huit qu'il partage :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Семь видов, которые фолио документов не получает, и восемь общих видов:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文档 folio 无法获得的七种类型，以及它共享的八种类型：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Block kind",
+   "hash": "8eb107918490267a",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نوع الكتلة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tipo de bloque",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Genre de bloc",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вид блока",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "块类型",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Label prefix",
+   "hash": "85a55192b48bffe7",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بادئة التسمية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Prefijo de etiqueta",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Préfixe d'étiquette",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Префикс метки",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "标签前缀",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Lean?",
+   "hash": "ec5d7d19304ce65a",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هل يدعم Lean؟",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Lean?",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Lean ?",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Lean?",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "是否包含 Lean？",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Profile",
+   "hash": "8d0fadd98c04aea8",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ملف التعريف",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Perfil",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Profil",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Профиль",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "配置文件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "required",
+   "hash": "cef6c94d706cb9f4",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إلزامي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "obligatorio",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "obligatoire",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "обязательно",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "必需",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "paper only",
+   "hash": "4aa6c94399d2bd53",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "paper فقط",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "solo paper",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "paper uniquement",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "только paper",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "仅限论文 ()",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "expected",
+   "hash": "d2b62205a78fa585",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "متوقع",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "esperado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "attendu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "ожидается",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "预期包含",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "optional",
+   "hash": "04e325a3b5b8a0b9",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اختياري",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "opcional",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "optionnel",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "опционально",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "可选",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "shared",
+   "hash": "c18a9b461bb1e454",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مشترك",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "compartido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "partagé",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "общий",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "共享 ()",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "n/a",
+   "hash": "a7f12e4766e9dade",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا ينطبق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "n/a",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "s. o.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "не применимо",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "不适用",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Others — extending folio-assistant",
+   "hash": "616ed0972c26dda8",
+   "sources": [
+    "docs/concepts/content-types.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أنواع أخرى — توسيع folio-assistant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Otros — extender folio-assistant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Autres — étendre folio-assistant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Другие — расширение folio-assistant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "其他——扩展 folio-assistant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

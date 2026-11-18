@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 37,
+      "count": 39,
       "unit": "open beans"
     }
   },
@@ -611,6 +611,20 @@
       "updatedAt": "2026-11-08T07:07:01Z",
       "preview": "Owner, 2026-11-03 (card, option 3): *\"why is references/ required dir? any references that were ingested should be under library/.\"* Then: \"sibling on 3\".\n\n## What is there now\n\n- smart-trust, smart-trust-phw and smart-immunizations each declare a `references` directory (`folio-reference/v1` CSL-JSON, one `<key>.json` per cited work). smart-trust holds 28 entries. smart-trust-phw and smart-immuniz",
       "file": "beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md"
+    },
+    {
+      "id": "folio-assistant-dkin",
+      "title": "who-iris: L1-ingest the remaining DAKs (TB, HIV, CHUD, PNC, SRV, SMBP, STI) with their per-task annotations",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-18T08:40:00Z",
+      "updatedAt": "2026-11-18T08:40:00Z",
+      "preview": "**Repository:** `litlfred/who-iris`. Work it there.\n\n**Who can work it:** an agent that can push to litlfred/who-iris. Cloud Claude sessions can't, because the Claude GitHub App isn't installed on that repo. A local agent (Antigravity, Claude Code on the owner's machine) using the owner's GitHub login can.\n\n**Owner request (2026-11-18):** \"All of the DAK documents have annotations for the BPMNs th",
+      "file": "beans/defs/folio-assistant-dkin--who-iris-l1-ingest-the-remaining-daks-tb-hiv-chud-pnc.md"
     },
     {
       "id": "folio-assistant-dkqd",
@@ -1653,6 +1667,20 @@
       "file": "beans/defs/folio-assistant-um0y--merge-manager-re-pin-cascade-core-761-smart-base-w.md"
     },
     {
+      "id": "folio-assistant-untm",
+      "title": "UNTERM: official UN terminology as translation candidates and glossary QA terms",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-18T08:40:00Z",
+      "updatedAt": "2026-11-18T08:40:00Z",
+      "preview": "**Repository:** `litlfred/cat-harness-tools`. Work it there; the adapter lives in `scripts/lib/translation-sources/`.\n\n**Who can work it:** an agent that can reach `https://unterm.un.org`. Cloud Claude sessions can't, because the environment's network policy refuses that host (proxy 403, checked 2026-11-18 06:31Z). A local agent (Antigravity, Claude Code on the owner's machine) can.\n\n**Owner reque",
+      "file": "beans/defs/folio-assistant-untm--unterm-official-un-terminology-as-translation-candid.md"
+    },
+    {
       "id": "folio-assistant-v29t",
       "title": "CI site publish has no pandoc/LibreOffice, so site:export fails every CI publish of dth-hrh",
       "status": "completed",
@@ -1948,8 +1976,8 @@
         "share": 0.8095238095238095
       }
     ],
-    "orphanOpen": 24,
-    "openTotal": 37,
+    "orphanOpen": 26,
+    "openTotal": 39,
     "coveredOpen": 12,
     "duplicateIds": 0
   }

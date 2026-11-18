@@ -1366,6 +1366,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph#flow/F_M14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph#flow/F_M2",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -1429,6 +1433,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Start_SubgraphWanted",
       "@type": "bootstrap:ProcessNode",
       "name": "A step needs a declared subgraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Task_CreateStateBranch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Create the declared state branch if missing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Task_MountBranchTip",

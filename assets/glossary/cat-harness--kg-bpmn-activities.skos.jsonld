@@ -1506,7 +1506,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. For a rendered change the reviewer reads the agent's before/after preview rather than building one. On agent-touched changes, an adversarial code review evaluates against the RED FLAG taxonomy and writes a committed verdict."
+          "@value": "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. For a rendered change the reviewer reads the agent's before/after preview rather than building one. On agent-touched changes, an adversarial code review evaluates against the RED FLAG taxonomy and writes a committed verdict. A change to translatable source text marks the strings it rewrote stale in every locale (their candidates' `msgidHash` no longer matches). The translations re-enter `translation-adjudication` afterwards; they never block this PR, and the reviewer does not wait for them."
         }
       ],
       "skos:notation": "Task_Review",
@@ -3326,7 +3326,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Builds the composed source with Jekyll 4 and just-the-docs (`bundle exec jekyll build`), runs each composing Tool's post-build pass, mounts instance-rendered content (`mount-instance-docs.ts`), and generates the TypeScript API reference with TypeDoc (`.github/actions/typedoc-api`). The main deploy is a full build: every index is rebuilt from the tree being published. See skill `feature-staging`, section Build types."
+          "@value": "Builds the composed source with Jekyll 4 and just-the-docs (`bundle exec jekyll build`), runs each composing Tool's post-build pass, mounts instance-rendered content (`mount-instance-docs.ts`), publishes the translation review projections wherever the checkout has translations (`publish-translation-review.ts`: `assets/translation-status/review.json` and each catalogue's strings projection under `assets/translation-status/strings/`, which a block's 🌐 pane reads), and generates the TypeScript API reference with TypeDoc (`.github/actions/typedoc-api`). The main deploy is a full build: every index is rebuilt from the tree being published. See skill `feature-staging`, section Build types."
         }
       ],
       "skos:notation": "Task_Build",
@@ -5106,7 +5106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable. The seed includes every publisher the declaration promises (`sub-kg-lifecycle` stage 10): a `qa` directory with `storage` needs `.github/workflows/publish-qa.yml`, the caller of the tools layer's `layer-qa-publish.yml`, and `test/results/` ignored. Without it the declared store is never written, and once the layer stops committing its results no reader finds them."
+          "@value": "Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable. The seed includes every publisher the declaration promises (`sub-kg-lifecycle` stage 10): a `qa` directory with `storage` needs `.github/workflows/publish-qa.yml`, the caller of the tools layer's `layer-qa-publish.yml`, and `test/results/` ignored. Without it the declared store is never written, and once the layer stops committing its results no reader finds them. Once `main` is on each new repository, create the state branches its declaration names (`bun run cat state:seed --init` from a checkout of that repository, the same step `state:mount` and `folio_init` run): the layer that declares a state branch creates it, and a layer that mounts it never does."
         }
       ],
       "skos:notation": "Task_Seed",
@@ -7166,6 +7166,26 @@
       ],
       "skos:notation": "Task_WriteLock",
       "dcterms:source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_WriteLock",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mountsubgraph.task_createstatebranch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Create the declared state branch if missing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A state branch the root layer declares and its own remote lacks is created by `bun run cat state:seed --init`, seeded empty with the standard layout. The layer that declares a state branch creates it at initialization (owner, 2026-11-17): `state:mount`, the session-start hook and a new layer's scaffold all run this step. The seed is a `state-manifest/v1` manifest with `authoritative: true`, a README, and the graph's starting files. A branch that exists is left as it is, and no branch is pushed onto an empty remote, where it would become the default branch. A MOUNTED layer's branch is never created from a downstream checkout: its miss names that layer's repository and the command to run there. Where the token cannot push, the mount stops with one line naming `state:seed --init`, rather than three gates failing downstream."
+        }
+      ],
+      "skos:notation": "Task_CreateStateBranch",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_CreateStateBranch",
       "skos:note": "candidate"
     },
     {
@@ -11859,6 +11879,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_autopick",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Auto-pick by rank"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For each string nobody has adjudicated, its candidates are ranked: official 0, adjudicated 1, a person's proposal 2, a translation platform (Weblate, Crowdin, Transifex) 3, an agent model 4, machine translation 5; a QA failure adds 10; ties go to the newest; a stale candidate, made for another source text, is never picked. An empty `msgstr`, or one that is itself an earlier auto-pick, takes the best: fuzzy and unofficial (`chosen.how: auto`), except an official candidate whose English matches the msgid exactly, which is written as `auto-official`. A collaborator's choice, and text whose provenance is not an auto-pick, are never overwritten. `translation-strings.ts` `applyAutoPick`; the 🌐 pane ranks with the same function's rules."
+        }
+      ],
+      "skos:notation": "Task_TRA_AutoPick",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_AutoPick",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_blockpane",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open a block's 🌐 translation pane"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On every page, source-language pages included, a block's 📣 panel has a 🌐 pane that lists every locale's current translation of the block, its status, and how it came to be (`chosen.how`, `chosen.by`). On a translated page its own locale comes first and the others are collapsed. ✎ Fix translation opens, per locale, each of the block's strings with its candidates ranked as the auto-pick ranks them: the text; the source's kind, id and version; who proposed it, linked to the issue it came from; the date; its QA results; a stale mark when it was made for another source text; whether an official source's English matched exactly; and which one is the default."
+        }
+      ],
+      "skos:notation": "Task_TRA_BlockPane",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_BlockPane",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_candidates",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -11891,7 +11951,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "For each wrong string: pick one of the candidates (its source is recorded with the suggestion) or type the text. The suggestion carries the text the reviewer saw (`current`), so a catalogue that changed under them is caught."
+          "@value": "For each wrong string: pick a ranked candidate, which fills an editable box (its source is recorded with the suggestion while its text is unedited), or type your own. Anyone's text is a proposal. An owner, member or collaborator may also tick Choose as the translation and say why: the suggestion then carries `choose: true` and the `reason`, and it is recorded as the string's translation only once the workflow has confirmed who they are. The suggestion carries the text the reviewer saw (`current`), so a choice against a catalogue that changed under them is caught."
         }
       ],
       "skos:notation": "Task_TRA_Choose",
@@ -11911,7 +11971,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Submit opens GitHub's new-issue form prefilled with a readable summary and a `translation-adjudication/v1` JSON block, labelled `translation-adjudication` and titled `[translation review] …`. When the record is too long for a URL the page copies the body for pasting instead. Filing it is the act of adjudicating."
+          "@value": "Submit opens GitHub's new-issue form prefilled with a readable summary and a `translation-adjudication/v1` JSON block, labelled `translation-adjudication` and titled `[translation review] …`. The summary says, per string, whether the author proposes or chooses. When the record is too long for a URL the page copies the body for pasting instead. Filing it is the act of proposing, or, for a collaborator who chose, of adjudicating."
         }
       ],
       "skos:notation": "Task_TRA_FileIssue",
@@ -11979,6 +12039,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_propose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Append every suggestion as a human candidate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every suggestion, whoever filed it, is appended to the catalogue's `translation-candidates/v1` sidecar as `{kind: \"human\", id: \"github:<login>\", by, issue}`, with the `msgidHash` of the string it translates and its placeholder QA. A proposal is never refused for a changed catalogue and never conflicts with another: the sidecar keeps them all, ranked side by side. A record that does not parse, or that names another repository or another translations directory, is refused here."
+        }
+      ],
+      "skos:notation": "Task_TRA_Propose",
+      "dcterms:source": "cat-harness/library/processes/translation-review-adjudication.bpmn#Task_TRA_Propose",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationreviewadjudication.task_tra_refuse",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -12031,7 +12111,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`translation:status` writes `review.html` beside the status page, with `assets/translation-status/review.json`: every catalogue × locale, its state (`machine`, `flagged`, `reviewed`, `stale`, `official`), the candidates per string, and the hash of the catalogue's bytes. That hash is what the verdict is pinned to."
+          "@value": "`translation:status` writes `review.html` beside the status page. Every site build, wherever the checkout has translations, publishes `assets/translation-status/review.json` (`folio-translation-review/v1`: every catalogue × locale, its state, and the hash of the catalogue's bytes) and, per catalogue, its strings projection (`folio-translation-strings/v1`: every string in every locale, its status, its candidates ranked, and the default pick) — `publish-translation-review.ts`, run by the site build. The catalogue hash is what an adjudication is pinned to; the strings projection is what a block's 🌐 pane draws."
         }
       ],
       "skos:notation": "Task_TRA_ReviewPage",
@@ -12066,12 +12146,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Write the records"
+          "@value": "Write the choices and sign-offs"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Acceptable: the catalogue's translation node gets `signedOffBy` / `signedOffAt`. Mistranslation: each suggestion replaces its `msgstr`, marked `#, fuzzy`. Either way an entry is appended to the catalogue's `translation-qa` attestation (criterion `human-adjudication`) naming the issue and the hash the person saw; the attestation is append-only and checked against `qa-attestations/v1` before it is written. The PO header `X-Folio-Official` and the locale's `status.json` are never touched."
+          "@value": "A chosen suggestion becomes the string's `msgstr`, not fuzzy, and its sidecar entry's `chosen` records `how: adjudicated`, by whom, when, in which issue, why, and which candidate. `acceptable`: the catalogue's translation node gets `signedOffBy` / `signedOffAt`, and each fuzzy string in it is adjudicated as it stands. Each adjudication appends an entry to the catalogue's `translation-qa` attestation (criterion `human-adjudication`) naming the issue and the hash the person saw, and a proposal one under `human-proposal`; the attestation is append-only and checked against `qa-attestations/v1` before it is written. The PO header `X-Folio-Official` and the locale's `status.json` are never touched."
         }
       ],
       "skos:notation": "Task_TRA_Write",

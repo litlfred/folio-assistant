@@ -558,6 +558,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/content/lang-text.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "lang-text.test",
+      "graphNode": "undeclared",
+      "summary": "A glossary label or definition may be a string or a language map",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/content/lang-text.ts",
+      "instance": "cat-harness-tools",
+      "name": "lang-text",
+      "graphNode": "undeclared",
+      "summary": "A glossary label or definition that may be translated.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/content/narrative.test.ts",
       "instance": "cat-harness-tools",
       "name": "narrative.test",
@@ -4319,6 +4335,14 @@
       "name": "l2-bpmn",
       "graphNode": "undeclared",
       "summary": "Knowledge-graph layer L2-BPMN, version 3.0, as typed data.",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "instance": "smart-base",
+      "name": "task-annotations",
+      "graphNode": "schema",
+      "summary": "`dak-task-annotations/v1` — the reviewable record of a DAK's BPMN task",
       "isTest": false
     },
     {
@@ -15917,6 +15941,14 @@
             "string": "https://zod.dev/api#strings"
           },
           "doc": "Markdown content of the companion .md file (for cross-ref scanning)."
+        },
+        {
+          "name": "folioLabels",
+          "type": "ReadonlyMap<string, ReadonlySet<string>>",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "doc": "The labels of every document in the same folio, keyed by document slug —"
         }
       ],
       "extendsNames": [],
@@ -18058,6 +18090,17 @@
           "links": {
             "string": "https://zod.dev/api#strings"
           }
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The declared `version`, whose major the layer's `@base` is minted under (`instanceKgBase`)."
         }
       ],
       "extendsNames": [],
@@ -21784,6 +21827,21 @@
       "refs": [
         "cat-harness-tools/schemas/content/sticky-contribution.ts#Initiation"
       ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/content/lang-text.ts#LangText",
+      "name": "LangText",
+      "module": "cat-harness-tools/schemas/content/lang-text.ts",
+      "kind": "type-alias",
+      "doc": "A label or definition as `folio-glossary/v1` allows it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "source": "typescript",
@@ -49074,6 +49132,18 @@
           "utype": "MOUNT_LOCK_SCHEMA"
         },
         {
+          "name": "pinnedAt",
+          "type": "z.string().datetime().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "When `mount:remote` wrote this content, pins included (UTC, ISO 8601,"
+        },
+        {
           "name": "mounts",
           "type": "z.array(z.object({ harness: InstanceNameSchema, repository: z.string().min(1), ref: CommitShaSchema }).strict())",
           "optional": false,
@@ -68371,6 +68441,21 @@
       "exported": false
     },
     {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#Clock",
+      "name": "Clock",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-scalar",
+      "doc": "A clock time in a day, `HH:MM`, 24-hour.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "name": "Id",
       "module": "cat-harness-tools/schemas/process/workshop.ts",
@@ -69893,6 +69978,229 @@
       "external": [
         "z"
       ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSchedule",
+      "name": "WorkshopSchedule",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "name": "WorkshopScheduleSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "The days as a calendar: time down the side, a column per track, and joint",
+      "fields": [
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text"
+        },
+        {
+          "name": "intro",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "One paragraph above the days, Markdown."
+        },
+        {
+          "name": "tracks",
+          "type": "z.array(WorkshopScheduleTrackSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "WorkshopScheduleTrackSchema[]"
+        },
+        {
+          "name": "days",
+          "type": "z .array(z.object({ day: z.number().int().min(1), title: Text.optional(), summary: Text.optional(), slots: z.array(Work…",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "z .array(object({ day: number().int().min(1), title: Text.optional(), summary: Text.optional(), slots: array(Work…"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Text",
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlot",
+      "name": "WorkshopScheduleSlot",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "name": "WorkshopScheduleSlotSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "One slot of a day. A `session` sits in one `track`; a `joint` session, a",
+      "fields": [
+        {
+          "name": "start",
+          "type": "Clock",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "end",
+          "type": "Clock",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "kind",
+          "type": "z.enum([\"session\", \"joint\", \"break\", \"logistics\"])",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "track",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Id"
+        },
+        {
+          "name": "module",
+          "type": "ModuleId.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "ModuleId",
+          "doc": "The module the slot teaches, in the track's workshop: the calendar links to its page."
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "type",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "What sort of session (\"Talk\", \"Lab\")."
+        },
+        {
+          "name": "note",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "Who leads it, or what to know (a role, never a name)."
+        },
+        {
+          "name": "sessions",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "Text[]",
+          "doc": "The parts of a joint session, in order (\"P1.1 Welcome\")."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Clock",
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "name": "WorkshopScheduleTrackSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "A track of the schedule: a column of the calendar. `workshop` names the sibling workshop (same layer) whose modules the track's slots name; absent, this workshop.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "workshop",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Id"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
       "source": "zod",
       "exported": true
     },
@@ -114733,6 +115041,445 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureData",
+      "name": "AsDrawnFigureData",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "name": "AsDrawnFigureSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"as-drawn-figure/v1\")",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "\"as-drawn-figure/v1\""
+        },
+        {
+          "name": "figure",
+          "type": "z.object({ library: z.string().min(1), labels: z.array(z.string().regex(/^Fig\\. \\d+$/u)).min(1), caption: z.string().mi…",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "object",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          }
+        },
+        {
+          "name": "basis",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "region",
+          "type": "z.tuple([Num, Num, Num, Num])",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "tuple"
+        },
+        {
+          "name": "canvas",
+          "type": "z.object({ width: Num.positive(), height: Num.positive() }).strict()",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "object",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          }
+        },
+        {
+          "name": "clips",
+          "type": "z.array(z.object({ d: PathD, evenodd: z.literal(true).optional() }).strict())",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "object[]",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          }
+        },
+        {
+          "name": "shapes",
+          "type": "z.array(AsDrawnShapeSchema)",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "AsDrawnShapeSchema[]"
+        },
+        {
+          "name": "texts",
+          "type": "z.array(AsDrawnTextSchema)",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "AsDrawnTextSchema[]"
+        },
+        {
+          "name": "images",
+          "type": "z.array(AsDrawnImageSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "AsDrawnImageSchema[]"
+        },
+        {
+          "name": "omitted",
+          "type": "z.object({ softMasked: z.number().int().positive(), why: z.string().min(1) }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "object",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          },
+          "doc": "What the PDF paints that the transcription leaves out, and why."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+        "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+        "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+        "folio-assistant-core/schemas/figure-data.ts#Num",
+        "folio-assistant-core/schemas/figure-data.ts#PathD"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "name": "AsDrawnImageSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "x",
+          "type": "Num",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "y",
+          "type": "Num",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "width",
+          "type": "Num.positive()",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "Num"
+        },
+        {
+          "name": "height",
+          "type": "Num.positive()",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "Num"
+        },
+        {
+          "name": "png",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Base64 PNG cropped from a 600 dpi render of the page."
+        },
+        {
+          "name": "clip",
+          "type": "ClipRefs.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "ClipRefs"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+        "folio-assistant-core/schemas/figure-data.ts#Num"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "name": "AsDrawnShapeSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "d",
+          "type": "PathD",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "fill",
+          "type": "UpperHex.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "UpperHex"
+        },
+        {
+          "name": "evenodd",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "true"
+        },
+        {
+          "name": "stroke",
+          "type": "UpperHex.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "UpperHex"
+        },
+        {
+          "name": "strokeWidth",
+          "type": "Num.nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Num"
+        },
+        {
+          "name": "dash",
+          "type": "z.array(Num.nonnegative()).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "Num[]"
+        },
+        {
+          "name": "cap",
+          "type": "z.enum([\"round\", \"square\"]).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "join",
+          "type": "z.enum([\"round\", \"bevel\"]).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "fillOpacity",
+          "type": "Num.min(0).max(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Num"
+        },
+        {
+          "name": "strokeOpacity",
+          "type": "Num.min(0).max(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Num"
+        },
+        {
+          "name": "clip",
+          "type": "ClipRefs.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "ClipRefs",
+          "doc": "Indices into `clips`: the shape is drawn inside all of them."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+        "folio-assistant-core/schemas/figure-data.ts#Num",
+        "folio-assistant-core/schemas/figure-data.ts#PathD",
+        "folio-assistant-core/schemas/figure-data.ts#UpperHex"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "name": "AsDrawnTextSchema",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "x",
+          "type": "Num",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "doc": "The baseline origin of the run."
+        },
+        {
+          "name": "y",
+          "type": "Num",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "size",
+          "type": "Num.positive()",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "Num"
+        },
+        {
+          "name": "text",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "weight",
+          "type": "z.number().int().min(100).max(900).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "number",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "italic",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "true"
+        },
+        {
+          "name": "color",
+          "type": "UpperHex.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "UpperHex"
+        },
+        {
+          "name": "width",
+          "type": "Num.positive().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Num",
+          "doc": "The printed width, so the run keeps its place in another font."
+        },
+        {
+          "name": "rotate",
+          "type": "Num.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Num",
+          "doc": "Degrees clockwise, about the origin."
+        },
+        {
+          "name": "link",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The glossary concept the label names (exact prefLabel or altLabel match)."
+        },
+        {
+          "name": "clip",
+          "type": "ClipRefs.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "ClipRefs"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+        "folio-assistant-core/schemas/figure-data.ts#Num",
+        "folio-assistant-core/schemas/figure-data.ts#UpperHex"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/figure-data.ts#Cell",
       "name": "Cell",
       "module": "folio-assistant-core/schemas/figure-data.ts",
@@ -114779,6 +115526,20 @@
       "external": [
         "z"
       ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+      "name": "ClipRefs",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "source": "zod",
       "exported": false
     },
@@ -115158,6 +115919,34 @@
       "external": [
         "z"
       ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "name": "Num",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#PathD",
+      "name": "PathD",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "source": "zod",
       "exported": false
     },
@@ -115573,6 +116362,20 @@
       "external": [
         "z"
       ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/figure-data.ts#UpperHex",
+      "name": "UpperHex",
+      "module": "folio-assistant-core/schemas/figure-data.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "source": "zod",
       "exported": false
     },
@@ -149287,6 +150090,74 @@
       "exported": true
     },
     {
+      "id": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#EmitContext",
+      "name": "EmitContext",
+      "module": "smart-base/L2-bpmn/schemas/extract-bpmn.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "ns",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "eid",
+          "type": "(id: string | null) => string",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "nodes",
+          "type": "GraphNode[]",
+          "optional": false,
+          "array": true,
+          "card": "0..*"
+        },
+        {
+          "name": "edges",
+          "type": "GraphEdge[]",
+          "optional": false,
+          "array": true,
+          "card": "0..*"
+        },
+        {
+          "name": "warnings",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "personaTitles",
+          "type": "Map<string, PersonaTitle | null>",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "smart-base/L2-bpmn/schemas/extract-bpmn.ts#PersonaTitle"
+      ],
+      "unresolved": [
+        "GraphEdge",
+        "GraphNode"
+      ],
+      "external": [],
+      "source": "typescript",
+      "exported": false
+    },
+    {
       "id": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#PersonaTitle",
       "name": "PersonaTitle",
       "module": "smart-base/L2-bpmn/schemas/extract-bpmn.ts",
@@ -149320,6 +150191,391 @@
       "unresolved": [],
       "external": [],
       "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema",
+      "name": "AnnotationSourceSchema",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "zod-object",
+      "doc": "Where in the L1 document an annotation came from.",
+      "fields": [
+        {
+          "name": "document",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The L1 library document id (who-iris `library/<id>/`)."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "number",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          },
+          "doc": "The page the item starts on, when the extraction recorded one."
+        },
+        {
+          "name": "item",
+          "type": "z.string().regex(/^\\d+(\\.\\d+)*$/)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The item's number as printed: `1`, `2.3`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotations",
+      "name": "DakTaskAnnotations",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema",
+      "name": "DakTaskAnnotationsSchema",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DAK_TASK_ANNOTATIONS_SCHEMA)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "DAK_TASK_ANNOTATIONS_SCHEMA"
+        },
+        {
+          "name": "bpmn",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The BPMN file these annotate, relative to this file (its basename)."
+        },
+        {
+          "name": "process",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The DAK process id: `IMMZ.B`."
+        },
+        {
+          "name": "document",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The L1 document and the heading of the annotations block."
+        },
+        {
+          "name": "heading",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "tasks",
+          "type": "z.array(TaskAnnotationSchema)",
+          "optional": false,
+          "array": true,
+          "card": "0..*",
+          "utype": "TaskAnnotationSchema[]"
+        },
+        {
+          "name": "unmatched",
+          "type": "z.array(UnmatchedItemSchema).default([])",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "UnmatchedItemSchema[]"
+        },
+        {
+          "name": "unannotated",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "BPMN task ids with no annotation item."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema",
+        "smart-base/L2-bpmn/schemas/task-annotations.ts#UnmatchedItemSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DAK_TASK_ANNOTATIONS_SCHEMA",
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#MatchMethod",
+      "name": "MatchMethod",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotation",
+      "name": "TaskAnnotation",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema",
+      "name": "TaskAnnotationSchema",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "bpmnTask",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The BPMN task's `@id`: the join key into the diagram."
+        },
+        {
+          "name": "activityId",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The DAK activity id (`IMMZ.B1`, `TB.A5`): the join key into the spreadsheets."
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The step's name as the annotation prints it."
+        },
+        {
+          "name": "description",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The annotation's bullets, as Markdown, one `- ` line per `»`."
+        },
+        {
+          "name": "personas",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Personas performing the task, as the BPMN lane names them."
+        },
+        {
+          "name": "dataElements",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Data element ids the data dictionary keys to this activity."
+        },
+        {
+          "name": "requirements",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Functional requirement ids keyed to this activity."
+        },
+        {
+          "name": "decisionTables",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Decision table ids keyed to this activity, or named by the task's calledDecision."
+        },
+        {
+          "name": "matchedBy",
+          "type": "z.enum(MATCH_METHODS)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "source",
+          "type": "AnnotationSourceSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "MATCH_METHODS",
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "smart-base/L2-bpmn/schemas/task-annotations.ts#UnmatchedItemSchema",
+      "name": "UnmatchedItemSchema",
+      "module": "smart-base/L2-bpmn/schemas/task-annotations.ts",
+      "kind": "zod-object",
+      "doc": "An annotation item no BPMN task was found for: for a person to adjudicate, never guessed.",
+      "fields": [
+        {
+          "name": "item",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "name",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
       "exported": true
     },
     {
@@ -163410,6 +164666,134 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "days",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "intro",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "via": "days",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "via": "tracks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Clock",
+      "via": "end",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Clock",
+      "via": "start",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "track",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "module",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "note",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "sessions",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "type",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "workshop",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopKind",
       "via": "",
@@ -168720,6 +170104,214 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "via": "images",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "via": "shapes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "via": "texts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "canvas",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "region",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#PathD",
+      "via": "clips",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+      "via": "clip",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "height",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "width",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "x",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "y",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+      "via": "clip",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "dash",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "fillOpacity",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "strokeOpacity",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "strokeWidth",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#PathD",
+      "via": "d",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#UpperHex",
+      "via": "fill",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#UpperHex",
+      "via": "stroke",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#ClipRefs",
+      "via": "clip",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "rotate",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "size",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "width",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "x",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#Num",
+      "via": "y",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema",
+      "to": "folio-assistant-core/schemas/figure-data.ts#UpperHex",
+      "via": "color",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
@@ -178085,6 +179677,38 @@
       "from": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#BpmnExtraction",
       "to": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#BpmnStats",
       "via": "stats",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#EmitContext",
+      "to": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#PersonaTitle",
+      "via": "personaTitles",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema",
+      "to": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema",
+      "via": "tasks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema",
+      "to": "smart-base/L2-bpmn/schemas/task-annotations.ts#UnmatchedItemSchema",
+      "via": "unmatched",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema",
+      "to": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema",
+      "via": "source",
       "kind": "field",
       "optional": false,
       "array": false

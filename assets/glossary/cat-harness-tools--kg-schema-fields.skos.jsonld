@@ -11376,6 +11376,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/constraints.constraintcontext.foliolabels",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConstraintContext.folioLabels"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The labels of every document in the same folio, keyed by document slug — what a cross-paper `<slug>:<label>` in `uses[]` / `foreshadows[]` resolves against. Absent when the caller did not build it; a cross-paper ref is then not judged, and the caller says so."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/constraints.ts#ConstraintContext.folioLabels",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/constraints.constraintcontext.mdcontent",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -11582,6 +11601,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.vocabulary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/content-context.instancecontextdecl.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceContextDecl.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared `version`, whose major the layer's `@base` is minted under (`instanceKgBase`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/content-context.ts#InstanceContextDecl.version",
       "skos:note": "candidate"
     },
     {
@@ -31269,6 +31307,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/remote-mount.mountlockschema.pinnedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountLockSchema.pinnedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When `mount:remote` wrote this content, pins included (UTC, ISO 8601, whole seconds): T, the time `lock:coherence:check` judges freshness against. A commit's date is not T: a squash merge dates the commit that carries the lock at the MERGE, so every layer main that moved between the re-pin and the merge read as \"moved before T\" and the pin as stale (merge-manager, 2026-11-17: three WHO syncs lost that race). Kept when a mount rewrites the same content, so a re-run does not churn the lock; written anew whenever anything else in it changes. The check accepts it only when it is no later than the commit that carries the lock and no earlier than any pin's own commit; optional so a lock written before it was recorded still parses."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountLockSchema.pinnedAt",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/remote-mount.mountlockschema.unmounted",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -48727,6 +48784,101 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema.steps",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopscheduleschema.intro",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopScheduleSchema.intro"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One paragraph above the days, Markdown."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema.intro",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopscheduleslotschema.module",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopScheduleSlotSchema.module"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The module the slot teaches, in the track's workshop: the calendar links to its page."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema.module",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopscheduleslotschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopScheduleSlotSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who leads it, or what to know (a role, never a name)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopscheduleslotschema.sessions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopScheduleSlotSchema.sessions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parts of a joint session, in order (\"P1.1 Welcome\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema.sessions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopscheduleslotschema.type",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopScheduleSlotSchema.type"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What sort of session (\"Talk\", \"Lab\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema.type",
       "skos:note": "candidate"
     },
     {

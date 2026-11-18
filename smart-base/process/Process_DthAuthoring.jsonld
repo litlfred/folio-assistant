@@ -17,8 +17,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested"
       ],
-      "nodeCount": 45,
-      "flowCount": 53,
+      "nodeCount": 47,
+      "flowCount": 55,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
@@ -315,6 +315,22 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_ArchReview",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_L3Built",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {

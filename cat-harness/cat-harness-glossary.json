@@ -928,7 +928,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "label": "Reviewer (adjudicator)",
-      "scopeNote": "The only lane that judges a translation. The person who files the issue IS the adjudicator: their GitHub login is the only identity the record carries, and nothing they type in the body can name anyone else. Choosing a candidate is a judgement too, so the candidate's source is recorded with the verdict.",
+      "scopeNote": "The only lane that judges a translation. The person who files the issue is the reviewer: their GitHub login is the only identity the record carries, and nothing they type in the body can name anyone else. Whoever they are, what they file is recorded as a proposal; it is an adjudication only when the workflow finds them an owner, member or collaborator (`author_association`) and they asked to choose. Choosing a candidate is a judgement too, so the candidate's source is recorded with it.",
       "source": "cat-harness/library/processes/translation-review-adjudication.bpmn"
     },
     {

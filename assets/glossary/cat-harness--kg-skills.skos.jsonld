@@ -4416,7 +4416,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A person's verdict on a machine translation, carried from the translation review page to the record: the reviewer accepts a catalogue, or flags a mistranslation and picks a candidate or writes their own text; the verdict is filed as a `translation-adjudication/v1` issue; a workflow checks the author and the catalogue's hash, writes the records and opens a PR; a maintainer merges it. Use for \"review the translations\", \"this string is mistranslated\", \"why was my review not recorded\", and when wiring a layer for review. Locale sign-off is a separate act, not this one."
+          "@value": "A person's word on a translation, carried from the translation review page or a block's 🌐 pane to the record: anyone proposes text, which joins the ranked candidates; an owner, member or collaborator adjudicates, by accepting a catalogue or choosing one string's translation with a reason; it is filed as a `translation-adjudication/v1` issue; a workflow checks the author and the catalogue's hash, writes the records, re-runs the auto-pick and opens a PR; a maintainer merges it. Use for \"review the translations\", \"this string is mistranslated\", \"why was my review not recorded\", and when wiring a layer for review. Locale sign-off is a separate act, not this one."
         }
       ],
       "skos:notation": "translation-adjudication",

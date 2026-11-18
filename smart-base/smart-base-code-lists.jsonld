@@ -553,7 +553,7 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
       "notation": "bpmn-event",
       "prefLabel": "BPMN Event",
-      "definition": "A start or end event. Same connectivity argument as gateway, plus one of its own: entry and exit points are what make 'is this task reachable' and 'does this path terminate' answerable at all.",
+      "definition": "A start, end or intermediate event (WHO's DAK BPMN draw intermediate throw and catch events inside sub-processes). Same connectivity argument as gateway, plus one of its own: entry and exit points are what make 'is this task reachable' and 'does this path terminate' answerable at all.",
       "rdf:value": "http://smart.who.int/kg/bpmn-event"
     },
     {
@@ -609,7 +609,7 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
       "notation": "dak-task",
       "prefLabel": "Task Entry",
-      "definition": "One entry of BusinessProcessWorkflow's `task 0..*` backbone: identifier, name, description. A node rather than a property because the same task is also drawn in the BPMN file, and the two lists have to be joinable to be checkable against each other.",
+      "definition": "One task of a DAK business process, as the DAK document's \"notes and annotations\" describe it: identifier, name, description, and the personas, data elements, requirements and decision tables it links to. A node rather than a property because the same task is also drawn in the BPMN file, and the two have to be joinable to be checkable against each other (`describes`). Read from a BPMN file's `dak-task-annotations/v1` sidecar (smart-base/L2-bpmn/schemas/task-annotations.ts); BusinessProcessWorkflow's `task 0..*` backbone carries the first three fields of the same thing.",
       "rdf:value": "http://smart.who.int/kg/dak-task"
     },
     {

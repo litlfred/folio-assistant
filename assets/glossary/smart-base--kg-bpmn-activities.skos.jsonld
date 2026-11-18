@@ -494,6 +494,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_dthauthoring.call_dakl3",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "The DAK content as a FHIR IG [dak-l3-ig]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stages 5 and 6 of smart-guideline-end-to-end for the handbook: its DAK-kind assets become a FHIR IG on smart-base (personas as ActorDefinitions, processes and decision tables as PlanDefinitions with CQL Libraries, data elements as logical models, ValueSets and Questionnaires, indicators as Measures, requirements as Requirements). An asset goes to L3 once its L2 review is requested; its SME review at L3 re-runs the L2 dummy clients through the built logic. Runs beside the drafting reviews and never holds the zero draft. Calls Process_DakL3Ig; the agent writes the gap report (guideline-gap-report) after it."
+        }
+      ],
+      "skos:notation": "Call_DakL3",
+      "dcterms:source": "smart-base/L2/collab/processes/dth-authoring.bpmn#Call_DakL3",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_dthauthoring.call_data",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2671,7 +2691,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One review item per created or changed asset, shown as its reviewer reads it (diagram, table, data-dictionary rows); an adapted asset as a diff against its pinned upstream. Each form's wireframe candidates are reviewed blind and one is chosen (Process_Adjudication, Process_OptionsAnalysis). For each L2 component this is the review that forks inside its edit-and-review subprocess (l2-component-edit-review.bpmn), with the renderer, checker and reviewing role that skill tables."
+          "@value": "One review item per created or changed asset, shown as its reviewer reads it (diagram, table, data-dictionary rows); an adapted asset as a diff against its pinned upstream. Each form's wireframe candidates are reviewed blind and one is chosen (Process_Adjudication, Process_OptionsAnalysis). For each L2 component this is the review that forks inside its edit-and-review subprocess (l2-component-edit-review.bpmn), with the renderer, checker and reviewing role that skill tables. Each review item goes to the role whose expertise its question needs: clinical and programme SMEs see rendered diagrams, tables and forms with made-up clients walked through them, never .bpmn, .dmn or FSH; terminologists and the business analyst review codes and structure in their own items."
         }
       ],
       "skos:notation": "Task_AdjL2",
@@ -2691,7 +2711,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One review item per created or changed resource: differential, each Questionnaire against the L2 wireframe it was derived from (field to item: fhir-harness fhir-questionnaire-wireframe, whose check is check-wireframe-questionnaire), CQL beside its DMN rule with test results, terminology expansions."
+          "@value": "One review item per created or changed resource: differential, each Questionnaire against the L2 wireframe it was derived from (field to item: fhir-harness fhir-questionnaire-wireframe, whose check is check-wireframe-questionnaire), CQL beside its DMN rule with test results, terminology expansions. The clinical SME reviews behaviour, not resources: the stage-4 dummy clients re-run through the built PlanDefinition / CQL and the filled-in Questionnaire, outcome beside outcome. The FHIR modeller reviews the resources."
         }
       ],
       "skos:notation": "Task_AdjL3",
@@ -2711,7 +2731,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Against the stage-6 IG build, with conformance tests from the IG's examples and test cases."
+          "@value": "Against the stage-6 IG build, with conformance tests from the IG's examples and test cases. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_BuildApp",
@@ -2731,7 +2751,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "From the L1 KG: which existing DAKs to reuse, adapt, extend or reject, each with evidence and reason. Reuse first; prefer the jurisdiction's adaptation, recording the WHO original as its upstream. For each component kept, record how the candidate produces it (the tools graph, the candidate repository's source spreadsheets and converters, WHO's DAK toolchain); stage 4 uses that toolchain."
+          "@value": "From the L1 KG: which existing DAKs to reuse, adapt, extend or reject, each with evidence and reason. Reuse first; prefer the jurisdiction's adaptation, recording the WHO original as its upstream. For each component kept, record how the candidate produces it (the tools graph, the candidate repository's source spreadsheets and converters, WHO's DAK toolchain); stage 4 uses that toolchain. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_DepsL2",
@@ -2751,7 +2771,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Index each candidate IG, then match the L1 KG and the L2 assets against it: reuse, adapt, extend or reject per IG, and record per artefact type the candidate's toolchain (CQL refresh, test-case format, example generator), which stage 6 then uses."
+          "@value": "Index each candidate IG, then match the L1 KG and the L2 assets against it: reuse, adapt, extend or reject per IG, and record per artefact type the candidate's toolchain (CQL refresh, test-case format, example generator), which stage 6 then uses. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_DepsL3",
@@ -2811,7 +2831,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Component 1 sources of any DAK already in scope first, then WHO IRIS and the jurisdiction's own guidelines. Each candidate marked in-library / in-KG / not yet."
+          "@value": "Component 1 sources of any DAK already in scope first, then WHO IRIS and the jurisdiction's own guidelines. Each candidate marked in-library / in-KG / not yet. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_IdentifyL1",
@@ -2831,7 +2851,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Per source not yet extracted: cat ingest into library/, the generic-document layer (l1-library), then the L1 layer (recommendations, remarks, practices, scenario candidates) into library/<bib>/l1-extraction/."
+          "@value": "Per source not yet extracted: cat ingest into library/, the generic-document layer (l1-library), then the L1 layer (recommendations, remarks, practices, scenario candidates) into library/<bib>/l1-extraction/. A figure or table that carries a process, a decision or data is cut out with its page and transcribed verbatim (a table stays a table, a figure's boxes and arrows as printed), for stage 4 to model as BPMN, DMN or data elements, each naming the transcription in wasDerivedFrom. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_IngestKg",
@@ -2851,7 +2871,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The authoring steps of l2-dak-authoring.bpmn (personas and scenarios, BPMN, DMN, data dictionary, indicators and requirements, terminology), plus the design of each data-entry form as wireframe candidates (wireframe-design-review, design use) from the persona, the user scenario and the core data elements. Its clinical validation is this stage's adjudication and does not hold up stage 5. The IG is built through fhir-harness's AST cache lifecycle (ig-ast-refresh.yml), with the DAK pre-processing as smart-base's pre-export overlay (dak-preprocessing, dak-pre-export.sh) and the DAK sidecars made from the AST (dak-postprocessing)."
+          "@value": "The authoring steps of l2-dak-authoring.bpmn (personas and scenarios, BPMN, DMN, data dictionary, indicators and requirements, terminology), plus the design of each data-entry form as wireframe candidates (wireframe-design-review, design use) from the persona, the user scenario and the core data elements. Its clinical validation is this stage's adjudication and does not hold up stage 5. The IG is built through fhir-harness's AST cache lifecycle (ig-ast-refresh.yml), with the DAK pre-processing as smart-base's pre-export overlay (dak-preprocessing, dak-pre-export.sh) and the DAK sidecars made from the AST (dak-postprocessing). A transcribed figure or table becomes its BPMN process, DMN table or data elements, adding nothing it does not show. Each process and decision table gets dummy clients (test scenarios, component 9) for its SME review to run. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_L2",
@@ -2871,7 +2891,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The mapping and pipeline of dak-l3-ig.bpmn, up to a clean IG build. Every L3 asset names the L2 asset it implements in wasDerivedFrom, with that edge's adjudication state. Each Questionnaire is derived from the chosen L2 wireframe of its form. Publication continues in that process and is not on the path to stage 8."
+          "@value": "The mapping and pipeline of dak-l3-ig.bpmn, up to a clean IG build. Every L3 asset names the L2 asset it implements in wasDerivedFrom, with that edge's adjudication state. Each Questionnaire is derived from the chosen L2 wireframe of its form. Publication continues in that process and is not on the path to stage 8. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
         }
       ],
       "skos:notation": "Task_L3",

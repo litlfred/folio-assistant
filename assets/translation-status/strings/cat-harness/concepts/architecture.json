@@ -1,0 +1,913 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "cat-harness",
+ "repository": "litlfred/cat-harness",
+ "translations": "translations",
+ "catalogue": "concepts/architecture",
+ "hashes": {
+  "ar": "1c54ddd89d742212",
+  "es": "fe0176498e66755a",
+  "fr": "61ae892e07c6aa2b",
+  "ru": "10acaacfe613e8c3",
+  "zh": "ff3abbacd094c740"
+ },
+ "strings": [
+  {
+   "msgid": "Access control — ODRL, checked before every task",
+   "hash": "f8dfaad7be883c3c",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التحكم في الوصول — ODRL، يتم التحقق منه قبل كل مهمة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Control de acceso — ODRL, comprobado antes de cada tarea",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contrôle d'accès — ODRL, vérifié avant chaque tâche",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Управление доступом — ODRL, проверка перед каждой задачей",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "访问控制 —— ODRL，在每项任务前执行检查",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Architecture",
+   "hash": "c65aac58570c8a84",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الهندسة المعمارية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Arquitectura",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Architecture",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Архитектура",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "架构",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content adapters",
+   "hash": "30c79836fd153748",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "محولات المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Adaptadores de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Adaptateurs de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Адаптеры содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容适配器",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Deployment",
+   "hash": "468f55064a85d8e8",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "النشر",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Despliegue",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Déploiement",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Развертывание",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "部署",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "folio-assistant is an MCP server with a pluggable content adapter layer, a skill system, a typed content-object model, RBAC, and a deploy story. The content it operates on lives in a separate repository — the platform is content-agnostic.",
+   "hash": "e51f6fef831cf441",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إن folio-assistant هو خادم MCP يضم طبقة محولات محتوى قابلة للتوصيل، ونظام مهارات، ونموذج كائنات محتوى مصنف بالأنواع، ونظام تحكم في الوصول قائم على الأدوار (RBAC)، وآلية نشر. ويعيش المحتوى الذي يعمل عليه في مستودع منفصل — فالمنصة مستقلة عن المحتوى.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "folio-assistant es un servidor MCP con una capa conectable de adaptadores de contenido, un sistema de habilidades, un modelo de objetos de contenido tipado, RBAC y una estrategia de despliegue. El contenido sobre el que opera reside en un repositorio independiente: la plataforma es independiente del contenido.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "folio-assistant est un serveur MCP doté d'une couche d'adaptateurs de contenu enfichable, d'un système de compétences, d'un modèle d'objets de contenu typé, d'un RBAC et d'une stratégie de déploiement. Le contenu sur lequel il opère réside dans un dépôt séparé — la plateforme est indépendante du contenu.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "folio-assistant — это MCP-сервер с подключаемым уровнем адаптеров содержимого, системой навыков, типизированной объектной моделью содержимого, RBAC и стратегией развертывания. Содержимое, с которым он работает, находится в отдельном репозитории — платформа не зависит от содержимого.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "folio-assistant 是一个 MCP 服务器，具备可插拔的内容适配器层、技能系统、类型化内容对象模型、RBAC 以及部署方案。它所操作的内容存放在独立的仓库中 —— 平台本身与内容无关。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "For papers, content is a tree of typed blocks validated at runtime with Zod:",
+   "hash": "31b03737eaa31b1a",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بالنسبة للأوراق العلمية، فإن المحتوى هو شجرة من الكتل (blocks) محددة الأنواع يتم التحقق منها أثناء التشغيل عبر Zod:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Para los artículos, el contenido es un árbol de bloques tipados y validados en tiempo de ejecución con Zod:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Pour les articles, le contenu est un arbre de blocs typés validés à l'exécution avec Zod :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Для статей содержимое представляет собой дерево типизированных блоков, валидируемых во время выполнения с помощью Zod:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "对于论文，内容是一棵由类型化块（blocks）构成的树，在运行时通过 Zod 进行验证：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Overview",
+   "hash": "6fbcac346ccee208",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نظرة عامة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Visión general",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Vue d'ensemble",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Обзор",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "概述",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "page",
+   "hash": "0b90017c537086d4",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الصفحة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "página",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "page",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "страница",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "页面",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Path",
+   "hash": "6025e7a2313a081d",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المسار",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ruta",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chemin",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Путь",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "路径",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Phase 0/I/II/III, the gates, and what is still undecided",
+   "hash": "db3eb4bcb9027af1",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المراحل 0/I/II/III، والبوابات، وما لم يُحسم بعد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Fases 0/I/II/III, las puertas de validación y lo que aún no se ha decidido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Phases 0/I/II/III, les étapes clés (gates) et ce qui reste à trancher",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Фазы 0/I/II/III, контрольные точки (gates) и то, что пока остается нерешенным",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Phase 0/I/II/III、各项关卡以及尚未决定的事项",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Repository layout",
+   "hash": "14a0df2c291ca202",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تخطيط المستودع",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Estructura del repositorio",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Agencement du dépôt",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Структура репозитория",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "仓库布局",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Separation of concerns — current and future state",
+   "hash": "d6e74281c75235be",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فصل الاهتمامات — الوضع الحالي والمستقبلي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Separación de responsabilidades — estado actual y futuro",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Séparation des préoccupations — état actuel et futur",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Разделение ответственности — текущее и будущее состояние",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "关注点分离 —— 现状与未来规划",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Skills and skill packages",
+   "hash": "8d8780820a226b94",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المهارات وحزم المهارات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Habilidades y paquetes de habilidades",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Compétences et paquets de compétences",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Навыки и пакеты навыков",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "技能与技能包",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The content-object model",
+   "hash": "1cbd6c8bfd817783",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نموذج كائنات المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El modelo de objetos de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le modèle d'objets de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Объектная модель контента",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容对象模型",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The five target repos and which directory lands in which",
+   "hash": "b62b7fcc9ffe8288",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المستودعات الخمسة المستهدفة وأي دليل يستقر في أيّ منها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los cinco repositorios de destino y qué directorio va a parar a cuál",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les cinq dépôts cibles et dans lequel chaque répertoire atterrit",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пять целевых репозиториев и то, какой каталог в какой из них попадает",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "五个目标仓库以及各目录分别落入哪个仓库",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The MCP server",
+   "hash": "c2a379a19649c3a2",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "خادم MCP",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El servidor MCP",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le serveur MCP",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сервер MCP",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "MCP 服务器",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The rest of this page describes the architecture as it is now.",
+   "hash": "fb74f4774555127a",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يصف باقي هذه الصفحة الهندسة المعمارية كما هي عليه الآن.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El resto de esta página describe la arquitectura tal como es ahora.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le reste de cette page décrit l'architecture telle qu'elle est actuellement.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В остальной части этой страницы описывается архитектура в ее текущем виде.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页的其余部分描述当前现状下的架构。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This documentation site",
+   "hash": "31030dae2dbd5895",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "موقع التوثيق هذا",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Este sitio de documentación",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce site de documentation",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Этот сайт документации",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本文档站点",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What is actually in this repo today, measured, and where the mixture is",
+   "hash": "5e3e76776c21ea70",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما هو موجود بالفعل في هذا المستودع اليوم، بالأرقام المقاسة، وأين يكمن المزيج",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Qué hay realmente en este repositorio hoy, cuantificado, y dónde se encuentra la mezcla",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce qui se trouve réellement dans ce dépôt aujourd'hui, mesures à l'appui, et où se situe le mélange",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что фактически находится в этом репозитории сегодня (в измеренном виде) и где происходит смешение",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本仓库当前的实际内容、度量数据以及混杂之处",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "what it answers",
+   "hash": "eee0d9b73fc1f69c",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما تجيب عليه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "qué responde",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "ce à quoi elle répond",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "на какой вопрос отвечает",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "说明的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What kinds of repository exist — Tool, Test, Content, Consumer — and what each may contain",
+   "hash": "ae535ee779903e23",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما هي أنواع المستودعات الموجودة — أداة (Tool)، واختبار (Test)، ومحتوى (Content)، ومستهلك (Consumer) — وما قد يحتويه كل منها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Qué tipos de repositorios existen — Herramienta, Prueba, Contenido, Consumidor — y qué puede contener cada uno",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Quels types de dépôts existent — Outils, Tests, Contenu, Consommateur — et ce que chacun peut contenir",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Какие виды репозиториев существуют — Tool, Test, Content, Consumer — и что может содержать каждый из них",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "存在哪些类型的仓库 —— 工具（Tool）、测试（Test）、内容（Content）、消费者（Consumer） —— 以及各仓库可包含的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What lives here",
+   "hash": "5029058f598f5de0",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما يحتويه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Qué reside aquí",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce qui s'y trouve",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что здесь находится",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "包含内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Work-plan priming (cross-harness)",
+   "hash": "0ab44ab38d151817",
+   "sources": [
+    "docs/concepts/architecture.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تهيئة خطة العمل (عبر أطر العمل المختلفة)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Preparación del plan de trabajo (entre arneses)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Amorçage du plan de travail (inter-harnais)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Прайминг плана работы (между харнессами)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工作计划引导（跨 harness）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

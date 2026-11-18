@@ -1,0 +1,523 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "smart-trust",
+ "repository": "litlfred/smart-trust",
+ "translations": "translations",
+ "catalogue": "pagecontent/functional",
+ "hashes": {
+  "ar": "f54748ec7293c79d",
+  "es": "75cbdc384cb82efe",
+  "fr": "2dd49adcfd89bf6e",
+  "ru": "0fbddffb17c250bf",
+  "zh": "6078526ab818966f"
+ },
+ "strings": [
+  {
+   "msgid": "Consensus data models, controlled vocabularies and data transformations allow consumers of health documents to understand content of a health document in a computable manner. Shared formats for expressing health policies in executable business rule libraries further allow consumers to validate the content against their own public health policies. Here these artifacts are defined using healthcare data specifications aligned with <a0>Health Level Seven International (HL7)</a0>. HL7 is a not-for-profit, ANSI-accredited standards developing organization dedicated to providing a comprehensive framework and related standards for the exchange, integration, sharing and retrieval of electronic health information.",
+   "hash": "8734d1e164a0e891",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تتيح نماذج البيانات التوافقية والمفردات المضبوطة وتحويلات البيانات لمستهلكي المستندات الصحية فهم محتوى المستند الصحي بطريقة قابلة للحوسبة. كما تتيح الصيغ المشتركة للتعبير عن السياسات الصحية في مكتبات قواعد عمل قابلة للتنفيذ للمستهلكين التحقق من صحة المحتوى وفق سياساتهم الخاصة في مجال الصحة العامة. وتُعرَّف هذه العناصر هنا باستخدام مواصفات بيانات الرعاية الصحية المتوائمة مع <a0>المنظمة الدولية للمستوى السابع للصحة (HL7)</a0>. وHL7 منظمة غير ربحية لتطوير المعايير، معتمدة من ANSI، مكرّسة لتوفير إطار شامل ومعايير ذات صلة لتبادل المعلومات الصحية الإلكترونية وتكاملها ومشاركتها واسترجاعها.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los modelos de datos consensuados, los vocabularios controlados y las transformaciones de datos permiten a los usuarios de documentos de salud comprender el contenido de un documento de salud de forma computable. Los formatos compartidos para expresar políticas de salud en bibliotecas ejecutables de reglas de negocio permiten además a dichos usuarios validar el contenido con respecto a sus propias políticas de salud pública. Aquí estos artefactos se definen mediante especificaciones de datos de atención de salud alineadas con <a0>Health Level Seven International (HL7)</a0>. HL7 es una organización sin fines de lucro, acreditada por ANSI, dedicada a la elaboración de normas, que proporciona un marco integral y normas conexas para el intercambio, la integración, la puesta en común y la recuperación de información sanitaria electrónica.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Des modèles de données consensuels, des vocabulaires contrôlés et des transformations de données permettent aux utilisateurs de documents de santé de comprendre le contenu d’un document de santé de manière calculable. Des formats partagés pour exprimer les politiques de santé sous forme de bibliothèques de règles métier exécutables permettent en outre à ces utilisateurs de valider le contenu au regard de leurs propres politiques de santé publique. Ici, ces artefacts sont définis à l’aide de spécifications de données de santé alignées sur <a0>Health Level Seven International (HL7)</a0>. HL7 est un organisme d’élaboration de normes à but non lucratif, accrédité par l’ANSI, qui se consacre à fournir un cadre complet et des normes connexes pour l’échange, l’intégration, le partage et la récupération des informations de santé électroniques.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Согласованные модели данных, контролируемые словари и преобразования данных позволяют потребителям медицинских документов понимать содержимое медицинского документа в вычислимой форме. Общие форматы выражения политик в области здравоохранения в виде исполняемых библиотек бизнес-правил также позволяют потребителям проверять содержимое на соответствие собственным политикам в области общественного здравоохранения. Здесь эти артефакты определяются с использованием спецификаций медицинских данных, согласованных с <a0>Health Level Seven International (HL7)</a0>. HL7 — некоммерческая организация по разработке стандартов, аккредитованная ANSI, деятельность которой направлена на создание комплексной основы и связанных с ней стандартов для обмена, интеграции, совместного использования и поиска электронной медицинской информации.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "共识数据模型、受控词汇表和数据转换使健康文档的使用方能够以可计算的方式理解健康文档的内容。以可执行业务规则库表达卫生政策的共享格式，进一步使使用方能够依据其自身的公共卫生政策验证内容。此处，这些工件采用与 <a0>Health Level Seven International（HL7）</a0>相一致的医疗卫生数据规范加以定义。HL7 是一个经 ANSI 认可的非营利性标准制定组织，致力于为电子健康信息的交换、集成、共享和检索提供全面的框架和相关标准。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Existing health data certificate standards use various well-defined methods of providing digital signatures in health documents based on public key cryptography methods. Public key distribution within the federated registry is standardized to allow actors across networks to retrieve and process public keys, metadata, business rules, revocation data from any other actor. Universal verifier applications can use the content shared within the federated registry to extract digital signatures from health documents and verify issuer and integrity of the document content according to the specifications established by the credential standard.",
+   "hash": "2ee84d295abd3d2c",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تستخدم معايير شهادات البيانات الصحية القائمة طرائق متنوعة ومحددة جيداً لتوفير التوقيعات الرقمية في المستندات الصحية استناداً إلى أساليب التشفير بالمفاتيح العمومية. ويُوحَّد توزيع المفاتيح العمومية ضمن السجل الاتحادي لتمكين الجهات الفاعلة عبر الشبكات من استرجاع المفاتيح العمومية والبيانات الوصفية وقواعد العمل وبيانات الإلغاء ومعالجتها من أي جهة فاعلة أخرى. ويمكن لتطبيقات التحقق الشاملة استخدام المحتوى المُشارَك ضمن السجل الاتحادي لاستخراج التوقيعات الرقمية من المستندات الصحية والتحقق من الجهة المُصدِرة وسلامة محتوى المستند وفقاً للمواصفات التي يحددها معيار بيانات الاعتماد.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Las normas existentes sobre certificados de datos de salud utilizan diversos métodos bien definidos para incorporar firmas digitales en los documentos de salud, basados en métodos de criptografía de clave pública. La distribución de claves públicas dentro del registro federado está normalizada para que los actores de las distintas redes puedan obtener y procesar claves públicas, metadatos, reglas de negocio y datos de revocación de cualquier otro actor. Las aplicaciones de verificación universales pueden utilizar el contenido compartido en el registro federado para extraer las firmas digitales de los documentos de salud y verificar el emisor y la integridad del contenido del documento conforme a las especificaciones establecidas por la norma de la credencial.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les normes existantes relatives aux certificats de données de santé utilisent diverses méthodes bien définies pour apposer des signatures numériques dans les documents de santé, fondées sur des méthodes de cryptographie à clé publique. La distribution des clés publiques au sein du registre fédéré est normalisée afin de permettre aux acteurs de différents réseaux de récupérer et de traiter les clés publiques, les métadonnées, les règles métier et les données de révocation de tout autre acteur. Les applications de vérification universelles peuvent utiliser le contenu partagé au sein du registre fédéré pour extraire les signatures numériques des documents de santé et vérifier l’émetteur et l’intégrité du contenu du document conformément aux spécifications établies par la norme du justificatif.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Существующие стандарты сертификатов медицинских данных используют различные чётко определённые методы включения цифровых подписей в медицинские документы на основе методов криптографии с открытым ключом. Распространение открытых ключей в федеративном реестре стандартизировано, чтобы акторы в разных сетях могли получать и обрабатывать открытые ключи, метаданные, бизнес-правила и данные об отзыве от любого другого актора. Универсальные приложения проверки могут использовать содержимое, совместно используемое в федеративном реестре, для извлечения цифровых подписей из медицинских документов и проверки эмитента и целостности содержимого документа в соответствии со спецификациями, установленными стандартом удостоверений.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "现有的健康数据证书标准采用多种定义明确的方法，基于公钥密码学方法在健康文档中提供数字签名。联合登记系统内的公钥分发已实现标准化，使跨网络的参与者能够从任何其他参与者处检索和处理公钥、元数据、业务规则和撤销数据。通用验证方应用程序可以利用联合登记系统内共享的内容，从健康文档中提取数字签名，并按照凭证标准所确立的规范验证文档内容的签发方和完整性。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Health content​ interoperability",
+   "hash": "5508846c265289e8",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التشغيل البيني للمحتوى الصحي",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Interoperabilidad del contenido de salud​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Interopérabilité du contenu de santé​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Совместимость медицинского содержимого",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "健康内容互操作性",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Identity authentication and identity binding",
+   "hash": "bf5ac2a1cb64100b",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المصادقة على الهوية وربط الهوية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autenticación de la identidad y vinculación de la identidad",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Authentification de l’identité et liaison d’identité",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Аутентификация личности и привязка к личности",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "身份认证与身份绑定",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Identity authentication and identity binding is out of scope for this framework and is determined by policies established at the individual verifier level.",
+   "hash": "b6272e1cbe96ed15",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تقع المصادقة على الهوية وربط الهوية خارج نطاق هذا الإطار، وتحددها السياسات المعتمدة على مستوى كل جهة مُتحقِّقة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La autenticación de la identidad y la vinculación de la identidad quedan fuera del alcance de este marco y se determinan mediante las políticas establecidas por cada verificador.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L’authentification de l’identité et la liaison d’identité sont hors du périmètre de ce cadre et sont déterminées par les politiques établies au niveau de chaque vérificateur.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Аутентификация личности и привязка к личности не входят в сферу действия настоящей основы и определяются политиками, установленными на уровне отдельной проверяющей стороны.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "身份认证与身份绑定不在本框架范围之内，由各验证方层面确立的政策决定。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Is the certificate issuer trusted by the verifier?​",
+   "hash": "55ab7a421b67f5e4",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هل الجهة المُصدِرة للشهادة موثوقة لدى الجهة المُتحقِّقة؟",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Confía el verificador en el emisor del certificado?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le vérificateur fait-il confiance à l’émetteur du certificat ?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Доверяет ли проверяющая сторона эмитенту сертификата?",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "验证方是否信任该证书的签发方？",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Is the correct content included in the certificate/credential or health document?​",
+   "hash": "5d38e8895053ea51",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هل المحتوى الصحيح مُدرج في الشهادة أو بيانات الاعتماد أو المستند الصحي؟",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Incluye el certificado, la credencial o el documento de salud el contenido correcto?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le contenu correct figure-t-il dans le certificat/justificatif ou le document de santé ?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Включено ли в сертификат/удостоверение или медицинский документ правильное содержимое?",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "证书/凭证或健康文档中是否包含正确的内容？",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Is the individual person who they purport to be?​ Is the certificate about this person?​",
+   "hash": "fec511ec1983bed5",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هل الشخص هو من يدّعي أنه هو؟ هل الشهادة متعلقة بهذا الشخص؟",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Es la persona quien dice ser?​ ¿Se refiere el certificado a esta persona?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La personne est-elle bien celle qu’elle prétend être ?​ Le certificat concerne-t-il cette personne ?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Является ли данное лицо тем, за кого себя выдаёт? Относится ли сертификат к этому лицу?",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "此人是否为其所声称的人？该证书是否关于此人？",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Is the vaccine credential, COVID certificate or other trusted health document verifiably from the purported issuer?​ Has the certificate remained unaltered since it was issued?​",
+   "hash": "b45c447c9e807bed",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هل بيانات اعتماد اللقاح أو شهادة COVID أو أي مستند صحي موثوق آخر صادرة فعلاً، بشكل قابل للتحقق، عن الجهة المُصدِرة المزعومة؟ هل بقيت الشهادة دون تعديل منذ إصدارها؟",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Procede de forma verificable la credencial de vacunación, el certificado de COVID u otro documento de salud de confianza del emisor que se indica?​ ¿Ha permanecido inalterado el certificado desde su emisión?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le justificatif de vaccination, le certificat COVID ou tout autre document de santé de confiance provient-il de manière vérifiable de l’émetteur présumé ?​ Le certificat est-il resté inchangé depuis son émission ?​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Можно ли проверить, что удостоверение о вакцинации, сертификат COVID или иной доверенный медицинский документ действительно исходит от заявленного эмитента? Остался ли сертификат неизменённым с момента выдачи?",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "疫苗凭证、COVID 证书或其他可信健康文档是否可验证地来自其所声称的签发方？该证书自签发以来是否未被篡改？",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Requirements",
+   "hash": "583db49c6c8af0dd",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المتطلبات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Requisitos",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exigences",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Требования",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "需求",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The federated registry facilitates determination of trust through services for verifiers to discover issuers from within other networks and access governance policies for those networks. It provides infrastructure for technical governance of participating networks.",
+   "hash": "503b363fae3500d7",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ييسّر السجل الاتحادي تحديد الثقة من خلال خدمات تتيح للجهات المُتحقِّقة اكتشاف الجهات المُصدِرة من داخل الشبكات الأخرى والوصول إلى سياسات الحوكمة الخاصة بتلك الشبكات. ويوفر بنية تحتية للحوكمة التقنية للشبكات المشاركة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El registro federado facilita la determinación de la confianza mediante servicios que permiten a los verificadores descubrir emisores de otras redes y acceder a las políticas de gobernanza de esas redes. Proporciona la infraestructura para la gobernanza técnica de las redes participantes.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le registre fédéré facilite l’établissement de la confiance au moyen de services permettant aux vérificateurs de découvrir des émetteurs appartenant à d’autres réseaux et d’accéder aux politiques de gouvernance de ces réseaux. Il fournit une infrastructure pour la gouvernance technique des réseaux participants.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Федеративный реестр способствует установлению доверия посредством услуг, позволяющих проверяющим сторонам обнаруживать эмитентов в других сетях и получать доступ к политикам управления этих сетей. Он предоставляет инфраструктуру для технического управления участвующими сетями.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "联合登记系统通过为验证方提供服务，使其能够发现其他网络中的签发方并获取这些网络的治理政策，从而便于确定信任。它为参与网络的技术治理提供基础设施。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "There are a number of requirements that must be met in the process of exchanging trusted health documents.",
+   "hash": "67ac69394553e770",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ثمة عدد من المتطلبات التي يجب استيفاؤها في عملية تبادل المستندات الصحية الموثوقة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Hay una serie de requisitos que deben cumplirse en el proceso de intercambio de documentos de salud de confianza.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un certain nombre d’exigences doivent être satisfaites lors de l’échange de documents de santé de confiance.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Существует ряд требований, которые должны соблюдаться в процессе обмена доверенными медицинскими документами.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在交换可信健康文档的过程中，必须满足若干需求。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Trust interoperability and trust networks​",
+   "hash": "5eb3791032797ee4",
+   "sources": [
+    "input/pagecontent/functional.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التشغيل البيني للثقة وشبكات الثقة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Interoperabilidad de la confianza y redes de confianza​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Interopérabilité de la confiance et réseaux de confiance​",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Совместимость доверия и сети доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "信任互操作性与信任网络",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

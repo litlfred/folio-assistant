@@ -2142,6 +2142,291 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.annotationsourceschema.document",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AnnotationSourceSchema.document"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The L1 library document id (who-iris `library/<id>/`)."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema.document",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.annotationsourceschema.item",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AnnotationSourceSchema.item"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The item's number as printed: `1`, `2.3`."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema.item",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.annotationsourceschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AnnotationSourceSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page the item starts on, when the extraction recorded one."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.daktaskannotationsschema.bpmn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakTaskAnnotationsSchema.bpmn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The BPMN file these annotate, relative to this file (its basename)."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.bpmn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.daktaskannotationsschema.document",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakTaskAnnotationsSchema.document"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The L1 document and the heading of the annotations block."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.document",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.daktaskannotationsschema.process",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakTaskAnnotationsSchema.process"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DAK process id: `IMMZ.B`."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.process",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.daktaskannotationsschema.unannotated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakTaskAnnotationsSchema.unannotated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "BPMN task ids with no annotation item."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.unannotated",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.activityid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.activityId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DAK activity id (`IMMZ.B1`, `TB.A5`): the join key into the spreadsheets."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.activityId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.bpmntask",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.bpmnTask"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The BPMN task's `@id`: the join key into the diagram."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.bpmnTask",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.dataelements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.dataElements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Data element ids the data dictionary keys to this activity."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.dataElements",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.decisiontables",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.decisionTables"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Decision table ids keyed to this activity, or named by the task's calledDecision."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.decisionTables",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The annotation's bullets, as Markdown, one `- ` line per `»`."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The step's name as the annotation prints it."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.personas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.personas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Personas performing the task, as the BPMN lane names them."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.personas",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/task-annotations.taskannotationschema.requirements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TaskAnnotationSchema.requirements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Functional requirement ids keyed to this activity."
+        }
+      ],
+      "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.requirements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/vocab.codelist.name",
       "@type": "skos:Concept",
       "skos:inScheme": {

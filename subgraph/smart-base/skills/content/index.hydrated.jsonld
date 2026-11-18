@@ -9,6 +9,26 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
+          "@id": "http://smart.who.int/base/skill/guideline-gap-report",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The QA report smart-guideline-end-to-end writes after every stage: where a guideline's chain from L1 recommendation to L2 asset to L3 resource is broken, which source figures and tables are not yet computable, and which assets have no review requested, a review pending, or a review sent back. Each gap names the asset, the stage that closes it and the role that reviews it. It is staged with the stage's output and linked from every review request, so each reviewer sees where their asset sits and what is still missing. A report, never a gate. Read after any stage of smart-guideline-end-to-end or dth-authoring, and when asked \"what is left to do on this guideline?\".",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+          "inputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/input.schema.json",
+          "instructionLines": 91,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-gap-report.md",
+          "name": "guideline-gap-report",
+          "outputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f243c4136da504808caab5cbed8f64eb37e524e61e85764bdb4e6e95f4f1c6ad",
+            "bytes": 5469,
+            "sha256": "f243c4136da504808caab5cbed8f64eb37e524e61e85764bdb4e6e95f4f1c6ad"
+          },
+          "title": "guideline-gap-report"
+        },
+        {
           "@id": "http://smart.who.int/base/skill/guideline-use-case",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -72,14 +92,14 @@
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
           "inputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json",
-          "instructionLines": 257,
+          "instructionLines": 363,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
           "name": "smart-guideline-end-to-end",
           "outputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6bfe00c1126a39dc36f5253bfb9dd4d385263b00f87de1ccdc76777aa7f45c5c",
-            "bytes": 19779,
-            "sha256": "6bfe00c1126a39dc36f5253bfb9dd4d385263b00f87de1ccdc76777aa7f45c5c"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/963e16d37c6ed708efa388420164a5afe7a243d9f1f4862ec2548a07bb79c6a6",
+            "bytes": 27333,
+            "sha256": "963e16d37c6ed708efa388420164a5afe7a243d9f1f4862ec2548a07bb79c6a6"
           },
           "title": "smart-guideline-end-to-end"
         },

@@ -1,0 +1,2980 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "folio-assistant-core",
+ "repository": "litlfred/folio-assistant-core",
+ "translations": "translations",
+ "catalogue": "guides/document-ingestion",
+ "hashes": {
+  "ar": "d57ce0e940bbd010",
+  "es": "00282d22d4d7eaa9",
+  "fr": "00c92f56e2b43d7e",
+  "ru": "11dda5e430a1b755",
+  "zh": "952059e0a201543a"
+ },
+ "strings": [
+  {
+   "msgid": "Document ingestion",
+   "hash": "fcbda81ff4dd3bbb",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استيعاب الوثائق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ingestión de documentos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ingestion de documents",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Загрузка документов",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文档摄取",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "On this page",
+   "hash": "3eaf2267edd897d6",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "في هذه الصفحة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En esta página",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Sur cette page",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "На этой странице",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页目录",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This page is generated from  — each section below links to its own source.",
+   "hash": "56493aabbeb8430a",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تم توليد هذه الصفحة من  — يرتبط كل قسم أدناه بمصدره الخاص.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esta página se genera a partir de  — cada sección a continuación enlaza a su propia fuente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cette page est générée à partir de  — chaque section ci-dessous renvoie vers sa propre source.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Эта страница сгенерирована из  — каждый раздел ниже ссылается на собственный исходный файл.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页面生成自  — 下方每个小节都链接至其自身的源文件。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "How a dropped file becomes an L1 source the corpus can cite — expressed as BPMN 2.0 swimlane diagrams, with the Ingestion Engine as a named actor and every not-yet-built step linked to the bean that tracks it.",
+   "hash": "7fea629af8ee17fc",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كيف يتحول ملف تم إفلاته إلى مصدر بالمستوى L1 يمكن لمجموعة المحتوى الاستشهاد به — موضَّح كـ مخططات مسارات BPMN 2.0، مع محرك الاستيعاب كفاعل مسمى وكل خطوة لم تُبنَ بعد مرتبطة بالـ bean الذي يتتبعها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cómo un archivo depositado se convierte en una fuente L1 que el corpus puede citar — expresado como diagramas de carriles BPMN 2.0, con el Motor de ingestión como un actor designado y cada paso aún no implementado vinculado al bean que le hace seguimiento.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Comment un fichier déposé devient une source L1 que le corpus peut citer — exprimé sous forme de diagrammes BPMN 2.0 à couloirs, avec le Moteur d'ingestion comme acteur nommé et chaque étape pas encore construite liée au bean qui en assure le suivi.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Как добавленный файл становится источником L1, на который корпус может ссылаться — представлено в виде BPMN 2.0 диаграмм с дорожками (swimlane diagrams), где движок загрузки (Ingestion Engine) выступает как именованный участник, а каждый еще не реализованный шаг связан с отслеживающим его bean.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "放入的文件如何变成语料库可以引用的 L1 来源 —— 以 BPMN 2.0 泳道图表示，将摄取引擎作为具名参与者，并将每个尚未构建的步骤链接至跟踪它的 bean。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "and  are two stages of one pipeline",
+   "hash": "c4efa0cc302dd7ca",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "و هما مرحلتان في خط أنابيب واحد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "y  son dos etapas de una misma canalización",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "et  sont deux étapes d'un même pipeline",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "и  — два этапа единого конвейера",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "与  是同一流水线的两个阶段",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "They are not the same directory under two names, and the distinction is load-bearing:",
+   "hash": "a0ffb6e19a85453d",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هما ليسا الدليل نفسه تحت اسمين، والتمييز بينهما ركيزة أساسية:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "No son el mismo directorio con dos nombres distintos, y la distinción es estructural:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Il ne s'agit pas du même répertoire sous deux noms différents, et la distinction est fondamentale :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Они не являются одним и тем же каталогом под двумя разными именами, и это различие имеет принципиальное значение:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "它们并不是同一个目录冠以两个名称，两者的区分具有关键的承重作用（load-bearing）：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "what it holds",
+   "hash": "f262193bca51d8e1",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما يحتويه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "lo que contiene",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "ce qu'il contient",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "что содержит",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "所存内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "raw files as dropped",
+   "hash": "8354213e3169728b",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ملفات خام كما أُفلِتت",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "archivos en bruto tal como se depositan",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "fichiers bruts tels que déposés",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "исходные файлы в том виде, как они были помещены",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "放入时的原始文件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "ingested, structured, described",
+   "hash": "3d3ff9370001d565",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مستوعب، ومهيكل، وموصوف",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "ingerido, estructurado, descrito",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "ingéré, structuré, décrit",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "обработанные, структурированные, описанные",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "已摄取、已结构化、已描述",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "stage",
+   "hash": "647f122b71eaeb21",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المرحلة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "etapa",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "étape",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "этап",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "阶段",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "incoming queue",
+   "hash": "5375c206a9674d19",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قائمة انتظار واردة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "cola de entrada",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "file d'attente entrante",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "входящая очередь",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "传入队列",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "L1 source content",
+   "hash": "86decd378cb1e378",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "محتوى مصدر بالمستوى L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "contenido de fuente L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "contenu source L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "содержимое источника L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "L1 来源内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "greppable by the corpus checklist",
+   "hash": "b09294f760a128d8",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قابل للبحث بـ grep عبر قائمة فحص مجموعة المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "accesible mediante grep por la lista de comprobación del corpus",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "interrogeable par grep par la checklist du corpus",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "доступно для поиска чеклистом corpus-grep",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "是否可通过语料库检查清单 grep",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "no",
+   "hash": "8a1993623ee7edec",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "no",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "non",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "нет",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": true,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "yes",
+   "hash": "29bbd53e2c3f4276",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نعم",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "sí",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "oui",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "да",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": true,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "That last row is the one that costs sessions. The corpus-grep checklist searches  only — so a paper still sitting in  does not merely go unread, it makes a clean grep read as \"nobody has done this\" while the source is sitting on disk. An un-ingested source is worse than an absent one, because it produces false confidence rather than a gap.",
+   "hash": "6e3545947d8a2ef8",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هذا الصف الأخير هو الذي يكلف جلسات عمل كاملة. فقائمة فحص corpus-grep تبحث في  فقط — لذا فإن ورقة بحثية لا تزال قابعة في  لا تظل غير مقروءة فحسب، بل تجعل نتائج grep النظيفة (clean grep) تُقرأ كأن \"لا أحد قد أنجز هذا\" بينما المصدر موجود بالفعل على القرص. والمصدر غير المستوعب أسوأ من المصدر الغائب، لأنه يولد ثقة زائفة بدلاً من إظهار الفجوة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esa última fila es la que cuesta sesiones. La lista de comprobación de búsquedas grep del corpus busca únicamente en  — por lo que un artículo que aún permanezca en  no solo se queda sin leer, sino que hace que un grep limpio se interprete como «nadie ha hecho esto» mientras la fuente se encuentra en el disco. Una fuente no ingerida es peor que una ausente, porque genera una falsa confianza en lugar de una laguna.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cette dernière ligne est celle qui coûte des sessions de travail. La checklist de corpus-grep cherche uniquement dans  — ainsi, un article se trouvant encore dans  n'est pas seulement non lu, il fait qu'un grep sans résultat s'interprète comme « personne n'a fait cela » alors que la source se trouve bien sur le disque. Une source non ingérée est pire qu'une source absente, car elle produit une fausse certitude plutôt qu'une lacune.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Именно последняя строка приводит к потере рабочих сессий. Чеклист corpus-grep выполняет поиск только в  — поэтому статья, все еще находящаяся в , не просто остается непрочитанной; из-за нее чистый grep (отсутствие совпадений) воспринимается как «этого никто еще не делал», в то время как источник уже лежит на диске. Необработанный источник хуже отсутствующего, поскольку он порождает ложную уверенность вместо явного пробела.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "最后一行正是消耗会话成本的地方。语料库 grep 检查清单仅搜索  —— 因此，仍然留在  中的论文不仅没有被阅读，而且在源文件明明静躺在磁盘上时，还会使没有任何匹配的 grep 结果被误读为“没有任何人做过这项工作”。未摄取的来源比不存在的来源更糟糕，因为它产生的是盲目自信，而不是暴露出缺口。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "is L1",
+   "hash": "4b782bd1662c713c",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هو المستوى L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "es L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "est du L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каталог  — это L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "即 L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Anything under  is L1 source content. Any knowledge-graph reference to a source — from a paper, an L2 DAK, an L3 IG, or any other artefact — resolves to it through , never to a loose path or a bare URL.",
+   "hash": "a2ac84ebac844dd4",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أي شيء يقع تحت  هو محتوى مصدر بالمستوى L1. وأي إشارة من الرسم البياني للمعرفة إلى مصدر — من ورقة بحثية، أو DAK للمستوى L2، أو IG للمستوى L3، أو أي قطعة أثرية (artefact) أخرى — تُحل إليه من خلال ، ولا تحل أبدًا إلى مسار سائب أو عنوان URL مجرد.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cualquier elemento bajo  es contenido de fuente L1. Cualquier referencia del grafo de conocimiento hacia una fuente —desde un artículo (paper), un DAK L2, una IG L3 o cualquier otro artefacto— se resuelve hacia ella a través de , nunca mediante una ruta suelta o una URL directa.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Tout ce qui se trouve sous  est du contenu source L1. Toute référence du graphe de connaissances vers une source — depuis un article, un DAK L2, un IG L3 ou tout autre artefact — se résout vers elle via , jamais vers un chemin isolé ou une URL brute.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Все, что находится в каталоге , является содержимым источника L1. Любая ссылка графа знаний на источник — из статьи, L2 DAK, L3 IG или любого другого артефакта — разрешается (resolves) к нему через , и никогда — через произвольный путь или прямой URL.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "下的任何内容都是 L1 来源内容。对来源的任何知识图谱引用 —— 无论来自论文、L2 DAK、L3 IG 还是任何其他制品 —— 都通过  进行解析，绝不会解析至游离路径或裸 URL。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A bibliography entry may point at a remote asset rather than a local binary. That lives in a sibling  field carrying kind / role / url-or-path / checksum / retrieved — not inside , because  is regenerated from the tree on every sync and an authored URL placed there is silently dropped.",
+   "hash": "d1aaaaa59305dc1b",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قد يشير مدخل المراجع الببليوغرافية إلى أصل عن بُعد بدلاً من ملف ثنائي محلي. ويعيش ذلك في حقل شقيق  يحمل kind / role / url-or-path / checksum / retrieved — وليس داخل ، لأن  يُعاد توليده من الشجرة في كل مزامنة، وأي عنوان URL مؤلف يوضع هناك يتم إسقاطه بصمت.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una entrada bibliográfica puede apuntar a un recurso (asset) remoto en lugar de a un binario local. Eso reside en un campo hermano  que contiene kind / role / url-or-path / checksum / retrieved —no dentro de , porque  se regenera a partir del árbol en cada sincronización y cualquier URL redactada que se coloque allí se descartará silenciosamente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une entrée bibliographique peut pointer vers une ressource distante plutôt que vers un binaire local. Celle-ci réside dans un champ frère  portant kind / role / url-or-path / checksum / retrieved — et non à l'intérieur de , car  est régénéré à partir de l'arborescence à chaque synchronisation, et une URL rédigée qui y serait placée est supprimée silencieusement.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Библиографическая запись может указывать на удаленный ресурс, а не на локальный бинарный файл. Такие данные хранятся в соседнем поле , содержащем kind / role / url-or-path / checksum / retrieved, а не внутри , поскольку  повторно генерируется из дерева файлов при каждой синхронизации, и добавленный вручную URL в нем будет молча проигнорирован.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "书目条目可以指向远程资产，而非本地二进制文件。该条目存放在同级的  字段中，包含 kind / role / url-or-path / checksum / retrieved —— 而不是在  内部，因为每次同步时  都会根据目录树重新生成，放置在其中的手动编写的 URL 会被静默丢弃。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The pipeline",
+   "hash": "c84a91d38379988b",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "خط الأنابيب",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La canalización",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le pipeline",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Конвейер",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "流水线",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Open the BPMN source{: .btn .btn-outline }",
+   "hash": "053fdbd277901bcc",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فتح مصدر BPMN{: .btn .btn-outline }",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Abrir la fuente BPMN{: .btn .btn-outline }",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ouvrir la source BPMN{: .btn .btn-outline }",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Открыть исходный код BPMN{: .btn .btn-outline }",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "打开 BPMN 源文件{: .btn .btn-outline }",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The Ingestion Engine is an actor, not a script. It runs unattended. A drop during an editing session triggers ingestion in the background — the contributor does not wait for it, and nothing about the editing flow blocks on it.",
+   "hash": "fc84feaa407135b0",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "محرك الاستيعاب فاعل وليس نصًا برمجيًا. فهو يعمل دون مراقبة. وإفلات ملف أثناء جلسة تحرير يُطلق الاستيعاب في الخلفية — فلا ينتظره المساهم، ولا يتعطل أي شيء في مسار عمل التحرير بسببه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El Motor de ingestión es un actor, no un script. Se ejecuta de forma desatendida. Un archivo depositado durante una sesión de edición activa la ingestión en segundo plano —el colaborador no tiene que esperar por ella, y nada en el flujo de edición se bloquea a causa de este proceso.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le Moteur d'ingestion est un acteur, pas un script. Il s'exécute de façon autonome. Un dépôt au cours d'une session d'édition déclenche l'ingestion en arrière-plan — le contributeur ne l'attend pas, et rien dans le flux d'édition ne se retrouve bloqué par celui-ci.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Движок загрузки (Ingestion Engine) — это действующее лицо, а не скрипт. Он работает автономно. Добавление файла во время сессии редактирования запускает загрузку в фоновом режиме: участник не ждет ее завершения, и процесс редактирования ни в чем не блокируется.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "摄取引擎是一个参与者，而非脚本。 它以无人值守方式运行。在编辑会话期间放入文件会在后台触发摄取 —— 贡献者无需等待它，编辑流中的任何部分都不会被其阻塞。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The failure edge is a bean, not a log line. When the completeness gate finds a missing derived artefact, the engine opens a bean and the document stays in . It does not land half-ingested in  looking finished.",
+   "hash": "574c059696c4755d",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مسار الفشل هو عنصر bean وليس سطر سجل. فعندما تجد بوابة الاكتمال قطعة أثرية مشتقة مفقودة، يفتح المحرك عنصر bean وتبقى الوثيقة في . ولا تستقر نصف مستوعبة في  لتبدو وكأنها مكتملة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El extremo de fallo es un bean, no una línea de registro (log). Cuando la compuerta de completitud detecta que falta un artefacto derivado, el motor abre un bean y el documento permanece en . No termina semi-ingerido en  con apariencia de estar listo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La branche d'échec est un bean, pas une ligne de journal. Lorsque la porte de complétude détecte un artefact dérivé manquant, le moteur ouvre un bean et le document reste dans . Il n'atterrit pas à moitié ingéré dans  en ayant l'air terminé.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ветвь ошибки — это bean, а не строка в логе. Когда шлюз полноты обнаруживает отсутствие какого-либо производного артефакта, движок открывает bean, а документ остается в . Он не попадает полуобработанным в , создавая видимость завершенности.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "失败分支是一个 bean，而非一行日志。 当完整性关卡发现缺少衍生制品时，引擎会打开一个 bean，且该文档保留在  中。它不会半摄取地落入  并显得像是已经完成了一样。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Each subprocess is its own file, called with  and declared with . Open any of them on its own in bpmn.io; the parent stays readable because it does not inline them.",
+   "hash": "b57d17c2c3753e56",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كل عملية فرعية هي ملف مستقل بذاته، يُستدعى عبر  ويُصرَّح عنه بـ . يمكنك فتح أي منها بمفرده في bpmn.io؛ حيث يظل المخطط الأصل قابلاً للقراءة لأنه لا يضمّنها بشكل مباشر.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cada subproceso es su propio archivo, invocado con  y declarado con . Abre cualquiera de ellos por separado en bpmn.io; el proceso padre se mantiene legible porque no los incluye en línea.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chaque sous-processus est son propre fichier, appelé avec  et déclaré avec . Ouvrez n'importe lequel d'entre eux individuellement dans bpmn.io ; le parent reste lisible car il ne les intègre pas en ligne.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каждый подпроцесс вынесен в отдельный файл, вызывается через  и объявляется через . Любой из них можно открыть отдельно в bpmn.io; родительский процесс остается легко читаемым, поскольку не включает их в себя целиком.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "每个子流程都是独立的文件，使用  进行调用，并使用  进行声明。在 bpmn.io 中单独打开其中的任何一个；父流程因未内联它们而保持良好的可读性。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The end is where authoring begins. \"Available to cite as an L1 source\" is the hand-off into the publication workflow — the same corpus an author edits and a reviewer reviews.",
+   "hash": "6efab4f923f7f5d4",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "النهاية هي المكان الذي يبدأ منه التأليف. \"متاح للاستشهاد كمصدر L1\" هي نقطة التسليم إلى مسار عمل النشر — مجموعة المحتوى نفسها التي يحررها مؤلف ويراجعها مراجع.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El final es donde comienza la autoría. «Disponible para citar como fuente L1» es el traspaso hacia el flujo de publicación —el mismo corpus que un autor edita y un revisor revisa.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La fin est le point de départ de la rédaction. « Disponible pour être cité comme source L1 » est le passage de relais vers le flux de publication — le même corpus qu'un auteur édite et qu'un réviseur relit.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Конец процесса — это точка, где начинается авторская работа. Состояние «Доступно для цитирования как источник L1» служит передачей в процесс публикации — в тот самый корпус, который автор редактирует, а рецензент проверяет.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "终点即是创作的起点。 “可作为 L1 来源进行引用”是向发布工作流的交接点 —— 也就是作者进行编辑和审阅者进行审阅的同一个语料库。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Extract structure",
+   "hash": "42267e653c861fd7",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استخراج البنية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Extraer estructura",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Extraire la structure",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Извлечение структуры",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "提取结构",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The OCR branch is the one to know about. A document ingested that way keeps its text in  and only a stub in  — so the documented  grep cannot see its mathematics at all. That asymmetry is why the corpus-grep checklist has a fourth tier, and why a clean  grep is not evidence that the library lacks a topic.",
+   "hash": "b85dcf2d82fcb099",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فرع التعرف الضوئي على الحروف (OCR) هو الفرع الذي يجب الانتباه إليه. فالوثيقة المستوعبة بهذه الطريقة تحتفظ بنصها في  وفقط كود بديل مختصر (stub) في  — وبالتالي فإن بحث grep الموثق في  لا يمكنه رؤية معادلاتها الرياضية على الإطلاق. هذا التفاوت هو السبب في أن قائمة فحص corpus-grep تحتوي على مستوى رابع، والسبب في أن نتائج grep النظيفة في  لا تُعد دليلاً على خلو المكتبة من موضوع ما.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La rama de OCR es la que conviene conocer. Un documento ingerido de esa manera conserva su texto en  y solo un fragmento básico (stub) en  —por lo que la búsqueda grep documentada sobre  no puede ver en absoluto sus fórmulas matemáticas. Esa asimetría es la razón por la que la lista de comprobación de búsquedas grep del corpus tiene un cuarto nivel, y por la que un grep limpio en  no es prueba de que la biblioteca carezca de un tema.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La branche OCR est celle qu'il faut connaître. Un document ingéré de cette façon conserve son texte dans  et seulement un stub dans  — ainsi le grep documenté sur  ne peut pas du tout voir ses mathématiques. Cette asymétrie explique pourquoi la checklist de corpus-grep possède un quatrième niveau, et pourquoi un grep sans résultat dans  ne constitue pas une preuve que la bibliothèque est dépourvue d'un sujet.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ветвь OCR — это то, о чем необходимо знать. Документ, загруженный таким способом, хранит свой текст в  и лишь заглушку в  — поэтому документированный grep по  вообще не видит содержащуюся в нем математику. Именно из-за этой асимметрии чеклист corpus-grep имеет четвертый уровень, и именно поэтому чистый grep по  не служит доказательством отсутствия темы в библиотеке.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "需要特别了解的是 OCR 分支。以这种方式摄取的文档将其文本保留在  中，而在  中只有一个存根（stub） —— 因此已文档化的  grep 根本无法看到其中的数学内容。这种不对称性正是语料库 grep 检查清单设立第四层的原因，也是为什么干净的  grep 结果并不是表明库中缺少某个主题的证据。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Each section file carries the document brief in its front-matter. That is contextual retrieval: a chunk in isolation loses what makes it mean anything, so a hit is interpretable without opening anything else.",
+   "hash": "7b2212635f20d1c4",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يحمل كل ملف قسم موجز الوثيقة في الترويسة الأمامية (front-matter). وهذا هو الاسترجاع السياقي: فالكتلة بمعزل تفقد ما يمنحها أي معنى، وبالتالي يمكن تفسير النتيجة المطابقة دون الحاجة إلى فتح أي شيء آخر.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cada archivo de sección incluye el resumen del documento (document brief) en su front matter. Eso es recuperación contextual: un fragmento (chunk) de forma aislada pierde el sentido que le da significado, por lo que una coincidencia resulta interpretable sin necesidad de abrir nada más.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chaque fichier de section comporte le résumé du document dans son front-matter. C'est le principe de la recherche contextuelle : un fragment pris isolément perd ce qui lui donne son sens, alors qu'ici un résultat est interprétable sans avoir à ouvrir quoi que ce soit d'autre.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каждый файл раздела содержит резюме документа в своем front-matter. Это контекстный поиск (contextual retrieval): фрагмент сам по себе теряет свой изначальный смысл, поэтому резюме позволяет интерпретировать найденное совпадение без необходимости открывать другие файлы.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "每个章节文件的前置元数据中都带有文档简介。这就是上下文检索：孤立的代码块/文本块会失去其意义所在，因此这样可以在无需打开任何其他内容的情况下解释匹配结果。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Derive content",
+   "hash": "a2fd1fb233a649e7",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اشتقاق المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Derivar contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dériver le contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Получение производного контента",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "衍生内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This subprocess is mostly not built yet. Every task in it is tracked; see the table below. It is drawn in full anyway, because the shape of the pipeline is the thing being agreed, and a diagram that shows only what already exists cannot be used to decide what to build.",
+   "hash": "6905167807bc92aa",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هذه العملية الفرعية لم تُبنَ بعد في معظمها. ويتم تتبع كل مهمة فيها؛ انظر الجدول أدناه. ومع ذلك، فقد تم رسمها بالكامل، لأن شكل خط الأنابيب هو الأمر الذي يجري الاتفاق عليه، والمخطط الذي يعرض فقط ما هو موجود بالفعل لا يمكن استخدامه لتحديد ما ينبغي بناؤه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Este subproceso en su mayor parte aún no está construido. Cada tarea dentro de él está bajo seguimiento; consulta la tabla más abajo. Se dibuja completo de todos modos, porque la forma de la canalización es lo que se está acordando, y un diagrama que solo muestre lo que ya existe no se puede utilizar para decidir qué construir.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce sous-processus n'est pour l'essentiel pas encore construit. Chaque tâche qu'il contient fait l'objet d'un suivi ; voir le tableau ci-dessous. Il est néanmoins représenté dans son intégralité, car la forme du pipeline est l'élément qui fait l'objet d'un accord, et un diagramme qui ne montrerait que ce qui existe déjà ne pourrait pas servir à décider de ce qu'il faut construire.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Этот подпроцесс по большей части еще не реализован. Каждая задача в нем отслеживается; см. таблицу ниже. Тем не менее он изображен полностью, поскольку согласованию подлежит именно структура конвейера, а диаграмма, показывающая только то, что уже существует, не может использоваться для принятия решений о том, что нужно разработать.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "该子流程大部分尚未构建。 其中的每项任务都处于跟踪状态；参见下表。无论如何它都已完整绘制，因为流水线的形态正是正在商定的内容，而仅展示现有内容的图表无法用于决定要构建什么。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The step that is easy to skip and expensive to retrofit is the last one. A generated description is a claim by someone, not a property of the file. Recording whether a human or an agent wrote it — and for an agent, which model version — is what lets a reader weigh it, and what makes a superseded model's descriptions findable as a set later. It is unrecoverable once lost.",
+   "hash": "002e863bc2a0da40",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الخطوة التي يسهل تخطيها وتكون باهظة التكلفة عند إضافتها لاحقًا هي الخطوة الأخيرة. فالوصف المُولّد هو ادعاء صادر عن جهة ما، وليس خاصية للملف. إن تسجيل ما إذا كان إنسان أو وكيل هو من كتبه — وبالنسبة للوكيل، أي إصدار من النموذج — هو ما يتيح للقارئ وزنه وتقييمه، وما يجعل أوصاف النماذج التي تم تجاوزها قابلة للعثور عليها كمجموعة لاحقًا. وبمجرد فقدانه، لا يمكن استرجاعه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El paso que resulta fácil omitir y costoso de incorporar a posteriori es el último. Una descripción generada es una afirmación hecha por alguien, no una propiedad del archivo. Registrar si la escribió un humano o un agente —y en el caso de un agente, qué versión del modelo— es lo que le permite al lector sopesarla, y lo que hace que las descripciones de un modelo reemplazado se puedan localizar como conjunto más adelante. Es irrecuperable una vez que se pierde.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'étape facile à omettre et coûteuse à rattraper a posteriori est la dernière. Une description générée est une assertion émise par quelqu'un, pas une propriété du fichier. Consigner si un humain ou un agent l'a rédigée — et pour un agent, quelle version de modèle — est ce qui permet à un lecteur de la pondérer, et ce qui rend les descriptions d'un modèle dépassé retrouvables en tant qu'ensemble ultérieurement. C'est irrécupérable une fois perdu.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Шаг, который легко пропустить и крайне затратно внедрять задним числом, — это последний шаг. Сгенерированное описание — это чье-то утверждение, а не свойство самого файла. Фиксация того, кем оно было создано — человеком или агентом (а для агента — версия модели), — позволяет читателю оценить его достоверность и дает возможность впоследствии найти весь набор описаний, созданных устаревшей моделью. Если эта информация утрачена, восстановить ее невозможно.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "容易被跳过且事后补救成本高昂的步骤是最后一步。生成的描述是某人的主张，而非文件本身的属性。记录是由人类还是智能体编写 —— 对于智能体而言还包括具体的模型版本 —— 能让读者评估其分量，并使得在后续查找被淘汰模型的整套描述成为可能。一旦遗失便无法恢复。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Ingest the theme",
+   "hash": "0c0a5395fe773ae4",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استيعاب السمة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ingerir el tema",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ingérer le thème",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Загрузка темы оформления",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "摄取主题",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Only some sources are themes, and a person decides which. After content is derived, the gateway A theme source? asks whoever is ingesting whether this document also carries a theme: a deployed site that serves one, or a style guide that states one. There is deliberately no rule that computes the answer. Whether a branded document is a theme source is an authoring judgement, and the owner ruled it so for bean . A source that is not a theme skips straight to building the knowledge graph.",
+   "hash": "548c3aec52fe2d70",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بعض المصادر فقط تمثل سمات، وشخص هو من يقرر أياً منها كذلك. بعد اشتقاق المحتوى، تسأل البوابة هل هو مصدر سمة؟ الشخص القائم بالاستيعاب عما إذا كانت هذه الوثيقة تحمل أيضًا سمة: موقع منشور يخدم إحداها، أو دليل أسلوب ينص على إحداها. ولا توجد قاعدة تحسب الإجابة عمدًا. فما إذا كانت وثيقة ذات علامة تجارية تمثل مصدر سمة هو حكم تأليفي، وقد حكم المالك بذلك بالنسبة للـ bean ‏. والمصدر الذي لا يمثل سمة يتخطى مباشرة إلى بناء الرسم البياني للمعرفة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Solo algunas fuentes son temas, y una persona decide cuáles. Después de derivar el contenido, la compuerta ¿Una fuente de tema? pregunta a quien esté realizando la ingestión si este documento también porta un tema: un sitio desplegado que sirve uno, o una guía de estilo que lo estipula. Deliberadamente no hay ninguna regla que calcule la respuesta. Decidir si un documento con marca institucional es una fuente de tema es un juicio editorial, y el propietario así lo determinó para el bean . Una fuente que no es un tema pasa directamente a la construcción del grafo de conocimiento.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Seules certaines sources sont des thèmes, et c'est une personne qui en décide. Une fois le contenu dérivé, la passerelle Une source de thème ? demande à la personne chargée de l'ingestion si ce document porte également un thème : un site déployé qui en sert un, ou un guide de style qui en énonce un. Il n'existe délibérément aucune règle calculant la réponse. Déterminer si un document doté d'une identité visuelle est une source de thème relève d'un jugement de rédaction, et le propriétaire en a décidé ainsi pour le bean . Une source qui n'est pas un thème passe directement à la construction du graphe de connaissances.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Лишь некоторые источники содержат темы, и решение об этом принимает человек. После извлечения производного контента шлюз Источник темы? опрашивает выполняющего загрузку о том, несет ли данный документ тему оформления: развернутый сайт, который ее отдает, или руководство по стилю, которое ее формулирует. Правило для автоматического вычисления этого ответа намеренно отсутствует. Является ли брендированный документ источником темы — это авторское суждение, и именно такое решение владелец принял для bean . Источник, не являющийся темой, сразу переходит к построению графа знаний.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "仅有部分来源属于主题，且由人工来决定哪些属于主题。 在内容完成衍生后，网关 是否为主题来源？ 会询问正在执行摄取的人员：该文档是否还带有主题 —— 即提供主题服务的已部署站点，或是声明主题的风格指南。这里特意没有设计用于计算得出答案的规则。带有品牌特性的文档是否属于主题来源是一种创作判断，所有者针对 bean  作出了这一定夺。不属于主题的来源将直接跳至构建知识图谱。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The decision sits at a gateway, not inside the subprocess, because \"this is not a theme\" and \"this theme is malformed\" are different outcomes. The first is the normal case. The second is a defect, and the subprocess reports it by refusing.",
+   "hash": "dfcb0698604ea682",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يقبع القرار عند بوابة، وليس داخل العملية الفرعية، لأن \"هذا ليس سمة\" و\"هذه السمة مشوهة\" نتيجتان مختلفتان. فالأولى هي الحالة الطبيعية. والثانية عيب برمجي، وتُبلغ عنه العملية الفرعية بالرفض.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La decisión se sitúa en una compuerta, no dentro del subproceso, porque «esto no es un tema» y «este tema está mal formado» son resultados distintos. El primero es el caso normal. El segundo es un defecto, y el subproceso lo reporta mediante un rechazo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La décision se situe au niveau d'une passerelle et non à l'intérieur du sous-processus, car « ceci n'est pas un thème » et « ce thème est mal formé » sont des issues distinctes. La première est le cas normal. La seconde est une anomalie, et le sous-processus la signale en refusant.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Это решение принимается на уровне шлюза, а не внутри подпроцесса, поскольку «это не тема» и «эта тема некорректна» — разные исходы. Первый случай — штатный. Второй — дефект, и подпроцесс сообщает о нем отказом.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "该决定位于网关处，而非子流程内部，因为“这不是主题”与“该主题格式有误”是两种不同的结果。前者属于正常情况；后者属于缺陷，子流程会通过拒绝处理来进行报告。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Inside, the two kinds of source differ in one step only: a deployment's served stylesheet is read for its declarations, while a guide's stated rules are read as it writes them. After that the paths join:",
+   "hash": "1b2305e7b41c0340",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وفي الداخل، يختلف نوعا المصادر في خطوة واحدة فقط: ورقة الأنماط المُقدَّمة الخاصة بالنشر تُقرأ لاستخراج تصريحاتها، بينما قواعد الدليل المنصوص عليها تُقرأ كما هي مكتوبة فيه. بعد ذلك تلتقي المسارات:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En su interior, los dos tipos de fuente se diferencian en un solo paso: se leen las declaraciones de la hoja de estilos servida de un despliegue, mientras que en una guía se leen sus reglas estipuladas tal como las define. Tras ello, las rutas convergen:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "À l'intérieur, les deux types de sources ne diffèrent qu'en une seule étape : la feuille de style servie d'un déploiement est lue pour en extraire les déclarations, tandis que les règles énoncées d'un guide sont lues telles qu'il les écrit. Ensuite, les chemins convergent :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Внутри подпроцесса эти два вида источников различаются лишь одним шагом: в случае развертывания считываются объявления отдаваемой таблицы стилей, тогда как для руководства считываются сформулированные им правила. После этого пути сходятся:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在子流程内部，两类来源仅在一个步骤上有所不同：部署站点提供服务的样式表会读取其属性声明，而指南明确声明的规则则按其书写原样读取。在此之后，各路径汇聚：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "values are mapped onto the shared palette roles;",
+   "hash": "bfefa1af5fa741b5",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تُعيَّن القيم على أدوار لوحة الألوان المشتركة؛",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "los valores se asignan a los roles de paleta compartidos;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "les valeurs sont associées aux rôles de la palette partagée ;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "значения сопоставляются с общими ролями палитры;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将各值映射到共享调色板角色；",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "contradictions in the source are recorded as data, never silently resolved by picking one;",
+   "hash": "dab599cd97082946",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تُسجَّل التناقضات في المصدر كبيانات، ولا تُحل أبدًا بصمت عن طريق اختيار أحدها؛",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "las contradicciones en la fuente se registran como datos, nunca se resuelven silenciosamente escogiendo una;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "les contradictions dans la source sont consignées sous forme de données, jamais résolues en silence en en choisissant une arbitrairement ;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "противоречия в источнике регистрируются как данные и никогда не разрешаются молчаливым выбором одного из вариантов;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将源材料中的矛盾记录为数据，绝不通过擅自挑选一个来静默解决；",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "a value the source is silent on is marked as a choice, not presented as a measurement;",
+   "hash": "da8b93199d5023c1",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "القيمة التي يصمت المصدر عنها تُحدَّد على أنها خيار، ولا تُعرض كقياس؛",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "un valor sobre el cual la fuente no dice nada se marca como una elección, no se presenta como una medición;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "une valeur sur laquelle la source reste muette est marquée comme un choix, et non présentée comme une mesure ;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "значение, о котором источник умалчивает, помечается как выбор, а не преподносится как измерение;",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "源材料未提及的值被标记为一项选择，而非作为测量值呈现；",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "if a layout is missing, the subprocess refuses as incomplete rather than producing a theme quietly degraded to the layouts it was given.",
+   "hash": "83e5ef69b54e738e",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إذا كان أحد التخطيطات مفقودًا، فإن العملية الفرعية ترفض باعتبارها غير مكتملة بدلاً من إنتاج سمة متدهورة ضمنيًا تقتصر على التخطيطات المعطاة لها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "si falta una maqueta (layout), el subproceso rechaza por incompleto en lugar de producir un tema degradado discretamente a las maquetas que se le suministraron.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "si une mise en page est manquante, le sous-processus refuse en la déclarant incomplète plutôt que de produire un thème silencieusement dégradé, restreint aux seules mises en page qui lui ont été fournies.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "если макет отсутствует, подпроцесс отклоняет обработку как неполную, вместо того чтобы незаметно выдать урезанную тему, ограниченную лишь предоставленными макетами.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "如果缺少某种布局，子流程会以不完整为由拒绝执行，而不是悄悄降级为仅包含所给定布局的主题。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A complete theme goes to the theme and UI review, and the result is one Theme node. It is one node kind, not three, because the palette vocabulary is shared and only the geometry varies between a sticky, a webpage and a publication.",
+   "hash": "e339100d0862c9b4",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تذهب السمة المكتملة إلى مراجعة السمة وواجهة المستخدم، والنتيجة هي عقدة Theme واحدة. وهي نوع عقدة واحد وليس ثلاثة، لأن مفردات لوحة الألوان مشتركة وفقط الهندسة تختلف بين الملاحظة اللاصقة (sticky)، وصفحة الويب، والمطبوعة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un tema completo pasa a la revisión de tema y de UI, y el resultado es un único nodo Theme. Es un solo tipo de nodo, no tres, porque el vocabulario de paleta se comparte y solo varía la geometría entre un pósit (sticky), una página web y una publicación.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un thème complet fait l'objet d'une revue de thème et d'interface utilisateur, et le résultat est un unique nœud Theme. Il s'agit d'un seul type de nœud, et non de trois, car le vocabulaire de palette est partagé et seule la géométrie varie entre une note autocollante, une page web et une publication.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Полная тема направляется на проверку темы и интерфейса, и результатом становится один узел Theme. Это единый тип узла, а не три разных, поскольку словарь палитры является общим, а между стикером, веб-страницей и публикацией меняется только геометрия.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "完整的主题会提交给主题与 UI 审阅，其产出是一个 Theme 节点。它是单一节点类型而非三种，因为调色板词汇是共享的，便签条（sticky）、网页与出版物之间仅几何结构有所不同。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Build the L1 knowledge graph",
+   "hash": "034641e06885f0c6",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بناء الرسم البياني للمعرفة L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Construir el grafo de conocimiento L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Construire le graphe de connaissances L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Построение графа знаний L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "构建 L1 知识图谱",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Each folder gets a standalone  as its record of truth, referenced from .  is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one.",
+   "hash": "4ea80fbc92a3c981",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يحصل كل مجلد على ملف  مستقل باعتباره سجل الحقيقة المعتمد الخاص به، ويُشار إليه من . وتعد  بالفعل مفردات JSON-LD الخاصة بمجموعة المحتوى هذه، لذا فإن هذا يوسع سياقًا حيًا بدلاً من استحداث سياق جديد.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cada carpeta obtiene un  independiente como su registro fidedigno de referencia, referenciado desde .  ya es el vocabulario JSON-LD de este corpus, por lo que esto extiende un contexto existente en lugar de introducir uno nuevo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chaque dossier reçoit un  autonome comme notice faisant foi, référencée depuis .  constitue déjà le vocabulaire JSON-LD de ce corpus, cela étend donc un contexte existant plutôt que d'en introduire un nouveau.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каждая папка получает автономный файл  в качестве эталонной записи, на которую ссылается . Словарь  уже используется как словарь JSON-LD в этом корпусе, поэтому данный шаг расширяет существующий контекст, а не вводит новый.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "每个文件夹都获得一个独立的  作为其真实的基准记录，由  进行引用。 已经是该语料库的 JSON-LD 词汇表，因此这是对既有活跃上下文的扩展，而非引入新上下文。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The folder name is the bibliography citation key, so a citation and a directory are the same string.",
+   "hash": "02f68cba758940b3",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اسم المجلد هو مفتاح الاستشهاد الببليوغرافي، وبالتالي فإن الاستشهاد والمجلد هما السلسلة النصية نفسها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El nombre de la carpeta es la clave de citación bibliográfica, de modo que una cita y un directorio son la misma cadena de texto.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le nom de dossier est la clé de citation bibliographique, ainsi une citation et un répertoire sont la même chaîne de caractères.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Имя папки и есть ключ библиографической цитаты, поэтому цитата и каталог представляют собой одну и ту же строку.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文件夹名称即是书目引用键，因此引用与目录是完全相同的字符串。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The L1 completeness gate",
+   "hash": "3ed99f17047d5d92",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بوابة اكتمال L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La compuerta de completitud L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La porte de complétude L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Шлюз полноты L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "L1 完整性关卡",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Without this gate every derivation step above is optional in practice: the document lands in , reads as ingested, and the gap surfaces whenever someone next needs the missing artefact — long after the context is gone.",
+   "hash": "7e722b4d20e6c4da",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "من دون هذه البوابة، تصبح كل خطوة اشتقاق أعلاه اختيارية عمليًا: حيث تستقر الوثيقة في ، وتظهر على أنها مستوعبة، وتطفو الفجوة إلى السطح حينما يحتاج شخص ما في المرة التالية إلى القطعة الأثرية المفقودة — بعد فترة طويلة من تلاشي السياق.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sin esta compuerta, cada paso de derivación anterior es opcional en la práctica: el documento llega a , figura como ingerido, y la brecha sale a la luz la próxima vez que alguien necesite el artefacto faltante —mucho después de que el contexto haya desaparecido.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Sans cette porte, chaque étape de dérivation ci-dessus est facultative en pratique : le document atterrit dans , apparaît comme ingéré, et la lacune refait surface lorsque quelqu'un a besoin ultérieurement de l'artefact manquant — bien longtemps après la disparition du contexte.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Без этого шлюза каждый из описанных выше шагов генерации производных данных на практике оказывается необязательным: документ попадает в , выглядит как полностью обработанный, а пробел всплывает лишь тогда, когда кому-то в следующий раз понадобится недостающий артефакт — спустя долгое время после того, как контекст уже утрачен.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "若没有此关卡，上述每个衍生步骤在实践中都将变为可选的：文档进入 ，显示为已摄取，而缺口只有在下一次有人需要该缺失制品时才会显现 —— 此时相关上下文早已荡然无存。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The round trip is why the translation check is shaped the way it is. A forward-only check asks whether the target-language text reads well, which a confident mistranslation passes. Back-translating and comparing asks whether the meaning survived, which is the property actually wanted, and needs no reference translation. What it cannot do is decide which reading is right — that edge goes to a reviewer.",
+   "hash": "da4a6934a2f99098",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إن الرحلة ذهابًا وإيابًا (round trip) هي السبب في تشكيل فحص الترجمة بهذا الشكل. فالفحص في اتجاه واحد فقط يسأل عما إذا كان نص اللغة الهدف يُقرأ جيدًا، وهو ما تجتازه الترجمة الخاطئة الواثقة. أما الترجمة العكسية والمقارنة فتسأل عما إذا كان المعنى قد نجا، وهي الخاصية المطلوبة بالفعل، ولا تتطلب ترجمة مرجعية. وما لا تستطيع فعله هو تحديد أي القراءتين صحيحة — وهذا المسار يُحال إلى مراجع.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El proceso de ida y vuelta (round trip) es la razón por la que la comprobación de traducción está concebida de esta manera. Una comprobación solo hacia adelante pregunta si el texto en el idioma de destino se lee bien, prueba que una traducción errónea pero convincente puede superar. Traducir de vuelta y comparar pregunta si el significado sobrevivió, que es la propiedad realmente deseada, y no necesita una traducción de referencia. Lo que no puede hacer es decidir cuál interpretación es la correcta —ese extremo se traslada a un revisor.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'aller-retour explique la façon dont la vérification de traduction est structurée. Un contrôle unidirectionnel direct se demande si le texte dans la langue cible se lit bien, ce qu'un contresens traduit avec assurance réussit sans peine. Rétro-traduire et comparer permet de vérifier si le sens a subsisté, ce qui est la propriété réellement recherchée, et ne nécessite aucune traduction de référence. Ce qu'il ne peut pas faire, c'est décider quelle interprétation est la bonne — cette branche est transmise à un réviseur.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Именно двусторонний перевод (round trip) определяет форму проверки перевода. Прямая проверка лишь оценивает, насколько гладко читается текст на целевом языке, что вполне под силу и уверенному ошибочному переводу. Обратный перевод и сравнение проверяют, сохранился ли смысл — именно то свойство, которое требуется, — и не требуют эталонного перевода. Однако такой метод не способен решить, какой вариант прочтения правильный, — эта ветка передается рецензенту.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "往返检查是翻译检查设计成此种形态的原因。仅向前检查只询问目标语言文本是否通顺，而笃定的误翻也能通过该检查。回译并进行比对则询问含义是否得以留存，这才是真正需要的属性，且无需参考译文。它所无法做到的是判定哪种解读是正确的 —— 该分支会转交给审阅者。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What is not built yet",
+   "hash": "d4fd76926b887d27",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما لم يُبنَ بعد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lo que aún no está construido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce qui n'est pas encore construit",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что еще не реализовано",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "尚未构建的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Every one of these is drawn in the diagrams above and tracked as a bean. None is implemented.",
+   "hash": "5c242fb8535a573d",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كل واحدة من هذه مرسومة في المخططات أعلاه ومُتتبَّعة كـ bean. ولم يتم تنفيذ أي منها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cada uno de estos elementos está dibujado en los diagramas anteriores y bajo seguimiento como un bean. Ninguno está implementado.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chacun de ces éléments est représenté dans les diagrammes ci-dessus et suivi sous la forme d'un bean. Aucun n'est implémenté.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каждый из этих пунктов отображен на диаграммах выше и отслеживается в виде bean. Ни один из них еще не реализован.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "上述图表中所绘制的每一项均作为 bean 进行了跟踪。目前均未实现。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Step",
+   "hash": "697a7a23604e8d63",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الخطوة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Paso",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Étape",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Шаг",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "步骤",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Bean",
+   "hash": "6735ae455e50e213",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الـ Bean",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Bean",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Bean",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Bean",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Bean",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Notes",
+   "hash": "05644cf7db56c7a3",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ملاحظات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Notas",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Remarques",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Примечания",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "说明",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "One pipeline entry point",
+   "hash": "3c81220fa0d3e9b6",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نقطة دخول واحدة لخط الأنابيب",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un único punto de entrada de la canalización",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Point d'entrée unique du pipeline",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Единая точка входа в конвейер",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "单一流水线入口点",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Today the move is a script plus whatever the agent remembers",
+   "hash": "f3663311935114c9",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "النقل اليوم يتم عبر نص برمجى بالإضافة إلى ما يتذكره الوكيل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Hoy el traslado es un script más lo que recuerde el agente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Aujourd'hui, le déplacement se fait par un script complété par ce dont l'agent se souvient",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "На сегодняшний день перемещение — это скрипт плюс то, что удерживает в памяти агент",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "目前该移动操作只是一个脚本，加上智能体所记得的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Archive contents manifest",
+   "hash": "8cca2904ad093182",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بيان محتويات الأرشيف",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Manifiesto de contenidos de archivo comprimido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Manifeste du contenu d'archive",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Манифест содержимого архива",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "归档内容清单",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A tar is opaque to every grep until listed as data",
+   "hash": "d83f73ec727d44ec",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ملف tar غامض أمام أي بحث grep حتى يُدرج كبيانات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un tar es opaco para cualquier grep hasta que se liste como datos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une archive tar reste opaque à tout grep tant qu'elle n'est pas répertoriée comme donnée",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Архив tar непроницаем для любого grep, пока он не представлен в виде структурированных данных",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "tar 包在作为数据列出之前对所有 grep 都是不透明的",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Technical file metadata",
+   "hash": "f372619d7b90762c",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بيانات التعريف التقنية للملف",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Metadatos técnicos del archivo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Métadonnées techniques de fichier",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Технические метаданные файла",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "技术文件元数据",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The checksum is what makes a remote asset verifiable",
+   "hash": "a07b9a313d752d78",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المجموع الاختباري (checksum) هو ما يجعل الأصل البعيد قابلاً للتحقق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La suma de comprobación (checksum) es lo que hace verificable a un recurso remoto",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La somme de contrôle est ce qui rend une ressource distante vérifiable",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Контрольная сумма — это то, что делает удаленный ресурс проверяемым",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "校验和使远程资产可供验证",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Image descriptions, localized",
+   "hash": "be64ad09644cf936",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أوصاف الصور، مترجمة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Descripciones de imágenes, localizadas",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Descriptions d'images, localisées",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Описания изображений, локализованные",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本地化图像描述",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Including images extracted from PDFs",
+   "hash": "38cfad7c003357b7",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بما في ذلك الصور المستخرجة من ملفات PDF",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Incluidas las imágenes extraídas de archivos PDF",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Y compris les images extraites de PDF",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Включая изображения, извлеченные из PDF",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "包括从 PDF 中提取的图像",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Audio transcription + translation",
+   "hash": "2515ac3850b482d2",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تفريغ الصوت + الترجمة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Transcripción de audio + traducción",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Transcription audio + traduction",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Транскрипция аудио + перевод",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "音频转录 + 翻译",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Tabular metadata",
+   "hash": "fd019e9d4eaccb62",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بيانات التعريف الجدولية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Metadatos tabulares",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Métadonnées tabulaires",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Табличные метаданные",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "表格元数据",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Sheets, headers, shape, narrative",
+   "hash": "e292ac3e3cb2927e",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأوراق، والترويسات، والشكل، والسرد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Hojas, encabezados, estructura, narrativa",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Feuilles, en-têtes, dimensionnement, récit",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Листы, заголовки, размерность (shape), описание",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工作表、表头、数据形态、叙述",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Narrative provenance",
+   "hash": "09ded080f0398639",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أصل ونسب السرد (provenance)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Procedencia de la narrativa",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Provenance narrative",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Происхождение текстовых описаний",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "叙述来源溯源",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Human or agent + model version",
+   "hash": "9c9f40357b10e90d",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إنسان أو وكيل + إصدار النموذج",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Humano o agente + versión del modelo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Humain ou agent + version du modèle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Человек или агент + версия модели",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "人类或智能体 + 模型版本",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "L1 completeness gate",
+   "hash": "434f6b1a12423da9",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بوابة اكتمال L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Compuerta de completitud L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Porte de complétude L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Шлюз полноты L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "L1 完整性关卡",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Makes the rest obligatory rather than aspirational",
+   "hash": "87ab94fc2d49e240",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تجعل الباقي إلزاميًا وليس مجرد تطلعات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Hace que el resto sea obligatorio en lugar de una mera aspiración",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rend le reste obligatoire plutôt qu'indicatif",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Делает остальные шаги обязательными, а не желательными",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "使其余部分成为强制要求而非可有可无的设想",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Round-trip translation QA",
+   "hash": "1068989f60061a61",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ضمان جودة الترجمة ذهابًا وإيابًا",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "QA de traducción de ida y vuelta",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "QA de traduction aller-retour",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Двусторонний контроль качества перевода",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "往返翻译 QA",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Detects drift; a human adjudicates it",
+   "hash": "edf4ae29c6456704",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تكتشف الانحراف؛ ويفصل فيها إنسان",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Detecta desviaciones; un humano las adjudica",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Détecte la dérive ; un humain l'arbitre",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Обнаруживает смысловые искажения; окончательное решение принимает человек",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "检测漂移；由人工进行判定",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "How much of this does Dublin Core carry?",
+   "hash": "668d6e813f4d4b91",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما المقدار الذي يحمله Dublin Core من هذا؟",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Cuánto de esto abarca Dublin Core?",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Quelle part de tout cela Dublin Core prend-il en charge ?",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что из этого покрывает Dublin Core?",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Dublin Core 涵盖了其中的多少？",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Some of it, and it is worth being exact about which, because the answer decides whether a field is a  term or something this project invents.",
+   "hash": "47eeb150fb0d64f4",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "جزءًا منه، ويجدر بنا توخي الدقة بشأن ما يشمله، لأن الإجابة تحدد ما إذا كان الحقل مصطلحًا من  أو شيئًا يبتكره هذا المشروع.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una parte, y vale la pena ser exactos acerca de cuál, porque la respuesta determina si un campo es un término de  o algo inventado por este proyecto.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une partie seulement, et il convient d'être précis sur ce point, car la réponse détermine si un champ relève d'un terme  ou de quelque chose que ce projet invente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Лишь часть, и здесь важно точно понимать, какую именно, поскольку ответ определяет, является ли поле термином  или чем-то, изобретенным данным проектом.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "涵盖了其中一部分，而明确具体涵盖了哪些很有价值，因为答案决定了一个字段究竟是  术语还是本项目自创的内容。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Dublin Core covers the bibliographic layer well — , , , , , , , . The per-folder record and the archive's part/whole structure sit comfortably there.",
+   "hash": "0636bf24b180dd40",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يغطي Dublin Core الطبقة الببليوغرافية بشكل جيد — ، و، و، و، و، و، و، و. حيث يستقر السجل الخاص بكل مجلد وبنية الجزء/الكل للأرشيف هناك بارتياح.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Dublin Core cubre bien la capa bibliográfica — , , , , , , , . El registro por carpeta y la estructura parte/todo del archivo comprimido encajan cómodamente allí.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dublin Core couvre bien la couche bibliographique — , , , , , , , . La notice par dossier et la structure partie/tout de l'archive y trouvent naturellement leur place.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Dublin Core хорошо покрывает библиографический слой — , , , , , , , . Запись для отдельной папки и структура архива «часть/целое» отлично в него укладываются.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Dublin Core 很好地覆盖了书目层 —— 、、、、、、、。每个文件夹的记录以及归档的部分/整体结构都能很自然地融入其中。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "It does not cover the derived layer. A narrative description of a figure, a transcript, a back-translation confidence, a sheet's column headers, and above all the provenance of a generated narrative are not  terms, and a published vocabulary is the wrong place to guess an IRI.",
+   "hash": "0e792ea4ef57ad84",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ولكنه لا يغطي الطبقة المشتقة. فالوصف السردي لشكل توضيحي، والتفريغ النصي، ومستوى الثقة في الترجمة العكسية، وترويسات أعمدة جدول البيانات، وقبل كل شيء أصل ونسب السرد المُولَّد (provenance) ليست مصطلحات في ، والمفردات المنشورة ليست المكان المناسب لتخمين معرف موارد دولي (IRI).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "No cubre la capa derivada. Una descripción narrativa de una figura, una transcripción, la confianza de una retrotraducción, los encabezados de columna de una hoja de cálculo y, por encima de todo, la procedencia de una narrativa generada no son términos de , y un vocabulario publicado es el lugar equivocado para adivinar un IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Il ne couvre pas la couche dérivée. Une description narrative d'une figure, une transcription, un indice de confiance de rétro-traduction, les en-têtes de colonnes d'une feuille de calcul, et par-dessus tout la provenance d'un récit généré ne sont pas des termes , et un vocabulaire publié n'est pas le bon endroit pour deviner un IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Он не покрывает слой производных данных. Текстовое описание иллюстрации, транскрипт, оценка достоверности обратного перевода, заголовки столбцов таблицы и, главное, происхождение сгенерированного описания — это не термины , а опубликованный словарь — неподходящее место для угадывания IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "它并不涵盖衍生层。 图表的叙述性描述、文字记录、回译置信度、工作表的列标题，尤其是所生成叙述的来源溯源，均不是  术语，而在已发布的词汇表中胡乱猜测 IRI 是错误的做法。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The house rule already in  decides the shape: generalising is sound; inventing is not. Where an existing vocabulary has the term, use it; where it does not, the term goes in this project's own namespace rather than being bent into an approximate  one. Which vocabularies to reach for first — PROV-O for provenance is the obvious candidate — is not yet decided and must be settled against the published specifications rather than from memory.",
+   "hash": "85a8bb8987917b70",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وتحدد القاعدة الداخلية الموجودة بالفعل في  هذا الشكل: التعميم سليم؛ والابتكار ليس كذلك. فحيثما تحتوي مفردات موجودة على المصطلح، استخدمه؛ وحيثما لا توجد، يوضع المصطلح في مساحة الأسماء الخاصة بهذا المشروع بدلاً من تطويعه قسرًا في مصطلح تقريبي من . أما أي المفردات التي يُلجأ إليها أولاً — ويُعد PROV-O للأصل والنسب (provenance) هو المرشح البديهي — فهو أمر لم يُحسم بعد ويجب تسويته وفقًا للمواصفات المنشورة بدلاً من الاعتماد على الذاكرة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La regla interna ya presente en  define la pauta: generalizar es acertado; inventar no lo es. Donde un vocabulario existente contenga el término, utilízalo; donde no lo tenga, el término pasa al espacio de nombres propio de este proyecto en lugar de forzarlo dentro de uno aproximado en . A qué vocabularios recurrir en primer lugar —PROV-O para procedencia es el candidato evidente— es algo que aún no está decidido y debe resolverse contrastándolo con las especificaciones publicadas en lugar de fiarse de la memoria.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La règle interne déjà présente dans  en dicte la forme : généraliser est sain ; inventer ne l'est pas. Lorsqu'un vocabulaire existant contient le terme, utilisez-le ; lorsque ce n'est pas le cas, le terme va dans l'espace de noms propre à ce projet plutôt que d'être dénaturé en un terme  approximatif. Vers quels vocabulaires se tourner en premier lieu — PROV-O pour la provenance étant le candidat évident — n'est pas encore tranché et devra être établi au vu des spécifications publiées plutôt que de mémoire.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Внутреннее правило проекта, уже зафиксированное в , определяет подход: обобщать разумно; изобретать — нет. Если существующий словарь содержит термин, используйте его; если нет — термин помещается в собственное пространство имен проекта, а не подгоняется под приблизительный термин . К каким словарям следует обращаться в первую очередь (PROV-O для происхождения — очевидный кандидат), еще не решено, и этот вопрос должен быть урегулирован на основе опубликованных спецификаций, а не по памяти.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "中既有的内部规则决定了其形态：合理泛化是明智的，凭空捏造则不然。 凡是现有词汇表中已有的术语，直接采用；凡是没有的，该术语应放入本项目自己的命名空间中，而不是被硬套进一个近似的  术语中。优先采用哪些词汇表 —— 用于溯源的 PROV-O 显然是首选候选 —— 目前尚未确定，必须根据已发布的规范而不是凭记忆来定夺。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Editing an ingested source",
+   "hash": "5748069b0bd96dae",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تحرير مصدر مستوعب",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Editar una fuente ingerida",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Modifier une source ingérée",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Редактирование загруженного источника",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "编辑已摄取的来源",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Ingestion never edits corpus content. It produces L1 records; authoring and review consume them through the ordinary flow in the publication workflow, where a change to a content block goes through validation, findings, and an editor's decision.",
+   "hash": "6034e2ac5e451f38",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يقوم الاستيعاب بتحرير محتوى مجموعة المحتوى أبدًا. بل ينتج سجلات L1؛ بينما يستهلكها التأليف والمراجعة عبر المسار المعتاد في مسار عمل النشر، حيث يمر التغيير على كتلة المحتوى بالتحقق، والنتائج، وقرار المحرر.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La ingestión nunca edita el contenido del corpus. Produce registros L1; la autoría y la revisión los consumen a través del flujo habitual en el flujo de publicación, donde un cambio en un bloque de contenido pasa por validación, hallazgos y la decisión de un editor.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'ingestion ne modifie jamais le contenu du corpus. Elle produit des notices L1 ; la rédaction et la révision les consomment à travers le flux habituel dans le flux de publication, où une modification apportée à un bloc de contenu passe par la validation, les constats et la décision d'un éditeur.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Процесс загрузки никогда не редактирует контент корпуса. Он создает записи L1; авторская работа и рецензирование используют их через обычный поток процесса публикации, где изменение блока контента проходит валидацию, регистрацию замечаний и решение редактора.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "摄取绝不会编辑语料库内容。它产出 L1 记录；创作和审阅通过发布工作流中的常规流程来消费它们，其中对内容块的修改会经历验证、问题发现以及编辑者的决策。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The one coupling worth stating: a drop into  during an editing session starts ingestion in the background. The editor is not blocked, and the new source becomes citeable when the gate passes — not before.",
+   "hash": "26b448e6c49ab644",
+   "sources": [
+    "docs/guides/document-ingestion.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "والارتباط الوحيد الجدير بالذكر: أن إفلات ملف في  أثناء جلسة تحرير يبدأ عملية الاستيعاب في الخلفية. ولا يتعطل المحرر، ويصبح المصدر الجديد قابلاً للاستشهاد به عند اجتياز البوابة — وليس قبل ذلك.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El único acoplamiento que vale la pena destacar: depositar un archivo en  durante una sesión de edición inicia la ingestión en segundo plano. El editor no queda bloqueado, y la nueva fuente pasa a ser citable cuando la compuerta se supera —no antes.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le seul couplage méritant d'être précisé : un dépôt dans  pendant une session d'édition lance l'ingestion en arrière-plan. L'éditeur n'est pas bloqué, et la nouvelle source devient citable lorsque la porte est franchie — pas avant.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Единственная взаимосвязь, которую стоит отметить: добавление файла в  во время сессии редактирования запускает загрузку в фоновом режиме. Редактор не блокируется, а новый источник становится доступным для цитирования после прохождения шлюза — не раньше.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "值得说明的一项耦合是：在编辑会话期间向  放入文件会在后台启动摄取。编辑者不会被阻塞，而新来源在关卡通过时即可被引用 —— 绝不会在此之前。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

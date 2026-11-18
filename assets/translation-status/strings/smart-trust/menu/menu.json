@@ -1,0 +1,1578 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "smart-trust",
+ "repository": "litlfred/smart-trust",
+ "translations": "translations",
+ "catalogue": "menu/menu",
+ "hashes": {
+  "ar": "a36cac30fab78d9a",
+  "es": "777a417487eee53d",
+  "fr": "7eae104915a1468d",
+  "ru": "7517df6868eb9235",
+  "zh": "bcef3ae7c810e676"
+ },
+ "strings": [
+  {
+   "msgid": "WHO SMART Trust",
+   "hash": "1e34979dfe6ed34b",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": false,
+     "pick": {
+      "text": "صندوق سمارت الاستئماني لمنظمة الصحة العالمية (WHO SMART Trust)",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "صندوق سمارت الاستئماني لمنظمة الصحة العالمية (WHO SMART Trust)",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:53:46.056Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": false
+      }
+     ]
+    },
+    "es": {
+     "text": "WHO SMART Trust",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "WHO SMART Trust",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "WHO SMART Trust",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:53:52.804Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "La confiance de l'OMS SMART",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "La confiance de l'OMS SMART",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "La confiance de l'OMS SMART",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T06:53:59.339Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": false,
+     "pick": {
+      "text": "卫生组织SMART信托基金",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "卫生组织SMART信托基金",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T06:54:11.754Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Home",
+   "hash": "d53cd9a8009e07e8",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الصفحة الرئيسية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Inicio",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Accueil",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Главная",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "首页",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Summary",
+   "hash": "33d2953076ca7aaa",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الملخص",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Resumen",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Résumé",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Краткое изложение",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "摘要",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Dependencies",
+   "hash": "f1ddc706848e3816",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التبعيات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Dependencias",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dépendances",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Зависимости",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "依赖项",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Ethical Considerations and Data Protection Principles",
+   "hash": "6da5c5fdd2edb037",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الاعتبارات الأخلاقية ومبادئ حماية البيانات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Consideraciones éticas y principios de protección de datos",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Considérations éthiques et principes de protection des données",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Этические соображения и принципы защиты данных",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "伦理考虑与数据保护原则",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Frequently Asked Questions",
+   "hash": "586cf2f721142337",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأسئلة الشائعة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Preguntas frecuentes",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Foire aux questions",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Часто задаваемые вопросы",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "常见问题",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "GDHCN Administrative and Operational Framework",
+   "hash": "9400e54161b68173",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإطار الإداري والتشغيلي لـ GDHCN",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Marco administrativo y operativo de la GDHCN",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cadre administratif et opérationnel du GDHCN",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Административная и операционная основа GDHCN",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "GDHCN 行政与运营框架",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Business Requirements",
+   "hash": "62e004ea9924b8c2",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "متطلبات العمل",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Requisitos empresariales",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exigences métier",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Бизнес-требования",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "业务需求",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Concepts",
+   "hash": "9ffdaf25d695a4ce",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المفاهيم",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Conceptos",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Concepts",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Концепции",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "概念",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Certificate Governance",
+   "hash": "aa54506fb59e2ed6",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حوكمة الشهادات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Gobernanza de certificados",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Gouvernance des certificats",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Управление сертификатами",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "证书治理",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Onboarding Process",
+   "hash": "7d115ffe76b50540",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عملية الانضمام",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Proceso de integración",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Processus d’intégration",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Процесс подключения",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "入网流程",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Data Sharing Agreement Processes",
+   "hash": "72f1e5b6d57c820c",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عمليات اتفاق مشاركة البيانات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Procesos de los acuerdos de intercambio de datos",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Processus des accords de partage de données",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Процессы соглашений об обмене данными",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "数据共享协议流程",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Use Cases",
+   "hash": "20d9f5c16af25a4f",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حالات الاستخدام",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Casos de uso",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cas d’utilisation",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Варианты использования",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用例",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Decision Support Logic",
+   "hash": "bb9bec6ce7228457",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "منطق دعم القرار",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lógica de apoyo a la toma de decisiones",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Logique d’aide à la décision",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Логика поддержки принятия решений",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "决策支持逻辑",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Functional Requirements",
+   "hash": "e4bbd6d9651ef1cc",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المتطلبات الوظيفية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Requisitos funcionales",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exigences fonctionnelles",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Функциональные требования",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "功能需求",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Data Models and Exchange",
+   "hash": "b9b44e25b702d366",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نماذج البيانات والتبادل",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Modelos de datos e intercambio",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Modèles de données et échange",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Модели данных и обмен",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "数据模型与交换",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "System Actors",
+   "hash": "111a46b305e3b13c",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الجهات الفاعلة في النظام",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Actores del sistema",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Acteurs du système",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Участники системы",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "系统参与者",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Transactions",
+   "hash": "ecde5f5fc002db31",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المعاملات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Transacciones",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Transactions",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Транзакции",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "事务",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Sequence Diagrams",
+   "hash": "743e760f46625aa2",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مخططات التسلسل",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Diagramas de secuencia",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Diagrammes de séquence",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Диаграммы последовательности",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "时序图",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Trust Domains",
+   "hash": "d20f987d5ef1839d",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نطاقات الثقة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ámbitos de confianza",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Domaines de confiance",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Домены доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "信任域",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Trust Network Gateway Architecture",
+   "hash": "47b71322403b6f59",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "بنية بوابة شبكة الثقة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Arquitectura de la puerta de enlace a la red de confianza",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Architecture de la passerelle du réseau de confiance",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Архитектура шлюза сети доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "信任网络网关架构",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "DID Trustlist Specification",
+   "hash": "a002c48cdd64ddd7",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مواصفة قائمة الثقة DID",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Especificación de la lista de confianza DID",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Spécification de la liste de confiance DID",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Спецификация списка доверия DID",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "DID 信任列表规范",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "HCERT Specification",
+   "hash": "7859cc713edb8856",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مواصفة HCERT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Especificación HCERT",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Spécification HCERT",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Спецификация HCERT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "HCERT 规范",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "QR Code Generation",
+   "hash": "ee8c40156b4b351d",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إنشاء رموز QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Generación de códigos QR",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Génération de codes QR",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Генерация QR-кодов",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "QR 码生成",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Deployment",
+   "hash": "468f55064a85d8e8",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "النشر",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Despliegue",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Déploiement",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Развёртывание",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "部署",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Onboarding Checklist",
+   "hash": "1db567473bb4fd36",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قائمة التحقق من الانضمام",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lista de verificación de la integración",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Liste de contrôle de l’intégration",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Контрольный перечень подключения",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "入网检查清单",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Security and Privacy Considerations",
+   "hash": "86dd8dbd72c54fd6",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اعتبارات الأمن والخصوصية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Consideraciones de seguridad y privacidad",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Considérations relatives à la sécurité et à la protection de la vie privée",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Аспекты безопасности и конфиденциальности",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "安全与隐私考虑",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Testing",
+   "hash": "a4c778899105b076",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الاختبار",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Pruebas",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Tests",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Тестирование",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "测试",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Reference Implementations",
+   "hash": "ac9aeb0d91979b55",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التطبيقات المرجعية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Implementaciones de referencia",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Implémentations de référence",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Эталонные реализации",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "参考实现",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Downloads",
+   "hash": "470f5ec3c873c2a4",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التنزيلات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Descargas",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Téléchargements",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Загрузки",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "下载",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Changes",
+   "hash": "53e55a64879f5719",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التغييرات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cambios",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Modifications",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Изменения",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "变更",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Endpoints",
+   "hash": "b5af019fa2f265fa",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نقاط النهاية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Endpoints",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Points de terminaison",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Конечные точки",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "端点",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Indices",
+   "hash": "36ff503812e833c5",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الفهارس",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Índices",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Index",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Указатели",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "索引",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Artifact Index",
+   "hash": "233eee39fdb12e3e",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فهرس العناصر",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Índice de artefactos",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Index des artefacts",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Указатель артефактов",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "制品索引",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Bibliography",
+   "hash": "9b133e70e92cd020",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المراجع",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Bibliografía",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Bibliographie",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Библиография",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "参考文献",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Mappings",
+   "hash": "8f5585224c32234d",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التقابلات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Correspondencias",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Correspondances",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сопоставления",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "映射",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "License",
+   "hash": "62a598c405d90232",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الترخيص",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Licencia",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Licence",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Лицензия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "许可",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "DAK API",
+   "hash": "aeed19fa51923352",
+   "sources": [
+    "sushi-config.yaml:menu"
+   ],
+   "locales": {
+    "ar": {
+     "text": "واجهة برمجة تطبيقات DAK",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "API del DAK",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "API DAK",
+     "status": "mt",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "API DAK",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "DAK API",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

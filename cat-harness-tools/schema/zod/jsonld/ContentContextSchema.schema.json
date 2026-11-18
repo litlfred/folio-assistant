@@ -106,6 +106,31 @@
           "items": false,
           "minItems": 2,
           "maxItems": 2
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@base": {
+                  "type": "string",
+                  "pattern": "^https?:\\/\\/\\S+\\/v(0|[1-9]\\d*)\\/$"
+                }
+              },
+              "required": [
+                "@base"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
         }
       ]
     }

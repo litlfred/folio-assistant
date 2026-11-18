@@ -315,6 +315,18 @@
    }
   },
   {
+   "id": "Call_DakL3",
+   "name": "The DAK content as a FHIR IG",
+   "left": 61.12,
+   "top": 31.01,
+   "box": {
+    "left": 59.68,
+    "top": 34.63,
+    "width": 0.35,
+    "height": 1.32
+   }
+  },
+  {
    "id": "M3",
    "name": "Record milestone M3 · Zero draft",
    "left": 65.83,
@@ -2132,6 +2144,97 @@
      {
       "name": "voice-overlay-review",
       "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Call_DakL3": {
+   "id": "Call_DakL3",
+   "name": "The DAK content as a FHIR IG",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DthAuthoring/node/Call_DakL3",
+   "stepHref": "dth-authoring.html#step-Call_DakL3",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DthAuthoring/lane/Lane_Analyst",
+   "skills": [
+    {
+     "name": "smart-guideline-end-to-end",
+     "href": "../../../reference/skill-instructions/smart-guideline-end-to-end.html"
+    },
+    {
+     "name": "guideline-gap-report",
+     "href": "../../../reference/skill-instructions/guideline-gap-report.html"
+    }
+   ],
+   "calls": {
+    "name": "L2 DAK to L3 FHIR IG",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DakL3Ig",
+    "diagram": "dak-l3-ig.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../reference/skill-instructions/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../reference/skill-instructions/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../reference/skill-instructions/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../reference/skill-instructions/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../reference/skill-instructions/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
      }
     ]
    }

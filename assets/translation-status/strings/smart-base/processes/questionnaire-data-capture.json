@@ -1,0 +1,2776 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "smart-base",
+ "repository": "litlfred/smart-base",
+ "translations": "translations",
+ "catalogue": "processes/questionnaire-data-capture",
+ "hashes": {
+  "ar": "481a9d338dfc11f3",
+  "es": "378d750d5b2cc8c0",
+  "fr": "6dfdf512794e21d7",
+  "ru": "33f52a3c76088262",
+  "zh": "58178fe7d3698286"
+ },
+ "strings": [
+  {
+   "msgid": "A form is due",
+   "hash": "db3824a16cbd2c97",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإستمارة واجبة الدفع",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "الإستمارة واجبة الدفع",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "الإستمارة واجبة الدفع",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Debe presentarse un formulario.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Debe presentarse un formulario.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Debe presentarse un formulario.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Un formulaire est dû",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Un formulaire est dû",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Un formulaire est dû",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Подлежат представлению бланк",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Подлежат представлению бланк",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Подлежат представлению бланк",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "表格到期",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "表格到期",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "表格到期",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "A health worker completes one of the DAK's forms, a FHIR R4 Questionnaire conforming to Structured Data Capture, as their device renders it, and the point-of-care system turns the completed QuestionnaireResponse into the resources it stands for by the extraction the form declares (SDC $extract). Generic for any DAK: registering a client, recording a visit, a referral. A DAK's diagram calls it by call activity; the caller's lanes take on health-worker and point-of-care-system for the duration of the call. Skills: complete-sdc-questionnaire, extract-questionnaire-response (package authoring-who-smart-guidelines).",
+   "hash": "be6f9d830ee435da",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ويستكمل العامل الصحي إحدى استمارات DAK، واستبيان R4 FHIR الذي يتفق مع نظام التقاط البيانات، كما يترجمه جهازه، ويحول نظام نقطة الرعاية الاستبيان المستكمل إلى الموارد التي يمثلها الاستخراج الذي يعلن عن الاستمارة (SDC- extract). وهو عام لأي DAK: تسجيل العميل، تسجيل الزيارة، الإحالة. ويطلق عليه الرسم البياني DAK عن طريق نشاط الاتصال؛ وتأخذ مسارات المتصل على العامل الصحي ونظام نقطة الرعاية طوال مدة المكالمة. المهارات: الاستجواب الكامل والاستجواب والاستجواب - الاستجابة (تعبئة المؤلفين - من هم الأذكياء - المبادئ التوجيهية).",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "ويستكمل العامل الصحي إحدى استمارات DAK، واستبيان R4 FHIR الذي يتفق مع نظام التقاط البيانات، كما يترجمه جهازه، ويحول نظام نقطة الرعاية الاستبيان المستكمل إلى الموارد التي يمثلها الاستخراج الذي يعلن عن الاستمارة (SDC- extract). وهو عام لأي DAK: تسجيل العميل، تسجيل الزيارة، الإحالة. ويطلق عليه الرسم البياني DAK عن طريق نشاط الاتصال؛ وتأخذ مسارات المتصل على العامل الصحي ونظام نقطة الرعاية طوال مدة المكالمة. المهارات: الاستجواب الكامل والاستجواب والاستجواب - الاستجابة (تعبئة المؤلفين - من هم الأذكياء - المبادئ التوجيهية).",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "ويستكمل العامل الصحي إحدى استمارات DAK، واستبيان R4 FHIR الذي يتفق مع نظام التقاط البيانات، كما يترجمه جهازه، ويحول نظام نقطة الرعاية الاستبيان المستكمل إلى الموارد التي يمثلها الاستخراج الذي يعلن عن الاستمارة (SDC- extract). وهو عام لأي DAK: تسجيل العميل، تسجيل الزيارة، الإحالة. ويطلق عليه الرسم البياني DAK عن طريق نشاط الاتصال؛ وتأخذ مسارات المتصل على العامل الصحي ونظام نقطة الرعاية طوال مدة المكالمة. المهارات: الاستجواب الكامل والاستجواب والاستجواب - الاستجابة (تعبئة المؤلفين - من هم الأذكياء - المبادئ التوجيهية).",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Un trabajador de salud completa uno de los formularios del DAK, un Cuestionario FHIR R4 que se ajusta a la captura de datos estructurados, como su dispositivo lo hace, y el sistema de punto de cuidado convierte el Cuestionario completadoResponda en los recursos que representa por la extracción el formulario declara (SDC $extract). Genérico para cualquier DAK: registrar un cliente, registrar una visita, una remisión. El diagrama de un DAK lo llama por actividad de llamada; los carriles del llamante toman el trabajador de salud y el sistema de punto de cuidado para la duración de la llamada. Habilidades: completo-sdc-cuestionario, extracto-cuestionario-respuesta (paquete autor-que-inteligente-guías).",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Un trabajador de salud completa uno de los formularios del DAK, un Cuestionario FHIR R4 que se ajusta a la captura de datos estructurados, como su dispositivo lo hace, y el sistema de punto de cuidado convierte el Cuestionario completadoResponda en los recursos que representa por la extracción el formulario declara (SDC $extract). Genérico para cualquier DAK: registrar un cliente, registrar una visita, una remisión. El diagrama de un DAK lo llama por actividad de llamada; los carriles del llamante toman el trabajador de salud y el sistema de punto de cuidado para la duración de la llamada. Habilidades: completo-sdc-cuestionario, extracto-cuestionario-respuesta (paquete autor-que-inteligente-guías).",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Un trabajador de salud completa uno de los formularios del DAK, un Cuestionario FHIR R4 que se ajusta a la captura de datos estructurados, como su dispositivo lo hace, y el sistema de punto de cuidado convierte el Cuestionario completadoResponda en los recursos que representa por la extracción el formulario declara (SDC $extract). Genérico para cualquier DAK: registrar un cliente, registrar una visita, una remisión. El diagrama de un DAK lo llama por actividad de llamada; los carriles del llamante toman el trabajador de salud y el sistema de punto de cuidado para la duración de la llamada. Habilidades: completo-sdc-cuestionario, extracto-cuestionario-respuesta (paquete autor-que-inteligente-guías).",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Un travailleur de la santé remplit l'un des formulaires de la DAK, un questionnaire FHIR R4 conforme à la saisie structurée de données, comme son appareil le rend, et le système de point de soins transforme le questionnaire rempli en ressources qu'il représente par l'extraction le formulaire déclare (SDC $extrait). Générique pour tout DAK: enregistrement d'un client, enregistrement d'une visite, référence. Le diagramme de la DAK l'appelle par activité d'appel; les voies de l'appelant prennent sur le travailleur de la santé et le système de point de soins pour la durée de l'appel.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Un travailleur de la santé remplit l'un des formulaires de la DAK, un questionnaire FHIR R4 conforme à la saisie structurée de données, comme son appareil le rend, et le système de point de soins transforme le questionnaire rempli en ressources qu'il représente par l'extraction le formulaire déclare (SDC $extrait). Générique pour tout DAK: enregistrement d'un client, enregistrement d'une visite, référence. Le diagramme de la DAK l'appelle par activité d'appel; les voies de l'appelant prennent sur le travailleur de la santé et le système de point de soins pour la durée de l'appel.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Un travailleur de la santé remplit l'un des formulaires de la DAK, un questionnaire FHIR R4 conforme à la saisie structurée de données, comme son appareil le rend, et le système de point de soins transforme le questionnaire rempli en ressources qu'il représente par l'extraction le formulaire déclare (SDC $extrait). Générique pour tout DAK: enregistrement d'un client, enregistrement d'une visite, référence. Le diagramme de la DAK l'appelle par activité d'appel; les voies de l'appelant prennent sur le travailleur de la santé et le système de point de soins pour la durée de l'appel.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Медицинский работник заполняет один из бланков DAK, вопросник FHIR R4, соответствующий структурированному сбору данных, по мере того, как они издаются, и система точечной помощи превращает заполненный вопросник в ресурсы, за которые он отсылает форму (SDC экстракт). Типичный для любого DAK: регистрация клиента, запись посещения, направление. Диаграмма DAK называет его по вызову; полосы вызова забирают работников здравоохранения и систему консультирования на время вызова. Навыки: полный сдик-вопросник, экстра-вопросник-ответ (пакет автор-кто-март-руководящие принципы).",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Медицинский работник заполняет один из бланков DAK, вопросник FHIR R4, соответствующий структурированному сбору данных, по мере того, как они издаются, и система точечной помощи превращает заполненный вопросник в ресурсы, за которые он отсылает форму (SDC экстракт). Типичный для любого DAK: регистрация клиента, запись посещения, направление. Диаграмма DAK называет его по вызову; полосы вызова забирают работников здравоохранения и систему консультирования на время вызова. Навыки: полный сдик-вопросник, экстра-вопросник-ответ (пакет автор-кто-март-руководящие принципы).",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Медицинский работник заполняет один из бланков DAK, вопросник FHIR R4, соответствующий структурированному сбору данных, по мере того, как они издаются, и система точечной помощи превращает заполненный вопросник в ресурсы, за которые он отсылает форму (SDC экстракт). Типичный для любого DAK: регистрация клиента, запись посещения, направление. Диаграмма DAK называет его по вызову; полосы вызова забирают работников здравоохранения и систему консультирования на время вызова. Навыки: полный сдик-вопросник, экстра-вопросник-ответ (пакет автор-кто-март-руководящие принципы).",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "一名卫生工作者填写了DAK表格中的一张,即FHIR R4问卷,该问卷与结构化数据采集相符,因为其设备可以提供,而护理点系统则将填写完毕的问卷回复转换成其提取表格(SDC $extrap)所代表资源。对于任何DAK来说,通用的表格是:注册客户、记录访问、查询。DAK的图表称它为呼叫活动;在通话期间,呼叫者使用卫生工作者和护理点系统。技能:完整问卷、抽取问卷回复(包装作者-谁-谁-聪明-指南)。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "一名卫生工作者填写了DAK表格中的一张,即FHIR R4问卷,该问卷与结构化数据采集相符,因为其设备可以提供,而护理点系统则将填写完毕的问卷回复转换成其提取表格(SDC $extrap)所代表资源。对于任何DAK来说,通用的表格是:注册客户、记录访问、查询。DAK的图表称它为呼叫活动;在通话期间,呼叫者使用卫生工作者和护理点系统。技能:完整问卷、抽取问卷回复(包装作者-谁-谁-聪明-指南)。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "一名卫生工作者填写了DAK表格中的一张,即FHIR R4问卷,该问卷与结构化数据采集相符,因为其设备可以提供,而护理点系统则将填写完毕的问卷回复转换成其提取表格(SDC $extrap)所代表资源。对于任何DAK来说,通用的表格是:注册客户、记录访问、查询。DAK的图表称它为呼叫活动;在通话期间,呼叫者使用卫生工作者和护理点系统。技能:完整问卷、抽取问卷回复(包装作者-谁-谁-聪明-指南)。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "A person in the health-worker role: completes the form with the client, confirming any pre-populated answer.",
+   "hash": "9beeaa09dae3aac6",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الشخص الذي يقوم بدور العامل الصحي: يملأ الاستمارة مع العميل، ويؤكد أي إجابة مأهولة مسبقاً.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "الشخص الذي يقوم بدور العامل الصحي: يملأ الاستمارة مع العميل، ويؤكد أي إجابة مأهولة مسبقاً.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "الشخص الذي يقوم بدور العامل الصحي: يملأ الاستمارة مع العميل، ويؤكد أي إجابة مأهولة مسبقاً.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Una persona en el rol de trabajador de la salud: completa el formulario con el cliente, confirmando cualquier respuesta pre-poblada.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Una persona en el rol de trabajador de la salud: completa el formulario con el cliente, confirmando cualquier respuesta pre-poblada.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Una persona en el rol de trabajador de la salud: completa el formulario con el cliente, confirmando cualquier respuesta pre-poblada.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Une personne dans le rôle de travailleur de la santé : remplit le formulaire avec le client, confirmant toute réponse pré-remplie.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Une personne dans le rôle de travailleur de la santé : remplit le formulaire avec le client, confirmant toute réponse pré-remplie.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Une personne dans le rôle de travailleur de la santé : remplit le formulaire avec le client, confirmant toute réponse pré-remplie.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Лицо, занимающее должность медицинского работника: заполняет бланк с клиентом, подтверждая любой предварительный ответ.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Лицо, занимающее должность медицинского работника: заполняет бланк с клиентом, подтверждая любой предварительный ответ.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Лицо, занимающее должность медицинского работника: заполняет бланк с клиентом, подтверждая любой предварительный ответ.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "从事保健工作者工作的人:与客户填写表格,确认任何预先获得的答案。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "从事保健工作者工作的人:与客户填写表格,确认任何预先获得的答案。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "从事保健工作者工作的人:与客户填写表格,确认任何预先获得的答案。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Capture data with an SDC questionnaire",
+   "hash": "1747db93b871d5b7",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استقطب البيانات مع استبيان SDC",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "استقطب البيانات مع استبيان SDC",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "استقطب البيانات مع استبيان SDC",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Captura de datos con un cuestionario SDC",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Captura de datos con un cuestionario SDC",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Captura de datos con un cuestionario SDC",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Saisir des données avec un questionnaire SDC",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Saisir des données avec un questionnaire SDC",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Saisir des données avec un questionnaire SDC",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Захват данных с помощью вопросника по УРЦ",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Захват данных с помощью вопросника по УРЦ",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Захват данных с помощью вопросника по УРЦ",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "带 SDC 问卷的捕获数据",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "带 SDC 问卷的捕获数据",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "带 SDC 问卷的捕获数据",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Complete the form",
+   "hash": "7e16a029a23278e0",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اكمل الإستمارة",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "اكمل الإستمارة",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "اكمل الإستمارة",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Complete el formulario",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Complete el formulario",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Complete el formulario",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Remplir le formulaire",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Remplir le formulaire",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Remplir le formulaire",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Заполните бланк",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Заполните бланк",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Заполните бланк",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "填写表格",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "填写表格",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "填写表格",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Complete the SDC Questionnaire as the device renders it: confirm or correct each pre-populated answer, answer every enabled required item within its constraints, and submit. The result is a completed QuestionnaireResponse.",
+   "hash": "a3522c32f857ae27",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اكمل استبيان SDC كما تعطيه الأداة: تأكيد أو تصحيح كل إجابة مأهولة مسبقاً، الإجابة على كل عنصر ممكن مطلوب ضمن قيوده، وتقديم. النتيجة هي إستبيان مكتمل.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "اكمل استبيان SDC كما تعطيه الأداة: تأكيد أو تصحيح كل إجابة مأهولة مسبقاً، الإجابة على كل عنصر ممكن مطلوب ضمن قيوده، وتقديم. النتيجة هي إستبيان مكتمل.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "اكمل استبيان SDC كما تعطيه الأداة: تأكيد أو تصحيح كل إجابة مأهولة مسبقاً، الإجابة على كل عنصر ممكن مطلوب ضمن قيوده، وتقديم. النتيجة هي إستبيان مكتمل.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Complete el Cuestionario SDC como el dispositivo lo renderiza: confirme o corrija cada respuesta pre-poblada, responda a cada elemento requerido habilitado dentro de sus limitaciones, y envíe. El resultado es un CuestionarioResponse completado.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Complete el Cuestionario SDC como el dispositivo lo renderiza: confirme o corrija cada respuesta pre-poblada, responda a cada elemento requerido habilitado dentro de sus limitaciones, y envíe. El resultado es un CuestionarioResponse completado.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Complete el Cuestionario SDC como el dispositivo lo renderiza: confirme o corrija cada respuesta pre-poblada, responda a cada elemento requerido habilitado dentro de sus limitaciones, y envíe. El resultado es un CuestionarioResponse completado.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Remplir le questionnaire SDC au fur et à mesure que l'appareil le rend : confirmer ou corriger chaque réponse pré-remplie, répondre à chaque élément requis activé dans les limites de ses contraintes et soumettre.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Remplir le questionnaire SDC au fur et à mesure que l'appareil le rend : confirmer ou corriger chaque réponse pré-remplie, répondre à chaque élément requis activé dans les limites de ses contraintes et soumettre.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Remplir le questionnaire SDC au fur et à mesure que l'appareil le rend : confirmer ou corriger chaque réponse pré-remplie, répondre à chaque élément requis activé dans les limites de ses contraintes et soumettre.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Заполните вопросник SDC по мере его поступления: подтвердите или исправьте каждый предварительно загруженный ответ, ответьте на каждый потребовавшийся элемент в пределах своих ограничений и представьте.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Заполните вопросник SDC по мере его поступления: подтвердите или исправьте каждый предварительно загруженный ответ, ответьте на каждый потребовавшийся элемент в пределах своих ограничений и представьте.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Заполните вопросник SDC по мере его поступления: подтвердите или исправьте каждый предварительно загруженный ответ, ответьте на каждый потребовавшийся элемент в пределах своих ограничений и представьте.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "按设备完成 SDC 问卷: 确认或纠正每个预选的答案, 在其限制范围内回答每个启用的必需项目并提交。 结果是完成的问卷回复 。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "按设备完成 SDC 问卷: 确认或纠正每个预选的答案, 在其限制范围内回答每个启用的必需项目并提交。 结果是完成的问卷回复 。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "按设备完成 SDC 问卷: 确认或纠正每个预选的答案, 在其限制范围内回答每个启用的必需项目并提交。 结果是完成的问卷回复 。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Extract and save the resources",
+   "hash": "34c0ebed66718d43",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استخرج الموارد ووفرها",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "استخرج الموارد ووفرها",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "استخرج الموارد ووفرها",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Extraer y ahorrar los recursos",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Extraer y ahorrar los recursos",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Extraer y ahorrar los recursos",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Extraire et sauver les ressources",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Extraire et sauver les ressources",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Extraire et sauver les ressources",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Добыча и экономия ресурсов",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Добыча и экономия ресурсов",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Добыча и экономия ресурсов",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "提取并保存资源",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "提取并保存资源",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "提取并保存资源",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Form declares an extraction?",
+   "hash": "6828ed8c647f5be9",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإستمارة تُعلنُ a إستخراج؟",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "الإستمارة تُعلنُ a إستخراج؟",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "الإستمارة تُعلنُ a إستخراج؟",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "¿El formulario declara una extracción?",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "¿El formulario declara una extracción?",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "¿El formulario declara una extracción?",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Le formulaire déclare une extraction ?",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Le formulaire déclare une extraction ?",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Le formulaire déclare une extraction ?",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Форма указывает на извлечение?",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Форма указывает на извлечение?",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Форма указывает на извлечение?",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "表格显示抽取吗?",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "表格显示抽取吗?",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "表格显示抽取吗?",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Health worker",
+   "hash": "c8104eb9113f68dd",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أخصائية صحية",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "أخصائية صحية",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "أخصائية صحية",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Trabajador de la salud",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Trabajador de la salud",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Trabajador de la salud",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Agent de santé",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Agent de santé",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Agent de santé",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Медицинский работник",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Медицинский работник",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Медицинский работник",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "卫生工作者",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "卫生工作者",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "卫生工作者",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "no",
+   "hash": "8a1993623ee7edec",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "لا",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "لا",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "no",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "no",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "no",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Pas de problème.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Pas de problème.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Pas de problème.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Нет",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Нет",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Нет",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "没有",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "没有",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "没有",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Point-of-care system",
+   "hash": "0fa8ed155990fd5d",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نظام مراكز الرعاية",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "نظام مراكز الرعاية",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "نظام مراكز الرعاية",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Sistema de puntos de atención",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Sistema de puntos de atención",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Sistema de puntos de atención",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Système de points de service",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Système de points de service",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Système de points de service",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Система центров медицинского обслуживания",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Система центров медицинского обслуживания",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Система центров медицинского обслуживания",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "护理点制度",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "护理点制度",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "护理点制度",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Read from the Questionnaire, not decided: an SDC extraction extension (targetStructureMap, itemExtractionContext or observationExtract) is present, or it is not.",
+   "hash": "1101aa7c58c7bcd1",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اقرأ من الاستبيان، ولم يتقرر: يوجد أو لا يوجد امتداد لاستخراج SDC (خريطة هيكلية مستهدفة، أو نص خروج عنصر أو برنامج مراقبة مستخرج).",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "اقرأ من الاستبيان، ولم يتقرر: يوجد أو لا يوجد امتداد لاستخراج SDC (خريطة هيكلية مستهدفة، أو نص خروج عنصر أو برنامج مراقبة مستخرج).",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "اقرأ من الاستبيان، ولم يتقرر: يوجد أو لا يوجد امتداد لاستخراج SDC (خريطة هيكلية مستهدفة، أو نص خروج عنصر أو برنامج مراقبة مستخرج).",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Lea el Cuestionario, no decidido: una extensión de extracción SDC (targetStructureMap, itemExtractionContext u observationExtract) está presente, o no lo está.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Lea el Cuestionario, no decidido: una extensión de extracción SDC (targetStructureMap, itemExtractionContext u observationExtract) está presente, o no lo está.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Lea el Cuestionario, no decidido: una extensión de extracción SDC (targetStructureMap, itemExtractionContext u observationExtract) está presente, o no lo está.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Lire à partir du questionnaire, non décidé: une extension d'extraction SDC (cibleStructureMap, itemExtractionContexte ou observationExtraction) est présente, ou non.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Lire à partir du questionnaire, non décidé: une extension d'extraction SDC (cibleStructureMap, itemExtractionContexte ou observationExtraction) est présente, ou non.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Lire à partir du questionnaire, non décidé: une extension d'extraction SDC (cibleStructureMap, itemExtractionContexte ou observationExtraction) est présente, ou non.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": false,
+     "pick": {
+      "text": "Прочитать из вопросника не решено: присутствует или нет расширение экстракции SDC (targetStructureMap, count ExtractContext или conservationExtract).",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Прочитать из вопросника не решено: присутствует или нет расширение экстракции SDC (targetStructureMap, count ExtractContext или conservationExtract).",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": false
+      }
+     ]
+    },
+    "zh": {
+     "text": "从调查表中读取,未决定:存在或没有SDC提取扩展(目标结构图、项目摘要或观测摘要)。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "从调查表中读取,未决定:存在或没有SDC提取扩展(目标结构图、项目摘要或观测摘要)。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "从调查表中读取,未决定:存在或没有SDC提取扩展(目标结构图、项目摘要或观测摘要)。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Resources saved",
+   "hash": "f515f46f23b3807c",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الموارد التي تم توفيرها",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "الموارد التي تم توفيرها",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "الموارد التي تم توفيرها",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Recursos ahorrados",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Recursos ahorrados",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Recursos ahorrados",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Ressources économisées",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Ressources économisées",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Ressources économisées",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Экономия ресурсов",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Экономия ресурсов",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Экономия ресурсов",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "节省的资源",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "节省的资源",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "节省的资源",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Response stored",
+   "hash": "43587e26649189d7",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تم تخزين الرد",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "تم تخزين الرد",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "تم تخزين الرد",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Respuesta almacenada",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Respuesta almacenada",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Respuesta almacenada",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Réponse enregistrée",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Réponse enregistrée",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Réponse enregistrée",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Ответ хранится",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Ответ хранится",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Ответ хранится",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "反应已储存",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "反应已储存",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "反应已储存",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "Run SDC $extract by the method the Questionnaire declares and save the resulting transaction Bundle whole, queued when offline.",
+   "hash": "d188282d9d23eb5f",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "شغّل SDC extract بالطريقه التي يعلن بها الاستبيان واحفظ الصفقة الناتجة كاملة، مصطفة عند التوقف عن الاتصال.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "شغّل SDC extract بالطريقه التي يعلن بها الاستبيان واحفظ الصفقة الناتجة كاملة، مصطفة عند التوقف عن الاتصال.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "شغّل SDC extract بالطريقه التي يعلن بها الاستبيان واحفظ الصفقة الناتجة كاملة، مصطفة عند التوقف عن الاتصال.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Ejecute SDC $extract por el método que el Cuestionario declara y guarde la transacción resultante Paquete completo, en cola cuando esté fuera de línea.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Ejecute SDC $extract por el método que el Cuestionario declara y guarde la transacción resultante Paquete completo, en cola cuando esté fuera de línea.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Ejecute SDC $extract por el método que el Cuestionario declara y guarde la transacción resultante Paquete completo, en cola cuando esté fuera de línea.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Exécutez SDC $extract par la méthode que le questionnaire déclare et enregistrez la transaction résultante Bundle entier, en file d'attente lorsque hors ligne.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Exécutez SDC $extract par la méthode que le questionnaire déclare et enregistrez la transaction résultante Bundle entier, en file d'attente lorsque hors ligne.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Exécutez SDC $extract par la méthode que le questionnaire déclare et enregistrez la transaction résultante Bundle entier, en file d'attente lorsque hors ligne.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "",
+     "status": "missing",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "使用问卷声明的方法运行 SDC $extracte 并保存由此产生的交易包, 退出时排队 。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "使用问卷声明的方法运行 SDC $extracte 并保存由此产生的交易包, 退出时排队 。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "使用问卷声明的方法运行 SDC $extracte 并保存由此产生的交易包, 退出时排队 。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "The app or EHR the form is filled in: extracts and saves the resources, offline first.",
+   "hash": "19a4c6897f7f3203",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التطبيق أو EHR يتم ملء النموذج: يستخرج ويوفّر الموارد، خارج الشبكة أولا.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "التطبيق أو EHR يتم ملء النموذج: يستخرج ويوفّر الموارد، خارج الشبكة أولا.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "التطبيق أو EHR يتم ملء النموذج: يستخرج ويوفّر الموارد، خارج الشبكة أولا.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "La aplicación o EHR el formulario se rellena: extrae y guarda los recursos, sin conexión primero.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "La aplicación o EHR el formulario se rellena: extrae y guarda los recursos, sin conexión primero.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "La aplicación o EHR el formulario se rellena: extrae y guarda los recursos, sin conexión primero.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "L'application ou EHR le formulaire est rempli: extrait et enregistre les ressources, hors ligne d'abord.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "L'application ou EHR le formulaire est rempli: extrait et enregistre les ressources, hors ligne d'abord.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "L'application ou EHR le formulaire est rempli: extrait et enregistre les ressources, hors ligne d'abord.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Приложение или EHR бланк заполняется: выдержки и экономит ресурсы, сначала офлайн.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Приложение или EHR бланк заполняется: выдержки и экономит ресурсы, сначала офлайн.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Приложение или EHR бланк заполняется: выдержки и экономит ресурсы, сначала офлайн.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "应用程序或 EHR 该表填入: 提取并保存资源, 首先脱机 。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "应用程序或 EHR 该表填入: 提取并保存资源, 首先脱机 。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "应用程序或 EHR 该表填入: 提取并保存资源, 首先脱机 。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "The client's resources, and the response they came from, are in the record.",
+   "hash": "e11210b9661c0cfa",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مصادر العميل، والاستجابة التي جاءت من، هي في السجل.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "مصادر العميل، والاستجابة التي جاءت من، هي في السجل.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "مصادر العميل، والاستجابة التي جاءت من، هي في السجل.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Los recursos del cliente, y la respuesta de la que vinieron, están en el registro.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Los recursos del cliente, y la respuesta de la que vinieron, están en el registro.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Los recursos del cliente, y la respuesta de la que vinieron, están en el registro.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Les ressources du client et la réponse qu'ils ont apportée sont au dossier.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Les ressources du client et la réponse qu'ils ont apportée sont au dossier.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Les ressources du client et la réponse qu'ils ont apportée sont au dossier.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Ресурсы клиента и их ответ на них зафиксированы в протоколе.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Ресурсы клиента и их ответ на них зафиксированы в протоколе.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Ресурсы клиента и их ответ на них зафиксированы в протоколе.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "客户的资源 以及他们的反应 都记录在案",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "客户的资源 以及他们的反应 都记录在案",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "客户的资源 以及他们的反应 都记录在案",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "The DAK's process reaches a step that records data on a form: registering a client, a visit, a referral.",
+   "hash": "81e91234aa7d4817",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عملية DAK تصل إلى خطوة تسجل البيانات على استمارة: تسجيل العميل، زيارة، إحالة.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "عملية DAK تصل إلى خطوة تسجل البيانات على استمارة: تسجيل العميل، زيارة، إحالة.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "عملية DAK تصل إلى خطوة تسجل البيانات على استمارة: تسجيل العميل، زيارة، إحالة.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "El proceso del DAK alcanza un paso que registra datos en un formulario: registrar un cliente, una visita, una referencia.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "El proceso del DAK alcanza un paso que registra datos en un formulario: registrar un cliente, una visita, una referencia.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "El proceso del DAK alcanza un paso que registra datos en un formulario: registrar un cliente, una visita, una referencia.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Le processus de la DAK atteint une étape qui enregistre les données sur un formulaire : l'enregistrement d'un client, une visite, une référence.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Le processus de la DAK atteint une étape qui enregistre les données sur un formulaire : l'enregistrement d'un client, une visite, une référence.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Le processus de la DAK atteint une étape qui enregistre les données sur un formulaire : l'enregistrement d'un client, une visite, une référence.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Процесс DAK достигает этапа, который регистрирует данные на бланке: регистрация клиента, посещение, направление.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Процесс DAK достигает этапа, который регистрирует данные на бланке: регистрация клиента, посещение, направление.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Процесс DAK достигает этапа, который регистрирует данные на бланке: регистрация клиента, посещение, направление.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "DAK的程序达到了在表格上记录数据的一步:登记客户、访问、转介。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "DAK的程序达到了在表格上记录数据的一步:登记客户、访问、转介。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "DAK的程序达到了在表格上记录数据的一步:登记客户、访问、转介。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "The form declares no extraction: the QuestionnaireResponse itself is the record.",
+   "hash": "0b98bc3d713c3305",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإستمارة لا تعلن أي إستخراج: الإستبيان نفسه هو السجل.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "الإستمارة لا تعلن أي إستخراج: الإستبيان نفسه هو السجل.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "الإستمارة لا تعلن أي إستخراج: الإستبيان نفسه هو السجل.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "El formulario no declara extracción: el CuestionarioResponse en sí mismo es el registro.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "El formulario no declara extracción: el CuestionarioResponse en sí mismo es el registro.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "El formulario no declara extracción: el CuestionarioResponse en sí mismo es el registro.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "Le formulaire ne déclare aucune extraction: le QuestionnaireRéponse elle-même est le dossier.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Le formulaire ne déclare aucune extraction: le QuestionnaireRéponse elle-même est le dossier.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Le formulaire ne déclare aucune extraction: le QuestionnaireRéponse elle-même est le dossier.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "В бланке не говорится о извлечения: ответ на вопросник сам по себе является записью.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "В бланке не говорится о извлечения: ответ на вопросник сам по себе является записью.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "В бланке не говорится о извлечения: ответ на вопросник сам по себе является записью.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "表格未声明提取内容:调查表本身即为记录。",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "表格未声明提取内容:调查表本身即为记录。",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "表格未声明提取内容:调查表本身即为记录。",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "msgid": "yes",
+   "hash": "29bbd53e2c3f4276",
+   "sources": [
+    "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نعم",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "نعم",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "نعم",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ar",
+        "at": "2026-11-15T06:51:04.574Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "es": {
+     "text": "Sí",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Sí",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Sí",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-es",
+        "at": "2026-11-15T06:59:33.065Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "fr": {
+     "text": "oui",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "oui",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "oui",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-fr",
+        "at": "2026-11-15T07:06:40.711Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "ru": {
+     "text": "Есть.",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "Есть.",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "Есть.",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-ru",
+        "at": "2026-11-15T07:16:49.225Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    },
+    "zh": {
+     "text": "对",
+     "status": "mt",
+     "fuzzy": true,
+     "pick": {
+      "text": "对",
+      "candidate": 0,
+      "tier": "mt",
+      "unofficial": true
+     },
+     "candidates": [
+      {
+       "text": "对",
+       "source": {
+        "kind": "open-mt",
+        "id": "Helsinki-NLP/opus-mt-en-zh",
+        "at": "2026-11-15T07:25:07.221Z"
+       },
+       "tier": "mt",
+       "score": 5,
+       "stale": false,
+       "qaFailures": [],
+       "current": true
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

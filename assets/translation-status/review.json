@@ -8,7 +8,31 @@
   "fence": "json translation-adjudication",
   "maxUrl": 7500,
   "candidatesSchema": "translation-candidates/v1",
-  "candidatesSuffix": ".candidates.json"
+  "candidatesSuffix": ".candidates.json",
+  "chooseField": "choose",
+  "proposeOpen": true
+ },
+ "strings": {
+  "schema": "folio-translation-strings/v1",
+  "base": "assets/translation-status/strings/",
+  "statuses": [
+   "official",
+   "adjudicated",
+   "proposed",
+   "agent",
+   "mt",
+   "missing",
+   "stale",
+   "unattributed"
+  ],
+  "pickTiers": [
+   "official",
+   "human-adjudicated",
+   "human-proposed",
+   "platform",
+   "agent",
+   "mt"
+  ]
  },
  "layers": [
   {
@@ -64,7 +88,8 @@
        "fuzzy": 0,
        "hash": "35c0766431513faf"
       }
-     }
+     },
+     "strings": "cat-harness/concepts/agentic-harness.json"
     },
     {
      "catalogue": "concepts/architecture",
@@ -107,7 +132,8 @@
        "fuzzy": 0,
        "hash": "ff3abbacd094c740"
       }
-     }
+     },
+     "strings": "cat-harness/concepts/architecture.json"
     },
     {
      "catalogue": "concepts/content-types",
@@ -150,7 +176,8 @@
        "fuzzy": 0,
        "hash": "65083021da70d5b1"
       }
-     }
+     },
+     "strings": "cat-harness/concepts/content-types.json"
     },
     {
      "catalogue": "concepts/skills",
@@ -193,7 +220,8 @@
        "fuzzy": 0,
        "hash": "76a9ecea849c491a"
       }
-     }
+     },
+     "strings": "cat-harness/concepts/skills.json"
     },
     {
      "catalogue": "glossary",
@@ -234,7 +262,8 @@
        "fuzzy": 0,
        "hash": "f86e61bbccca23f1"
       }
-     }
+     },
+     "strings": "cat-harness/glossary.json"
     },
     {
      "catalogue": "glossary/bootstrap--terms",
@@ -277,7 +306,8 @@
        "fuzzy": 0,
        "hash": "426c7160d550230c"
       }
-     }
+     },
+     "strings": "cat-harness/glossary/bootstrap--terms.json"
     },
     {
      "catalogue": "glossary/cat-harness--platform",
@@ -320,7 +350,8 @@
        "fuzzy": 0,
        "hash": "0f1ec6472ed983fc"
       }
-     }
+     },
+     "strings": "cat-harness/glossary/cat-harness--platform.json"
     },
     {
      "catalogue": "guides/agent-onboarding",
@@ -364,7 +395,8 @@
        "fuzzy": 0,
        "hash": "36fbe6a483077d36"
       }
-     }
+     },
+     "strings": "cat-harness/guides/agent-onboarding.json"
     },
     {
      "catalogue": "guides/beans-and-todos",
@@ -407,7 +439,8 @@
        "fuzzy": 0,
        "hash": "9d5283d3e71372e6"
       }
-     }
+     },
+     "strings": "cat-harness/guides/beans-and-todos.json"
     },
     {
      "catalogue": "index",
@@ -451,7 +484,8 @@
        "fuzzy": 0,
        "hash": "ff949bbdfdea399d"
       }
-     }
+     },
+     "strings": "cat-harness/index.json"
     },
     {
      "catalogue": "kg-viewer",
@@ -499,7 +533,8 @@
        "hash": "5fe781f307253cc2",
        "generatedBy": "folio-assistant translate-kg-viewer"
       }
-     }
+     },
+     "strings": "cat-harness/kg-viewer.json"
     },
     {
      "catalogue": "process/crdm-methodology",
@@ -538,7 +573,8 @@
        "translated": 0,
        "fuzzy": 0
       }
-     }
+     },
+     "strings": "cat-harness/process/crdm-methodology.json"
     },
     {
      "catalogue": "start/accessibility",
@@ -581,7 +617,8 @@
        "fuzzy": 0,
        "hash": "ad16a56b3b001084"
       }
-     }
+     },
+     "strings": "cat-harness/start/accessibility.json"
     },
     {
      "catalogue": "start/contributing",
@@ -624,7 +661,8 @@
        "fuzzy": 0,
        "hash": "cbdaee7278339950"
       }
-     }
+     },
+     "strings": "cat-harness/start/contributing.json"
     },
     {
      "catalogue": "start/getting-started",
@@ -667,7 +705,8 @@
        "fuzzy": 0,
        "hash": "eec6ed915f1848bc"
       }
-     }
+     },
+     "strings": "cat-harness/start/getting-started.json"
     },
     {
      "catalogue": "start/installation",
@@ -710,7 +749,8 @@
        "fuzzy": 0,
        "hash": "97d00129a092fa2c"
       }
-     }
+     },
+     "strings": "cat-harness/start/installation.json"
     }
    ],
    "templatesOnly": 99
@@ -726,8 +766,499 @@
     "ru",
     "zh"
    ],
-   "rows": [],
-   "templatesOnly": 10
+   "rows": [
+    {
+     "catalogue": "processes/act-on-decision-support",
+     "sources": [
+      "../smart-base/L4/processes/act-on-decision-support.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 32,
+       "translated": 0,
+       "fuzzy": 31,
+       "hash": "9582b07dd55feebb",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 32,
+       "translated": 0,
+       "fuzzy": 32,
+       "hash": "0d34b5d28888ede8",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 32,
+       "translated": 0,
+       "fuzzy": 32,
+       "hash": "3fd7b7404c50eb14",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 32,
+       "translated": 0,
+       "fuzzy": 28,
+       "hash": "f3fbc0922ca7e38a",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 32,
+       "translated": 0,
+       "fuzzy": 30,
+       "hash": "9c70567e2b9aac28",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/act-on-decision-support.json"
+    },
+    {
+     "catalogue": "processes/classify-and-code-content",
+     "sources": [
+      "../smart-base/L1/processes/classify-and-code-content.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 36,
+       "translated": 0,
+       "fuzzy": 35,
+       "hash": "505820195b1e2820",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 36,
+       "translated": 0,
+       "fuzzy": 36,
+       "hash": "e631592000fcbaf3",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 36,
+       "translated": 0,
+       "fuzzy": 35,
+       "hash": "1a7bcb6a5edb9877",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 36,
+       "translated": 0,
+       "fuzzy": 32,
+       "hash": "71b93c4f5af48266",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 36,
+       "translated": 0,
+       "fuzzy": 35,
+       "hash": "86d2dcc64caa275e",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/classify-and-code-content.json"
+    },
+    {
+     "catalogue": "processes/dak-l3-ig",
+     "sources": [
+      "../smart-base/L3/collab/processes/dak-l3-ig.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 12,
+       "translated": 0,
+       "fuzzy": 12,
+       "hash": "46860ab908346e84",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 12,
+       "translated": 0,
+       "fuzzy": 12,
+       "hash": "e4c364d623ce2124",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 12,
+       "translated": 0,
+       "fuzzy": 12,
+       "hash": "4e5154f325c89617",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 12,
+       "translated": 0,
+       "fuzzy": 11,
+       "hash": "694184571f7e9c7f",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 12,
+       "translated": 0,
+       "fuzzy": 11,
+       "hash": "90d8d4e793edf14a",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/dak-l3-ig.json"
+    },
+    {
+     "catalogue": "processes/diig-investment-path",
+     "sources": [
+      "../smart-base/collab/processes/diig-investment-path.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 44,
+       "translated": 0,
+       "fuzzy": 41,
+       "hash": "b3c3aa155b8f8eb6",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 44,
+       "translated": 0,
+       "fuzzy": 43,
+       "hash": "0a5a258c0cae9c5b",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 44,
+       "translated": 0,
+       "fuzzy": 43,
+       "hash": "2a2a165a5a4d3c26",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 44,
+       "translated": 0,
+       "fuzzy": 37,
+       "hash": "b2c35ed62ee9f9a9",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 44,
+       "translated": 0,
+       "fuzzy": 43,
+       "hash": "4b09e1c6f771be3b",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/diig-investment-path.json"
+    },
+    {
+     "catalogue": "processes/dth-authoring",
+     "sources": [
+      "../smart-base/L2/collab/processes/dth-authoring.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 99,
+       "translated": 0,
+       "fuzzy": 98,
+       "hash": "b4fcee95ecdc2525",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 99,
+       "translated": 0,
+       "fuzzy": 99,
+       "hash": "7c3a6da66af92f82",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 99,
+       "translated": 0,
+       "fuzzy": 98,
+       "hash": "7973de915feabf3f",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 99,
+       "translated": 0,
+       "fuzzy": 93,
+       "hash": "51c70070cabe3b19",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 99,
+       "translated": 0,
+       "fuzzy": 99,
+       "hash": "be70804f87921f38",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/dth-authoring.json"
+    },
+    {
+     "catalogue": "processes/l2-component-edit-review",
+     "sources": [
+      "../smart-base/L2/collab/processes/l2-component-edit-review.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 33,
+       "translated": 0,
+       "fuzzy": 31,
+       "hash": "09686b24da355a10",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 33,
+       "translated": 0,
+       "fuzzy": 33,
+       "hash": "837aa9ea9996781f",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 33,
+       "translated": 0,
+       "fuzzy": 33,
+       "hash": "357cbedb1a29dc60",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 33,
+       "translated": 0,
+       "fuzzy": 31,
+       "hash": "5f7d4db0ad86a5ed",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 33,
+       "translated": 0,
+       "fuzzy": 33,
+       "hash": "d095a478907cff5e",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/l2-component-edit-review.json"
+    },
+    {
+     "catalogue": "processes/l2-dak-authoring",
+     "sources": [
+      "../smart-base/L2/collab/processes/l2-dak-authoring.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 56,
+       "translated": 0,
+       "fuzzy": 55,
+       "hash": "6802093bdcfe8996",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 56,
+       "translated": 0,
+       "fuzzy": 56,
+       "hash": "e2534763183a8468",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 56,
+       "translated": 0,
+       "fuzzy": 56,
+       "hash": "bb56e10ff08e417d",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 56,
+       "translated": 0,
+       "fuzzy": 55,
+       "hash": "7ef3656b8923a5d1",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 56,
+       "translated": 0,
+       "fuzzy": 56,
+       "hash": "6a878fcb1d69c74d",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/l2-dak-authoring.json"
+    },
+    {
+     "catalogue": "processes/questionnaire-data-capture",
+     "sources": [
+      "../smart-base/L4/processes/questionnaire-data-capture.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 20,
+       "translated": 0,
+       "fuzzy": 20,
+       "hash": "481a9d338dfc11f3",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 20,
+       "translated": 0,
+       "fuzzy": 20,
+       "hash": "378d750d5b2cc8c0",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 20,
+       "translated": 0,
+       "fuzzy": 20,
+       "hash": "6dfdf512794e21d7",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 20,
+       "translated": 0,
+       "fuzzy": 18,
+       "hash": "33f52a3c76088262",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 20,
+       "translated": 0,
+       "fuzzy": 20,
+       "hash": "58178fe7d3698286",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/questionnaire-data-capture.json"
+    },
+    {
+     "catalogue": "processes/SGAuthoring.DAKLifecycle",
+     "sources": [
+      "../smart-base/collab/processes/content/SGAuthoring.DAKLifecycle.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 119,
+       "translated": 0,
+       "fuzzy": 119,
+       "hash": "a66824753d984828",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 119,
+       "translated": 0,
+       "fuzzy": 119,
+       "hash": "75231b989a8a3995",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 119,
+       "translated": 0,
+       "fuzzy": 118,
+       "hash": "6874866fb81feb6e",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 119,
+       "translated": 0,
+       "fuzzy": 113,
+       "hash": "fa107ceba3c8475f",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 119,
+       "translated": 0,
+       "fuzzy": 118,
+       "hash": "10879c356443e147",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/SGAuthoring.DAKLifecycle.json"
+    },
+    {
+     "catalogue": "processes/smart-guideline-end-to-end",
+     "sources": [
+      "../smart-base/collab/processes/content/smart-guideline-end-to-end.bpmn"
+     ],
+     "cells": {
+      "ar": {
+       "state": "machine",
+       "entries": 54,
+       "translated": 0,
+       "fuzzy": 54,
+       "hash": "2d1ad1257def1779",
+       "generatedBy": "machine"
+      },
+      "es": {
+       "state": "machine",
+       "entries": 54,
+       "translated": 0,
+       "fuzzy": 54,
+       "hash": "94b89d512b91e4a8",
+       "generatedBy": "machine"
+      },
+      "fr": {
+       "state": "machine",
+       "entries": 54,
+       "translated": 0,
+       "fuzzy": 54,
+       "hash": "a1012b1568900a4c",
+       "generatedBy": "machine"
+      },
+      "ru": {
+       "state": "machine",
+       "entries": 54,
+       "translated": 0,
+       "fuzzy": 52,
+       "hash": "11201383081c3601",
+       "generatedBy": "machine"
+      },
+      "zh": {
+       "state": "machine",
+       "entries": 54,
+       "translated": 0,
+       "fuzzy": 54,
+       "hash": "28f92c3d0a0dd88a",
+       "generatedBy": "machine"
+      }
+     },
+     "strings": "smart-base/processes/smart-guideline-end-to-end.json"
+    }
+   ],
+   "templatesOnly": 0
   },
   {
    "name": "fhir-harness",
@@ -747,6 +1278,7 @@
       "QA_PAGE_STRINGS.acceptedLocal",
       "QA_PAGE_STRINGS.ast",
       "QA_PAGE_STRINGS.by",
+      "QA_PAGE_STRINGS.carriedSummary",
       "QA_PAGE_STRINGS.content",
       "QA_PAGE_STRINGS.count",
       "QA_PAGE_STRINGS.englishOnly",
@@ -827,40 +1359,41 @@
      "cells": {
       "ar": {
        "state": "machine",
-       "entries": 78,
-       "translated": 78,
+       "entries": 79,
+       "translated": 79,
        "fuzzy": 0,
-       "hash": "5e57123dc114acb1"
+       "hash": "016cbce792f58d47"
       },
       "es": {
        "state": "machine",
-       "entries": 78,
-       "translated": 78,
+       "entries": 79,
+       "translated": 79,
        "fuzzy": 0,
-       "hash": "12c7ba0cfe795e82"
+       "hash": "ebe975cd13894d77"
       },
       "fr": {
        "state": "machine",
-       "entries": 78,
-       "translated": 78,
+       "entries": 79,
+       "translated": 79,
        "fuzzy": 0,
-       "hash": "fd225bb601eb87a6"
+       "hash": "8d25b05b7d679929"
       },
       "ru": {
        "state": "machine",
-       "entries": 78,
-       "translated": 78,
+       "entries": 79,
+       "translated": 79,
        "fuzzy": 0,
-       "hash": "c719c3f9781a7069"
+       "hash": "c613cfb3f1b8131f"
       },
       "zh": {
        "state": "machine",
-       "entries": 78,
-       "translated": 78,
+       "entries": 79,
+       "translated": 79,
        "fuzzy": 0,
-       "hash": "bf6f65d685d39de1"
+       "hash": "b71d3aa94b23ffa3"
       }
-     }
+     },
+     "strings": "fhir-harness/generated-pages/ig-qa-page.json"
     },
     {
      "catalogue": "publisher/messages",
@@ -914,7 +1447,8 @@
        "fuzzy": 0,
        "hash": "adaa6ef34effa312"
       }
-     }
+     },
+     "strings": "fhir-harness/publisher/messages.json"
     }
    ],
    "templatesOnly": 7
@@ -980,7 +1514,8 @@
        "fuzzy": 0,
        "hash": "87fdeff54cdbbe73"
       }
-     }
+     },
+     "strings": "folio-assistant-core/block-kinds.json"
     },
     {
      "catalogue": "glossary/folio-assistant-core--platform",
@@ -1023,7 +1558,8 @@
        "fuzzy": 0,
        "hash": "653dbe5c73b91335"
       }
-     }
+     },
+     "strings": "folio-assistant-core/glossary/folio-assistant-core--platform.json"
     },
     {
      "catalogue": "glossary/glossary-page",
@@ -1066,7 +1602,8 @@
        "fuzzy": 0,
        "hash": "52da61e8571f9626"
       }
-     }
+     },
+     "strings": "folio-assistant-core/glossary/glossary-page.json"
     },
     {
      "catalogue": "guides/document-ingestion",
@@ -1109,7 +1646,8 @@
        "fuzzy": 2,
        "hash": "952059e0a201543a"
       }
-     }
+     },
+     "strings": "folio-assistant-core/guides/document-ingestion.json"
     },
     {
      "catalogue": "process/evidence",
@@ -1152,7 +1690,8 @@
        "fuzzy": 0,
        "hash": "e3c4114f83c7b195"
       }
-     }
+     },
+     "strings": "folio-assistant-core/process/evidence.json"
     },
     {
      "catalogue": "process/publication-workflow",
@@ -1195,7 +1734,8 @@
        "fuzzy": 0,
        "hash": "63e8edc8af386047"
       }
-     }
+     },
+     "strings": "folio-assistant-core/process/publication-workflow.json"
     }
    ],
    "templatesOnly": 32
@@ -1253,7 +1793,8 @@
        "fuzzy": 0,
        "hash": "00ac00a0ac966708"
       }
-     }
+     },
+     "strings": "smart-trust/apps/onboarding-game.json"
     },
     {
      "catalogue": "glossary",
@@ -1291,7 +1832,8 @@
        "fuzzy": 0,
        "hash": "9d4d7bd13f4f8445"
       }
-     }
+     },
+     "strings": "smart-trust/glossary.json"
     },
     {
      "catalogue": "glossary/smart-trust--gdhcn",
@@ -1339,7 +1881,8 @@
        "hash": "e04ba9f7b09f2879",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/glossary/smart-trust--gdhcn.json"
     },
     {
      "catalogue": "menu/menu",
@@ -1387,7 +1930,8 @@
        "hash": "bcef3ae7c810e676",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/menu/menu.json"
     },
     {
      "catalogue": "pagecontent/business_requirements",
@@ -1435,7 +1979,8 @@
        "hash": "fd90ac9d7d1bbc2b",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/business_requirements.json"
     },
     {
      "catalogue": "pagecontent/changes",
@@ -1483,7 +2028,8 @@
        "hash": "082395fe7fc34cb6",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/changes.json"
     },
     {
      "catalogue": "pagecontent/concepts",
@@ -1531,7 +2077,8 @@
        "hash": "446210914c033c64",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts.json"
     },
     {
      "catalogue": "pagecontent/concepts_certificate_governance",
@@ -1579,7 +2126,8 @@
        "hash": "45b58bff7217fce9",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_certificate_governance.json"
     },
     {
      "catalogue": "pagecontent/concepts_did",
@@ -1627,7 +2175,8 @@
        "hash": "c52a36836bb94832",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_did.json"
     },
     {
      "catalogue": "pagecontent/concepts_did_gdhcn",
@@ -1675,7 +2224,8 @@
        "hash": "860cc2597ba9e271",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_did_gdhcn.json"
     },
     {
      "catalogue": "pagecontent/concepts_did_specifications",
@@ -1723,7 +2273,8 @@
        "hash": "d80e10c6a5ed6f60",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_did_specifications.json"
     },
     {
      "catalogue": "pagecontent/concepts_did_v1",
@@ -1771,7 +2322,8 @@
        "hash": "8a52613b36fced13",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_did_v1.json"
     },
     {
      "catalogue": "pagecontent/concepts_onboarding",
@@ -1819,7 +2371,8 @@
        "hash": "9af8015994e8d5d2",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_onboarding.json"
     },
     {
      "catalogue": "pagecontent/concepts_onboarding_checklist",
@@ -1867,7 +2420,8 @@
        "hash": "dbb4f45bf6d44fde",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_onboarding_checklist.json"
     },
     {
      "catalogue": "pagecontent/concepts_onboarding_process_full",
@@ -1915,7 +2469,8 @@
        "hash": "0a6f59f4324986ec",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/concepts_onboarding_process_full.json"
     },
     {
      "catalogue": "pagecontent/dak-api",
@@ -1963,7 +2518,8 @@
        "hash": "ace265b45952ce06",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/dak-api.json"
     },
     {
      "catalogue": "pagecontent/data_exchange",
@@ -2011,7 +2567,8 @@
        "hash": "e93fc0251546257c",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/data_exchange.json"
     },
     {
      "catalogue": "pagecontent/decision_support",
@@ -2059,7 +2616,8 @@
        "hash": "22814c116d98d8f7",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/decision_support.json"
     },
     {
      "catalogue": "pagecontent/dependencies",
@@ -2107,7 +2665,8 @@
        "hash": "86d76bf2b5dc0fbf",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/dependencies.json"
     },
     {
      "catalogue": "pagecontent/deployment",
@@ -2155,7 +2714,8 @@
        "hash": "494ecb8a3e90cbdd",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/deployment.json"
     },
     {
      "catalogue": "pagecontent/disclaimer",
@@ -2203,7 +2763,8 @@
        "hash": "0a0cd8c6cc122029",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/disclaimer.json"
     },
     {
      "catalogue": "pagecontent/downloads",
@@ -2251,7 +2812,8 @@
        "hash": "ea1243f20dc1befb",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/downloads.json"
     },
     {
      "catalogue": "pagecontent/dsa_processes",
@@ -2299,7 +2861,8 @@
        "hash": "7496c951ce0075fc",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/dsa_processes.json"
     },
     {
      "catalogue": "pagecontent/endpoints",
@@ -2347,7 +2910,8 @@
        "hash": "ddf859e8cf0bf3c0",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/endpoints.json"
     },
     {
      "catalogue": "pagecontent/ethical_principles",
@@ -2395,7 +2959,8 @@
        "hash": "1b46ac60c572417c",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/ethical_principles.json"
     },
     {
      "catalogue": "pagecontent/faq",
@@ -2443,7 +3008,8 @@
        "hash": "dec95000eb08fe7e",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/faq.json"
     },
     {
      "catalogue": "pagecontent/feedback",
@@ -2491,7 +3057,8 @@
        "hash": "e9aa1844357c4023",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/feedback.json"
     },
     {
      "catalogue": "pagecontent/functional",
@@ -2539,7 +3106,8 @@
        "hash": "6078526ab818966f",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/functional.json"
     },
     {
      "catalogue": "pagecontent/hcert_spec",
@@ -2587,7 +3155,8 @@
        "hash": "3a0508c242e9c293",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/hcert_spec.json"
     },
     {
      "catalogue": "pagecontent/home",
@@ -2635,7 +3204,8 @@
        "hash": "59669adafc1625fb",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/home.json"
     },
     {
      "catalogue": "pagecontent/indices",
@@ -2683,7 +3253,8 @@
        "hash": "bf97842e81a70405",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/indices.json"
     },
     {
      "catalogue": "pagecontent/license",
@@ -2731,7 +3302,8 @@
        "hash": "173cca3828bfb248",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/license.json"
     },
     {
      "catalogue": "pagecontent/maps",
@@ -2779,7 +3351,8 @@
        "hash": "1a1326d6fa9bfdc3",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/maps.json"
     },
     {
      "catalogue": "pagecontent/overview",
@@ -2827,7 +3400,8 @@
        "hash": "3a1aa0beda27bc1c",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/overview.json"
     },
     {
      "catalogue": "pagecontent/qr_code_generation",
@@ -2875,7 +3449,8 @@
        "hash": "f8da2a303b9fa647",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/qr_code_generation.json"
     },
     {
      "catalogue": "pagecontent/reference_implementation",
@@ -2923,7 +3498,8 @@
        "hash": "ca45cb469f97c4de",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/reference_implementation.json"
     },
     {
      "catalogue": "pagecontent/security_privacy",
@@ -2971,7 +3547,8 @@
        "hash": "f1bcd50cd6c53e80",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/security_privacy.json"
     },
     {
      "catalogue": "pagecontent/sequence-diagrams",
@@ -3019,7 +3596,8 @@
        "hash": "71fd4cf5b769b85b",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/sequence-diagrams.json"
     },
     {
      "catalogue": "pagecontent/support",
@@ -3067,7 +3645,8 @@
        "hash": "3a250e097ab5282d",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/support.json"
     },
     {
      "catalogue": "pagecontent/system-actors",
@@ -3115,7 +3694,8 @@
        "hash": "fd0e280bce95c273",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/system-actors.json"
     },
     {
      "catalogue": "pagecontent/testing",
@@ -3163,7 +3743,8 @@
        "hash": "d9702d4209e7dde5",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/testing.json"
     },
     {
      "catalogue": "pagecontent/transactions",
@@ -3211,7 +3792,8 @@
        "hash": "d0a7af334f70ef93",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/transactions.json"
     },
     {
      "catalogue": "pagecontent/trust_domains",
@@ -3259,7 +3841,8 @@
        "hash": "81ce47d4676a8e0d",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/trust_domains.json"
     },
     {
      "catalogue": "pagecontent/trust_network_gateway_architecture",
@@ -3307,7 +3890,8 @@
        "hash": "3cb9591552ce8ffe",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/trust_network_gateway_architecture.json"
     },
     {
      "catalogue": "pagecontent/use_cases",
@@ -3355,7 +3939,8 @@
        "hash": "1a8869a053d358cd",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/pagecontent/use_cases.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB",
@@ -3403,7 +3988,8 @@
        "hash": "75606683c73bcfef",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.Apply",
@@ -3451,7 +4037,8 @@
        "hash": "d0b24fc47b1f0980",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.Apply.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.ChangeKeys",
@@ -3499,7 +4086,8 @@
        "hash": "d86dac891b1cc0dc",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.ChangeKeys.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.ConnectTest",
@@ -3547,7 +4135,8 @@
        "hash": "6a420003f15fd0f8",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.ConnectTest.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.ConveyLetter",
@@ -3595,7 +4184,8 @@
        "hash": "86b69ec5e7180168",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.ConveyLetter.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.GoLive",
@@ -3643,7 +4233,8 @@
        "hash": "65db0efea83e0fae",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.GoLive.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.PrepareKeys",
@@ -3691,7 +4282,8 @@
        "hash": "062d965c4dd6f91b",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.PrepareKeys.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.RegisterKeys",
@@ -3739,7 +4331,8 @@
        "hash": "b80b10a83703cf2a",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.RegisterKeys.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.Terminate",
@@ -3787,7 +4380,8 @@
        "hash": "c170333a4366d417",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.Terminate.json"
     },
     {
      "catalogue": "processes/GDHCN.ONB.VerifyLetter",
@@ -3835,7 +4429,8 @@
        "hash": "6e75824645e6084b",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.ONB.VerifyLetter.json"
     },
     {
      "catalogue": "processes/GDHCN.TrustDomain.Join",
@@ -3883,7 +4478,8 @@
        "hash": "26b7dbe6e2f3a86c",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.TrustDomain.Join.json"
     },
     {
      "catalogue": "processes/GDHCN.TrustDomain.Propose",
@@ -3931,7 +4527,8 @@
        "hash": "f5b065d5084e30f4",
        "generatedBy": "agent"
       }
-     }
+     },
+     "strings": "smart-trust/processes/GDHCN.TrustDomain.Propose.json"
     }
    ],
    "templatesOnly": 0
@@ -3989,7 +4586,8 @@
        "fuzzy": 0,
        "hash": "ed4c506ac2e3d79f"
       }
-     }
+     },
+     "strings": "who-iris/glossary/who-iris--who-terms.json"
     },
     {
      "catalogue": "site/iris-site",
@@ -4032,7 +4630,8 @@
        "fuzzy": 0,
        "hash": "479ece57d5006c38"
       }
-     }
+     },
+     "strings": "who-iris/site/iris-site.json"
     }
    ],
    "templatesOnly": 4
@@ -4096,7 +4695,8 @@
        "fuzzy": 0,
        "hash": "a86f7d96e3794cb1"
       }
-     }
+     },
+     "strings": "folio-assistant-sci/block-kinds.json"
     }
    ],
    "templatesOnly": 3

@@ -367,27 +367,27 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f1f3f0ca8bf9a664ccf5216c0ff3e35da82eb9db",
-  "sourceCommitSha": "f1f3f0ca8bf9a664ccf5216c0ff3e35da82eb9db",
-  "sourceTree": "859e4592e832b905d2ee98471122fc546a1eb00f",
-  "sourceCommitAt": "2026-11-17T20:36:53+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1d9a41d22d76c6fbdf763550d7bf8b16a3e9207c",
+  "sourceCommitSha": "1d9a41d22d76c6fbdf763550d7bf8b16a3e9207c",
+  "sourceTree": "5c8e19b257a159401033b2e5387238973d9601dd",
+  "sourceCommitAt": "2026-11-18T21:44:46+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 35,
+    "Skill": 36,
     "Process": 10,
-    "SequenceFlow": 191,
+    "SequenceFlow": 193,
     "Lane": 30,
-    "ProcessNode": 179,
-    "TranslationSource": 50,
+    "ProcessNode": 181,
+    "TranslationSource": 100,
     "GraphTypology": 25,
     "Voice": 2,
     "Role": 3,
     "Subgraph": 33,
     "Theme": 1,
     "Asset": 3,
-    "Tool": 22,
-    "Schema": 9
+    "Tool": 23,
+    "Schema": 10
   },
   "@graph": [
     {
@@ -397,7 +397,7 @@
       "title": "smart-guideline-end-to-end",
       "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation, as an orchestrator of ten named stage skills, each with its own input and output contract: guideline-use-case, dak-l1-library, recommendation-extraction, l2-dependency-choice, l2-dak-authoring, l3-dependency-choice, l3-fhir-authoring, l4-application-brief, wireframe-design-review and l4-application-build. Each stage's output is the next stage's input. Human adjudication follows every stage as QA, not as a gate, but the order of the stages is a rule: no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested. Read before starting any end-to-end authoring or adaptation, and to find which skill runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
-      "instructionLines": 257,
+      "instructionLines": 363,
       "inputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/output.schema.json",
       "hasInstructions": true,
@@ -453,6 +453,21 @@
       "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/guideline-gap-report",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "guideline-gap-report",
+      "title": "guideline-gap-report",
+      "description": "The QA report smart-guideline-end-to-end writes after every stage: where a guideline's chain from L1 recommendation to L2 asset to L3 resource is broken, which source figures and tables are not yet computable, and which assets have no review requested, a review pending, or a review sent back. Each gap names the asset, the stage that closes it and the role that reviews it. It is staged with the stage's output and linked from every review request, so each reviewer sees where their asset sits and what is still missing. A report, never a gate. Read after any stage of smart-guideline-end-to-end or dth-authoring, and when asked \"what is left to do on this guideline?\".",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-gap-report.md",
+      "instructionLines": 91,
+      "inputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
@@ -596,7 +611,7 @@
       "title": "dth-authoring",
       "description": "How a WHO Digital Transformation Handbook (DTH) is produced, from sources to publication, in the seven stages and milestones of dth-authoring.bpmn — and the rules the diagram cannot carry: which review sheet each stage uses, the DAK kinds every DTH is written in, and how a term is deprecated. Read before starting a new DTH, before moving one to its next stage, and before setting up its feedback or public-comment sheet.",
       "instructionsPath": "L2/skills/smart-l2/dth-authoring.md",
-      "instructionLines": 87,
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -609,7 +624,7 @@
       "title": "l2-component-edit-review",
       "description": "How one L2 DAK component is edited by the agent and reviewed by a person: personas and user scenarios, BPMN business processes, DMN decision and scheduling logic, core data elements and glossary with their terminology bindings, indicators and requirements. One subprocess for all of them. The agent edits, checks, renders and stages with a before/after, then hands the component on, and review forks alongside it without blocking. Per component, it lists the authoring skill, checker, renderer and diff, reviewing role, and what the reviewer judges. Read before authoring or reviewing any L2 component, and when an L2 track asks what its reviewer needs to see.",
       "instructionsPath": "L2/skills/smart-l2/l2-component-edit-review.md",
-      "instructionLines": 108,
+      "instructionLines": 129,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2065,7 +2080,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Human adjudicators",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inSubgraph": "http://smart.who.int/base/directory/collab"
     },
     {
@@ -2118,7 +2133,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/dak-l1-library"
+        "http://smart.who.int/base/skill/dak-l1-library",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2158,7 +2174,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
@@ -2205,7 +2221,10 @@
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/recommendation-extraction",
-        "http://smart.who.int/base/skill/dak-l1-library"
+        "http://smart.who.int/base/skill/dak-l1-library",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/figure-rebuild",
+        "http://smart.who.int/base/skill/transcription-verbatim",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2245,7 +2264,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -2294,7 +2313,8 @@
       "requires": [
         "http://smart.who.int/base/skill/l2-dependency-choice",
         "http://smart.who.int/base/skill/smart-base-tools",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2334,7 +2354,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -2365,7 +2385,8 @@
         "http://smart.who.int/base/skill/dak-preprocessing",
         "http://smart.who.int/base/skill/dak-postprocessing",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2406,7 +2427,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -2437,7 +2458,8 @@
         "http://smart.who.int/base/skill/l3-dependency-choice",
         "http://smart.who.int/base/skill/ig-artifact-ingestion",
         "http://smart.who.int/base/skill/smart-base-tools",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2477,7 +2499,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -2549,7 +2571,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
         "http://smart.who.int/base/skill/l2-dak-authoring",
         "http://smart.who.int/base/skill/smart-base-tools",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2589,7 +2612,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -2662,7 +2685,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/l4-application-build"
+        "http://smart.who.int/base/skill/l4-application-build",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2702,7 +2726,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -2744,7 +2768,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2762,7 +2786,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2780,7 +2804,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2798,7 +2822,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2816,7 +2840,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2834,7 +2858,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2852,7 +2876,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3269,8 +3293,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested"
       ],
-      "nodeCount": 45,
-      "flowCount": 53,
+      "nodeCount": 47,
+      "flowCount": 55,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
@@ -3567,6 +3591,22 @@
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_ArchReview",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_L3Built",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
@@ -4429,7 +4469,8 @@
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_DthAuthoring#flow/F35",
-        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F36"
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F36",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a"
       ],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
@@ -4475,6 +4516,48 @@
       "outgoing": [
         "http://smart.who.int/base/process/Process_DthAuthoring#flow/F38"
       ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "The DAK content as a FHIR IG",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/smart-guideline-end-to-end",
+        "http://smart.who.int/base/skill/guideline-gap-report"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_L3Built",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "IG built",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b"
+      ],
+      "outgoing": [],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
     },
     {
@@ -6729,12 +6812,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/SGAuthoring.DAKLifecycle.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/SGAuthoring.DAKLifecycle (ar)",
+      "description": "The ar gettext catalogue of the strings processes/SGAuthoring.DAKLifecycle holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/SGAuthoring.DAKLifecycle.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ar/processes/SGAuthoring.DAKLifecycle.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/SGAuthoring.DAKLifecycle (ar, template)",
       "description": "The gettext template of the strings processes/SGAuthoring.DAKLifecycle holds, extracted for the ar locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ar/processes/SGAuthoring.DAKLifecycle.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/act-on-decision-support.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/act-on-decision-support (ar)",
+      "description": "The ar gettext catalogue of the strings processes/act-on-decision-support holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/act-on-decision-support.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6747,12 +6848,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/classify-and-code-content.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/classify-and-code-content (ar)",
+      "description": "The ar gettext catalogue of the strings processes/classify-and-code-content holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/classify-and-code-content.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ar/processes/classify-and-code-content.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/classify-and-code-content (ar, template)",
       "description": "The gettext template of the strings processes/classify-and-code-content holds, extracted for the ar locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ar/processes/classify-and-code-content.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/dak-l3-ig.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dak-l3-ig (ar)",
+      "description": "The ar gettext catalogue of the strings processes/dak-l3-ig holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/dak-l3-ig.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6765,12 +6884,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/diig-investment-path.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/diig-investment-path (ar)",
+      "description": "The ar gettext catalogue of the strings processes/diig-investment-path holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/diig-investment-path.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ar/processes/diig-investment-path.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/diig-investment-path (ar, template)",
       "description": "The gettext template of the strings processes/diig-investment-path holds, extracted for the ar locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ar/processes/diig-investment-path.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/dth-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dth-authoring (ar)",
+      "description": "The ar gettext catalogue of the strings processes/dth-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/dth-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6783,12 +6920,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/l2-component-edit-review.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-component-edit-review (ar)",
+      "description": "The ar gettext catalogue of the strings processes/l2-component-edit-review holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/l2-component-edit-review.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ar/processes/l2-component-edit-review.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/l2-component-edit-review (ar, template)",
       "description": "The gettext template of the strings processes/l2-component-edit-review holds, extracted for the ar locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ar/processes/l2-component-edit-review.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/l2-dak-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-dak-authoring (ar)",
+      "description": "The ar gettext catalogue of the strings processes/l2-dak-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/l2-dak-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6801,12 +6956,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/questionnaire-data-capture.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/questionnaire-data-capture (ar)",
+      "description": "The ar gettext catalogue of the strings processes/questionnaire-data-capture holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/questionnaire-data-capture.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ar/processes/questionnaire-data-capture.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/questionnaire-data-capture (ar, template)",
       "description": "The gettext template of the strings processes/questionnaire-data-capture holds, extracted for the ar locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ar/processes/questionnaire-data-capture.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ar/processes/smart-guideline-end-to-end.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/smart-guideline-end-to-end (ar)",
+      "description": "The ar gettext catalogue of the strings processes/smart-guideline-end-to-end holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ar/processes/smart-guideline-end-to-end.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6819,12 +6992,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/SGAuthoring.DAKLifecycle.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/SGAuthoring.DAKLifecycle (es)",
+      "description": "The es gettext catalogue of the strings processes/SGAuthoring.DAKLifecycle holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/SGAuthoring.DAKLifecycle.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/es/processes/SGAuthoring.DAKLifecycle.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/SGAuthoring.DAKLifecycle (es, template)",
       "description": "The gettext template of the strings processes/SGAuthoring.DAKLifecycle holds, extracted for the es locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/es/processes/SGAuthoring.DAKLifecycle.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/act-on-decision-support.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/act-on-decision-support (es)",
+      "description": "The es gettext catalogue of the strings processes/act-on-decision-support holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/act-on-decision-support.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6837,12 +7028,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/classify-and-code-content.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/classify-and-code-content (es)",
+      "description": "The es gettext catalogue of the strings processes/classify-and-code-content holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/classify-and-code-content.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/es/processes/classify-and-code-content.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/classify-and-code-content (es, template)",
       "description": "The gettext template of the strings processes/classify-and-code-content holds, extracted for the es locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/es/processes/classify-and-code-content.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/dak-l3-ig.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dak-l3-ig (es)",
+      "description": "The es gettext catalogue of the strings processes/dak-l3-ig holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/dak-l3-ig.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6855,12 +7064,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/diig-investment-path.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/diig-investment-path (es)",
+      "description": "The es gettext catalogue of the strings processes/diig-investment-path holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/diig-investment-path.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/es/processes/diig-investment-path.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/diig-investment-path (es, template)",
       "description": "The gettext template of the strings processes/diig-investment-path holds, extracted for the es locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/es/processes/diig-investment-path.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/dth-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dth-authoring (es)",
+      "description": "The es gettext catalogue of the strings processes/dth-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/dth-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6873,12 +7100,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/l2-component-edit-review.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-component-edit-review (es)",
+      "description": "The es gettext catalogue of the strings processes/l2-component-edit-review holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/l2-component-edit-review.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/es/processes/l2-component-edit-review.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/l2-component-edit-review (es, template)",
       "description": "The gettext template of the strings processes/l2-component-edit-review holds, extracted for the es locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/es/processes/l2-component-edit-review.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/l2-dak-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-dak-authoring (es)",
+      "description": "The es gettext catalogue of the strings processes/l2-dak-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/l2-dak-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6891,12 +7136,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/questionnaire-data-capture.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/questionnaire-data-capture (es)",
+      "description": "The es gettext catalogue of the strings processes/questionnaire-data-capture holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/questionnaire-data-capture.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/es/processes/questionnaire-data-capture.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/questionnaire-data-capture (es, template)",
       "description": "The gettext template of the strings processes/questionnaire-data-capture holds, extracted for the es locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/es/processes/questionnaire-data-capture.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/es/processes/smart-guideline-end-to-end.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/smart-guideline-end-to-end (es)",
+      "description": "The es gettext catalogue of the strings processes/smart-guideline-end-to-end holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/es/processes/smart-guideline-end-to-end.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6909,12 +7172,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/SGAuthoring.DAKLifecycle.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/SGAuthoring.DAKLifecycle (fr)",
+      "description": "The fr gettext catalogue of the strings processes/SGAuthoring.DAKLifecycle holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/SGAuthoring.DAKLifecycle.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/fr/processes/SGAuthoring.DAKLifecycle.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/SGAuthoring.DAKLifecycle (fr, template)",
       "description": "The gettext template of the strings processes/SGAuthoring.DAKLifecycle holds, extracted for the fr locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/fr/processes/SGAuthoring.DAKLifecycle.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/act-on-decision-support.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/act-on-decision-support (fr)",
+      "description": "The fr gettext catalogue of the strings processes/act-on-decision-support holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/act-on-decision-support.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6927,12 +7208,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/classify-and-code-content.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/classify-and-code-content (fr)",
+      "description": "The fr gettext catalogue of the strings processes/classify-and-code-content holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/classify-and-code-content.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/fr/processes/classify-and-code-content.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/classify-and-code-content (fr, template)",
       "description": "The gettext template of the strings processes/classify-and-code-content holds, extracted for the fr locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/fr/processes/classify-and-code-content.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/dak-l3-ig.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dak-l3-ig (fr)",
+      "description": "The fr gettext catalogue of the strings processes/dak-l3-ig holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/dak-l3-ig.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6945,12 +7244,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/diig-investment-path.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/diig-investment-path (fr)",
+      "description": "The fr gettext catalogue of the strings processes/diig-investment-path holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/diig-investment-path.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/fr/processes/diig-investment-path.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/diig-investment-path (fr, template)",
       "description": "The gettext template of the strings processes/diig-investment-path holds, extracted for the fr locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/fr/processes/diig-investment-path.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/dth-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dth-authoring (fr)",
+      "description": "The fr gettext catalogue of the strings processes/dth-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/dth-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6963,12 +7280,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/l2-component-edit-review.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-component-edit-review (fr)",
+      "description": "The fr gettext catalogue of the strings processes/l2-component-edit-review holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/l2-component-edit-review.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/fr/processes/l2-component-edit-review.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/l2-component-edit-review (fr, template)",
       "description": "The gettext template of the strings processes/l2-component-edit-review holds, extracted for the fr locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/fr/processes/l2-component-edit-review.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/l2-dak-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-dak-authoring (fr)",
+      "description": "The fr gettext catalogue of the strings processes/l2-dak-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/l2-dak-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6981,12 +7316,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/questionnaire-data-capture.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/questionnaire-data-capture (fr)",
+      "description": "The fr gettext catalogue of the strings processes/questionnaire-data-capture holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/questionnaire-data-capture.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/fr/processes/questionnaire-data-capture.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/questionnaire-data-capture (fr, template)",
       "description": "The gettext template of the strings processes/questionnaire-data-capture holds, extracted for the fr locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/fr/processes/questionnaire-data-capture.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/fr/processes/smart-guideline-end-to-end.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/smart-guideline-end-to-end (fr)",
+      "description": "The fr gettext catalogue of the strings processes/smart-guideline-end-to-end holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/fr/processes/smart-guideline-end-to-end.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -6999,12 +7352,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/SGAuthoring.DAKLifecycle.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/SGAuthoring.DAKLifecycle (ru)",
+      "description": "The ru gettext catalogue of the strings processes/SGAuthoring.DAKLifecycle holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/SGAuthoring.DAKLifecycle.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ru/processes/SGAuthoring.DAKLifecycle.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/SGAuthoring.DAKLifecycle (ru, template)",
       "description": "The gettext template of the strings processes/SGAuthoring.DAKLifecycle holds, extracted for the ru locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ru/processes/SGAuthoring.DAKLifecycle.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/act-on-decision-support.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/act-on-decision-support (ru)",
+      "description": "The ru gettext catalogue of the strings processes/act-on-decision-support holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/act-on-decision-support.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7017,12 +7388,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/classify-and-code-content.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/classify-and-code-content (ru)",
+      "description": "The ru gettext catalogue of the strings processes/classify-and-code-content holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/classify-and-code-content.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ru/processes/classify-and-code-content.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/classify-and-code-content (ru, template)",
       "description": "The gettext template of the strings processes/classify-and-code-content holds, extracted for the ru locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ru/processes/classify-and-code-content.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/dak-l3-ig.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dak-l3-ig (ru)",
+      "description": "The ru gettext catalogue of the strings processes/dak-l3-ig holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/dak-l3-ig.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7035,12 +7424,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/diig-investment-path.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/diig-investment-path (ru)",
+      "description": "The ru gettext catalogue of the strings processes/diig-investment-path holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/diig-investment-path.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ru/processes/diig-investment-path.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/diig-investment-path (ru, template)",
       "description": "The gettext template of the strings processes/diig-investment-path holds, extracted for the ru locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ru/processes/diig-investment-path.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/dth-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dth-authoring (ru)",
+      "description": "The ru gettext catalogue of the strings processes/dth-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/dth-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7053,12 +7460,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/l2-component-edit-review.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-component-edit-review (ru)",
+      "description": "The ru gettext catalogue of the strings processes/l2-component-edit-review holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/l2-component-edit-review.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ru/processes/l2-component-edit-review.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/l2-component-edit-review (ru, template)",
       "description": "The gettext template of the strings processes/l2-component-edit-review holds, extracted for the ru locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ru/processes/l2-component-edit-review.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/l2-dak-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-dak-authoring (ru)",
+      "description": "The ru gettext catalogue of the strings processes/l2-dak-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/l2-dak-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7071,12 +7496,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/questionnaire-data-capture.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/questionnaire-data-capture (ru)",
+      "description": "The ru gettext catalogue of the strings processes/questionnaire-data-capture holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/questionnaire-data-capture.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/ru/processes/questionnaire-data-capture.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/questionnaire-data-capture (ru, template)",
       "description": "The gettext template of the strings processes/questionnaire-data-capture holds, extracted for the ru locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/ru/processes/questionnaire-data-capture.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/ru/processes/smart-guideline-end-to-end.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/smart-guideline-end-to-end (ru)",
+      "description": "The ru gettext catalogue of the strings processes/smart-guideline-end-to-end holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/ru/processes/smart-guideline-end-to-end.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7089,12 +7532,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/SGAuthoring.DAKLifecycle.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/SGAuthoring.DAKLifecycle (zh)",
+      "description": "The zh gettext catalogue of the strings processes/SGAuthoring.DAKLifecycle holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/SGAuthoring.DAKLifecycle.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/zh/processes/SGAuthoring.DAKLifecycle.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/SGAuthoring.DAKLifecycle (zh, template)",
       "description": "The gettext template of the strings processes/SGAuthoring.DAKLifecycle holds, extracted for the zh locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/zh/processes/SGAuthoring.DAKLifecycle.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/act-on-decision-support.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/act-on-decision-support (zh)",
+      "description": "The zh gettext catalogue of the strings processes/act-on-decision-support holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/act-on-decision-support.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7107,12 +7568,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/classify-and-code-content.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/classify-and-code-content (zh)",
+      "description": "The zh gettext catalogue of the strings processes/classify-and-code-content holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/classify-and-code-content.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/zh/processes/classify-and-code-content.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/classify-and-code-content (zh, template)",
       "description": "The gettext template of the strings processes/classify-and-code-content holds, extracted for the zh locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/zh/processes/classify-and-code-content.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/dak-l3-ig.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dak-l3-ig (zh)",
+      "description": "The zh gettext catalogue of the strings processes/dak-l3-ig holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/dak-l3-ig.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7125,12 +7604,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/diig-investment-path.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/diig-investment-path (zh)",
+      "description": "The zh gettext catalogue of the strings processes/diig-investment-path holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/diig-investment-path.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/zh/processes/diig-investment-path.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/diig-investment-path (zh, template)",
       "description": "The gettext template of the strings processes/diig-investment-path holds, extracted for the zh locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/zh/processes/diig-investment-path.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/dth-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/dth-authoring (zh)",
+      "description": "The zh gettext catalogue of the strings processes/dth-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/dth-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7143,12 +7640,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/l2-component-edit-review.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-component-edit-review (zh)",
+      "description": "The zh gettext catalogue of the strings processes/l2-component-edit-review holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/l2-component-edit-review.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/zh/processes/l2-component-edit-review.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/l2-component-edit-review (zh, template)",
       "description": "The gettext template of the strings processes/l2-component-edit-review holds, extracted for the zh locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/zh/processes/l2-component-edit-review.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/l2-dak-authoring.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/l2-dak-authoring (zh)",
+      "description": "The zh gettext catalogue of the strings processes/l2-dak-authoring holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/l2-dak-authoring.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -7161,12 +7676,30 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/questionnaire-data-capture.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/questionnaire-data-capture (zh)",
+      "description": "The zh gettext catalogue of the strings processes/questionnaire-data-capture holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/questionnaire-data-capture.po",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
       "@id": "http://smart.who.int/base/translationSource/zh/processes/questionnaire-data-capture.pot",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
       "title": "processes/questionnaire-data-capture (zh, template)",
       "description": "The gettext template of the strings processes/questionnaire-data-capture holds, extracted for the zh locale: what can be translated.",
       "sourceKind": "translation-sources",
       "sourcePath": "translations/zh/processes/questionnaire-data-capture.pot",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/translationSource/zh/processes/smart-guideline-end-to-end.po",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/TranslationSource",
+      "title": "processes/smart-guideline-end-to-end (zh)",
+      "description": "The zh gettext catalogue of the strings processes/smart-guideline-end-to-end holds: what has been translated, and what is fuzzy.",
+      "sourceKind": "translation-sources",
+      "sourcePath": "translations/zh/processes/smart-guideline-end-to-end.po",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
     },
     {
@@ -8052,7 +8585,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run smart-base/scripts/gen-l1-extraction-pages.ts"
+        "shell": "bun run cat smart-base:l1-extraction:pages"
       },
       "io": {
         "inputs": [
@@ -8691,11 +9224,83 @@
       ]
     },
     {
+      "@id": "http://smart.who.int/base/tools/dak-task-annotations.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "dak-task-annotations",
+      "title": "DAK task annotations → BPMN sidecars",
+      "description": "Read a DAK document's per-task \"NOTES AND ANNOTATIONS\" from its L1 section text (who-iris), match each numbered item to the BPMN task it describes (by @id, then the label's step number with the file's process letter, then the name), add the persona from the task's lane or pool and the data elements, functional requirements and decision tables the DAK workbooks key to the activity id, and write one `dak-task-annotations/v1` sidecar (`<file>.tasks.json`) beside each BPMN (`smart-base/L2-bpmn/scripts/dak-task-annotations.ts`, schema `smart-base/L2-bpmn/schemas/task-annotations.ts`). Items no task matches are listed for a person to adjudicate; a re-run keeps adjudicated matches. `--report` prints what a set of sidecars covers and never fails. The BPMN is read, never written, and nothing FHIR-specific is involved.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run smart-base/L2-bpmn/scripts/dak-task-annotations.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "prefix",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId",
+            "description": "The DAK's id prefix: IMMZ, TB, CHUD.",
+            "required": true,
+            "arg": {
+              "flag": "--prefix"
+            }
+          },
+          {
+            "name": "document",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId",
+            "description": "The L1 library document id the annotations are read from.",
+            "required": true,
+            "arg": {
+              "flag": "--document"
+            }
+          },
+          {
+            "name": "l1",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A section .md of that document holding the annotations blocks; repeatable.",
+            "required": true,
+            "arg": {
+              "flag": "--l1"
+            }
+          },
+          {
+            "name": "bpmn",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A .bpmn file or a directory of them; repeatable.",
+            "required": true,
+            "arg": {
+              "flag": "--bpmn"
+            }
+          },
+          {
+            "name": "xlsx",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/WorkbookPath",
+            "description": "A DAK workbook (data dictionary, requirements, decision-support logic); repeatable.",
+            "required": false,
+            "arg": {
+              "flag": "--xlsx"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "sidecars",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One <file>.tasks.json beside each BPMN (with --write)."
+          }
+        ]
+      },
+      "satisfies": [
+        "http://smart.who.int/base/skill/smart-base-tools"
+      ]
+    },
+    {
       "@id": "http://smart.who.int/base/tools/kg-extract-bpmn.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "kg-extract-bpmn",
       "title": "BPMN → L2-BPMN knowledge graph",
-      "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+      "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. When a `dak-task-annotations/v1` sidecar sits beside the file (`<file>.tasks.json`), each of its entries becomes an l2 `dak-task` that `describes` its BPMN task, with `performedBy`, `usesDataElement`, `specifiedBy` and `invokesDecision` edges by the DAK's own ids. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
       "install": {
         "none": true
       },
@@ -8717,6 +9322,15 @@
             "required": false,
             "arg": {
               "flag": "--personas"
+            }
+          },
+          {
+            "name": "annotations",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A dak-task-annotations/v1 sidecar; defaults to the <file>.tasks.json beside the BPMN, and none is read when neither exists.",
+            "required": false,
+            "arg": {
+              "flag": "--annotations"
             }
           },
           {
@@ -9332,6 +9946,21 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
       "jsonSchema": [
         "http://smart.who.int/base/schema/zod/guideline-portfolio/GuidelinePortfolioSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/task-annotations",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "task-annotations",
+      "title": "task-annotations",
+      "summary": "`dak-task-annotations/v1` — the reviewable record of a DAK's BPMN task",
+      "module": "L2-bpmn/schemas/task-annotations.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-bpmn",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/task-annotations/AnnotationSourceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/task-annotations/DakTaskAnnotationsSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/task-annotations/TaskAnnotationSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/task-annotations/UnmatchedItemSchema.schema.json"
       ]
     }
   ]

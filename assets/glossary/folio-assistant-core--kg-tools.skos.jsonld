@@ -34,6 +34,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/as-drawn-svg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Figure redrawn as drawn, from its PDF vector layer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Draw a figure as SVG from `as-drawn-figure/v1` data: the drawing `scripts/pdf-as-drawn.py` transcribes from the source PDF's vector layer (every path, clip, text run and image in the L1 figure region, at its printed position, colour and size). The SVG keeps the original's layout and style; labels are SVG text held to their printed width, and labels that name a glossary concept link to it."
+        }
+      ],
+      "skos:notation": "as-drawn-svg",
+      "dcterms:source": "folio-assistant-core/tools/as-drawn-svg/as-drawn-svg.ts#as-drawn-svg",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/bibliography-page",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -146,7 +166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept."
+          "@value": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; a tile whose data names a link (URL, glossary concept or who-iris library entry) is an SVG link titled with the tile's name, and a tile with none is drawn without one."
         }
       ],
       "skos:notation": "diig-phases-svg",

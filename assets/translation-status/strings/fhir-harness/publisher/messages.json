@@ -1,0 +1,963 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "fhir-harness",
+ "repository": "litlfred/fhir-harness",
+ "translations": "translations",
+ "catalogue": "publisher/messages",
+ "hashes": {
+  "ar": "44cd147b6d9c3162",
+  "es": "e73bdd662cc4760f",
+  "fr": "ceeca6fbe164bb7d",
+  "ru": "d2769631590fe3e9",
+  "zh": "adaa6ef34effa312"
+ },
+ "strings": [
+  {
+   "msgctxt": "MSG_DRAFT_SRC_STATUS",
+   "msgid": "Reference to draft {2} {0} from {3} {4} {1}",
+   "hash": "9d9b5b9278d9e9f9",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:MSG_DRAFT_SRC_STATUS",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إشارة إلى {2} مسودة {0} من {4} {3} {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Referencia a {2} en borrador {0} desde {4} {3} {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Référence à {2} à l’état de brouillon {0} depuis {4} {3} {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ссылка на черновой {2} {0} из {4} со статусом {3} {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "从 {3} 状态的 {4} {1} 引用了草稿状态的 {2} {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "The resource {0} should have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see {1})",
+   "hash": "5bb189099a5273c9",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينبغي تخصيص معرّف OID للمورد {0} لإتاحة استخدامه مع أنظمة المصطلحات القائمة على OID، مثل CDA (تخصيص OID سهل، انظر {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Al recurso {0} se le debería asignar un OID para un posible uso con sistemas terminológicos basados en OID, p. ej. CDA (asignar un OID es sencillo: véase {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La ressource {0} devrait avoir un OID attribué, pour un éventuel usage avec des systèmes terminologiques fondés sur les OID, par exemple CDA (attribuer un OID est simple : voir {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ресурсу {0} следует назначить OID для возможного использования с терминологическими системами на основе OID, например CDA (назначить OID просто, см. {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "资源 {0} 应分配一个 OID，以便可能用于基于 OID 的术语系统（例如 CDA）（分配 OID 很简单，参见 {1}）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "The resource {0} could usefully have an OID assigned (OIDs are easy to assign - see {1})",
+   "hash": "46207d02e7a6c81a",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "من المفيد تخصيص معرّف OID للمورد {0} (تخصيص OID سهل، انظر {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sería útil asignar un OID al recurso {0} (asignar un OID es sencillo: véase {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Il serait utile d’attribuer un OID à la ressource {0} (attribuer un OID est simple : voir {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ресурсу {0} было бы полезно назначить OID (назначить OID просто, см. {1})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "为资源 {0} 分配一个 OID 会有帮助（分配 OID 很简单，参见 {1}）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "CODESYSTEM_DESIGNATION_DISP_CLASH_LANG",
+   "msgid": "The designation ''{0}'' has no use and is in the same language (''{2}''), so is not differentiated from the base display (''{1}'')",
+   "hash": "320225cbbae2dfab",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:CODESYSTEM_DESIGNATION_DISP_CLASH_LANG",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التسمية «{0}» بلا استخدام وهي باللغة نفسها («{2}»)، لذا لا تتميّز عن العرض الأساسي («{1}»)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La designación «{0}» no tiene uso y está en el mismo idioma («{2}»), por lo que no se distingue de la visualización base («{1}»)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La désignation « {0} » n’a pas d’usage et est dans la même langue (« {2} ») ; elle ne se distingue donc pas de l’affichage de base (« {1} »)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "名称“{0}”没有用途且与基本显示（“{1}”）使用同一语言（“{2}”），因此无法与之区分",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "XHTML_URL_INVALID_CHARS_other",
+   "msgid": "URL contains {0} Invalid Characters: {1}",
+   "hash": "b9282bf5a26ff0a9",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:XHTML_URL_INVALID_CHARS_other",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يحتوي عنوان URL على {0} من الأحرف غير الصالحة: {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L’URL contient {0} caractères non valides : {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "URL содержит недопустимые символы ({0}): {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "URL 包含 {0} 个无效字符：{1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "Name should be usable as an identifier for the module by machine processing applications such as code generation ({0})",
+   "hash": "49d6232bf969b477",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينبغي أن يكون الاسم صالحًا للاستخدام معرّفًا للوحدة في تطبيقات المعالجة الآلية مثل توليد الشيفرة ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El nombre debería poder usarse como identificador del módulo por aplicaciones de procesamiento automático, como la generación de código ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le nom devrait pouvoir servir d’identifiant au module pour les applications de traitement automatique, comme la génération de code ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Имя должно быть пригодно в качестве идентификатора модуля для приложений машинной обработки, например для генерации кода ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "名称应可被机器处理应用（如代码生成）用作模块的标识符（{0}）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "INV_FAILED_SOURCE",
+   "msgid": "Constraint failed: {0}: ''{1}'' (defined in {2})",
+   "hash": "8279f293208d81f0",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:INV_FAILED_SOURCE",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فشل القيد: {0}: «{1}» (مُعرَّف في {2})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Restricción incumplida: {0}: «{1}» (definida en {2})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contrainte non respectée : {0} : « {1} » (définie dans {2})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ограничение не выполнено: {0}: «{1}» (определено в {2})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "约束未满足：{0}：“{1}”（定义于 {2}）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "INV_FAILED_ID",
+   "msgid": "Constraint failed: {0}: ''{1}'' at {2}",
+   "hash": "b93ed875c537a315",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:INV_FAILED_ID",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فشل القيد: {0}: «{1}» عند {2}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Restricción incumplida: {0}: «{1}» en {2}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contrainte non respectée : {0} : « {1} » à {2}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ограничение не выполнено: {0}: «{1}» в {2}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "约束未满足：{0}：“{1}”，位于 {2}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "Element names should be simple alphanumerics with a max of 64 characters, or code generation tools may be broken ({0})",
+   "hash": "f37b8d13668ef89e",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينبغي أن تكون أسماء العناصر أحرفًا وأرقامًا بسيطة بحد أقصى 64 حرفًا، وإلا فقد تتعطل أدوات توليد الشيفرة ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los nombres de los elementos deberían ser alfanuméricos simples de 64 caracteres como máximo; de lo contrario, las herramientas de generación de código pueden fallar ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les noms d’éléments devraient être de simples alphanumériques de 64 caractères au plus, faute de quoi les outils de génération de code risquent de ne pas fonctionner ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Имена элементов должны быть простыми буквенно-цифровыми, не длиннее 64 символов, иначе инструменты генерации кода могут работать неверно ({0})",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "元素名称应为不超过 64 个字符的简单字母数字，否则代码生成工具可能出错（{0}）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "Display_Name_for__should_be_one_of__instead_of_one",
+   "msgid": "Wrong Display Name ''{4}'' for {1}#{2}. Valid display is {3} (for the language(s) ''{5}'')",
+   "hash": "5fc54cb9b5283193",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:Display_Name_for__should_be_one_of__instead_of_one",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اسم عرض خاطئ «{4}» لـ {1}#{2}. العرض الصالح هو {3} (للغة أو اللغات «{5}»)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Nombre de visualización incorrecto «{4}» para {1}#{2}. La visualización válida es {3} (para el idioma o los idiomas «{5}»)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Nom d’affichage erroné « {4} » pour {1}#{2}. L’affichage valide est {3} (pour la ou les langues « {5} »)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{1}#{2} 的显示名称“{4}”有误。有效的显示名称是 {3}（适用语言：“{5}”）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "INV_FAILED",
+   "msgid": "Constraint failed: {0}: ''{1}''",
+   "hash": "00042bd393ae160c",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:INV_FAILED",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فشل القيد: {0}: «{1}»",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Restricción incumplida: {0}: «{1}»",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contrainte non respectée : {0} : « {1} »",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ограничение не выполнено: {0}: «{1}»",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "约束未满足：{0}：“{1}”",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "VALUESET_CODE_CONCEPT_HINT",
+   "msgid": "{3}. Note that the display in the ValueSet does not have to match; this check exists to help check that it''s not accidentally the wrong code",
+   "hash": "2730096e3d0bafa8",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:VALUESET_CODE_CONCEPT_HINT",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "ar": {
+     "text": "{3}. لا يلزم أن يتطابق العرض في مجموعة القيم ValueSet؛ يهدف هذا الفحص إلى التأكد من أن الرمز ليس خاطئًا عن غير قصد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{3}. La visualización en el ValueSet no tiene por qué coincidir; esta comprobación sirve para verificar que no se trate por error del código equivocado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{3}. L’affichage dans le ValueSet n’a pas à correspondre ; cette vérification sert à s’assurer qu’il ne s’agit pas d’un mauvais code par accident",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{3}. Отображение в ValueSet не обязано совпадать; эта проверка помогает убедиться, что код не указан ошибочно",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{3}。ValueSet 中的显示名称不必匹配；此检查旨在帮助确认没有误用错误的代码",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "No conformance term found in the text: {0}",
+   "hash": "9777fe4c4feacf29",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لم يُعثر على مصطلح مطابقة في النص: {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "No se encontró ningún término de conformidad en el texto: {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Aucun terme de conformité trouvé dans le texte : {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В тексте не найден термин соответствия: {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文本中未找到一致性术语：{0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "Conformance resource {0} - the canonical URL ({1}) does not match the URL ({2}). Use the special-url parameter if you really mean for it not to match",
+   "hash": "0f6ccbb2cfa3c7a8",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مورد المطابقة {0}: عنوان URL الأساسي ({1}) لا يطابق عنوان URL ({2}). استخدم المعامل special-url إذا كنت تقصد فعلًا عدم التطابق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Recurso de conformidad {0}: la URL canónica ({1}) no coincide con la URL ({2}). Use el parámetro special-url si de verdad no deben coincidir",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ressource de conformité {0} : l’URL canonique ({1}) ne correspond pas à l’URL ({2}). Utilisez le paramètre special-url si cette différence est voulue",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ресурс соответствия {0}: канонический URL ({1}) не совпадает с URL ({2}). Используйте параметр special-url, если несовпадение намеренное",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一致性资源 {0}：规范 URL（{1}）与 URL（{2}）不匹配。如果确实有意不匹配，请使用 special-url 参数",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "text",
+   "msgid": "URL Mismatch {0} vs {1}",
+   "hash": "cee5fe86768ff025",
+   "sources": [
+    "TEXT_TEMPLATES",
+    "fhir-harness/scripts/ig-publisher-i18n.ts"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عدم تطابق عنوان URL: {0} مقابل {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Las URL no coinciden: {0} frente a {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "URL discordantes : {0} et {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Несовпадение URL: {0} и {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "URL 不匹配：{0} 与 {1}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "MSG_EXPERIMENTAL",
+   "msgid": "Reference to experimental {2} {0}",
+   "hash": "f6be650c0796b48c",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:MSG_EXPERIMENTAL",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "Referencia a {2} experimental {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Référence à {2} expérimental {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "引用了实验性的 {2} {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "TYPE_SPECIFIC_CHECKS_DT_XHTML_UNKNOWN_HREF",
+   "msgid": "Hyperlink scheme ''{3}'' in ''{0}'' at ''{1}'' for ''{2}'' is not a widely supported protocol and should be checked",
+   "hash": "157ddd356bebda21",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:TYPE_SPECIFIC_CHECKS_DT_XHTML_UNKNOWN_HREF",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "El esquema de hipervínculo «{3}» en «{0}» en «{1}» para «{2}» no es un protocolo ampliamente compatible y debería comprobarse",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le schéma d’hyperlien « {3} » dans « {0} » à « {1} » pour « {2} » n’est pas un protocole largement pris en charge et devrait être vérifié",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Схема гиперссылки «{3}» в «{0}» в «{1}» для «{2}» не является широко поддерживаемым протоколом и требует проверки",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "“{2}”的“{1}”处“{0}”中的超链接协议“{3}”并未得到广泛支持，应予检查",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "MSG_DEPRECATED",
+   "msgid": "Reference to deprecated {2} {0}",
+   "hash": "ec9b0bfa8a0124c1",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:MSG_DEPRECATED",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "Referencia a {2} obsoleto {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Référence à {2} obsolète {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "引用了已弃用的 {2} {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "IG_DEPENDENCY_VERSION_WARNING_OLD",
+   "msgid": "The ImplementationGuide uses package {0} released on {2}, but the most recent appropriate version is {1}. This reference is getting old and the more recent version should be considered",
+   "hash": "447dd7054ac2e48a",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:IG_DEPENDENCY_VERSION_WARNING_OLD",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "La guía de implementación usa el paquete {0}, publicado el {2}, pero la versión adecuada más reciente es {1}. Esta referencia se está quedando antigua y debería considerarse la versión más reciente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le guide d’implémentation utilise le paquet {0}, publié le {2}, alors que la version appropriée la plus récente est {1}. Cette référence vieillit : il faudrait envisager la version plus récente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "实施指南使用的程序包 {0} 发布于 {2}，但最新的适用版本是 {1}。此引用正在变旧，应考虑使用更新的版本",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "SD_DERIVATION_NO_CONCRETE",
+   "msgid": "{0} is labeled as an abstract type, but no concrete descendants were found (check definitions - this is usually an error unless concrete definitions are in some other package)",
+   "hash": "8779f726a7c07b39",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:SD_DERIVATION_NO_CONCRETE",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "{0} está marcado como tipo abstracto, pero no se encontraron descendientes concretos (compruebe las definiciones: suele ser un error, salvo que las definiciones concretas estén en otro paquete)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{0} est marqué comme type abstrait, mais aucun descendant concret n’a été trouvé (vérifiez les définitions : c’est en général une erreur, sauf si les définitions concrètes se trouvent dans un autre paquet)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{0} 被标记为抽象类型，但未找到任何具体子类型（请检查定义：除非具体定义位于其他程序包中，否则这通常是错误）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "SD_ED_EXPERIMENTAL_BINDING",
+   "msgid": "The definition for the element ''{0}'' binds to the value set ''{1}'' which is experimental, but this structure is not labeled as experimental",
+   "hash": "9daa3bb21ca19df8",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:SD_ED_EXPERIMENTAL_BINDING",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "La definición del elemento «{0}» se vincula al conjunto de valores «{1}», que es experimental, pero esta estructura no está marcada como experimental",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La définition de l’élément « {0} » est liée au jeu de valeurs « {1} », qui est expérimental, alors que cette structure n’est pas marquée comme expérimentale",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "元素“{0}”的定义绑定到实验性值集“{1}”，但此结构未标记为实验性",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "Type_Specific_Checks_DT_XHTML_Resolve",
+   "msgid": "Hyperlink ''{0}'' at ''{1}'' for ''{2}'' does not resolve",
+   "hash": "b36126192bd9de08",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:Type_Specific_Checks_DT_XHTML_Resolve",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "es": {
+     "text": "El hipervínculo «{0}» en «{1}» para «{2}» no se resuelve",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L’hyperlien « {0} » à « {1} » pour « {2} » ne se résout pas",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Гиперссылка «{0}» в «{1}» для «{2}» не разрешается",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "“{2}”的“{1}”处的超链接“{0}”无法解析",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "This_element_does_not_match_any_known_slice_",
+   "msgid": "This element does not match any known slice {0} (this may not be a problem, but you should check that it''s not intended to match a slice)",
+   "hash": "082cd5dceecfd2c8",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:This_element_does_not_match_any_known_slice_",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "fr": {
+     "text": "Cet élément ne correspond à aucune tranche connue {0} (ce n’est peut-être pas un problème, mais vérifiez qu’il n’est pas censé correspondre à une tranche)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "此元素不匹配任何已知切片 {0}（这可能不是问题，但应检查它是否本应匹配某个切片）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "XHTML_URL_INVALID",
+   "msgid": "The URL is not valid because ''({1})'': {0}",
+   "hash": "0c454463fa12a110",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:XHTML_URL_INVALID",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "fr": {
+     "text": "L’URL n’est pas valide, car « ({1}) » : {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "URL 无效，原因是“({1})”：{0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "CODESYSTEM_CS_HL7_PRESENT_ELEMENT_SUPPL",
+   "msgid": "CodeSystems SHOULD NOT have a stated value for the {0} element when they are a supplement",
+   "hash": "42ca9a4bcc5d86ee",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:CODESYSTEM_CS_HL7_PRESENT_ELEMENT_SUPPL",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "fr": {
+     "text": "Un CodeSystem qui est un supplément NE DEVRAIT PAS indiquer de valeur pour l’élément {0}",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "作为补充的 CodeSystem 不应（SHOULD NOT）为 {0} 元素声明值",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "Type_Specific_Checks_DT_URL_Resolve",
+   "msgid": "No definition could be found for URL value ''{0}''",
+   "hash": "61f65c715089f3fc",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:Type_Specific_Checks_DT_URL_Resolve",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "fr": {
+     "text": "Aucune définition n’a pu être trouvée pour la valeur d’URL « {0} »",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "找不到 URL 值“{0}”的定义",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgctxt": "TYPE_SPECIFIC_CHECKS_DT_CANONICAL_RESOLVE",
+   "msgid": "A definition could not be found for Canonical URL ''{0}''",
+   "hash": "b8bb3391d04e73c2",
+   "sources": [
+    "7.0.1",
+    "Messages.properties:TYPE_SPECIFIC_CHECKS_DT_CANONICAL_RESOLVE",
+    "org.hl7.fhir.utilities"
+   ],
+   "locales": {
+    "fr": {
+     "text": "Aucune définition n’a pu être trouvée pour l’URL canonique « {0} »",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "找不到规范 URL“{0}”的定义",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

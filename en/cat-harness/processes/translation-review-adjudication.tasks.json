@@ -5,132 +5,168 @@
   {
    "id": "Task_TRA_Candidates",
    "name": "Produce candidate translations (any engine)",
-   "left": 10,
+   "left": 8.66,
    "top": 10.56,
    "box": {
-    "left": 7.26,
+    "left": 6.29,
     "top": 18.31,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_SeedFuzzy",
    "name": "Write the first candidate as a fuzzy msgstr",
-   "left": 19.06,
+   "left": 16.51,
    "top": 2.39,
    "box": {
-    "left": 16.32,
+    "left": 14.14,
     "top": 10.14,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_ReviewPage",
    "name": "Build the review page",
-   "left": 28.11,
+   "left": 24.35,
    "top": 10.56,
    "box": {
-    "left": 25.38,
+    "left": 21.98,
     "top": 18.31,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_Review",
    "name": "Read the catalogue on the review page",
-   "left": 28.11,
-   "top": 47.18,
+   "left": 21.73,
+   "top": 40.14,
    "box": {
-    "left": 25.38,
-    "top": 54.93,
-    "width": 0.91,
+    "left": 19.37,
+    "top": 47.89,
+    "width": 0.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_TRA_BlockPane",
+   "name": "Open a block's 🌐 translation pane",
+   "left": 21.73,
+   "top": 54.93,
+   "box": {
+    "left": 19.37,
+    "top": 62.68,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_Choose",
    "name": "Pick a candidate or write your own",
-   "left": 37.55,
+   "left": 32.52,
    "top": 55.63,
    "box": {
-    "left": 34.81,
+    "left": 30.15,
     "top": 63.38,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_FileIssue",
    "name": "File the adjudication issue",
-   "left": 43.21,
+   "left": 37.42,
    "top": 47.18,
    "box": {
-    "left": 40.47,
+    "left": 35.05,
     "top": 54.93,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_Plan",
    "name": "Plan the records (translation:adjudicate)",
-   "left": 52.26,
+   "left": 45.27,
    "top": 10.56,
    "box": {
-    "left": 49.53,
+    "left": 42.9,
     "top": 18.31,
-    "width": 0.91,
+    "width": 0.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_TRA_Propose",
+   "name": "Append every suggestion as a human candidate",
+   "left": 54.42,
+   "top": 10.56,
+   "box": {
+    "left": 52.05,
+    "top": 18.31,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_Refuse",
    "name": "Comment why nothing was recorded",
-   "left": 73.4,
+   "left": 87.1,
    "top": 23.94,
    "box": {
-    "left": 70.66,
+    "left": 84.73,
     "top": 31.69,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_Write",
-   "name": "Write the records",
-   "left": 73.4,
+   "name": "Write the choices and sign-offs",
+   "left": 67.82,
    "top": 10.56,
    "box": {
-    "left": 70.66,
+    "left": 65.45,
     "top": 18.31,
-    "width": 0.91,
+    "width": 0.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_TRA_AutoPick",
+   "name": "Auto-pick by rank",
+   "left": 73.38,
+   "top": 10.56,
+   "box": {
+    "left": 71.01,
+    "top": 18.31,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_OpenPR",
    "name": "Open a ready PR and comment",
-   "left": 83.21,
+   "left": 81.87,
    "top": 10.56,
    "box": {
-    "left": 80.47,
+    "left": 79.5,
     "top": 18.31,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   },
   {
    "id": "Task_TRA_Merge",
    "name": "Review the PR; merge or close",
-   "left": 83.21,
+   "left": 81.87,
    "top": 78.17,
    "box": {
-    "left": 80.47,
+    "left": 79.5,
     "top": 85.92,
-    "width": 0.91,
+    "width": 0.78,
     "height": 3.38
    }
   }
@@ -523,6 +559,86 @@
     ]
    }
   },
+  "Task_TRA_BlockPane": {
+   "id": "Task_TRA_BlockPane",
+   "name": "Open a block's 🌐 translation pane",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane",
+   "stepHref": "translation-review-adjudication.html#step-Task_TRA_BlockPane",
+   "lane": "Reviewer (adjudicator)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
+   "skills": [
+    {
+     "name": "translation-adjudication",
+     "href": "../../../reference/skill-instructions/translation-adjudication.html"
+    }
+   ],
+   "role": {
+    "name": "translation-adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
+    "title": "Translation adjudicator",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../reference/skill-instructions/untainted-verification.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
   "Task_TRA_Choose": {
    "id": "Task_TRA_Choose",
    "name": "Pick a candidate or write your own",
@@ -785,6 +901,108 @@
     ]
    }
   },
+  "Task_TRA_Propose": {
+   "id": "Task_TRA_Propose",
+   "name": "Append every suggestion as a human candidate",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Propose",
+   "stepHref": "translation-review-adjudication.html#step-Task_TRA_Propose",
+   "lane": "Automated pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
+   "skills": [
+    {
+     "name": "translation-adjudication",
+     "href": "../../../reference/skill-instructions/translation-adjudication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
   "Task_TRA_Refuse": {
    "id": "Task_TRA_Refuse",
    "name": "Comment why nothing was recorded",
@@ -889,10 +1107,112 @@
   },
   "Task_TRA_Write": {
    "id": "Task_TRA_Write",
-   "name": "Write the records",
+   "name": "Write the choices and sign-offs",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Write",
    "stepHref": "translation-review-adjudication.html#step-Task_TRA_Write",
+   "lane": "Automated pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
+   "skills": [
+    {
+     "name": "translation-adjudication",
+     "href": "../../../reference/skill-instructions/translation-adjudication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-adjudication",
+      "href": "../../../reference/skill-instructions/translation-adjudication.html"
+     },
+     {
+      "name": "translation-candidate-source",
+      "href": "../../../reference/skill-instructions/translation-candidate-source.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_TRA_AutoPick": {
+   "id": "Task_TRA_AutoPick",
+   "name": "Auto-pick by rank",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick",
+   "stepHref": "translation-review-adjudication.html#step-Task_TRA_AutoPick",
    "lane": "Automated pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
    "skills": [

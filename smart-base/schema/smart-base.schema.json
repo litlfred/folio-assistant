@@ -135,6 +135,12 @@
     "skills/review-decision-support-guidance/output": {
       "$ref": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json"
     },
+    "skills/guideline-gap-report/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/guideline-gap-report/input.schema.json"
+    },
+    "skills/guideline-gap-report/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/guideline-gap-report/output.schema.json"
+    },
     "skills/guideline-use-case/input": {
       "$ref": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json"
     },
@@ -305,6 +311,18 @@
     },
     "zod/ontology/ValueSetSchema": {
       "$ref": "http://smart.who.int/base/schema/zod/ontology/ValueSetSchema.schema.json"
+    },
+    "zod/task-annotations/AnnotationSourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/AnnotationSourceSchema.schema.json"
+    },
+    "zod/task-annotations/DakTaskAnnotationsSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/DakTaskAnnotationsSchema.schema.json"
+    },
+    "zod/task-annotations/TaskAnnotationSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/TaskAnnotationSchema.schema.json"
+    },
+    "zod/task-annotations/UnmatchedItemSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/UnmatchedItemSchema.schema.json"
     }
   },
   "$comment": "Instance graph: http://smart.who.int/base/smart-base.jsonld"

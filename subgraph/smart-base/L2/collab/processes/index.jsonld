@@ -224,6 +224,14 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "@type": "cat-harness:Lane",
       "name": "Business analyst"
@@ -279,6 +287,11 @@
       "name": "Business processes · BPMN"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "The DAK content as a FHIR IG"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Data",
       "@type": "bootstrap:ProcessNode",
       "name": "Data elements, indicators, requirements"
@@ -312,6 +325,11 @@
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Steps",
       "@type": "bootstrap:ProcessNode",
       "name": "Planning steps per chapter"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_L3Built",
+      "@type": "bootstrap:ProcessNode",
+      "name": "IG built"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_Published",

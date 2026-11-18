@@ -1,0 +1,6412 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "cat-harness",
+ "repository": "litlfred/cat-harness",
+ "translations": "translations",
+ "catalogue": "concepts/agentic-harness",
+ "hashes": {
+  "ar": "27177d26a831eba2",
+  "es": "1d9486d5979ac429",
+  "fr": "bc2c6208108e7cec",
+  "ru": "6a674848cdbdc629",
+  "zh": "35c0766431513faf"
+ },
+ "strings": [
+  {
+   "msgid": "Agentic harness",
+   "hash": "a976c82b5b9d5fe1",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إطار العمل الوكيل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Arnés agéntico",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Harnais agentique",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агентная обвязка",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能代理工具框架",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "On this page",
+   "hash": "3eaf2267edd897d6",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "في هذه الصفحة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En esta página",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Sur cette page",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "На этой странице",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页目录",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This is not about the agent's internal architecture. It is about the observable contract between the agent and the user: what states the interaction can be in, how requests are classified, which workflow the agent enters for each class, and what the user should expect at each stage.",
+   "hash": "e94c5d51bdc32928",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يتعلق هذا بالهندسة المعمارية الداخلية للوكيل. بل يتعلق بـ العقد الملموس (observable contract) بين الوكيل والمستخدم: ما هي الحالات التي يمكن أن يكون فيها التفاعل، وكيف تُصنَّف الطلبات، وما هو سير العمل الذي يدخله الوكيل لكل فئة، وما يجب أن يتوقعه المستخدم في كل مرحلة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esto no trata sobre la arquitectura interna del agente. Trata sobre el contrato observable entre el agente y el usuario: en qué estados puede estar la interacción, cómo se clasifican las solicitudes, a qué flujo de trabajo ingresa el agente para cada clase y qué debe esperar el usuario en cada etapa.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Il ne s'agit pas de l'architecture interne de l'agent. Il s'agit du contrat observable entre l'agent et l'utilisateur : dans quels états l'interaction peut se trouver, comment les requêtes sont classées, quel flux de travail l'agent intègre pour chaque catégorie, et ce à quoi l'utilisateur doit s'attendre à chaque étape.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Речь идет не о внутренней архитектуре агента. Речь идет о наблюдаемом контракте между агентом и пользователем: в каких состояниях может находиться взаимодействие, как классифицируются запросы, в какой рабочий процесс агент входит для каждого класса и чего пользователю следует ожидать на каждом этапе.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "这并不涉及智能体的内部架构，而是关乎智能体与用户之间的可观察契约：交互可能处于哪些状态、如何对请求进行分类、智能体针对每个类别进入哪种工作流，以及用户在各个阶段应抱有何种预期。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Interaction states",
+   "hash": "3871a020d4cda57a",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حالات التفاعل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Estados de interacción",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "États de l'interaction",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Состояния взаимодействия",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "交互状态",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A user–agent interaction is always in exactly one of two states:",
+   "hash": "3d0c6717ba43bf39",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يكون التفاعل بين المستخدم والوكيل دائمًا في إحدى حالتين بالضبط:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una interacción usuario–agente se encuentra siempre exactamente en uno de dos estados:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une interaction utilisateur-agent se trouve toujours exactement dans l'un de deux états :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Взаимодействие между пользователем и агентом всегда находится ровно в одном из двух состояний:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户与智能体之间的交互始终处于以下两种状态之一：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Idle state",
+   "hash": "6e2c93c6ee462028",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حالة الخمول (Idle state)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Estado inactivo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "État inactif (Idle)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Состояние ожидания (Idle state)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "空闲状态",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Workflow state",
+   "hash": "0612078d9e5f6f96",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حالة سير العمل (Workflow state)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Estado de flujo de trabajo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "État de flux de travail (Workflow)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Состояние рабочего процесса (Workflow state)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工作流状态",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The agent is executing a named workflow — each represented by a BPMN process diagram with the agent and user in separate swim lanes. The active workflow determines what the agent does next and what it expects from the user.",
+   "hash": "d2a198d5d3fd5e01",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يقوم الوكيل بتنفيذ سير عمل مسمى — يتم تمثيل كل منها بمخطط عملية BPMN مع وضع الوكيل والمستخدم في مسارات سباحة (swimlanes) منفصلة. ويحدد سير العمل النشط ما سيفعله الوكيل بعد ذلك وما يتوقعه من المستخدم.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El agente está ejecutando un flujo de trabajo con nombre; cada uno representado por un diagrama de procesos BPMN con el agente y el usuario en carriles (swim lanes) independientes. El flujo de trabajo activo determina qué hace el agente a continuación y qué espera del usuario.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'agent exécute un flux de travail nommé — chacun étant représenté par un diagramme de processus BPMN où l'agent et l'utilisateur se trouvent dans des couloirs distincts. Le flux de travail actif détermine ce que l'agent fait ensuite et ce qu'il attend de l'utilisateur.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент выполняет именованный рабочий процесс, каждый из которых представлен BPMN-диаграммой процесса с отдельными дорожками (swimlanes) для агента и пользователя. Активный рабочий процесс определяет, что агент делает дальше и чего он ожидает от пользователя.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体正在执行某个具名工作流——每个工作流均由一个 BPMN 流程图表示，其中智能体与用户位于各自独立的泳道中。活动工作流决定了智能体接下来的操作以及对用户的预期。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Workflow",
+   "hash": "621f83e46bbfd3a5",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير العمل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "BPMN source",
+   "hash": "83a18e6cbf2b8977",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مصدر BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Origen BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Source BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Источник BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BPMN 源文件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Entered when",
+   "hash": "cad53a10eb329419",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يُدخل إليه عندما",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Se inicia cuando",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Activé quand",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Условие входа",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "进入时机",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Authoring (paper)",
+   "hash": "778f18e65b74cde3",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التأليف (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autoría (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rédaction (article)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Создание контента (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "撰写（论文）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User requests content authoring in a paper folio",
+   "hash": "4e95751ca1947952",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يطلب المستخدم تأليف محتوى في folio من نوع paper",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario solicita autoría de contenido en un folio de paper",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur demande la rédaction de contenu dans un folio d'article",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь запрашивает создание содержимого в фолио статьи (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户请求在论文 folio 中撰写内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Authoring (document)",
+   "hash": "429a1f5046c61e38",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التأليف (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autoría (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rédaction (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Создание контента (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "撰写（文档）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User requests content authoring in a document folio",
+   "hash": "5df75122bda44f70",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يطلب المستخدم تأليف محتوى في folio من نوع document",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario solicita autoría de contenido en un folio de documento",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur demande la rédaction de contenu dans un folio de document",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь запрашивает создание содержимого в фолио документа (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户请求在文档 folio 中撰写内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content lifecycle",
+   "hash": "9106cda82a4869fd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "دورة حياة المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ciclo de vida de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cycle de vie du contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Жизненный цикл содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容生命周期",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content moves through validate → render → publish",
+   "hash": "72ec01ba0d3e15f8",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينتقل المحتوى عبر التحقق → التصيير → النشر",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El contenido avanza a través de validar → renderizar → publicar",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le contenu passe par valider → restituer → publier",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Содержимое проходит этапы validate → render → publish",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容经过 validate → render → publish 阶段",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Document ingestion",
+   "hash": "fcbda81ff4dd3bbb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استيعاب المستندات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ingesta de documentos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ingestion de documents",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Импорт документов",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文档摄取",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Draft to publication",
+   "hash": "f5739c7c75c911b4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "من المسودة إلى النشر",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "De borrador a publicación",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Du brouillon à la publication",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "От черновика к публикации",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "草稿至发布",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content moves from draft to published",
+   "hash": "130694b7327d1873",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينتقل المحتوى من مسودة إلى منشور",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El contenido pasa de borrador a publicado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le contenu passe de brouillon à publié",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Содержимое переходит из состояния черновика в опубликованное",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容从草稿状态转为已发布状态",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "CRDM requirements",
+   "hash": "73f9d0e4c3d43538",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "متطلبات CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Requisitos CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exigences CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Требования CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "CRDM 需求",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Agent detects a feature request",
+   "hash": "e6fa80fe49671800",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يكتشف الوكيل طلب ميزة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El agente detecta una solicitud de funcionalidad (feature request)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'agent détecte une demande de fonctionnalité",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент обнаруживает запрос новой функциональности (feature request)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体检测到功能需求",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Evidence retrieval",
+   "hash": "b40466dbf56a6e85",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استرجاع الأدلة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Recuperación de evidencias",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Récupération de preuves",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поиск свидетельств",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "证据检索",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Agent searches for evidence to support a claim",
+   "hash": "8c824c9b6f83f08b",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يبحث الوكيل عن أدلة لدعم ادعاء",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El agente busca evidencias para respaldar una afirmación",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'agent recherche des preuves à l'appui d'une affirmation",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент ищет свидетельства для подтверждения утверждения",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体检索证据以支持某项主张",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "State transitions: a workflow can be suspended when the user asks to switch context. The agent records where it was (the current BPMN activity) and can resume later. Only one workflow is active at a time, but suspended workflows form a stack — the most recent is resumed first.",
+   "hash": "12abcec334a54396",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "انتقالات الحالة: يمكن تعليق (suspend) سير العمل عندما يطلب المستخدم تبديل السياق. يسجل الوكيل أين كان (نشاط BPMN الحالي) ويمكنه الاستئناف لاحقًا. ويكون هناك سير عمل واحد فقط نشطًا في المرة الواحدة، ولكن تشكل مسارات العمل المعلقة مكدسًا (stack) — حيث يُستأنف الأحدث منها أولاً.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Transiciones de estado: un flujo de trabajo puede suspenderse cuando el usuario solicita cambiar de contexto. El agente registra dónde se encontraba (la actividad BPMN actual) y puede reanudarlo más tarde. Solo hay un flujo de trabajo activo a la vez, pero los flujos de trabajo suspendidos forman una pila: el más reciente se reanuda primero.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Transitions d'état : un flux de travail peut être suspendu lorsque l'utilisateur demande de changer de contexte. L'agent enregistre où il en était (l'activité BPMN en cours) et peut reprendre plus tard. Un seul flux de travail est actif à la fois, mais les flux de travail suspendus forment une pile — le plus récent est repris en premier.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Переходы состояний: рабочий процесс может быть приостановлен, когда пользователь просит переключить контекст. Агент фиксирует, где он находился (текущее действие BPMN), и может возобновить его позже. Одновременно активен только один рабочий процесс, но приостановленные рабочие процессы образуют стек — первым возобновляется наиболее недавний.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "状态转换： 当用户要求切换上下文时，工作流可以被挂起。智能体会记录当前所在位置（当前的 BPMN 活动），以便稍后恢复。同一时刻只能有一个处于活动状态的工作流，但挂起的工作流会构成一个栈——最近挂起的工作流最先被恢复。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The key rule: the agent always knows which workflow it is in. If it does not, it is in the idle state, and the next request starts a new workflow.",
+   "hash": "89f7ecf3fbe174ec",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "القاعدة الأساسية: يعرف الوكيل دائمًا في أي سير عمل يتواجد. وإذا لم يكن يعرف، فهو في حالة الخمول، وسيبدأ الطلب التالي سير عمل جديدًا.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La regla clave: el agente siempre sabe en qué flujo de trabajo se encuentra. Si no lo sabe, está en estado inactivo, y la siguiente solicitud inicia un nuevo flujo de trabajo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La règle clé : l'agent sait toujours dans quel flux de travail il se trouve. Si ce n'est pas le cas, il se trouve dans l'état inactif, et la requête suivante démarre un nouveau flux de travail.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ключевое правило: агент всегда знает, в каком рабочем процессе он находится. Если он этого не знает, он находится в состоянии ожидания, и следующий запрос запускает новый рабочий процесс.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "核心规则：智能体始终清楚自己处于哪个工作流中。如果无法确定，则说明它处于空闲状态，下一个请求将开启一个新的工作流。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Session lifecycle",
+   "hash": "99435e4fb9341506",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "دورة حياة الجلسة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ciclo de vida de la sesión",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cycle de vie de la session",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Жизненный цикл сессии",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "会话生命周期",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Every agent session follows the same lifecycle:",
+   "hash": "ae279e0c40a76abb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تتبع كل جلسة وكيل دورة الحياة ذاتها:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cada sesión de agente sigue el mismo ciclo de vida:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chaque session d'agent suit le même cycle de vie :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каждая сессия агента следует одному и тому же жизненному циклу:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "每个智能体会话都遵循相同的生命周期：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Classify — each user request is classified (see next section) and routed to the appropriate workflow.",
+   "hash": "aeabbf6f7b306e7a",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التصنيف — يُصنف كل طلب للمستخدم (انظر القسم التالي) ويُوجه إلى سير العمل المناسب.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "**Clasificación (Classify)** — cada solicitud del usuario se clasifica (consulta la siguiente sección) y se enruta al flujo de trabajo correspondiente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Classification (Classify) — chaque requête utilisateur est classée (voir la section suivante) et acheminée vers le flux de travail approprié.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Классификация (Classify) — каждый запрос пользователя классифицируется (см. следующий раздел) и направляется в соответствующий рабочий процесс.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "分类 — 对每个用户请求进行分类（参见下一节），并路由到相应的工作流。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Handoff — when the session ends (user leaves, context limit, token exhaustion), the agent's durable state is:",
+   "hash": "38457501cd381cec",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التسليم — عندما تنتهي الجلسة (مغادرة المستخدم، حد السياق، استنفاد الرموز المميزة/tokens)، تكون الحالة الدائمة للوكيل متمثلة في:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "**Traspaso (Handoff)** — cuando la sesión finaliza (el usuario se marcha, límite de contexto, agotamiento de tokens), el estado duradero del agente consiste en:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Passation (Handoff) — lorsque la session se termine (l'utilisateur quitte, limite de contexte atteinte, épuisement des jetons), l'état persistant de l'agent est constitué de :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Передача смены (Handoff) — при завершении сессии (пользователь уходит, достигнут лимит контекста, исчерпаны токены) долговременное состояние агента составляют:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "交接 — 当会话结束时（用户离开、上下文达到上限、Token 耗尽），智能体的持久化状态包括：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Committed and pushed code",
+   "hash": "c13dc8521a70e4a8",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "شفرة برمجية مثبتة ومرفوعة (committed and pushed)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Código con commit y push realizados",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Code commité et poussé",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Закоммиченный и запушенный код",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "已提交并推送的代码",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Issue comments with summaries of what was accomplished",
+   "hash": "875491e05dfc5d87",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تعليقات على المسائل تتضمن ملخصات لما تم إنجازه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Comentarios en issues con resúmenes de lo que se ha logrado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Commentaires sur les tickets avec des résumés de ce qui a été accompli",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Комментарии к задачам (issues) с краткими итогами того, что было достигнуто",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "包含已完成工作摘要的 Issue 评论",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The chat is ephemeral; everything else survives",
+   "hash": "b2ca2795be933bab",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المحادثة عابرة؛ وكل شيء آخر ينجو ويبقى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El chat es efímero; todo lo demás sobrevive",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le chat est éphémère ; tout le reste subsiste",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Чат эфемерен; всё остальное сохраняется",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "聊天记录是瞬态的；其他所有内容均会留存",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Request classification",
+   "hash": "f8e2c71d3fd71758",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تصنيف الطلبات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Clasificación de solicitudes",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Classification des requêtes",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Классификация запросов",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "请求分类",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Every user request is classified into one of these categories. The classification determines which workflow the agent enters.",
+   "hash": "3b71c62a2b5f3ce0",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يُصنف كل طلب مستخدم إلى إحدى هذه الفئات. ويحدد هذا التصنيف سير العمل الذي يدخله الوكيل.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cada solicitud del usuario se clasifica en una de estas categorías. La clasificación determina a qué flujo de trabajo ingresa el agente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Chaque requête utilisateur est classée dans l'une de ces catégories. La classification détermine le flux de travail que l'agent intègre.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Каждый запрос пользователя относится к одной из следующих категорий. Классификация определяет, в какой рабочий процесс входит агент.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "每个用户请求都会被归入以下类别之一。分类决定了智能体进入哪个工作流。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Category",
+   "hash": "f5d80c9effa8d27e",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الفئة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Categoría",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Catégorie",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Категория",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "类别",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Description",
+   "hash": "12e67adba9f110ab",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الوصف",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Descripción",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Description",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Описание",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "描述",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Workflow entered",
+   "hash": "3b43f97a4dbc3653",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير العمل الذي يتم دخوله",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo iniciado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail intégré",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Запускаемый рабочий процесс",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "进入的工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content authoring",
+   "hash": "38e2bc5824764adc",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تأليف المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autoría de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rédaction de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Создание содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容撰写",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Write, edit, extend folio content (chapters, blocks, sections)",
+   "hash": "4b2582857094b4ff",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كتابة محتوى folio أو تعديله أو توسيعه (فصول، كتل، أقسام)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Escribir, editar, ampliar contenido del folio (capítulos, bloques, secciones)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Écrire, modifier, enrichir le contenu du folio (chapitres, blocs, sections)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Написание, редактирование, расширение содержимого фолио (главы, блоки, разделы)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "编写、编辑、扩充 folio 内容（章节、块、小节）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Authoring workflow (paper or document)",
+   "hash": "5d5d2d4a997e633a",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل التأليف (paper أو document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo de autoría (paper o document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail de rédaction (article ou document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс создания (paper или document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "撰写工作流（论文或文档）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content review",
+   "hash": "0513ba274864a4c2",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مراجعة المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Revisión de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Relecture de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рецензирование содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容评审",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Review, validate, provide feedback on existing content",
+   "hash": "cd6381f9f735487f",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مراجعة المحتوى الحالي والتحقق منه وتقديم ملاحظات بشأنه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Revisar, validar, proporcionar comentarios sobre contenido existente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Examiner, valider, fournir des retours sur le contenu existant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Проверка, валидация, обратная связь по существующему содержимому",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "评审、验证现有内容并提供反馈",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content lifecycle / editing-HCI workflow",
+   "hash": "e265071f96ae28fd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل دورة حياة المحتوى / تحرير تفاعل الإنسان والحاسوب (HCI)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ciclo de vida de contenido / flujo de trabajo de HCI de edición",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail du cycle de vie du contenu / édition-IHM (editing-HCI)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Жизненный цикл содержимого / рабочий процесс editing-HCI",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容生命周期 / editing-HCI 工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content ingestion",
+   "hash": "1ca47683124eb486",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استيعاب المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ingesta de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ingestion de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Импорт содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容摄取",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Ingest a source document into the folio",
+   "hash": "a272e42a98babfba",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استيعاب مستند مصدر في الـ folio",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ingerir un documento fuente en el folio",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ingérer un document source dans le folio",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Импорт исходного документа в фолио",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将源文档摄取到 folio 中",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Document ingestion workflow",
+   "hash": "c1ba95cd70625018",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل استيعاب المستندات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo de ingesta de documentos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail d'ingestion de documents",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс импорта документов",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文档摄取工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Feature request",
+   "hash": "e6de9e33edf74771",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "طلب ميزة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "**Solicitud de funcionalidad (feature request)**",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Demande de fonctionnalité",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Запрос функциональности",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "功能需求",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "CRDM requirements workflow",
+   "hash": "d9e95daddc517ea2",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل متطلبات CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo de requisitos CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail des exigences CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс требований CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "CRDM 需求工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Information request",
+   "hash": "c9b595d02c5d3f90",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "طلب معلومات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Solicitud de información",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Demande d'information",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Информационный запрос",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "信息咨询",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Ask about the platform, content, or process",
+   "hash": "f381a72234f310dc",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الاستفسار عن المنصة أو المحتوى أو العملية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Preguntar sobre la plataforma, el contenido o el proceso",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Poser des questions sur la plateforme, le contenu ou le processus",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вопрос о платформе, содержимом или процессе",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "询问有关平台、内容或流程的问题",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "No workflow — answer directly",
+   "hash": "519fcf107559d879",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يوجد سير عمل — الإجابة مباشرة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sin flujo de trabajo — responder directamente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Aucun flux de travail — réponse directe",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вне процессов — прямой ответ",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "无工作流 — 直接回答",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Tool invocation",
+   "hash": "0c2f928e4c86dadb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استدعاء أداة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Invocación de herramientas",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Invocation d'outil",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вызов инструмента",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工具调用",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "No workflow — execute and report",
+   "hash": "1a8e291f086f8bea",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يوجد سير عمل — التنفيذ والإبلاغ",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sin flujo de trabajo — ejecutar e informar",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Aucun flux de travail — exécuter et rendre compte",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вне процессов — выполнить и отчитаться",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "无工作流 — 执行并报告",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Work-plan management",
+   "hash": "271be8dc97e4560f",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إدارة خطة العمل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Gestión del plan de trabajo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Gestion du plan de travail",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Управление планом работы",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工作计划管理",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Bug report",
+   "hash": "a5b0cdf14ccc8cc4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تقرير خطأ",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "**Informe de error (bug report)**",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rapport de bogue",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Отчет об ошибке",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "缺陷报告",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Report broken behaviour in existing features",
+   "hash": "fa79f07e2800431c",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإبلاغ عن سلوك معطوب في ميزات موجودة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Reportar un comportamiento anómalo en funcionalidades existentes",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Signaler un comportement défaillant dans les fonctionnalités existantes",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сообщение о некорректном поведении существующих возможностей",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "报告现有功能中的异常行为",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Triage: fix directly if small, CRDM if redesign needed",
+   "hash": "acc6e695d65d5d9c",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الفرز: الإصلاح المباشر إن كان صغيرًا، أو CRDM إن استلزم الأمر إعادة تصميم",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Triaje: corregir directamente si es pequeño, CRDM si requiere rediseño",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Triage : corriger directement si mineur, CRDM si une refonte est nécessaire",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сортировка: прямое исправление, если дефект небольшой; CRDM, если требуется переработка",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "分流处理：若问题较小则直接修复；若需要重新设计则走 CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The feature-request detection rule",
+   "hash": "bacd4b03e727ae36",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قاعدة اكتشاف طلبات الميزات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La regla de detección de solicitudes de funcionalidad",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La règle de détection des demandes de fonctionnalités",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Правило обнаружения запросов функциональности",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "功能需求检测规则",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "If implementing the request would require changes to folio-assistant (the platform repository) rather than to a folio repository, the request is a feature, and the agent should enter the CRDM workflow.",
+   "hash": "4a411f63ce5239c1",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إذا كان تنفيذ الطلب يتطلب تغييرات في folio-assistant (مستودع المنصة) بدلاً من مستودع folio، فإن الطلب هو ميزة، ويجب على الوكيل الدخول في سير عمل CRDM.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Si implementar la solicitud requeriría cambios en folio-assistant (el repositorio de la plataforma) en lugar de en un repositorio de folio, la solicitud es una funcionalidad (feature), y el agente debe ingresar al flujo de trabajo CRDM.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Si la mise en œuvre de la requête nécessite des modifications de folio-assistant (le dépôt de la plateforme) plutôt que d'un dépôt de folio, la requête est une fonctionnalité, et l'agent doit entrer dans le flux de travail CRDM.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Если реализация запроса потребует изменений в folio-assistant (репозитории платформы), а не в репозитории фолио, запрос является запросом новой функциональности, и агенту следует войти в рабочий процесс CRDM.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "如果实现该请求需要修改 folio-assistant（平台仓库）而非 folio 仓库，则该请求属于新功能，智能体应当进入 CRDM 工作流。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "When uncertain, the agent asks: \"This sounds like it might need a platform change — is that right, or is this something I can do within the current content model?\"",
+   "hash": "1ba773c084d2d91e",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عند عدم اليقين، يسأل الوكيل: \"يبدو أن هذا قد يتطلب تغييرًا في المنصة — هل هذا صحيح، أم أنه شيء يمكنني فعله ضمن نموذج المحتوى الحالي؟\"",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En caso de duda, el agente pregunta: \"Esto parece requerir un cambio en la plataforma; ¿es correcto, o es algo que puedo hacer dentro del modelo de contenido actual?\"",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "En cas de doute, l'agent demande : « Cela semble nécessiter une modification de la plateforme — est-ce bien le cas, ou s'agit-il de quelque chose que je peux réaliser dans le cadre du modèle de contenu actuel ? »",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "При возникновении сомнений агент уточняет: «Похоже, для этого могут потребоваться изменения платформы — так ли это, или я могу выполнить эту задачу в рамках текущей модели содержимого?»",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "当无法确定时，智能体会询问：“这听起来可能需要修改平台——情况是否如此？还是说我可以在现有的内容模型内完成？”",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content workflows",
+   "hash": "e559e1b1392e32c9",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujos de trabajo de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочие процессы содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Writing guides:",
+   "hash": "d85bc292bfaa47a4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أدلة الكتابة:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Guías de redacción:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Guides de rédaction :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Руководства по написанию:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "撰写指南：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The harness does not redefine these workflows. It provides the entry point — classifying the request and routing to the right one — and the exit point — returning to idle state when the workflow completes, or suspending if the user switches context.",
+   "hash": "2f4840cea848f2ea",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يعيد إطار العمل تعريف مسارات العمل هذه. بل يوفر نقطة الدخول — عبر تصنيف الطلب وتوجيهه إلى المسار الصحيح — ونقطة الخروج — بالعودة إلى حالة الخمول عند اكتمال سير العمل، أو التعليق إذا قام المستخدم بتبديل السياق.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El arnés no redefine estos flujos de trabajo. Proporciona el punto de entrada — clasificar la solicitud y enrutar a la adecuada — y el punto de salida — regresar al estado inactivo cuando el flujo de trabajo se completa, o suspenderlo si el usuario cambia de contexto.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le harnais ne redéfinit pas ces flux de travail. Il fournit le point d'entrée — la classification de la requête et son acheminement vers le flux approprié — ainsi que le point de sortie — le retour à l'état inactif lorsque le flux se termine, ou la suspension si l'utilisateur change de contexte.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Обвязка не переопределяет эти рабочие процессы. Она обеспечивает точку входа — классификацию запроса и маршрутизацию к нужному процессу — и точку выхода — возврат в состояние ожидания по завершении рабочего процесса или его приостановку, если пользователь переключает контекст.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本工具框架并未重新定义这些工作流。它提供了入口点——对请求进行分类并路由至正确的工作流——以及出口点——在工作流完成时返回空闲状态，或在用户切换上下文时予以挂起。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Deterministic and agentic processing",
+   "hash": "821018e31b34cadd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المعالجة الحتمية والوكيلة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Procesamiento determinista y agéntico",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Traitement déterministe et agentique",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Детерминированная и агентная обработка",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "确定性与智能体化处理",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Those are not one axis, and treating them as one is the first thing to get wrong. At least three questions are being conflated — who decides the branch, what happens if the decision is wrong, and who enforces. A step can be fully agentic on the first and fully deterministic on the third: the commit boundary is exactly that, an agent deciding freely and a hook refusing the write regardless.",
+   "hash": "432390cf22746f8c",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هذه ليست محورًا واحدًا، ومعاملتها كأنها محور واحد هو أول خطأ يمكن الوقوع فيه. حيث يتم الخلط بين ثلاثة أسئلة على الأقل — من يقرر الفرع، وماذا يحدث إذا كان القرار خاطئًا، ومن يفرض الالتزام. ويمكن أن تكون الخطوة وكيلة بالكامل في السؤال الأول وحتمية بالكامل في السؤال الثالث: وحد التثبيت هو بالضبط ذلك: وكيل يقرر بحرية وخطاف (hook) يرفض الكتابة بغض النظر عن ذلك.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esos no son un solo eje, y tratarlos como tal es el primer error que se comete. Se están combinando al menos tres preguntas: quién decide la bifurcación, qué sucede si la decisión es incorrecta y quién la hace cumplir. Un paso puede ser totalmente agéntico en la primera y totalmente determinista en la tercera: el límite de commit es exactamente eso, un agente que decide libremente y un hook que rechaza la escritura independientemente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ceux-ci ne forment pas un seul axe, et les traiter comme tel est la première erreur à commettre. Au moins trois questions sont confondues — qui décide de la branche, que se passe-t-il si la décision est incorrecte, et qui applique la règle. Une étape peut être totalement agentique sur la première question et totalement déterministe sur la troisième : la frontière de commit est précisément cela, un agent qui décide librement et un hook qui refuse l'écriture quoi qu'il en soit.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Это не одна ось, и трактовать их как единое целое — главная ошибка, которую здесь можно совершить. Смешиваются по меньшей мере три вопроса: кто определяет ветвление, что происходит, если решение ошибочно, и кто обеспечивает соблюдение. Шаг может быть полностью агентным по первому критерию и полностью детерминированным по третьему: граница коммитов именно такова — агент решает свободно, а хук отклоняет запись независимо от этого.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "这些并非同一维度，将其混为一谈首先就会导致理解偏差。这里至少混淆了三个问题——谁来决定分支、如果决定有误会发生什么，以及谁来执行约束。某个步骤在第一个问题上可以是完全智能体驱动的，而在第三个问题上则是完全确定性的：提交边界正是如此，智能体自由做出决定，而钩子无论如何都会拒绝写入。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "BPMN execution: one skill, two engines",
+   "hash": "c84d877bacd142d6",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تنفيذ BPMN: مهارة واحدة، ومحركان",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ejecución de BPMN: una habilidad, dos motores",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exécution BPMN : une compétence, deux moteurs",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Выполнение BPMN: один навык, два движка",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BPMN 执行：一项技能，两个引擎",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "BPMN Execution Skill: given a Process, Context, State and Role, utilize one or more Skills in order to execute a Task.",
+   "hash": "81ce2ca8da35837c",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مهارة تنفيذ BPMN: بالنظر إلى عملية (Process)، وسياق (Context)، وحالة (State)، ودور (Role)، يتم استخدام مهارة واحدة أو أكثر من أجل تنفيذ مهمة (Task).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Habilidad de ejecución de BPMN: dados un Proceso, Contexto, Estado y Rol, utilizar una o más Habilidades para ejecutar una Tarea.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Compétence d'exécution BPMN (BPMN Execution Skill) : étant donné un Processus, un Contexte, un État et un Rôle, utiliser une ou plusieurs Compétences afin d'exécuter une Tâche.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Навык выполнения BPMN (BPMN Execution Skill): имея Процесс, Контекст, Состояние и Роль, задействовать один или несколько Навыков для выполнения Задачи.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BPMN 执行技能： 给定流程、上下文、状态和角色，运用一项或多项技能以执行任务。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "One skill, two kinds of Tool. The skill is the same at both ends: take the process, the context, the current state and the role, pick the skills, and do the task. What changes is the Tool that runs it, and a Tool is swappable behind a skill in the way every other Tool here is.",
+   "hash": "85420d14def5532c",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مهارة واحدة، ونوعان من الأدوات. المهارة هي نفسها عند كلا الطرفين: أخذ العملية، والسياق، والحالة الراهنة والدور، واختيار المهارات، وأداء المهمة. ما يتغير هو الأداة التي تشغلها، والأداة قابلة للتبديل خلف المهارة بالطريقة ذاتها المتبعة مع كل أداة أخرى هنا.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una habilidad, dos tipos de Herramienta. La habilidad es la misma en ambos extremos: tomar el proceso, el contexto, el estado actual y el rol, elegir las habilidades y realizar la tarea. Lo que cambia es la **Herramienta (Tool)** que la ejecuta, y una Herramienta es intercambiable detrás de una habilidad del mismo modo que cualquier otra Herramienta aquí.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une compétence, deux types d'Outil. La compétence est la même aux deux extrémités : prendre le processus, le contexte, l'état actuel et le rôle, choisir les compétences et accomplir la tâche. Ce qui change, c'est l'Outil (Tool) qui l'exécute, et un Outil est interchangeable derrière une compétence comme n'importe quel autre Outil ici.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Один навык, два вида инструментов (Tool). Навык одинаков на обоих полюсах: взять процесс, контекст, текущее состояние и роль, выбрать навыки и выполнить задачу. Меняется лишь инструмент (Tool), выполняющий ее, а инструмент взаимозаменяем в рамках навыка точно так же, как и любой другой инструмент в этой системе.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一项技能，两类工具。 两端的技能是相同的：获取流程、上下文、当前状态和角色，选取技能，并执行任务。发生变化的是运行它的工具，正如这里的其他所有工具一样，技能背后的工具是可以替换的。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "deterministic end",
+   "hash": "b5f61707209773f9",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الطرف الحتمي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "extremo determinista",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Extrémité déterministe",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Детерминированный полюс",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "确定性端",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "agentic end",
+   "hash": "14a6a9161ca8ce58",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الطرف الوكيلي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "extremo agéntico",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Extrémité agentique",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агентный полюс",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体端",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Tool",
+   "hash": "655fb54a727282e0",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأداة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Herramienta",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Outil",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Инструмент (Tool)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工具",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "any open-source BPMN 2.0 engine",
+   "hash": "a4ac5bf2c2f43def",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أي محرك BPMN 2.0 مفتوح المصدر",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "cualquier motor BPMN 2.0 de código abierto",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "n'importe quel moteur BPMN 2.0 open source",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Любой движок BPMN 2.0 с открытым исходным кодом",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "任何开源 BPMN 2.0 引擎",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "an agentic swarm",
+   "hash": "4e5a82bc86558eea",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سرب وكيل (agentic swarm)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "un enjambre agéntico",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "un essaim agentique",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агентный рой",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体集群",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Scope of an agent",
+   "hash": "02e192294526240b",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نطاق عمل الوكيل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Alcance de un agente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Portée d'un agent",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Охват агента",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体范围",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "one task at a time, handed to it by the engine",
+   "hash": "bd1fde36d693887a",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مهمة واحدة في المرة الواحدة، يسندها المحرك إليه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "una tarea a la vez, asignada por el motor",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "une tâche à la fois, confiée par le moteur",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Одна задача за раз, передаваемая движком",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一次执行一个任务，由引擎指派",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "most or all tasks",
+   "hash": "59b91e1a631884a9",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "معظم المهام أو كلها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "la mayoría o todas las tareas",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "la plupart ou la totalité des tâches",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Большинство или все задачи",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "大部分或全部任务",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "State",
+   "hash": "887c46ca7f4b4352",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الحالة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Estado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "État",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Состояние",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "状态",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "held by the engine, strictly",
+   "hash": "2d4216865e6ee14f",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يحتفظ بها المحرك بشكل صارم",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "mantenido por el motor, estrictamente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "conservé par le moteur, strictement",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Строго удерживается движком",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "由引擎严格持有",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "ungoverned: the swarm holds it",
+   "hash": "3161172664df49d4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "غير محكومة: يحتفظ بها السرب",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "no gobernado: el enjambre lo mantiene",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "non gouverné : l'essaim le détient",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Неуправляемое: состояние удерживает рой",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "非托管：由集群持有",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Swimlanes",
+   "hash": "5f88adc750716ce2",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مسارات السباحة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "**Carriles (swimlanes)**",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Couloirs (Swimlanes)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Дорожки (Swimlanes)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "泳道",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "enforced: only the lane's role may perform its task",
+   "hash": "42dcffc4551c961a",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مفروضة: دور المسار فقط هو المخول بتنفيذ مهمته",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "aplicados: solo el rol del carril puede ejecutar su tarea",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "appliqués : seul le rôle du couloir peut exécuter sa tâche",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Строгие: только роль дорожки может выполнять ее задачу",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "强制执行：仅泳道对应的角色可执行其任务",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "relaxed: an agent may act across lanes",
+   "hash": "e9aa5be0d838dfbd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مخففة: قد يتصرف الوكيل عبر المسارات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "relajados: un agente puede actuar a través de carriles",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "assouplis : un agent peut agir à travers les couloirs",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ослабленные: агент может действовать поперек дорожек",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "放宽限制：智能体可跨泳道操作",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What keeps it honest",
+   "hash": "aeb3373eb594423d",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما يضمن النزاهة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Qué garantiza la honestidad",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce qui garantit la rigueur",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что обеспечивает соблюдение правил",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "保障机制",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "the engine refuses a step before it happens",
+   "hash": "735a1917fd9a2fd7",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يرفض المحرك الخطوة قبل حدوثها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "el motor rechaza un paso antes de que ocurra",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "le moteur refuse une étape avant qu'elle ne se produise",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Движок отклоняет шаг до того, как он произойдет",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "引擎在步骤发生之前予以拒绝",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "mechanical + agentic QA/QC reports find it after it happened",
+   "hash": "a3a83ffaf79b89fb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تكتشفها تقارير ضمان/مراقبة الجودة (QA/QC) الميكانيكية + الوكيلة بعد حدوثها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "informes de QA/QC mecánicos + agénticos lo detectan después de que haya ocurrido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "des rapports QA/QC mécaniques + agentiques la détectent après coup",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Механические + агентные отчеты QA/QC обнаруживают нарушения постфактум",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "机械 + 智能体 QA/QC 报告在事后从记录中发现",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Feature-request workflow (CRDM)",
+   "hash": "155cc2c783feb6ed",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل طلبات الميزات (CRDM)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo de solicitudes de funcionalidad (CRDM)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail des demandes de fonctionnalités (CRDM)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс запросов функциональности (CRDM)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "功能需求工作流（CRDM）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "How the agent enters CRDM",
+   "hash": "6be1b32d48609b58",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كيف يدخل الوكيل في CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cómo ingresa el agente a CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Comment l'agent entre dans CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Как агент входит в CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体如何进入 CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "New session, first request is a feature: → Acknowledge, explain you will help work through requirements first, enter Phase 1.",
+   "hash": "1852e629f8e01886",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "جلسة جديدة، والطلب الأول هو ميزة: ← تأكيد الاستلام، وشرح أنك ستساعد في العمل على المتطلبات أولاً، والدخول في المرحلة 1.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Nueva sesión, la primera solicitud es una funcionalidad: → Reconocer la solicitud, explicar que primero ayudarás a definir los requisitos, ingresar a la Fase 1.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Nouvelle session, la première requête est une fonctionnalité : → Prendre acte, expliquer que vous allez d'abord aider à préciser les exigences, passer à la Phase 1.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Новая сессия, первый запрос — запрос новой функциональности: → Подтвердить получение, объяснить, что сначала вы поможете проработать требования, перейти к Фазе 1.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "新会话，首个请求即为功能需求： → 确认请求，说明将首先协助梳理需求，进入阶段 1。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Existing session, already in CRDM: → Incorporate the new request into the current requirements document, continue.",
+   "hash": "cc5caa2ecf28af39",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "جلسة موجودة، وتعمل بالفعل في CRDM: ← دمج الطلب الجديد في وثيقة المتطلبات الحالية، والمتابعة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sesión existente, ya en CRDM: → Incorporar la nueva solicitud en el documento de requisitos actual, continuar.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Session existante, déjà dans CRDM : → Intégrer la nouvelle requête dans le document d'exigences en cours, continuer.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Существующая сессия, уже находится в CRDM: → Включить новый запрос в текущий документ требований, продолжить.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "现有会话，已处于 CRDM 中： → 将新请求纳入当前的需求文档中，继续推进。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What the user sees",
+   "hash": "63a2350b9441de6c",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما يراه المستخدم",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lo que ve el usuario",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce que l'utilisateur voit",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что видит пользователь",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户所看到的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The agent does not say \"entering CRDM mode\" or use methodology jargon. Instead:",
+   "hash": "915e90c5db45efeb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يقول الوكيل \"جارٍ الدخول في وضع CRDM\" أو يستخدم مصطلحات منهجية متخصصة. بل يقول بدلاً من ذلك:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El agente no dice \"entrando en modo CRDM\" ni utiliza jerga metodológica. En su lugar:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'agent ne dit pas « passage en mode CRDM » et n'utilise pas de jargon méthodologique. À la place :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент не говорит: «перехожу в режим CRDM» и не использует методологический жаргон. Вместо этого:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体不会说“正在进入 CRDM 模式”或使用方法论术语。相反，它会这样表达：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "\"This sounds like a platform change — something we'd need to add to folio-assistant itself. Before I build anything, let me help you work through exactly what's needed so we get it right. I'll document the requirements on the issue so others can weigh in.\"",
+   "hash": "7dfd1c1150f51856",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "\"يبدو هذا كتغيير في المنصة — شيء سنحتاج إلى إضافته إلى folio-assistant نفسه. قبل أن أقوم ببناء أي شيء، اسمح لي بمساعدتك في تحديد ما هو مطلوب بالضبط حتى نقوم بالأمر بالشكل الصحيح. سأوثق المتطلبات في المسألة حتى يتمكن الآخرون من إبداء آرائهم.\"",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "\"Esto parece un cambio en la plataforma: algo que tendríamos que añadir al propio folio-assistant. Antes de construir nada, déjame ayudarte a definir con exactitud lo que se necesita para que lo hagamos bien. Documentaré los requisitos en el issue para que otros puedan opinar.\"",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "« Cela ressemble à une modification de la plateforme — quelque chose que nous devrions ajouter à folio-assistant lui-même. Avant que je ne construise quoi que ce soit, permettez-moi de vous aider à clarifier exactement ce qui est nécessaire afin de bien faire les choses. Je consignerai les exigences sur le ticket afin que d'autres personnes puissent donner leur avis. »",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "«Похоже, здесь требуются изменения в платформе — то, что нам понадобится добавить в сам folio-assistant. Прежде чем приступать к разработке, давайте я помогу вам точно проработать все требования, чтобы всё получилось правильно. Я зафиксирую требования в задаче (issue), чтобы остальные участники тоже могли высказать свое мнение».",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "“这听起来像是平台层面的变更——属于我们需要添加到 folio-assistant 本身的功能。在开始构建任何内容之前，让我先协助您理清具体的需求细节，以确保方案准确无误。我会在 Issue 上记录这些需求，以便其他人也能参与讨论。”",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "How the agent exits CRDM",
+   "hash": "6c0de57c3a456f9b",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كيف يخرج الوكيل من CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cómo sale el agente de CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Comment l'agent quitte CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Как агент выходит из CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体如何退出 CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The CRDM workflow exits when:",
+   "hash": "d6ae04e81c4a3cf4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينتهي سير عمل CRDM عندما:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El flujo de trabajo CRDM finaliza cuando:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le flux de travail CRDM se termine lorsque :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс CRDM завершается, когда:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "CRDM 工作流在满足以下条件时退出：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The user explicitly defers the remaining work",
+   "hash": "07600649858b9b63",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يؤجل المستخدم العمل المتبقي صراحة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario pospone explícitamente el trabajo restante",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur reporte explicitement le travail restant",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь прямо откладывает оставшуюся работу",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户明确推迟剩余工作",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "On exit, if a content workflow was suspended, the agent resumes it.",
+   "hash": "1d1077f841af099b",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عند الخروج، إذا كان سير عمل المحتوى قد تم تعليقه، يقوم الوكيل باستئنافه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Al salir, si se había suspendido un flujo de trabajo de contenido, el agente lo reanuda.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "À la sortie, si un flux de travail de contenu avait été suspendu, l'agent le reprend.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "При выходе, если рабочий процесс работы с содержимым был приостановлен, агент возобновляет его.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "退出时，若先前有被挂起的内容工作流，智能体将予以恢复。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User-provided content and sources",
+   "hash": "3498eab1b20e99a4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المحتوى والمصادر المقدمة من المستخدم",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Contenido y fuentes proporcionados por el usuario",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contenu et sources fournis par l'utilisateur",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Предоставляемое пользователем содержимое и источники",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户提供的内容与源材料",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Users provide content and source material through multiple channels. The agent should accept all of them and route them into the appropriate pipeline:",
+   "hash": "278f27158529ea08",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يقدم المستخدمون المحتوى والمواد المصدرية عبر قنوات متعددة. وينبغي للوكيل قبولها جميعًا وتوجيهها إلى المسار الإجرائي المناسب:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los usuarios proporcionan contenido y material fuente a través de múltiples canales. El agente debe aceptar todos ellos y enrutarlos a la canalización (pipeline) correspondiente:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les utilisateurs fournissent du contenu et des sources par de multiples canaux. L'agent doit tous les accepter et les acheminer vers le pipeline approprié :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователи предоставляют содержимое и исходные материалы по различным каналам. Агент должен принимать их все и направлять в соответствующий конвейер:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户通过多种渠道提供内容和源材料。智能体应当接收所有这些材料并将其路由到适当的流程管线中：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Channel",
+   "hash": "7fa3c64be189b48f",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "القناة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Canal",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Canal",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Канал",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "渠道",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Example",
+   "hash": "035092b9264c20ee",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثال",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ejemplo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exemple",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пример",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "示例",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Routed to",
+   "hash": "0e873f6c15bce154",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تُوجَّه إلى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Enrutado a",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Acheminé vers",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Куда направляется",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "路由至",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User drops a Word doc, PDF, Excel file",
+   "hash": "158bb19f7b545c7d",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يُسقط المستخدم ملف Word، أو PDF، أو Excel",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario deposita un documento de Word, PDF, archivo de Excel",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur dépose un document Word, PDF, fichier Excel",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь сбрасывает документ Word, PDF, файл Excel",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户放入 Word 文档、PDF、Excel 文件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Document ingestion pipeline",
+   "hash": "acdcc25fc4538b71",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مسار استيعاب المستندات الإجرائي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Canalización de ingesta de documentos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Pipeline d'ingestion de documents",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Конвейер импорта документов",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "文档摄取管线",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User references an already-ingested L1 source",
+   "hash": "2ddad5dc6a6cef12",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يشير المستخدم إلى مصدر L1 تم استيعابه بالفعل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario hace referencia a una fuente L1 ya ingerida",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur fait référence à une source L1 déjà ingérée",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь ссылается на ранее импортированный источник L1",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户引用已摄取的 L1 源",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Direct citation in content",
+   "hash": "71e029a88457f096",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اقتباس مباشر في المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Citación directa en el contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Citation directe dans le contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Прямое цитирование в содержимом",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在内容中直接引用",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content authoring workflow",
+   "hash": "46e9fab25bfbc948",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سير عمل تأليف المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de trabajo de autoría de contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de travail de rédaction de contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Рабочий процесс создания содержимого",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容撰写工作流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "GitHub issue attachments",
+   "hash": "9ac7ffaec9a35550",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مرفقات مسائل GitHub",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Adjuntos en issues de GitHub",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Pièces jointes aux tickets GitHub",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вложения в задачи GitHub",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "GitHub Issue 附件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User attaches a file to an issue comment",
+   "hash": "aeca4b7a17ef8c27",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يرفق المستخدم ملفًا بتعليق على المسألة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario adjunta un archivo a un comentario de un issue",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur joint un fichier à un commentaire de ticket",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь прикрепляет файл к комментарию в issue",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户向 Issue 评论中附加文件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Agent downloads and processes",
+   "hash": "657c980116719551",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينزل الوكيل الملف ويعالجه",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El agente lo descarga y procesa",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'agent le télécharge et le traite",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент скачивает и обрабатывает",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体下载并处理",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Chat upload",
+   "hash": "cb3bdfbbf1f99740",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الرفع عبر المحادثة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Subida en el chat",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Téléversement dans le chat",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Загрузка в чат",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "聊天界面上传",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User uploads a file in the LLM chat interface",
+   "hash": "31fb0967c32a4978",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يرفع المستخدم ملفًا في واجهة محادثة LLM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario sube un archivo en la interfaz de chat del LLM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur téléverse un fichier dans l'interface de chat du LLM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь загружает файл через интерфейс чата LLM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户在 LLM 聊天界面上传文件",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "URL reference",
+   "hash": "05e076347f51b8cd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مرجع الرابط (URL)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Referencia por URL",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Référence d'URL",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Указание URL",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "URL 引用",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "User pastes a link to a document",
+   "hash": "24f6d49b53b703aa",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يلصق المستخدم رابطًا لمستند",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El usuario pega un enlace a un documento",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'utilisateur colle un lien vers un document",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пользователь вставляет ссылку на документ",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "用户粘贴文档链接",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Agent fetches and ingests if appropriate",
+   "hash": "f0ef25f7aa8582a1",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يجلب الوكيل المستند ويستوعبه إذا كان ذلك مناسبًا",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El agente lo descarga e ingiere si corresponde",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'agent le récupère et l'ingère si approprié",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент получает и импортирует при необходимости",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体在适当时抓取并摄取",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "For CRDM specifically",
+   "hash": "52ce5a6757464deb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لـ CRDM على وجه التحديد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Para CRDM específicamente",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Spécifiquement pour CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Особенности для CRDM",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "针对 CRDM 的特别说明",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "During requirements gathering, user-provided content is input to requirements, not content to author. The agent should:",
+   "hash": "02d0a01391216ac1",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أثناء جمع المتطلبات، يعتبر المحتوى الذي يقدمه المستخدم مدخلاً للمتطلبات، وليس محتوى لتأليفه. وينبغي للوكيل:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Durante la recopilación de requisitos, el contenido proporcionado por el usuario es información de entrada para los requisitos, no contenido para redactar. El agente debe:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Lors de la collecte des exigences, le contenu fourni par l'utilisateur constitue une donnée d'entrée pour les exigences, et non du contenu à rédiger. L'agent doit :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В ходе сбора требований материалы, предоставленные пользователем, представляют собой входные данные для требований, а не содержимое для создания. Агенту следует:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在需求收集阶段，用户提供的材料是需求的输入，而非待撰写的内容。智能体应当：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Read and understand the provided material",
+   "hash": "2326cae6a44a3e67",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قراءة المادة المقدمة وفهمها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Leer y comprender el material facilitado",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Lire et comprendre le matériel fourni",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Прочитать и осмыслить предоставленный материал",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "阅读并理解所提供的材料",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Extract requirements-relevant information",
+   "hash": "55165d01007b4a95",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استخراج المعلومات ذات الصلة بالمتطلبات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Extraer información relevante para los requisitos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Extraire les informations pertinentes pour les exigences",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Извлечь сведения, относящиеся к требованиям",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "提取与需求相关的信息",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Synthesise it into the needs statement or requirements document",
+   "hash": "95acc728464a28b0",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "صياغتها ودمجها في بيان الاحتياجات أو وثيقة المتطلبات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sintetizarla en la declaración de necesidades o en el documento de requisitos",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les synthétiser dans l'énoncé des besoins ou le document d'exigences",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Синтезировать их в формулировку потребностей или документ требований",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将其综合整理至需求陈述或需求文档中",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Reference the source in the issue comment (with link or attachment)",
+   "hash": "59db2cc800744ff5",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإشارة إلى المصدر في التعليق على المسألة (برابط أو مرفق)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Hacer referencia a la fuente en el comentario del issue (con enlace o archivo adjunto)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Référencer la source dans le commentaire du ticket (avec un lien ou une pièce jointe)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сослаться на источник в комментарии к задаче (с ссылкой или вложением)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在 Issue 评论中引用源材料（附带链接或附件）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Example: a user uploads a public consultation feedback Excel spreadsheet. The agent does not try to ingest it as folio content; it reads the feedback items and synthesises them into requirements for the review triage tool.",
+   "hash": "2829cf8465f25b31",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثال: يقوم مستخدم برفع جدول بيانات Excel يتضمن ملاحظات استشارة عامة. لا يحاول الوكيل استيعاب الجدول كمحتوى folio؛ بل يقرأ بنود الملاحظات ويصيغها في شكل متطلبات لأداة فرز المراجعات.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ejemplo: un usuario sube una hoja de cálculo de Excel con comentarios de una consulta pública. El agente no intenta ingerirla como contenido de folio; lee los elementos de retroalimentación y los sintetiza en requisitos para la herramienta de triaje de revisiones.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exemple : un utilisateur téléverse une feuille de calcul Excel contenant les retours d'une consultation publique. L'agent n'essaie pas de l'ingérer comme contenu de folio ; il lit les éléments de retour et les synthétise en exigences pour l'outil de triage des relectures.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пример: пользователь загружает таблицу Excel с отзывами по итогам общественных консультаций. Агент не пытается импортировать ее как содержимое фолио; он считывает пункты отзывов и обобщает их в требования для инструмента сортировки рецензий (review triage tool).",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "示例：用户上传了一份公众咨询反馈的 Excel 表格。智能体不会尝试将其作为 folio 内容摄取；而是阅读反馈条目，并将其提炼为评审分流工具的功能需求。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Issue and bean discipline",
+   "hash": "c76163802dd3f6ac",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "انضباط المسائل وBeans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Disciplina de issues y beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Discipline des tickets et des beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Дисциплина задач и beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Issue 与 Bean 纪律",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Issues vs beans",
+   "hash": "465d59b1453cadb5",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المسائل مقابل Beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Issues frente a beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Tickets vs beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Задачи против beans",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Issue 与 Bean 的对比",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "GitHub issue",
+   "hash": "7ea137448394d99d",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مسألة GitHub",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Issue de GitHub",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ticket GitHub (issue)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Задача GitHub (issue)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "GitHub Issue",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Scope",
+   "hash": "5ad899f202f8093f",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "النطاق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Alcance",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Portée",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Масштаб",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "范围",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A feature, requirement set, or user story",
+   "hash": "0501312db1273eb4",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ميزة، أو مجموعة متطلبات، أو قصة مستخدم",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una funcionalidad, conjunto de requisitos o historia de usuario",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une fonctionnalité, un ensemble d'exigences ou une user story",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Функция, набор требований или пользовательская история",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一项功能、一组需求或一个用户故事",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A single PR-sized unit of work",
+   "hash": "f2819a32b0e884a1",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وحدة عمل فردية بحجم طلب سحب (PR) واحد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una única unidad de trabajo del tamaño de un PR",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une unité de travail de la taille d'une seule PR",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Единица работы размером в один PR",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "单个 PR 规模的工作单元",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Audience",
+   "hash": "024abe5cb54a592e",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الجمهور",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Audiencia",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Public cible",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Аудитория",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "受众",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Stakeholders, requestor, BA",
+   "hash": "9440a3de2db04cbc",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أصحاب المصلحة، وطالب الميزة، ومحلل الأعمال (BA)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Partes interesadas (stakeholders), solicitante, BA",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Parties prenantes, demandeur, analyste métier (BA)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Стейкхолдеры, автор запроса, бизнес-аналитик",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "利益相关者、需求提出者、业务分析师（BA）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Agent, developer",
+   "hash": "fd256363cae28ca5",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الوكيل، والمطور",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Agente, desarrollador",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Agent, développeur",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Агент, разработчик",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体、开发者",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Lifecycle",
+   "hash": "2cb2762cfc4de882",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "دورة الحياة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ciclo de vida",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cycle de vie",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Жизненный цикл",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "生命周期",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Open → requirements → sign-off → implementation → close",
+   "hash": "0ec9c657c2242abe",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مفتوحة ← متطلبات ← اعتماد ← تنفيذ ← إغلاق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Open → requirements → sign-off → implementation → close",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ouvert → exigences → validation (sign-off) → implémentation → clôture",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Open → requirements → sign-off → implementation → close",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "开启（Open）→ 需求梳理（requirements）→ 签发（sign-off）→ 实现（implementation）→ 关闭（close）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Created → in-progress → resolved",
+   "hash": "cf714acc46afa269",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مُنشأة ← قيد التنفيذ ← محلولة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Created → in-progress → resolved",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Créé → en cours → résolu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Created → in-progress → resolved",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "已创建（Created）→ 进行中（in-progress）→ 已解决（resolved）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Relation",
+   "hash": "3a4830ca2464ed59",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "العلاقة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Relación",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Relation",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Связь",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "关系",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Rules for agents",
+   "hash": "aeb0f1b5fef8aadd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قواعد للوكلاء",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Reglas para los agentes",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Règles pour les agents",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Правила для агентов",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能体守则",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Feature work → issue first. Before implementing, check:",
+   "hash": "c574fa84989c1fcc",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "العمل على الميزات ← المسألة أولاً. قبل التنفيذ، تحقق من:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Trabajo de funcionalidad → issue primero. Antes de implementar, comprueba:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Travail sur les fonctionnalités → ticket en priorité. Avant d'implémenter, vérifiez :",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Работа над функциональностью → сначала задача (issue). Перед реализацией проверьте:",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "功能开发 → Issue 先行。 在动手实现之前，检查：",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Is there an existing open issue? Search by keywords.",
+   "hash": "0a7d5066857e8fe5",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هل توجد مسألة مفتوحة بالفعل؟ ابحث باستخدام الكلمات المفتاحية.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "¿Existe un issue abierto existente? Busca por palabras clave.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Existe-t-il un ticket ouvert ? Recherchez par mots-clés.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Существует ли уже открытая задача? Выполните поиск по ключевым словам.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "是否存在现有的未关闭 Issue？通过关键字搜索。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "If no open match, check recently closed issues.",
+   "hash": "c548d07c091a721f",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إذا لم تجد تطابقًا بين المسائل المفتوحة، فتحقق من المسائل المغلقة مؤخرًا.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Si no hay coincidencias abiertas, revisa los issues cerrados recientemente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "En l'absence de correspondance ouverte, vérifiez les tickets récemment fermés.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Если открытых совпадений нет, проверьте недавно закрытые задачи.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "若无开启的匹配项，检查近期关闭的 Issue。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "If no match at all, ask the user to create one. Do not create an issue without user permission.",
+   "hash": "4a1bf0b463490d32",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إذا لم تجد أي تطابق على الإطلاق، فاطلب من المستخدم إنشاء مسألة. لا تنشئ مسألة دون إذن المستخدم.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Si no hay coincidencia en absoluto, pide al usuario que cree uno. No crees un issue sin el permiso del usuario.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Si aucune correspondance n'existe, demandez à l'utilisateur d'en créer un. Ne créez pas de ticket sans la permission de l'utilisateur.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Если совпадений нет вовсе, попросите пользователя создать задачу. Не создавайте задачу без разрешения пользователя.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "若完全没有匹配项，请用户创建一个。未经用户许可，切勿创建 Issue。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What was accomplished in this round",
+   "hash": "b8c27e4af10bb811",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما تم إنجازه في هذه الجولة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lo que se logró en esta ronda",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce qui a été accompli durant ce cycle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что было сделано в этом раунде",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本轮已完成的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Links to updated content for review (staging URLs, docs pages)",
+   "hash": "799abde6d9b1336a",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "روابط إلى المحتوى المحدث للمراجعة (عناوين URL للبيئة التجريبية، وصفحات التوثيق)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Enlaces al contenido actualizado para revisión (URLs de staging, páginas de documentación)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Des liens vers le contenu mis à jour pour relecture (URL de préproduction, pages de documentation)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ссылки на обновленное содержимое для проверки (staging URL, страницы документации)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "供评审的已更新内容链接（预发布环境 URL、文档页面）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Before/after comparison table for changed pages",
+   "hash": "3a00f234db4049d3",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "جدول مقارنة قبل/بعد للصفحات التي تم تغييرها",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tabla comparativa de antes/después para las páginas modificadas",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un tableau comparatif avant/après pour les pages modifiées",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Таблицу сравнения «до/после» для измененных страниц",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "变更页面的修改前/修改后对比表",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Never close an issue without explicit authorization. The BA or stakeholder closes it. The agent closes it only when the BA explicitly says to. An agent must never assume completion.",
+   "hash": "39a74178268913de",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا تغلق مسألة أبدًا دون تفويض صريح. يقوم محلل الأعمال (BA) أو صاحب المصلحة بإغلاقها. ولا يغلقها الوكيل إلا عندما يطلب منه محلل الأعمال ذلك صراحة. ويجب ألا يفترض الوكيل الاكتمال أبدًا.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Nunca cerrar un issue sin autorización explícita. El BA o la parte interesada lo cierra. El agente lo cierra únicamente cuando el BA lo indique explícitamente. Un agente nunca debe asumir la finalización.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ne jamais fermer un ticket sans autorisation explicite. C'est l'analyste métier (BA) ou la partie prenante qui le ferme. L'agent ne le ferme que si le BA lui en donne explicitement l'instruction. Un agent ne doit jamais présumer de l'achèvement d'un travail.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Никогда не закрывайте задачу без явного указания. Задачу закрывает бизнес-аналитик или стейкхолдер. Агент закрывает ее исключительно тогда, когда бизнес-аналитик прямо указал сделать это. Агент ни при каких обстоятельствах не должен самостоятельно считать задачу завершенной.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "未经明确授权，绝不可关闭 Issue。 由 BA 或利益相关者来关闭。只有在 BA 明确指示时，智能体才可以关闭 Issue。智能体绝不能擅自假定任务已完成。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Requirements may span multiple issues. The agent should link to all relevant issues and note the relationships.",
+   "hash": "bd11bc9552450c09",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "قد تمتد المتطلبات عبر مسائل متعددة. ينبغي للوكيل الربط بجميع المسائل ذات الصلة وتدوين العلاقات بينها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los requisitos pueden abarcar múltiples issues. El agente debe enlazar a todos los issues pertinentes y señalar las relaciones.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les exigences peuvent s'étendre sur plusieurs tickets. L'agent doit lier tous les tickets pertinents et noter leurs relations.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Требования могут охватывать несколько задач. Агенту следует дать ссылки на все соответствующие задачи и отразить связи между ними.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "需求可能跨越多个 Issue。 智能体应当链接到所有相关 Issue 并说明它们之间的关系。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Consolidated skill references",
+   "hash": "18ec7edcbf8973ef",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مراجع المهارات المجمعة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Referencias consolidadas de habilidades",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Références consolidées des compétences",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сводные ссылки на навыки",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "综合技能参考",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Behaviour",
+   "hash": "58835b9a5dc8e1fc",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "السلوك",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Comportamiento",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Comportement",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поведение",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "行为",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Source skill / document",
+   "hash": "285e46a29674cdb8",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المهارة / الوثيقة المصدر",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Habilidad / documento de origen",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Compétence / document source",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Исходный навык / документ",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "源技能 / 文档",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Location",
+   "hash": "3dbd37921490af90",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الموقع",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ubicación",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Emplacement",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Расположение",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "位置",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Session start sweep",
+   "hash": "a0055c6838f562c6",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مسح بدء الجلسة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Barrido de inicio de sesión",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Balayage au début de session",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Стартовый обзор сессии",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "会话启动巡检",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Commit and PR discipline",
+   "hash": "612cb238083ad919",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "انضباط التثبيت وطلبات السحب",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Disciplina de commits y PR",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Discipline des commits et PR",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Дисциплина коммитов и PR",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "提交与 PR 纪律",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Feature-request detection",
+   "hash": "294a454da1b74e34",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اكتشاف طلبات الميزات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Detección de solicitudes de funcionalidad",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Détection des demandes de fonctionnalités",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Обнаружение запросов функциональности",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "功能需求检测",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content authoring (paper)",
+   "hash": "67df208a0ea84edb",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تأليف المحتوى (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autoría de contenido (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rédaction de contenu (article)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Создание содержимого (paper)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容撰写（论文）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "authoring-math skills",
+   "hash": "27eae7ce617e40f1",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مهارات authoring-math",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "habilidades authoring-math",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "compétences authoring-math",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "навыки authoring-math",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "authoring-math 技能",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content authoring (document)",
+   "hash": "449a72fd426b668d",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تأليف المحتوى (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autoría de contenido (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rédaction de contenu (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Создание содержимого (document)",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容撰写（文档）",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "folio-document-adapter skills",
+   "hash": "1dbba7ce5b8a3427",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مهارات folio-document-adapter",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "habilidades folio-document-adapter",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "compétences folio-document-adapter",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "навыки folio-document-adapter",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "folio-document-adapter 技能",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "content-lifecycle skills",
+   "hash": "3f4f630f5c9bfda0",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مهارات content-lifecycle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "habilidades content-lifecycle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "compétences content-lifecycle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "навыки content-lifecycle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "content-lifecycle 技能",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Dispatch and coordination",
+   "hash": "f718cdc76a4d6659",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإرسال والتنسيق",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Despacho y coordinación",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Répartition et coordination",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Диспетчеризация и координация",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "调度与协调",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content types and adapters",
+   "hash": "07ebd223baa1fdbd",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أنواع المحتوى والمحولات",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tipos de contenido y adaptadores",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Types de contenu et adaptateurs",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Типы содержимого и адаптеры",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容类型与适配器",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "BPMN diagram authoring",
+   "hash": "30105bfb3f6d4e69",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تأليف مخططات BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Autoría de diagramas BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Conception de diagrammes BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Разработка диаграмм BPMN",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BPMN 图绘制",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "When a skill and this page disagree, the skill wins. This page is a consolidation, not a new authority. If you find a discrepancy, fix this page.",
+   "hash": "be63444fa2282b62",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عندما تختلف إحدى المهارات مع هذه الصفحة، تسود المهارة. فهذه الصفحة هي تجميع وتوحيد، وليست سلطة جديدة بحد ذاتها. وإذا وجدت تعارضًا، فقم بإصلاح هذه الصفحة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cuando una habilidad y esta página discrepen, la habilidad prevalece. Esta página es una consolidación, no una nueva autoridad. Si encuentras una discrepancia, corrige esta página.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "En cas de désaccord entre une compétence et cette page, la compétence l'emporte. Cette page est une consolidation, non une nouvelle autorité. Si vous constatez une divergence, corrigez cette page.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "При расхождении между навыком и этой страницей приоритет имеет навык. Эта страница представляет собой сводный материал, а не новый первоисточник. Если вы обнаружите расхождение, исправьте эту страницу.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "当某项技能与本页面存在分歧时，以技能为准。 本页面属于综合汇编，并非新的权威源。如果您发现差异，请修正本页面。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "What is not built yet",
+   "hash": "d4fd76926b887d27",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ما لم يُبنَ بعد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lo que aún no está construido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce qui n'est pas encore construit",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Что еще не реализовано",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "尚未构建的内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Automated request classification — the classification table is a reference for agents to read; there is no classifier tool that routes automatically.",
+   "hash": "f2c3151fe2b45bc2",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التصنيف الآلي للطلبات — يعد جدول التصنيف مرجعًا يقرأه الوكلاء؛ ولا توجد أداة مصنِّف توجه الطلبات تلقائيًا.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Clasificación automatizada de solicitudes — la tabla de clasificación es una referencia para que los agentes la consulten; no existe una herramienta clasificadora que enrute automáticamente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Classification automatisée des requêtes — la table de classification est une référence destinée à la lecture par les agents ; il n'existe pas d'outil de classification assurant un routage automatique.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Автоматическая классификация запросов — таблица классификации является справочником для агентов; инструмента-классификатора, выполняющего автоматическую маршрутизацию, нет.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "自动化请求分类 — 分类表供智能体查阅参考；目前尚无自动进行路由的分类器工具。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "BPMN for the agentic harness itself — a top-level BPMN diagram showing the idle/workflow state machine and the classification routing is not yet authored.",
+   "hash": "be99c463468e1b47",
+   "sources": [
+    "docs/concepts/agentic-harness.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مخطط BPMN لإطار العمل الوكيل نفسه — لم يتم بعد تأليف مخطط BPMN عالي المستوى يوضح آلة حالة الخمول/سير العمل وتوجيه التصنيف.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "BPMN para el propio arnés agéntico — aún no se ha creado un diagrama BPMN de nivel superior que muestre la máquina de estados inactivo/flujo de trabajo y el enrutamiento de clasificación.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "BPMN pour le harnais agentique lui-même — un diagramme BPMN de haut niveau illustrant la machine à états inactif/flux de travail et le routage de classification n'a pas encore été conçu.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "BPMN для самой агентной обвязки — высокоуровневая диаграмма BPMN, иллюстрирующая конечный автомат состояний ожидания / рабочего процесса и маршрутизацию по классификации, еще не создана.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "智能代理工具框架本身的 BPMN 图 — 展示空闲/工作流状态机以及分类路由的顶层 BPMN 图尚未绘制。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

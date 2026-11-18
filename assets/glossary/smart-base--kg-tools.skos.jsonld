@@ -114,6 +114,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/dak-task-annotations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DAK task annotations → BPMN sidecars"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read a DAK document's per-task \"NOTES AND ANNOTATIONS\" from its L1 section text (who-iris), match each numbered item to the BPMN task it describes (by @id, then the label's step number with the file's process letter, then the name), add the persona from the task's lane or pool and the data elements, functional requirements and decision tables the DAK workbooks key to the activity id, and write one `dak-task-annotations/v1` sidecar (`<file>.tasks.json`) beside each BPMN (`smart-base/L2-bpmn/scripts/dak-task-annotations.ts`, schema `smart-base/L2-bpmn/schemas/task-annotations.ts`). Items no task matches are listed for a person to adjudicate; a re-run keeps adjudicated matches. `--report` prints what a set of sidecars covers and never fails. The BPMN is read, never written, and nothing FHIR-specific is involved."
+        }
+      ],
+      "skos:notation": "dak-task-annotations",
+      "dcterms:source": "smart-base/L2-bpmn/tools/dak-task-annotations/dak-task-annotations.ts#dak-task-annotations",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/dmn-to-html",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -206,7 +226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`."
+          "@value": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. When a `dak-task-annotations/v1` sidecar sits beside the file (`<file>.tasks.json`), each of its entries becomes an l2 `dak-task` that `describes` its BPMN task, with `performedBy`, `usesDataElement`, `specifiedBy` and `invokesDecision` edges by the DAK's own ids. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`."
         }
       ],
       "skos:notation": "kg-extract-bpmn",

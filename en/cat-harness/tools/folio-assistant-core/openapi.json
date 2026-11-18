@@ -167,6 +167,88 @@
         ]
       }
     },
+    "/tools/as-drawn-svg": {
+      "post": {
+        "operationId": "as-drawn-svg",
+        "summary": "Figure redrawn as drawn, from its PDF vector layer",
+        "description": "Draw a figure as SVG from `as-drawn-figure/v1` data: the drawing `scripts/pdf-as-drawn.py` transcribes from the source PDF's vector layer (every path, clip, text run and image in the L1 figure region, at its printed position, colour and size). The SVG keeps the original's layout and style; labels are SVG text held to their printed width, and labels that name a glossary concept link to it.",
+        "tags": [
+          "figure-rebuild"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "as-drawn-svg/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "An as-drawn-figure/v1 file, or a directory of them."
+                  },
+                  "out-dir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write as-drawn-fig-<N>.svg."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing; fail when data is invalid or an SVG is stale."
+                  }
+                },
+                "required": [
+                  "data",
+                  "out-dir"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "svg": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "One SVG per data file, named after the figure labels it draws."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/as-drawn-svg.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/as-drawn-svg.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "figure-rebuild"
+        ],
+        "x-selection": {
+          "when": "A folio's L1 figure has no model route (ArchiMate, BPMN, DMN, FHIR, a figure-data family) or needs an as-drawn companion to its model view, and should be an SVG that looks like the printed figure rather than a PNG crop.",
+          "limits": "Transcribes; does not interpret. Soft-masked paints (drop shadows) are left out and counted in `omitted`. Fonts fall back to Source Sans or Arial, held to the printed width.",
+          "cost": "Reads JSON files; no network."
+        }
+      }
+    },
     "/tools/bibliography-page": {
       "post": {
         "operationId": "bibliography-page",
@@ -584,7 +666,7 @@
       "post": {
         "operationId": "diig-phases-svg",
         "summary": "DIIG phases, steps and resources chart",
-        "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept.",
+        "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; a tile whose data names a link (URL, glossary concept or who-iris library entry) is an SVG link titled with the tile's name, and a tile with none is drawn without one.",
         "tags": [
           "figure-rebuild"
         ],
@@ -606,6 +688,10 @@
                   "out": {
                     "$ref": "#/components/schemas/RepoPath",
                     "description": "Where to write the SVG; stdout when absent."
+                  },
+                  "library-base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "Where who-iris library entry pages are published, ending in `/`; defaults to the WorldHealthOrganization who-iris site."
                   }
                 },
                 "required": [
@@ -626,7 +712,7 @@
                   "properties": {
                     "svg": {
                       "$ref": "#/components/schemas/RepoPath",
-                      "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile."
+                      "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile, inside a titled `<a>` when the tile links."
                     }
                   }
                 }

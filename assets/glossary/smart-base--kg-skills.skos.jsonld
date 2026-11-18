@@ -234,6 +234,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-skills/guideline-gap-report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "guideline-gap-report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The QA report smart-guideline-end-to-end writes after every stage: where a guideline's chain from L1 recommendation to L2 asset to L3 resource is broken, which source figures and tables are not yet computable, and which assets have no review requested, a review pending, or a review sent back. Each gap names the asset, the stage that closes it and the role that reviews it. It is staged with the stage's output and linked from every review request, so each reviewer sees where their asset sits and what is still missing. A report, never a gate. Read after any stage of smart-guideline-end-to-end or dth-authoring, and when asked \"what is left to do on this guideline?\"."
+        }
+      ],
+      "skos:notation": "guideline-gap-report",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/guideline-gap-report.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-skills/guideline-use-case",
       "@type": "skos:Concept",
       "skos:inScheme": {

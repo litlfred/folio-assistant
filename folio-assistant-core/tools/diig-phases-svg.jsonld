@@ -367,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "diig-phases-svg",
       "title": "DIIG phases, steps and resources chart",
-      "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept.",
+      "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; a tile whose data names a link (URL, glossary concept or who-iris library entry) is an SVG link titled with the tile's name, and a tile with none is drawn without one.",
       "install": {
         "none": true
       },
@@ -393,13 +393,22 @@
             "arg": {
               "flag": "--out"
             }
+          },
+          {
+            "name": "library-base",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
+            "description": "Where who-iris library entry pages are published, ending in `/`; defaults to the WorldHealthOrganization who-iris site.",
+            "required": false,
+            "arg": {
+              "flag": "--library-base"
+            }
           }
         ],
         "outputs": [
           {
             "name": "svg",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile."
+            "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile, inside a titled `<a>` when the tile links."
           }
         ]
       },

@@ -1,0 +1,1342 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "smart-trust",
+ "repository": "litlfred/smart-trust",
+ "translations": "translations",
+ "catalogue": "pagecontent/overview",
+ "hashes": {
+  "ar": "1e58954bb21ec962",
+  "es": "b9e2aa297105bbaa",
+  "fr": "31ecc18cde869302",
+  "ru": "986610805258cd81",
+  "zh": "3a1aa0beda27bc1c"
+ },
+ "strings": [
+  {
+   "msgid": "A collection of well defined digital health documents that are issued and verified by members of the GDHCN  A Public Key Infrastructure (PKI) that is used for the publishing and distribution of public keys used for verification of digital signatures of the digital health documents.",
+   "hash": "a17b2cd0499c4253",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مجموعة من المستندات الصحية الرقمية المحدَّدة جيدًا التي يُصدرها أعضاء GDHCN ويتحققون منها. والبنية التحتية للمفاتيح العمومية (PKI) المستخدمة لنشر وتوزيع المفاتيح العمومية المستخدمة في التحقق من التوقيعات الرقمية للمستندات الصحية الرقمية.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un conjunto de documentos digitales de salud bien definidos que emiten y verifican los miembros de la GDHCN  Una infraestructura de clave pública (PKI) que se utiliza para la publicación y distribución de las claves públicas empleadas para verificar las firmas digitales de los documentos digitales de salud.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un ensemble de documents de santé numériques bien définis, émis et vérifiés par les membres du GDHCN  Une infrastructure à clés publiques (ICP, en anglais PKI) utilisée pour la publication et la distribution des clés publiques servant à la vérification des signatures numériques des documents de santé numériques.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Набор чётко определённых цифровых медицинских документов, которые выдаются и проверяются участниками GDHCN  Инфраструктура открытых ключей (PKI), используемая для публикации и распространения открытых ключей, применяемых для проверки цифровых подписей цифровых медицинских документов.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一组定义明确的数字健康文档，由 GDHCN 成员签发和验证；一套公钥基础设施（PKI），用于发布和分发验证这些数字健康文档的数字签名所用的公钥。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Knowledge Library used to maintain metadata including terminology codings, product codes and business rules that are used to provide semantic interoperability of these digital health documents",
+   "hash": "80295ac8909e716e",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مكتبة معارف تُستخدم لحفظ البيانات الوصفية، بما في ذلك ترميزات المصطلحات ورموز المنتجات وقواعد العمل التي تُستخدم لتوفير قابلية التشغيل البيني الدلالية لهذه المستندات الصحية الرقمية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una biblioteca de conocimientos utilizada para mantener metadatos, como codificaciones terminológicas, códigos de productos y reglas de negocio, que se emplean para proporcionar interoperabilidad semántica a estos documentos digitales de salud",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une bibliothèque de connaissances utilisée pour maintenir les métadonnées, notamment les codages terminologiques, les codes de produits et les règles métier, qui servent à assurer l’interopérabilité sémantique de ces documents de santé numériques",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Библиотека знаний, используемая для ведения метаданных, включая терминологические коды, коды продуктов и бизнес-правила, которые используются для обеспечения семантической совместимости этих цифровых медицинских документов",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一个知识库，用于维护元数据，包括术语编码、产品代码和业务规则，以实现这些数字健康文档的语义互操作性",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Achieving global interoperability of health certificates does not require that all jurisdictions use the same standard. Interoperability can also be achieved when there are pre-arranged mechanisms in place so that certificates issued by one jurisdiction are accepted in another. A number of services and technical artifacts have been developed to address particular criteria for establishing interoperability and a system of trust including:",
+   "hash": "622ad16657000eaf",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يتطلب تحقيقُ قابلية التشغيل البيني العالمية للشهادات الصحية أن تستخدم جميع الولايات القضائية المعيار نفسه. إذ يمكن أيضًا تحقيق قابلية التشغيل البيني عند وجود آليات متفق عليها مسبقًا تضمن قبول الشهادات الصادرة عن ولاية قضائية ما في ولاية قضائية أخرى. وقد طُوِّر عدد من الخدمات والعناصر التقنية لتلبية معايير محددة لإرساء قابلية التشغيل البيني ونظام للثقة، منها:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Lograr la interoperabilidad mundial de los certificados de salud no requiere que todas las jurisdicciones utilicen la misma norma. La interoperabilidad también puede lograrse cuando existen mecanismos acordados previamente para que los certificados emitidos por una jurisdicción se acepten en otra. Se han desarrollado varios servicios y artefactos técnicos para abordar criterios concretos con el fin de establecer la interoperabilidad y un sistema de confianza, entre ellos:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Parvenir à l’interopérabilité mondiale des certificats de santé n’exige pas que toutes les juridictions utilisent la même norme. L’interopérabilité peut également être obtenue lorsque des mécanismes préétablis sont en place, de sorte que les certificats émis par une juridiction soient acceptés dans une autre. Un certain nombre de services et d’artefacts techniques ont été élaborés pour répondre à des critères particuliers permettant d’établir l’interopérabilité et un système de confiance, notamment :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Для достижения глобальной совместимости медицинских сертификатов не требуется, чтобы все юрисдикции использовали один и тот же стандарт. Совместимость может быть также достигнута при наличии заранее согласованных механизмов, обеспечивающих признание в одной юрисдикции сертификатов, выданных в другой. Для выполнения отдельных критериев установления совместимости и системы доверия разработан ряд услуг и технических артефактов, в том числе:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "实现健康证书的全球互操作性，并不要求所有管辖区使用同一标准。如果预先建立了相应机制，使一个管辖区签发的证书能够在另一个管辖区得到接受，同样可以实现互操作性。为满足建立互操作性和信任体系的特定标准，已开发了多项服务和技术工件，包括：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "As with any digital solution, there are ethical considerations, such as potential impacts on equity and on equitable access, and data protection principles that need to inform the design of the technical specifications, as well as provide guidance on how resulting solutions can be ethically implemented. The following page discusses some key ethical considerations and data protection principles that Member States are encouraged to – and, where they have legal obligations, must – include in their respective deployments of digital solutions. These ethical considerations and data protection principles have also informed the design criteria for WHO’s SMART Guidelines and for the utilization of the WHO’s Global Digital Health Certification Network.",
+   "hash": "fa1228f289d3e119",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "كما هو الحال مع أي حل رقمي، ثمة اعتبارات أخلاقية، مثل الآثار المحتملة على الإنصاف وعلى الوصول المنصف، ومبادئ لحماية البيانات يتعيّن أن تسترشد بها عملية تصميم المواصفات التقنية، وأن توفر إرشادات بشأن كيفية تنفيذ الحلول الناتجة تنفيذًا أخلاقيًا. وتناقش الصفحة التالية بعض الاعتبارات الأخلاقية الرئيسية ومبادئ حماية البيانات التي تُشجَّع الدول الأعضاء على تضمينها – ويجب عليها ذلك حيثما كانت عليها التزامات قانونية – في عمليات نشرها للحلول الرقمية. وقد استرشدت معايير تصميم إرشادات SMART الصادرة عن منظمة الصحة العالمية (WHO) واستخدامُ الشبكة العالمية لإصدار الشهادات الصحية الرقمية التابعة لمنظمة الصحة العالمية (WHO) بهذه الاعتبارات الأخلاقية ومبادئ حماية البيانات أيضًا.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Como ocurre con cualquier solución digital, existen consideraciones éticas, como los posibles efectos sobre la equidad y el acceso equitativo, y principios de protección de datos que deben orientar el diseño de las especificaciones técnicas, así como ofrecer orientación sobre cómo aplicar de forma ética las soluciones resultantes. En la página siguiente se examinan algunas consideraciones éticas y principios de protección de datos clave que se alienta a los Estados Miembros a incluir —y que, cuando tengan obligaciones jurídicas, deben incluir— en sus respectivos despliegues de soluciones digitales. Estas consideraciones éticas y principios de protección de datos también han orientado los criterios de diseño de las SMART Guidelines de la OMS y de la utilización de la Red Mundial de Certificación Digital de Salud de la OMS.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Comme pour toute solution numérique, il existe des considérations éthiques, telles que les incidences potentielles sur l’équité et sur l’accès équitable, ainsi que des principes de protection des données, qui doivent guider la conception des spécifications techniques et fournir des orientations sur la manière dont les solutions qui en résultent peuvent être mises en œuvre de façon éthique. La page suivante examine certaines considérations éthiques et certains principes de protection des données essentiels que les États Membres sont encouragés à inclure – et, lorsqu’ils y sont juridiquement tenus, doivent inclure – dans leurs déploiements respectifs de solutions numériques. Ces considérations éthiques et ces principes de protection des données ont également guidé les critères de conception des lignes directrices SMART de l’OMS et de l’utilisation du Réseau mondial de certification de la santé numérique de l’OMS.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Как и в случае любого цифрового решения, существуют этические соображения, такие как возможное влияние на справедливость и на равный доступ, а также принципы защиты данных, которые должны учитываться при разработке технических спецификаций и служить ориентиром в отношении того, как полученные решения могут быть внедрены с соблюдением этических норм. На следующей странице рассматриваются ключевые этические соображения и принципы защиты данных, которые государствам — членам ВОЗ рекомендуется (а при наличии юридических обязательств — необходимо) учитывать при развёртывании ими цифровых решений. Эти этические соображения и принципы защиты данных также легли в основу критериев разработки руководящих принципов SMART ВОЗ (WHO SMART Guidelines) и использования Глобальной сети сертификации в области цифрового здравоохранения ВОЗ.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "与任何数字解决方案一样，存在需要为技术规范的设计提供依据、并为如何以合乎伦理的方式实施由此产生的解决方案提供指导的伦理考虑（例如对公平和公平获取的潜在影响）和数据保护原则。以下页面讨论了一些关键的伦理考虑和数据保护原则，鼓励会员国在各自部署数字解决方案时纳入这些考虑和原则，并且在负有法律义务的情况下必须纳入。这些伦理考虑和数据保护原则也为世卫组织（WHO）SMART 指南的设计标准以及世卫组织（WHO）全球数字健康认证网络的使用提供了依据。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Audience",
+   "hash": "024abe5cb54a592e",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الجمهور المستهدف",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Destinatarios",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Public cible",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Целевая аудитория",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "受众",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Available Trust Domains",
+   "hash": "0ccd42c8f73861d8",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نطاقات الثقة المتاحة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ámbitos de confianza disponibles",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Domaines de confiance disponibles",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Доступные Домены доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "可用的信任域",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Background &amp; Purpose",
+   "hash": "da0fd112c727b31d",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الخلفية والغرض",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Antecedentes &amp; finalidad",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contexte et objectif",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Предпосылки и цель",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "背景与目的",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "C.L.38.2023 (Global Digital Health Certification Network) - Arabic",
+   "hash": "79958451622e9fe6",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "C.L.38.2023 (الشبكة العالمية لإصدار الشهادات الصحية الرقمية) - العربية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "C.L.38.2023 (Red Mundial de Certificación Digital de Salud) - Árabe",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "C.L.38.2023 (Réseau mondial de certification de la santé numérique) - arabe",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "C.L.38.2023 (Глобальная сеть сертификации в области цифрового здравоохранения) — на арабском языке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "C.L.38.2023（全球数字健康认证网络）- 阿拉伯文",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "C.L.38.2023 (Global Digital Health Certification Network) - Chinese",
+   "hash": "9b507acf6d422e2e",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "C.L.38.2023 (الشبكة العالمية لإصدار الشهادات الصحية الرقمية) - الصينية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "C.L.38.2023 (Red Mundial de Certificación Digital de Salud) - Chino",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "C.L.38.2023 (Réseau mondial de certification de la santé numérique) - chinois",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "C.L.38.2023 (Глобальная сеть сертификации в области цифрового здравоохранения) — на китайском языке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "C.L.38.2023（全球数字健康认证网络）- 中文",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "C.L.38.2023 (Global Digital Health Certification Network) - English",
+   "hash": "010a96b9153c767e",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "C.L.38.2023 (الشبكة العالمية لإصدار الشهادات الصحية الرقمية) - الإنجليزية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "C.L.38.2023 (Red Mundial de Certificación Digital de Salud) - Inglés",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "C.L.38.2023 (Réseau mondial de certification de la santé numérique) - anglais",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "C.L.38.2023 (Глобальная сеть сертификации в области цифрового здравоохранения) — на английском языке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "C.L.38.2023（全球数字健康认证网络）- 英文",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "C.L.38.2023 (Global Digital Health Certification Network) - French",
+   "hash": "2887b06ce8a00213",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "C.L.38.2023 (الشبكة العالمية لإصدار الشهادات الصحية الرقمية) - الفرنسية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "C.L.38.2023 (Red Mundial de Certificación Digital de Salud) - Francés",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "C.L.38.2023 (Réseau mondial de certification de la santé numérique) - français",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "C.L.38.2023 (Глобальная сеть сертификации в области цифрового здравоохранения) — на французском языке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "C.L.38.2023（全球数字健康认证网络）- 法文",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "C.L.38.2023 (Global Digital Health Certification Network) - Russian",
+   "hash": "34ff9a5f2072a314",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "C.L.38.2023 (الشبكة العالمية لإصدار الشهادات الصحية الرقمية) - الروسية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "C.L.38.2023 (Red Mundial de Certificación Digital de Salud) - Ruso",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "C.L.38.2023 (Réseau mondial de certification de la santé numérique) - russe",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "C.L.38.2023 (Глобальная сеть сертификации в области цифрового здравоохранения) — на русском языке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "C.L.38.2023（全球数字健康认证网络）- 俄文",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "C.L.38.2023 (Global Digital Health Certification Network) - Spanish",
+   "hash": "993dff5b5b308165",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "C.L.38.2023 (الشبكة العالمية لإصدار الشهادات الصحية الرقمية) - الإسبانية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "C.L.38.2023 (Red Mundial de Certificación Digital de Salud) - Español",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "C.L.38.2023 (Réseau mondial de certification de la santé numérique) - espagnol",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "C.L.38.2023 (Глобальная сеть сертификации в области цифрового здравоохранения) — на испанском языке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "C.L.38.2023（全球数字健康认证网络）- 西班牙文",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Circular letter to Member States",
+   "hash": "87a2c6e30922f76c",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "رسالة دورية إلى الدول الأعضاء",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Carta circular a los Estados Miembros",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Lettre circulaire aux États Membres",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Циркулярное письмо государствам — членам ВОЗ",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "致会员国的通函",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Community",
+   "hash": "030f4a838abcb3f0",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المجتمع",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Comunidad",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Communauté",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сообщество",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "社区",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Data models, transformations and vocabulary definitions that allow exchange of health data between various standards formats, preserving a jurisdiction's autonomy regarding domestic processes while allowing re-issuance and mutual recognition of credentials between jurisdictions Standard specifications for exchanging public keys between various networks for verifying digital signatures on health credentials A global trust registry and federated public key infrastructure solution that provides technical interoperability and technical governance between regional trust networks Workflows for creating, sharing and executing business rules that evaluate public health policies against health data for cross-border or port of entry requirements Open source tools and technical guidance to reduce the burden of implementing the technical infrastructure to participate in the federated trust network, including open source trust network infrastructure for jurisdictions to implement their own regional trust networks",
+   "hash": "8e9b510b2bfbd42d",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نماذج البيانات وعمليات التحويل وتعريفات المفردات التي تتيح تبادل البيانات الصحية بين صيغ المعايير المختلفة، مع الحفاظ على استقلالية الولاية القضائية فيما يتعلق بالعمليات المحلية، والسماح في الوقت نفسه بإعادة إصدار الاعتمادات والاعتراف المتبادل بها بين الولايات القضائية. ومواصفات قياسية لتبادل المفاتيح العمومية بين الشبكات المختلفة للتحقق من التوقيعات الرقمية على الاعتمادات الصحية. وسجل عالمي للثقة وحل اتحادي للبنية التحتية للمفاتيح العمومية يوفر قابلية التشغيل البيني التقنية والحوكمة التقنية بين شبكات الثقة الإقليمية. وسير عمل لإنشاء قواعد العمل ومشاركتها وتنفيذها، وهي قواعد تُقيِّم سياسات الصحة العامة مقابل البيانات الصحية لمتطلبات العبور عبر الحدود أو متطلبات نقاط الدخول. وأدوات مفتوحة المصدر وإرشادات تقنية لتخفيف عبء تنفيذ البنية التحتية التقنية اللازمة للمشاركة في شبكة الثقة الاتحادية، بما في ذلك بنية تحتية مفتوحة المصدر لشبكات الثقة تتيح للولايات القضائية تنفيذ شبكات الثقة الإقليمية الخاصة بها",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Modelos de datos, transformaciones y definiciones de vocabulario que permiten el intercambio de datos de salud entre distintos formatos normalizados, preservando la autonomía de cada jurisdicción respecto de sus procesos nacionales y permitiendo a la vez la reemisión y el reconocimiento mutuo de credenciales entre jurisdicciones Especificaciones normalizadas para intercambiar claves públicas entre distintas redes a fin de verificar las firmas digitales de las credenciales de salud Un registro mundial de confianza y una solución de infraestructura de clave pública federada que proporcionan interoperabilidad técnica y gobernanza técnica entre las redes de confianza regionales Flujos de trabajo para crear, compartir y ejecutar reglas de negocio que evalúan las políticas de salud pública con respecto a los datos de salud para los requisitos transfronterizos o de los puntos de entrada Herramientas de código abierto y orientaciones técnicas para reducir la carga de implantar la infraestructura técnica necesaria para participar en la red de confianza federada, incluida una infraestructura de red de confianza de código abierto para que las jurisdicciones implanten sus propias redes de confianza regionales",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Des modèles de données, des transformations et des définitions de vocabulaire permettant l’échange de données de santé entre différents formats normalisés, préservant l’autonomie d’une juridiction quant à ses processus nationaux tout en permettant la réémission et la reconnaissance mutuelle des justificatifs entre juridictions Des spécifications normalisées pour l’échange de clés publiques entre différents réseaux afin de vérifier les signatures numériques apposées sur les justificatifs de santé Un registre mondial de confiance et une solution d’infrastructure à clés publiques fédérée assurant l’interopérabilité technique et la gouvernance technique entre les réseaux de confiance régionaux Des flux de travail pour créer, partager et exécuter des règles métier qui évaluent les politiques de santé publique au regard des données de santé pour les exigences transfrontalières ou aux points d’entrée Des outils open source et des orientations techniques visant à réduire la charge de la mise en place de l’infrastructure technique nécessaire pour participer au réseau de confiance fédéré, y compris une infrastructure de réseau de confiance open source permettant aux juridictions de mettre en place leurs propres réseaux de confiance régionaux",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Модели данных, преобразования и определения словарей, позволяющие обмениваться медицинскими данными в различных форматах стандартов, сохраняя автономию юрисдикции в отношении внутренних процессов и обеспечивая при этом повторную выдачу и взаимное признание удостоверений между юрисдикциями Стандартные спецификации обмена открытыми ключами между различными сетями для проверки цифровых подписей на медицинских удостоверениях Глобальный реестр доверия и федеративное решение инфраструктуры открытых ключей, обеспечивающее техническую совместимость и техническое управление между региональными сетями доверия Рабочие процессы создания, совместного использования и выполнения бизнес-правил, которые оценивают соответствие медицинских данных политике общественного здравоохранения для требований при пересечении границы или в пункте въезда Инструменты с открытым исходным кодом и техническое руководство, снижающие нагрузку по внедрению технической инфраструктуры для участия в федеративной сети доверия, включая инфраструктуру сети доверия с открытым исходным кодом, позволяющую юрисдикциям создавать собственные региональные сети доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "数据模型、转换和词汇定义，使健康数据能够在各种标准格式之间交换，在保留管辖区对国内流程自主权的同时，允许管辖区之间重新签发和相互认可凭证；在不同网络之间交换公钥以验证健康凭证上数字签名的标准规范；一个全球信任登记系统和联合公钥基础设施解决方案，在区域信任网络之间提供技术互操作性和技术治理；用于创建、共享和执行业务规则的工作流，这些业务规则依据健康数据评估公共卫生政策，以满足跨境或入境口岸的要求；开源工具和技术指导，以减轻为参与联合信任网络而实施技术基础设施的负担，包括供各管辖区实施其自身区域信任网络的开源信任网络基础设施",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Establish trust of digitally signed clinical algorithms published by WHO through the SMART Guidelines work. Allow for a global product catalogue of trusted medical products and devices. Ensure information about a patient can be accessed and trusted regardless of one is in the world. Support health systems resiliency to address future outbreaks in a world. Empower individuals to manage their own health and well-being.",
+   "hash": "8cabc8445d7c5841",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إرساء الثقة في الخوارزميات السريرية الموقَّعة رقميًا التي تنشرها منظمة الصحة العالمية (WHO) من خلال العمل على إرشادات SMART. وإتاحة كتالوج عالمي للمنتجات والأجهزة الطبية الموثوقة. وضمان إمكانية الوصول إلى المعلومات المتعلقة بالمريض والثقة بها أينما كان في العالم. ودعم قدرة النظم الصحية على الصمود لمواجهة الفاشيات المستقبلية في العالم. وتمكين الأفراد من إدارة صحتهم وعافيتهم بأنفسهم.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Establecer la confianza en los algoritmos clínicos firmados digitalmente que publica la OMS mediante el trabajo de las SMART Guidelines. Permitir un catálogo mundial de productos y dispositivos médicos de confianza. Garantizar que la información sobre un paciente pueda consultarse y sea fiable dondequiera que se encuentre en el mundo. Apoyar la resiliencia de los sistemas de salud para afrontar futuros brotes en el mundo. Empoderar a las personas para que gestionen su propia salud y bienestar.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Établir la confiance dans les algorithmes cliniques signés numériquement publiés par l’OMS dans le cadre des travaux sur les lignes directrices SMART. Permettre un catalogue mondial de produits médicaux et de dispositifs de confiance. Garantir que les informations concernant un patient soient accessibles et dignes de confiance, où que l’on se trouve dans le monde. Soutenir la résilience des systèmes de santé face aux futures flambées épidémiques dans le monde. Donner aux personnes les moyens de gérer leur propre santé et leur bien-être.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Устанавливать доверие к алгоритмам клинической практики с цифровой подписью, публикуемым ВОЗ в рамках работы над руководящими принципами SMART. Обеспечивать возможность создания глобального каталога доверенных медицинских изделий и устройств. Обеспечивать доступ к информации о пациенте и доверие к ней независимо от того, где в мире он находится. Поддерживать устойчивость систем здравоохранения для реагирования на будущие вспышки болезней в мире. Расширять возможности людей по управлению собственным здоровьем и благополучием.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "为世卫组织（WHO）通过 SMART 指南工作发布的经数字签名的临床算法建立信任。支持建立可信医疗产品和器械的全球产品目录。确保无论身处世界何地，患者信息都能被访问和信任。支持卫生系统韧性，以应对世界上未来的疫情暴发。增强个人管理自身健康和福祉的能力。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Ethical Considerations and Data Protection Principles",
+   "hash": "6da5c5fdd2edb037",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الاعتبارات الأخلاقية ومبادئ حماية البيانات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Consideraciones éticas y principios de protección de datos",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Considérations éthiques et principes de protection des données",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Этические соображения и принципы защиты данных",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "伦理考虑与数据保护原则",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "In addition to verifying and validating COVID-19 certificates, a global digital health trust network such as the GDHCN can:",
+   "hash": "34beb821bc4db915",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إضافةً إلى التحقق من شهادات COVID-19 والتثبت من صلاحيتها، يمكن لشبكة ثقة عالمية للصحة الرقمية مثل GDHCN أن:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Además de verificar y validar certificados de COVID-19, una red mundial de confianza para la salud digital como la GDHCN puede:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Outre la vérification et la validation des certificats COVID-19, un réseau mondial de confiance pour la santé numérique tel que le GDHCN peut :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Помимо верификации и проверки действительности сертификатов COVID-19, глобальная сеть доверия в области цифрового здравоохранения, такая как GDHCN, может:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "除验证和校验 COVID-19 证书外，GDHCN 这样的全球数字健康信任网络还可以：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "In response to COVID-19, Governments and organizations across the world have developed and adopted standards and technologies to create, present, and verify digital vaccination and test credentials. However, a global technical framework to enable convenient use and interoperability of these credentials between systems – while also allowing domestic autonomy over their use – does not exist yet and is critically needed.",
+   "hash": "ee8fa58c088df55d",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "استجابةً لجائحة COVID-19، وضعت الحكومات والمنظمات في جميع أنحاء العالم معايير وتقنيات واعتمدتها لإنشاء اعتمادات رقمية للتطعيم والاختبار وتقديمها والتحقق منها. غير أن إطارًا تقنيًا عالميًا يتيح الاستخدام الميسَّر لهذه الاعتمادات وقابلية تشغيلها البيني بين النظم – مع السماح في الوقت نفسه بالاستقلالية المحلية في استخدامها – لا يوجد بعد، وثمة حاجة ماسة إليه.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En respuesta a la COVID-19, gobiernos y organizaciones de todo el mundo han elaborado y adoptado normas y tecnologías para crear, presentar y verificar credenciales digitales de vacunación y de pruebas. Sin embargo, todavía no existe un marco técnico mundial que permita el uso cómodo y la interoperabilidad de estas credenciales entre sistemas —y que a la vez preserve la autonomía nacional sobre su uso—, y se necesita con urgencia.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "En réponse à la COVID-19, les gouvernements et les organisations du monde entier ont élaboré et adopté des normes et des technologies pour créer, présenter et vérifier des justificatifs numériques de vaccination et de dépistage. Toutefois, un cadre technique mondial permettant une utilisation pratique et l’interopérabilité de ces justificatifs entre les systèmes – tout en préservant l’autonomie nationale quant à leur utilisation – n’existe pas encore et fait cruellement défaut.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В ответ на COVID-19 правительства и организации во всём мире разработали и внедрили стандарты и технологии для создания, предъявления и проверки цифровых удостоверений о вакцинации и тестировании. Однако глобальной технической основы, обеспечивающей удобное использование и совместимость этих удостоверений между системами при сохранении внутренней автономии в отношении их использования, пока не существует, и в ней имеется острая необходимость.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "为应对 COVID-19，世界各国政府和组织已开发并采用了用于创建、出示和验证数字疫苗接种凭证和检测凭证的标准和技术。然而，目前尚不存在一个全球技术框架，能够使这些凭证在系统之间便捷使用和互操作，同时允许各国自主决定其使用方式，而这样的框架是迫切需要的。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Issuers that provide verifiable health credentials to individuals, Verifiers that consume verifiable health credentials provided by individuals, and Trust Networks that establish trust relationships and policies between issuers and verifiers.",
+   "hash": "881ac4f9a5561f4b",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الجهات المُصدِرة التي تقدِّم اعتمادات صحية قابلة للتحقق إلى الأفراد، والجهات المُتحقِّقة التي تستخدم الاعتمادات الصحية القابلة للتحقق المقدَّمة من الأفراد، وشبكات الثقة التي تُرسي علاقات الثقة والسياسات بين الجهات المُصدِرة والجهات المُتحقِّقة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Emisores que proporcionan credenciales de salud verificables a las personas, verificadores que utilizan las credenciales de salud verificables que presentan las personas, y redes de confianza que establecen relaciones y políticas de confianza entre emisores y verificadores.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les émetteurs, qui fournissent des justificatifs de santé vérifiables aux personnes, les vérificateurs, qui utilisent les justificatifs de santé vérifiables fournis par les personnes, et les réseaux de confiance, qui établissent des relations de confiance et des politiques entre émetteurs et vérificateurs.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "эмитенты, предоставляющие физическим лицам проверяемые медицинские удостоверения; проверяющие стороны, использующие проверяемые медицинские удостоверения, предъявляемые физическими лицами; и сети доверия, устанавливающие отношения доверия и политики между эмитентами и проверяющими сторонами.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "签发方：向个人提供可验证健康凭证；验证方：使用个人提供的可验证健康凭证；信任网络：在签发方与验证方之间建立信任关系和政策。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "On Friday, September 29, 2023, WHO’s Director General sent a circular letter to all Member States encouraging participation in the GDHCN.",
+   "hash": "776cadb2081ffc7b",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "في يوم الجمعة 29 سبتمبر/أيلول 2023، أرسل المدير العام لمنظمة الصحة العالمية (WHO) رسالة دورية إلى جميع الدول الأعضاء يشجِّعها فيها على المشاركة في GDHCN.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El viernes 29 de septiembre de 2023, el Director General de la OMS envió una carta circular a todos los Estados Miembros en la que alentaba su participación en la Red Mundial.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le vendredi 29 septembre 2023, le Directeur général de l’OMS a adressé une lettre circulaire à tous les États Membres pour les encourager à participer au GDHCN.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В пятницу, 29 сентября 2023 г., Генеральный директор ВОЗ направил всем государствам — членам ВОЗ циркулярное письмо, призывающее к участию в GDHCN.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "2023 年 9 月 29 日（星期五），世卫组织（WHO）总干事向所有会员国发出通函，鼓励其参与 GDHCN。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Participants",
+   "hash": "d5916be3b7e38984",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المشاركون",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Participantes",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Participants",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Участники",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "参与方",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Sign up on chat.fhir.org community and follow the stream who-smart-guidelines for questions, queries and chats related to WHO SMART Guidelines chat.fhir.org WHO also hosts weekly calls on authoring and implementing WHO SMART Guidelines where participation is welcome. Please send an email at gdhcn-support@who.int in order to get invited. gdhcn-support@who.int",
+   "hash": "8ff0151b5b9a2865",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "سجِّل في مجتمع chat.fhir.org وتابع القناة who-smart-guidelines لطرح الأسئلة والاستفسارات والمحادثات المتعلقة بإرشادات SMART الصادرة عن منظمة الصحة العالمية (WHO) chat.fhir.org. وتستضيف منظمة الصحة العالمية (WHO) أيضًا اجتماعات أسبوعية بشأن تأليف إرشادات SMART الصادرة عنها وتنفيذها، والمشاركة فيها مُرحَّب بها. يُرجى إرسال بريد إلكتروني إلى gdhcn-support@who.int للحصول على دعوة. gdhcn-support@who.int",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Regístrese en la comunidad chat.fhir.org y siga el canal who-smart-guidelines para preguntas, consultas y conversaciones relacionadas con las SMART Guidelines de la OMS chat.fhir.org La OMS también organiza llamadas semanales sobre la elaboración y la implementación de las SMART Guidelines de la OMS, en las que la participación es bienvenida. Envíe un correo electrónico a gdhcn-support@who.int para recibir una invitación. gdhcn-support@who.int",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Inscrivez-vous sur la communauté chat.fhir.org et suivez le fil who-smart-guidelines pour les questions, demandes et discussions relatives aux lignes directrices SMART de l’OMS chat.fhir.org L’OMS organise également des appels hebdomadaires sur la rédaction et la mise en œuvre des lignes directrices SMART de l’OMS, auxquels vous êtes invités à participer. Veuillez envoyer un courriel à gdhcn-support@who.int pour recevoir une invitation. gdhcn-support@who.int",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Зарегистрируйтесь в сообществе chat.fhir.org и подпишитесь на поток who-smart-guidelines для вопросов, запросов и обсуждений, связанных с руководящими принципами SMART ВОЗ (WHO SMART Guidelines) chat.fhir.org ВОЗ также проводит еженедельные созвоны по разработке и внедрению руководящих принципов SMART ВОЗ, участие в которых приветствуется. Чтобы получить приглашение, направьте письмо по адресу gdhcn-support@who.int. gdhcn-support@who.int",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "请在 chat.fhir.org 社区注册，并关注 who-smart-guidelines 频道，以提出与世卫组织 SMART 指南相关的问题、咨询和讨论。chat.fhir.org WHO 还每周举办关于编写和实施世卫组织（WHO）SMART 指南的电话会议，欢迎参加。如需获得邀请，请发送电子邮件至 gdhcn-support@who.int。gdhcn-support@who.int",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Summary",
+   "hash": "33d2953076ca7aaa",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الملخص",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Resumen",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Résumé",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Краткий обзор",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "摘要",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The audience for this guide includes decision makers, analysts and technical assets at potential individual issuers, existing trust networks or potential verifiers who may participate in the federated trust network. Stakeholders include Member States, regional networks, and standards development organizations.",
+   "hash": "f66e8a0ca70331f6",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يشمل الجمهور المستهدف بهذا الدليل صانعي القرار والمحللين والكوادر التقنية لدى الجهات المُصدِرة الفردية المحتملة، أو شبكات الثقة القائمة، أو الجهات المُتحقِّقة المحتملة التي قد تشارك في شبكة الثقة الاتحادية. ويشمل أصحاب المصلحة الدول الأعضاء والشبكات الإقليمية ومنظمات وضع المعايير.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los destinatarios de esta guía son los responsables de la toma de decisiones, los analistas y el personal técnico de posibles emisores individuales, redes de confianza existentes o posibles verificadores que puedan participar en la red de confianza federada. Entre las partes interesadas figuran los Estados Miembros, las redes regionales y las organizaciones de elaboración de normas.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le public cible de ce guide comprend les décideurs, les analystes et les ressources techniques des émetteurs individuels potentiels, des réseaux de confiance existants ou des vérificateurs potentiels susceptibles de participer au réseau de confiance fédéré. Les parties prenantes comprennent les États Membres, les réseaux régionaux et les organismes d’élaboration de normes.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Целевая аудитория настоящего руководства включает лиц, принимающих решения, аналитиков и технических специалистов потенциальных отдельных эмитентов, существующих сетей доверия или потенциальных проверяющих сторон, которые могут участвовать в федеративной сети доверия. К заинтересованным сторонам относятся государства — члены ВОЗ, региональные сети и организации по разработке стандартов.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本指南的受众包括可能参与联合信任网络的潜在单个签发方、现有信任网络或潜在验证方的决策者、分析人员和技术人员。利益相关方包括会员国、区域网络和标准制定组织。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The codes for the GDHCN Trust Domains are contained in the GDHCN Trust Domain Value Set and are described in more detail here.",
+   "hash": "59ed5d663cc1eb7f",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ترد رموز نطاقات الثقة في GDHCN ضمن مجموعة القيم الخاصة بنطاقات الثقة في GDHCN (GDHCN Trust Domain Value Set)، وهي موصوفة بمزيد من التفصيل هنا.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los códigos de los ámbitos de confianza de la GDHCN figuran en el conjunto de valores de ámbitos de confianza de la GDHCN (GDHCN Trust Domain Value Set) y se describen con más detalle aquí.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les codes des Domaines de confiance du GDHCN figurent dans le jeu de valeurs GDHCN Trust Domain et sont décrits plus en détail ici.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Коды Доменов доверия GDHCN содержатся в наборе значений GDHCN Trust Domain Value Set и более подробно описаны здесь.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "GDHCN 信任域的代码包含在 GDHCN 信任域值集中，并在此处有更详细的说明。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The GDHCN is a digital reflection of the trust WHO already has with Member States. The GDHCN is a digital trust network is based on proven  concepts which are used to describe the specifications and mechanisms for establishing trust, which allow eligible participants to establish new trust domains for exchange of verifiable digital health records. Eligible participants of the trust network may apply to join by following an on-boarding process.   The GDHCN is operated under the GDHCN Administrative and Operational Framework.",
+   "hash": "e7b1297b655e092f",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إن GDHCN انعكاس رقمي للثقة القائمة بالفعل بين منظمة الصحة العالمية (WHO) والدول الأعضاء. وGDHCN شبكة ثقة رقمية تستند إلى مفاهيم مُثبتة تُستخدم لوصف المواصفات والآليات اللازمة لإرساء الثقة، وتتيح للمشاركين المؤهَّلين إنشاء نطاقات ثقة جديدة لتبادل السجلات الصحية الرقمية القابلة للتحقق. ويجوز للمشاركين المؤهَّلين في شبكة الثقة التقدم بطلب للانضمام باتباع عملية الانضمام.   وتُشغَّل GDHCN بموجب الإطار الإداري والتشغيلي لـ GDHCN.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La GDHCN es un reflejo digital de la confianza que la OMS ya mantiene con los Estados Miembros. La GDHCN es una red de confianza digital basada en conceptos probados que se utilizan para describir las especificaciones y los mecanismos para establecer la confianza, y que permiten a los participantes cualificados establecer nuevos ámbitos de confianza para el intercambio de registros digitales de salud verificables. Los participantes cualificados de la red de confianza pueden solicitar su adhesión siguiendo un proceso de integración.   La GDHCN funciona con arreglo al Marco Administrativo y Operativo de la GDHCN.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le GDHCN est le reflet numérique de la confiance que l’OMS entretient déjà avec les États Membres. Le GDHCN est un réseau de confiance numérique fondé sur des concepts éprouvés, qui servent à décrire les spécifications et les mécanismes d’établissement de la confiance, et qui permettent aux participants admissibles d’établir de nouveaux Domaines de confiance pour l’échange de dossiers de santé numériques vérifiables. Les participants admissibles au réseau de confiance peuvent demander à le rejoindre en suivant un processus d’intégration.   Le GDHCN est exploité conformément au Cadre administratif et opérationnel du GDHCN.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "GDHCN является цифровым отражением доверия, которое уже существует между ВОЗ и государствами — членами ВОЗ. GDHCN — это цифровая сеть доверия, основанная на проверенных  концепциях, которые используются для описания спецификаций и механизмов установления доверия, позволяющих правомочным участникам создавать новые Домены доверия для обмена проверяемыми цифровыми медицинскими записями. Правомочные участники сети доверия могут подать заявку на присоединение, пройдя процесс подключения.   GDHCN функционирует в соответствии с Административно-операционной основой GDHCN (GDHCN Administrative and Operational Framework).",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "GDHCN 是世卫组织（WHO）与会员国之间已有信任的数字化体现。GDHCN 是一个数字信任网络，基于经过验证的概念，这些概念用于描述建立信任的规范和机制，使合格参与方能够建立新的信任域，以交换可验证的数字健康记录。信任网络的合格参与方可以按照入网流程申请加入。GDHCN 依照《GDHCN 行政与运营框架》运行。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The interoperable exchange of health information in a trusted environment is a complex task with an increasingly large number of stakeholders (e.g. public health agencies, accredited labs, border control organizations, institutions authorized to verify) that need to ensure that data is transferred safely and securely, that the health content is interoperable, and that information is understandable and actionable. This guide details how to utilize a global technical framework to allow interoperability of health credentials between systems, while preserving domestic autonomy over their use.",
+   "hash": "2e33ef563a932001",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إن التبادل القابل للتشغيل البيني للمعلومات الصحية في بيئة موثوقة مهمة معقدة تشمل عددًا متزايدًا من أصحاب المصلحة (مثل وكالات الصحة العامة، والمختبرات المعتمدة، ومنظمات مراقبة الحدود، والمؤسسات المأذون لها بالتحقق) الذين يتعيَّن عليهم ضمان نقل البيانات بأمان وأمن، وأن يكون المحتوى الصحي قابلًا للتشغيل البيني، وأن تكون المعلومات مفهومة وقابلة للتنفيذ. ويوضح هذا الدليل كيفية الاستفادة من إطار تقني عالمي لإتاحة قابلية التشغيل البيني للاعتمادات الصحية بين النظم، مع الحفاظ على الاستقلالية المحلية في استخدامها.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El intercambio interoperable de información de salud en un entorno de confianza es una tarea compleja en la que interviene un número cada vez mayor de partes interesadas (por ejemplo, organismos de salud pública, laboratorios acreditados, organismos de control fronterizo, instituciones autorizadas para verificar) que deben garantizar que los datos se transfieran de forma segura y protegida, que el contenido de salud sea interoperable y que la información sea comprensible y útil para la acción. Esta guía detalla cómo utilizar un marco técnico mundial que permita la interoperabilidad de las credenciales de salud entre sistemas, preservando a la vez la autonomía nacional sobre su uso.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L’échange interopérable d’informations de santé dans un environnement de confiance est une tâche complexe faisant intervenir un nombre croissant de parties prenantes (p. ex. organismes de santé publique, laboratoires accrédités, organismes de contrôle aux frontières, institutions habilitées à effectuer des vérifications) qui doivent s’assurer que les données sont transférées de manière sûre et sécurisée, que le contenu de santé est interopérable et que les informations sont compréhensibles et exploitables. Ce guide explique comment utiliser un cadre technique mondial pour permettre l’interopérabilité des justificatifs de santé entre les systèmes, tout en préservant l’autonomie nationale quant à leur utilisation.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Обмен медицинской информацией с обеспечением совместимости в доверенной среде является сложной задачей, в которой участвует всё большее число заинтересованных сторон (например, ведомства общественного здравоохранения, аккредитованные лаборатории, органы пограничного контроля, учреждения, уполномоченные осуществлять проверку), которым необходимо обеспечить безопасную и надёжную передачу данных, совместимость медицинского содержимого, а также понятность информации и возможность действовать на её основе. В настоящем руководстве подробно описано, как использовать глобальную техническую основу для обеспечения совместимости медицинских удостоверений между системами при сохранении внутренней автономии в отношении их использования.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在可信环境中以可互操作的方式交换健康信息是一项复杂的任务，涉及的利益相关方（例如公共卫生机构、经认可的实验室、边境管控组织、获授权进行验证的机构）越来越多，他们需要确保数据得到安全可靠的传输、健康内容可互操作，且信息可理解、可据以采取行动。本指南详细说明如何利用全球技术框架实现健康凭证在系统之间的互操作性，同时保留各国对其使用的自主权。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The WHO Global Digital Health Certification Network is a collection of components that are used to verify interoperable digital health documents or certificates.  This system of comprised of three main features:",
+   "hash": "002561eac420ea97",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إن الشبكة العالمية لإصدار الشهادات الصحية الرقمية التابعة لمنظمة الصحة العالمية (WHO) مجموعة من المكونات التي تُستخدم للتحقق من المستندات أو الشهادات الصحية الرقمية القابلة للتشغيل البيني.  ويتألف هذا النظام من ثلاث سمات رئيسية:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La Red Mundial de Certificación Digital de Salud de la OMS es un conjunto de componentes que se utilizan para verificar documentos o certificados digitales de salud interoperables.  Este sistema se compone de tres funciones principales:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le Réseau mondial de certification de la santé numérique (GDHCN) de l’OMS est un ensemble de composants utilisés pour vérifier des documents ou certificats de santé numériques interopérables.  Ce système comprend trois éléments principaux :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Глобальная сеть сертификации в области цифрового здравоохранения ВОЗ представляет собой совокупность компонентов, используемых для проверки совместимых цифровых медицинских документов или сертификатов.  Эта система состоит из трёх основных элементов:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "世卫组织（WHO）全球数字健康认证网络是一组用于验证可互操作数字健康文档或证书的组件。该系统由三个主要部分组成：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This guide describes expected workflows for potential actors in a trust ecosystem, namely:",
+   "hash": "277bdd84d471aab9",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يصف هذا الدليل سير العمل المتوقع للجهات الفاعلة المحتملة في منظومة الثقة، وهي:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esta guía describe los flujos de trabajo previstos para los posibles actores de un ecosistema de confianza, a saber:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce guide décrit les flux de travail attendus pour les acteurs potentiels d’un écosystème de confiance, à savoir :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В настоящем руководстве описаны ожидаемые рабочие процессы для потенциальных акторов экосистемы доверия, а именно:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本指南描述了信任生态系统中潜在参与者的预期工作流，即：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This guide describes the specifications and on-boarding procedures for WHO's Global Digital Health Certification Network (GDHCN).  The GDHCN is a mechanism to support verification of health documents and certifications that are exchanged between participants of the GDHCN.  These health certifications may include COVID-19 certificates, routine immunization cards, and home-based records consistent with International Patient Summary standards. This mechanism provides means of harmonizing global health protocol standards and establishing a system for recognition of digital certificates for continuity of care and at point of entry.  The GDHCN is designed to leverage existing investments by jurisdictions that were made under the COVID-19 response and provide the digital health infrastructure needed for resiliency in future epidemic and pandemic responses.",
+   "hash": "43bedf5570c80c34",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يصف هذا الدليل المواصفات وإجراءات الانضمام إلى الشبكة العالمية لإصدار الشهادات الصحية الرقمية (GDHCN) التابعة لمنظمة الصحة العالمية (WHO).  وGDHCN آلية لدعم التحقق من المستندات والشهادات الصحية المتبادلة بين المشاركين في GDHCN.  وقد تشمل هذه الشهادات الصحية شهادات COVID-19، وبطاقات التمنيع الروتيني، والسجلات المنزلية المتسقة مع معايير الملخص الدولي للمريض (International Patient Summary). وتوفر هذه الآلية وسائل لمواءمة معايير بروتوكولات الصحة العالمية وإرساء نظام للاعتراف بالشهادات الرقمية من أجل استمرارية الرعاية وعند نقاط الدخول.  وقد صُمِّمت GDHCN للاستفادة من الاستثمارات القائمة التي قامت بها الولايات القضائية في إطار الاستجابة لجائحة COVID-19، ولتوفير البنية التحتية للصحة الرقمية اللازمة للصمود في الاستجابات المستقبلية للأوبئة والجوائح.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esta guía describe las especificaciones y los procedimientos de incorporación de la Red Mundial de Certificación Digital de Salud (GDHCN) de la OMS.  La GDHCN es un mecanismo para apoyar la verificación de los documentos y certificaciones de salud que se intercambian entre los participantes de la GDHCN.  Estas certificaciones de salud pueden incluir certificados de COVID-19, cartillas de inmunización sistemática y registros domiciliarios conformes con las normas del Resumen Internacional del Paciente (International Patient Summary). Este mecanismo proporciona medios para armonizar las normas de los protocolos sanitarios mundiales y establecer un sistema de reconocimiento de certificados digitales para la continuidad de la atención y en los puntos de entrada.  La GDHCN está diseñada para aprovechar las inversiones existentes que realizaron las jurisdicciones en el marco de la respuesta a la COVID-19 y proporcionar la infraestructura de salud digital necesaria para la resiliencia en futuras respuestas a epidemias y pandemias.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ce guide décrit les spécifications et les procédures d’intégration du Réseau mondial de certification de la santé numérique (GDHCN) de l’OMS.  Le GDHCN est un mécanisme destiné à soutenir la vérification des documents et certifications de santé échangés entre les participants du GDHCN.  Ces certifications de santé peuvent comprendre des certificats COVID-19, des carnets de vaccination systématique et des dossiers tenus à domicile conformes aux normes de l’International Patient Summary. Ce mécanisme fournit des moyens d’harmoniser les normes des protocoles de santé mondiaux et d’établir un système de reconnaissance des certificats numériques pour la continuité des soins et aux points d’entrée.  Le GDHCN est conçu pour tirer parti des investissements existants réalisés par les juridictions dans le cadre de la riposte à la COVID-19 et fournir l’infrastructure de santé numérique nécessaire à la résilience lors des futures ripostes aux épidémies et aux pandémies.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В настоящем руководстве описаны спецификации и процедуры подключения к Глобальной сети сертификации в области цифрового здравоохранения ВОЗ (GDHCN).  GDHCN — это механизм поддержки проверки медицинских документов и сертификатов, которыми обмениваются участники GDHCN.  К таким медицинским сертификатам могут относиться сертификаты COVID-19, карты плановой иммунизации и домашние медицинские записи, соответствующие стандартам Международной сводки о пациенте (IPS). Этот механизм предоставляет средства гармонизации глобальных стандартов протоколов здравоохранения и создания системы признания цифровых сертификатов для обеспечения непрерывности медицинской помощи и в пунктах въезда.  GDHCN призвана использовать существующие инвестиции юрисдикций, сделанные в рамках мер реагирования на COVID-19, и обеспечить инфраструктуру цифрового здравоохранения, необходимую для устойчивости при реагировании на будущие эпидемии и пандемии.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本指南描述了世卫组织（WHO）全球数字健康认证网络（GDHCN）的规范和入网程序。GDHCN 是一种机制，用于支持对 GDHCN 参与方之间交换的健康文档和证明进行验证。这些健康证明可以包括 COVID-19 证书、常规免疫接种卡，以及符合国际患者摘要标准的家庭保存记录。该机制提供了协调全球卫生协议标准的手段，并为连续性医疗和入境口岸建立数字证书认可体系。GDHCN 旨在利用各管辖区在 COVID-19 应对中已有的投资，并提供未来流行病和大流行应对韧性所需的数字健康基础设施。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Trust Network",
+   "hash": "cc93459768b81ac5",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "شبكة الثقة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Red de confianza",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Réseau de confiance",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сеть доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "信任网络",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Trust Network Participants",
+   "hash": "e3ef49a7129458ad",
+   "sources": [
+    "input/pagecontent/overview.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المشاركون في شبكة الثقة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Participantes en la red de confianza",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Participants au réseau de confiance",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Участники сети доверия",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "信任网络参与方",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

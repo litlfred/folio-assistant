@@ -1,0 +1,1732 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "cat-harness",
+ "repository": "litlfred/cat-harness",
+ "translations": "translations",
+ "catalogue": "glossary/bootstrap--terms",
+ "hashes": {
+  "ar": "617c1706c4800c9b",
+  "es": "e82d7543de6c4187",
+  "fr": "e633c5806db4f84f",
+  "ru": "0e77c8e7a227993a",
+  "zh": "426c7160d550230c"
+ },
+ "strings": [
+  {
+   "msgid": "A BPMN flow node: an activity (a task or call activity), a gateway, or an event.",
+   "hash": "b90ec1411f694339",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عقدة تدفق BPMN: نشاط (مهمة أو نشاط استدعاء) أو بوابة أو حدث.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un nodo de flujo BPMN: una actividad (una tarea o una actividad de llamada), una compuerta o un evento.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un nœud de flux BPMN : une activité (une tâche ou une activité d'appel), une passerelle ou un événement.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Узел потока BPMN: действие (задача или вызывающее действие), шлюз или событие.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BPMN 流节点：一个活动（任务或调用活动）、一个网关或一个事件。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.",
+   "hash": "856a556c3a37974e",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مُدخل `needs` في الإعلان يسمّي رسماً بيانياً معرفياً آخر. يجوز أن تشير المراجع من مثيلات العقدة في هذا الرسم إلى الرسم المسمّى، ولا يجوز العكس أبداً.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una entrada `needs` de una Declaración que nombra otro Grafo de conocimiento. Las Referencias pueden apuntar desde las Instancias de nodo de este grafo hacia el nombrado, nunca en sentido inverso.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une entrée `needs` d'une Déclaration qui nomme un autre Graphe de connaissances. Les Références peuvent pointer des Instances de nœud de ce graphe vers celui qui est nommé, jamais en sens inverse.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Запись `needs` Декларации, называющая другой Граф знаний. Ссылки могут вести от Экземпляров узла этого графа к названному, но никогда обратно.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "声明中的一条 `needs` 条目，用于指明另一个知识图谱。引用可以从本图谱的节点实例指向所指明的图谱，绝不反向。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A directed connection in a BPMN process from one Process Node to the next.",
+   "hash": "493abce455c1bd7a",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وصلة موجّهة في عملية BPMN من عقدة عملية إلى التي تليها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una conexión dirigida en un proceso BPMN de un Nodo de proceso al siguiente.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une connexion orientée dans un processus BPMN, d'un Nœud de processus au suivant.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Направленная связь в процессе BPMN от одного Узла процесса к следующему.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BPMN 流程中从一个流程节点到下一个流程节点的有向连接。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to.",
+   "hash": "ca71f5d1dbec528e",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مُدخل دليل في الإعلان: معرّف ودليل وأنواع الرسوم البيانية التي تنتمي إليها أنواع مثيلات العقدة فيه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una entrada de directorio de una Declaración: un id, un directorio y los Tipos de grafo a los que pertenecen los tipos de sus Instancias de nodo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une entrée de répertoire d'une Déclaration : un id, un répertoire et les Types de graphe auxquels appartiennent les types de ses Instances de nœud.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Запись каталога в Декларации: id, каталог и Виды графов, к которым относятся виды его Экземпляров узла.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "声明中的一条目录条目：一个 id、一个目录，以及其节点实例的类型所属的图类型。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
+   "hash": "e38065c83dba834f",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حقل في الإعلان، أو في أحد مُدخلاته، غير معرَّف هنا. القارئ الذي لا يتعرّف على الحقل يتجاهله، ويبقى باقي الإعلان على معناه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un campo de una Declaración, o de una de sus entradas, que no se define aquí. Un lector que no reconoce el campo lo ignora, y el resto de la Declaración conserva su significado.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un champ d'une Déclaration, ou de l'une de ses entrées, qui n'est pas défini ici. Un lecteur qui ne reconnaît pas le champ l'ignore, et le reste de la Déclaration garde son sens.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поле Декларации или одной из её записей, которое здесь не определено. Читатель, не распознающий поле, пропускает его, а остальная Декларация сохраняет своё значение.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "声明或其某条条目中未在此处定义的字段。不识别该字段的读取方会忽略它，声明的其余部分保持原意。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for.",
+   "hash": "a05b86f6328f7342",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مُدخل ملف في الإعلان: ملف واحد عن المستودع نفسه، يبيّن حقلُه `role` الغرضَ منه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una entrada de archivo de una Declaración: un archivo sobre el propio repositorio, cuyo campo `role` indica para qué sirve.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une entrée de fichier d'une Déclaration : un fichier concernant le dépôt lui-même, dont le champ `role` indique à quoi il sert.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Запись файла в Декларации: один файл о самом репозитории, поле `role` которого говорит, для чего он нужен.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "声明中的一条文件条目：关于仓库本身的一个文件，其 `role` 字段说明它的用途。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A JSON document, `<name>.json`, that gives a name and lists directory entries and file entries.",
+   "hash": "1a953cb1907b6660",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مستند JSON باسم `<name>.json` يحدّد اسماً ويسرد مُدخلات الأدلة ومُدخلات الملفات.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un documento JSON, `<name>.json`, que da un nombre y enumera entradas de directorio y entradas de archivo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un document JSON, `<name>.json`, qui donne un nom et énumère des entrées de répertoire et des entrées de fichier.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Документ JSON, `<name>.json`, задающий имя и перечисляющий записи каталогов и записи файлов.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一个 JSON 文档 `<name>.json`，给出名称并列出目录条目和文件条目。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Knowledge Graph whose Subgraphs hold Skills, Roles or Processes: what an Actor uses to work with a Knowledge Graph, including itself.",
+   "hash": "e8bc1d0c33f6caf2",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "رسم بياني معرفي تحوي رسومه البيانية الفرعية مهارات أو أدواراً أو عمليات: ما يستخدمه الفاعل للعمل مع رسم بياني معرفي، بما في ذلك هذا الرسم نفسه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un Grafo de conocimiento cuyos Subgrafos contienen Habilidades, Roles o Procesos: aquello que un Actor usa para trabajar con un Grafo de conocimiento, incluido él mismo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un Graphe de connaissances dont les Sous-graphes contiennent des Compétences, des Rôles ou des Processus : ce qu'un Acteur utilise pour travailler avec un Graphe de connaissances, y compris lui-même.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Граф знаний, Подграфы которого содержат Навыки, Роли или Процессы: то, чем Актор пользуется для работы с Графом знаний, включая сам этот граф.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "其子图包含技能、角色或流程的知识图谱：行动者用来处理知识图谱（包括其自身）的工具。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A name paired with a Node Schema.",
+   "hash": "eb38ad0d2b1ae3bb",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اسم مقترن بمخطط عقدة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un nombre emparejado con un Esquema de nodo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un nom associé à un Schéma de nœud.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Имя, сопоставленное со Схемой узла.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "与一个节点模式配对的名称。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A named set of Node Kinds.",
+   "hash": "3dbb3d4dfcda5430",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مجموعة مسمّاة من أنواع العقد.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un conjunto con nombre de Tipos de nodo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un ensemble nommé de Types de nœud.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Именованный набор Видов узлов.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一组具名的节点类型。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Node Instance holding a BPMN process that coordinates Tasks: its Process Nodes, joined by Sequence Flows, sit in lanes that each name a Role.",
+   "hash": "e8d20ce0f00124cf",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثيل عقدة يحوي عملية BPMN تنسّق المهام: تقع عُقد العملية فيها، المرتبطة بتدفقات التسلسل، في مسارات يسمّي كلٌّ منها دوراً.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una Instancia de nodo que contiene un proceso BPMN que coordina Tareas: sus Nodos de proceso, unidos por Flujos de secuencia, se sitúan en carriles que nombran cada uno un Rol.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une Instance de nœud contenant un processus BPMN qui coordonne des Tâches : ses Nœuds de processus, reliés par des Flux de séquence, se trouvent dans des couloirs qui nomment chacun un Rôle.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Экземпляр узла, содержащий процесс BPMN, который координирует Задачи: его Узлы процесса, соединённые Потоками последовательности, расположены на дорожках, каждая из которых называет Роль.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "包含协调任务的 BPMN 流程的节点实例：其流程节点由顺序流连接，位于各自指明一个角色的泳道中。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Node Instance holding natural-language instructions an Actor follows to carry out a Task.",
+   "hash": "c09e470d2d02e6ef",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثيل عقدة يحوي تعليمات بلغة طبيعية يتّبعها الفاعل لتنفيذ مهمة.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una Instancia de nodo que contiene instrucciones en lenguaje natural que un Actor sigue para llevar a cabo una Tarea.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une Instance de nœud contenant des instructions en langage naturel qu'un Acteur suit pour accomplir une Tâche.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Экземпляр узла, содержащий инструкции на естественном языке, которым Актор следует при выполнении Задачи.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "包含自然语言指令的节点实例，行动者按照这些指令执行任务。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Node Instance naming a part an Actor takes on to carry out Tasks, and listing the Skills that part needs.",
+   "hash": "cbd6b1fe9e7ca584",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثيل عقدة يسمّي دوراً يتولّاه الفاعل لتنفيذ المهام، ويسرد المهارات التي يحتاجها ذلك الدور.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una Instancia de nodo que nombra un papel que un Actor asume para llevar a cabo Tareas y enumera las Habilidades que ese papel necesita.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une Instance de nœud qui nomme un rôle qu'un Acteur endosse pour accomplir des Tâches et énumère les Compétences dont ce rôle a besoin.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Экземпляр узла, называющий роль, которую Актор принимает на себя для выполнения Задач, и перечисляющий Навыки, необходимые для этой роли.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "命名行动者为执行任务所担任的职责，并列出该职责所需技能的节点实例。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node that satisfies it satisfies the other too.",
+   "hash": "aae0ab40da9e01ab",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نوع عقدة يتطلّب مخططها كل ما يتطلّبه مخطط نوع عقدة آخر، فكل عقدة تستوفيه تستوفي الآخر أيضاً.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un Tipo de nodo cuyo Esquema de nodo exige todo lo que exige el de otro Tipo de nodo, de modo que todo Nodo que lo satisface satisface también el otro.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un Type de nœud dont le Schéma de nœud exige tout ce qu'exige celui d'un autre Type de nœud, de sorte que tout Nœud qui le satisfait satisfait aussi l'autre.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вид узла, Схема узла которого требует всего, что требует схема другого Вида узла, так что любой Узел, удовлетворяющий ей, удовлетворяет и другой.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一种节点类型，其节点模式要求另一节点类型的全部要求，因此满足它的每个节点也满足另一类型。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema.",
+   "hash": "991f7e4547dba95c",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عقدة تسمّي نوع عقدتها في `$schema` أو في الترويسة، وتستوفي مخطط العقدة لذلك النوع.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un Nodo que nombra su Tipo de nodo, en `$schema` o en el preámbulo, y satisface el Esquema de nodo de ese tipo.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un Nœud qui nomme son Type de nœud, dans `$schema` ou dans l'en-tête, et satisfait le Schéma de nœud de ce type.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Узел, указывающий свой Вид узла в `$schema` или во вводном блоке и удовлетворяющий Схеме узла этого вида.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在 `$schema` 或前置元数据中指明其节点类型，并满足该类型节点模式的节点。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A Node's naming of another Node by its IRI.",
+   "hash": "505f2a87d4576929",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تسمية عقدةٍ لعقدة أخرى بواسطة معرّف IRI الخاص بها.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La designación que un Nodo hace de otro Nodo por su IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La désignation d'un Nœud par un autre Nœud au moyen de son IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Указание одним Узлом на другой Узел по его IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一个节点通过 IRI 对另一个节点的指称。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A person, an agent or a program that can carry out Tasks.",
+   "hash": "b2028190356048a9",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "شخص أو وكيل أو برنامج قادر على تنفيذ المهام.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una persona, un agente o un programa que puede llevar a cabo Tareas.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une personne, un agent ou un programme capable d'accomplir des Tâches.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Человек, агент или программа, способные выполнять Задачи.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "能够执行任务的人、智能体或程序。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A schema a Node can be checked against: a JSON Schema, or a published external schema such as BPMN's.",
+   "hash": "7ced3fd6a22b834d",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مخطط يمكن التحقق من عقدة وفقه: JSON Schema، أو مخطط خارجي منشور مثل مخطط BPMN.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un esquema contra el que se puede validar un Nodo: un JSON Schema, o un esquema externo publicado como el de BPMN.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un schéma par rapport auquel un Nœud peut être vérifié : un JSON Schema, ou un schéma externe publié comme celui de BPMN.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Схема, по которой можно проверить Узел: JSON Schema или опубликованная внешняя схема, например схема BPMN.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "可用来校验节点的模式：JSON Schema，或已发布的外部模式，例如 BPMN 的模式。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A unit of work, stated by what it needs to begin and what it produces.",
+   "hash": "2345832f449e925c",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وحدة عمل، تُوصَف بما تحتاجه لتبدأ وبما تُنتجه.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una unidad de trabajo, expresada por lo que necesita para comenzar y lo que produce.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une unité de travail, énoncée par ce dont elle a besoin pour commencer et ce qu'elle produit.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Единица работы, описанная тем, что ей нужно для начала, и тем, что она производит.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一个工作单元，以其开始所需和产出来描述。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Actor",
+   "hash": "6f8b4741b5bb1e3e",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الفاعل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Actor",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Acteur",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Актор",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "行动者",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Asset",
+   "hash": "3320c150f9ccb00f",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الأصل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Recurso",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ressource",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ресурс",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "资产",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Content",
+   "hash": "7b91043f8150b90c",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المحتوى",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Contenido",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Contenu",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Содержимое",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "内容",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Declaration",
+   "hash": "4c6fef870560bd9f",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإعلان",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Declaración",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Déclaration",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Декларация",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "声明",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Dependency",
+   "hash": "4df7d0a2e1fe4ba7",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "التبعية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Dependencia",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dépendance",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Зависимость",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "依赖",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Extension",
+   "hash": "ec0218b6871bc566",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الامتداد",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Extensión",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Extension",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Расширение",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "扩展",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Graph Typology",
+   "hash": "65ef454a105d7c60",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نوع الرسم البياني",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tipo de grafo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Type de graphe",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вид графа",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "图类型",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Harness",
+   "hash": "aeb6383035bf8247",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإطار",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Arnés",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Harnais",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Обвязка",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "工具框架",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Knowledge Graph",
+   "hash": "dccbd3563127dd84",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الرسم البياني المعرفي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Grafo de conocimiento",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Graphe de connaissances",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Граф знаний",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "知识图谱",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Node",
+   "hash": "7cab3890d295608a",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "العقدة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Nodo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Nœud",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Узел",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "节点",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Node Instance",
+   "hash": "ff1f068f38b06ef5",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثيل العقدة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Instancia de nodo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Instance de nœud",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Экземпляр узла",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "节点实例",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Node Instances that describe the subject matter of a Knowledge Graph, such as records, documents, catalogues and their terms, rather than how to work with it.",
+   "hash": "f0af9ec2332768f5",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مثيلات عقدة تصف موضوع الرسم البياني المعرفي، كالسجلات والمستندات والفهارس ومصطلحاتها، لا طريقة العمل به.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Instancias de nodo que describen el objeto de un Grafo de conocimiento, como registros, documentos, catálogos y sus términos, y no cómo trabajar con él.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Instances de nœud qui décrivent l'objet d'un Graphe de connaissances, comme des enregistrements, des documents, des catalogues et leurs termes, plutôt que la manière de travailler avec lui.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Экземпляры узла, описывающие предмет Графа знаний, — записи, документы, каталоги и их термины, — а не то, как с ним работать.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "描述知识图谱主题内容的节点实例，例如记录、文档、目录及其术语，而不是如何使用该图谱。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Node Kind",
+   "hash": "943270badaec0dc4",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نوع العقدة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tipo de nodo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Type de nœud",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вид узла",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "节点类型",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Node Schema",
+   "hash": "3e87bef874090938",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مخطط العقدة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esquema de nodo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Schéma de nœud",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Схема узла",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "节点模式",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "One file, or one part of a file addressable by an IRI fragment, named by an IRI.",
+   "hash": "d09672f426ab9e62",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ملف، أو جزء من ملف يمكن الوصول إليه بجزء IRI، يُسمّى بمعرّف IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un archivo, o una parte de un archivo direccionable mediante un fragmento de IRI, nombrado por un IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un fichier, ou une partie de fichier adressable par un fragment d'IRI, nommé par un IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Файл или часть файла, адресуемая фрагментом IRI, названные с помощью IRI.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "由 IRI 命名的一个文件，或可通过 IRI 片段寻址的文件的一部分。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Process",
+   "hash": "d843d35adcb749f4",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "العملية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Proceso",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Processus",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Процесс",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "流程",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Process Node",
+   "hash": "b08f06d8c739faa6",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عقدة العملية",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Nodo de proceso",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Nœud de processus",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Узел процесса",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "流程节点",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Reference",
+   "hash": "581624034bcad8b7",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المرجع",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Referencia",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Référence",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Ссылка",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "引用",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Role",
+   "hash": "3143dc269767c351",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الدور",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Rol",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rôle",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Роль",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "角色",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Sequence Flow",
+   "hash": "e1c020b417a42e45",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تدفق التسلسل",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Flujo de secuencia",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Flux de séquence",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поток последовательности",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "顺序流",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Skill",
+   "hash": "679b948a1b77e535",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المهارة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Habilidad",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Compétence",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Навык",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "技能",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Subgraph",
+   "hash": "cc13fa3040ebb056",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الرسم البياني الفرعي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Subgrafo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Sous-graphe",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Подграф",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "子图",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Subkind",
+   "hash": "b47ffd11ec143e8e",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "النوع الفرعي",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Subtipo",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Sous-type",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Подвид",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "子类型",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Task",
+   "hash": "eccd3f6f36b55bd1",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المهمة",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tarea",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Tâche",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Задача",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "任务",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The Node Schemas, Node Instances and Assets one Declaration lists, as of one version of the repository. Published as JSON-LD, the statements of each Subgraph's Node Instances form one named graph.",
+   "hash": "e3d27ba6f744f0c5",
+   "sources": [
+    "bootstrap/schemas/graph.schema.json"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مخططات العقد ومثيلات العقد والأصول التي يسردها إعلان واحد، بحسب نسخة واحدة من المستودع. وعند نشرها بصيغة JSON-LD، تشكّل عبارات مثيلات العقدة في كل رسم بياني فرعي رسماً بيانياً مسمّى واحداً.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los Esquemas de nodo, las Instancias de nodo y los Recursos que enumera una Declaración, en una versión dada del repositorio. Publicadas como JSON-LD, las afirmaciones de las Instancias de nodo de cada Subgrafo forman un grafo con nombre.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les Schémas de nœud, les Instances de nœud et les Ressources qu'énumère une Déclaration, pour une version donnée du dépôt. Publiées en JSON-LD, les assertions des Instances de nœud de chaque Sous-graphe forment un graphe nommé.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Схемы узлов, Экземпляры узлов и Ресурсы, перечисленные в одной Декларации, на одну версию репозитория. При публикации в JSON-LD утверждения Экземпляров узла каждого Подграфа образуют один именованный граф.",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一份声明所列出的节点模式、节点实例和资产，对应仓库的某一版本。以 JSON-LD 发布时，每个子图的节点实例中的陈述构成一个具名图。",
+     "status": "unattributed",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

@@ -4901,16 +4901,16 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/translation-review-adjudication.svg",
-      "description": "A person's verdict on a machine translation, carried from the review page to the record. Candidate translations come from any engine; a reviewer accepts what is there, or flags a mistranslation and picks a candidate or writes their own; the verdict travels as a GitHub issue; a workflow checks it and opens a pull request; a maintainer merges it.\n\nYou are in this process when a catalogue has a translation nobody has adjudicated: a `machine`, `flagged` or `stale` cell on the review page. `translation-workflow` produces the machine translation and `human-translation-workflow` makes a locale official; this process sits between them and does neither. What it records is that ONE catalogue was read by ONE person who could be held to it, against the exact bytes they saw.\n\nTwo rules hold throughout. Candidates are never a barrier to having a translation: an empty `msgstr` gets the first candidate, marked fuzzy, so the page always has something to show. And a suggestion is a person's text that nobody else has reviewed: it enters the catalogue fuzzy, flagging it for review, never accepting it. Locale sign-off (`X-Folio-Official`, the locale's `status.json`) is a separate, deliberate act that this process never performs.\n\nGitHub is one Tool here, not the process: the issue is the carrier of the verdict and the pull request the carrier of the record. Another forge carrying the same `translation-adjudication/v1` record would be another Tool satisfying the same skill.",
+      "description": "A person's word on a translation, carried from the page they read it on to the record. Candidate translations come from any engine and from anyone; a reader opens the review page or a block's 🌐 pane, accepts what is there, or picks a ranked candidate or writes their own; that travels as a GitHub issue; a workflow checks it and opens a pull request; a maintainer merges it.\n\nYou are in this process when a catalogue has a translation nobody has adjudicated: a `machine`, `flagged` or `stale` cell on the review page, or a string a block's 🌐 pane shows as `proposed`, `agent`, `mt`, `missing` or `stale`. `translation-workflow` produces the machine translation and `human-translation-workflow` makes a locale official; this process sits between them and does neither. What it records is that ONE catalogue was read by ONE person who could be held to it, against the exact bytes they saw.\n\nTwo rules hold throughout. Candidates are never a barrier to having a translation: an empty `msgstr` gets the first candidate, marked fuzzy, so the page always has something to show. And a reader's text is a proposal until a collaborator chooses it: anyone may propose, and every proposal is appended to the candidates sidecar beside the others; only an owner, member or collaborator adjudicates, by choosing one text as the translation with a reason. A string nobody has adjudicated shows the best-ranked candidate, fuzzy and unofficial, unless an official source's English matches the msgid exactly. Locale sign-off (`X-Folio-Official`, the locale's `status.json`) is a separate, deliberate act that this process never performs.\n\nGitHub is one Tool here, not the process: the issue is the carrier of the verdict and the pull request the carrier of the record. Another forge carrying the same `translation-adjudication/v1` record would be another Tool satisfying the same skill.",
       "enforcement": "advisory",
-      "flowCount": 29,
+      "flowCount": 38,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "name": "Translation review and adjudication",
-      "nodeCount": 27,
+      "nodeCount": 34,
       "sourcePath": "library/processes/translation-review-adjudication.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/library/processes/translation-review-adjudication.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Start_TRA",
-      "summary": "A person's verdict on a machine translation, carried from the review page to the record."
+      "summary": "A person's word on a translation, carried from the page they read it on to the record."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_1",
@@ -4934,7 +4934,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Write",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_OpenPR"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_12",
@@ -4982,12 +4982,12 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_ReviewPage",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Review"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Entry"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_6",
       "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Review",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_EntryJoin",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Verdict"
@@ -5039,9 +5039,9 @@
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Author",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "name": "No",
+      "name": "No: proposals only",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Refuse"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_AuthorYes",
@@ -5051,6 +5051,15 @@
       "name": "Yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Hash"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Chosen",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_PerCatalogue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "name": "Chosen",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_Adjudicated"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_DetNo",
@@ -5068,7 +5077,7 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "name": "Yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Author"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Propose"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EmptyNo",
@@ -5089,13 +5098,31 @@
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_SeedFuzzy"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPage",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Entry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "name": "Review page",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPane",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Entry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "name": "A block's 🌐",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashNo",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Hash",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "name": "No",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Refuse"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashYes",
@@ -5134,6 +5161,15 @@
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Choose"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_NothingToRecord",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Anything",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Refuse"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_OnceNo",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Once",
@@ -5152,11 +5188,52 @@
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_AlreadyRecorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PageDone",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_EntryJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PaneDone",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_EntryJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Picked",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Anything"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Proposed",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Propose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_SomethingToRecord",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Anything",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_OpenPR"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Suggested",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_PerCatalogue",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "name": "Suggestion applied",
+      "name": "Proposed",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_Flagged"
     },
@@ -5183,6 +5260,20 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "name": "Reviewer (adjudicator)",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_Adjudicated",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Maintainer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Chosen",
+      "name": "String adjudicated (not official)",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+      "relaxable": true,
+      "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_AlreadyRecorded",
@@ -5233,7 +5324,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Maintainer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Suggested",
-      "name": "Catalogue flagged for review",
+      "name": "Proposal recorded (fuzzy until chosen)",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
@@ -5269,12 +5360,30 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Anything",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Picked",
+      "name": "Anything to record?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_NothingToRecord",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_SomethingToRecord"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Author",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_DetYes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Proposed",
       "name": "Author an owner, member or collaborator?",
       "nodeKind": "exclusive",
       "outgoing": [
@@ -5323,13 +5432,49 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Entry",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_5",
+      "name": "Where does the reader start?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPage",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPane"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_EntryJoin",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PageDone",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PaneDone"
+      ],
+      "name": "Gateway_TRA_EntryJoin",
+      "nodeKind": "exclusive",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_6",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Hash",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_AuthorYes",
-      "name": "Any catalogue unchanged?",
+      "name": "Any choice against an unchanged catalogue?",
       "nodeKind": "exclusive",
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashNo",
@@ -5387,6 +5532,7 @@
       "nodeKind": "exclusive",
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Accepted",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Chosen",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Suggested"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
@@ -5442,6 +5588,42 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_AuthorNo",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashNo",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_11"
+      ],
+      "name": "Auto-pick by rank",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Picked",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPane",
+      "name": "Open a block's 🌐 translation pane",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PaneDone",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
       "touchesWorkPlan": false
     },
     {
@@ -5517,7 +5699,7 @@
       "bpmnType": "bpmn:ServiceTask",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_11",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_SomethingToRecord",
       "name": "Open a ready PR and comment",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_12",
@@ -5544,15 +5726,28 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Propose",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_DetYes",
+      "name": "Append every suggestion as a human candidate",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Proposed",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Refuse",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ServiceTask",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_AuthorNo",
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashNo"
-      ],
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_NothingToRecord",
       "name": "Comment why nothing was recorded",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_10",
@@ -5568,10 +5763,10 @@
       "bpmnType": "bpmn:UserTask",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_5",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPage",
       "name": "Read the catalogue on the review page",
       "nodeKind": "activity",
-      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_6",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PageDone",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
       "relaxable": true,
@@ -5617,7 +5812,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashYes",
-      "name": "Write the records",
+      "name": "Write the choices and sign-offs",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_11",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication",

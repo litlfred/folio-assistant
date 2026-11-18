@@ -2,9 +2,9 @@
   "$schema": "folio-search-manifest/v1",
   "source": {
     "path": "assets/js/search-data.json",
-    "sha256": "80fe4a532ddb50b0131c2a42bf887a3eb9cbdcbb68c922b25a6d21c3e08c2d7a",
-    "entries": 20582,
-    "bytes": 47585526
+    "sha256": "0c53e9181abdddb244cfd06105df65033a367500d47d40675275d4064784acb3",
+    "entries": 20664,
+    "bytes": 47340895
   },
   "scopes": [
     {
@@ -25,22 +25,22 @@
       "id": "cat-harness",
       "kind": "instance",
       "path": "assets/js/search/cat-harness.json",
-      "entries": 10675,
-      "bytes": 16487415,
+      "entries": 10691,
+      "bytes": 16546614,
       "index": {
         "path": "assets/js/search/cat-harness.idx.json",
-        "bytes": 47442373
+        "bytes": 47612249
       }
     },
     {
       "id": "cat-harness-tools",
       "kind": "instance",
       "path": "assets/js/search/cat-harness-tools.json",
-      "entries": 694,
-      "bytes": 3697070,
+      "entries": 709,
+      "bytes": 3703975,
       "index": {
         "path": "assets/js/search/cat-harness-tools.idx.json",
-        "bytes": 6814626
+        "bytes": 6842285
       }
     },
     {
@@ -59,10 +59,10 @@
       "kind": "instance",
       "path": "assets/js/search/folio-assistant-core.json",
       "entries": 2268,
-      "bytes": 3684546,
+      "bytes": 3703112,
       "index": {
         "path": "assets/js/search/folio-assistant-core.idx.json",
-        "bytes": 10324110
+        "bytes": 10367000
       }
     },
     {
@@ -122,11 +122,11 @@
       "id": "section-reference",
       "kind": "section",
       "path": "assets/js/search/section-reference.json",
-      "entries": 4340,
-      "bytes": 5617602,
+      "entries": 4360,
+      "bytes": 5918777,
       "index": {
         "path": "assets/js/search/section-reference.idx.json",
-        "bytes": 19057821
+        "bytes": 19901782
       }
     },
     {
@@ -134,10 +134,10 @@
       "kind": "section",
       "path": "assets/js/search/section-uml.json",
       "entries": 1057,
-      "bytes": 1553172,
+      "bytes": 1555160,
       "index": {
         "path": "assets/js/search/section-uml.idx.json",
-        "bytes": 3859058
+        "bytes": 3861022
       }
     },
     {
@@ -159,10 +159,10 @@
       "kind": "instance",
       "path": "assets/js/search/smart-trust.json",
       "entries": 343,
-      "bytes": 7374913,
+      "bytes": 7377319,
       "index": {
         "path": "assets/js/search/smart-trust.idx.json",
-        "bytes": 12674371
+        "bytes": 12673573
       }
     },
     {
@@ -176,8 +176,8 @@
       "id": "who-iris",
       "kind": "instance",
       "path": "assets/js/search/who-iris.json",
-      "entries": 5,
-      "bytes": 55226
+      "entries": 36,
+      "bytes": 223630
     }
   ],
   "remote": [
@@ -187,5 +187,20 @@
       "href": "id-lookup/?index=who-iris/",
       "entries": 53
     }
-  ]
+  ],
+  "layers": [
+    "bootstrap",
+    "bootstrap-tools",
+    "cat-harness",
+    "cat-harness-tools",
+    "fhir-harness",
+    "folio-assistant-core",
+    "folio-assistant-sci",
+    "smart-base",
+    "smart-immunizations",
+    "smart-trust",
+    "smart-trust-phw",
+    "who-iris"
+  ],
+  "kgSearch": "slices/search.html?slice=kg"
 }

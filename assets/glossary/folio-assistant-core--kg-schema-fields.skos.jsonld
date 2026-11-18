@@ -1382,6 +1382,139 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawnfigureschema.omitted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnFigureSchema.omitted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the PDF paints that the transcription leaves out, and why."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema.omitted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawnimageschema.png",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnImageSchema.png"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Base64 PNG cropped from a 600 dpi render of the page."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema.png",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawnshapeschema.clip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnShapeSchema.clip"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Indices into `clips`: the shape is drawn inside all of them."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema.clip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawntextschema.link",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnTextSchema.link"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The glossary concept the label names (exact prefLabel or altLabel match)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.link",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawntextschema.rotate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnTextSchema.rotate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Degrees clockwise, about the origin."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.rotate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawntextschema.width",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnTextSchema.width"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The printed width, so the run keeps its place in another font."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.width",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/figure-data.asdrawntextschema.x",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AsDrawnTextSchema.x"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The baseline origin of the run."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.x",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.glossaryschema.hasversion",
       "@type": "skos:Concept",
       "skos:inScheme": {

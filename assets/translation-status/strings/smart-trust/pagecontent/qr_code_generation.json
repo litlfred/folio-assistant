@@ -1,0 +1,4072 @@
+{
+ "$schema": "folio-translation-strings/v1",
+ "layer": "smart-trust",
+ "repository": "litlfred/smart-trust",
+ "translations": "translations",
+ "catalogue": "pagecontent/qr_code_generation",
+ "hashes": {
+  "ar": "e90b941c37e259e1",
+  "es": "26e82378c45fcb66",
+  "fr": "7bfb38e2b04c83ad",
+  "ru": "10de4e9e28cd7092",
+  "zh": "f8da2a303b9fa647"
+ },
+ "strings": [
+  {
+   "msgid": "{code0} deserves attention because it is the only revocation mechanism this specification offers: certificates cannot be reliably revoked once issued, so the validity period must be chosen to bound the damage from a compromised key, balanced against the holder's ability to come back for a reissue. It must not exceed the DSC's own validity period, and {code1} must not predate it. See <a0>section 6.1</a0>.",
+   "hash": "dec90b513d229a45",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "{code0} جدير بالاهتمام لأنه آلية الإلغاء الوحيدة التي تقدمها هذه المواصفة: إذ لا يمكن إلغاء الشهادات بصورة موثوقة بعد إصدارها، لذا يجب اختيار مدة الصلاحية بحيث تحدّ من الضرر الناجم عن اختراق مفتاح، مع موازنة ذلك بقدرة الحامل على العودة لإعادة الإصدار. ويجب ألا تتجاوز مدة صلاحية شهادة DSC نفسها، ويجب ألا يسبق {code1} بدايتها. انظر <a0>القسم 6.1</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{code0} merece atención porque es el único mecanismo de revocación que ofrece esta especificación: los certificados no pueden revocarse de forma fiable una vez emitidos, por lo que el período de validez debe elegirse de modo que limite el daño de una clave comprometida, sopesándolo con la posibilidad del titular de volver para obtener una reemisión. No debe superar el propio período de validez del DSC, y {code1} no debe ser anterior a él. Véase la <a0>sección 6.1</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{code0} mérite une attention particulière, car c'est le seul mécanisme de révocation qu'offre la présente spécification : les certificats ne peuvent pas être révoqués de manière fiable une fois émis ; la période de validité doit donc être choisie de façon à limiter les dommages en cas de compromission d'une clé, en tenant compte de la possibilité pour le titulaire de revenir obtenir une nouvelle émission. Elle ne doit pas dépasser la période de validité du DSC lui-même, et {code1} ne doit pas lui être antérieur. Voir la <a0>section 6.1</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{code0} заслуживает внимания, поскольку это единственный механизм отзыва, предусмотренный настоящей спецификацией: после выдачи сертификаты невозможно надёжно отозвать, поэтому срок действия следует выбирать так, чтобы ограничить ущерб от компрометации ключа, соблюдая баланс с возможностью владельца обратиться за повторной выдачей. Он не должен превышать собственный срок действия DSC, а {code1} не должно предшествовать его началу. См. <a0>раздел 6.1</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{code0} 值得关注，因为它是本规范提供的唯一吊销机制：证书一旦签发便无法可靠地吊销，因此必须选择适当的有效期，以限制密钥遭到破坏所造成的损害，同时兼顾持有人回来重新签发证书的能力。它不得超过 DSC 自身的有效期，且 {code1} 不得早于 DSC 的有效期。参见<a0>第 6.1 节</a0>。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "{code0} has a required binding to the WHO PreQual product identifiers, so the administered product must be resolved in the PreQual vaccine database and that identifier used. A clinical code for the vaccine type will not satisfy it.",
+   "hash": "acaeae256b42f927",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لـ {code0} ربط إلزامي بمعرّفات منتجات WHO PreQual، لذا يجب البحث عن المنتج المُعطى في قاعدة بيانات اللقاحات PreQual واستخدام ذلك المعرّف. ولا يفي بذلك رمز سريري لنوع اللقاح.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{code0} tiene un enlace obligatorio a los identificadores de productos de la precalificación (PreQual) de la OMS, por lo que el producto administrado debe resolverse en la base de datos de vacunas precalificadas y debe utilizarse ese identificador. Un código clínico del tipo de vacuna no lo satisface.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{code0} est lié de manière obligatoire (required binding) aux identifiants de produits de la préqualification (PreQual) de l'OMS ; le produit administré doit donc être recherché dans la base de données PreQual des vaccins et c'est cet identifiant qui doit être utilisé. Un code clinique du type de vaccin ne suffit pas.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{code0} имеет обязательную привязку к идентификаторам продуктов WHO PreQual (преквалификации ВОЗ), поэтому введённый продукт необходимо найти в базе данных преквалифицированных вакцин PreQual и использовать этот идентификатор. Клинический код типа вакцины этому требованию не удовлетворяет.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{code0} 必须绑定到世卫组织（WHO）PreQual 产品标识符，因此必须在 PreQual 疫苗数据库中查明所接种的产品，并使用该标识符。疫苗类型的临床代码不能满足这一要求。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "{code0} is 1..1. One DVC documents one immunization event. A visit at which two vaccines are administered produces two certificates and two QR codes.",
+   "hash": "368ce1b3796cd954",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "{code0} عدديته 1..1. فشهادة DVC واحدة توثّق حدث تمنيع واحدًا. والزيارة التي يُعطى فيها لقاحان تنتج شهادتين ورمزي QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{code0} es 1..1. Un DVC documenta un único acto de inmunización. Una visita en la que se administran dos vacunas produce dos certificados y dos códigos QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{code0} a la cardinalité 1..1. Un DVC documente un seul acte de vaccination. Une visite au cours de laquelle deux vaccins sont administrés donne lieu à deux certificats et deux codes QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{code0} имеет кратность 1..1. Один DVC документирует одно событие иммунизации. При посещении, во время которого вводятся две вакцины, оформляются два сертификата и два QR-кода.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{code0} 的基数为 1..1。一份 DVC 记录一次免疫接种事件。一次就诊中接种两种疫苗，会产生两份证书和两个 QR 码。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "{code0} is Hepatitis B Vaccine (rDNA) (Paediatric) (FVP-P-132) in the <a0>WHO PreQual product identifiers</a0>. The BCG certificate is identical but for {code1}, which carries {code2}, BCG Vaccine (FVP-P-73), and its batch number.",
+   "hash": "15e135594561aeb6",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "{code0} هو Hepatitis B Vaccine (rDNA) (Paediatric) (FVP-P-132) في <a0>معرّفات منتجات WHO PreQual</a0>. وشهادة BCG مطابقة لها باستثناء {code1}، الذي يحمل {code2}، أي BCG Vaccine (FVP-P-73)، ورقم دفعته.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{code0} es Hepatitis B Vaccine (rDNA) (Paediatric) (FVP-P-132) en los <a0>identificadores de productos PreQual de la OMS</a0>. El certificado de la BCG es idéntico salvo por {code1}, que lleva {code2}, BCG Vaccine (FVP-P-73), y su número de lote.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{code0} correspond à Hepatitis B Vaccine (rDNA) (Paediatric) (FVP-P-132) dans les <a0>identifiants de produits PreQual de l'OMS</a0>. Le certificat BCG est identique, à l'exception de {code1}, qui contient {code2}, BCG Vaccine (FVP-P-73), et son numéro de lot.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{code0} — это Hepatitis B Vaccine (rDNA) (Paediatric) (FVP-P-132) в <a0>идентификаторах продуктов WHO PreQual</a0>. Сертификат о вакцинации БЦЖ (BCG) идентичен, за исключением {code1}, где указаны {code2}, BCG Vaccine (FVP-P-73), и номер её серии.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在 <a0>WHO PreQual 产品标识符</a0>中，{code0} 为乙型肝炎疫苗（rDNA）（儿童用）（FVP-P-132）。BCG 证书与之相同，只是 {code1} 承载的是 {code2}，即 BCG 疫苗（FVP-P-73）及其批号。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "{code0} is optional precisely because many certificate subjects have no identification document. A newborn is the obvious case; {code1} carries the parent or guardian instead.",
+   "hash": "8e4178c37d2d84d7",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "{code0} اختياري تحديدًا لأن كثيرًا من أصحاب الشهادات لا يملكون وثيقة هوية. والمولود الجديد هو الحالة الأوضح؛ إذ يحمل {code1} بيانات الوالد أو الوصي بدلًا منه.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{code0} es opcional precisamente porque muchos sujetos de certificados no tienen documento de identificación. Un recién nacido es el caso evidente; {code1} lleva en su lugar al progenitor o tutor.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{code0} est facultatif précisément parce que de nombreux sujets de certificat n'ont pas de pièce d'identité. Le nouveau-né en est l'exemple évident ; {code1} contient alors le parent ou le tuteur.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{code0} является необязательным именно потому, что у многих субъектов сертификатов нет документа, удостоверяющего личность. Очевидный случай — новорождённый; вместо этого {code1} содержит сведения о родителе или опекуне.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{code0} 之所以是可选的，正是因为许多证书主体没有身份证件。新生儿就是显而易见的例子；此时由 {code1} 承载父母或监护人的信息。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "{code0} is the concrete model: its parent {code1} is abstract, as is {code2}, so neither can be instantiated directly.",
+   "hash": "820418f0753c8040",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "{code0} هو النموذج الفعلي: فأصله {code1} مجرّد، وكذلك {code2}، لذا لا يمكن إنشاء أيٍّ منهما مباشرة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "{code0} es el modelo concreto: su padre {code1} es abstracto, al igual que {code2}, por lo que ninguno de los dos puede instanciarse directamente.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "{code0} est le modèle concret : son parent {code1} est abstrait, tout comme {code2} ; aucun des deux ne peut donc être instancié directement.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "{code0} — это конкретная модель: её родительская модель {code1} является абстрактной, как и {code2}, поэтому ни одну из них нельзя инстанцировать напрямую.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{code0} 是具体模型：它的父级 {code1} 是抽象的，{code2} 也是抽象的，因此二者都不能直接实例化。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "<a0>Section 3.2.7</a0> of the specification allows several types of health certificate to exist under the {code0} claim. Carrying exactly one is an implementation choice, not a constraint of the container, and it is the choice made throughout this page.",
+   "hash": "58893a3493b4c8c8",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يسمح <a0>القسم 3.2.7</a0> من المواصفة بوجود عدة أنواع من الشهادات الصحية تحت المطالبة {code0}. وحمل نوع واحد بالضبط خيار تنفيذي، لا قيد يفرضه الحاوي، وهو الخيار المعتمد في هذه الصفحة كلها.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La <a0>sección 3.2.7</a0> de la especificación permite que existan varios tipos de certificado de salud bajo la declaración {code0}. Llevar exactamente uno es una decisión de implementación, no una restricción del contenedor, y es la decisión adoptada en toda esta página.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La <a0>section 3.2.7</a0> de la spécification permet que plusieurs types de certificats de santé coexistent sous la revendication {code0}. N'en contenir qu'un seul est un choix d'implémentation, et non une contrainte du conteneur ; c'est le choix retenu tout au long de cette page.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "<a0>Раздел 3.2.7</a0> спецификации допускает наличие нескольких типов медицинских сертификатов в утверждении {code0}. Включение ровно одного является выбором реализации, а не ограничением контейнера, и именно этот выбор сделан на всей данной странице.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "规范的<a0>第 3.2.7 节</a0>允许在 {code0} 声明下存在多种类型的健康证书。只承载一种是一项实现选择，而非容器的约束，本页通篇采用这一选择。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "1. The pipeline at a glance",
+   "hash": "059a465a07b2b797",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "1. سلسلة المعالجة في لمحة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "1. El proceso de un vistazo",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "1. Vue d'ensemble de la chaîne de traitement",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "1. Общая схема конвейера",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "1. 流程概览",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "10. Step 9 — Render the QR code",
+   "hash": "b57a0fb25039af9b",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "10. الخطوة 9 — عرض رمز QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "10. Paso 9 — Generar el código QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "10. Étape 9 — Générer le code QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "10. Шаг 9 — Формирование изображения QR-кода",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "10. 第 9 步——渲染 QR 码",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "11. Verifying: the same steps upwards",
+   "hash": "a72ddfb7b469784f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "11. التحقق: الخطوات نفسها بترتيب عكسي",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "11. Verificación: los mismos pasos en sentido inverso",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "11. Vérification : les mêmes étapes en sens inverse",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "11. Проверка: те же шаги в обратном порядке",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "11. 验证：自下而上执行相同步骤",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12. Worked example — a newborn birth dose DVC",
+   "hash": "e97ea1d9a4db5546",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12. مثال تطبيقي — شهادة DVC لجرعة الولادة لمولود جديد",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12. Ejemplo práctico — un DVC de dosis al nacer de un recién nacido",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12. Exemple détaillé — DVC d'une dose à la naissance chez un nouveau-né",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12. Рабочий пример — DVC о дозе при рождении для новорождённого",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12. 实例——新生儿出生剂次 DVC",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12.1 Scenario",
+   "hash": "139a3d1f0923e6b5",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12.1 السيناريو",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12.1 Escenario",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12.1 Scénario",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12.1 Сценарий",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12.1 场景",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12.2 Host-country schedule",
+   "hash": "b78060bcd7e79ea4",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12.2 جدول التطعيم في البلد المضيف",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12.2 Calendario del país anfitrión",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12.2 Calendrier du pays d'accueil",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12.2 График страны пребывания",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12.2 东道国接种计划",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12.3 Issuer",
+   "hash": "e42cbbefad15b62f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12.3 الجهة المُصدِرة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12.3 Emisor",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12.3 Émetteur",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12.3 Эмитент",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12.3 签发方",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12.4 The payload",
+   "hash": "914f04db2fed5a12",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12.4 الحمولة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12.4 La carga útil",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12.4 La charge utile",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12.4 Полезная нагрузка",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12.4 载荷",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12.5 Size at each stage",
+   "hash": "1bf47987ef177b9c",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12.5 الحجم في كل مرحلة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12.5 Tamaño en cada etapa",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12.5 Taille à chaque étape",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12.5 Размер на каждом этапе",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12.5 各阶段的大小",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "12.6 The certificates",
+   "hash": "2651cdfc93d8aa73",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "12.6 الشهادات",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "12.6 Los certificados",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "12.6 Les certificats",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "12.6 Сертификаты",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "12.6 证书",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "2. Step 1 — Select the payload type",
+   "hash": "fd2422ca6c0e2495",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "2. الخطوة 1 — اختيار نوع الحمولة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "2. Paso 1 — Seleccionar el tipo de carga útil",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "2. Étape 1 — Choisir le type de charge utile",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "2. Шаг 1 — Выбор типа полезной нагрузки",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "2. 第 1 步——选择载荷类型",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "222 bytes",
+   "hash": "0df577ab3d96660d",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "222 بايت",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "222 bytes",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "222 octets",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "222 байта",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "222 字节",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "293 bytes",
+   "hash": "6fb87fb1efcc094d",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "293 بايت",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "293 bytes",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "293 octets",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "293 байта",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "293 字节",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "3. Step 2 — Assemble the payload",
+   "hash": "c05313af6f5552e1",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "3. الخطوة 2 — تجميع الحمولة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "3. Paso 2 — Componer la carga útil",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "3. Étape 2 — Constituer la charge utile",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "3. Шаг 2 — Формирование полезной нагрузки",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "3. 第 2 步——组装载荷",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "307 bytes",
+   "hash": "7e91ccef6de914fb",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "307 بايت",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "307 bytes",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "307 octets",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "307 байт",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "307 字节",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "35 mm to 60 mm diagonal — RECOMMENDED",
+   "hash": "6ac002b377ab556d",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "من 35 mm إلى 60 mm قطريًا — يُوصى به (RECOMMENDED)",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "De 35 mm a 60 mm de diagonal — RECOMENDADO",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "35 mm à 60 mm de diagonale — RECOMMANDÉ",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "от 35 мм до 60 мм по диагонали — РЕКОМЕНДУЕТСЯ",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "对角线 35 mm 至 60 mm——推荐（RECOMMENDED）",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "4. Step 3 — Build the CWT claim set",
+   "hash": "a21a0ebc64aef8ab",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "4. الخطوة 3 — بناء مجموعة مطالبات CWT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "4. Paso 3 — Construir el conjunto de declaraciones CWT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "4. Étape 3 — Construire l'ensemble de revendications CWT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "4. Шаг 3 — Построение набора утверждений CWT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "4. 第 3 步——构建 CWT 声明集",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "444 characters",
+   "hash": "25003eac662713bc",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "444 حرفًا",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "444 caracteres",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "444 caractères",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "444 символа",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "444 个字符",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "5. Step 4 — Serialise as CBOR",
+   "hash": "2fabcebab7af440d",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "5. الخطوة 4 — التسلسل بصيغة CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "5. Paso 4 — Serializar como CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "5. Étape 4 — Sérialiser en CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "5. Шаг 4 — Сериализация в CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "5. 第 4 步——序列化为 CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "6. Step 5 — Sign as a COSE_Sign1",
+   "hash": "b74579c9732772b3",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "6. الخطوة 5 — التوقيع بصيغة COSE_Sign1",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "6. Paso 5 — Firmar como COSE_Sign1",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "6. Étape 5 — Signer sous forme de COSE_Sign1",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "6. Шаг 5 — Подписание в виде COSE_Sign1",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "6. 第 5 步——签名为 COSE_Sign1",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "7. Step 6 — Compress",
+   "hash": "92efc159ccc27be6",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "7. الخطوة 6 — الضغط",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "7. Paso 6 — Comprimir",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "7. Étape 6 — Compresser",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "7. Шаг 6 — Сжатие",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "7. 第 6 步——压缩",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "8. Step 7 — Encode as Base45",
+   "hash": "5df64a2c93dfd87f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "8. الخطوة 7 — الترميز بصيغة Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "8. Paso 7 — Codificar en Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "8. Étape 7 — Encoder en Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "8. Шаг 7 — Кодирование в Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "8. 第 7 步——编码为 Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "9. Step 8 — Prefix the context identifier",
+   "hash": "2010d65177394daf",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "9. الخطوة 8 — إضافة بادئة معرّف السياق",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "9. Paso 8 — Anteponer el identificador de contexto",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "9. Étape 8 — Ajouter le préfixe d'identifiant de contexte",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "9. Шаг 8 — Добавление префикса идентификатора контекста",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "9. 第 8 步——添加上下文标识符前缀",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A DVC rather than an ICVP. Hepatitis B and BCG are routine schedule vaccines, not International Health Regulations entry requirements.",
+   "hash": "45844a8899a439c8",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "شهادة DVC لا شهادة ICVP. فلقاحا التهاب الكبد B وBCG من لقاحات الجدول الروتيني، وليسا من اشتراطات الدخول بموجب اللوائح الصحية الدولية.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Un DVC y no un ICVP. La hepatitis B y la BCG son vacunas del calendario sistemático, no requisitos de entrada del Reglamento Sanitario Internacional.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Un DVC plutôt qu'un ICVP. L'hépatite B et le BCG sont des vaccins du calendrier de routine, et non des conditions d'entrée au titre du Règlement sanitaire international.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "DVC, а не ICVP. Вакцины против гепатита B и БЦЖ (BCG) входят в плановый график, а не в требования для въезда согласно Международным медико-санитарным правилам.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "是 DVC 而非 ICVP。乙型肝炎疫苗和 BCG 是常规接种计划中的疫苗，而非《国际卫生条例》规定的入境要求。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A family from the Lao People's Democratic Republic is visiting relatives abroad when the mother delivers. The newborn receives the routine birth-dose vaccinations of the host country's national childhood immunization schedule before discharge. The clinic records the doses and issues a signed certificate; the family has one shared phone between them, so the clinic prints a paper card with the QR code and offers digital delivery as an option.",
+   "hash": "0b55d8b5c3ef50ac",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "عائلة من جمهورية لاو الديمقراطية الشعبية تزور أقاربها في الخارج حين تضع الأم مولودها. ويتلقى المولود الجديد تطعيمات جرعة الولادة الروتينية ضمن الجدول الوطني لتمنيع الأطفال في البلد المضيف قبل الخروج من المرفق الصحي. وتسجّل العيادة الجرعات وتُصدر شهادة موقَّعة؛ ولأن لدى العائلة هاتفًا واحدًا مشتركًا، تطبع العيادة بطاقة ورقية عليها رمز QR وتعرض التسليم الرقمي خيارًا إضافيًا.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una familia de la República Democrática Popular Lao está de visita en casa de unos familiares en el extranjero cuando la madre da a luz. El recién nacido recibe, antes del alta, las vacunas sistemáticas de dosis al nacer del calendario nacional de inmunización infantil del país anfitrión. La clínica registra las dosis y emite un certificado firmado; la familia tiene un único teléfono compartido, por lo que la clínica imprime una tarjeta en papel con el código QR y ofrece la entrega digital como opción.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une famille de la République démocratique populaire lao rend visite à des proches à l'étranger lorsque la mère accouche. Avant sa sortie, le nouveau-né reçoit les vaccinations de routine à la naissance prévues par le calendrier national de vaccination de l'enfant du pays d'accueil. La clinique enregistre les doses et émet un certificat signé ; la famille ne dispose que d'un seul téléphone partagé ; la clinique imprime donc une carte papier portant le code QR et propose la remise numérique en option.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Семья из Лаосской Народно-Демократической Республики находится в гостях у родственников за рубежом, когда у матери происходят роды. Перед выпиской новорождённому проводят плановые вакцинации дозами при рождении в соответствии с национальным графиком иммунизации детей страны пребывания. Клиника регистрирует дозы и выдаёт подписанный сертификат; у семьи один общий телефон на всех, поэтому клиника печатает бумажную карту с QR-кодом и предлагает цифровую доставку в качестве дополнительной возможности.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "一个来自老挝人民民主共和国的家庭在国外探亲期间，母亲分娩。新生儿在出院前按照东道国国家儿童免疫接种计划接种了常规出生剂次疫苗。诊所记录了这些剂次并签发了一份已签名的证书；该家庭只有一部共用手机，因此诊所打印了一张带 QR 码的纸质卡片，并提供数字递送作为可选方式。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "A payload is identified by a subclaim inside the {code0} claim ({code1}). The subclaims, and the logical model each one carries, are enumerated in the <a0>HCert logical model</a0>; section <a1>3.2.7.1</a1> of the HCERT Specification is authoritative for which are assigned. The registered trust domains are listed in the <a2>GDHCN Trust Domain value set</a2> and described under <a3>Trust Domains</a3>.",
+   "hash": "f9399b4450dd2c52",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تُعرَّف الحمولة بمطالبة فرعية داخل المطالبة {code0} ({code1}). وتُعدَّد المطالبات الفرعية، والنموذج المنطقي الذي تحمله كلٌّ منها، في <a0>النموذج المنطقي HCert</a0>؛ والقسم <a1>3.2.7.1</a1> من مواصفة HCERT هو المرجع المعتمد فيما يخص المطالبات المخصَّصة. وترد نطاقات الثقة المسجَّلة في <a2>مجموعة قيم نطاقات الثقة في GDHCN</a2> وتوصف تحت <a3>نطاقات الثقة</a3>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Una carga útil se identifica mediante una subdeclaración dentro de la declaración {code0} ({code1}). Las subdeclaraciones, y el modelo lógico que lleva cada una, se enumeran en el <a0>modelo lógico HCert</a0>; la sección <a1>3.2.7.1</a1> de la especificación HCERT es la referencia autorizada sobre cuáles están asignadas. Los ámbitos de confianza registrados se enumeran en el <a2>conjunto de valores de ámbitos de confianza de la GDHCN</a2> y se describen en <a3>Ámbitos de confianza</a3>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Une charge utile est identifiée par une sous-revendication à l'intérieur de la revendication {code0} ({code1}). Les sous-revendications, et le modèle logique que chacune contient, sont énumérés dans le <a0>modèle logique HCert</a0> ; la section <a1>3.2.7.1</a1> de la spécification HCERT fait foi quant à celles qui sont attribuées. Les domaines de confiance enregistrés sont répertoriés dans le <a2>jeu de valeurs GDHCN Trust Domain</a2> et décrits sous <a3>Domaines de confiance</a3>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Полезная нагрузка идентифицируется подутверждением в утверждении {code0} ({code1}). Подутверждения и логическая модель, которую содержит каждое из них, перечислены в <a0>логической модели HCert</a0>; раздел <a1>3.2.7.1</a1> Спецификации HCERT является определяющим в отношении того, какие из них назначены. Зарегистрированные Домены доверия перечислены в <a2>наборе значений GDHCN Trust Domain</a2> и описаны в разделе <a3>Домены доверия</a3>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "载荷由 {code0} 声明（{code1}）中的子声明标识。各子声明及其所承载的逻辑模型列于 <a0>HCert 逻辑模型</a0>中；HCERT 规范的第 <a1>3.2.7.1</a1> 节对哪些子声明已分配具有权威性。已注册的信任域列于 <a2>GDHCN 信任域值集</a2>中，并在<a3>信任域</a3>下进行了描述。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Alphanumeric (Mode 2, symbols {code0}) — MUST, in conjunction with Base45",
+   "hash": "eb336fec842e8f42",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أبجدي رقمي (الوضع 2، الرموز {code0}) — يجب (MUST)، مقترنًا بـ Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Alfanumérico (modo 2, símbolos {code0}) — OBLIGATORIO, junto con Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Alphanumérique (mode 2, symboles {code0}) — DOIT, conjointement avec Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Буквенно-цифровой (режим 2, символы {code0}) — ОБЯЗАТЕЛЬНО (MUST), в сочетании с Base45",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "字母数字模式（Mode 2，符号 {code0}）——必须（MUST），与 Base45 结合使用",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "At least one of {code0} or {code1} must be present — the {code2} invariant.",
+   "hash": "aade410959b6f7ca",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يجب أن يوجد أحد {code0} أو {code1} على الأقل — وهو الثابت {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Debe estar presente al menos uno de {code0} o {code1}: la invariante {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Au moins l'un des éléments {code0} ou {code1} doit être présent — l'invariant {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Должно присутствовать по крайней мере одно из {code0} или {code1} — инвариант {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "{code0} 或 {code1} 中至少必须存在一个——即 {code2} 不变式。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Base45 + {code0} prefix",
+   "hash": "da73db9260be543c",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "Base45 + البادئة {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Base45 + prefijo {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Base45 + préfixe {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Base45 + префикс {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "Base45 + {code0} 前缀",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Base45-decode, then ZLIB-decompress.",
+   "hash": "04d35e265e4f45b1",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فُكَّ ترميز Base45، ثم فُكَّ ضغط ZLIB.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Decodificar Base45 y, a continuación, descomprimir ZLIB.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Décoder le Base45, puis décompresser avec ZLIB.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Декодировать Base45, затем распаковать ZLIB.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "进行 Base45 解码，然后进行 ZLIB 解压缩。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "BCG, the second certificate from the same visit:",
+   "hash": "2372843bdb0b12c5",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "BCG، الشهادة الثانية من الزيارة نفسها:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "BCG, el segundo certificado de la misma visita:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "BCG, le second certificat de la même visite :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "БЦЖ (BCG), второй сертификат того же посещения:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "BCG，同一次就诊的第二份证书：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Because {code0} must fall inside the DSC validity period and {code1} must not exceed it, the scenario dates sit inside the window of the onboarded DEV certificate.",
+   "hash": "1526af070f1b3de0",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لأن {code0} يجب أن يقع ضمن مدة صلاحية شهادة DSC ولأن {code1} يجب ألا يتجاوزها، فإن تواريخ السيناريو تقع ضمن نافذة شهادة DEV المنضمّة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Como {code0} debe quedar dentro del período de validez del DSC y {code1} no debe superarlo, las fechas del escenario se sitúan dentro del intervalo del certificado DEV integrado.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Comme {code0} doit se situer dans la période de validité du DSC et que {code1} ne doit pas la dépasser, les dates du scénario se trouvent dans la fenêtre du certificat DEV intégré.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поскольку {code0} должно находиться в пределах срока действия DSC, а {code1} не должно выходить за его пределы, даты сценария лежат внутри окна действия подключённого сертификата DEV.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "由于 {code0} 必须落在 DSC 有效期之内，且 {code1} 不得超过该有效期，因此场景日期均位于已入网 DEV 证书的有效窗口内。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Both certificates carry the key identifier {code0} (hex {code1}).",
+   "hash": "55f025b66a233519",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تحمل الشهادتان كلتاهما معرّف المفتاح {code0} (بالست عشري {code1}).",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ambos certificados llevan el identificador de clave {code0} (hex {code1}).",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les deux certificats portent l'identifiant de clé {code0} (hex {code1}).",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Оба сертификата содержат идентификатор ключа {code0} (в шестнадцатеричном виде {code1}).",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "两份证书都带有密钥标识符 {code0}（十六进制 {code1}）。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Compress the COSE structure with ZLIB (<a0>RFC 1950</a0>) using Deflate (<a1>RFC 1951</a1>). Compression comes after signing, so the verifier decompresses before it verifies.",
+   "hash": "f6f4f2f485a08c2f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اضغط بنية COSE باستخدام ZLIB (<a0>RFC 1950</a0>) مع Deflate (<a1>RFC 1951</a1>). ويأتي الضغط بعد التوقيع، لذا تفكّ الجهة المُتحقِّقة الضغط قبل أن تتحقق.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Comprima la estructura COSE con ZLIB (<a0>RFC 1950</a0>) mediante Deflate (<a1>RFC 1951</a1>). La compresión se realiza después de la firma, por lo que el verificador descomprime antes de verificar.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Compresser la structure COSE avec ZLIB (<a0>RFC 1950</a0>) au moyen de Deflate (<a1>RFC 1951</a1>). La compression intervient après la signature ; le vérificateur décompresse donc avant de vérifier.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сжать структуру COSE с помощью ZLIB (<a0>RFC 1950</a0>) с использованием Deflate (<a1>RFC 1951</a1>). Сжатие выполняется после подписания, поэтому проверяющая сторона распаковывает данные перед проверкой.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "使用 Deflate（<a1>RFC 1951</a1>）以 ZLIB（<a0>RFC 1950</a0>）压缩 COSE 结构。压缩在签名之后进行，因此验证方需先解压缩再验证。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Computing the signature: build the {code0}",
+   "hash": "60d483f09d9a5445",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حساب التوقيع: ابنِ {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cálculo de la firma: construya el {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Calcul de la signature : construire le {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вычисление подписи: построить {code0},",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "计算签名：构建 {code0}",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Confirm the {code0} prefix and strip it.",
+   "hash": "d2b9db53d222e2af",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تأكد من وجود البادئة {code0} ثم أزِلها.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Confirmar el prefijo {code0} y eliminarlo.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Confirmer la présence du préfixe {code0} et le retirer.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Убедиться в наличии префикса {code0} и удалить его.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "确认 {code0} 前缀并将其去除。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "COSE_Sign1, signed",
+   "hash": "e898ec2abc941330",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "COSE_Sign1، موقَّع",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "COSE_Sign1, firmado",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "COSE_Sign1, signé",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "COSE_Sign1, подписанный",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "COSE_Sign1，已签名",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "CWT claim set, CBOR",
+   "hash": "f7135cb59cd84c91",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مجموعة مطالبات CWT، بصيغة CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Conjunto de declaraciones CWT, CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ensemble de revendications CWT, CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Набор утверждений CWT, CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "CWT 声明集，CBOR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Data in the QR rather than behind a link. The certificate has to verify at a rural clinic back home, on paper, with no reliable connectivity.",
+   "hash": "9ad9e9026028d122",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "البيانات داخل رمز QR بدلًا من أن تكون خلف رابط. إذ يجب أن تكون الشهادة قابلة للتحقق في عيادة ريفية في البلد الأم، على الورق، من دون اتصال موثوق بالشبكة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Datos en el QR y no detrás de un enlace. El certificado tiene que poder verificarse en una clínica rural del país de origen, en papel, sin conectividad fiable.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les données dans le code QR plutôt que derrière un lien. Le certificat doit pouvoir être vérifié dans une clinique rurale du pays d'origine, sur papier, sans connectivité fiable.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Данные в QR-коде, а не по ссылке. Сертификат должен проходить проверку в сельской клинике на родине, на бумаге, без надёжной связи.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "数据放在 QR 码中，而不是放在链接背后。该证书必须能够在家乡的乡村诊所以纸质形式、在没有可靠网络连接的情况下完成验证。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Decode the CBOR payload and check {code0} and {code1} against the current time.",
+   "hash": "dea590674ee54174",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "فُكَّ ترميز حمولة CBOR وتحقق من {code0} و{code1} مقارنةً بالوقت الحالي.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Decodificar la carga útil CBOR y comprobar {code0} y {code1} con respecto a la hora actual.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Décoder la charge utile CBOR et vérifier {code0} et {code1} par rapport à l'heure actuelle.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Декодировать полезную нагрузку CBOR и сверить {code0} и {code1} с текущим временем.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "解码 CBOR 载荷，并根据当前时间检查 {code0} 和 {code1}。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Deriving the {code0}: take the DER encoding of the DSC and use the first 8 bytes of its SHA-256 fingerprint. Because it is truncated, {code1} is not unique, so a verifier that finds several DSCs with the same {code2} MUST try all of them. {code3} is not security-critical; it is a lookup hint.",
+   "hash": "0db4243a5728638f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اشتقاق {code0}: خذ ترميز DER لشهادة DSC واستخدم أول 8 بايتات من بصمة SHA-256 الخاصة بها. ولأنه مقتطع، فإن {code1} ليس فريدًا، لذا يجب (MUST) على الجهة المُتحقِّقة التي تجد عدة شهادات DSC تحمل {code2} نفسه أن تجربها جميعًا. و{code3} ليس حرجًا من الناحية الأمنية؛ فهو مجرد تلميح للبحث.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Obtención del {code0}: tome la codificación DER del DSC y utilice los primeros 8 bytes de su huella digital SHA-256. Como está truncado, {code1} no es único, por lo que un verificador que encuentre varios DSC con el mismo {code2} DEBE probarlos todos. {code3} no es crítico para la seguridad; es una pista de búsqueda.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dérivation du {code0} : prendre l'encodage DER du DSC et utiliser les 8 premiers octets de son empreinte SHA-256. Comme il est tronqué, {code1} n'est pas unique ; un vérificateur qui trouve plusieurs DSC ayant le même {code2} DOIT donc les essayer tous. {code3} n'est pas critique pour la sécurité ; c'est une aide à la recherche.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Вычисление {code0}: взять DER-кодирование DSC и использовать первые 8 байт его отпечатка SHA-256. Поскольку значение усечено, {code1} не является уникальным, поэтому проверяющая сторона, обнаружившая несколько DSC с одинаковым {code2}, ДОЛЖНА опробовать все из них. {code3} не критичен для безопасности; это подсказка для поиска.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "推导 {code0}：取 DSC 的 DER 编码，使用其 SHA-256 指纹的前 8 个字节。由于经过截断，{code1} 并不唯一，因此发现多个具有相同 {code2} 的 DSC 的验证方必须（MUST）逐一尝试。{code3} 不是安全关键字段，而只是一个查找提示。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Encode the claim set as CBOR (<a0>RFC 7049</a0>). The JSON shown on this page and in the logical models is schema notation only — the wire format is CBOR, and an implementation need never produce the JSON form at all.",
+   "hash": "8128d270faeab6a2",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "رمِّز مجموعة المطالبات بصيغة CBOR (<a0>RFC 7049</a0>). وصيغة JSON المعروضة في هذه الصفحة وفي النماذج المنطقية مجرد تدوين للمخطط — فصيغة النقل هي CBOR، ولا يلزم أي تنفيذ أن ينتج صيغة JSON على الإطلاق.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Codifique el conjunto de declaraciones como CBOR (<a0>RFC 7049</a0>). El JSON que se muestra en esta página y en los modelos lógicos es solo notación de esquema: el formato de transmisión es CBOR, y una implementación nunca necesita producir la forma JSON.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Encoder l'ensemble de revendications en CBOR (<a0>RFC 7049</a0>). Le JSON présenté sur cette page et dans les modèles logiques n'est qu'une notation de schéma — le format de transmission est CBOR, et une implémentation n'a jamais besoin de produire la forme JSON.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Закодировать набор утверждений в CBOR (<a0>RFC 7049</a0>). JSON, приведённый на этой странице и в логических моделях, является лишь нотацией схемы — форматом передачи является CBOR, и реализации вообще не требуется формировать JSON-представление.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将声明集编码为 CBOR（<a0>RFC 7049</a0>）。本页及逻辑模型中所示的 JSON 仅为模式表示法——线路格式是 CBOR，实现完全无需生成 JSON 形式。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Encode the compressed bytes with <a0>Base45</a0>. Base45 exists for one reason: its 45-character alphabet is exactly the QR Alphanumeric character set, which stores data far more densely than byte mode.",
+   "hash": "2c7b80dd2a024bbd",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "رمِّز البايتات المضغوطة باستخدام <a0>Base45</a0>. ولـ Base45 سبب وجود واحد: أبجديته المؤلفة من 45 حرفًا تطابق تمامًا مجموعة الأحرف الأبجدية الرقمية في QR، التي تخزّن البيانات بكثافة أعلى بكثير من وضع البايت.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Codifique los bytes comprimidos con <a0>Base45</a0>. Base45 existe por una sola razón: su alfabeto de 45 caracteres es exactamente el conjunto de caracteres alfanuméricos del QR, que almacena los datos con mucha más densidad que el modo byte.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Encoder les octets compressés en <a0>Base45</a0>. Base45 existe pour une seule raison : son alphabet de 45 caractères correspond exactement au jeu de caractères alphanumérique du code QR, qui stocke les données de manière beaucoup plus dense que le mode octet.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Закодировать сжатые байты с помощью <a0>Base45</a0>. Base45 существует по одной причине: его алфавит из 45 символов в точности совпадает с буквенно-цифровым набором символов QR, в котором данные хранятся значительно плотнее, чем в байтовом режиме.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "使用 <a0>Base45</a0> 对压缩后的字节进行编码。Base45 的存在只有一个原因：它的 45 字符字母表恰好是 QR 字母数字字符集，而该字符集存储数据的密度远高于字节模式。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Encoding mode",
+   "hash": "cc51df56378a0b0e",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وضع الترميز",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Modo de codificación",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Mode d'encodage",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Режим кодирования",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "编码模式",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Error correction",
+   "hash": "90e7bdfd796273a1",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تصحيح الأخطاء",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Corrección de errores",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Correction d'erreurs",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Коррекция ошибок",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "纠错",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "ES256 is the primary algorithm ({code0} {code1}) and PS256 the secondary ({code2}). Both MUST be implemented even though only one signs any given certificate; the secondary exists so that a break in the primary does not strand the whole network. {code3} MAY instead sit in the unprotected header, and verifiers MUST accept both placements — but when it appears in both, the protected one wins.",
+   "hash": "f8159b60666b7404",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ES256 هي الخوارزمية الأساسية ({code0} {code1}) وPS256 هي الثانوية ({code2}). ويجب (MUST) تنفيذ كلتيهما رغم أن واحدة فقط توقّع أي شهادة بعينها؛ فالثانوية موجودة كي لا يؤدي كسر الأساسية إلى شلّ الشبكة بأكملها. ويجوز (MAY) أن يوضع {code3} بدلًا من ذلك في الترويسة غير المحمية، ويجب (MUST) على الجهات المُتحقِّقة قبول كلا الموضعين — ولكن إذا ظهر في كليهما، تُعتمد القيمة المحمية.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "ES256 es el algoritmo principal ({code0} {code1}) y PS256 el secundario ({code2}). Ambos DEBEN implementarse aunque solo uno firme cada certificado; el secundario existe para que una vulneración del principal no deje inutilizada toda la red. {code3} PUEDE situarse en cambio en la cabecera no protegida, y los verificadores DEBEN aceptar ambas ubicaciones; pero cuando aparece en las dos, prevalece la protegida.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "ES256 est l'algorithme principal ({code0} {code1}) et PS256 l'algorithme secondaire ({code2}). Les deux DOIVENT être implémentés, même si un seul signe un certificat donné ; l'algorithme secondaire existe pour qu'une faille de l'algorithme principal ne paralyse pas l'ensemble du réseau. {code3} PEUT figurer à la place dans l'en-tête non protégé, et les vérificateurs DOIVENT accepter les deux emplacements — mais lorsqu'il figure dans les deux, c'est la valeur protégée qui prévaut.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "ES256 — основной алгоритм ({code0} {code1}), а PS256 — дополнительный ({code2}). Оба ДОЛЖНЫ быть реализованы, хотя каждый конкретный сертификат подписывается только одним из них; дополнительный алгоритм существует для того, чтобы взлом основного не парализовал всю сеть. {code3} МОЖЕТ вместо этого находиться в незащищённом заголовке, и проверяющие стороны ДОЛЖНЫ принимать оба варианта размещения, — однако если он присутствует в обоих, приоритет имеет защищённый.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "ES256 是主算法（{code0} {code1}），PS256 是辅助算法（{code2}）。尽管任何一份证书只用其中一种算法签名，但两者都必须（MUST）实现；辅助算法的存在是为了在主算法被攻破时不致使整个网络陷入困境。{code3} 也可以（MAY）放在非受保护头部中，验证方必须（MUST）接受这两种放置方式——但当两处都出现时，以受保护头部中的为准。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "For the hepatitis B certificate:",
+   "hash": "4c6a1edd98bf8177",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لشهادة التهاب الكبد B:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Para el certificado de la hepatitis B:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Pour le certificat d'hépatite B :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Для сертификата о вакцинации против гепатита B:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "对于乙型肝炎证书：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "For this walkthrough the payload is a DVC — a Digital Vaccine Certificate — carried under subclaim {code0}. The steps below are the steps for that payload. A different payload changes only Step 2; Steps 3 to 9 are identical.",
+   "hash": "b2066b045cc21c0f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "في هذه الجولة الإرشادية، الحمولة هي شهادة DVC — شهادة لقاح رقمية — محمولة تحت المطالبة الفرعية {code0}. والخطوات أدناه هي خطوات تلك الحمولة. ولا تغيّر الحمولة المختلفة سوى الخطوة 2؛ أما الخطوات من 3 إلى 9 فمتطابقة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "En este recorrido guiado, la carga útil es un DVC —un certificado digital de vacunación— que se transporta bajo la subdeclaración {code0}. Los pasos siguientes son los correspondientes a esa carga útil. Una carga útil diferente solo modifica el paso 2; los pasos 3 a 9 son idénticos.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dans cette présentation guidée, la charge utile est un DVC — un certificat numérique de vaccination (Digital Vaccine Certificate) — contenu sous la sous-revendication {code0}. Les étapes ci-dessous sont celles qui s'appliquent à cette charge utile. Une autre charge utile ne modifie que l'étape 2 ; les étapes 3 à 9 sont identiques.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В данном пошаговом обзоре полезной нагрузкой является DVC — цифровой сертификат о вакцинации, — передаваемый в подутверждении {code0}. Приведённые ниже шаги относятся к этой полезной нагрузке. Другая полезная нагрузка меняет только Шаг 2; шаги с 3 по 9 идентичны.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在本演练中，载荷是 DVC——数字疫苗证书（Digital Vaccine Certificate）——承载于子声明 {code0} 之下。以下步骤即针对该载荷的步骤。换用不同的载荷只会改变第 2 步；第 3 步至第 9 步完全相同。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Four points about using the model are not apparent from the StructureDefinition and are worth stating here:",
+   "hash": "012d0fb569d8070d",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أربع نقاط حول استخدام النموذج لا تتضح من StructureDefinition، ويجدر ذكرها هنا:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Hay cuatro aspectos del uso del modelo que no se desprenden de la StructureDefinition y que conviene señalar aquí:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Quatre points relatifs à l'utilisation du modèle ne ressortent pas de la StructureDefinition et méritent d'être précisés ici :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Четыре аспекта использования модели не очевидны из StructureDefinition, и их стоит изложить здесь:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "关于该模型的使用，有四点无法从 StructureDefinition 中看出，值得在此说明：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Generating a QR Code",
+   "hash": "010ecf8d74a0330c",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إنشاء رمز QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Generación de un código QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Générer un code QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Генерация QR-кода",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "生成 QR 码",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Hepatitis B birth dose, {code0} subclaim {code1}, shown in JSON notation. {code2} carries the PreQual product identifier of the product actually administered:",
+   "hash": "f61cf69b55ea6080",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "جرعة الولادة من لقاح التهاب الكبد B، المطالبة {code0} الفرعية {code1}، معروضة بتدوين JSON. ويحمل {code2} معرّف منتج PreQual للمنتج المُعطى فعليًا:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Dosis al nacer de hepatitis B, subdeclaración {code1} de {code0}, mostrada en notación JSON. {code2} lleva el identificador de producto PreQual del producto efectivamente administrado:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dose d'hépatite B à la naissance, {code0} sous-revendication {code1}, présentée en notation JSON. {code2} contient l'identifiant de produit PreQual du produit effectivement administré :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Доза вакцины против гепатита B при рождении, {code0} подутверждение {code1}, в нотации JSON. {code2} содержит идентификатор продукта PreQual фактически введённого продукта:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "乙型肝炎出生剂次，{code0} 子声明 {code1}，以 JSON 表示法显示。{code2} 承载实际接种产品的 PreQual 产品标识符：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Hepatitis B birth dose:",
+   "hash": "645879895cf63989",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "جرعة الولادة من لقاح التهاب الكبد B:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Dosis al nacer de hepatitis B:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Dose d'hépatite B à la naissance :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Доза вакцины против гепатита B при рождении:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "乙型肝炎出生剂次：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "If you are printing below 300 dpi, make sure each module is rendered as an exact square. Non-proportional scaling turns modules into rectangles and is a frequent cause of certificates that scan on screen but not on paper.",
+   "hash": "bd1c440830eb8aee",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "إذا كنت تطبع بدقة أقل من 300 dpi، فتأكد من رسم كل وحدة مربعًا تامًا. فالتحجيم غير المتناسب يحوّل الوحدات إلى مستطيلات، وهو سبب شائع لشهادات تُقرأ على الشاشة ولا تُقرأ على الورق.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Si imprime con menos de 300 ppp, asegúrese de que cada módulo se represente como un cuadrado exacto. El escalado no proporcional convierte los módulos en rectángulos y es una causa frecuente de certificados que se escanean en pantalla pero no en papel.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Si vous imprimez à moins de 300 ppp, veillez à ce que chaque module soit rendu sous forme de carré exact. Une mise à l'échelle non proportionnelle transforme les modules en rectangles et est une cause fréquente de certificats lisibles à l'écran mais pas sur papier.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "При печати с разрешением ниже 300 dpi убедитесь, что каждый модуль отображается точным квадратом. Непропорциональное масштабирование превращает модули в прямоугольники и является частой причиной того, что сертификаты сканируются с экрана, но не с бумаги.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "如果以低于 300 dpi 的分辨率打印，请确保每个模块都渲染为精确的正方形。非等比缩放会使模块变成矩形，这是证书在屏幕上能扫描而在纸上无法扫描的常见原因。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Implementers should confirm the current schedule against the national authority before relying on it; schedules are revised.",
+   "hash": "232903307ebb25ad",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينبغي للمنفذين التأكد من الجدول الحالي لدى السلطة الوطنية قبل الاعتماد عليه؛ فالجداول تُنقَّح.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los implementadores deberían confirmar el calendario vigente con la autoridad nacional antes de basarse en él; los calendarios se revisan.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les responsables de la mise en œuvre devraient vérifier le calendrier en vigueur auprès de l'autorité nationale avant de s'y fier ; les calendriers sont révisés.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Перед тем как полагаться на график, разработчикам следует сверить его с действующим графиком национального органа; графики пересматриваются.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "实施者在依赖当前接种计划之前，宜向国家主管部门进行确认；接种计划会有修订。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Level {code0}, approximately 25% — RECOMMENDED",
+   "hash": "678b50399261185b",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المستوى {code0}، نحو 25% — يُوصى به (RECOMMENDED)",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Nivel {code0}, aproximadamente el 25 % — RECOMENDADO",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Niveau {code0}, environ 25 % — RECOMMANDÉ",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Уровень {code0}, приблизительно 25% — РЕКОМЕНДУЕТСЯ",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "级别 {code0}，约 25%——推荐（RECOMMENDED）",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Live examples. Each step below has a live example that runs in your browser, using a WebAssembly build of an open-source HCERT library (<a0>litlfred/smart-trust-tools</a0>). They share one certificate: edit the payload in Step 2 and every later step re-runs. The signing key below was just generated by your browser. It cannot leave the page, and its certificate is a self-signed test DSC on no trust list, so nothing made here verifies anywhere else.",
+   "hash": "cfb9842855aa54cd",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أمثلة حية. لكل خطوة أدناه مثال حي يعمل في متصفحك، باستخدام إصدار WebAssembly من مكتبة HCERT مفتوحة المصدر (<a0>litlfred/smart-trust-tools</a0>). وتشترك جميعها في شهادة واحدة: عدِّل الحمولة في الخطوة 2 فيُعاد تشغيل كل خطوة لاحقة. ومفتاح التوقيع أدناه أنشأه متصفحك للتو، ولا يمكنه مغادرة الصفحة، وشهادته شهادة DSC اختبارية موقَّعة ذاتيًا وغير مدرجة في أي قائمة ثقة، لذا لا يُتحقَّق من أي شيء يُنشأ هنا في أي مكان آخر.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Ejemplos en vivo. Cada paso que figura a continuación tiene un ejemplo en vivo que se ejecuta en su navegador, mediante una compilación WebAssembly de una biblioteca HCERT de código abierto (<a0>litlfred/smart-trust-tools</a0>). Todos comparten un mismo certificado: edite la carga útil en el paso 2 y todos los pasos posteriores se vuelven a ejecutar. La clave de firma que figura a continuación la acaba de generar su navegador. No puede salir de la página, y su certificado es un DSC de prueba autofirmado que no figura en ninguna lista de confianza, por lo que nada de lo que se genere aquí se verifica en ningún otro lugar.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exemples en direct. Chaque étape ci-dessous comporte un exemple en direct qui s'exécute dans votre navigateur, au moyen d'une version WebAssembly d'une bibliothèque HCERT libre (<a0>litlfred/smart-trust-tools</a0>). Ils partagent un même certificat : modifiez la charge utile à l'étape 2 et toutes les étapes suivantes sont réexécutées. La clé de signature ci-dessous vient d'être générée par votre navigateur. Elle ne peut pas quitter la page, et son certificat est un DSC de test autosigné ne figurant sur aucune liste de confiance ; rien de ce qui est produit ici ne peut donc être vérifié ailleurs.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Интерактивные примеры. Для каждого шага ниже приведён интерактивный пример, который выполняется в вашем браузере с использованием сборки WebAssembly библиотеки HCERT с открытым исходным кодом (<a0>litlfred/smart-trust-tools</a0>). Все они используют один сертификат: измените полезную нагрузку на Шаге 2, и все последующие шаги будут выполнены заново. Приведённый ниже ключ подписи только что сгенерирован вашим браузером. Он не может покинуть страницу, а его сертификат — самоподписанный тестовый DSC, не входящий ни в один список доверия, поэтому ничто созданное здесь не пройдёт проверку нигде больше.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "实时示例。下面的每个步骤都有一个在浏览器中运行的实时示例，使用开源 HCERT 库（<a0>litlfred/smart-trust-tools</a0>）的 WebAssembly 构建。这些示例共用一份证书：在第 2 步中编辑载荷，之后的每个步骤都会重新运行。下面的签名密钥是刚刚由你的浏览器生成的。它无法离开本页，其证书是一个不在任何信任列表上的自签名测试 DSC，因此在此生成的任何内容都无法在其他地方通过验证。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Look the {code0} up on the trust list, retrieving every DSC that matches.",
+   "hash": "8a68872d575d2f15",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ابحث عن {code0} في قائمة الثقة، مسترجعًا كل شهادة DSC مطابقة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Buscar el {code0} en la lista de confianza y recuperar todos los DSC que coincidan.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Rechercher le {code0} dans la liste de confiance, en récupérant tous les DSC correspondants.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Найти {code0} в списке доверия, получив все соответствующие DSC.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在信任列表中查找 {code0}，获取所有匹配的 DSC。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Nationality and issuer differ. {code0} is the infant's nationality ({code1}); the issuer is the country whose clinic administered the dose. This separation is exactly what the model is for.",
+   "hash": "a99883fc0c783741",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الجنسية والجهة المُصدِرة مختلفتان. {code0} هو جنسية الرضيع ({code1})؛ أما الجهة المُصدِرة فهي البلد الذي أعطت عيادته الجرعة. وهذا الفصل هو بالضبط ما صُمِّم النموذج من أجله.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La nacionalidad y el emisor difieren. {code0} es la nacionalidad del lactante ({code1}); el emisor es el país cuya clínica administró la dosis. Esta separación es exactamente la finalidad del modelo.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La nationalité et l'émetteur diffèrent. {code0} est la nationalité du nourrisson ({code1}) ; l'émetteur est le pays dont la clinique a administré la dose. Cette distinction est précisément la raison d'être du modèle.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Гражданство и эмитент различаются. {code0} — гражданство младенца ({code1}); эмитентом является страна, в клинике которой была введена доза. Именно для такого разделения и предназначена модель.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "国籍与签发方不同。{code0} 是婴儿的国籍（{code1}）；签发方是接种该剂次的诊所所在的国家。这种区分正是该模型的用途所在。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "No {code0}, but a {code1}. The newborn has no identification document. The guardian element carries the mother's name instead.",
+   "hash": "ddd6062c113a2eae",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "لا يوجد {code0}، بل {code1}. فالمولود الجديد لا يملك وثيقة هوية، ويحمل عنصر الوصي اسم الأم بدلًا من ذلك.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Sin {code0}, pero con {code1}. El recién nacido no tiene documento de identificación. El elemento del tutor lleva en su lugar el nombre de la madre.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Pas de {code0}, mais un {code1}. Le nouveau-né n'a pas de pièce d'identité. L'élément relatif au tuteur contient à la place le nom de la mère.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Нет {code0}, но есть {code1}. У новорождённого нет документа, удостоверяющего личность. Вместо этого элемент опекуна содержит имя матери.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "没有 {code0}，但有 {code1}。新生儿没有身份证件。监护人元素改为承载母亲的姓名。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Parse the COSE_Sign1 and read {code0} and {code1} from the protected header.",
+   "hash": "42b986a4ba3c2c6e",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حلِّل COSE_Sign1 واقرأ {code0} و{code1} من الترويسة المحمية.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Analizar el COSE_Sign1 y leer {code0} y {code1} de la cabecera protegida.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Analyser le COSE_Sign1 et lire {code0} et {code1} dans l'en-tête protégé.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Разобрать COSE_Sign1 и прочитать {code0} и {code1} из защищённого заголовка.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "解析 COSE_Sign1，并从受保护头部读取 {code0} 和 {code1}。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Place the payload under its subclaim, inside the {code0} claim, inside a <a0>CWT claim set</a0> — see that model for the claim keys and types, and <a1>section 3.2</a1> of the specification for their normative definitions.",
+   "hash": "f91a03c255ac72ef",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ضع الحمولة تحت مطالبتها الفرعية، داخل المطالبة {code0}، داخل <a0>مجموعة مطالبات CWT</a0> — راجع ذلك النموذج لمعرفة مفاتيح المطالبات وأنواعها، و<a1>القسم 3.2</a1> من المواصفة لتعريفاتها المعيارية.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Coloque la carga útil bajo su subdeclaración, dentro de la declaración {code0}, dentro de un <a0>conjunto de declaraciones CWT</a0>; consulte ese modelo para conocer las claves y los tipos de las declaraciones, y la <a1>sección 3.2</a1> de la especificación para sus definiciones normativas.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Placer la charge utile sous sa sous-revendication, à l'intérieur de la revendication {code0}, elle-même à l'intérieur d'un <a0>ensemble de revendications CWT</a0> — voir ce modèle pour les clés et types des revendications, et la <a1>section 3.2</a1> de la spécification pour leurs définitions normatives.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поместить полезную нагрузку в её подутверждение внутри утверждения {code0}, внутри <a0>набора утверждений CWT</a0> — ключи и типы утверждений см. в этой модели, а их нормативные определения — в <a1>разделе 3.2</a1> спецификации.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将载荷放在其子声明之下，置于 {code0} 声明之内，再置于 <a0>CWT 声明集</a0>之内——声明键及其类型参见该模型，其规范性定义参见规范的<a1>第 3.2 节</a1>。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Populate the logical model for the payload type you selected. For a DVC that is <a0>DVCMinPreQual</a0>, whose vaccine details are <a1>DVCMinVaccineDetailsPreQual</a1>. Follow those definitions for the element list, cardinalities and bindings rather than any copy of them.",
+   "hash": "5eb153914ab35b09",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "املأ النموذج المنطقي الخاص بنوع الحمولة الذي اخترته. وبالنسبة إلى شهادة DVC فهو <a0>DVCMinPreQual</a0>، وتفاصيل اللقاح فيه هي <a1>DVCMinVaccineDetailsPreQual</a1>. واتبع تلك التعريفات لقائمة العناصر وعدديتها وروابطها بدلًا من أي نسخة منها.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Complete el modelo lógico del tipo de carga útil que haya seleccionado. Para un DVC es <a0>DVCMinPreQual</a0>, cuyos datos de la vacuna son <a1>DVCMinVaccineDetailsPreQual</a1>. Siga esas definiciones para la lista de elementos, las cardinalidades y los enlaces, y no cualquier copia de ellas.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Renseigner le modèle logique correspondant au type de charge utile choisi. Pour un DVC, il s'agit de <a0>DVCMinPreQual</a0>, dont les détails de vaccin sont <a1>DVCMinVaccineDetailsPreQual</a1>. Suivre ces définitions pour la liste des éléments, les cardinalités et les liaisons, plutôt qu'une quelconque copie de celles-ci.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Заполнить логическую модель для выбранного типа полезной нагрузки. Для DVC это <a0>DVCMinPreQual</a0>, сведения о вакцине в которой задаются моделью <a1>DVCMinVaccineDetailsPreQual</a1>. В отношении перечня элементов, кратностей и привязок следуйте этим определениям, а не каким-либо их копиям.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "为所选的载荷类型填充逻辑模型。对于 DVC，即 <a0>DVCMinPreQual</a0>，其疫苗详情为 <a1>DVCMinVaccineDetailsPreQual</a1>。元素列表、基数和绑定应遵循这些定义，而不是遵循其任何副本。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Prefix the Base45 string with {code0}. Verifiers use this to recognise what they have scanned and which decoding scheme to apply. A future backwards-incompatible revision will use a new identifier, incrementing through {code1} and then {code2}.",
+   "hash": "d30f6ff5ff102048",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أضف البادئة {code0} إلى سلسلة Base45. وتستخدمها الجهات المُتحقِّقة لتمييز ما مسحته وتحديد مخطط فك الترميز الواجب تطبيقه. وسيستخدم أي تنقيح مستقبلي غير متوافق مع الإصدارات السابقة معرّفًا جديدًا، تزايديًا عبر {code1} ثم {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Anteponga {code0} a la cadena Base45. Los verificadores lo utilizan para reconocer lo que han escaneado y qué esquema de decodificación aplicar. Una futura revisión no compatible con versiones anteriores utilizará un nuevo identificador, que avanzará a {code1} y después a {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Ajouter le préfixe {code0} à la chaîne Base45. Les vérificateurs s'en servent pour reconnaître ce qu'ils ont scanné et le schéma de décodage à appliquer. Une future révision non rétrocompatible utilisera un nouvel identifiant, en passant successivement à {code1} puis à {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Добавить к строке Base45 префикс {code0}. Проверяющие стороны используют его, чтобы распознать отсканированные данные и определить применимую схему декодирования. В будущей версии, несовместимой с предыдущими, будет использоваться новый идентификатор с последовательным увеличением: {code1}, затем {code2}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在 Base45 字符串前添加前缀 {code0}。验证方据此识别所扫描的内容以及应采用的解码方案。未来不向后兼容的修订版将使用新的标识符，先按 {code1} 递增，再按 {code2} 递增。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Property",
+   "hash": "b8241be501e30aa9",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الخاصية",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Propiedad",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Propriété",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Свойство",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "属性",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "QR Code, ISO/IEC 18004:2015 — SHALL",
+   "hash": "27daefcda518f04e",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "رمز QR، ISO/IEC 18004:2015 — يتعيّن (SHALL)",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Código QR, ISO/IEC 18004:2015 — DEBERÁ",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Code QR, ISO/IEC 18004:2015 — DOIT",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "QR Code, ISO/IEC 18004:2015 — ОБЯЗАТЕЛЬНО (SHALL)",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "QR 码，ISO/IEC 18004:2015——应当（SHALL）",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "QR symbol",
+   "hash": "a888ddde471ac45f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "رمز QR المرئي",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Símbolo QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Symbole QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Символ QR",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "QR 符号",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Read the {code0} claim, dispatch on the subclaim to the right logical model, and only then apply business rules.",
+   "hash": "859ee0e1a476b4ea",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "اقرأ المطالبة {code0}، ووجِّه المعالجة حسب المطالبة الفرعية إلى النموذج المنطقي الصحيح، ثم طبِّق قواعد العمل بعد ذلك فقط.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Leer la declaración {code0}, remitir según la subdeclaración al modelo lógico correcto y solo entonces aplicar las reglas de negocio.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Lire la revendication {code0}, aiguiller selon la sous-revendication vers le modèle logique approprié, et seulement ensuite appliquer les règles métier.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Прочитать утверждение {code0}, по подутверждению выбрать нужную логическую модель и только после этого применять бизнес-правила.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "读取 {code0} 声明，根据子声明分派到正确的逻辑模型，然后才应用业务规则。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Rebuild the {code0} and verify the signature against each candidate DSC until one succeeds. Verify the signature before processing the payload.",
+   "hash": "16848dac31522ba0",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أعِد بناء {code0} وتحقق من التوقيع مقابل كل شهادة DSC مرشحة حتى ينجح أحدها. وتحقق من التوقيع قبل معالجة الحمولة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Reconstruir el {code0} y verificar la firma con cada DSC candidato hasta que uno lo consiga. Verificar la firma antes de procesar la carga útil.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Reconstruire le {code0} et vérifier la signature avec chaque DSC candidat jusqu'à ce que l'un d'eux réussisse. Vérifier la signature avant de traiter la charge utile.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Заново построить {code0} и проверить подпись по каждому DSC-кандидату, пока проверка не завершится успешно. Проверять подпись следует до обработки полезной нагрузки.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "重新构建 {code0}，并依次使用每个候选 DSC 验证签名，直到有一个成功为止。在处理载荷之前先验证签名。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Rendered size",
+   "hash": "1ddce1e7008c5d73",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الحجم المعروض",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tamaño de visualización",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Taille de rendu",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Размер изображения",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "渲染尺寸",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Requirement",
+   "hash": "c18d5124d1dcb64b",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المتطلب",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Requisito",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Exigence",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Требование",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "要求",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "serialise it as CBOR, and sign those bytes. For ES256 the COSE signature value is the fixed-width concatenation {code0}, 32 bytes each — not the ASN.1 DER encoding that most crypto libraries return by default. Converting between the two is the single most common interoperability bug in HCERT implementations.",
+   "hash": "827efb1ba28ff793",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وسلسِلها بصيغة CBOR، ووقِّع تلك البايتات. وبالنسبة إلى ES256، فإن قيمة توقيع COSE هي الضمّ ثابت العرض {code0}، بطول 32 بايتًا لكل منهما — وليست ترميز ASN.1 DER الذي تعيده معظم مكتبات التشفير افتراضيًا. والتحويل بين الصيغتين هو أكثر أخطاء قابلية التشغيل البيني شيوعًا في تنفيذات HCERT.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "serialícelo como CBOR y firme esos bytes. En ES256, el valor de la firma COSE es la concatenación de ancho fijo {code0}, de 32 bytes cada uno, y no la codificación ASN.1 DER que devuelven por defecto la mayoría de las bibliotecas criptográficas. La conversión entre ambas es el error de interoperabilidad más común en las implementaciones de HCERT.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "le sérialiser en CBOR, puis signer ces octets. Pour ES256, la valeur de signature COSE est la concaténation à largeur fixe {code0}, de 32 octets chacun — et non l'encodage ASN.1 DER que la plupart des bibliothèques cryptographiques renvoient par défaut. La conversion entre les deux est le bogue d'interopérabilité le plus courant dans les implémentations HCERT.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "сериализовать её в CBOR и подписать полученные байты. Для ES256 значением подписи COSE является конкатенация фиксированной длины {code0}, по 32 байта каждая, — а не кодирование ASN.1 DER, которое большинство криптографических библиотек возвращает по умолчанию. Преобразование между ними — самая распространённая ошибка совместимости в реализациях HCERT.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将其序列化为 CBOR，并对这些字节进行签名。对于 ES256，COSE 签名值是定宽拼接 {code0}，每部分 32 字节——而不是大多数密码库默认返回的 ASN.1 DER 编码。在两者之间进行转换是 HCERT 实现中最常见的互操作性缺陷。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Signing uses a key whose public key is onboarded to the GDHCN DEV trust network, so the example verifies against the DEV trust list. The private key is held in the build environment and never enters this repository; only the DSC, the SCA, the QR images and the {code0} strings are published.",
+   "hash": "d7b9af0317af0454",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يستخدم التوقيع مفتاحًا انضمّ مفتاحه العمومي إلى شبكة الثقة DEV التابعة لـ GDHCN، لذا يُتحقَّق من المثال مقابل قائمة الثقة DEV. ويُحتفظ بالمفتاح الخاص في بيئة البناء ولا يدخل هذا المستودع أبدًا؛ ولا يُنشر إلا شهادة DSC وSCA وصور QR وسلاسل {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La firma utiliza una clave cuya clave pública está integrada en la red de confianza DEV de la GDHCN, por lo que el ejemplo se verifica con la lista de confianza DEV. La clave privada se conserva en el entorno de compilación y nunca entra en este repositorio; solo se publican el DSC, la SCA, las imágenes QR y las cadenas {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La signature utilise une clé dont la clé publique est intégrée au réseau de confiance DEV du GDHCN ; l'exemple peut donc être vérifié avec la liste de confiance DEV. La clé privée est conservée dans l'environnement de construction et n'entre jamais dans ce dépôt ; seuls le DSC, la SCA, les images QR et les chaînes {code0} sont publiés.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Для подписания используется ключ, открытый ключ которого подключён к сети доверия GDHCN DEV, поэтому пример проходит проверку по списку доверия DEV. Закрытый ключ хранится в среде сборки и никогда не попадает в этот репозиторий; публикуются только DSC, SCA, изображения QR-кодов и строки {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "签名所用密钥的公钥已入网到 GDHCN DEV 信任网络，因此该示例可依据 DEV 信任列表通过验证。私钥保存在构建环境中，从不进入本存储库；只发布 DSC、SCA、QR 图像和 {code0} 字符串。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Size",
+   "hash": "af059d2acf468f63",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الحجم",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Tamaño",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Taille",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Размер",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "大小",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Stage",
+   "hash": "b1da89fd9c5b522a",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "المرحلة",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Etapa",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Étape",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Этап",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "阶段",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Steps 3 to 9 never vary with the payload. A verifier runs the same list upwards.",
+   "hash": "1e8f8148db5ed712",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الخطوات من 3 إلى 9 لا تتغير أبدًا بتغيّر الحمولة. وتنفذ الجهة المُتحقِّقة القائمة نفسها بترتيب عكسي.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los pasos 3 a 9 nunca varían con la carga útil. Un verificador recorre la misma lista en sentido inverso.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les étapes 3 à 9 ne varient jamais selon la charge utile. Un vérificateur parcourt la même liste en sens inverse.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Шаги с 3 по 9 никогда не зависят от полезной нагрузки. Проверяющая сторона выполняет тот же перечень в обратном порядке.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "第 3 步至第 9 步从不随载荷而变化。验证方自下而上执行同一列表。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Strings SHOULD be NFC-normalised. Decoders SHOULD be permissive about input that is not.",
+   "hash": "7a90e550921765b7",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ينبغي (SHOULD) أن تكون السلاسل النصية مُطبَّعة وفق NFC. وينبغي (SHOULD) أن تتساهل أدوات فك الترميز مع المدخلات غير المُطبَّعة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Las cadenas DEBERÍAN normalizarse en NFC. Los decodificadores DEBERÍAN ser permisivos con las entradas que no lo estén.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les chaînes DEVRAIENT être normalisées en NFC. Les décodeurs DEVRAIENT être tolérants envers les entrées qui ne le sont pas.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Строки СЛЕДУЕТ нормализовать в форме NFC. Декодерам СЛЕДУЕТ допускать входные данные, не нормализованные таким образом.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "字符串宜（SHOULD）进行 NFC 规范化。解码器对未规范化的输入宜（SHOULD）保持宽容。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Symbology",
+   "hash": "28d9cf6e585566bc",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "نظام الترميز",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Simbología",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Symbologie",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Символика",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "码制",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Thailand's Expanded Programme on Immunization gives two vaccines at birth: BCG as soon as possible after birth, and the first dose of hepatitis B vaccine within 24 hours of birth. The DTP-HepB and OPV series begin later, at 2, 4 and 6 months. A birth visit in Thailand therefore produces exactly the two certificates modelled here.",
+   "hash": "e4ff0590c0a5bc47",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يعطي البرنامج الموسَّع للتمنيع في تايلند لقاحين عند الولادة: BCG في أقرب وقت ممكن بعد الولادة، والجرعة الأولى من لقاح التهاب الكبد B خلال 24 ساعة من الولادة. وتبدأ سلسلتا DTP-HepB وOPV لاحقًا، في الأشهر 2 و4 و6. لذلك تنتج زيارة الولادة في تايلند الشهادتين المنمذجتين هنا بالضبط.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El Programa Ampliado de Inmunización de Tailandia administra dos vacunas al nacer: la BCG lo antes posible tras el nacimiento y la primera dosis de la vacuna contra la hepatitis B en las 24 horas siguientes al nacimiento. Las series de DTP-HepB y de OPV comienzan más tarde, a los 2, 4 y 6 meses. Por tanto, una visita por nacimiento en Tailandia produce exactamente los dos certificados aquí modelados.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le Programme élargi de vaccination de la Thaïlande prévoit deux vaccins à la naissance : le BCG dès que possible après la naissance, et la première dose de vaccin contre l'hépatite B dans les 24 heures suivant la naissance. Les séries DTC-HepB et VPO commencent plus tard, à 2, 4 et 6 mois. Une visite de naissance en Thaïlande produit donc exactement les deux certificats modélisés ici.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Расширенная программа иммунизации Таиланда предусматривает введение двух вакцин при рождении: БЦЖ (BCG) как можно скорее после рождения и первой дозы вакцины против гепатита B в течение 24 часов после рождения. Серии DTP-HepB и OPV начинаются позднее, в 2, 4 и 6 месяцев. Поэтому посещение при рождении в Таиланде даёт ровно два сертификата, смоделированных здесь.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "泰国的扩大免疫规划在出生时接种两种疫苗：出生后尽早接种 BCG，并在出生后 24 小时内接种第一剂乙型肝炎疫苗。DTP-HepB 和 OPV 系列接种稍后开始，分别在 2、4 和 6 个月时进行。因此，在泰国的一次出生就诊恰好产生此处所建模的两份证书。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The container, the signature and the transport encoding are the same for every GDHCN trust domain, and are specified normatively in the <a0>HCERT Specification</a0>. What changes from one use case to the next is only the payload: which logical model goes inside the {code0} claim, and under which subclaim. Everything after that choice is mechanical.",
+   "hash": "5d4ed62752ed6170",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الحاوي والتوقيع وترميز النقل هي نفسها لكل نطاقات الثقة في GDHCN، وهي محددة معياريًا في <a0>مواصفة HCERT</a0>. وما يتغير من حالة استخدام إلى أخرى هو الحمولة فقط: أي نموذج منطقي يوضع داخل المطالبة {code0}، وتحت أي مطالبة فرعية. وكل ما يلي ذلك الاختيار آلي.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El contenedor, la firma y la codificación de transporte son los mismos para todos los ámbitos de confianza de la GDHCN, y se especifican de forma normativa en la <a0>especificación HCERT</a0>. Lo único que cambia de un caso de uso a otro es la carga útil: qué modelo lógico va dentro de la declaración {code0} y bajo qué subdeclaración. Todo lo que sigue a esa elección es mecánico.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Le conteneur, la signature et l'encodage de transport sont les mêmes pour tous les domaines de confiance du GDHCN et sont spécifiés de manière normative dans la <a0>spécification HCERT</a0>. Ce qui change d'un cas d'usage à l'autre, c'est uniquement la charge utile : quel modèle logique est placé dans la revendication {code0}, et sous quelle sous-revendication. Tout ce qui suit ce choix est mécanique.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Контейнер, подпись и транспортное кодирование одинаковы для всех Доменов доверия GDHCN и нормативно определены в <a0>Спецификации HCERT</a0>. От одного варианта использования к другому меняется только полезная нагрузка: какая логическая модель помещается в утверждение {code0} и в каком подутверждении. Всё, что следует за этим выбором, выполняется механически.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "容器、签名和传输编码对每个 GDHCN 信任域都是相同的，并在 <a0>HCERT 规范</a0>中作了规范性规定。不同用例之间唯一变化的只是载荷：哪个逻辑模型放入 {code0} 声明，以及放在哪个子声明之下。此选择之后的一切都是机械性的。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The element names are two and three characters long because every byte is paid for twice — once in the CBOR encoding and again in the QR's module count.",
+   "hash": "ccf51e83a02051ba",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "أسماء العناصر مؤلفة من حرفين أو ثلاثة لأن كل بايت يُدفع ثمنه مرتين — مرة في ترميز CBOR ومرة أخرى في عدد وحدات رمز QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los nombres de los elementos tienen dos y tres caracteres porque cada byte se paga dos veces: una en la codificación CBOR y otra en el número de módulos del QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les noms d'éléments comptent deux ou trois caractères, car chaque octet se paie deux fois — une fois dans l'encodage CBOR et une autre dans le nombre de modules du code QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Имена элементов имеют длину два и три символа, потому что за каждый байт приходится платить дважды — один раз в кодировании CBOR и ещё раз в количестве модулей QR-кода.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "元素名称只有两到三个字符长，因为每个字节都要付出两次代价——一次在 CBOR 编码中，另一次在 QR 码的模块数量中。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The example is issued by GDHCN DEV participant {code0}, not by any Member State. GDHCN participant codes are ISO 3166-1 alpha-3, while the CWT {code1} claim and the X.509 country attribute take the alpha-2 form — here {code2}, matching the {code3} attribute of the Document Signing Certificate subject.",
+   "hash": "a19438ce29987e84",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يصدر المثال المشارك في GDHCN DEV ذو الرمز {code0}، لا أي دولة عضو. ورموز المشاركين في GDHCN هي رموز ISO 3166-1 alpha-3، بينما تأخذ المطالبة {code1} في CWT وسمة البلد في X.509 صيغة alpha-2 — وهي هنا {code2}، المطابقة للسمة {code3} في موضوع شهادة توقيع المستندات.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "El ejemplo lo emite el participante DEV de la GDHCN {code0}, no ningún Estado Miembro. Los códigos de participante de la GDHCN son ISO 3166-1 alfa-3, mientras que la declaración CWT {code1} y el atributo de país X.509 adoptan la forma alfa-2 —aquí {code2}—, que coincide con el atributo {code3} del sujeto del certificado de firma de documentos.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "L'exemple est émis par le participant DEV du GDHCN {code0}, et non par un État Membre. Les codes de participant au GDHCN suivent la norme ISO 3166-1 alpha-3, tandis que la revendication CWT {code1} et l'attribut de pays X.509 utilisent la forme alpha-2 — ici {code2}, qui correspond à l'attribut {code3} du sujet du certificat de signataire de documents.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Пример выдан участником GDHCN DEV {code0}, а не каким-либо государством — членом ВОЗ. Коды участников GDHCN соответствуют ISO 3166-1 alpha-3, тогда как утверждение CWT {code1} и атрибут страны X.509 используют форму alpha-2 — здесь {code2}, что соответствует атрибуту {code3} субъекта сертификата подписанта документов.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "该示例由 GDHCN DEV 参与方 {code0} 签发，而非由任何会员国签发。GDHCN 参与方代码采用 ISO 3166-1 alpha-3，而 CWT {code1} 声明和 X.509 国家属性采用 alpha-2 形式——此处为 {code2}，与文档签名证书主体的 {code3} 属性相匹配。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The Extended Key Usage identifiers in <a0>Appendix A.2</a0> are inherited from the EU DCC and cover test, vaccination and recovery. They have not been applied to the payload types introduced since, and there is no mapping from the newer subclaims to a key usage, so a verifier has nothing to check them against for a DVC.",
+   "hash": "049e98d2e9a86210",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "معرّفات استخدام المفتاح الموسَّع في <a0>الملحق A.2</a0> موروثة من EU DCC وتغطي الاختبار والتطعيم والتعافي. ولم تُطبَّق على أنواع الحمولة التي استُحدثت منذ ذلك الحين، ولا يوجد ربط بين المطالبات الفرعية الأحدث واستخدام مفتاح ما، لذا لا تجد الجهة المُتحقِّقة ما تتحقق منه مقابلها في حالة شهادة DVC.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los identificadores de uso extendido de claves del <a0>apéndice A.2</a0> se heredan del EU DCC y abarcan pruebas, vacunación y recuperación. No se han aplicado a los tipos de carga útil introducidos desde entonces, y no existe correspondencia entre las subdeclaraciones más recientes y un uso de clave, por lo que un verificador no tiene nada con qué contrastarlos en el caso de un DVC.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les identifiants Extended Key Usage de l'<a0>appendice A.2</a0> sont hérités de l'EU DCC et couvrent le test, la vaccination et le rétablissement. Ils n'ont pas été appliqués aux types de charge utile introduits depuis, et il n'existe aucune correspondance entre les nouvelles sous-revendications et un usage des clés ; un vérificateur n'a donc rien à quoi les comparer pour un DVC.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Идентификаторы расширенного назначения ключа (Extended Key Usage) в <a0>Приложении A.2</a0> унаследованы от EU DCC и охватывают тестирование, вакцинацию и выздоровление. Они не применялись к типам полезной нагрузки, введённым впоследствии, и не существует сопоставления новых подутверждений с назначением ключа, поэтому для DVC проверяющей стороне не с чем их сверять.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "<a0>附录 A.2</a0> 中的扩展密钥用途标识符继承自欧盟（EU）DCC，涵盖检测、疫苗接种和康复。它们尚未应用于此后引入的载荷类型，也不存在从较新子声明到密钥用途的映射，因此对于 DVC，验证方没有可据以检查的依据。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The resulting structure is {code0}.",
+   "hash": "185447be1b46bb04",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "البنية الناتجة هي {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La estructura resultante es {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La structure obtenue est {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Полученная структура — {code0}.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "所得结构为 {code0}。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The same two certificates, decoded and verified live in your browser against XXR's Document Signing Certificate from the DEV trust list:",
+   "hash": "e6ee812e8bb2cf8f",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الشهادتان نفسهما، بعد فك ترميزهما والتحقق منهما مباشرة في متصفحك مقابل شهادة توقيع المستندات الخاصة بـ XXR من قائمة الثقة DEV:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Los mismos dos certificados, decodificados y verificados en vivo en su navegador con el certificado de firma de documentos de XXR de la lista de confianza DEV:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Les deux mêmes certificats, décodés et vérifiés en direct dans votre navigateur avec le certificat de signataire de documents de XXR provenant de la liste de confiance DEV :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Те же два сертификата, декодированные и проверенные в реальном времени в вашем браузере по сертификату подписанта документов XXR из списка доверия DEV:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "同样的两份证书，在你的浏览器中依据 DEV 信任列表中 XXR 的文档签名证书实时解码并验证：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "The signature and its headers account for 85 of the 307 bytes — on payloads this small, the cryptography costs more than the clinical data. This is why the minimal models use two-character element names, and why a payload much larger than this does not belong in a QR code at all.",
+   "hash": "e6d00d72aebc3b4e",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "يستهلك التوقيع وترويساته 85 من أصل 307 بايتات — ففي حمولات بهذا الصغر، يكلّف التشفير أكثر من البيانات السريرية. ولهذا تستخدم النماذج الدنيا أسماء عناصر من حرفين، ولهذا لا مكان في رمز QR أصلًا لحمولة أكبر من هذه بكثير.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "La firma y sus cabeceras representan 85 de los 307 bytes: en cargas útiles tan pequeñas, la criptografía cuesta más que los datos clínicos. Por eso los modelos mínimos utilizan nombres de elementos de dos caracteres, y por eso una carga útil mucho mayor que esta no es apropiada en absoluto para un código QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "La signature et ses en-têtes représentent 85 des 307 octets — pour des charges utiles aussi petites, la cryptographie coûte plus cher que les données cliniques. C'est pourquoi les modèles minimaux utilisent des noms d'éléments de deux caractères, et pourquoi une charge utile beaucoup plus volumineuse que celle-ci n'a pas du tout sa place dans un code QR.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "На подпись и её заголовки приходится 85 из 307 байт — при столь малых полезных нагрузках криптография обходится дороже, чем клинические данные. Именно поэтому в минимальных моделях используются двухсимвольные имена элементов и поэтому полезной нагрузке, значительно превышающей этот размер, вообще не место в QR-коде.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在 307 字节中，签名及其头部占 85 字节——对于如此小的载荷，密码学部分的开销超过了临床数据。这就是最小模型使用两字符元素名称的原因，也是远大于此的载荷根本不应放入 QR 码的原因。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This drives the design decisions directly:",
+   "hash": "9bd060fbc74ab84a",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "وهذا يوجّه قرارات التصميم مباشرة:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esto determina directamente las decisiones de diseño:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cela détermine directement les choix de conception :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Это непосредственно определяет проектные решения:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "这直接决定了设计选择：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "This page is a step-by-step, implementer-facing walkthrough of how a signed health certificate becomes a QR code on a piece of paper or a phone screen, and how a verifier turns that QR code back into trustworthy data.",
+   "hash": "c8bac2a3ed3cbb0e",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "هذه الصفحة جولة إرشادية خطوة بخطوة موجّهة إلى المنفذين، تشرح كيف تتحول شهادة صحية موقَّعة إلى رمز QR على ورقة أو شاشة هاتف، وكيف تحوّل الجهة المُتحقِّقة رمز QR ذاك مجددًا إلى بيانات جديرة بالثقة.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Esta página es un recorrido guiado paso a paso, dirigido a los implementadores, de cómo un certificado de salud firmado se convierte en un código QR en un papel o en la pantalla de un teléfono, y de cómo un verificador vuelve a convertir ese código QR en datos fiables.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Cette page est une présentation guidée, étape par étape et destinée aux responsables de la mise en œuvre, de la façon dont un certificat de santé signé devient un code QR sur une feuille de papier ou un écran de téléphone, et de la façon dont un vérificateur retransforme ce code QR en données dignes de confiance.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Эта страница представляет собой пошаговый обзор для разработчиков о том, как подписанный медицинский сертификат превращается в QR-код на листе бумаги или экране телефона и как проверяющая сторона преобразует этот QR-код обратно в достоверные данные.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "本页是面向实施者的分步演练，说明已签名的健康证书如何变成纸张或手机屏幕上的 QR 码，以及验证方如何将该 QR 码还原为可信数据。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "To verify them, resolve that {code0} against the GDHCN trust list rather than against any copy of the certificate shipped beside the QR code. The DID trust list endpoints for the development, user-acceptance testing and production environments are listed under <a0>Trustlist Distribution Endpoints</a0>; this example is issued in DEV, so its Document Signing Certificate is on the DEV trust list. Fetching the signing certificate from the trust list is the verification path the specification defines, and the only one that tells a verifier the key is still trusted — a certificate distributed alongside the certificate it signed proves nothing about that.",
+   "hash": "8ef9c1b477cc282b",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "للتحقق منهما، حُلَّ {code0} ذاك مقابل قائمة الثقة في GDHCN، لا مقابل أي نسخة من الشهادة مرفقة بجانب رمز QR. وترد نقاط نهاية قائمة الثقة DID لبيئات التطوير واختبار قبول المستخدم والإنتاج تحت <a0>نقاط نهاية توزيع قائمة الثقة</a0>؛ وهذا المثال صادر في DEV، لذا فإن شهادة توقيع المستندات الخاصة به موجودة في قائمة الثقة DEV. وجلب شهادة التوقيع من قائمة الثقة هو مسار التحقق الذي تحدده المواصفة، وهو الوحيد الذي يُعلم الجهة المُتحقِّقة بأن المفتاح لا يزال موثوقًا — فالشهادة الموزَّعة مع الشهادة التي وقّعتها لا تثبت شيئًا في هذا الشأن.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Para verificarlos, resuelva ese {code0} en la lista de confianza de la GDHCN y no en ninguna copia del certificado distribuida junto al código QR. Los puntos de conexión de la lista de confianza DID para los entornos de desarrollo, pruebas de aceptación por el usuario y producción figuran en <a0>Puntos de conexión de distribución de la lista de confianza</a0>; este ejemplo se emite en DEV, por lo que su certificado de firma de documentos está en la lista de confianza DEV. Obtener el certificado de firma de la lista de confianza es la vía de verificación que define la especificación, y la única que indica a un verificador que la clave sigue siendo de confianza: un certificado distribuido junto al certificado que firmó no demuestra nada al respecto.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Pour les vérifier, résoudre ce {code0} au moyen de la liste de confiance du GDHCN plutôt qu'au moyen d'une quelconque copie du certificat fournie à côté du code QR. Les points de terminaison des listes de confiance DID pour les environnements de développement, de test d'acceptation par les utilisateurs et de production sont répertoriés sous <a0>Trustlist Distribution Endpoints</a0> ; cet exemple est émis en DEV, son certificat de signataire de documents figure donc sur la liste de confiance DEV. La récupération du certificat de signature à partir de la liste de confiance est la voie de vérification définie par la spécification, et la seule qui indique au vérificateur que la clé est toujours digne de confiance — un certificat distribué avec le certificat qu'il a signé ne prouve rien à cet égard.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Чтобы проверить их, разрешите этот {code0} по списку доверия GDHCN, а не по какой-либо копии сертификата, поставляемой вместе с QR-кодом. Конечные точки DID списка доверия для сред разработки, приёмочного тестирования и промышленной эксплуатации перечислены в разделе <a0>Trustlist Distribution Endpoints</a0>; данный пример выдан в DEV, поэтому его сертификат подписанта документов находится в списке доверия DEV. Получение сертификата подписи из списка доверия — это путь проверки, определённый спецификацией, и единственный путь, сообщающий проверяющей стороне, что ключ по-прежнему является доверенным, — сертификат, распространяемый вместе с подписанным им сертификатом, ничего об этом не доказывает.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "要验证它们，应依据 GDHCN 信任列表解析该 {code0}，而不是依据随 QR 码一起提供的任何证书副本。开发、用户验收测试和生产环境的 DID 信任列表端点列于<a0>信任列表分发端点</a0>下；本示例在 DEV 中签发，因此其文档签名证书位于 DEV 信任列表上。从信任列表获取签名证书是规范所定义的验证路径，也是唯一能告诉验证方该密钥仍受信任的路径——与其所签名的证书一同分发的证书，对此不能证明任何事情。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Two certificates. {code0} is 1..1, so the birth visit yields one certificate per vaccine.",
+   "hash": "395da865e028d8d0",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "شهادتان. {code0} عدديته 1..1، لذا تنتج زيارة الولادة شهادة واحدة لكل لقاح.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Dos certificados. {code0} es 1..1, por lo que la visita por nacimiento da lugar a un certificado por vacuna.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Deux certificats. {code0} a la cardinalité 1..1 ; la visite de naissance donne donc lieu à un certificat par vaccin.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Два сертификата. {code0} имеет кратность 1..1, поэтому посещение при рождении даёт по одному сертификату на каждую вакцину.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "两份证书。{code0} 的基数为 1..1，因此出生就诊会为每种疫苗产生一份证书。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Two things are worth knowing before picking a number. Subclaims 0 and above are reserved by WHO and are allocated together with a trust domain, through the GDHCN Secretariat. Subclaims that are negative integers are the development range and are free to use, so an implementation using one is a pilot or a development deployment and the number is not guaranteed to be stable.",
+   "hash": "7696d3dc9e8d4404",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "ثمة أمران يجدر معرفتهما قبل اختيار رقم. المطالبات الفرعية 0 فما فوق محجوزة لمنظمة الصحة العالمية (WHO) وتُخصَّص مع نطاق ثقة، عن طريق أمانة GDHCN. أما المطالبات الفرعية ذات الأعداد الصحيحة السالبة فهي نطاق التطوير وهي متاحة للاستخدام بحرية، لذا فإن التنفيذ الذي يستخدم إحداها يكون تجريبيًا أو نشرًا للتطوير، ولا يُضمن استقرار الرقم.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Conviene saber dos cosas antes de elegir un número. Las subdeclaraciones 0 y superiores están reservadas por la OMS y se asignan junto con un ámbito de confianza, a través de la Secretaría de la Red Mundial. Las subdeclaraciones que son números enteros negativos constituyen el intervalo de desarrollo y pueden usarse libremente, por lo que una implementación que utilice una de ellas es un piloto o un despliegue de desarrollo, y no se garantiza que el número sea estable.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Deux points méritent d'être connus avant de choisir un numéro. Les sous-revendications 0 et supérieures sont réservées par l'OMS et sont attribuées conjointement avec un domaine de confiance, par l'intermédiaire du Secrétariat du GDHCN. Les sous-revendications qui sont des entiers négatifs constituent la plage de développement et sont libres d'utilisation ; une implémentation qui en utilise une est donc un projet pilote ou un déploiement de développement, et la stabilité du numéro n'est pas garantie.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Прежде чем выбирать номер, полезно знать две вещи. Подутверждения 0 и выше зарезервированы ВОЗ и выделяются вместе с Доменом доверия через Секретариат GDHCN. Подутверждения, являющиеся отрицательными целыми числами, относятся к диапазону разработки и могут использоваться свободно, поэтому реализация, использующая такое подутверждение, является пилотным проектом или развёртыванием для разработки, и стабильность номера не гарантируется.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在选择编号之前，有两点值得了解。0 及以上的子声明由世卫组织（WHO）保留，并通过 GDHCN 秘书处与信任域一同分配。负整数子声明属于开发范围，可自由使用，因此使用此类子声明的实现属于试点或开发部署，其编号不保证稳定。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Validate the input before trusting it. Parsing the protected header necessarily happens before signature verification, which makes it an attack surface; check types and lengths defensively. See <a0>section 6.3</a0>.",
+   "hash": "1bbbf610668b249b",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تحقّق من صحة المدخلات قبل الوثوق بها. فتحليل الترويسة المحمية يحدث بالضرورة قبل التحقق من التوقيع، مما يجعله سطحًا للهجوم؛ لذا افحص الأنواع والأطوال بحذر. انظر <a0>القسم 6.3</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Valide la entrada antes de confiar en ella. El análisis de la cabecera protegida se produce necesariamente antes de la verificación de la firma, lo que la convierte en una superficie de ataque; compruebe los tipos y las longitudes de forma defensiva. Véase la <a0>sección 6.3</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Valider l'entrée avant de s'y fier. L'analyse de l'en-tête protégé intervient nécessairement avant la vérification de la signature, ce qui en fait une surface d'attaque ; vérifier les types et les longueurs de manière défensive. Voir la <a0>section 6.3</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Проверяйте входные данные, прежде чем доверять им. Разбор защищённого заголовка неизбежно происходит до проверки подписи, что делает его поверхностью атаки; проверяйте типы и длины с соблюдением мер защиты. См. <a0>раздел 6.3</a0>.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "在信任输入之前先对其进行验证。解析受保护头部必然发生在签名验证之前，这使其成为一个攻击面；应以防御性方式检查类型和长度。参见<a0>第 6.3 节</a0>。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Verify the string made above, change one character of it and watch the step that stops it, or paste any {code0} string:",
+   "hash": "9cebfb4b2c9291b9",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "تحقق من السلسلة المُنشأة أعلاه، أو غيّر حرفًا واحدًا فيها وراقب الخطوة التي توقفها، أو الصق أي سلسلة {code0}:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Verifique la cadena generada arriba, cambie uno de sus caracteres y observe el paso que la detiene, o pegue cualquier cadena {code0}:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Vérifiez la chaîne produite ci-dessus, modifiez-en un caractère et observez l'étape qui la bloque, ou collez n'importe quelle chaîne {code0} :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Проверьте строку, созданную выше, измените в ней один символ и посмотрите, на каком шаге проверка будет остановлена, или вставьте любую строку {code0}:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "验证上面生成的字符串，修改其中一个字符并观察是哪一步拦下了它，或粘贴任意 {code0} 字符串：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Version 16, error correction {code0}, Alphanumeric mode",
+   "hash": "5c2b72987b946c1c",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "الإصدار 16، تصحيح الأخطاء {code0}، الوضع الأبجدي الرقمي",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Versión 16, corrección de errores {code0}, modo alfanumérico",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Version 16, correction d'erreurs {code0}, mode alphanumérique",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Версия 16, коррекция ошибок {code0}, буквенно-цифровой режим",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "版本 16，纠错级别 {code0}，字母数字模式",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Where this page and the <a0>HCERT Specification</a0> appear to differ, the HCERT Specification is authoritative.",
+   "hash": "160d78d245e63cce",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "حيثما يبدو اختلاف بين هذه الصفحة و<a0>مواصفة HCERT</a0>، تكون مواصفة HCERT هي المرجع المعتمد.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Cuando esta página y la <a0>especificación HCERT</a0> parezcan diferir, la especificación HCERT es la referencia autorizada.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "En cas de divergence apparente entre cette page et la <a0>spécification HCERT</a0>, c'est la spécification HCERT qui fait foi.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Если эта страница и <a0>Спецификация HCERT</a0> расходятся, определяющей является Спецификация HCERT.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "如果本页与 <a0>HCERT 规范</a0>看似存在差异，以 HCERT 规范为准。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Wrap the CBOR payload in a single-signer COSE structure (<a0>RFC 8152</a0>), CBOR tag {code0}, with {code1} (label 1) and {code2} (label 4) in the protected header.",
+   "hash": "b69c06a3a8561d7b",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "غلِّف حمولة CBOR في بنية COSE أحادية الموقِّع (<a0>RFC 8152</a0>)، بوسم CBOR {code0}، مع {code1} (التسمية 1) و{code2} (التسمية 4) في الترويسة المحمية.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Encapsule la carga útil CBOR en una estructura COSE de un solo firmante (<a0>RFC 8152</a0>), etiqueta CBOR {code0}, con {code1} (etiqueta 1) y {code2} (etiqueta 4) en la cabecera protegida.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Envelopper la charge utile CBOR dans une structure COSE à signataire unique (<a0>RFC 8152</a0>), balise CBOR {code0}, avec {code1} (label 1) et {code2} (label 4) dans l'en-tête protégé.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Поместить полезную нагрузку CBOR в структуру COSE с одним подписантом (<a0>RFC 8152</a0>), тег CBOR {code0}, с {code1} (метка 1) и {code2} (метка 4) в защищённом заголовке.",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "将 CBOR 载荷封装在单签名者 COSE 结构（<a0>RFC 8152</a0>）中，CBOR 标签为 {code0}，并在受保护头部中放入 {code1}（标签 1）和 {code2}（标签 4）。",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "Wrapped in the CWT claim set:",
+   "hash": "639d8372893c57d3",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مغلَّفة في مجموعة مطالبات CWT:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Encapsulado en el conjunto de declaraciones CWT:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Enveloppé dans l'ensemble de revendications CWT :",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "В составе набора утверждений CWT:",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "封装在 CWT 声明集中：",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  },
+  {
+   "msgid": "ZLIB/Deflate compressed",
+   "hash": "61a70e8ac997e489",
+   "sources": [
+    "input/pagecontent/qr_code_generation.md"
+   ],
+   "locales": {
+    "ar": {
+     "text": "مضغوطة بـ ZLIB/Deflate",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "es": {
+     "text": "Comprimido con ZLIB/Deflate",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "fr": {
+     "text": "Compressé ZLIB/Deflate",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "ru": {
+     "text": "Сжато ZLIB/Deflate",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    },
+    "zh": {
+     "text": "ZLIB/Deflate 压缩后",
+     "status": "agent",
+     "fuzzy": false,
+     "candidates": []
+    }
+   }
+  }
+ ]
+}

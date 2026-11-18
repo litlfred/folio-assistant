@@ -367,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "kg-extract-bpmn",
       "title": "BPMN → L2-BPMN knowledge graph",
-      "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+      "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. When a `dak-task-annotations/v1` sidecar sits beside the file (`<file>.tasks.json`), each of its entries becomes an l2 `dak-task` that `describes` its BPMN task, with `performedBy`, `usesDataElement`, `specifiedBy` and `invokesDecision` edges by the DAK's own ids. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
       "install": {
         "none": true
       },
@@ -389,6 +389,15 @@
             "required": false,
             "arg": {
               "flag": "--personas"
+            }
+          },
+          {
+            "name": "annotations",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A dak-task-annotations/v1 sidecar; defaults to the <file>.tasks.json beside the BPMN, and none is read when neither exists.",
+            "required": false,
+            "arg": {
+              "flag": "--annotations"
             }
           },
           {

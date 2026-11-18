@@ -15,8 +15,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Start_SubgraphWanted"
       ],
-      "nodeCount": 11,
-      "flowCount": 13,
+      "nodeCount": 12,
+      "flowCount": 14,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -54,6 +54,14 @@
       "name": "branch",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/GW_SourceKind",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Task_CreateStateBranch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph#flow/F_M14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Task_CreateStateBranch",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Task_MountBranchTip",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },

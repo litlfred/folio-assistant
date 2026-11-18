@@ -1956,12 +1956,17 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_AuthorNo",
       "@type": "bootstrap:SequenceFlow",
-      "name": "No"
+      "name": "No: proposals only"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_AuthorYes",
       "@type": "bootstrap:SequenceFlow",
       "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Chosen",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Chosen"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_DetNo",
@@ -1982,6 +1987,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EmptyYes",
       "@type": "bootstrap:SequenceFlow",
       "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPage",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Review page"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPane",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "A block's 🌐"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_HashNo",
@@ -2009,6 +2024,11 @@
       "name": "Mistranslation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_NothingToRecord",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_OnceNo",
       "@type": "bootstrap:SequenceFlow",
       "name": "No"
@@ -2019,9 +2039,30 @@
       "name": "Yes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PageDone",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PaneDone",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Picked",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Proposed",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_SomethingToRecord",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Suggested",
       "@type": "bootstrap:SequenceFlow",
-      "name": "Suggestion applied"
+      "name": "Proposed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Maintainer",
@@ -2037,6 +2078,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
       "@type": "cat-harness:Lane",
       "name": "Reviewer (adjudicator)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_Adjudicated",
+      "@type": "bootstrap:ProcessNode",
+      "name": "String adjudicated (not official)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_AlreadyRecorded",
@@ -2056,7 +2102,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_Flagged",
       "@type": "bootstrap:ProcessNode",
-      "name": "Catalogue flagged for review"
+      "name": "Proposal recorded (fuzzy until chosen)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_NotRecorded",
@@ -2067,6 +2113,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/End_TRA_Reviewed",
       "@type": "bootstrap:ProcessNode",
       "name": "Catalogue reviewed (not official)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Anything",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Anything to record?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Author",
@@ -2084,9 +2135,19 @@
       "name": "Any msgstr empty?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Entry",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Where does the reader start?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_EntryJoin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_TRA_EntryJoin"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Hash",
       "@type": "bootstrap:ProcessNode",
-      "name": "Any catalogue unchanged?"
+      "name": "Any choice against an unchanged catalogue?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Merged",
@@ -2119,6 +2180,16 @@
       "name": "A catalogue needs a translation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_AutoPick",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Auto-pick by rank"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open a block's 🌐 translation pane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Candidates",
       "@type": "bootstrap:ProcessNode",
       "name": "Produce candidate translations (any engine)"
@@ -2149,6 +2220,11 @@
       "name": "Plan the records (translation:adjudicate)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Propose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Append every suggestion as a human candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Refuse",
       "@type": "bootstrap:ProcessNode",
       "name": "Comment why nothing was recorded"
@@ -2171,7 +2247,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_Write",
       "@type": "bootstrap:ProcessNode",
-      "name": "Write the records"
+      "name": "Write the choices and sign-offs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",

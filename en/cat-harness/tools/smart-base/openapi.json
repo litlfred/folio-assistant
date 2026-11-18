@@ -428,6 +428,92 @@
         }
       }
     },
+    "/tools/dak-task-annotations": {
+      "post": {
+        "operationId": "dak-task-annotations",
+        "summary": "DAK task annotations → BPMN sidecars",
+        "description": "Read a DAK document's per-task \"NOTES AND ANNOTATIONS\" from its L1 section text (who-iris), match each numbered item to the BPMN task it describes (by @id, then the label's step number with the file's process letter, then the name), add the persona from the task's lane or pool and the data elements, functional requirements and decision tables the DAK workbooks key to the activity id, and write one `dak-task-annotations/v1` sidecar (`<file>.tasks.json`) beside each BPMN (`smart-base/L2-bpmn/scripts/dak-task-annotations.ts`, schema `smart-base/L2-bpmn/schemas/task-annotations.ts`). Items no task matches are listed for a person to adjudicate; a re-run keeps adjudicated matches. `--report` prints what a set of sidecars covers and never fails. The BPMN is read, never written, and nothing FHIR-specific is involved.",
+        "tags": [
+          "smart-base-tools"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "dak-task-annotations/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prefix": {
+                    "$ref": "#/components/schemas/DocId",
+                    "description": "The DAK's id prefix: IMMZ, TB, CHUD."
+                  },
+                  "document": {
+                    "$ref": "#/components/schemas/DocId",
+                    "description": "The L1 library document id the annotations are read from."
+                  },
+                  "l1": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A section .md of that document holding the annotations blocks; repeatable."
+                  },
+                  "bpmn": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A .bpmn file or a directory of them; repeatable."
+                  },
+                  "xlsx": {
+                    "$ref": "#/components/schemas/WorkbookPath",
+                    "description": "A DAK workbook (data dictionary, requirements, decision-support logic); repeatable."
+                  }
+                },
+                "required": [
+                  "prefix",
+                  "document",
+                  "l1",
+                  "bpmn"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sidecars": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "One <file>.tasks.json beside each BPMN (with --write)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "http://smart.who.int/base/tools/dak-task-annotations.jsonld",
+        "x-invoke": {
+          "shell": "bun run smart-base/L2-bpmn/scripts/dak-task-annotations.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-satisfies": [
+          "smart-base-tools"
+        ],
+        "x-selection": {
+          "when": "A DAK's BPMN task annotations are to be made computable: recorded beside the BPMN for review and put in the knowledge graph by kg-extract-bpmn.",
+          "limits": "Reads the flattened L1 text, so an item's page is not recorded; a step number is accepted only where the list's sequence allows it, which keeps page numbers out but can merge a mis-numbered item into its predecessor. Sub-steps a figure draws but the annotations do not describe are listed as unannotated.",
+          "cost": "Seconds, no network."
+        }
+      }
+    },
     "/tools/dmn-to-html": {
       "post": {
         "operationId": "dmn-to-html",
@@ -753,7 +839,7 @@
       "post": {
         "operationId": "kg-extract-bpmn",
         "summary": "BPMN → L2-BPMN knowledge graph",
-        "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+        "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. When a `dak-task-annotations/v1` sidecar sits beside the file (`<file>.tasks.json`), each of its entries becomes an l2 `dak-task` that `describes` its BPMN task, with `performedBy`, `usesDataElement`, `specifiedBy` and `invokesDecision` edges by the DAK's own ids. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
         "tags": [
           "smart-base-tools"
         ],
@@ -775,6 +861,10 @@
                   "personas": {
                     "$ref": "#/components/schemas/RepoPath",
                     "description": "A directory of ActorDefinition FSH; a pool's @name is matched against their titles. When absent, every pool -> persona join is recorded unresolved."
+                  },
+                  "annotations": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A dak-task-annotations/v1 sidecar; defaults to the <file>.tasks.json beside the BPMN, and none is read when neither exists."
                   },
                   "out": {
                     "$ref": "#/components/schemas/RepoPath",
@@ -819,7 +909,7 @@
         ],
         "x-selection": {
           "when": "A BPMN file's interior is to be read into the knowledge graph as the L2-BPMN subgraph, with its pool -> persona joins recorded and their resolution status made queryable.",
-          "limits": "Parses the OMG BPMN serialisation with regular expressions, as smart-kg did; it reads tasks, sub-processes, exclusive gateways, start/end events, sequence and message flows, and does not interpret diagram layout. A pool -> persona match is exact string equality on a display title, so it does not survive a rename.",
+          "limits": "Parses the OMG BPMN serialisation with regular expressions, as smart-kg did; it reads every task type, sub-processes, gateways, start, end and intermediate events, sequence and message flows, and does not interpret diagram layout. A pool -> persona match is exact string equality on a display title, so it does not survive a rename.",
           "cost": "Seconds, no network."
         }
       }
@@ -1182,7 +1272,7 @@
         },
         "x-tool-iri": "http://smart.who.int/base/tools/l1-extraction-pages.jsonld",
         "x-invoke": {
-          "shell": "bun run smart-base/scripts/gen-l1-extraction-pages.ts"
+          "shell": "bun run cat smart-base:l1-extraction:pages"
         },
         "x-install": {
           "none": true
@@ -2254,6 +2344,13 @@
         "format": "uri",
         "description": "An absolute http(s) URL",
         "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+      },
+      "WorkbookPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A repository path to a spreadsheet workbook.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/WorkbookPath"
       }
     }
   }

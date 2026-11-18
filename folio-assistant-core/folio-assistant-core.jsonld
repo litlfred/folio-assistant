@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f1f3f0ca8bf9a664ccf5216c0ff3e35da82eb9db",
-  "sourceCommitSha": "f1f3f0ca8bf9a664ccf5216c0ff3e35da82eb9db",
-  "sourceTree": "859e4592e832b905d2ee98471122fc546a1eb00f",
-  "sourceCommitAt": "2026-11-17T20:36:53+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1d9a41d22d76c6fbdf763550d7bf8b16a3e9207c",
+  "sourceCommitSha": "1d9a41d22d76c6fbdf763550d7bf8b16a3e9207c",
+  "sourceTree": "5c8e19b257a159401033b2e5387238973d9601dd",
+  "sourceCommitAt": "2026-11-18T21:44:46+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -387,7 +387,7 @@
     "Role": 4,
     "Subgraph": 32,
     "Asset": 4,
-    "Tool": 30,
+    "Tool": 31,
     "Schema": 17,
     "SoftwareLibrary": 22
   },
@@ -611,7 +611,7 @@
       "name": "document-authoring",
       "title": "document-authoring",
       "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
-      "instructionLines": 92,
+      "instructionLines": 114,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
       "hasInstructions": true,
@@ -664,7 +664,7 @@
       "name": "document-publishing",
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
-      "instructionLines": 188,
+      "instructionLines": 212,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
@@ -719,7 +719,7 @@
       "title": "Block actions: [edit] and [feedback] on every block",
       "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
       "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
-      "instructionLines": 154,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -732,7 +732,7 @@
       "title": "Folio content lifecycle and evidence appraisal",
       "description": "The content-folio half of the content-lifecycle skills (the harness's content-feedback, content-review, content-test, content-validate and evidence-appraisal; this layer's content-plan, content-author, content-publish and content-retire): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules.",
       "instructionsPath": "skills/content/folio-document-adapter/folio-content-lifecycle.md",
-      "instructionLines": 59,
+      "instructionLines": 69,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -926,7 +926,7 @@
       "title": "Figure rebuild: a figure is data, not a picture",
       "description": "Turn a figure into a computable diagram: every figure of a source publication when a folio is built from its L1 entry, and any hand-drawn figure in a folio, an IG or a demonstrator that is redrawn from a source. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source, and the rebuild keeps the original's layout. The figure-coverage check counts what is missing and what is still only a picture.",
       "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
-      "instructionLines": 339,
+      "instructionLines": 370,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -18384,6 +18384,66 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/as-drawn-svg.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "as-drawn-svg",
+      "title": "Figure redrawn as drawn, from its PDF vector layer",
+      "description": "Draw a figure as SVG from `as-drawn-figure/v1` data: the drawing `scripts/pdf-as-drawn.py` transcribes from the source PDF's vector layer (every path, clip, text run and image in the L1 figure region, at its printed position, colour and size). The SVG keeps the original's layout and style; labels are SVG text held to their printed width, and labels that name a glossary concept link to it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/as-drawn-svg.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "data",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "An as-drawn-figure/v1 file, or a directory of them.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "out-dir",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write as-drawn-fig-<N>.svg.",
+            "required": true,
+            "arg": {
+              "flag": "--out-dir"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing; fail when data is invalid or an SVG is stale.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "svg",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One SVG per data file, named after the figure labels it draws."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/bibliography-page.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "bibliography-page",
@@ -18734,7 +18794,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "diig-phases-svg",
       "title": "DIIG phases, steps and resources chart",
-      "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept.",
+      "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; a tile whose data names a link (URL, glossary concept or who-iris library entry) is an SVG link titled with the tile's name, and a tile with none is drawn without one.",
       "install": {
         "none": true
       },
@@ -18760,13 +18820,22 @@
             "arg": {
               "flag": "--out"
             }
+          },
+          {
+            "name": "library-base",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
+            "description": "Where who-iris library entry pages are published, ending in `/`; defaults to the WorldHealthOrganization who-iris site.",
+            "required": false,
+            "arg": {
+              "flag": "--library-base"
+            }
           }
         ],
         "outputs": [
           {
             "name": "svg",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile."
+            "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile, inside a titled `<a>` when the tile links."
           }
         ]
       },
@@ -20506,6 +20575,10 @@
       "module": "schemas/figure-data.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-schemas",
       "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/AsDrawnFigureSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/AsDrawnImageSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/AsDrawnShapeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/AsDrawnTextSchema.schema.json",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/DiigPhasesAdaptationSchema.schema.json",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/DiigPhasesFigureSchema.schema.json",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/SmartGuidelinesApproachFigureSchema.schema.json"

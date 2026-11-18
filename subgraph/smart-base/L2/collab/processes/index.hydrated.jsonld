@@ -10,10 +10,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dth-authoring.svg",
       "description": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), structured drafting (M3 zero draft), working-group feedback (M4), public comment (M5 released, M6 dispositioned), and finalise and publish (M7).\nMilestones are recorded checkpoints, not gates: each is written as a note on the handbook's epic bean (which milestone, when, evidence), so the site can show stage and progress. Review runs beside drafting as QA, as in smart-guideline-end-to-end.bpmn.\nStructured drafting uses the smart-base DAK block kinds for personas, scenarios, processes, decisions, data elements, indicators and requirements, and each track calls Process_L2ComponentEditReview, as l2-dak-authoring.bpmn does. Contributor feedback from the contributor log sheet and from GitHub pc: comments lands in one review store.\nHandbooks ingested from a published WHO PDF (PHC, SC, PC, SFP) enter at stage 1 with their library built and their outline given by the publication; dth-hrh, authored natively, is the pilot. Steps with no platform subprocess are marked as placeholders in their documentation.\nEmpirical content (figures, statistics, country examples) stays as cited narrative blocks and never enters formal content.",
       "enforcement": "advisory",
-      "flowCount": 53,
+      "flowCount": 55,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
       "name": "DTH authoring",
-      "nodeCount": 45,
+      "nodeCount": 47,
       "sourcePath": "L2/collab/processes/dth-authoring.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L2/collab/processes/dth-authoring.bpmn",
       "startNode": "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested",
@@ -446,6 +446,22 @@
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_Published"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_L3Built"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
@@ -554,6 +570,26 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
         "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_DakL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+      "incoming": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a",
+      "name": "The DAK content as a FHIR IG",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "requires": [
+        "http://smart.who.int/base/skill/smart-guideline-end-to-end",
+        "http://smart.who.int/base/skill/guideline-gap-report"
       ],
       "touchesWorkPlan": false
     },
@@ -695,6 +731,20 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_L3Built",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+      "incoming": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3b",
+      "name": "IG built",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_Published",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
@@ -785,7 +835,8 @@
       "nodeKind": "parallel",
       "outgoing": [
         "http://smart.who.int/base/process/Process_DthAuthoring#flow/F35",
-        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F36"
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F36",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F_L3a"
       ],
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
