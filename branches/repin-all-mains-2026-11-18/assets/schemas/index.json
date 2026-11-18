@@ -18090,6 +18090,17 @@
           "links": {
             "string": "https://zod.dev/api#strings"
           }
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The declared `version`, whose major the layer's `@base` is minted under (`instanceKgBase`)."
         }
       ],
       "extendsNames": [],
