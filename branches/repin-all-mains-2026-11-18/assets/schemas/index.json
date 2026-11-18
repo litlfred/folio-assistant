@@ -558,6 +558,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/content/lang-text.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "lang-text.test",
+      "graphNode": "undeclared",
+      "summary": "A glossary label or definition may be a string or a language map",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/content/lang-text.ts",
+      "instance": "cat-harness-tools",
+      "name": "lang-text",
+      "graphNode": "undeclared",
+      "summary": "A glossary label or definition that may be translated.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/content/narrative.test.ts",
       "instance": "cat-harness-tools",
       "name": "narrative.test",
@@ -21800,6 +21816,21 @@
       "refs": [
         "cat-harness-tools/schemas/content/sticky-contribution.ts#Initiation"
       ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/content/lang-text.ts#LangText",
+      "name": "LangText",
+      "module": "cat-harness-tools/schemas/content/lang-text.ts",
+      "kind": "type-alias",
+      "doc": "A label or definition as `folio-glossary/v1` allows it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "source": "typescript",

@@ -1,116 +1,116 @@
   writer skip: ON (records of 5b7aaa32f489, 17 writer(s))
   ig-index:build runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json) [decided in 0.0s]
-  ran ig-index:build (reuse off) [17.1s]
+  ran ig-index:build (reuse off) [15.7s]
   uml:overview runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/folio-assistant-core/glossary/index.md) [decided in 0.0s]
-  smart-base:document-kinds runs: not recorded: the run reached a traced input site (layer-output: build/layers/smart-base/fhir-artifact-index/index.json) [decided in 0.6s]
-  ran smart-base:document-kinds (reuse off) [1.2s]
-qa:refresh: kg:audit:all runs: cat-harness-tools changed (+10 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, fhir-harness/fhir-harness.json, folio-assistant-core/package.json, and 3 others)
+  smart-base:document-kinds runs: not recorded: the run reached a traced input site (layer-output: build/layers/smart-base/fhir-artifact-index/index.json) [decided in 0.7s]
+  ran smart-base:document-kinds (reuse off) [1.4s]
+qa:refresh: kg:audit:all runs: cat-harness-tools changed (+12 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 5 others)
 qa:refresh: kg:detangle runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/detangle/bootstrap-tools/skills.detangle.json)
 qa:refresh: translation:block-qa runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/block-qa/docs/source/process-crdm-methodology/agent-skills-and-tooling.qa.json)
 qa:refresh: qa-sweep:docs runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/block-qa/docs/source/process-crdm-methodology/agent-skills-and-tooling.qa.json)
   voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
-  subgraph:jsonld runs: not recorded: the trace is 829391767 bytes, more than 536870912 [decided in 1.9s]
-qa:refresh: check:l1-complete runs: cat-harness-tools changed (+24 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/pipeline/repo-root.ts, cat-harness-tools/schemas/constraints.ts, cat-harness-tools/schemas/kg/remote-mount.ts, and 17 others)
+  subgraph:jsonld runs: not recorded: the trace is 829391767 bytes, more than 536870912 [decided in 3.3s]
+qa:refresh: check:l1-complete runs: cat-harness-tools changed (+26 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/pipeline/repo-root.ts, cat-harness-tools/schemas/constraints.ts, cat-harness-tools/schemas/content, and 19 others)
 qa:refresh: p2:refusals runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)
-qa:refresh: lsi:index:cat-harness:skills runs: cat-harness-tools changed (+17 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lsi.ts, cat-harness-tools/scripts/viewer-declarations.ts, and 10 others)
-qa:refresh: lsi:index:library runs: cat-harness-tools changed (+14 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lsi.ts, cat-harness-tools/scripts/viewer-declarations.ts, and 7 others)
+qa:refresh: lsi:index:cat-harness:skills runs: cat-harness-tools changed (+19 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 12 others)
+qa:refresh: lsi:index:library runs: cat-harness-tools changed (+16 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 9 others)
 qa:refresh: lsi:audit runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/lsi/cat-harness/docs.lsi.json)
 qa:refresh: docs:pages runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)
-qa:refresh: viewer:nav:audit runs: cat-harness-tools changed (+23 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/nav-label.ts, and 16 others)
+qa:refresh: viewer:nav:audit runs: cat-harness-tools changed (+25 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, and 18 others)
 qa:refresh: eval:crdm-detect runs: not recorded: the run reached a traced input site (test-run: clock)
-qa:refresh: root-scan-census runs: cat-harness-tools changed (+83 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/bean-store-read.ts, cat-harness-tools/scripts/build-instance-site.ts, cat-harness-tools/scripts/check-bean-parent-prose.ts, and 76 others)
+qa:refresh: root-scan-census runs: cat-harness-tools changed (+89 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/bean-store-read.ts, cat-harness-tools/scripts/build-instance-site.ts, and 82 others)
 qa:refresh: skill:register runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/concepts/folio-assistant-core/glossary/index.md)
 qa:refresh: term:mapping runs: not recorded: the run reached a traced input site (check-term-mapping: clock)
-qa:refresh: check:harness-state runs: beans/defs changed (+200 more: beans/defs/folio-assistant-95e7--smart-base-move-skill-tool-source-out-of-github-an.md, beans/defs/folio-assistant-hhkw--smart-base-delete-the-dead-parts-of-github-skills.md, beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md, cat-harness-tools, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/pipeline/qa-checkers-uses.ts, and 193 others)
-qa:refresh: check:wireframes runs: cat-harness-tools changed (+13 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs/wireframes/index.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/check-wireframes.ts, cat-harness-tools/scripts/lib, and 6 others)
-qa:refresh: check:source-licence runs: .github/scripts/cqg_judge.py changed (+56 more: .github/workflows, .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, and 49 others)
-qa:refresh: check:layout-norms runs: cat-harness-tools changed (+12 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness/docs, fhir-harness/fhir-harness.json, and 5 others)
-qa:refresh: check:rendered-labels runs: .github/workflows changed (+54 more: cat-harness-tools, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/journeys, cat-harness-tools/scripts/journeys/assets, and 47 others)
-qa:refresh: check:lane-documentation runs: .github/scripts/cqg_judge.py changed (+63 more: .github/workflows, .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, and 56 others)
-qa:refresh: check:methodology-evidence runs: cat-harness-tools changed (+38 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, and 31 others)
-qa:refresh: check:avatar-coverage runs: cat-harness-tools changed (+10 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, fhir-harness/fhir-harness.json, folio-assistant-core/package.json, and 3 others)
-qa:refresh: check:unlinked-beans runs: beans/defs changed (+29 more: beans/defs/folio-assistant-95e7--smart-base-move-skill-tool-source-out-of-github-an.md, beans/defs/folio-assistant-hhkw--smart-base-delete-the-dead-parts-of-github-skills.md, beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md, cat-harness-tools, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, and 22 others)
+qa:refresh: check:harness-state runs: beans/defs changed (+209 more: beans/defs/folio-assistant-95e7--smart-base-move-skill-tool-source-out-of-github-an.md, beans/defs/folio-assistant-hhkw--smart-base-delete-the-dead-parts-of-github-skills.md, beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md, cat-harness-tools, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/pipeline/qa-checkers-uses.ts, and 202 others)
+qa:refresh: check:wireframes runs: cat-harness-tools changed (+15 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs/wireframes/index.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/check-wireframes.ts, and 8 others)
+qa:refresh: check:source-licence runs: .github/scripts/cqg_judge.py changed (+58 more: .github/workflows, .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, and 51 others)
+qa:refresh: check:layout-norms runs: cat-harness-tools changed (+14 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 7 others)
+qa:refresh: check:rendered-labels runs: .github/workflows changed (+56 more: cat-harness-tools, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/journeys, and 49 others)
+qa:refresh: check:lane-documentation runs: .github/scripts/cqg_judge.py changed (+65 more: .github/workflows, .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, and 58 others)
+qa:refresh: check:methodology-evidence runs: cat-harness-tools changed (+40 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, and 33 others)
+qa:refresh: check:avatar-coverage runs: cat-harness-tools changed (+12 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 5 others)
+qa:refresh: check:unlinked-beans runs: beans/defs changed (+31 more: beans/defs/folio-assistant-95e7--smart-base-move-skill-tool-source-out-of-github-an.md, beans/defs/folio-assistant-hhkw--smart-base-delete-the-dead-parts-of-github-skills.md, beans/defs/folio-assistant-kjea--smart-base-move-21-skill-i-o-contracts-from-schema.md, cat-harness-tools, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, and 24 others)
 qa:refresh: kg:export runs: not recorded: git status is not a read-only command the cone replays
-qa:refresh: check:reference-direction runs: .github/workflows changed (+4728 more: .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, README.md, and 4721 others)
-qa:refresh: audit:coverage runs: .github/workflows changed (+84 more: .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, beans/defs, and 77 others)
-qa:refresh: readme:subgraphs runs: cat-harness-tools changed (+10 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, fhir-harness/fhir-harness.json, folio-assistant-core/package.json, and 3 others)
-  ran subgraph:jsonld (reuse off) [35.5s]
+qa:refresh: check:reference-direction runs: .github/workflows changed (+4739 more: .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, README.md, and 4732 others)
+qa:refresh: audit:coverage runs: .github/workflows changed (+87 more: .github/workflows/cancel-on-close.yml, .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, beans/defs, and 80 others)
+qa:refresh: readme:subgraphs runs: cat-harness-tools changed (+12 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 5 others)
+  ran subgraph:jsonld (reuse off) [47.3s]
   library:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html) [decided in 0.1s]
   library:keywords runs: its script, imports, audited environment or tools changed [decided in 0.1s]
-  ran library:keywords (reuse off) [333.2s]
+  ran library:keywords (reuse off) [385.8s]
   voices:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json) [decided in 0.1s]
-  ran voices:viz (reuse off) [1.0s]
+  ran voices:viz (reuse off) [1.2s]
   theme:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran theme:viz (reuse off) [0.7s]
-  uploads:viz runs: cat-harness-tools changed (+26 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/pipeline/repo-root.ts, cat-harness-tools/schemas/constraints.ts, cat-harness-tools/schemas/kg/remote-mount.ts, and 19 others) [decided in 1.4s]
-  ran uploads:viz (reuse off) [3.8s]
-  document-kinds:viz runs: cat-harness-tools changed (+18 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/nav-label.ts, and 11 others) [decided in 0.0s]
-  ran document-kinds:viz (reuse off) [0.7s]
-  skills:docs runs: not recorded: the trace is 1137907066 bytes, more than 536870912 [decided in 0.1s]
-  ran skills:docs (reuse off) [16.2s]
+  ran theme:viz (reuse off) [0.8s]
+  uploads:viz runs: cat-harness-tools changed (+28 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/pipeline/repo-root.ts, cat-harness-tools/schemas/constraints.ts, cat-harness-tools/schemas/content, and 21 others) [decided in 2.0s]
+  ran uploads:viz (reuse off) [5.4s]
+  document-kinds:viz runs: cat-harness-tools changed (+20 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, and 13 others) [decided in 0.0s]
+  ran document-kinds:viz (reuse off) [0.9s]
+  skills:docs runs: not recorded: the trace is 1137907066 bytes, more than 536870912 [decided in 0.2s]
+  ran skills:docs (reuse off) [25.5s]
   node-kinds runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran node-kinds (reuse off) [1.1s]
+  ran node-kinds (reuse off) [1.2s]
   node-kind:pages runs: main's copy from 5b7aaa32f489 builds nothing at cat-harness/docs/en/cat-harness/node-kind-index/, cat-harness/docs/en/cat-harness/bean/, cat-harness/docs/en/cat-harness/software-library/, cat-harness/docs/en/cat-harness/sme-case-verdict/, cat-harness/docs/en/cat-harness/test-data-fixed/, cat-harness/docs/en/cat-harness/test-data-generated/, cat-harness/docs/en/cat-harness/cat-harness-declaration/, cat-harness/docs/en/cat-harness/document-kind/, cat-harness/docs/en/cat-harness/document-kind-coverage/, cat-harness/docs/en/cat-harness/work-plan/, cat-harness/docs/en/cat-harness/qa-script/, cat-harness/docs/en/cat-harness-tools/qa-attestations/, cat-harness/docs/en/folio-assistant-core/changeset/, cat-harness/docs/en/folio-assistant-core/public-comment/, declared since [decided in 0.0s]
-  ran node-kind:pages (reuse off) [12.8s]
-  bibliography:page runs: cat-harness-tools changed (+13 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/viewer-declarations.ts, fhir-harness/fhir-harness.json, and 6 others) [decided in 0.1s]
-  ran bibliography:page (reuse off) [1.8s]
+  ran node-kind:pages (reuse off) [16.5s]
+  bibliography:page runs: cat-harness-tools changed (+15 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 8 others) [decided in 0.2s]
+  ran bibliography:page (reuse off) [2.2s]
   ig-ast:pages runs: not recorded: git ls-remote is not a read-only command the cone replays [decided in 0.0s]
   ran ig-ast:pages (reuse off) [0.9s]
   smart:pages runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json) [decided in 0.0s]
   ran smart:pages (reuse off) [0.8s]
   jsonld:contexts runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran jsonld:contexts (reuse off) [2.6s]
+  ran jsonld:contexts (reuse off) [3.0s]
   smart-base:pages runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json) [decided in 0.0s]
   smart-trust:pages runs: not recorded: the run reached a traced input site (layer-output: smart-trust/fhir-artifact-index/index.json) [decided in 0.0s]
   smart-trust-phw:pages runs: not recorded: the run reached a traced input site (layer-output: smart-trust-phw/fhir-artifact-index/index.json) [decided in 0.0s]
-  ran smart-trust-phw:pages (reuse off) [0.6s]
-  ran smart-trust:pages (reuse off) [0.7s]
-  ran smart-base:pages (reuse off) [0.8s]
-  smart-base:l1-extraction:pages runs: cat-harness-tools changed (+19 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/pipeline/repo-root.ts, cat-harness-tools/schemas/constraints.ts, cat-harness-tools/schemas/kg/remote-mount.ts, and 12 others) [decided in 0.0s]
-  ran smart-base:l1-extraction:pages (reuse off) [0.7s]
+  ran smart-trust-phw:pages (reuse off) [0.8s]
+  ran smart-trust:pages (reuse off) [0.9s]
+  ran smart-base:pages (reuse off) [0.9s]
+  smart-base:l1-extraction:pages runs: cat-harness-tools changed (+21 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/pipeline/repo-root.ts, cat-harness-tools/schemas/constraints.ts, cat-harness-tools/schemas/content, and 14 others) [decided in 0.0s]
+  ran smart-base:l1-extraction:pages (reuse off) [0.8s]
   tools:viz runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.0s]
-  ran tools:viz (reuse off) [39.0s]
-  auto:docs runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html) [decided in 0.0s]
-  ran auto:docs (reuse off) [7.2s]
-  web-apps:build runs: cat-harness-tools changed (+17 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/nav-label.ts, and 10 others) [decided in 0.0s]
-  ran web-apps:build (reuse off) [0.4s]
-  openapi:viz runs: cat-harness-tools changed (+13 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/navbar.ts, cat-harness-tools/scripts/page-layout.ts, and 6 others) [decided in 0.0s]
+  ran tools:viz (reuse off) [59.6s]
+  auto:docs runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html) [decided in 0.1s]
+  ran auto:docs (reuse off) [9.9s]
+  web-apps:build runs: cat-harness-tools changed (+19 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, and 12 others) [decided in 0.0s]
+  ran web-apps:build (reuse off) [0.5s]
+  openapi:viz runs: cat-harness-tools changed (+15 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/layer-output.ts, and 8 others) [decided in 0.0s]
   ran openapi:viz (reuse off) [0.2s]
   schema:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html) [decided in 0.0s]
-  ran schema:viz (reuse off) [3.1s]
+  ran schema:viz (reuse off) [3.3s]
   methodologies:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json) [decided in 0.0s]
-  ran methodologies:viz (reuse off) [2.2s]
+  ran methodologies:viz (reuse off) [2.5s]
   external-schemas:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran external-schemas:viz (reuse off) [9.1s]
+  ran external-schemas:viz (reuse off) [10.2s]
   subscriptions:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran subscriptions:viz (reuse off) [0.2s]
-  docs:pages runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.2s]
-  ran docs:pages (reuse off) [2.2s]
+  ran subscriptions:viz (reuse off) [0.3s]
+  docs:pages runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.3s]
+  ran docs:pages (reuse off) [3.0s]
   docs:harness runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json) [decided in 0.0s]
-  ran docs:harness (reuse off) [3.2s]
+  ran docs:harness (reuse off) [3.8s]
   navbar:include runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json) [decided in 0.0s]
   ran navbar:include (reuse off) [0.2s]
   kind:table runs: its script, imports, audited environment or tools changed [decided in 0.0s]
   ran kind:table (reuse off) [0.2s]
   avatars:css runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran avatars:css (reuse off) [0.1s]
+  ran avatars:css (reuse off) [0.2s]
   themes:css runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/site-chrome/assets/css/themes.css) [decided in 0.0s]
-  ran themes:css (reuse off) [0.6s]
-  folio:viz runs: cat-harness-tools changed (+20 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 13 others) [decided in 0.0s]
-  ran folio:viz (reuse off) [0.8s]
-  kg:viewer runs: cat-harness-tools changed (+18 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/nav-label.ts, and 11 others) [decided in 0.1s]
-  ran kg:viewer (reuse off) [0.5s]
+  ran themes:css (reuse off) [0.7s]
+  folio:viz runs: cat-harness-tools changed (+22 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/docs, cat-harness-tools/docs/wireframes, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, and 15 others) [decided in 0.0s]
+  ran folio:viz (reuse off) [0.9s]
+  kg:viewer runs: cat-harness-tools changed (+20 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/package.json, cat-harness-tools/schemas/content, cat-harness-tools/schemas/kg/remote-mount.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/lib, and 13 others) [decided in 0.0s]
+  ran kg:viewer (reuse off) [0.6s]
   state:visualizer runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/validators/cat-harness/index.html) [decided in 0.1s]
-  ran state:visualizer (reuse off) [16.2s]
+  ran state:visualizer (reuse off) [17.9s]
   site:viz runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
-  ran site:viz (reuse off) [2.0s]
+  ran site:viz (reuse off) [1.9s]
   slice:sqlite runs: main's copy from 5b7aaa32f489 builds nothing at cat-harness/docs/assets/slices/, declared since [decided in 0.0s]
-  ran slice:sqlite (reuse off) [11.0s]
+  ran slice:sqlite (reuse off) [14.8s]
   render:bpmn runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/img/workflows/render-kg-to-github-pages.svg) [decided in 0.0s]
-  ran render:bpmn (reuse off) [11.3s]
+  ran render:bpmn (reuse off) [13.8s]
   processes:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html) [decided in 0.0s]
-  ran processes:viz (reuse off) [8.3s]
+  ran processes:viz (reuse off) [11.3s]
   fsh-guts:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html) [decided in 0.0s]
-  ran fsh-guts:viz (reuse off) [1.8s]
+  ran fsh-guts:viz (reuse off) [2.2s]
   kind:json-schemas runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran kind:json-schemas (reuse off) [1.1s]
+  ran kind:json-schemas (reuse off) [1.2s]
