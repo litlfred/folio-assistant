@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2402.02172v5/blocks/figure-vfig-p004",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p004.png",
+  "pageStart": 4,
+  "pageEnd": 4,
+  "narrative": [
+    {
+      "text": "Figure 2: CodeAgent pipeline scenario across review roles, and Figure 3: Architecture of the Self-Improving Chain-of-Thought with QA-Checker.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "antigravity",
+        "model": "gemini-2.5-pro"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2402.02172v5/sections/sec-003",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2402.02172v5",
+  "provenance": "ingested"
+}

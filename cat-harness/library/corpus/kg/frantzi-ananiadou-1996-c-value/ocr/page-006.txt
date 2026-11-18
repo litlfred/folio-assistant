@@ -1,0 +1,130 @@
+of compound words. They extend the measure
+for three words in a different way than that de-
+fined by (Fano, 1961), and no mention is given to
+how their formulas would be extended for word-
+sequences of length more that three. They do not
+consider nested collocations.
+
+(Smadja, 1993), extracts uninterrupted as well
+as interrupted collocations (predicative relations,
+rigid noun phrases and phrasal templates). The
+system performs very well under two conditions:
+the corpus must be large, and the collocations we
+are interested in extracting, must have high fre-
+quencies.
+
+(Nagao and Mori, 1994), extract collocations
+using the following rule: longer collocations and
+frequent, collocations are more important. An im-
+provement to this algorithm is that of (Ikchara et
+al., 1995). They proposed an algorithm for the
+extraction of uninterrupted as well as interrupted
+collocations from Japanese corpora. The extrac-
+tion involves the following conditions: longer col-
+locations have priority, more frequent colloca-
+tions have priority, substrings are extracted only
+if found in other places by themselves.
+
+Finally, the Dictionary of English Collocations,
+(Kjellmer, 1994), includes n-grams appearing even
+only once. For cach of them its exclusive fre-
+quency (number of occurrences the n-gram ap-
+peared by itself), its inclusive frequency (number
+of times it appeared in total) and its relative fre-
+quency (the ratio of its actual frequency to its ex-
+pected frequency), is given.
+
+6 Conclusions and Future Work
+
+As collocation identification (either in general lan-
+guage or in sublanguages) finds many applica-
+tions, the need to automate, as much as possible,
+that process increases. Automation is helped by
+the recent availability of large scale textual cor-
+pora.
+
+In this paper we dealt with the extraction of un-
+interrupted and interrupted collocations focusing
+on those we call nested collocations (those being
+substrings of other collocations). A method for
+their extraction was proposed.
+
+In future, we plan to extend our algorithm to
+include predicative relations. We are going to in-
+corporate linguistic knowledge to improve the re-
+sults. Finally, this algorithm will be applied for
+term extraction.
+
+7 Acknowledgements
+
+We thank our anonymous reviewers for their com-
+ments.
+
+46
+
+References
+
+Ananiadou, S.; McNaught, J. 1995. Terms are
+not alone: term choice and choice terms. In
+Journal of Aslib Proceedings, vol.47,no.2:47- 60.
+
+Brill, E. 1992. A simple rule-based part of speech
+tagger. In Proc. of the Third Conference of Ap-
+plied Natural Language Processing, ACL, pages
+152-155.
+
+Choucka, Y., Klein, T. and Neuwitz, FE. 1983.
+Automatic retrieval of frequent idiomatic and
+collocational expressions in a large corpus. In
+Journal of Literary and Linguistic Computing,
+4:34 38.
+
+Church, K.W. and Hanks, P. 1990. Word Associ-
+ation Norms, Mutual Information, and Lexicog-
+raphy. In Computational Linguistics, 16:22 29.
+
+Frawley, W. 1988. Relational models and meta-
+science. In Evens, M. (ed.) Relational models
+of the lexicon, Cambridge:Cambridge Univer-
+sity Press, 335-372.
+
+Nagao, M. and Mori, S. 1994. A new Method of
+N-gram Statistics for Large Number of n and
+Automatic Extraction of Words and Phrases
+from Large Text Data of Japanese. In Proc.
+of COLING, pages 611--615.
+
+Fano, R.M. 1961. In Transmission of informa-
+tion: a statistical theory of communications,
+M.LT. Press, New York.
+
+Ikehara, §.; Shirai, 5. and Kawaoka, T. 1995. Au-
+tomatic Extraction of Collocations from Very
+Large Japanese Corpora using N-gram Statis-
+tics. In Transactions of Information Processing
+Society of Japan, 11:2584-2596. (in Japanose).
+
+Kim, P.K. and Cho, Y.K. 1993. Indexing Com-
+pound Words from Korean Texts using Mutual
+Information. In Proc. of NEPRS, pages 85-92.
+
+Kita, K.; Kato, ¥.; Omoto, ‘T. and Yano, Y. 1994.
+A Comparative Study of Automatic Extraction
+of Collocations from Corpora: Mutual Informa-
+tion vs. Cost, Criteria, In Journal of Natural
+Language Processing, 1:21-33.
+
+Kjellmer, G. 1994. A Dictionary of FEinglish Col-
+locations, Clarendon Press, Oxford.
+
+McHliece, R.J. 1977. The Theory of Information
+and Coding, Addison Wesley, London.
+
+Sinclair, J. 1991. In J. Sinclair and R. Carter, ed-
+itors, Corpus,Concordance, Collocation. Oxford
+University Press, Oxford, England.
+
+Smnadja, F. 1993. Retrieving Collocations from
+Text: Xtract. In Computational Linguistics,
+
+19:143--177.
