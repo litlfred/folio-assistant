@@ -1,0 +1,122 @@
+3 Our approach ~ The Algorithm
+
+We call the extracted strings candidate celloca-
+tions rather than collocations, since what we ac-
+cept as collocations depends on the application.
+Tt is the human judge that, will give the final de-
+cision. This is the reason we consider the method
+as semi-automatic.
+
+Let. us consider the string “New York Stock Ex-
+change”. Within this string, that has already been
+extracted as a candidate collocation, there are two
+substrings that should be extracted, and one that:
+should not. ‘The issue is how to distinguish when
+a substring of a candidate collocation is a candi-
+date collocation, and when it is not. Kita et al.
+assume that the substring is a candidate colloca-
+tion if it appears by itself (with a relatively high
+frequency). ‘Lo this we add that:
+
+the substring appears in more than one
+candidate collocations, even if it does not
+appear by itself.
+
+“Wall Street”, for example, appears 30 times in 6
+longer candidate collocations, and 8 times by it-
+self. If we considered only the number of times
+i appears by itself, it, would get a low value as
+a candidate collocation. We have to consider the
+number of times it appears within longer candi-
+date collocations. A second factor is the number
+of these longer collocations. ‘Uhe greater this num-
+ber is, the better the string is distributed, aud the
+greater its value as a candidate collocation. We
+make the above conditions more specific aud give
+the measure for a string being a candidate collo-
+cation. ‘The measure is called C-value and the fac-
+tors involved are the string’s frequency of occur-
+rence in the corpus, its frequency of occurrence in
+longer candidate collocations, the number of these
+longer candidate collocations and its length. Re-
+garding its length, we consider longer collocations
+to be “more important” than shorter appearing
+with the same frequency. More specifically, if |a|
+is the length? of the string a, its C-value is analo-
+gous to ja] —1. The Lis given since the shortest
+collocations are of length 2, and we want them to
+be “of importance” 2-1=1.
+
+More specifically:
+
+1. If @ has the same frequency with a longer
+candidate collocation that contains a, it is
+assigned C-valuwe(a)=0 i.c. is not a colloca-
+tion. It is straightforward that in this case a
+appears in one only longer candidate colloca-
+tion.
+
+"We use the same notation with (Kita et al., 1994).
+
+43
+
+2. If n(a) is the number of times a appears, and
+a is not a substring of an already extracted
+candidate collocation, then a is assigned
+
+C-value(a) = (jal ~ L)n(a) (2)
+
+3. Tf @ appears as a substring in one or more
+collocations (not with the same frequency),
+then it is assigned
+
+é
+C-value(a) = (Jal -- 1)(n(a) — Ha) (3)
+c(a)
+where ¢(a) is the total frequency of a in longer
+candidate collocations and c(a) the number
+of those candidate collocations. This is the
+most, complicate case.
+
+‘The importance of the number of occurrences
+of a string in a longer string is illustrated
+with the denominator of the fraction in iqua-
+tion 3. ‘The bigger the number of strings a
+substring appears in, the smaller the fraction
+
+total frequency o, OCCUPTETECE .
+- the wer the C-
+number OF OCCUTTERCES , biggc T the C
+
+value of the string.
+
+The algorithm for the extraction of the candi-
+date collocations follows:
+
+extract the n-grams
+decide on the lowest. frequency of collocations
+remove the n-grains below this frequency
+for all u-grams @ of maximum length
+calculate their C-value= (n — L)n(a)
+for all substrings b
+revise t(b)
+revise ¢(b)
+for all smaller n-grams a in descending order
+if (total frequency of a)=(frequency of a in
+
+a jonger string)
+ais NO'T a collocation
+else
+if a appears for the first. time
+C-values (n — 1)n(a)
+else
+C-valuc= (n — 1)(n(a) — we )
+for all substrings b
+revise t(b)
+revise ¢(b)
+
+‘The above algorithm computes the C-value of
+each string in an incremental way. ‘hat is, for
+each string a, we keep a tuple (n(a), t(a), e(a)) and
+we revise the t(a) and c(a) values. For cach n-
+gram 6, every time it is found in a longer extracted
