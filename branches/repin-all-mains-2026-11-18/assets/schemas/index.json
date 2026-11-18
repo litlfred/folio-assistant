@@ -68399,6 +68399,21 @@
       "exported": false
     },
     {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#Clock",
+      "name": "Clock",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-scalar",
+      "doc": "A clock time in a day, `HH:MM`, 24-hour.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "name": "Id",
       "module": "cat-harness-tools/schemas/process/workshop.ts",
@@ -69921,6 +69936,229 @@
       "external": [
         "z"
       ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSchedule",
+      "name": "WorkshopSchedule",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "name": "WorkshopScheduleSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "The days as a calendar: time down the side, a column per track, and joint",
+      "fields": [
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text"
+        },
+        {
+          "name": "intro",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "One paragraph above the days, Markdown."
+        },
+        {
+          "name": "tracks",
+          "type": "z.array(WorkshopScheduleTrackSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "WorkshopScheduleTrackSchema[]"
+        },
+        {
+          "name": "days",
+          "type": "z .array(z.object({ day: z.number().int().min(1), title: Text.optional(), summary: Text.optional(), slots: z.array(Work…",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "z .array(object({ day: number().int().min(1), title: Text.optional(), summary: Text.optional(), slots: array(Work…"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Text",
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlot",
+      "name": "WorkshopScheduleSlot",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "name": "WorkshopScheduleSlotSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "One slot of a day. A `session` sits in one `track`; a `joint` session, a",
+      "fields": [
+        {
+          "name": "start",
+          "type": "Clock",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "end",
+          "type": "Clock",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "kind",
+          "type": "z.enum([\"session\", \"joint\", \"break\", \"logistics\"])",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "track",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Id"
+        },
+        {
+          "name": "module",
+          "type": "ModuleId.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "ModuleId",
+          "doc": "The module the slot teaches, in the track's workshop: the calendar links to its page."
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "type",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "What sort of session (\"Talk\", \"Lab\")."
+        },
+        {
+          "name": "note",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "Who leads it, or what to know (a role, never a name)."
+        },
+        {
+          "name": "sessions",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "Text[]",
+          "doc": "The parts of a joint session, in order (\"P1.1 Welcome\")."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Clock",
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "name": "WorkshopScheduleTrackSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "A track of the schedule: a column of the calendar. `workshop` names the sibling workshop (same layer) whose modules the track's slots name; absent, this workshop.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "workshop",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Id"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
       "source": "zod",
       "exported": true
     },
@@ -164381,6 +164619,134 @@
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
       "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "days",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "intro",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "via": "days",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "via": "tracks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Clock",
+      "via": "end",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Clock",
+      "via": "start",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "track",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "module",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "note",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "sessions",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleSlotSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "type",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "workshop",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopScheduleTrackSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "label",
       "kind": "field",
       "optional": false,
       "array": false
