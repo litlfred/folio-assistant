@@ -371,10 +371,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8aaa238c22d931181a0f1617b3ee99826d377dbb",
-  "sourceCommitSha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
-  "sourceTree": "0f7add0ee08c6af35a0cc2c180a68fe42770c0a3",
-  "sourceCommitAt": "2026-11-18T07:24:05+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0502563e037168e8441aae723640d6dd92d1c862",
+  "sourceCommitSha": "0502563e037168e8441aae723640d6dd92d1c862",
+  "sourceTree": "2ac9d901152dfb34027efcb1b574ba6ef0832cf3",
+  "sourceCommitAt": "2026-11-18T11:10:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -747,7 +747,7 @@
       "title": "Block actions: [edit] and [feedback] on every block",
       "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
       "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
-      "instructionLines": 201,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -19518,6 +19518,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
       "description": "What auditing THIS layer produced, kept so a consumer can tell \"never audited\" from \"audited clean\". Stored on the `qa-reports` branch keyed by commit (`storage`), not committed: a local run writes the working copy here and `.gitignore` keeps it out of the checkout (bean 7mwa) — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every layer that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this layer runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this layer’s nodes, and inheriting them would attribute one layer’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it. Since `storage` was added, a reader resolves it from the store rather than the checkout, so its absence on disk reads as `unknown`, not clean.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/folio-assistant-core/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/qa"
     },
@@ -22355,8 +22356,8 @@
   ],
   "staging": {
     "branch": "repin/all-mains-2026-11-18",
-    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "sha": "0502563e037168e8441aae723640d6dd92d1c862",
     "pr": "3186/merge",
-    "run": "44252142799"
+    "run": "44292207152"
   }
 }
