@@ -1,0 +1,42 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:content-lifecycle",
+    "path": "skills/requirements/content-lifecycle.json"
+  },
+  "source_hash": "sha256:10a56dd9cefbcbff395cc5001984f5b879896b7a32552c1dfc9ed6dc24e3a387",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:content-lifecycle/plan-before-author",
+          "detail": "no skill or capability declares `satisfies: req:content-lifecycle#plan-before-author` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:content-lifecycle/publish-authorized",
+          "detail": "no skill or capability declares `satisfies: req:content-lifecycle#publish-authorized` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}
