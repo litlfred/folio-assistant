@@ -46,7 +46,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "b0d53a928232dc2815bc778015c2eace15e3863f",
+          "ref": "b7ffc049889d6088906ba2b893113d9ad17ef83d",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -57,8 +57,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-18",
-              "ref": "b0d53a928232dc2815bc778015c2eace15e3863f",
-              "evidence": "litlfred 2026-11-18, AskUserQuestion card in session session_01EucfRmkkpUrQ7g7TyYJLgb (litlfred/folio-assistant#3186): answered 'Yes, re-pin (Recommended)' to re-pinning cat-harness-tools from 976c22c4 to b0d53a92 (#2448, the qa-result-links fix)."
+              "ref": "b7ffc049889d6088906ba2b893113d9ad17ef83d",
+              "evidence": "litlfred 2026-11-18, AskUserQuestion cards in session session_01EucfRmkkpUrQ7g7TyYJLgb (litlfred/folio-assistant#3186): answered 'Yes, re-pin' to cat-harness-tools ded69df7 (#2452, qa-result-links), then 'Yes, pin b7ffc049' after main moved to b7ffc049 (#2453-#2455)."
             },
             "standing": {
               "follows": "main",
@@ -75,7 +75,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "5f2558de7820ee6812efc4bf220a1ce6602e8b7e",
+          "ref": "3e8d58d55997bce744c2dce8090ef3d22bfac31d",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -86,8 +86,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-18",
-              "ref": "5f2558de7820ee6812efc4bf220a1ce6602e8b7e",
-              "evidence": "litlfred 2026-11-18, AskUserQuestion card in session session_01EucfRmkkpUrQ7g7TyYJLgb (taking over litlfred/folio-assistant#3186): answered 'Yes, all 6 (Recommended)' to re-pinning cat-harness, cat-harness-tools, folio-assistant-core, smart-base, who-iris and smart-immunizations to their current mains; follows the owner's 06:18Z card '1. Yes, all 10' and ~06:22Z merge manager card 'Yes, re-pin all'. Brings cat-harness#1385 and smart-base#442 (stale .pot fix)."
+              "ref": "3e8d58d55997bce744c2dce8090ef3d22bfac31d",
+              "evidence": "litlfred 2026-11-18, AskUserQuestion card in session session_01EucfRmkkpUrQ7g7TyYJLgb (litlfred/folio-assistant#3186): answered 'Yes, all 3 at main' to re-pinning folio-assistant-core 5f2558de->3e8d58d5, smart-base 0eb6c52e->63daa527 and smart-trust-phw abfd0112->232ee09e after lock:freshness found them behind main."
             },
             "standing": {
               "follows": "main",
@@ -105,7 +105,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "0eb6c52ec3524f9ad6f139a28e1cb3a26882f71e",
+          "ref": "63daa5276909996824d0180082265817bb9e7e58",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -142,8 +142,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-18",
-              "ref": "0eb6c52ec3524f9ad6f139a28e1cb3a26882f71e",
-              "evidence": "litlfred 2026-11-18, AskUserQuestion card in session session_01EucfRmkkpUrQ7g7TyYJLgb (litlfred/folio-assistant#3186): answered 'Yes, all 3 (Recommended)' to re-pinning cat-harness to dc97a6bc, cat-harness-tools to ee3e29ed and smart-base to 0eb6c52e (cat-harness#1387, cat-harness-tools#2442/#2443, smart-base#443: the fixes #3186's full tier needed)."
+              "ref": "63daa5276909996824d0180082265817bb9e7e58",
+              "evidence": "litlfred 2026-11-18, AskUserQuestion card in session session_01EucfRmkkpUrQ7g7TyYJLgb (litlfred/folio-assistant#3186): answered 'Yes, all 3 at main' to re-pinning folio-assistant-core 5f2558de->3e8d58d5, smart-base 0eb6c52e->63daa527 and smart-trust-phw abfd0112->232ee09e after lock:freshness found them behind main."
             }
           }
         }
@@ -195,7 +195,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust-phw",
-          "ref": "abfd0112446db25a77450f9e9686f8981b3f72e6",
+          "ref": "232ee09e0e82880e04eb9075dbf129c36a3bf023",
           "overrides": {
             "smart-trust-phw": {
               "path": "smart-trust-phw",
@@ -215,8 +215,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-18",
-              "ref": "abfd0112446db25a77450f9e9686f8981b3f72e6",
-              "evidence": "litlfred 2026-11-18T06:18Z, AskUserQuestion card in session session_01EucfRn4VQy92PRcwgsDJTH: answered '1. Yes, all 10' to re-pinning cat-harness, cat-harness-tools, folio-assistant-core, smart-base, smart-trust-phw, bootstrap, bootstrap-tools, fhir-harness, folio-assistant-sci and smart-immunizations to their current mains (unblocks cat-harness#1378 graph:check-tools)"
+              "ref": "232ee09e0e82880e04eb9075dbf129c36a3bf023",
+              "evidence": "litlfred 2026-11-18, AskUserQuestion card in session session_01EucfRmkkpUrQ7g7TyYJLgb (litlfred/folio-assistant#3186): answered 'Yes, all 3 at main' to re-pinning folio-assistant-core 5f2558de->3e8d58d5, smart-base 0eb6c52e->63daa527 and smart-trust-phw abfd0112->232ee09e after lock:freshness found them behind main."
             },
             "standing": {
               "follows": "main",
