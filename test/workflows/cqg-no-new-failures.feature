@@ -188,6 +188,27 @@ Feature: Code-quality gates judge a PR by "no new failures compared with main"
     When the PR's bun step passes "old", reports 0 fail, and exits 1
     Then the pull_request verdict exits 1
 
+  @test:test/workflows/cqg-no-new-failures.test.ts::a_sharded_job_is_judged_against_every_shard_of_main's_run,_since_a_test_file_can_change_shards_(#3186)::a_failure_main_has_in_another_shard_is_known,_not_new
+  Scenario: A failure main has in another shard is known, not new
+    Given main's run holds "TypeScript — bun test, shard 1/2", whose bun step fails "moved", and "shard 2/2", which fails nothing
+    When shard 2/2 of the PR fails "moved"
+    Then the pull_request verdict exits 0
+    And the summary contains "(all 2 shards)" and "failing on main too"
+
+  @test:test/workflows/cqg-no-new-failures.test.ts::a_sharded_job_is_judged_against_every_shard_of_main's_run,_since_a_test_file_can_change_shards_(#3186)::a_failure_no_shard_of_main_has_is_still_new
+  Scenario: A failure no shard of main has is still new
+    Given that main run
+    When shard 2/2 of the PR fails "fresh"
+    Then the pull_request verdict exits 1
+    And the summary contains "a.test.ts > grp > fresh"
+
+  @test:test/workflows/cqg-no-new-failures.test.ts::a_sharded_job_is_judged_against_every_shard_of_main's_run,_since_a_test_file_can_change_shards_(#3186)::a_main_run_missing_a_shard's_record_is_not_used,_since_that_shard_could_hold_the_failure
+  Scenario: A main run missing a shard's record is not used
+    Given main's run holds shard 1/2's record, failing "moved", and a shard 2/2 log with no record
+    When shard 2/2 of the PR fails "moved"
+    Then the pull_request verdict exits 1
+    And the summary contains "every shard of"
+
   @test:test/workflows/cqg-no-new-failures.test.ts::Playwright_is_judged_per_spec::a_spec_failing_on_main_too_passes;_a_new_one_fails;_errors_outside_tests_are_could-not-determine
   Scenario: Playwright is judged per spec
     Given main's log for a Playwright step whose spec "home" fails
