@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/skill/platform-gates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/skill/platform-gates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "platform-gates",
+      "title": "The platform's own gates — run what CI will run",
+      "description": "`bun test` passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a `*:check` failure is actually telling you to do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/platform-gates.md",
+      "instructionLines": 237,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates"
+    }
+  ]
+}

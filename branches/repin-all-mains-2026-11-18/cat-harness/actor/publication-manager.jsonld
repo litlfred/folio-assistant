@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/actor/publication-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/actor/publication-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "publication-manager",
+      "actorKind": "person",
+      "title": "Publication Manager",
+      "description": "Release and deployment manager responsible for IG configuration, builds, versioning, publication, and platform updates.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.PublicationManager",
+        "lifecycle": [
+          "publish"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/capability/git-push",
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/capability/jekyll"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/role/publication-manager",
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/role/author"
+      ],
+      "permissionName": [
+        "release-management"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/publication-manager"
+    }
+  ]
+}

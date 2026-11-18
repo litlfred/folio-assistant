@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/smart-base/theme/who-smart-ig.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/theme/who-smart-ig.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/theme/who-smart-ig",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Theme",
+      "title": "WHO SMART IG",
+      "description": "The WHO SMART implementation-guide template's web theme, read off who.template.root's own stylesheet. Colour and geometry only — the top navbar is deliberately not reproduced.",
+      "sourceKind": "themes",
+      "sourcePath": "themes/themes.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-themes"
+    }
+  ]
+}

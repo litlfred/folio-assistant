@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Owner",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/role/iris-cdn-owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner"
+    }
+  ]
+}

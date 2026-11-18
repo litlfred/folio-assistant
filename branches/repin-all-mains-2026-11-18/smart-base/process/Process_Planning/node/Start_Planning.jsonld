@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/smart-base/process/Process_Planning/node/Start_Planning.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "DAK Development Initiated",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
+    }
+  ]
+}

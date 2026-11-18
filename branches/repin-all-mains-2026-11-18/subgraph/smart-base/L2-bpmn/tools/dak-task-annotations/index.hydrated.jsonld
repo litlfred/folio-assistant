@@ -1,0 +1,83 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/dak-task-annotations/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/dak-task-annotations.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Read a DAK document's per-task \"NOTES AND ANNOTATIONS\" from its L1 section text (who-iris), match each numbered item to the BPMN task it describes (by @id, then the label's step number with the file's process letter, then the name), add the persona from the task's lane or pool and the data elements, functional requirements and decision tables the DAK workbooks key to the activity id, and write one `dak-task-annotations/v1` sidecar (`<file>.tasks.json`) beside each BPMN (`smart-base/L2-bpmn/scripts/dak-task-annotations.ts`, schema `smart-base/L2-bpmn/schemas/task-annotations.ts`). Items no task matches are listed for a person to adjudicate; a re-run keeps adjudicated matches. `--report` prints what a set of sidecars covers and never fails. The BPMN is read, never written, and nothing FHIR-specific is involved.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run smart-base/L2-bpmn/scripts/dak-task-annotations.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--prefix"
+            },
+            "description": "The DAK's id prefix: IMMZ, TB, CHUD.",
+            "name": "prefix",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+          },
+          {
+            "arg": {
+              "flag": "--document"
+            },
+            "description": "The L1 library document id the annotations are read from.",
+            "name": "document",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+          },
+          {
+            "arg": {
+              "flag": "--l1"
+            },
+            "description": "A section .md of that document holding the annotations blocks; repeatable.",
+            "name": "l1",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--bpmn"
+            },
+            "description": "A .bpmn file or a directory of them; repeatable.",
+            "name": "bpmn",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--xlsx"
+            },
+            "description": "A DAK workbook (data dictionary, requirements, decision-support logic); repeatable.",
+            "name": "xlsx",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/WorkbookPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One <file>.tasks.json beside each BPMN (with --write).",
+            "name": "sidecars",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "dak-task-annotations",
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "DAK task annotations → BPMN sidecars"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-bpmn/tools/dak-task-annotations",
+  "path": "L2-bpmn/tools/dak-task-annotations/"
+}

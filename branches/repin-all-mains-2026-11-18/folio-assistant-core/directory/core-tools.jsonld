@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/folio-assistant-core/directory/core-tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/folio-assistant-core/directory/core-tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "core-tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
+      ],
+      "description": "The content layer's Tool nodes, such as `folio-changeset`, which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery, never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/folio-assistant-core/directory/core-tools",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-tools"
+    }
+  ]
+}

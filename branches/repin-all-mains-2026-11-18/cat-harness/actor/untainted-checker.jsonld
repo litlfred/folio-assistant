@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/actor/untainted-checker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin/all-mains-2026-11-18",
+    "sha": "8aaa238c22d931181a0f1617b3ee99826d377dbb",
+    "pr": "3186/merge",
+    "run": "44252142799"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/actor/untainted-checker",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "untainted-checker",
+      "actorKind": "agent",
+      "title": "Untainted checker",
+      "description": "The dispatched party that renders an artefact independently — a back-translation, an independent finding — given only what `UntaintedDispatch.checker_sees` allows and nothing that would let it shortcut. It RULES ON NOTHING: its witness carries `result: \"n/a\"` and the intermediate text a reader needs to ask 'on what basis?'. It deliberately does NOT hold `qa-reporting`, and that absence is the point — a checker that emits a verdict is comparing a thing with its own paraphrase of itself, and `check:qa-reviewer-permission` refuses it structurally rather than by convention.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/role/feedback-provider",
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/role/qc-reviewer",
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/role/untainted-checker",
+        "https://litlfred.github.io/folio-assistant/branches/repin-all-mains-2026-11-18/cat-harness/role/back-translator"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-checker"
+    }
+  ]
+}
