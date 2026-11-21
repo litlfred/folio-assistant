@@ -1,0 +1,27 @@
+{
+  "$ref": "#/definitions/IgCacheAction",
+  "definitions": {
+    "IgCacheAction": {
+      "type": "string",
+      "enum": [
+        "status",
+        "restore",
+        "seed",
+        "contribute",
+        "verify",
+        "list",
+        "doctor"
+      ],
+      "description": "An ig-cache verb: restore AST, seed it, or diagnose."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/IgCacheActionSchema.schema.json",
+  "title": "IgCacheActionSchema",
+  "description": "Generated from `IgCacheActionSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1121-2049",
+    "sha": "5a50b145d482ab1243e7179b2f508bccf331bd7f",
+    "pr": "3190/merge",
+    "run": "44948663887"
+  }
+}

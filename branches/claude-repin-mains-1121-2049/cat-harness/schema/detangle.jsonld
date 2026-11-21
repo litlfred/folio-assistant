@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/schema/detangle.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1121-2049",
+    "sha": "5a50b145d482ab1243e7179b2f508bccf331bd7f",
+    "pr": "3190/merge",
+    "run": "44948663887"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/schema/detangle",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "detangle",
+      "title": "detangle",
+      "summary": "Detangling — is this candidate subgraph really a subgraph?",
+      "module": "schemas/kg/detangle.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/detangle"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$ref": "#/definitions/Omission",
+  "definitions": {
+    "Omission": {
+      "type": "object",
+      "properties": {
+        "what": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "what",
+        "why"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/ontology/OmissionSchema.schema.json",
+  "title": "OmissionSchema",
+  "description": "Generated from `OmissionSchema` in L1/schemas/ontology.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1121-2049",
+    "sha": "5a50b145d482ab1243e7179b2f508bccf331bd7f",
+    "pr": "3190/merge",
+    "run": "44948663887"
+  }
+}

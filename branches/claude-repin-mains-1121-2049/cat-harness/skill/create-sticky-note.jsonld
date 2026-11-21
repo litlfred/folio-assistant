@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/skill/create-sticky-note.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1121-2049",
+    "sha": "5a50b145d482ab1243e7179b2f508bccf331bd7f",
+    "pr": "3190/merge",
+    "run": "44948663887"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/package/platform-ui"
+      ],
+      "instructionsPath": "platform-ui/skills/platform-ui/create-sticky-note.md",
+      "instructionLines": 137,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/cat-harness/directory/platform-ui",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note"
+    }
+  ]
+}

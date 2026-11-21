@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/fhir-harness/schema/fhir-artifact-index.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1121-2049/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-artifact-index.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1121-2049",
+    "sha": "5a50b145d482ab1243e7179b2f508bccf331bd7f",
+    "pr": "3190/merge",
+    "run": "44948663887"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "fhir-artifact-index",
+      "title": "fhir-artifact-index",
+      "summary": "The artefact index of a published FHIR Implementation Guide.",
+      "module": "schemas/fhir-artifact-index.ts"
+    }
+  ]
+}
