@@ -1,0 +1,1020 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2507.23348v1",
+ "source": {
+  "file": "arxiv-2507.23348v1.pdf",
+  "sha256": "141ba926efb2b113f614c1d562188a817391f866547cd5236c45b9fdb0b8fd89",
+  "bytes": 1862542,
+  "pages": 19,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-06T19:42:06Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2507.23348",
+   "version": "1",
+   "primary_class": "cs.SE",
+   "stamp_date": "31 Jul 2025"
+  },
+  "doi": null,
+  "title": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+  "authors_raw": "Han Li\u2020",
+  "title_lines": [
+   "SWE-Debate: Competitive Multi-Agent Debate for Software Issue",
+   "Resolution"
+  ],
+  "abstract": "Issue resolution has made remarkable progress thanks to the ad- vanced reasoning capabilities of large language models (LLMs). Recently, agent-based frameworks such as SWE-agent have further advanced this progress by enabling autonomous, tool-using agents to tackle complex software engineering tasks. While existing agent- based issue resolution approaches are primarily based on agents\u2019 independent explorations, they often get stuck in local solutions and fail to identify issue patterns that span across different parts of the codebase. To address this limitation, we propose SWE-Debate, a competitive multi-agent debate framework that encourages diverse reasoning paths and achieves more consolidated issue localization. SWE-Debate first creates multiple fault propagation traces as local- ization proposals by traversing a code dependency graph. Then, it organizes a three-round debate among specialized agents, each em- bodying distinct reasoning perspectives along the fault propagation trace. This structured competition enables agents to collaboratively converge on a consolidated fix plan. Finally, this consolidated fix plan is integrated into an MCTS-based code modification agent for patch generation. Experiments on the SWE-bench benchmark show that SWE-Debate achieves new state-of-the-art results in open-source agent frameworks and outperforms baselines by a large margin1.",
+  "docinfo": {
+   "Title": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+   "Author": "Han Li; Yuling Shi; Shaoxin Lin; Xiaodong Gu; Heng Lian; Xin Wang; Yantao Jia; Tao Huang; Qianxiang Wang",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:)",
+   "CreationDate": "D:20250801003226+00'00'"
+  },
+  "title_raw": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+   "heading": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+   "outline": "Abstract",
+   "text": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+   "corroborated_by": [
+    "heading",
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Motivation",
+   "page": 2,
+   "source": "outline",
+   "number": "2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 3,
+   "source": "outline",
+   "number": "3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Problem Formulation",
+   "page": 3,
+   "source": "outline",
+   "number": "3.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Fault Propagation Traces Proposal",
+   "page": 3,
+   "source": "outline",
+   "number": "3.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Multi-Agent Debate",
+   "page": 4,
+   "source": "outline",
+   "number": "3.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Patch Generation",
+   "page": 5,
+   "source": "outline",
+   "number": "3.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Setup",
+   "page": 5,
+   "source": "outline",
+   "number": "4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Research Questions",
+   "page": 5,
+   "source": "outline",
+   "number": "4.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Datasets",
+   "page": 5,
+   "source": "outline",
+   "number": "4.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Baselines",
+   "page": 5,
+   "source": "outline",
+   "number": "4.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Metrics",
+   "page": 6,
+   "source": "outline",
+   "number": "4.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Implementation Details",
+   "page": 6,
+   "source": "outline",
+   "number": "4.5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 6,
+   "source": "outline",
+   "number": "5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "RQ1: Effectiveness on Issue Resolution",
+   "page": 6,
+   "source": "outline",
+   "number": "5.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "RQ2: Ablation Study",
+   "page": 7,
+   "source": "outline",
+   "number": "5.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "RQ3: Localization Performance Comparison",
+   "page": 7,
+   "source": "outline",
+   "number": "5.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "RQ4: Impact of the Chain Depth.",
+   "page": 8,
+   "source": "outline",
+   "number": "5.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Case Study",
+   "page": 8,
+   "source": "outline",
+   "number": "5.5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 8,
+   "source": "outline",
+   "number": "6",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Strengths",
+   "page": 8,
+   "source": "outline",
+   "number": "6.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Limitations and Future Work",
+   "page": 9,
+   "source": "outline",
+   "number": "6.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Threats to Validity",
+   "page": 10,
+   "source": "outline",
+   "number": "7",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 10,
+   "source": "outline",
+   "number": "8",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Fault Localization",
+   "page": 10,
+   "source": "outline",
+   "number": "8.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Repository-Level Issue Resolution",
+   "page": 10,
+   "source": "outline",
+   "number": "8.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "LLM Multi-Agent Systems",
+   "page": 10,
+   "source": "outline",
+   "number": "8.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 11,
+   "source": "outline",
+   "number": "9",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "A SWE-Bench-Verified-S",
+   "page": 12,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "B Hyperparameters of MCTS",
+   "page": 13,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "C Prompt Templates",
+   "page": 13,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Motivating example of multi-agent debate",
+   "page": 3,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "Overview of SWE-Debate framework. Identifying Entry Nodes via Semantic Matching. Next, the",
+   "page": 4,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Main effectiveness results on SWE-Bench-Verified",
+   "page": 6,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Ablation study results showing the contribution of different components",
+   "page": 7,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Localization Performance on SWE-Bench-lite",
+   "page": 7,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "Impact of the Chain Depth",
+   "page": 8,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Case study of SWE-Debate with instance sympy-13974. methods using identical models, SWE-Debate demonstrates substantial improvements: 14.67% over SWE-Agent with DeepSeek-V3-0324 and 8.31% over SWE-Search with GPT-4o , representing an 3.93 percentage point improvement over the strongest baseline acro",
+   "page": 9,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Instance Id in SWE-Bench-Verified-S",
+   "page": 12,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "5",
+   "title": "MCTS Hyperparameters",
+   "page": 13,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 11,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 12,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 13,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 14,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 15,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 16,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 17,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 18,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 19,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 571,
+   "n_words": 63,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-000-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1393,
+   "n_words": 188,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-001-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 6182,
+   "n_words": 846,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-002-2-motivation",
+   "number": "2",
+   "title": "Motivation",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 3694,
+   "n_words": 451,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-003-33-multi-agent-debate",
+   "number": "3.3",
+   "title": "Multi-Agent Debate",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 2579,
+   "n_words": 284,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-004-3-methodology",
+   "number": "3",
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-005-31-problem-formulation",
+   "number": "3.1",
+   "title": "Problem Formulation",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1778,
+   "n_words": 255,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-006-32-fault-propagation-traces-proposal",
+   "number": "3.2",
+   "title": "Fault Propagation Traces Proposal",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 5,
+   "n_chars": 9799,
+   "n_words": 1305,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-007-34-patch-generation",
+   "number": "3.4",
+   "title": "Patch Generation",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1934,
+   "n_words": 296,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-008-4-experimental-setup",
+   "number": "4",
+   "title": "Experimental Setup",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-009-41-research-questions",
+   "number": "4.1",
+   "title": "Research Questions",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 222,
+   "n_words": 32,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-010-43-baselines",
+   "number": "4.3",
+   "title": "Baselines",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 78,
+   "n_words": 15,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-011-42-datasets",
+   "number": "4.2",
+   "title": "Datasets",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 1828,
+   "n_words": 249,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-012-44-metrics",
+   "number": "4.4",
+   "title": "Metrics",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 884,
+   "n_words": 124,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-013-45-implementation-details",
+   "number": "4.5",
+   "title": "Implementation Details",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 902,
+   "n_words": 133,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-014-5-results",
+   "number": "5",
+   "title": "Results",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 365,
+   "n_words": 46,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-015-51-rq1-effectiveness-on-issue-resolution",
+   "number": "5.1",
+   "title": "RQ1: Effectiveness on Issue Resolution",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 1912,
+   "n_words": 239,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-016-52-rq2-ablation-study",
+   "number": "5.2",
+   "title": "RQ2: Ablation Study",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 2427,
+   "n_words": 329,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-017-53-rq3-localization-performance-comparison",
+   "number": "5.3",
+   "title": "RQ3: Localization Performance Comparison",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 3373,
+   "n_words": 422,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-018-54-rq4-impact-of-the-chain-depth",
+   "number": "5.4",
+   "title": "RQ4: Impact of the Chain Depth.",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1981,
+   "n_words": 286,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-019-55-case-study",
+   "number": "5.5",
+   "title": "Case Study",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 2505,
+   "n_words": 333,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-020-6-discussion",
+   "number": "6",
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-021-61-strengths",
+   "number": "6.1",
+   "title": "Strengths",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 5544,
+   "n_words": 523,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-022-62-limitations-and-future-work",
+   "number": "6.2",
+   "title": "Limitations and Future Work",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 1610,
+   "n_words": 209,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-023-7-threats-to-validity",
+   "number": "7",
+   "title": "Threats to Validity",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 1991,
+   "n_words": 266,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-024-8-related-work",
+   "number": "8",
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-025-81-fault-localization",
+   "number": "8.1",
+   "title": "Fault Localization",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 332,
+   "n_words": 41,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-026-82-repository-level-issue-resolution",
+   "number": "8.2",
+   "title": "Repository-Level Issue Resolution",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 3160,
+   "n_words": 384,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-027-83-llm-multi-agent-systems",
+   "number": "8.3",
+   "title": "LLM Multi-Agent Systems",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 2046,
+   "n_words": 258,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-028-9-conclusion",
+   "number": "9",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 951,
+   "n_words": 120,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-029-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 19,
+   "n_chars": 37317,
+   "n_words": 5182,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 33,
+  "toc_inferred_entries": 0,
+  "figure_entries": 9,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 31,
+  "chars_total": 97370
+ }
+}
