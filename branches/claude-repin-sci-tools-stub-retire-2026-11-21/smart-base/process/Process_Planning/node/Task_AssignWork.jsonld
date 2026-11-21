@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/process/Process_Planning/node/Task_AssignWork.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork.jsonld",
+  "staging": {
+    "branch": "claude/repin-sci-tools-stub-retire-2026-11-21",
+    "sha": "1f56812317b74c1acc7b197ac62c55a2ddda053b",
+    "pr": "3189/merge",
+    "run": "44943370000"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Assign work and begin sprint cycle",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/directory/glossary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/glossary.jsonld",
+  "staging": {
+    "branch": "claude/repin-sci-tools-stub-retire-2026-11-21",
+    "sha": "1f56812317b74c1acc7b197ac62c55a2ddda053b",
+    "pr": "3189/merge",
+    "run": "44943370000"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary"
+      ],
+      "description": "SMART Base's generated glossary (`glossary/generated/smart-base/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and schema fields by `glossary:page`.",
+      "readmePath": "glossary/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/glossary"
+    }
+  ]
+}

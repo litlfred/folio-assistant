@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/theme/who-smart-ig.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sci-tools-stub-retire-2026-11-21/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/theme/who-smart-ig.jsonld",
+  "staging": {
+    "branch": "claude/repin-sci-tools-stub-retire-2026-11-21",
+    "sha": "1f56812317b74c1acc7b197ac62c55a2ddda053b",
+    "pr": "3189/merge",
+    "run": "44943370000"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/theme/who-smart-ig",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Theme",
+      "title": "WHO SMART IG",
+      "description": "The WHO SMART implementation-guide template's web theme, read off who.template.root's own stylesheet. Colour and geometry only — the top navbar is deliberately not reproduced.",
+      "sourceKind": "themes",
+      "sourcePath": "themes/themes.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-themes"
+    }
+  ]
+}
