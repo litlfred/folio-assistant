@@ -4,6 +4,7 @@ $schema: bean/1.0.0
 title: 'who-iris: L1-ingest the remaining DAKs (TB, HIV, CHUD, PNC, SRV, SMBP, STI) with their per-task annotations'
 status: todo
 type: task
+parent: folio-assistant-v8bg
 priority: high
 tags:
     - who-iris
@@ -11,7 +12,7 @@ tags:
     - bpmn
     - needs-repo-access
 created_at: 2026-11-18T08:40:00Z
-updated_at: 2026-11-18T08:40:00Z
+updated_at: 2026-11-21T16:30:00Z
 ---
 
 **Repository:** `litlfred/who-iris`. Work it there.
@@ -52,3 +53,5 @@ updated_at: 2026-11-18T08:40:00Z
 - [ ] each entry's per-task annotations are structured rows that dak-task-annotations can read
 - [ ] the matching report, per DAK, is in the PR
 - [ ] full tier green, `ready:` posted, merged by the merge manager
+
+_2026-11-21T16:30Z_ — parent set to `folio-assistant-v8bg` (open workstreams): open with no parent failed fa main's `every open bean belongs to an epic` test (Code-quality on 1d9a41d2).
