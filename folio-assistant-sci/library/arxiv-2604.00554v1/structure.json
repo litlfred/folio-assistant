@@ -1,0 +1,965 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2604.00554v1",
+ "source": {
+  "file": "2604.00554v1.pdf",
+  "sha256": "cabfd76a9acea0305b4244219dbe4868137c2015884b772bb4cb57d2c7de7853",
+  "bytes": 2224435,
+  "pages": 10,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-12T18:35:59Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2604.00554",
+   "version": "1",
+   "primary_class": "cs.DL",
+   "stamp_date": "1 Apr 2026"
+  },
+  "doi": null,
+  "title": "LLM-supported document separation for printed reviews from zbMATH Open",
+  "authors_raw": "Ivan Pluzhnikov",
+  "title_lines": [
+   "LLM-supported document separation for printed reviews from",
+   "zbMATH Open"
+  ],
+  "abstract": "This paper presents a specialized methodology for digitizing and segmenting mathematical documents from zbMATH Open, a com- prehensive database of mathematical literature, to enhance ma- chine processing capabilities. Currently, approximately 831,000 documents exist only in scanned volumes, which makes them not machine-processable. Furthermore, these scans often span multi- ple pages or share pages with other documents and incorporate diverse typesetting techniques, posing challenges for automated processing. To address these issues, we evaluate various Optical Charac- ter Recognition (OCR) tools and document separation techniques, proposing an optimized pipeline that outperforms existing ap- proaches. Our study identifies Mathpix as the most effective OCR tool for LaTeX conversion, demonstrating superior performance based on BLEU and Edit Distance metrics. For document sepa- ration, we fine-tune generative Large Language Models (LLMs) and integrate them into a Majority Voting framework, achieving 97.5% accuracy when providing the text of the document. Addi- tionally, our method identifies the start and end indexes for 90.6% of the test dataset, with an accuracy of 98.4% on applicable cases, resulting in an overall accuracy of 89.1% on the entire dataset. This approach surpasses traditional baselines, including regular expres- sions, ChatGPT-4o, and computer vision-based techniques. As a practical outcome, we process 810,977 mathematical documents into machine-readable text and extract precise document bound- aries for 721,288 documents in LaTeX format. These contributions significantly improve accessibility for mathematical information re- trieval systems, machine learning models, and related applications.",
+  "docinfo": {
+   "Title": "LLM-supported document separation for printed reviews from zbMATH Open",
+   "Author": "Ivan Pluzhnikov; Ankit Satpute; Moritz Schubotz; Olaf Teschke; Bela Gipp",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:a6404ea)",
+   "CreationDate": "D:20260402003809+00'00'"
+  },
+  "title_raw": "LLM-supported document separation for printed reviews from zbMATH Open",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "LLM-supported document separation for printed reviews from zbMATH Open",
+   "heading": "LLM-supported document separation for printed reviews from zbMATH Open",
+   "outline": "Abstract",
+   "text": "LLM-supported document separation for printed reviews from zbMATH Open",
+   "corroborated_by": [
+    "heading",
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": "2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Datasets and metrics",
+   "page": 3,
+   "source": "outline",
+   "number": "3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "zbMATH Open dataset",
+   "page": 3,
+   "source": "outline",
+   "number": "3.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "OCR evaluation dataset",
+   "page": 3,
+   "source": "outline",
+   "number": "3.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Metrics",
+   "page": 3,
+   "source": "outline",
+   "number": "3.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Document Splitting",
+   "page": 3,
+   "source": "outline",
+   "number": "4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "OCR comparison",
+   "page": 3,
+   "source": "outline",
+   "number": "4.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Conversion and challenges",
+   "page": 4,
+   "source": "outline",
+   "number": "4.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "OCR errors",
+   "page": 4,
+   "source": "outline",
+   "number": "4.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Regular expressions approach",
+   "page": 4,
+   "source": "outline",
+   "number": "5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Methodology",
+   "page": 4,
+   "source": "outline",
+   "number": "5.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Exclusion of documents from consideration",
+   "page": 4,
+   "source": "outline",
+   "number": "5.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Challenges",
+   "page": 4,
+   "source": "outline",
+   "number": "5.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Results",
+   "page": 5,
+   "source": "outline",
+   "number": "5.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "LLM-voting based document splitting",
+   "page": 5,
+   "source": "outline",
+   "number": "6",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Methodology",
+   "page": 5,
+   "source": "outline",
+   "number": "6.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Base models",
+   "page": 5,
+   "source": "outline",
+   "number": "6.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Fine-tuning",
+   "page": 6,
+   "source": "outline",
+   "number": "6.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Majority Voting approach",
+   "page": 6,
+   "source": "outline",
+   "number": "6.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "LLM baseline",
+   "page": 7,
+   "source": "outline",
+   "number": "6.5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Computer vision-based baseline",
+   "page": 7,
+   "source": "outline",
+   "number": "7",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Evaluation and all data processing.",
+   "page": 7,
+   "source": "outline",
+   "number": "8",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Evaluation of \"base\" models",
+   "page": 7,
+   "source": "outline",
+   "number": "8.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Evaluation results",
+   "page": 7,
+   "source": "outline",
+   "number": "8.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Errors analysis",
+   "page": 8,
+   "source": "outline",
+   "number": "8.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Error detection hypotheses",
+   "page": 8,
+   "source": "outline",
+   "number": "8.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Obtaining start and end indexes of documents.",
+   "page": 9,
+   "source": "outline",
+   "number": "8.5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "All data processing",
+   "page": 9,
+   "source": "outline",
+   "number": "8.6",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 9,
+   "source": "outline",
+   "number": "9",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Illustration of two scanned pages from zbMATH Open, showcasing the end of one document (blue), four complete documents (red), and the start of another (green)",
+   "page": 2,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Sample of the data from the zbMATH Open",
+   "page": 3,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Performance metrics of the OCR systems",
+   "page": 4,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "RE-based extraction approach. Red - titles and sources matches. Blue - text to be extracted",
+   "page": 5,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "Example of the prompt and correct generative Large Language Model output for the document https://zbmath.org/0005.34202",
+   "page": 5,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Validation losses of the Large Language Models",
+   "page": 6,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "5",
+   "title": "",
+   "page": 6,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Large Language Models overview",
+   "page": 6,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "CV model output on a page with 3 titles, of which 1 was recognized",
+   "page": 7,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Evaluation results of the document splitting approaches",
+   "page": 8,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 607,
+   "n_words": 64,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-000-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1736,
+   "n_words": 234,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-001-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 3674,
+   "n_words": 537,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-002-4-document-splitting",
+   "number": "4",
+   "title": "Document Splitting",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 259,
+   "n_words": 36,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-003-33-metrics",
+   "number": "3.3",
+   "title": "Metrics",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 695,
+   "n_words": 90,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-004-2-related-work",
+   "number": "2",
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 3319,
+   "n_words": 507,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-005-43-ocr-errors",
+   "number": "4.3",
+   "title": "OCR errors",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 60,
+   "n_words": 8,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-006-3-datasets-and-metrics",
+   "number": "3",
+   "title": "Datasets and metrics",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 187,
+   "n_words": 27,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-007-31-zbmath-open-dataset",
+   "number": "3.1",
+   "title": "zbMATH Open dataset",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1527,
+   "n_words": 231,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-008-32-ocr-evaluation-dataset",
+   "number": "3.2",
+   "title": "OCR evaluation dataset",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 91,
+   "n_words": 14,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-009-53-challenges",
+   "number": "5.3",
+   "title": "Challenges",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 2087,
+   "n_words": 337,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-010-41-ocr-comparison",
+   "number": "4.1",
+   "title": "OCR comparison",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 840,
+   "n_words": 130,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-011-42-conversion-and-challenges",
+   "number": "4.2",
+   "title": "Conversion and challenges",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 2017,
+   "n_words": 340,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-012-5-regular-expressions-approach",
+   "number": "5",
+   "title": "Regular expressions approach",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 223,
+   "n_words": 33,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-013-51-methodology",
+   "number": "5.1",
+   "title": "Methodology",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-014-54-results",
+   "number": "5.4",
+   "title": "Results",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 1658,
+   "n_words": 271,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-015-52-exclusion-of-documents-from-consideration",
+   "number": "5.2",
+   "title": "Exclusion of documents from consideration",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 2328,
+   "n_words": 372,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-016-6-llm-voting-based-document-splitting",
+   "number": "6",
+   "title": "LLM-voting based document splitting",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1110,
+   "n_words": 179,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-017-62-base-models",
+   "number": "6.2",
+   "title": "Base models",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 1497,
+   "n_words": 247,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-018-63-fine-tuning",
+   "number": "6.3",
+   "title": "Fine-tuning",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 1662,
+   "n_words": 278,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-019-64-majority-voting-approach",
+   "number": "6.4",
+   "title": "Majority Voting approach",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 1639,
+   "n_words": 243,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-020-65-llm-baseline",
+   "number": "6.5",
+   "title": "LLM baseline",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 902,
+   "n_words": 157,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-021-7-computer-vision-based-baseline",
+   "number": "7",
+   "title": "Computer vision-based baseline",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1128,
+   "n_words": 189,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-022-8-evaluation-and-all-data-processing",
+   "number": "8",
+   "title": "Evaluation and all data processing.",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 35,
+   "n_words": 5,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-023-81-evaluation-of-base-models",
+   "number": "8.1",
+   "title": "Evaluation of \"base\" models",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 830,
+   "n_words": 129,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-024-82-evaluation-results",
+   "number": "8.2",
+   "title": "Evaluation results",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 1047,
+   "n_words": 145,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-025-83-errors-analysis",
+   "number": "8.3",
+   "title": "Errors analysis",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1936,
+   "n_words": 325,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-026-84-error-detection-hypotheses",
+   "number": "8.4",
+   "title": "Error detection hypotheses",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 4963,
+   "n_words": 778,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-027-86-all-data-processing",
+   "number": "8.6",
+   "title": "All data processing",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 757,
+   "n_words": 123,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-028-9-conclusion",
+   "number": "9",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 1962,
+   "n_words": 289,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-029-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 10139,
+   "n_words": 1380,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 32,
+  "toc_inferred_entries": 0,
+  "figure_entries": 10,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 31,
+  "chars_total": 50915
+ }
+}
