@@ -1,0 +1,250 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2512.09874v3",
+ "source": {
+  "file": "2512.09874v3.pdf",
+  "sha256": "64a6fa7bd984c39433e2e955569a6465a6b4203608d1c5b29b581beebc0cb177",
+  "bytes": 3764859,
+  "pages": 16,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-12T18:35:59Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2512.09874",
+   "version": "3",
+   "primary_class": "cs.CV",
+   "stamp_date": "22 Aug 2026"
+  },
+  "doi": null,
+  "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+  "authors_raw": "Pius Horn1[0009\u22120004\u22121911\u22121138] and Janis Keuper1,2[0000\u22120002\u22121327\u22121243]",
+  "title_lines": [
+   "Benchmarking Document Parsers on",
+   "Mathematical Formula Extraction from PDFs"
+  ],
+  "abstract": "Correctly parsing mathematical formulas from PDFs is crit- ical for training large language models and building scienti\ufb01c knowledge bases from academic literature, yet existing benchmarks either exclude formulas entirely or lack semantically-aware evaluation metrics. We in- troduce a benchmarking framework centered on synthetically generated PDFs with precise LaTeX ground truth, enabling systematic control over layout, formulas, and content characteristics. For evaluation, we apply LLM-as-a-judge to assess semantic equivalence of parsed formulas, cap- turing mathematical meaning beyond surface-level notation di\ufb00erences. We validate this approach through a human study (250 formula pairs, 750 ratings from 30 evaluators), showing a Pearson correlation of r=0.78 with human judgment, compared to r=0.34 for character-level match- ing (CDM) and r\u22480 for text similarity. Our robust two-stage matching pipeline combining LLM-based extraction with fuzzy validation reliably aligns parsed formulas with ground truth despite format inconsisten- cies across parsers. Evaluating 20+ contemporary PDF parsers across 100 synthetic documents with 2,000+ formulas reveals signi\ufb01cant per- formance disparities, providing actionable guidance for practitioners se- lecting parsers for downstream applications.",
+  "docinfo": {
+   "Title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+   "Author": "Pius Horn; Janis Keuper",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:4af3385)",
+   "CreationDate": "D:20260825003938+00'00'"
+  },
+  "title_raw": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+   "heading": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+   "outline": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+   "text": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+   "corroborated_by": [
+    "heading",
+    "outline",
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Overview of the three main components of the benchmarking framework. The formula dataset component extracts and processes mathematical formulas from Wikipedia to create the wikipedia-latex-formulas-319k collection. The benchmark dataset component generates synthetic PDFs with precise ground truth by",
+   "page": 5,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "Correlation of Automated Metrics with Human Evaluations",
+   "page": 9,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Benchmark results comparing parser performance on mathematical formula extraction. Score is the average LLM-as-a-Judge rating (0\u201310 scale) across all formulas, combining inline and display formulas. Separate scores for inline/display formulas and CDM metrics are available on the project GitHub page",
+   "page": 12,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 11,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 12,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 13,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 14,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 15,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 16,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-000-document",
+   "number": null,
+   "title": "Document",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 16,
+   "n_chars": 41058,
+   "n_words": 6046,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 1,
+  "toc_inferred_entries": 0,
+  "figure_entries": 3,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 1,
+  "chars_total": 41058
+ }
+}
