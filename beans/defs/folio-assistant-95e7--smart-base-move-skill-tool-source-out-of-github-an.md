@@ -10,7 +10,7 @@ tags:
     - subgraphs
     - github-skills
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-15T18:22:00Z
+updated_at: 2026-11-17T07:06:00Z
 ---
 
 ## Why
@@ -38,3 +38,7 @@ Analysis: session https://claude.ai/code/session_01EucfRnu5trsK3i7GD1yvkP (2026-
 
 - [ ] Every child above is completed or scrapped with a reason.
 - [x] `find smart-base/.github -type f -not -path '*/workflows/*'` lists only pointers, gate config and generated files carrying the install-skills marker. (Verified on `litlfred/smart-base` `main` @ `bc3b379f71`, 2026-11-15: lists only `.github/cat.ts`, `.github/copilot-instructions.md`, `.github/main-qa-gates.json`, `.github/mount-from-lock.sh`, and 350/350 `.github/skills/*/SKILL.md` files carrying `<!-- installed by cat-harness-tools/scripts/install-skills.ts; edit the source, not this copy -->`.)
+
+## Progress
+
+_2026-11-17_ — Steps 1-3 merged: cat-harness-tools#2013 (9e91ec3, full suite judged after merge: identical failure set to its parent), smart-base#376 (dead .github/skills parts and the six unfireable workflows removed), smart-base#377 (21 contracts in L1..L4/schemas/skills/, after standing re-pin #381). Open: tgaj, 14un, dtda, 6gnn. Follow-up from #376: downstream DAKs need `SCRIPTS_BASE_COMMIT` in ghbuild.yml bumped past 82ed4ffc so `input/scripts/build-scripts.lock` reaches them. cat-tools-st4q is still `todo` on cat-harness-tools main and needs a status PR there.

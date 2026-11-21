@@ -9,7 +9,7 @@ tags:
     - smart-base
     - github-skills
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T22:15:00Z
+updated_at: 2026-11-17T07:06:00Z
 parent: folio-assistant-95e7
 ---
 

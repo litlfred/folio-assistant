@@ -10,7 +10,7 @@ tags:
     - subgraphs
     - skill-contracts
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T22:31:00Z
+updated_at: 2026-11-17T07:06:00Z
 parent: folio-assistant-95e7
 ---
 
