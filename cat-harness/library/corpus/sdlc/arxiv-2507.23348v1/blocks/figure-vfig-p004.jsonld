@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p004",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p004.png",
+  "pageStart": 4,
+  "pageEnd": 4,
+  "narrative": [
+    {
+      "text": "Figure 2: Overview of the SWE-Debate framework showing three interconnected stages: (1) Fault Propagation Traces Proposal, which extracts initial entities from the issue description (e.g., get_foo_bar_display, FooBar, get_FIELD_display) and traverses the static dependency graph along Contain, Inherit, Import, and Invoke edges to generate localization chains 1..N; (2) Multi-Agent Debate, consisting of Round 1 Localization Chain Selection via competitive ranking/voting to choose the Best Chain, Round 2 Modification Plan Proposal & Competitive Refinement where N=5 agents debate alternative strategies, and Round 3 Synthesizing a concrete <plan> via a discriminator; and (3) Patch Generation via Monte Carlo Tree Search (MCTS), where Search, Plan, and Edit actions navigate repository states to produce the final patch.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2507.23348v1/sections/sec-006",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2507.23348v1",
+  "provenance": "ingested"
+}
