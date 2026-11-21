@@ -569,7 +569,8 @@
       "module": "cat-harness-tools/schemas/content/lang-text.ts",
       "instance": "cat-harness-tools",
       "name": "lang-text",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a function library over label text; the glossary schema it reads belongs to a layer above",
       "summary": "A glossary label or definition that may be translated.",
       "isTest": false
     },
@@ -68368,6 +68369,200 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "name": "CanvasCardSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "badge",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "The card's badge (\"A\", \"1\", \"★\")."
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "text",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text"
+        },
+        {
+          "name": "note",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "Under the words, in italics (\"Must be true: …\", \"e.g. …\")."
+        },
+        {
+          "name": "lead",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "A prompt above the card's fields (\"DISCUSS: …\", \"FACILITATOR ASKS: …\"), Markdown-light."
+        },
+        {
+          "name": "tone",
+          "type": "CanvasTone.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "CanvasTone"
+        },
+        {
+          "name": "fields",
+          "type": "z.array(CanvasInnerFieldSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "CanvasInnerFieldSchema[]"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#CanvasInnerFieldSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#CanvasTone",
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema",
+      "name": "CanvasColumnSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "cell",
+          "type": "z.enum([\"text\", \"tick\", \"label\", \"choice\", \"ticks\", \"option\"]).default(\"text\")",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          }
+        },
+        {
+          "name": "options",
+          "type": "z.array(CanvasOptionSchema).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "CanvasOptionSchema[]",
+          "doc": "A `choice` or `ticks` column's options; a `choice` row may give its own."
+        },
+        {
+          "name": "group",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Id",
+          "doc": "The radio group an `option` column belongs to."
+        },
+        {
+          "name": "width",
+          "type": "z.enum([\"narrow\", \"wide\"]).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          },
+          "doc": "How wide the column draws."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#CanvasOptionSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#canvasFieldTypes",
+      "name": "canvasFieldTypes",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "undetermined",
+      "note": "[ z.object({ ...CanvasFieldBase, type: z.literal(\"text\"), lines: z.number().int().min(1).max(12).default(2), inline: z.boolean().optional(), same: Text.optiona…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#CanvasInnerFieldSchema",
+      "name": "CanvasInnerFieldSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "type"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/workshop.ts#CanvasOptionSchema",
       "name": "CanvasOptionSchema",
       "module": "cat-harness-tools/schemas/process/workshop.ts",
@@ -68387,6 +68582,17 @@
           "optional": false,
           "array": false,
           "card": "1..1"
+        },
+        {
+          "name": "write",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "boolean",
+          "links": {
+            "boolean": "https://zod.dev/api#booleans"
+          }
         }
       ],
       "extendsNames": [],
@@ -68396,7 +68602,9 @@
         "cat-harness-tools/schemas/process/workshop.ts#Text"
       ],
       "unresolved": [],
-      "external": [],
+      "external": [
+        "z"
+      ],
       "source": "zod",
       "exported": false
     },
@@ -68427,14 +68635,70 @@
           "array": false,
           "card": "0..1",
           "utype": "Text"
+        },
+        {
+          "name": "values",
+          "type": "z.record(z.string(), Text).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "record",
+          "links": {
+            "record": "https://zod.dev/api#records"
+          },
+          "doc": "The row's printed words in each `label` column, by column id."
+        },
+        {
+          "name": "group",
+          "type": "z.union([Text, z.array(Text).min(1)]).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "union",
+          "links": {
+            "union": "https://zod.dev/api#unions"
+          },
+          "doc": "The heading rows printed above this one (a layer of the architecture map)."
+        },
+        {
+          "name": "options",
+          "type": "z.array(CanvasOptionSchema).min(2).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "CanvasOptionSchema[]",
+          "doc": "This row's options for a `choice` column, when they are not the column's."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#CanvasOptionSchema",
         "cat-harness-tools/schemas/process/workshop.ts#Id",
         "cat-harness-tools/schemas/process/workshop.ts#Text"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#CanvasTone",
+      "name": "CanvasTone",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "plain",
+        "box",
+        "warm",
+        "cool",
+        "gap"
+      ],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "source": "zod",
@@ -68842,17 +69106,28 @@
       "extendsNames": [],
       "values": [
         "type",
-        "text",
-        "choice",
-        "ticks",
-        "grid",
-        "tick",
-        "gap"
+        "cards",
+        "columns",
+        "rows"
       ],
       "refs": [],
       "unresolved": [],
       "external": [],
       "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasInnerField",
+      "name": "WorkshopCanvasInnerField",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
       "exported": true
     },
     {
@@ -68890,6 +69165,30 @@
           "doc": "The paper of the PDF it is written out to; A3 landscape when absent."
         },
         {
+          "name": "masthead",
+          "type": "z.object({ title: Text, subtitle: Text.optional() }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "object",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          },
+          "doc": "The words at the top right of every sheet (\"DPI-H for Health Workshop\" over \"Policy-maker track · Day 1 and Day 2\")."
+        },
+        {
+          "name": "annex",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "boolean",
+          "links": {
+            "boolean": "https://zod.dev/api#booleans"
+          },
+          "doc": "false: a sheet carries only its own fields, no annex of the journey's other questions."
+        },
+        {
           "name": "sheets",
           "type": "z.array(WorkshopCanvasSheetSchema).min(1)",
           "optional": false,
@@ -68904,6 +69203,154 @@
       "refs": [
         "cat-harness-tools/schemas/process/workshop.ts#Text",
         "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSection",
+      "name": "WorkshopCanvasSection",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "name": "WorkshopCanvasSectionSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text"
+        },
+        {
+          "name": "number",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "The section's badge, as printed (\"1\", \"★\", \"!\")."
+        },
+        {
+          "name": "minutes",
+          "type": "z.number().int().positive().max(240).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "number",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "note",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "Printed after the minutes (\"write, then circle one rating per touchpoint\")."
+        },
+        {
+          "name": "discuss",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "The DISCUSS line under the title, Markdown-light."
+        },
+        {
+          "name": "rules",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "The RULES line under the title."
+        },
+        {
+          "name": "module",
+          "type": "z.array(ModuleId).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "ModuleId[]",
+          "doc": "The modules the section is worked in; the sheet's when absent."
+        },
+        {
+          "name": "layout",
+          "type": "z.enum([\"stack\", \"columns\", \"aside\", \"row\"]).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          },
+          "doc": "`stack`: one field under another; `columns`: side by side; `aside`: the first field to the left of the rest; `row`: on one line, wrapping."
+        },
+        {
+          "name": "split",
+          "type": "z.array(z.number().int().min(1)).min(2).max(4).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "number[]",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          },
+          "doc": "With `columns`: how many fields each column holds, left to right (one field per column when absent)."
+        },
+        {
+          "name": "tone",
+          "type": "CanvasTone.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "CanvasTone"
+        },
+        {
+          "name": "fields",
+          "type": "z.array(WorkshopCanvasFieldSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "WorkshopCanvasFieldSchema[]"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#CanvasTone",
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#Text",
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasFieldSchema"
       ],
       "unresolved": [],
       "external": [
@@ -68949,6 +69396,15 @@
           "doc": "As the room calls it: \"Cover\", \"Sheet 3\"."
         },
         {
+          "name": "kicker",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "The band above the title, as printed (\"Day 1 · Module 1 · Sheet 1 of 6\")."
+        },
+        {
           "name": "title",
           "type": "Text",
           "optional": false,
@@ -68962,7 +69418,28 @@
           "array": false,
           "card": "0..1",
           "utype": "Text",
-          "doc": "One line under the title: what the sheet is for."
+          "doc": "One line under the title: what the sheet is for. Markdown-light."
+        },
+        {
+          "name": "header",
+          "type": "z.array(z.object({ id: Id, label: Text, same: Text.optional() }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "object[]",
+          "links": {
+            "object": "https://zod.dev/api#objects"
+          },
+          "doc": "Write-ins beside the title (Country, Table); `same` shares one key across the sheets."
+        },
+        {
+          "name": "footer",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "Text",
+          "doc": "The line at the foot of the page."
         },
         {
           "name": "modules",
@@ -68971,18 +69448,15 @@
           "array": true,
           "card": "0..*",
           "utype": "ModuleId[]",
-          "doc": "The modules whose journey questions are its annex (those not already one of its fields)."
+          "doc": "The modules the sheet is worked in; with `annex`, whose journey questions are its annex (those not already one of its fields)."
         },
         {
           "name": "sections",
-          "type": "z.array(z.object({ id: Id, title: Text.optional(), fields: z.array(WorkshopCanvasFieldSchema).min(1) }).strict()).min(1)",
+          "type": "z.array(WorkshopCanvasSectionSchema).min(1)",
           "optional": false,
           "array": true,
           "card": "1..*",
-          "utype": "object[]",
-          "links": {
-            "object": "https://zod.dev/api#objects"
-          }
+          "utype": "WorkshopCanvasSectionSchema[]"
         }
       ],
       "extendsNames": [],
@@ -68991,7 +69465,7 @@
         "cat-harness-tools/schemas/process/workshop.ts#Id",
         "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
         "cat-harness-tools/schemas/process/workshop.ts#Text",
-        "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasFieldSchema"
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema"
       ],
       "unresolved": [],
       "external": [
@@ -163794,6 +164268,102 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#CanvasInnerFieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#CanvasTone",
+      "via": "tone",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "badge",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "lead",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "note",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#CanvasOptionSchema",
+      "via": "options",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "group",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasOptionSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "via": "id",
@@ -163811,10 +164381,26 @@
     },
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#CanvasOptionSchema",
+      "via": "options",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "via": "id",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "group",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -163831,6 +164417,14 @@
       "via": "label",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "values",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -163996,6 +164590,14 @@
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "masthead",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
       "via": "title",
       "kind": "field",
       "optional": false,
@@ -164010,6 +164612,86 @@
       "array": true
     },
     {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#CanvasTone",
+      "via": "tone",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "module",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "discuss",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "note",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "number",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "rules",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasFieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "header",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "via": "id",
@@ -164019,16 +164701,24 @@
     },
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
-      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
-      "via": "sections",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "modules",
       "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": true
     },
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
-      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
-      "via": "modules",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "footer",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "header",
       "kind": "field",
       "optional": true,
       "array": true
@@ -164044,7 +164734,7 @@
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
-      "via": "label",
+      "via": "kicker",
       "kind": "field",
       "optional": true,
       "array": false
@@ -164052,10 +164742,10 @@
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
-      "via": "sections",
+      "via": "label",
       "kind": "field",
-      "optional": false,
-      "array": true
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
@@ -164067,7 +164757,7 @@
     },
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema",
-      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasFieldSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema",
       "via": "sections",
       "kind": "field",
       "optional": false,

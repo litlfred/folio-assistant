@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 37,
+      "count": 38,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -37,6 +37,10 @@
         },
         {
           "module": "../bootstrap-tools/schemas/subgraph-export.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../cat-harness-tools/schemas/content/lang-text.ts",
           "why": "no-tag"
         },
         {
@@ -179,5 +183,5 @@
       "entries": []
     }
   },
-  "total": 37
+  "total": 38
 }

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 39,
+      "count": 40,
       "unit": "open beans"
     }
   },
@@ -618,11 +618,11 @@
       "status": "todo",
       "type": "task",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-18T08:40:00Z",
-      "updatedAt": "2026-11-18T08:40:00Z",
+      "updatedAt": "2026-11-21T16:30:00Z",
       "preview": "**Repository:** `litlfred/who-iris`. Work it there.\n\n**Who can work it:** an agent that can push to litlfred/who-iris. Cloud Claude sessions can't, because the Claude GitHub App isn't installed on that repo. A local agent (Antigravity, Claude Code on the owner's machine) using the owner's GitHub login can.\n\n**Owner request (2026-11-18):** \"All of the DAK documents have annotations for the BPMNs th",
       "file": "beans/defs/folio-assistant-dkin--who-iris-l1-ingest-the-remaining-daks-tb-hiv-chud-pnc.md"
     },
@@ -874,7 +874,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-14T17:50:00Z",
-      "updatedAt": "2026-11-15T17:30:00Z",
+      "updatedAt": "2026-11-16T08:45:00Z",
       "preview": "Thread \"Fix gate failures on platform mains\" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9BNSixgF4DaasKpgTGfx9vA), dispatched by the merge manager on red-main duty. Triage: smart-immunizations#145. Rule: fix causes, never waive a gate. Green PRs go to the merge manager; it merges once the owner reopens the merge window.\n\nRoot cause of three of t",
       "file": "beans/defs/folio-assistant-gm5f--fix-gate-failures-on-platform-mains-2026-11-14.md"
     },
@@ -1583,6 +1583,20 @@
       "file": "beans/defs/folio-assistant-sdd0--check-the-onboarding-game-page-loads-after-the-sma.md"
     },
     {
+      "id": "folio-assistant-sp4k",
+      "title": "Content sites: shared site build presets and a link check that refuses the publish",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-16T07:10:00Z",
+      "updatedAt": "2026-11-21T16:49:35Z",
+      "preview": "Owner chose option A (coordinator card, 2026-11-15/16) after smart-ra's glossary and bibliography 404s: one shared, layered list of site build steps for every content site, and every publish fails on a broken internal link. Thread \"Stop content sites missing pages\" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9TknJmb6WAJuHJXQCHbrj7K).\n\n## Design\n",
+      "file": "beans/defs/folio-assistant-sp4k--content-sites-shared-site-build-presets-and-refusing.md"
+    },
+    {
       "id": "folio-assistant-tgaj",
       "title": "smart-base: one BPMN swimlane/actor validator in L2-bpmn/tools/, replacing four",
       "status": "completed",
@@ -1672,11 +1686,11 @@
       "status": "todo",
       "type": "task",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-18T08:40:00Z",
-      "updatedAt": "2026-11-18T08:40:00Z",
+      "updatedAt": "2026-11-21T16:30:00Z",
       "preview": "**Repository:** `litlfred/cat-harness-tools`. Work it there; the adapter lives in `scripts/lib/translation-sources/`.\n\n**Who can work it:** an agent that can reach `https://unterm.un.org`. Cloud Claude sessions can't, because the environment's network policy refuses that host (proxy 403, checked 2026-11-18 06:31Z). A local agent (Antigravity, Claude Code on the owner's machine) can.\n\n**Owner reque",
       "file": "beans/defs/folio-assistant-untm--unterm-official-un-terminology-as-translation-candid.md"
     },
@@ -1798,11 +1812,11 @@
       "status": "in-progress",
       "type": "task",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-15T19:40:00Z",
-      "updatedAt": "2026-11-15T19:40:00Z",
+      "updatedAt": "2026-11-16T08:45:00Z",
       "preview": "Plan step T3 of `/mnt/project-files/who-migration-plan/who-migration-plan.md` (owner Q-WP-1 = A, \"proper way\", 2026-11-15). Thread: Build owner-aware tooling for WHO move (…4LP89hFRgqUtvWcbaP433v).\n\n## PRs (code only, lower layer first)\n- litlfred/cat-harness-tools#2338 (issue #2337): `schemas/kg/repo-owner.ts` (checkoutOwner = CAT_REPO_OWNER, origin, GITHUB_REPOSITORY_OWNER; HARNESS_OWNER + HARNE",
       "file": "beans/defs/folio-assistant-wt3x--who-move-t3-same-owner-pins-derived-owner-publishin.md"
     },
@@ -1976,8 +1990,8 @@
         "share": 0.8095238095238095
       }
     ],
-    "orphanOpen": 26,
-    "openTotal": 39,
+    "orphanOpen": 27,
+    "openTotal": 40,
     "coveredOpen": 12,
     "duplicateIds": 0
   }

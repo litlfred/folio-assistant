@@ -47628,6 +47628,177 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvascardschema.badge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasCardSchema.badge"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The card's badge (\"A\", \"1\", \"★\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema.badge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvascardschema.lead",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasCardSchema.lead"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A prompt above the card's fields (\"DISCUSS: …\", \"FACILITATOR ASKS: …\"), Markdown-light."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema.lead",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvascardschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasCardSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Under the words, in italics (\"Must be true: …\", \"e.g. …\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasCardSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvascolumnschema.group",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasColumnSchema.group"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The radio group an `option` column belongs to."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema.group",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvascolumnschema.options",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasColumnSchema.options"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A `choice` or `ticks` column's options; a `choice` row may give its own."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema.options",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvascolumnschema.width",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasColumnSchema.width"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How wide the column draws."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasColumnSchema.width",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvasrowschema.group",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasRowSchema.group"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The heading rows printed above this one (a layer of the architecture map)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema.group",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvasrowschema.options",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasRowSchema.options"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This row's options for a `choice` column, when they are not the column's."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema.options",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.canvasrowschema.values",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CanvasRowSchema.values"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The row's printed words in each `label` column, by column id."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#CanvasRowSchema.values",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.questionschema.canvas",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -47723,6 +47894,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvasschema.annex",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSchema.annex"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "false: a sheet carries only its own fields, no annex of the journey's other questions."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSchema.annex",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvasschema.masthead",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSchema.masthead"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The words at the top right of every sheet (\"DPI-H for Health Workshop\" over \"Policy-maker track · Day 1 and Day 2\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSchema.masthead",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvasschema.sheets",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -47780,6 +47989,177 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.discuss",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.discuss"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DISCUSS line under the title, Markdown-light."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.discuss",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.layout",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.layout"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`stack`: one field under another; `columns`: side by side; `aside`: the first field to the left of the rest; `row`: on one line, wrapping."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.layout",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.module",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.module"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The modules the section is worked in; the sheet's when absent."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.module",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Printed after the minutes (\"write, then circle one rating per touchpoint\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.number",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.number"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The section's badge, as printed (\"1\", \"★\", \"!\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.number",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.rules",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.rules"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The RULES line under the title."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.rules",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassectionschema.split",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSectionSchema.split"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "With `columns`: how many fields each column holds, left to right (one field per column when absent)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSectionSchema.split",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassheetschema.footer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSheetSchema.footer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The line at the foot of the page."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema.footer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassheetschema.header",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSheetSchema.header"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write-ins beside the title (Country, Table); `same` shares one key across the sheets."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema.header",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassheetschema.intro",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -47792,10 +48172,29 @@
       ],
       "skos:definition": [
         {
-          "@value": "One line under the title: what the sheet is for."
+          "@value": "One line under the title: what the sheet is for. Markdown-light."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema.intro",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshopcanvassheetschema.kicker",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopCanvasSheetSchema.kicker"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The band above the title, as printed (\"Day 1 · Module 1 · Sheet 1 of 6\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema.kicker",
       "skos:note": "candidate"
     },
     {
@@ -47830,7 +48229,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The modules whose journey questions are its annex (those not already one of its fields)."
+          "@value": "The modules the sheet is worked in; with `annex`, whose journey questions are its annex (those not already one of its fields)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopCanvasSheetSchema.modules",
