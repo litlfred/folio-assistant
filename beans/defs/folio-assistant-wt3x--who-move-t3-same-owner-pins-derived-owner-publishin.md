@@ -4,9 +4,10 @@ $schema: bean/1.0.0
 title: 'WHO move T3: same-owner pins, derived owner, publishing profile (code PRs)'
 status: in-progress
 type: task
+parent: folio-assistant-v8bg
 priority: high
 created_at: 2026-11-15T19:40:00Z
-updated_at: 2026-11-15T19:40:00Z
+updated_at: 2026-11-16T08:45:00Z
 tags:
     - who-migration
 ---
@@ -33,3 +34,5 @@ Merge in one batch, layer order, BEFORE the pre-who tag; merge manager then runs
 
 ## Log
 _2026-11-15T19:40Z_ — three PRs open as drafts; CI running.
+
+_2026-11-16T08:45Z_ — parent set to `folio-assistant-v8bg` (open workstreams): open with no parent failed fa main's `every open bean belongs to an epic` test (Code-quality run 43814817452).

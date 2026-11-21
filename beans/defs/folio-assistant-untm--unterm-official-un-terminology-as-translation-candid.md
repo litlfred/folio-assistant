@@ -4,13 +4,14 @@ $schema: bean/1.0.0
 title: 'UNTERM: official UN terminology as translation candidates and glossary QA terms'
 status: todo
 type: task
+parent: folio-assistant-v8bg
 priority: normal
 tags:
     - translation
     - unterm
     - needs-network-access
 created_at: 2026-11-18T08:40:00Z
-updated_at: 2026-11-18T08:40:00Z
+updated_at: 2026-11-21T16:30:00Z
 ---
 
 **Repository:** `litlfred/cat-harness-tools`. Work it there; the adapter lives in `scripts/lib/translation-sources/`.
@@ -53,3 +54,5 @@ The block translation feedback work landed in cat-harness-tools #2432 and #2433,
 - [ ] the archive or API, the licence and the rate limits are reported, with quotes and URLs
 - [ ] if allowed: the adapter, a pinned snapshot, official candidates, glossary QA terms, tests and docs
 - [ ] full tier green, `ready:` posted, merged by the merge manager
+
+_2026-11-21T16:30Z_ — parent set to `folio-assistant-v8bg` (open workstreams): open with no parent failed fa main's `every open bean belongs to an epic` test (Code-quality on 1d9a41d2).
