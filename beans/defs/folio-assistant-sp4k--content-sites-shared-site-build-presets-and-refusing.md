@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-16T07:10:00Z
-updated_at: 2026-11-16T07:10:00Z
+updated_at: 2026-11-21T16:49:35Z
 parent: folio-assistant-v8bg
 tags:
     - site-publish
@@ -29,7 +29,10 @@ Owner chose option A (coordinator card, 2026-11-15/16) after smart-ra's glossary
 
 ## Next
 
-1. #2346 and #825 green → merge manager.
-2. After re-pin: each document folio (WHO dth-hrh, smart-ra; litlfred dth-pc, dth-phc, dth-sc) sets `"extends": "document-folio"` and keeps only its extras; expect link-refuse reds to fix per site (build locally first).
+1. Merge manager: core#855 (declare core's test/attestations/: the 4 links every site refused) and core#857 (glossary ArchiMate links to a mounted layer's pages go to its own site: dth-pc's 58), then WHO dth-hrh#160 (stale KG nodes; publish red on main since 11-18).
+2. Re-pin core in each site PR after #855 (and #857 for dth-pc), then hand over: WHO dth-hrh#158, smart-ra#92, dth-pc#5, dth-phc#13, dth-sc#8 (all draft, extends document-folio).
+3. Close cat-harness-tools#2345 and core#824 when the five are merged.
 
 _2026-11-16T07:10:00Z_ — Created by thread "Stop content sites missing pages", session https://claude.ai/code/session_01Qmmkt8uBwv6vsMUHNmy7AQ.
+
+_2026-11-21T16:49:35Z_ — tools#2346 and core#825 merged. Five site PRs open, one per site (above), each built locally with links: refuse: dth-hrh 28,749 pages/4 misses, smart-ra 32,800/4, dth-sc 28,280/4, dth-phc 28,990/4 (+22 Fig. 3 links fixed in #13: old elements/ address), dth-pc 28,356/62 (4 + 58 fixed by core#857). The 4 shared misses are core's undeclared attestation pages (core#854/#855). Found WHO dth-hrh Site publish red since 11-18 (KG nodes stale after the IRI base move): #159/#160.
