@@ -1,0 +1,1169 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "w3c-2018-odrl-model-2-2",
+ "source": {
+  "file": "w3c-2018-odrl-model-2-2.pdf",
+  "sha256": "6d70216ccdd8df7b2fedfd0870aa48e2f1aae2ffd4cf512d77827a2a5b5471b3",
+  "bytes": 2236986,
+  "pages": 34,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-01T06:41:11Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": null,
+  "doi": null,
+  "title": "ODRL Information Model 2.2",
+  "authors_raw": "Renato Iannella, Monegraph, r@iannel.la",
+  "title_lines": [
+   "ODRL Information Model 2.2",
+   "W3C Recommendation 15 February 2018",
+   "This version:",
+   "Latest published version:",
+   "Latest editor's draft:",
+   "Implementation report:",
+   "Previous version:",
+   "Editors:"
+  ],
+  "abstract": "The Open Digital Rights Language (ODRL) is a policy expression language that provides a flexible and interoperable information model, vocabulary, and encoding mechanisms for representing statements about the usage of content and services. The ODRL Information Model describes the underlying concepts, entities, and relationships that form the foundational basis for the semantics of the ODRL policies. Policies are used to represent permitted and prohibited actions over a certain asset, as well as the obligations required to be meet by stakeholders. In addition, policies may be limited by constraints (e.g., temporal or spatial constraints) and duties (e.g. payments) may be imposed on permissions. Status of This Document This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the W3C technical reports index at https://www.w3.org/TR/. This document was published by the Permissions & Obligations Expression Working Group as a Recommendation. Comments regarding this document are welcome. Please send them to public-poe-comments@w3.org (subscribe, archives). Please see the Working Group's implementation report. This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread deployment. This enhances the functionality and interoperability of the Web. This document was produced by a group operating under the W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An",
+  "docinfo": {
+   "Title": "ODRL Information Model 2.2",
+   "Producer": "Skia/PDF m141",
+   "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+   "CreationDate": "D:20261001064017+00'00'"
+  },
+  "title_raw": "ODRL Information Model 2.2 W3C Recommendation 15 February 2018 This version: Latest published version: Latest editor's draft: Implementation report: Previous version: Editors:",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "ODRL Information Model 2.2",
+   "heading": "ODRL Information Model 2.2",
+   "outline": "ODRL Information Model 2.2",
+   "text": "ODRL Information Model 2.2 W3C Recommendation 15 February 2018 This version: Latest published version: Latest editor's draft: Implementation report: Previous version: Editors",
+   "corroborated_by": [
+    "heading",
+    "outline",
+    "text"
+   ],
+   "browser_print": true
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "ODRL Information Model 2.2",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "W3C Recommendation 15 February 2018",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Status of This Document",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Table of Contents",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Introduction",
+   "page": 2,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 3,
+   "title": "Aims of the Model",
+   "page": 3,
+   "source": "outline",
+   "number": "1.1"
+  },
+  {
+   "level": 3,
+   "title": "Conformance",
+   "page": 3,
+   "source": "outline",
+   "number": "1.2"
+  },
+  {
+   "level": 3,
+   "title": "Terminology",
+   "page": 3,
+   "source": "outline",
+   "number": "1.3"
+  },
+  {
+   "level": 2,
+   "title": "ODRL Information Model",
+   "page": 4,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 3,
+   "title": "NOTE",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Policy Class",
+   "page": 5,
+   "source": "outline",
+   "number": "2.1"
+  },
+  {
+   "level": 4,
+   "title": "Set Class",
+   "page": 6,
+   "source": "outline",
+   "number": "2.1.1"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Offer Class",
+   "page": 6,
+   "source": "outline",
+   "number": "2.1.2"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Agreement Class",
+   "page": 7,
+   "source": "outline",
+   "number": "2.1.3"
+  },
+  {
+   "level": 3,
+   "title": "Asset Class",
+   "page": 7,
+   "source": "outline",
+   "number": "2.2"
+  },
+  {
+   "level": 4,
+   "title": "NOTE",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Relation Property",
+   "page": 8,
+   "source": "outline",
+   "number": "2.2.1"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Part Of Property",
+   "page": 9,
+   "source": "outline",
+   "number": "2.2.2"
+  },
+  {
+   "level": 4,
+   "title": "Target Policy Property",
+   "page": 9,
+   "source": "outline",
+   "number": "2.2.3"
+  },
+  {
+   "level": 3,
+   "title": "Party Class",
+   "page": 10,
+   "source": "outline",
+   "number": "2.3"
+  },
+  {
+   "level": 4,
+   "title": "NOTE",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Function Property",
+   "page": 10,
+   "source": "outline",
+   "number": "2.3.1"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Part Of Property",
+   "page": 11,
+   "source": "outline",
+   "number": "2.3.2"
+  },
+  {
+   "level": 4,
+   "title": "Assigned Policy Properties",
+   "page": 12,
+   "source": "outline",
+   "number": "2.3.3"
+  },
+  {
+   "level": 3,
+   "title": "Action Class",
+   "page": 12,
+   "source": "outline",
+   "number": "2.4"
+  },
+  {
+   "level": 3,
+   "title": "Constraints",
+   "page": 13,
+   "source": "outline",
+   "number": "2.5"
+  },
+  {
+   "level": 4,
+   "title": "Constraint Class",
+   "page": 14,
+   "source": "outline",
+   "number": "2.5.1"
+  },
+  {
+   "level": 4,
+   "title": "Logical Constraint Class",
+   "page": 15,
+   "source": "outline",
+   "number": "2.5.2"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 15,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Constraint property with a Rule",
+   "page": 15,
+   "source": "outline",
+   "number": "2.5.3"
+  },
+  {
+   "level": 4,
+   "title": "Refinement property with an Action",
+   "page": 16,
+   "source": "outline",
+   "number": "2.5.4"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Refinement property with an Asset Collection",
+   "page": 17,
+   "source": "outline",
+   "number": "2.5.5"
+  },
+  {
+   "level": 4,
+   "title": "Refinement property with a Party Collection",
+   "page": 18,
+   "source": "outline",
+   "number": "2.5.6"
+  },
+  {
+   "level": 3,
+   "title": "Rule Class",
+   "page": 19,
+   "source": "outline",
+   "number": "2.6"
+  },
+  {
+   "level": 4,
+   "title": "Permission Class",
+   "page": 19,
+   "source": "outline",
+   "number": "2.6.1"
+  },
+  {
+   "level": 4,
+   "title": "Prohibition Class",
+   "page": 20,
+   "source": "outline",
+   "number": "2.6.2"
+  },
+  {
+   "level": 4,
+   "title": "Duty Class",
+   "page": 21,
+   "source": "outline",
+   "number": "2.6.3"
+  },
+  {
+   "level": 5,
+   "title": "NOTE",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Obligation property with a Policy",
+   "page": 21,
+   "source": "outline",
+   "number": "2.6.4"
+  },
+  {
+   "level": 4,
+   "title": "Duty property with a Permission",
+   "page": 22,
+   "source": "outline",
+   "number": "2.6.5"
+  },
+  {
+   "level": 4,
+   "title": "Consequence property with a Permission/Obligation Duty",
+   "page": 23,
+   "source": "outline",
+   "number": "2.6.6"
+  },
+  {
+   "level": 4,
+   "title": "Remedy property with a Prohibition",
+   "page": 24,
+   "source": "outline",
+   "number": "2.6.7"
+  },
+  {
+   "level": 3,
+   "title": "Policy Rule Composition",
+   "page": 24,
+   "source": "outline",
+   "number": "2.7"
+  },
+  {
+   "level": 4,
+   "title": "Compact Policy",
+   "page": 26,
+   "source": "outline",
+   "number": "2.7.1"
+  },
+  {
+   "level": 3,
+   "title": "Policy Metadata",
+   "page": 27,
+   "source": "outline",
+   "number": "2.8"
+  },
+  {
+   "level": 3,
+   "title": "Policy Inheritance",
+   "page": 28,
+   "source": "outline",
+   "number": "2.9"
+  },
+  {
+   "level": 3,
+   "title": "Policy Conflict Strategy",
+   "page": 29,
+   "source": "outline",
+   "number": "2.10"
+  },
+  {
+   "level": 2,
+   "title": "ODRL Profiles",
+   "page": 30,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 3,
+   "title": "ODRL Profile Purpose",
+   "page": 30,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 3,
+   "title": "ODRL Profile Conformance",
+   "page": 30,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 3,
+   "title": "ODRL Profile Mechanism",
+   "page": 31,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 3,
+   "title": "ODRL Core Profile",
+   "page": 31,
+   "source": "outline",
+   "number": "3.4"
+  },
+  {
+   "level": 2,
+   "title": "Privacy Considerations",
+   "page": 31,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 2,
+   "title": "A. Acknowledgements",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "B. Candidate Recommendation Exit Criteria",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "C. Relationship to the W3C ODRL Community Group Reports",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "D. Changes from Previous Versions",
+   "page": 33,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "E. References",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "E.1 Normative references",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "E.2 Informative references",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-000-odrl-information-model-22",
+   "number": null,
+   "title": "ODRL Information Model 2.2",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-001-w3c-recommendation-15-february-2018",
+   "number": null,
+   "title": "W3C Recommendation 15 February 2018",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 664,
+   "n_words": 62
+  },
+  {
+   "id": "sec-002-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 701,
+   "n_words": 102
+  },
+  {
+   "id": "sec-003-status-of-this-document",
+   "number": null,
+   "title": "Status of This Document",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 1536,
+   "n_words": 236
+  },
+  {
+   "id": "sec-004-table-of-contents",
+   "number": null,
+   "title": "Table of Contents",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-005-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-006-11-aims-of-the-model",
+   "number": "1.1",
+   "title": "Aims of the Model",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-007-12-conformance",
+   "number": "1.2",
+   "title": "Conformance",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-008-13-terminology",
+   "number": "1.3",
+   "title": "Terminology",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 2597,
+   "n_words": 412
+  },
+  {
+   "id": "sec-009-2-odrl-information-model",
+   "number": "2",
+   "title": "ODRL Information Model",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 5,
+   "n_chars": 6252,
+   "n_words": 970
+  },
+  {
+   "id": "sec-010-21-policy-class",
+   "number": "2.1",
+   "title": "Policy Class",
+   "level": 3,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1443,
+   "n_words": 224
+  },
+  {
+   "id": "sec-011-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 3,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 1150,
+   "n_words": 172
+  },
+  {
+   "id": "sec-012-211-set-class",
+   "number": "2.1.1",
+   "title": "Set Class",
+   "level": 4,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 274,
+   "n_words": 42
+  },
+  {
+   "id": "sec-013-212-offer-class",
+   "number": "2.1.2",
+   "title": "Offer Class",
+   "level": 4,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 339,
+   "n_words": 58
+  },
+  {
+   "id": "sec-014-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 5,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 1168,
+   "n_words": 150
+  },
+  {
+   "id": "sec-015-213-agreement-class",
+   "number": "2.1.3",
+   "title": "Agreement Class",
+   "level": 4,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 443,
+   "n_words": 74
+  },
+  {
+   "id": "sec-016-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 4,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 589,
+   "n_words": 75
+  },
+  {
+   "id": "sec-017-22-asset-class",
+   "number": "2.2",
+   "title": "Asset Class",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 2486,
+   "n_words": 325
+  },
+  {
+   "id": "sec-018-221-relation-property",
+   "number": "2.2.1",
+   "title": "Relation Property",
+   "level": 4,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 1771,
+   "n_words": 234
+  },
+  {
+   "id": "sec-019-222-part-of-property",
+   "number": "2.2.2",
+   "title": "Part Of Property",
+   "level": 4,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 821,
+   "n_words": 117
+  },
+  {
+   "id": "sec-020-223-target-policy-property",
+   "number": "2.2.3",
+   "title": "Target Policy Property",
+   "level": 4,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 1635,
+   "n_words": 200
+  },
+  {
+   "id": "sec-021-23-party-class",
+   "number": "2.3",
+   "title": "Party Class",
+   "level": 3,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 1475,
+   "n_words": 245
+  },
+  {
+   "id": "sec-022-231-function-property",
+   "number": "2.3.1",
+   "title": "Function Property",
+   "level": 4,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 1172,
+   "n_words": 174
+  },
+  {
+   "id": "sec-023-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 4,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 759,
+   "n_words": 122
+  },
+  {
+   "id": "sec-024-232-part-of-property",
+   "number": "2.3.2",
+   "title": "Part Of Property",
+   "level": 4,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 2221,
+   "n_words": 220
+  },
+  {
+   "id": "sec-025-233-assigned-policy-properties",
+   "number": "2.3.3",
+   "title": "Assigned Policy Properties",
+   "level": 4,
+   "page_start": 12,
+   "page_end": 12,
+   "n_chars": 1203,
+   "n_words": 185
+  },
+  {
+   "id": "sec-026-24-action-class",
+   "number": "2.4",
+   "title": "Action Class",
+   "level": 3,
+   "page_start": 12,
+   "page_end": 12,
+   "n_chars": 910,
+   "n_words": 152
+  },
+  {
+   "id": "sec-027-25-constraints",
+   "number": "2.5",
+   "title": "Constraints",
+   "level": 3,
+   "page_start": 12,
+   "page_end": 14,
+   "n_chars": 3899,
+   "n_words": 540
+  },
+  {
+   "id": "sec-028-251-constraint-class",
+   "number": "2.5.1",
+   "title": "Constraint Class",
+   "level": 4,
+   "page_start": 14,
+   "page_end": 15,
+   "n_chars": 3598,
+   "n_words": 562
+  },
+  {
+   "id": "sec-029-252-logical-constraint-class",
+   "number": "2.5.2",
+   "title": "Logical Constraint Class",
+   "level": 4,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 1647,
+   "n_words": 257
+  },
+  {
+   "id": "sec-030-253-constraint-property-with-a-rule",
+   "number": "2.5.3",
+   "title": "Constraint property with a Rule",
+   "level": 4,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-031-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 5,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 714,
+   "n_words": 114
+  },
+  {
+   "id": "sec-032-254-refinement-property-with-an-action",
+   "number": "2.5.4",
+   "title": "Refinement property with an Action",
+   "level": 4,
+   "page_start": 16,
+   "page_end": 16,
+   "n_chars": 338,
+   "n_words": 49
+  },
+  {
+   "id": "sec-033-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 5,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 1755,
+   "n_words": 173
+  },
+  {
+   "id": "sec-034-255-refinement-property-with-an-asset-collection",
+   "number": "2.5.5",
+   "title": "Refinement property with an Asset Collection",
+   "level": 4,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 2675,
+   "n_words": 321
+  },
+  {
+   "id": "sec-035-256-refinement-property-with-a-party-collection",
+   "number": "2.5.6",
+   "title": "Refinement property with a Party Collection",
+   "level": 4,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 2451,
+   "n_words": 267
+  },
+  {
+   "id": "sec-036-26-rule-class",
+   "number": "2.6",
+   "title": "Rule Class",
+   "level": 3,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 1444,
+   "n_words": 232
+  },
+  {
+   "id": "sec-037-261-permission-class",
+   "number": "2.6.1",
+   "title": "Permission Class",
+   "level": 4,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 1378,
+   "n_words": 213
+  },
+  {
+   "id": "sec-038-262-prohibition-class",
+   "number": "2.6.2",
+   "title": "Prohibition Class",
+   "level": 4,
+   "page_start": 20,
+   "page_end": 21,
+   "n_chars": 2915,
+   "n_words": 361
+  },
+  {
+   "id": "sec-039-263-duty-class",
+   "number": "2.6.3",
+   "title": "Duty Class",
+   "level": 4,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 2176,
+   "n_words": 352
+  },
+  {
+   "id": "sec-040-264-obligation-property-with-a-policy",
+   "number": "2.6.4",
+   "title": "Obligation property with a Policy",
+   "level": 4,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 410,
+   "n_words": 43
+  },
+  {
+   "id": "sec-041-note",
+   "number": null,
+   "title": "NOTE",
+   "level": 5,
+   "page_start": 21,
+   "page_end": 22,
+   "n_chars": 1282,
+   "n_words": 194
+  },
+  {
+   "id": "sec-042-265-duty-property-with-a-permission",
+   "number": "2.6.5",
+   "title": "Duty property with a Permission",
+   "level": 4,
+   "page_start": 22,
+   "page_end": 23,
+   "n_chars": 2357,
+   "n_words": 242
+  },
+  {
+   "id": "sec-043-266-consequence-property-with-a-permissionobliga",
+   "number": "2.6.6",
+   "title": "Consequence property with a Permission/Obligation Duty",
+   "level": 4,
+   "page_start": 23,
+   "page_end": 24,
+   "n_chars": 1971,
+   "n_words": 194
+  },
+  {
+   "id": "sec-044-267-remedy-property-with-a-prohibition",
+   "number": "2.6.7",
+   "title": "Remedy property with a Prohibition",
+   "level": 4,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 772,
+   "n_words": 115
+  },
+  {
+   "id": "sec-045-27-policy-rule-composition",
+   "number": "2.7",
+   "title": "Policy Rule Composition",
+   "level": 3,
+   "page_start": 24,
+   "page_end": 26,
+   "n_chars": 4419,
+   "n_words": 450
+  },
+  {
+   "id": "sec-046-271-compact-policy",
+   "number": "2.7.1",
+   "title": "Compact Policy",
+   "level": 4,
+   "page_start": 26,
+   "page_end": 27,
+   "n_chars": 1749,
+   "n_words": 232
+  },
+  {
+   "id": "sec-047-28-policy-metadata",
+   "number": "2.8",
+   "title": "Policy Metadata",
+   "level": 3,
+   "page_start": 27,
+   "page_end": 28,
+   "n_chars": 2736,
+   "n_words": 329
+  },
+  {
+   "id": "sec-048-29-policy-inheritance",
+   "number": "2.9",
+   "title": "Policy Inheritance",
+   "level": 3,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 3098,
+   "n_words": 375
+  },
+  {
+   "id": "sec-049-210-policy-conflict-strategy",
+   "number": "2.10",
+   "title": "Policy Conflict Strategy",
+   "level": 3,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 694,
+   "n_words": 105
+  },
+  {
+   "id": "sec-050-3-odrl-profiles",
+   "number": "3",
+   "title": "ODRL Profiles",
+   "level": 2,
+   "page_start": 29,
+   "page_end": 30,
+   "n_chars": 2106,
+   "n_words": 260
+  },
+  {
+   "id": "sec-051-31-odrl-profile-purpose",
+   "number": "3.1",
+   "title": "ODRL Profile Purpose",
+   "level": 3,
+   "page_start": 30,
+   "page_end": 30,
+   "n_chars": 937,
+   "n_words": 140
+  },
+  {
+   "id": "sec-052-32-odrl-profile-conformance",
+   "number": "3.2",
+   "title": "ODRL Profile Conformance",
+   "level": 3,
+   "page_start": 30,
+   "page_end": 31,
+   "n_chars": 1359,
+   "n_words": 137
+  },
+  {
+   "id": "sec-053-33-odrl-profile-mechanism",
+   "number": "3.3",
+   "title": "ODRL Profile Mechanism",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 2413,
+   "n_words": 314
+  },
+  {
+   "id": "sec-054-34-odrl-core-profile",
+   "number": "3.4",
+   "title": "ODRL Core Profile",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 228,
+   "n_words": 34
+  },
+  {
+   "id": "sec-055-4-privacy-considerations",
+   "number": "4",
+   "title": "Privacy Considerations",
+   "level": 2,
+   "page_start": 31,
+   "page_end": 32,
+   "n_chars": 684,
+   "n_words": 107
+  },
+  {
+   "id": "sec-056-a-acknowledgements",
+   "number": null,
+   "title": "A. Acknowledgements",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 32,
+   "n_chars": 259,
+   "n_words": 38
+  },
+  {
+   "id": "sec-057-b-candidate-recommendation-exit-criteria",
+   "number": null,
+   "title": "B. Candidate Recommendation Exit Criteria",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 32,
+   "n_chars": 1359,
+   "n_words": 216
+  },
+  {
+   "id": "sec-058-c-relationship-to-the-w3c-odrl-community-group-r",
+   "number": null,
+   "title": "C. Relationship to the W3C ODRL Community Group Reports",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 33,
+   "n_chars": 1183,
+   "n_words": 177
+  },
+  {
+   "id": "sec-059-d-changes-from-previous-versions",
+   "number": null,
+   "title": "D. Changes from Previous Versions",
+   "level": 2,
+   "page_start": 33,
+   "page_end": 34,
+   "n_chars": 3370,
+   "n_words": 437
+  },
+  {
+   "id": "sec-060-e-references",
+   "number": null,
+   "title": "E. References",
+   "level": 2,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-061-e1-normative-references",
+   "number": null,
+   "title": "E.1 Normative references",
+   "level": 3,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 523,
+   "n_words": 59
+  },
+  {
+   "id": "sec-062-e2-informative-references",
+   "number": null,
+   "title": "E.2 Informative references",
+   "level": 3,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 1913,
+   "n_words": 218
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 66,
+  "toc_inferred_entries": 0,
+  "sections": 64,
+  "chars_total": 92424
+ }
+}

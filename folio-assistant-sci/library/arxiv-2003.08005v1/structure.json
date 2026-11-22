@@ -1,0 +1,385 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2003.08005v1",
+ "source": {
+  "file": "2003.08005v1.pdf",
+  "sha256": "e7666d0332d8c877d68d58bf2c76af8f7b9db3058eb0c89cea1ecb299d76edc3",
+  "bytes": 1380989,
+  "pages": 8,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-12T18:35:59Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2003.08005",
+   "version": "1",
+   "primary_class": "cs.CV",
+   "stamp_date": "18 Mar 2020"
+  },
+  "doi": null,
+  "title": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images",
+  "authors_raw": "Parag Mali, Puneeth Kukkadapu, Mahshad Mahdavi, and, Richard Zanibbi",
+  "title_lines": [
+   "ScanSSD: Scanning Single Shot Detector for",
+   "Mathematical Formulas in PDF Document Images"
+  ],
+  "abstract": "We introduce the Scanning Single Shot Detector (ScanSSD) for locating math formulas offset from text and embedded in textlines. ScanSSD uses only visual features for detection: no formatting or typesetting information such as layout, font, or character labels are employed. Given a 600 dpi document page image, a Single Shot Detector (SSD) locates formulas at multiple scales using sliding windows, after which candidate detections are pooled to obtain page-level results. For our experiments we use the TFD-ICDAR2019v2 dataset, a modi\ufb01cation of the GTDB scanned math article collection. ScanSSD detects characters in formulas with high accuracy, obtaining a 0.926 f-score, and detects formulas with high recall overall. Detection errors are largely minor, such as splitting formulas at large whitespace gaps (e.g., for variable constraints) and merging formulas on adjacent textlines. Formula detection f-scores of 0.796 (IOU \u22650.5) and 0.733 (IOU \u22650.75) are obtained. Our data, evaluation tools, and code are publicly available. I. INTRODUCTION The PDF format is used ubiquitously for sharing and printing documents. Unfortunately, while the latest PDF speci\ufb01cation supports embedding structural information for graphical elements (e.g., \ufb01gures, tables, and footnotes1), most born-digital PDF documents contain only rendering-level information such as characters, lines, and images. These low-level objects can be recovered by parsing the document [1], but graphic regions must be located using detection algorithms. For example, PDFFigures [2] extracts \ufb01gures and tables from born-digital Computer Science research papers for Semantic Scholar.2 Unfortunately, older PDF documents may contain only scanned images of document pages, providing no information about characters or other graphical objects in the page images. We present a new image-based detector for mathematical formulas in in both born-digital and scanned PDF documents. Math expressions may be displayed and offset from the main text",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.17",
+   "Creator": "LaTeX with hyperref package",
+   "CreationDate": "D:20200319002246Z"
+  },
+  "title_raw": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images",
+  "title_source": "heading",
+  "title_verified": true,
+  "title_evidence": {
+   "heading": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images",
+   "outline": "I Introduction",
+   "text": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images",
+   "corroborated_by": [
+    "text"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "I Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "II Related Work",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "II-A Traditional Methods",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "II-B CRF and Deep Learning-Based Techniques",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "II-C Object Detection",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "III Creating the TFD-ICDAR2019v2 Dataset",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "IV ScanSSD: Window-Level Detection",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "IV-A Sliding Windows",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "IV-B Region Matching and Default Boxes in SSD",
+   "page": 4,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "IV-C Postprocessing",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "V ScanSSD: Voting-based Pooling from Windows",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "VI Results and Discussion",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "VI-A Training",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "VI-B Quantitative Results",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "VI-C Qualitative results",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "VII Conclusion",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "ScanSSD architecture. Heatmaps illustrate detection con\ufb01dences with gray \u22480, red \u22480.5, white \u22481.0. Purple and green bounding boxes show formula regions after stitching window-level detections and pooling, respectively",
+   "page": 4,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "Default boxes for a 512\u00d7512 window. Box centers (\u22c6) are in a 32\u00d732 grid. Shown are six default boxes around one point with different sizes and aspect ratios (red, green, and yellow boxes) located near a target formula (pink highlight)",
+   "page": 4,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Formula aspect ratios. Most formulas in our dataset have more width than height, i.e., are oriented horizontally",
+   "page": 5,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "Voting. Let B be the set of page-level bounding boxes for detected formulas, and C be set of con\ufb01dences obtained for",
+   "page": 5,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "7",
+   "title": "Document-level results, IOU \u22650.5 and IOU \u22650.75",
+   "page": 7,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "graphic"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 8,
+   "n_chars": 32080,
+   "n_words": 4967,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-000-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 6925,
+   "n_words": 1041,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 17,
+  "toc_inferred_entries": 0,
+  "figure_entries": 5,
+  "figure_sequence_gaps": [
+   "figure 1",
+   "figure 5"
+  ],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 2,
+  "chars_total": 39005
+ }
+}
