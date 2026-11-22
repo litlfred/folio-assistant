@@ -229,7 +229,19 @@ before it is ready (§”Content PRs”). Say so when coverage could
 not be measured, because a branch passed with unmeasured coverage reads as
 “reviewed”.</p></li><li><p><strong>Push</strong> the feature branch (retry/backoff as in step 2):
 <code class="language-plaintext highlighter-rouge">git push -u origin &lt;branch&gt;</code>. Then <strong>ask whether the push produced a run</strong>:
-<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/check-head-has-run.ts"><code class="language-plaintext highlighter-rouge">bun run cat check:head-has-run</code></a>.</p><p><strong>The push runs the fast gates first, where the pre-push hook is on.</strong> Git’s
+<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/check-head-has-run.ts"><code class="language-plaintext highlighter-rouge">bun run cat check:head-has-run</code></a>.</p><p><strong>The push runs the precheck first</strong> (owner, card 2026-11-18). Git’s
+<code class="language-plaintext highlighter-rouge">pre-push</code> hook, which the session-start primer installs, runs
+<a href="../../en/cat-harness/tools/cat-harness/precheck/"><code class="language-plaintext highlighter-rouge">bun run cat precheck</code></a> (<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/precheck.ts"><code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/precheck.ts</code></a>): only the
+fast checks whose inputs this push changed, 15–60 s, and nothing when it
+changed none of them. <code class="language-plaintext highlighter-rouge">index.lock.json</code> / <code class="language-plaintext highlighter-rouge">index.config.json</code> →
+<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/check-lock-coherence.ts"><code class="language-plaintext highlighter-rouge">lock:coherence:check</code></a> (agreement and freshness) and <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/remote-mount.ts"><code class="language-plaintext highlighter-rouge">mount:remote:check</code></a>;
+<code class="language-plaintext highlighter-rouge">.github/workflows/</code> → <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/workflow-pins.ts"><code class="language-plaintext highlighter-rouge">check:workflow-pins</code></a>; a <code class="language-plaintext highlighter-rouge">.ts</code> file → the typecheck.
+Never the full tier. A red check refuses the push: fix it, since CI would
+fail on it and email the owner. Without bun, a <code class="language-plaintext highlighter-rouge">cat</code> runner or
+<code class="language-plaintext highlighter-rouge">node_modules</code>, or when a check could not determine or ran past its time,
+it says so in one line and the push goes. Run it before pushing with
+<a href="../../en/cat-harness/tools/cat-harness/precheck/"><code class="language-plaintext highlighter-rouge">bun run cat precheck</code></a> (or <code class="language-plaintext highlighter-rouge">--dry-run</code> for the plan); <code class="language-plaintext highlighter-rouge">git push --no-verify</code>
+skips it, and is for a red you have reported, not one you have not read.</p><p><strong>Then the fast gates, where the pre-push hook is on.</strong> Git’s
 <code class="language-plaintext highlighter-rouge">pre-push</code> hook (installed by <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/git-hooks/install.sh"><code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/git-hooks/install.sh</code></a>)
 and, for agents, a Claude Code <code class="language-plaintext highlighter-rouge">PreToolUse</code> hook on <code class="language-plaintext highlighter-rouge">git push</code> both run
 <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/scripts/pre-push-gates.ts"><code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/pre-push-gates.ts</code></a> on the checked-out tree, before

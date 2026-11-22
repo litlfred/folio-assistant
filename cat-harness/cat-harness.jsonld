@@ -363,10 +363,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/42bd8d605d8c4416656611be69def69e6e855367",
-  "sourceCommitSha": "42bd8d605d8c4416656611be69def69e6e855367",
-  "sourceTree": "3f69182f217b04b0a7f55bb73e01242166676a70",
-  "sourceCommitAt": "2026-11-21T23:27:21Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
+  "sourceCommitSha": "6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
+  "sourceTree": "90d72f5514d61ba20e4bd53deb7c176452aff8c6",
+  "sourceCommitAt": "2026-11-22T01:49:44Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -380,7 +380,7 @@
     "SequenceFlow": 1234,
     "Lane": 206,
     "ProcessNode": 1188,
-    "Tool": 203,
+    "Tool": 204,
     "Schema": 198,
     "TranslationSource": 636,
     "ExternalSchema": 32,
@@ -1926,7 +1926,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/platform-gates.md",
-      "instructionLines": 237,
+      "instructionLines": 255,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3465,7 +3465,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge.md",
-      "instructionLines": 623,
+      "instructionLines": 637,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -54192,7 +54192,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "ci-pr-checks",
       "title": "Run a layer's PR checks",
-      "description": "Dispatch the layer's `harness-pr-checks.yml`, which calls the tools layer's reusable `layer-pr-checks.yml` (mount the pinned layers, run every gate of the layer's dependency harness, compare head against base) and, on main, `layer-main-qa.yml`. The workflow is the Tool: its helper scripts (run-gates, compare-gates, main-verdict, …) are its steps. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "description": "Dispatch the layer's `harness-pr-checks.yml`, which calls the tools layer's reusable `layer-pr-checks.yml` (mount the pinned layers, run every gate of the layer's dependency harness, compare head against base) and, on main, `layer-main-qa.yml`. On a PR without `release` / `ready-to-merge` it runs the fast tier, which is ADVISORY (owner, card 2026-11-18): no job concludes `failure`, and the verdict (`fast-verdict`, green or RED) is in the summary and warnings; the full tier fails hard, and merge-guard `--full-tier` still refuses a head whose full tier is not green. The workflow is the Tool: its helper scripts (run-gates, compare-gates, main-verdict, …) are its steps. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
       "install": {
         "cli": "gh"
       },
@@ -54396,7 +54396,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "ci-standing-repin",
       "title": "Run a layer's standing re-pin",
-      "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`, open or update ONE repin PR and label it `needs-repin` for the merge manager, creating that label first in a repository that has none (owner, card 2026-11-18); it never merges. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
       "install": {
         "cli": "gh"
       },
@@ -54843,6 +54843,49 @@
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/precheck.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "precheck",
+      "title": "Precheck a push",
+      "description": "Run, before a push leaves the machine, only the fast checks whose inputs the push changed: `lock:coherence:check` (agreement and freshness) and `mount:remote:check` for a change to `index.lock.json` or `index.config.json`, `check:workflow-pins` for a change under `.github/workflows/`, and the typecheck for a `.ts` change. Nothing runs when the push changed none of them, and the full tier never runs. It is git's `pre-push` hook (`scripts/git-hooks/pre-push`), installed by the session-start primer; the same command runs it by hand (as the hook it is `--git-hook <remote>`, with the pushed refs on stdin).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat precheck"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dry-run",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the checks this push owes and why, running none.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "One line per check run (✓, ✗ or ?), then the red checks' output. Exit 0: every check passed, none was owed, or none could be judged here (no bun, `cat` runner or `node_modules`; a dirty tree; a check that exited 2 or ran past `CAT_PRECHECK_TIMEOUT`, 90 s), each said in one line. Exit 1: a check is red, and the push is refused."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress"
       ]
     },
     {

@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -25,15 +29,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "National Health Workforce Accounts"
+          "@value": "National Health Workforce Accounts",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "NHWA"
+        {
+          "@value": "NHWA",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "a system by which countries progressively improve the availability, quality, and use of data on health workforce through monitoring of a set of indicators to support achievement of Universal Health Coverage, Sustainable Development Goals and other health objectives"
+          "@value": "a system by which countries progressively improve the availability, quality, and use of data on health workforce through monitoring of a set of indicators to support achievement of Universal Health Coverage, Sustainable Development Goals and other health objectives",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Quoted from Part I, \"Definition\" (PDF page 21). The handbook introduces it with \"The NHWA can be defined as –\" and gives it in quotation marks.",
@@ -48,16 +57,24 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Stock and Flow"
+          "@value": "Stock and Flow",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Module 1",
-        "Stock and flow"
+        {
+          "@value": "Module 1",
+          "@language": "en"
+        },
+        {
+          "@value": "Stock and flow",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This module provides a comprehensive overview of the size, composition and distribution of the HWF as well as its flow throughout the HLM."
+          "@value": "This module provides a comprehensive overview of the size, composition and distribution of the HWF as well as its flow throughout the HLM.",
+          "@language": "en"
         }
       ],
       "skos:notation": "1",
@@ -78,15 +95,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Education"
+          "@value": "Education",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Module 2"
+        {
+          "@value": "Module 2",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This module addresses capacity and quality in HWF education and training."
+          "@value": "This module addresses capacity and quality in HWF education and training.",
+          "@language": "en"
         }
       ],
       "skos:notation": "2",
@@ -107,17 +129,28 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Finance and Expenditures"
+          "@value": "Finance and Expenditures",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Module 3",
-        "Finance and expenditures",
-        "Finance and expenditure"
+        {
+          "@value": "Module 3",
+          "@language": "en"
+        },
+        {
+          "@value": "Finance and expenditures",
+          "@language": "en"
+        },
+        {
+          "@value": "Finance and expenditure",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This module covers finance and expenditures for active health workers and for the education and training of health workers."
+          "@value": "This module covers finance and expenditures for active health workers and for the education and training of health workers.",
+          "@language": "en"
         }
       ],
       "skos:notation": "3",
@@ -138,16 +171,24 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Working Conditions, Governance and Leadership"
+          "@value": "Working Conditions, Governance and Leadership",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Module 4",
-        "Working conditions, governance and leadership"
+        {
+          "@value": "Module 4",
+          "@language": "en"
+        },
+        {
+          "@value": "Working conditions, governance and leadership",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This module addresses working conditions, governance and leadership from various perspectives: health workers, national leadership capacity, and contribution of the country to regional and global mandates."
+          "@value": "This module addresses working conditions, governance and leadership from various perspectives: health workers, national leadership capacity, and contribution of the country to regional and global mandates.",
+          "@language": "en"
         }
       ],
       "skos:notation": "4",
@@ -168,12 +209,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Accreditation"
+          "@value": "Accreditation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "In a health workforce context, the evaluation of educational institutions and programs of study against pre-defined standards required for the delivery of education. The outcome of the process is certification of the suitability of education programmes and the capability of education institutions to deliver initial and/or continuing education."
+          "@value": "In a health workforce context, the evaluation of educational institutions and programs of study against pre-defined standards required for the delivery of education. The outcome of the process is certification of the suitability of education programmes and the capability of education institutions to deliver initial and/or continuing education.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 69 for this entry.",
@@ -188,15 +231,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Active Health Worker"
+          "@value": "Active Health Worker",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Active health worker"
+        {
+          "@value": "Active health worker",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "One who provides services to patients and communities (practising health worker) or whose medical education is a prerequisite for the execution of the job (e.g. education, research, public administration) even if the health worker is not directly providing services (professionally active health worker). If data are not available for practising or professionally active health workers, data with the closest definition can be used, such as “health worker licensed to practice”. Categories of level are based on the definitions of OECD/Eurostat/WHO-Europe Joint questionnaire on non-monetary health care statistics."
+          "@value": "One who provides services to patients and communities (practising health worker) or whose medical education is a prerequisite for the execution of the job (e.g. education, research, public administration) even if the health worker is not directly providing services (professionally active health worker). If data are not available for practising or professionally active health workers, data with the closest definition can be used, such as “health worker licensed to practice”. Categories of level are based on the definitions of OECD/Eurostat/WHO-Europe Joint questionnaire on non-monetary health care statistics.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 48 for this entry.",
@@ -211,15 +259,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Activity Level"
+          "@value": "Activity Level",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Activity level"
+        {
+          "@value": "Activity level",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "• Practising: This includes all health and care personnel directly providing services to or for patients and communities. • Professionally active: This includes practising health and care personnel as well as other personnel who are directly not providing services to patients but for whom their medical or paramedical education is a prerequisite for the execution of the job (e.g. education, research, public administration). • Licensed to practice: This includes all health and care personnel who are registered and entitled to practice."
+          "@value": "• Practising: This includes all health and care personnel directly providing services to or for patients and communities. • Professionally active: This includes practising health and care personnel as well as other personnel who are directly not providing services to patients but for whom their medical or paramedical education is a prerequisite for the execution of the job (e.g. education, research, public administration). • Licensed to practice: This includes all health and care personnel who are registered and entitled to practice.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 43 for this entry.",
@@ -234,15 +287,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Age Group"
+          "@value": "Age Group",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Age group"
+        {
+          "@value": "Age group",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Subgroup of a population, disaggregated by age; the following categories are recommended (in years): < 25, 25–34, 35–44, 45–54, 55–64, ≥ 65."
+          "@value": "Subgroup of a population, disaggregated by age; the following categories are recommended (in years): < 25, 25–34, 35–44, 45–54, 55–64, ≥ 65.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 43 for this entry.",
@@ -257,12 +315,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Applications"
+          "@value": "Applications",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The request to access to an educational programme."
+          "@value": "The request to access to an educational programme.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 104 for this entry.",
@@ -277,15 +337,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Childcare Support"
+          "@value": "Childcare Support",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Childcare support"
+        {
+          "@value": "Childcare support",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Financial support to parents to pay fees to childcare institutions (e.g. day-care centres, family day care) for the services they provide to them and their children."
+          "@value": "Financial support to parents to pay fees to childcare institutions (e.g. day-care centres, family day care) for the services they provide to them and their children.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 79 for this entry.",
@@ -300,15 +365,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Community Health Workers"
+          "@value": "Community Health Workers",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Community health workers"
+        {
+          "@value": "Community health workers",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Health workers who provide health education, referral and follow-up, case management, basic preventive health care and home visiting services to specific communities. They provide support and assistance to individuals and families in navigating the health and social services system."
+          "@value": "Health workers who provide health education, referral and follow-up, case management, basic preventive health care and home visiting services to specific communities. They provide support and assistance to individuals and families in navigating the health and social services system.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 46 for this entry.",
@@ -323,15 +393,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Continuing Professional Development"
+          "@value": "Continuing Professional Development",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Continuing professional development"
+        {
+          "@value": "Continuing professional development",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Training that is beyond clinical update and includes wide-ranging competences like research and scientific writing; multidisciplinary context of patient care; professionalism and ethical practice; communication, leadership, management and behavioural skills; team building; information technology; auditing; and appropriate attitudinal change to ensure improved patient service, research outcomes, and attainment of the highest degree of satisfaction by stakeholders. The form of continuing professional development (CPD) may include: courses and lectures; training days; peer review; clinical audit; reading journals; attending conferences; e-learning activity. CPD may be included in national standards of conduct, performance and ethics that govern health workers."
+          "@value": "Training that is beyond clinical update and includes wide-ranging competences like research and scientific writing; multidisciplinary context of patient care; professionalism and ethical practice; communication, leadership, management and behavioural skills; team building; information technology; auditing; and appropriate attitudinal change to ensure improved patient service, research outcomes, and attainment of the highest degree of satisfaction by stakeholders. The form of continuing professional development (CPD) may include: courses and lectures; training days; peer review; clinical audit; reading journals; attending conferences; e-learning activity. CPD may be included in national standards of conduct, performance and ethics that govern health workers.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 105 for this entry.",
@@ -346,15 +421,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Contract Type"
+          "@value": "Contract Type",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Contract type"
+        {
+          "@value": "Contract type",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "The contract type is a key employment characteristic of all workers, including health workers. Personnel may be categorized as full-time workers or part-time workers, depending on their specific contract types. Part-time workers refers to those employed persons whose normal hours of work (calculated weekly or on average over a given period of employment) are less than those of comparable full-time workers."
+          "@value": "The contract type is a key employment characteristic of all workers, including health workers. Personnel may be categorized as full-time workers or part-time workers, depending on their specific contract types. Part-time workers refers to those employed persons whose normal hours of work (calculated weekly or on average over a given period of employment) are less than those of comparable full-time workers.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 66 for this entry.",
@@ -369,15 +449,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Dual Practice"
+          "@value": "Dual Practice",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Dual practice"
+        {
+          "@value": "Dual practice",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Multiple health-related practices by a health worker in the same or different sites. Dual practice in this sense may be public-on-public, public-on-private, or private-on-private."
+          "@value": "Multiple health-related practices by a health worker in the same or different sites. Dual practice in this sense may be public-on-public, public-on-private, or private-on-private.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 106 for this entry.",
@@ -392,15 +477,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Duration of Health Workforce Education and Training"
+          "@value": "Duration of Health Workforce Education and Training",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Duration of health workforce education and training"
+        {
+          "@value": "Duration of health workforce education and training",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This is defined as the number of years required to complete a full curriculum for each health workforce education and training programme."
+          "@value": "This is defined as the number of years required to complete a full curriculum for each health workforce education and training programme.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 88; PDF page 102). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 69 for this entry.",
@@ -415,12 +505,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Enrolments"
+          "@value": "Enrolments",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Number of new entrants in the first year of an education programme."
+          "@value": "Number of new entrants in the first year of an education programme.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 89; PDF page 103). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 74 for this entry.",
@@ -435,15 +527,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Facility Type"
+          "@value": "Facility Type",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Facility type"
+        {
+          "@value": "Facility type",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Facility types are categorized following the system of health accounts through the classification of health care industries. These enable arrangement of country-specific institutions in common, internationally applicable categories. The categories are as follows: Hospitals (HP.1) Hospitals comprise licensed establishments that are primarily engaged in providing medical, diagnostic and treatment services that include physician, nursing and other health services to inpatients and the specialised accommodation services required by inpatients. Hospitals provide inpatient health services, many of which can be delivered only by using specialised facilities and professional knowledge as well as advanced medical technology and equipment, which form a significant and integral part of the provision process. Although the principal activity is the provision of inpatient medical care they may also provide day care, outpatient and home health care services. The tasks of hospitals may vary by country and are usually defined by legal requirements. In some countries, health care facilities need in addition a minimum size (such as a number of beds and medical staff to guarantee 24-hour access) in order to be registered as a hospital. Residential long-term care facilities (HP.2) The category of Residential long-term care facilities comprises establishments that are primarily engaged in providing residential long-term care that combines nursing, supervisory or other types of care as required by the residents. In these establishments, a significant part of the production process and the care provided is a mix of health and social services, with the health services being largely at the level of nursing care, in combination with personal care services. The medical components of care are, however, much less intensive than those provided in hospitals. Providers of ambulatory health care (HP.3) This item comprises establishments that are primarily engaged in providing health care services directly to outpatients who do not require inpatient services. This includes both offices of general medical practitioners and medical specialists and establishments specialising in the treatment of day-cases and in the delivery of home care services. Health practitioners in ambulatory health care primarily provide services to patients who visit the health professional’s office, or the practitioners visit the patients at home. Consequently, these establishments do not usually provide inpatient services. Ancillary services (HP.4, including transportation, emergency rescue, laboratories and others) This category comprises establishments that provide specific ancillary type of services directly to outpatients under the supervision of health professionals and not covered within the episode of treatment by hospitals, nursing care facilities, ambulatory care providers or other providers. Included are providers of patient transportation and emergency rescue, medical and diagnostic laboratories, dental laboratories and other providers of ancillary services. These specialised providers may charge patients directly for their services rendered or may provide these ancillary services as benefits-in-kind under special service contracts. Retailers (HP.5, including pharmacies) This item comprises specialised establishments whose primary activity is the retail sale of medical goods to the general public for individual or household consumption or utilisation. Establishments whose primary activity is the manufacture of medical goods, such as making lenses, orthopaedic or prosthetic appliances for direct sale to the general public for individual or household use, are also included, as is fitting and repair done in combination with sale. Note: Due to special medical safety and quality regulations, retailers of over-the-counter medical products and other providers of medical goods are subject to licensing and/or pharmaceutical authorisation in order to be eligible to provide their activities. Non-health care products such as cosmetics, dietetic products and natural products are excluded from health expenditures. Providers of preventive care (HP.6) This category comprises organisations that primarily provide collective preventive programmes and campaigns/public health programmes for specific groups of individuals or the population-at-large, such as health promotion and protection agencies or public health institutes as well as specialised establishments providing primary preventive care as their principal activity. This includes the promotion of healthy living conditions and lifestyles in schools by special outside health care professionals, agencies or organisations."
+          "@value": "Facility types are categorized following the system of health accounts through the classification of health care industries. These enable arrangement of country-specific institutions in common, internationally applicable categories. The categories are as follows: Hospitals (HP.1) Hospitals comprise licensed establishments that are primarily engaged in providing medical, diagnostic and treatment services that include physician, nursing and other health services to inpatients and the specialised accommodation services required by inpatients. Hospitals provide inpatient health services, many of which can be delivered only by using specialised facilities and professional knowledge as well as advanced medical technology and equipment, which form a significant and integral part of the provision process. Although the principal activity is the provision of inpatient medical care they may also provide day care, outpatient and home health care services. The tasks of hospitals may vary by country and are usually defined by legal requirements. In some countries, health care facilities need in addition a minimum size (such as a number of beds and medical staff to guarantee 24-hour access) in order to be registered as a hospital. Residential long-term care facilities (HP.2) The category of Residential long-term care facilities comprises establishments that are primarily engaged in providing residential long-term care that combines nursing, supervisory or other types of care as required by the residents. In these establishments, a significant part of the production process and the care provided is a mix of health and social services, with the health services being largely at the level of nursing care, in combination with personal care services. The medical components of care are, however, much less intensive than those provided in hospitals. Providers of ambulatory health care (HP.3) This item comprises establishments that are primarily engaged in providing health care services directly to outpatients who do not require inpatient services. This includes both offices of general medical practitioners and medical specialists and establishments specialising in the treatment of day-cases and in the delivery of home care services. Health practitioners in ambulatory health care primarily provide services to patients who visit the health professional’s office, or the practitioners visit the patients at home. Consequently, these establishments do not usually provide inpatient services. Ancillary services (HP.4, including transportation, emergency rescue, laboratories and others) This category comprises establishments that provide specific ancillary type of services directly to outpatients under the supervision of health professionals and not covered within the episode of treatment by hospitals, nursing care facilities, ambulatory care providers or other providers. Included are providers of patient transportation and emergency rescue, medical and diagnostic laboratories, dental laboratories and other providers of ancillary services. These specialised providers may charge patients directly for their services rendered or may provide these ancillary services as benefits-in-kind under special service contracts. Retailers (HP.5, including pharmacies) This item comprises specialised establishments whose primary activity is the retail sale of medical goods to the general public for individual or household consumption or utilisation. Establishments whose primary activity is the manufacture of medical goods, such as making lenses, orthopaedic or prosthetic appliances for direct sale to the general public for individual or household use, are also included, as is fitting and repair done in combination with sale. Note: Due to special medical safety and quality regulations, retailers of over-the-counter medical products and other providers of medical goods are subject to licensing and/or pharmaceutical authorisation in order to be eligible to provide their activities. Non-health care products such as cosmetics, dietetic products and natural products are excluded from health expenditures. Providers of preventive care (HP.6) This category comprises organisations that primarily provide collective preventive programmes and campaigns/public health programmes for specific groups of individuals or the population-at-large, such as health promotion and protection agencies or public health institutes as well as specialised establishments providing primary preventive care as their principal activity. This includes the promotion of healthy living conditions and lifestyles in schools by special outside health care professionals, agencies or organisations.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 89; PDF page 103). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 58 for this entry.",
@@ -458,15 +555,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Facility/Institution Ownership Type"
+          "@value": "Facility/Institution Ownership Type",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Facility/institution ownership type"
+        {
+          "@value": "Facility/institution ownership type",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Classification for ownership type: • Publicly-owned: Facilities owned or controlled by a governmental unit or a public corporation (where control is defined as the ability to determine the general corporate policy) corresponding to the institutional sector “government units” defined in the System of National Accounts 2008. • Not-for-profit privately-owned: Facilities that are legal or social entities created for the purpose of producing goods and services, whose status does not permit them to be a source of income, profit, or other financial gain for the unit(s) that establish, control or finance them, corresponding to the institutional sector “non-profit institutions serving households” defined in the System of National Accounts 2008. • For-profit privately-owned: Facilities that are legal entities set up for the purpose of producing goods and services and are capable of generating a profit or other financial gain for their owners corresponding to the institutional sector “non-financial corporations” defined in the System of National Accounts 2008."
+          "@value": "Classification for ownership type: • Publicly-owned: Facilities owned or controlled by a governmental unit or a public corporation (where control is defined as the ability to determine the general corporate policy) corresponding to the institutional sector “government units” defined in the System of National Accounts 2008. • Not-for-profit privately-owned: Facilities that are legal or social entities created for the purpose of producing goods and services, whose status does not permit them to be a source of income, profit, or other financial gain for the unit(s) that establish, control or finance them, corresponding to the institutional sector “non-profit institutions serving households” defined in the System of National Accounts 2008. • For-profit privately-owned: Facilities that are legal entities set up for the purpose of producing goods and services and are capable of generating a profit or other financial gain for their owners corresponding to the institutional sector “non-financial corporations” defined in the System of National Accounts 2008.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 90; PDF page 104). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 57 for this entry.",
@@ -481,12 +583,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Gender"
+          "@value": "Gender",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Gender refers to the characteristics of women, men, girls and boys that are socially constructed. This includes norms, behaviours and roles associated with being a woman, man, girl or boy, as well as relationships with each other. As a social construct, gender varies from society to society and can change over time. Gender is hierarchical and produces inequalities that intersect with other social and economic inequalities."
+          "@value": "Gender refers to the characteristics of women, men, girls and boys that are socially constructed. This includes norms, behaviours and roles associated with being a woman, man, girl or boy, as well as relationships with each other. As a social construct, gender varies from society to society and can change over time. Gender is hierarchical and produces inequalities that intersect with other social and economic inequalities.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 90; PDF page 104). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 107 for this entry.",
@@ -501,12 +605,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Graduate"
+          "@value": "Graduate",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "An individual who has successfully completed an education programme, according to the International Standard Classification of Education 2011."
+          "@value": "An individual who has successfully completed an education programme, according to the International Standard Classification of Education 2011.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 90; PDF page 104). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 108 for this entry.",
@@ -521,15 +627,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Education and Training Capacity"
+          "@value": "Health Workforce Education and Training Capacity",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce education and training capacity"
+        {
+          "@value": "Health workforce education and training capacity",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This is defined as the number of training places for a health workforce education and training programme per 10 000 population. The health workforce education and training capacity depends on various factors, such as physical infrastructure, human resources, financial resources, organizational and operational capacity, and other non-infrastructure physical inputs."
+          "@value": "This is defined as the number of training places for a health workforce education and training programme per 10 000 population. The health workforce education and training capacity depends on various factors, such as physical infrastructure, human resources, financial resources, organizational and operational capacity, and other non-infrastructure physical inputs.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 90; PDF page 104). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 69 for this entry.",
@@ -544,15 +655,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Education and Training Institution"
+          "@value": "Health Workforce Education and Training Institution",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce education and training institution"
+        {
+          "@value": "Health workforce education and training institution",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "An established institution that provides education as its main purpose, such as a school, college, university or training centre. Such institutions are normally accredited or sanctioned by the relevant national education authorities or equivalent to award qualifications. Educational institutions may also be operated by private organizations, such as religious bodies, special interest groups or private educational and training enterprises, both for-profit and not-for-profit. (108) Types of health workforce education and training institutions are: • Public: Public educational institutions provide core educational services such as teaching activities and ancillary services. They include schools, colleges, universities, and training centres. They are controlled and managed directly by a public education authority or governing body (council, committee, etc.), the majority of whose members are appointed by a public authority. • Private: Private educational institutions provide core educational products such as teaching activities and ancillary services. They include schools, colleges, universities, and training centres, that are controlled and directly managed either by a private organization such as a church, trade union, or business enterprise, or by a governing board whose members have mostly not been selected by a public authority. Whether or not an institution is private is therefore a matter of management, not funding. A school, for example, could in theory be entirely publicly funded but still be considered private because it is not managed by the government. In practice, for international comparability, any educational institution not managed by a government institution is classified as private."
+          "@value": "An established institution that provides education as its main purpose, such as a school, college, university or training centre. Such institutions are normally accredited or sanctioned by the relevant national education authorities or equivalent to award qualifications. Educational institutions may also be operated by private organizations, such as religious bodies, special interest groups or private educational and training enterprises, both for-profit and not-for-profit. (108) Types of health workforce education and training institutions are: • Public: Public educational institutions provide core educational services such as teaching activities and ancillary services. They include schools, colleges, universities, and training centres. They are controlled and managed directly by a public education authority or governing body (council, committee, etc.), the majority of whose members are appointed by a public authority. • Private: Private educational institutions provide core educational products such as teaching activities and ancillary services. They include schools, colleges, universities, and training centres, that are controlled and directly managed either by a private organization such as a church, trade union, or business enterprise, or by a governing board whose members have mostly not been selected by a public authority. Whether or not an institution is private is therefore a matter of management, not funding. A school, for example, could in theory be entirely publicly funded but still be considered private because it is not managed by the government. In practice, for international comparability, any educational institution not managed by a government institution is classified as private.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 90; PDF page 104). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it.",
@@ -567,15 +683,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Education and Training Place"
+          "@value": "Health Workforce Education and Training Place",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce education and training place"
+        {
+          "@value": "Health workforce education and training place",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A place may be offered by a health workforce education and training institution to an applicant who meets the published minimum admission requirements for a particular programme. The number of places denotes the capacity of an education and training institution and its programmes."
+          "@value": "A place may be offered by a health workforce education and training institution to an applicant who meets the published minimum admission requirements for a particular programme. The number of places denotes the capacity of an education and training institution and its programmes.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it.",
@@ -590,15 +711,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Education and Training Programme"
+          "@value": "Health Workforce Education and Training Programme",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce education and training programme"
+        {
+          "@value": "Health workforce education and training programme",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A “coherent set or sequence of educational activities or communication designed and organized to achieve pre-determined learning objectives or accomplish a specific set of educational tasks over a sustained period” with the objective to improve health knowledge, skills and competencies applied to health and enable the training of new health workers. Health workforce education and training programmes will often have a numerus clausus that restricts the number of places for a given programme."
+          "@value": "A “coherent set or sequence of educational activities or communication designed and organized to achieve pre-determined learning objectives or accomplish a specific set of educational tasks over a sustained period” with the objective to improve health knowledge, skills and competencies applied to health and enable the training of new health workers. Health workforce education and training programmes will often have a numerus clausus that restricts the number of places for a given programme.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 108 for this entry.",
@@ -613,15 +739,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Planning"
+          "@value": "Health Workforce Planning",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce planning"
+        {
+          "@value": "Health workforce planning",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Strategies that address the adequacy of the supply and distribution of the health workforce according to policy objectives and the consequential demand for health labour."
+          "@value": "Strategies that address the adequacy of the supply and distribution of the health workforce according to policy objectives and the consequential demand for health labour.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 63 for this entry.",
@@ -636,15 +767,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "In-service Training"
+          "@value": "In-service Training",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "In-service training"
+        {
+          "@value": "In-service training",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Training received while one is fully employed in the health sector. The aim is to equip health workers or the trainers of health workers with the skills to deliver specific interventions."
+          "@value": "Training received while one is fully employed in the health sector. The aim is to equip health workers or the trainers of health workers with the skills to deliver specific interventions.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 69 for this entry.",
@@ -659,15 +795,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Institutional Sector"
+          "@value": "Institutional Sector",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Institutional sector"
+        {
+          "@value": "Institutional sector",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Relevant sectors based on the System of National Accounts 2008: government units; non-profit institutions serving households; non-financial corporations; and households."
+          "@value": "Relevant sectors based on the System of National Accounts 2008: government units; non-profit institutions serving households; non-financial corporations; and households.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 57 for this entry.",
@@ -682,16 +823,24 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "International Health Regulations"
+          "@value": "International Health Regulations",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "International Health Regulations",
-        "IHR"
+        {
+          "@value": "International Health Regulations",
+          "@language": "en"
+        },
+        {
+          "@value": "IHR",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "An international legal instrument that is binding on 196 countries across the globe, including all Member States of WHO. Its aim is to help the international community prevent and respond to acute public health risks that have the potential to cross borders and threaten people worldwide."
+          "@value": "An international legal instrument that is binding on 196 countries across the globe, including all Member States of WHO. Its aim is to help the international community prevent and respond to acute public health risks that have the potential to cross borders and threaten people worldwide.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 109 for this entry.",
@@ -706,15 +855,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Interprofessional Education"
+          "@value": "Interprofessional Education",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Interprofessional education"
+        {
+          "@value": "Interprofessional education",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "When two or more health professionals learn about, from and with each other to enable effective collaboration and improve health outcomes. “Professional” is an all-encompassing term that includes individuals with the knowledge and/or skills to contribute to the physical, mental and social well-being of a community."
+          "@value": "When two or more health professionals learn about, from and with each other to enable effective collaboration and improve health outcomes. “Professional” is an all-encompassing term that includes individuals with the knowledge and/or skills to contribute to the physical, mental and social well-being of a community.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 110 for this entry.",
@@ -729,15 +883,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Job Vacancy"
+          "@value": "Job Vacancy",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Job vacancy"
+        {
+          "@value": "Job vacancy",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A paid post that is newly created, unoccupied, or about to become vacant: (a) for which the employer is taking active steps and is prepared to take further steps to find a suitable candidate from outside the enterprise concerned; and (b) which the employer intends to fill either immediately or within a specific period of time."
+          "@value": "A paid post that is newly created, unoccupied, or about to become vacant: (a) for which the employer is taking active steps and is prepared to take further steps to find a suitable candidate from outside the enterprise concerned; and (b) which the employer intends to fill either immediately or within a specific period of time.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 111 for this entry.",
@@ -752,15 +911,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Leadership Role"
+          "@value": "Leadership Role",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Leadership role"
+        {
+          "@value": "Leadership role",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A senior government official position (e.g., Commissioner, Director-General, Director, etc.) at the national level in the Ministry of Health"
+          "@value": "A senior government official position (e.g., Commissioner, Director-General, Director, etc.) at the national level in the Ministry of Health",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it.",
@@ -775,15 +939,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Leave Entitlements to Care for Sick Family Members"
+          "@value": "Leave Entitlements to Care for Sick Family Members",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Leave entitlements to care for sick family members"
+        {
+          "@value": "Leave entitlements to care for sick family members",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Entitlements to leave, sometimes paid, for employees with a child, partner, parent or other family member who is in need of care because of illness."
+          "@value": "Entitlements to leave, sometimes paid, for employees with a child, partner, parent or other family member who is in need of care because of illness.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 91; PDF page 105). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 79 for this entry.",
@@ -798,15 +967,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lifelong Learning"
+          "@value": "Lifelong Learning",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Lifelong learning"
+        {
+          "@value": "Lifelong learning",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "All general education, vocational education and training, non-formal education and informal learning undertaken throughout life, at all levels and all settings, resulting in an improvement in knowledge, skills and competences, which may include professional ethics."
+          "@value": "All general education, vocational education and training, non-formal education and informal learning undertaken throughout life, at all levels and all settings, resulting in an improvement in knowledge, skills and competences, which may include professional ethics.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 112 for this entry.",
@@ -821,15 +995,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Newly Active Health Worker"
+          "@value": "Newly Active Health Worker",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Newly active health worker"
+        {
+          "@value": "Newly active health worker",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A health worker who starts activity in the given year in the given profession."
+          "@value": "A health worker who starts activity in the given year in the given profession.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 51 for this entry.",
@@ -844,12 +1023,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Occupation"
+          "@value": "Occupation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The concept of occupation is defined as a “set of jobs whose main tasks and duties are characterized by a high degree of similarity”. A job is defined as “a set of tasks and duties performed, or meant to be performed, by one person, including for an employer or in self-employment”. The National Health Workforce Accounts covers health and health-related occupations grouped according to the International Standard Classification of Occupations 2008."
+          "@value": "The concept of occupation is defined as a “set of jobs whose main tasks and duties are characterized by a high degree of similarity”. A job is defined as “a set of tasks and duties performed, or meant to be performed, by one person, including for an employer or in self-employment”. The National Health Workforce Accounts covers health and health-related occupations grouped according to the International Standard Classification of Occupations 2008.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 46 for this entry.",
@@ -864,15 +1045,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Parental Leave"
+          "@value": "Parental Leave",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Parental leave"
+        {
+          "@value": "Parental leave",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Employment-protected leave of absence for employed parents, often supplementary to maternity and paternity leave, and frequently, but not in all countries, following the period of maternity leave."
+          "@value": "Employment-protected leave of absence for employed parents, often supplementary to maternity and paternity leave, and frequently, but not in all countries, following the period of maternity leave.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 79 for this entry.",
@@ -887,15 +1073,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Place of Birth"
+          "@value": "Place of Birth",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Place of birth"
+        {
+          "@value": "Place of birth",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This is defined as the place where the health worker was born. Personnel may be categorized as either foreign-born or national-born. Note that ‘foreign-born’ indicates the health worker’s place of birth was outside the country of interest, but not necessarily that their nationality is foreign."
+          "@value": "This is defined as the place where the health worker was born. Personnel may be categorized as either foreign-born or national-born. Note that ‘foreign-born’ indicates the health worker’s place of birth was outside the country of interest, but not necessarily that their nationality is foreign.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 101 for this entry.",
@@ -910,15 +1101,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Place of Training"
+          "@value": "Place of Training",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Place of training"
+        {
+          "@value": "Place of training",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "This is defined as the place of first qualification for the health worker. Personnel may be categorized as either domestic-trained, foreign-trained, or their place of training may be unknown. The foreign-trained health personnel may also be disaggregated into “foreign-trained national-born” (people born in a country who went to study in another country but have come back afterwards to practice in their home country) and “foreign-trained foreign-born”."
+          "@value": "This is defined as the place of first qualification for the health worker. Personnel may be categorized as either domestic-trained, foreign-trained, or their place of training may be unknown. The foreign-trained health personnel may also be disaggregated into “foreign-trained national-born” (people born in a country who went to study in another country but have come back afterwards to practice in their home country) and “foreign-trained foreign-born”.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 101 for this entry.",
@@ -933,15 +1129,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Pre-service Education"
+          "@value": "Pre-service Education",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Pre-service education"
+        {
+          "@value": "Pre-service education",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "All mandatory educational activities occurring before graduates enter into service, i.e. excluding all education and training activities done in-service and continuing professional development."
+          "@value": "All mandatory educational activities occurring before graduates enter into service, i.e. excluding all education and training activities done in-service and continuing professional development.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it.",
@@ -956,15 +1157,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Public Health Workforce"
+          "@value": "Public Health Workforce",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Public health workforce"
+        {
+          "@value": "Public health workforce",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "The public health workforce comprises all individuals who contribute to the delivery of at least one of the essential public health functions as part of integrated services and systems. This workforce comprises diverse and multidisciplinary occupations, from the health as well as other non-health sectors. This workforce can be conceptualized as three broad groupings: core group of public health personnel who have undergone professional training and/or registration with professional bodies in public health and could be from either health or another background; health and care workers who contribute to one or more public health functions as part of their clinical and/or social care roles; and personnel from a wide group of other allied occupations who contribute to addressing the determinants of health – for instance, personnel engaged in water and sanitation, food supply chains and road safety."
+          "@value": "The public health workforce comprises all individuals who contribute to the delivery of at least one of the essential public health functions as part of integrated services and systems. This workforce comprises diverse and multidisciplinary occupations, from the health as well as other non-health sectors. This workforce can be conceptualized as three broad groupings: core group of public health personnel who have undergone professional training and/or registration with professional bodies in public health and could be from either health or another background; health and care workers who contribute to one or more public health functions as part of their clinical and/or social care roles; and personnel from a wide group of other allied occupations who contribute to addressing the determinants of health – for instance, personnel engaged in water and sanitation, food supply chains and road safety.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 19 for this entry.",
@@ -979,12 +1185,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Remuneration"
+          "@value": "Remuneration",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Average gross annual income earned by employees or those self-employed, i.e. income per year and per person, before any deductions are made for social security contributions or income tax. A person may have more than one qualifying job in any given reference period. • Income earned by employees (earnings) refers to all payments – in cash or in kind, for work done or time worked – made by their employers, and includes basic wages, overtime and other bonuses (such as for night work, work on weekends), all allowances paid by the employer (such as for working away from home or for housing) and all commissions and gratuities paid by the employer. Employers may be the government, corporations, non-profit institutions or households. • Income earned by self-employed workers refers to all payments, in cash or in kind, made by customers for goods or services, and includes capitation or fee-for-service reimbursement, bonuses, commissions, and gratuities. It should be net of operation costs/practice expenses."
+          "@value": "Average gross annual income earned by employees or those self-employed, i.e. income per year and per person, before any deductions are made for social security contributions or income tax. A person may have more than one qualifying job in any given reference period. • Income earned by employees (earnings) refers to all payments – in cash or in kind, for work done or time worked – made by their employers, and includes basic wages, overtime and other bonuses (such as for night work, work on weekends), all allowances paid by the employer (such as for working away from home or for housing) and all commissions and gratuities paid by the employer. Employers may be the government, corporations, non-profit institutions or households. • Income earned by self-employed workers refers to all payments, in cash or in kind, made by customers for goods or services, and includes capitation or fee-for-service reimbursement, bonuses, commissions, and gratuities. It should be net of operation costs/practice expenses.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 58 for this entry.",
@@ -999,12 +1207,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sex"
+          "@value": "Sex",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Male or Female, based on physical characteristics observed at birth."
+          "@value": "Male or Female, based on physical characteristics observed at birth.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 92; PDF page 106). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 51 for this entry.",
@@ -1019,15 +1229,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Social Accountability"
+          "@value": "Social Accountability",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Social accountability"
+        {
+          "@value": "Social accountability",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "The obligation of an authorized body to direct its education, research, and service activities towards addressing the priority health concerns of the community, region, and/or nation it has a mandate to serve."
+          "@value": "The obligation of an authorized body to direct its education, research, and service activities towards addressing the priority health concerns of the community, region, and/or nation it has a mandate to serve.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 113 for this entry.",
@@ -1042,15 +1257,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Social Determinants of Health"
+          "@value": "Social Determinants of Health",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Social determinants of health"
+        {
+          "@value": "Social determinants of health",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "The conditions in which people are born, grow, work, live, and age, and the wider set of forces and systems shaping the conditions of daily life. These forces and systems include economic policies and systems, development agendas, social norms, social policies and political systems."
+          "@value": "The conditions in which people are born, grow, work, live, and age, and the wider set of forces and systems shaping the conditions of daily life. These forces and systems include economic policies and systems, development agendas, social norms, social policies and political systems.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 114 for this entry.",
@@ -1065,15 +1285,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Status in Employment"
+          "@value": "Status in Employment",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Status in employment"
+        {
+          "@value": "Status in employment",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "One of two categories of the total employed: (a) wage and salaried workers (employees): workers who hold a job defined as “paid employment”, with explicit (written or oral) or implicit employment contracts that give them a basic remuneration that is not directly dependent upon the revenue of the unit for which they work, and (b) self-employed workers: workers who, working on their own account or with one or more partners or in a cooperative, hold a “self-employment job”, i.e. one in which the remuneration is directly dependent upon the profits derived from the goods and services produced."
+          "@value": "One of two categories of the total employed: (a) wage and salaried workers (employees): workers who hold a job defined as “paid employment”, with explicit (written or oral) or implicit employment contracts that give them a basic remuneration that is not directly dependent upon the revenue of the unit for which they work, and (b) self-employed workers: workers who, working on their own account or with one or more partners or in a cooperative, hold a “self-employment job”, i.e. one in which the remuneration is directly dependent upon the profits derived from the goods and services produced.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 93 for this entry.",
@@ -1088,12 +1313,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Student"
+          "@value": "Student",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A person not economically active who attends any regular educational institution, public or private, for systematic instruction at any level of education."
+          "@value": "A person not economically active who attends any regular educational institution, public or private, for systematic instruction at any level of education.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 76 for this entry.",
@@ -1108,15 +1335,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Subnational Level"
+          "@value": "Subnational Level",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Subnational level"
+        {
+          "@value": "Subnational level",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "To be defined according to the specific conditions, governing structures, and constitutional provisions existing in a given country. Disaggregation based on administrative boundaries down to the first or second subnational level is recommended (depending on the structure of administrative boundaries and the size of subnational territories), without overlaps between the administrative units. Examples for subnational administrative units are states, regions, provinces, counties, and districts."
+          "@value": "To be defined according to the specific conditions, governing structures, and constitutional provisions existing in a given country. Disaggregation based on administrative boundaries down to the first or second subnational level is recommended (depending on the structure of administrative boundaries and the size of subnational territories), without overlaps between the administrative units. Examples for subnational administrative units are states, regions, provinces, counties, and districts.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 47 for this entry.",
@@ -1131,15 +1363,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Total Expenditure on Health Workforce Education"
+          "@value": "Total Expenditure on Health Workforce Education",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Total expenditure on health workforce education"
+        {
+          "@value": "Total expenditure on health workforce education",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Current and capital expenditure expressed as a percentage of gross national income (or gross national product) in a given financial year. This indicator shows the proportion of income spent by government authorities on health workforce education over a given financial year. This can also be calculated based on gross domestic product."
+          "@value": "Current and capital expenditure expressed as a percentage of gross national income (or gross national product) in a given financial year. This indicator shows the proportion of income spent by government authorities on health workforce education over a given financial year. This can also be calculated based on gross domestic product.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 74 for this entry.",
@@ -1154,15 +1391,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Total Public Expenditure"
+          "@value": "Total Public Expenditure",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Total public expenditure"
+        {
+          "@value": "Total public expenditure",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "The sum of expenditures on compensation of employees (FP.1): wages and salaries (FP.1.1); social contributions (FP.1.2); all other costs related to employees (FP.1.3); self-employed professional remuneration (FP.2). Expenditure on mandatory continuing professional development should be included within social contributions."
+          "@value": "The sum of expenditures on compensation of employees (FP.1): wages and salaries (FP.1.1); social contributions (FP.1.2); all other costs related to employees (FP.1.3); self-employed professional remuneration (FP.2). Expenditure on mandatory continuing professional development should be included within social contributions.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 58 for this entry.",
@@ -1177,15 +1419,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Vacancy Rate"
+          "@value": "Vacancy Rate",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Vacancy rate"
+        {
+          "@value": "Vacancy rate",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "The proportion of total posts that are vacant according to the definition of the job vacancy, expressed as a percentage of total positions, both filled and unfilled."
+          "@value": "The proportion of total posts that are vacant according to the definition of the job vacancy, expressed as a percentage of total positions, both filled and unfilled.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 111 for this entry.",
@@ -1200,15 +1447,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Wage and Salary"
+          "@value": "Wage and Salary",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Wage and salary"
+        {
+          "@value": "Wage and salary",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Gross remuneration in cash and in kind paid to employees, as a rule at regular intervals (usually monthly) for time worked or work done, together with remuneration for time not worked (such as annual vacation, other type of paid leave or holidays)."
+          "@value": "Gross remuneration in cash and in kind paid to employees, as a rule at regular intervals (usually monthly) for time worked or work done, together with remuneration for time not worked (such as annual vacation, other type of paid leave or holidays).",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "From the Glossary of the handbook (p. 93; PDF page 107). The library ingest of this edition has no Glossary section, so the definition was extracted from the PDF text layer on 2026-10-31 and needs a person to confirm it. The handbook cites its reference 115 for this entry.",
@@ -1223,11 +1475,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Accreditation Systems"
+          "@value": "Accreditation Systems",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Accreditation systems"
+        {
+          "@value": "Accreditation systems",
+          "@language": "en"
+        }
       ],
       "skos:scopeNote": "Listed under \"Glossary\" in the metadata sheet of indicator 2-07, but the Glossary of the handbook has no entry for it.",
       "dcterms:source": "uploads/9789240081291-eng/9789240081291-eng.pdf#page=102",
@@ -1241,15 +1497,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Density"
+          "@value": "Health Worker Density",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker density"
+        {
+          "@value": "Health worker density",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Density of health workers per 10 000 population"
+          "@value": "Density of health workers per 10 000 population",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-01",
@@ -1281,15 +1542,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Density at Subnational Level"
+          "@value": "Health Worker Density at Subnational Level",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker density at subnational level"
+        {
+          "@value": "Health worker density at subnational level",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Density of active health workers per 10 000 population at subnational level"
+          "@value": "Density of active health workers per 10 000 population at subnational level",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-02",
@@ -1321,15 +1587,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Age Group"
+          "@value": "Health Worker Distribution by Age Group",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by age group"
+        {
+          "@value": "Health worker distribution by age group",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers in different age groups"
+          "@value": "Percentage of active health workers in different age groups",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-03",
@@ -1364,15 +1635,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Sex"
+          "@value": "Health Worker Distribution by Sex",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by sex"
+        {
+          "@value": "Health worker distribution by sex",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers by sex"
+          "@value": "Percentage of active health workers by sex",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-04",
@@ -1404,15 +1680,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Facility Ownership"
+          "@value": "Health Worker Distribution by Facility Ownership",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by facility ownership"
+        {
+          "@value": "Health worker distribution by facility ownership",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers employed by facility ownership"
+          "@value": "Percentage of active health workers employed by facility ownership",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-05",
@@ -1444,15 +1725,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Facility Type"
+          "@value": "Health Worker Distribution by Facility Type",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by facility type"
+        {
+          "@value": "Health worker distribution by facility type",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers employed by facility type"
+          "@value": "Percentage of active health workers employed by facility type",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-06",
@@ -1484,15 +1770,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Place of Birth"
+          "@value": "Health Worker Distribution by Place of Birth",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by place of birth"
+        {
+          "@value": "Health worker distribution by place of birth",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers by their place of birth"
+          "@value": "Percentage of active health workers by their place of birth",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-07",
@@ -1524,15 +1815,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Place of Training"
+          "@value": "Health Worker Distribution by Place of Training",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by place of training"
+        {
+          "@value": "Health worker distribution by place of training",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers by their place of training"
+          "@value": "Percentage of active health workers by their place of training",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-08",
@@ -1564,15 +1860,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Annual Inflows of Health Workers"
+          "@value": "Annual Inflows of Health Workers",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Annual inflows of health workers"
+        {
+          "@value": "Annual inflows of health workers",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of newly active health workers to the total stock of active health workers"
+          "@value": "Ratio of newly active health workers to the total stock of active health workers",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-09",
@@ -1613,15 +1914,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Annual Outflows of Health Workers"
+          "@value": "Annual Outflows of Health Workers",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Annual outflows of health workers"
+        {
+          "@value": "Annual outflows of health workers",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of active health workers leaving the health labour market to the total stock of active health workers"
+          "@value": "Ratio of active health workers leaving the health labour market to the total stock of active health workers",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-10",
@@ -1656,15 +1962,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Vacancy Rate"
+          "@value": "Vacancy Rate",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Vacancy rate"
+        {
+          "@value": "Vacancy rate",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of unfilled posts to total number of funded posts"
+          "@value": "Ratio of unfilled posts to total number of funded posts",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-11",
@@ -1699,15 +2010,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Worker Distribution by Type of Contract"
+          "@value": "Health Worker Distribution by Type of Contract",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health worker distribution by type of contract"
+        {
+          "@value": "Health worker distribution by type of contract",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Percentage of active health workers by their type of contract"
+          "@value": "Percentage of active health workers by their type of contract",
+          "@language": "en"
         }
       ],
       "skos:notation": "1-12",
@@ -1739,15 +2055,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Education and Training Capacity"
+          "@value": "Health Workforce Education and Training Capacity",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce education and training capacity"
+        {
+          "@value": "Health workforce education and training capacity",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of health workforce education and training capacity per 10 000 population"
+          "@value": "Ratio of health workforce education and training capacity per 10 000 population",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-01",
@@ -1779,15 +2100,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ratio of Applications to Education and Training Capacity"
+          "@value": "Ratio of Applications to Education and Training Capacity",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Ratio of applications to education and training capacity"
+        {
+          "@value": "Ratio of applications to education and training capacity",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of applications for health workforce education and training to the training capacity"
+          "@value": "Ratio of applications for health workforce education and training to the training capacity",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-02",
@@ -1822,15 +2148,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ratio of Enrolments to Application"
+          "@value": "Ratio of Enrolments to Application",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Ratio of enrolments to application"
+        {
+          "@value": "Ratio of enrolments to application",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of students enrolled in the first year of health workforce education and training programmes to applications for these programmes"
+          "@value": "Ratio of students enrolled in the first year of health workforce education and training programmes to applications for these programmes",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-03",
@@ -1865,15 +2196,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ratio of Graduates to Stock"
+          "@value": "Ratio of Graduates to Stock",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Ratio of graduates to stock"
+        {
+          "@value": "Ratio of graduates to stock",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Ratio of graduates of health workforce education and training programmes to the stock of active health workers"
+          "@value": "Ratio of graduates of health workforce education and training programmes to the stock of active health workers",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-04",
@@ -1911,15 +2247,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Duration of Education and Training"
+          "@value": "Duration of Education and Training",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Duration of education and training"
+        {
+          "@value": "Duration of education and training",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Duration of health workforce education and training programmes, in years"
+          "@value": "Duration of health workforce education and training programmes, in years",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-05",
@@ -1948,15 +2289,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Accreditation Mechanisms for Education and Training Institutions and their Programmes"
+          "@value": "Accreditation Mechanisms for Education and Training Institutions and their Programmes",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Accreditation mechanisms for education and training institutions and their programmes"
+        {
+          "@value": "Accreditation mechanisms for education and training institutions and their programmes",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Existence of national and/or subnational mechanisms for accreditation of health workforce education and training institutions and their programmes (Yes/Partial/No)"
+          "@value": "Existence of national and/or subnational mechanisms for accreditation of health workforce education and training institutions and their programmes (Yes/Partial/No)",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-06",
@@ -1988,15 +2334,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Standards for Education and Training Programmes"
+          "@value": "Standards for Education and Training Programmes",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Standards for education and training programmes"
+        {
+          "@value": "Standards for education and training programmes",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Existence of standards for education and training programmes"
+          "@value": "Existence of standards for education and training programmes",
+          "@language": "en"
         }
       ],
       "skos:notation": "2-07",
@@ -2049,15 +2400,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Expenditure on Compensation of Health Workers"
+          "@value": "Expenditure on Compensation of Health Workers",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Expenditure on compensation of health workers"
+        {
+          "@value": "Expenditure on compensation of health workers",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Total expenditure on compensation of health workers"
+          "@value": "Total expenditure on compensation of health workers",
+          "@language": "en"
         }
       ],
       "skos:notation": "3-01",
@@ -2086,15 +2442,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Entry-level Wages and Salaries"
+          "@value": "Entry-level Wages and Salaries",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Entry-level wages and salaries"
+        {
+          "@value": "Entry-level wages and salaries",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Average entry-level wage and salary excluding social contributions"
+          "@value": "Average entry-level wage and salary excluding social contributions",
+          "@language": "en"
         }
       ],
       "skos:notation": "3-02",
@@ -2129,15 +2490,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Total Expenditure on Health Workforce Education"
+          "@value": "Total Expenditure on Health Workforce Education",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Total expenditure on health workforce education"
+        {
+          "@value": "Total expenditure on health workforce education",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Total expenditure on health workforce pre-service education (current and capital)"
+          "@value": "Total expenditure on health workforce pre-service education (current and capital)",
+          "@language": "en"
         }
       ],
       "skos:notation": "3-03",
@@ -2166,15 +2532,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Expenditure per Graduate on Health Workforce Education"
+          "@value": "Expenditure per Graduate on Health Workforce Education",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Expenditure per graduate on health workforce education"
+        {
+          "@value": "Expenditure per graduate on health workforce education",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Expenditure per graduate of health workforce education and training programme"
+          "@value": "Expenditure per graduate of health workforce education and training programme",
+          "@language": "en"
         }
       ],
       "skos:notation": "3-04",
@@ -2206,15 +2577,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Average Tuition Fee per Student"
+          "@value": "Average Tuition Fee per Student",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Average tuition fee per student"
+        {
+          "@value": "Average tuition fee per student",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Average annual tuition fee per student enrolled in health workforce education and training"
+          "@value": "Average annual tuition fee per student enrolled in health workforce education and training",
+          "@language": "en"
         }
       ],
       "skos:notation": "3-05",
@@ -2243,15 +2619,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Labour Regulations and Policies for Health Workforce"
+          "@value": "Labour Regulations and Policies for Health Workforce",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Labour regulations and policies for health workforce"
+        {
+          "@value": "Labour regulations and policies for health workforce",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Existence of labour regulations and policies on the employment characteristics, protection and working conditions of the health workforce"
+          "@value": "Existence of labour regulations and policies on the employment characteristics, protection and working conditions of the health workforce",
+          "@language": "en"
         }
       ],
       "skos:notation": "4-01",
@@ -2301,15 +2682,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Governance and Leadership Capacity"
+          "@value": "Health Workforce Governance and Leadership Capacity",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Health workforce governance and leadership capacity"
+        {
+          "@value": "Health workforce governance and leadership capacity",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Existence of health workforce governance and leadership capacity at national and/or subnational levels"
+          "@value": "Existence of health workforce governance and leadership capacity at national and/or subnational levels",
+          "@language": "en"
         }
       ],
       "skos:notation": "4-02",
@@ -2347,15 +2733,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Share of Women in Leadership Role"
+          "@value": "Share of Women in Leadership Role",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Share of women in leadership role"
+        {
+          "@value": "Share of women in leadership role",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Share of women in senior management positions in the Ministry of Health"
+          "@value": "Share of women in senior management positions in the Ministry of Health",
+          "@language": "en"
         }
       ],
       "skos:notation": "4-03",
@@ -2387,15 +2778,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "International Health Regulations Implementation Capacity"
+          "@value": "International Health Regulations Implementation Capacity",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "IHR implementation capacity"
+        {
+          "@value": "IHR implementation capacity",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Availability of human resources to implement International Health Regulations core capacity requirements (None/Limited/Developed/Demonstrated/Sustainable)"
+          "@value": "Availability of human resources to implement International Health Regulations core capacity requirements (None/Limited/Developed/Demonstrated/Sustainable)",
+          "@language": "en"
         }
       ],
       "skos:notation": "4-04",
@@ -2424,15 +2820,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "National Capacity to Monitor Key Metrics for Health Workforce Planning and Global Monitoring Frameworks"
+          "@value": "National Capacity to Monitor Key Metrics for Health Workforce Planning and Global Monitoring Frameworks",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "National capacity to monitor key metrics for health workforce planning and global monitoring frameworks"
+        {
+          "@value": "National capacity to monitor key metrics for health workforce planning and global monitoring frameworks",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "Capacity of national human resources for health information systems to monitor key metrics relevant for national health workforce planning and policy-making and for global monitoring frameworks"
+          "@value": "Capacity of national human resources for health information systems to monitor key metrics relevant for national health workforce planning and policy-making and for global monitoring frameworks",
+          "@language": "en"
         }
       ],
       "skos:notation": "4-05",

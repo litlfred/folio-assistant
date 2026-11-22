@@ -2,7 +2,13 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#",
+    "fa": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -75,7 +81,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "ممثل مالك الأعمال",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Representante del responsable (Business Owner)",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Représentant du responsable métier",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Представитель владельца бизнес-процессов",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/business-owner-representative#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "业务负责人代表",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority",
@@ -135,7 +203,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "سلطة التصديق",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Autoridad de certificación",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Autorité de certification",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Удостоверяющий центр",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/certificate-authority#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "证书颁发机构",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance",
@@ -195,7 +325,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "حوكمة شهادات مفاتيح التشفير",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Gobernanza de los certificados de claves de cifrado",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Gouvernance des certificats de clés de chiffrement",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Управление сертификатами ключей шифрования",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/encryption-key-certificate-governance#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "加密密钥证书治理",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant",
@@ -255,8 +447,70 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-zh"
+        }
+      ],
       "skos:scopeNote": "Quoted from Section II of the Framework. The L1 text splits this definition across sections (its list items were read as headings), and a page footnote interrupts it, so the text here follows the Framework's own wording rather than the section file line by line.",
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "مشارك مؤهَّل في GDHCN",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Participante cualificado para la Red Mundial",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Participant admissible au GDHCN",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Правомочный участник GDHCN",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/eligible-gdhcn-participant#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "合格 GDHCN 参与方",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat",
@@ -316,7 +570,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "أمانة GDHCN",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Secretaría de la Red Mundial",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Secrétariat du GDHCN",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Секретариат GDHCN",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-secretariat#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "GDHCN 秘书处",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network",
@@ -376,7 +692,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "شبكة الثقة التابعة لـ GDHCN",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Red de confianza de la Red Mundial",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Réseau de confiance du GDHCN",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Сеть доверия GDHCN",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/gdhcn-trust-network#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "GDHCN 信任网络",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency",
@@ -436,7 +814,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "وكالة اعتماد تعليم المهن الصحية",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Organismo de acreditación de la formación de profesionales de la salud",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Agence d’accréditation de la formation aux professions de santé",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ведомство по аккредитации образования в области медицинских профессий",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-professions-education-accreditation-agency#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "卫生专业教育认证机构",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency",
@@ -496,7 +936,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "وكالة ترخيص الخدمات الصحية",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Organismo de concesión de licencias de servicios de salud",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Agence d’autorisation des services de santé",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ведомство по лицензированию медицинских услуг",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/health-services-licensing-agency#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "卫生服务许可机构",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative",
@@ -556,7 +1058,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "ممثل مسؤول إدارة المفاتيح",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Representante del contacto principal (Key Master)",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Représentant responsable des clés",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Представитель по управлению ключами",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/key-master-representative#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "密钥主管代表",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative",
@@ -616,7 +1180,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الممثل القانوني",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Representante legal",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Représentant juridique",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Представитель по правовым вопросам",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/legal-representative#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "法律代表",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application",
@@ -676,7 +1302,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "خطاب الطلب",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Carta de solicitud",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Lettre de candidature",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Письмо-заявка",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/letter-of-application#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "申请函",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process",
@@ -736,8 +1424,70 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-zh"
+        }
+      ],
       "skos:scopeNote": "Quoted from Section II of the Framework. The L1 text splits this definition across sections (its list items were read as headings), and a page footnote interrupts it, so the text here follows the Framework's own wording rather than the section file line by line.",
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "عملية الانضمام",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Proceso de integración",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Processus d’intégration",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Процесс подключения",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/onboarding-process#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "入网流程",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency",
@@ -797,7 +1547,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "وكالة الصحة العامة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Organismo de salud pública",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Agence de santé publique",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ведомство общественного здравоохранения",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-agency#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "公共卫生机构",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency",
@@ -857,7 +1669,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "وكالة أمن الصحة العامة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Organismo de seguridad sanitaria pública",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Agence de sécurité sanitaire publique",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ведомство по обеспечению безопасности в области общественного здравоохранения",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-health-security-agency#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "公共卫生安全机构",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure",
@@ -917,8 +1791,70 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-zh"
+        }
+      ],
       "skos:notation": "PKI",
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "البنية التحتية للمفاتيح العمومية",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Infraestructura de clave pública",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Infrastructure à clés publiques (ICP)",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Инфраструктура открытых ключей",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/public-key-infrastructure#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "公钥基础设施",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative",
@@ -978,7 +1914,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الممثل التقني",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Representante técnico",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Représentant technique",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Технический представитель",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/technical-representative#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "技术代表",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain",
@@ -1038,7 +2036,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "نطاق الثقة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ámbito de confianza",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Domaine de confiance",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Домен доверия",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-domain#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "信任域",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network",
@@ -1098,7 +2158,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "شبكة الثقة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Red de confianza",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Réseau de confiance",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Сеть доверия",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "信任网络",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway",
@@ -1158,7 +2280,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "بوابة شبكة الثقة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Puerta de enlace a la red de confianza",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Passerelle du réseau de confiance",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Шлюз сети доверия",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trust-network-gateway#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "信任网络网关",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service",
@@ -1218,7 +2402,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "خدمة موثوقة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Servicio de confianza (Trusted Service)",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Service de confiance",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Доверенная услуга",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/trusted-service#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "可信服务",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate",
@@ -1278,7 +2524,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-zh"
+        }
+      ],
       "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "شهادة صحية رقمية قابلة للتحقق",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Certificado digital de salud verificable",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Certificat numérique de santé vérifiable",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Проверяемый цифровой сертификат о состоянии здоровья",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns/glossary/gdhcn/verifiable-digital-health-certificate#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "可验证数字健康证书",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     }
   ]
 }

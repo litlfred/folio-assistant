@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -24,11 +28,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Information System"
+          "@value": "Health Information System",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "HIS"
+        {
+          "@value": "HIS",
+          "@language": "en"
+        }
       ],
       "skos:scopeNote": "Figure 3 labels it 'A complex system containing various health information sub systems'.",
       "dcterms:source": "uploads/9789241549226-eng/9789241549226-eng.pdf#page=18",
@@ -42,7 +50,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Financial Management System"
+          "@value": "Financial Management System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -62,7 +71,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Alert and Response System"
+          "@value": "Alert and Response System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -82,7 +92,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EMR/Patient Management System"
+          "@value": "EMR/Patient Management System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -102,7 +113,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Environmental Monitoring System"
+          "@value": "Environmental Monitoring System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -122,7 +134,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Diagnostics/Lab System"
+          "@value": "Diagnostics/Lab System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -142,7 +155,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Asset Management System"
+          "@value": "Asset Management System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -162,7 +176,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Disease Management System"
+          "@value": "Disease Management System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -182,7 +197,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Supply-chain Management System"
+          "@value": "Supply-chain Management System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A sub-system of the health information system in Figure 3.",
@@ -202,7 +218,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Disease Surveillance System"
+          "@value": "Disease Surveillance System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Named in the text describing Figure 3 ('disease surveillance systems'); not drawn in the figure.",
@@ -222,7 +239,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Knowledge Management System"
+          "@value": "Knowledge Management System",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Named in the text describing Figure 3 ('knowledge management systems'); not drawn in the figure.",
@@ -242,14 +260,27 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Human Resources for Health Information System"
+          "@value": "Human Resources for Health Information System",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "HRHIS",
-        "HRIS",
-        "HRH Information System",
-        "health workforce information system"
+        {
+          "@value": "HRHIS",
+          "@language": "en"
+        },
+        {
+          "@value": "HRIS",
+          "@language": "en"
+        },
+        {
+          "@value": "HRH Information System",
+          "@language": "en"
+        },
+        {
+          "@value": "health workforce information system",
+          "@language": "en"
+        }
       ],
       "skos:scopeNote": "The centre box of Figure 3, 'a model health workforce information system, often referred to as HRIS, with numerous functional components'.",
       "skos:broader": [
@@ -268,7 +299,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Workforce Production"
+          "@value": "Workforce Production",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -288,7 +320,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Vacancy and Recruitment"
+          "@value": "Vacancy and Recruitment",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -308,7 +341,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Finance"
+          "@value": "Finance",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -328,11 +362,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Registration and Licensing"
+          "@value": "Registration and Licensing",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Registration and Listening"
+        {
+          "@value": "Registration and Listening",
+          "@language": "en"
+        }
       ],
       "skos:scopeNote": "Figure 3 prints this component as 'Registration and Listening'; Table 1 names the function 'Regulation - Registration and Licensing'. The figure's spelling is kept as an altLabel.",
       "skos:broader": [
@@ -351,7 +389,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Migration"
+          "@value": "Migration",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -371,7 +410,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Payroll"
+          "@value": "Payroll",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -391,7 +431,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Benefits"
+          "@value": "Benefits",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -411,7 +452,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Performance Management"
+          "@value": "Performance Management",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -431,7 +473,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Training"
+          "@value": "Training",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -451,7 +494,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Retirement"
+          "@value": "Retirement",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A functional component of the HRH information system in Figure 3.",
@@ -471,12 +515,19 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Workforce Registry"
+          "@value": "Health Workforce Registry",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "HRH Workforce Registry",
-        "electronic health workforce registry"
+        {
+          "@value": "HRH Workforce Registry",
+          "@language": "en"
+        },
+        {
+          "@value": "electronic health workforce registry",
+          "@language": "en"
+        }
       ],
       "skos:scopeNote": "Figure 3 draws it as a functional component of the HRH information system; the text calls it 'a central and essential component of a functional HRIS'.",
       "skos:broader": [
@@ -495,11 +546,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Pre-Entry"
+          "@value": "Pre-Entry",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Planning Workforce Needs"
+        {
+          "@value": "Planning Workforce Needs",
+          "@language": "en"
+        }
       ],
       "skos:notation": "1",
       "skos:scopeNote": "A health workforce functional domain of the person-centric life cycle (Figure 4, Table 1): 'Pre-Entry (Planning Workforce Needs)'.",
@@ -519,11 +574,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Entry"
+          "@value": "Entry",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Preparing Workforce"
+        {
+          "@value": "Preparing Workforce",
+          "@language": "en"
+        }
       ],
       "skos:notation": "2",
       "skos:scopeNote": "A health workforce functional domain of the person-centric life cycle (Figure 4, Table 1): 'Entry (Preparing Workforce)'.",
@@ -543,11 +602,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Exist"
+          "@value": "Exist",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Managing Workforce"
+        {
+          "@value": "Managing Workforce",
+          "@language": "en"
+        }
       ],
       "skos:notation": "3",
       "skos:scopeNote": "A health workforce functional domain of the person-centric life cycle (Figure 4, Table 1): 'Exist (Managing Workforce)'.",
@@ -567,11 +630,15 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Exit"
+          "@value": "Exit",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "Retiring Workforce"
+        {
+          "@value": "Retiring Workforce",
+          "@language": "en"
+        }
       ],
       "skos:notation": "4",
       "skos:scopeNote": "A health workforce functional domain of the person-centric life cycle (Figure 4, Table 1): 'Exit (Retiring Workforce)'.",
@@ -591,7 +658,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Workforce forecasting and budget"
+          "@value": "Workforce forecasting and budget",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An information category of Table 2 (types of health workforce information needs at national and sub-national levels).",
@@ -611,7 +679,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Distribution of workforce by cadre, facility, and targets"
+          "@value": "Distribution of workforce by cadre, facility, and targets",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An information category of Table 2 (types of health workforce information needs at national and sub-national levels).",
@@ -631,7 +700,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Workforce training and development"
+          "@value": "Workforce training and development",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An information category of Table 2 (types of health workforce information needs at national and sub-national levels).",
@@ -651,7 +721,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Workforce recruitment and retention"
+          "@value": "Workforce recruitment and retention",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An information category of Table 2 (types of health workforce information needs at national and sub-national levels).",
@@ -671,7 +742,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Performance management"
+          "@value": "Performance management",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An information category of Table 2 (types of health workforce information needs at national and sub-national levels).",
@@ -691,7 +763,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "In a national context an electronic health workforce registry can be considered the single authoritative source of health workforce information that can provide an accurate count of all health care personnel that either have worked or are currently working at national or sub-national levels, including in the private sector."
+          "@value": "In a national context an electronic health workforce registry can be considered the single authoritative source of health workforce information that can provide an accurate count of all health care personnel that either have worked or are currently working at national or sub-national levels, including in the private sector.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 16-18.",
@@ -711,7 +784,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "An electronic health workforce registry can be designed to authenticate and validate the existence of a health worker and provide essential details about that person."
+          "@value": "An electronic health workforce registry can be designed to authenticate and validate the existence of a health worker and provide essential details about that person.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 16-18.",
@@ -731,7 +805,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "In addition, a health workforce registry can ensure quality control, provide easy access to information on production, distribution and utilization of health personnel, and assist in budgeting, research development and advocacy."
+          "@value": "In addition, a health workforce registry can ensure quality control, provide easy access to information on production, distribution and utilization of health personnel, and assist in budgeting, research development and advocacy.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 16-18.",
@@ -751,7 +826,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "A health workforce registry allows aggregation of health workforce data in several combinations and assists both national and sub-national ministries of health in producing essential indicator-based reports, as needed."
+          "@value": "A health workforce registry allows aggregation of health workforce data in several combinations and assists both national and sub-national ministries of health in producing essential indicator-based reports, as needed.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 16-18.",
@@ -771,7 +847,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "The health workforce registry is a central and essential component of a functional HRIS, as it contains important health worker attributes that can subsequently be linked to other relevant HRIS components."
+          "@value": "The health workforce registry is a central and essential component of a functional HRIS, as it contains important health worker attributes that can subsequently be linked to other relevant HRIS components.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 16-18.",
@@ -791,7 +868,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Action Plan and Budget"
+          "@value": "Action Plan and Budget",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -816,7 +894,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Education - Enrolment"
+          "@value": "Education - Enrolment",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -841,7 +920,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Education - Graduation"
+          "@value": "Education - Graduation",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -866,7 +946,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Education - Accreditation"
+          "@value": "Education - Accreditation",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -891,7 +972,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Regulation - Registration and Licensing"
+          "@value": "Regulation - Registration and Licensing",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -916,7 +998,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Regulation - Disciplinary Action"
+          "@value": "Regulation - Disciplinary Action",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -941,7 +1024,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Recruitment"
+          "@value": "Recruitment",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -966,7 +1050,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Payroll Administration"
+          "@value": "Payroll Administration",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -991,7 +1076,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Training (in-service)"
+          "@value": "Training (in-service)",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1016,7 +1102,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Leave Management"
+          "@value": "Leave Management",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1041,7 +1128,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Relicensure"
+          "@value": "Relicensure",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1066,7 +1154,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PBF Evaluation"
+          "@value": "PBF Evaluation",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1091,7 +1180,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Transfer"
+          "@value": "Transfer",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1116,7 +1206,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Disciplinary Action"
+          "@value": "Disciplinary Action",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1141,7 +1232,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Retirement"
+          "@value": "Retirement",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1166,7 +1258,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Discharge - Involuntary"
+          "@value": "Discharge - Involuntary",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1191,7 +1284,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Discharge - Voluntary"
+          "@value": "Discharge - Voluntary",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1216,7 +1310,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Discharge - Death during tenure"
+          "@value": "Discharge - Death during tenure",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1241,7 +1336,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Pension"
+          "@value": "Pension",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-table-row), word for word from pages 20-21.",
@@ -1266,7 +1362,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Staffing gaps against norms"
+          "@value": "Staffing gaps against norms",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1291,7 +1388,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Estimation of workforce needs"
+          "@value": "Estimation of workforce needs",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1316,7 +1414,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Estimation of financial needs"
+          "@value": "Estimation of financial needs",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1341,7 +1440,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Timely standardized reports"
+          "@value": "Timely standardized reports",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1366,7 +1466,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Private sector / cadre types"
+          "@value": "Private sector / cadre types",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1391,7 +1492,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Facilities-type, geographic location"
+          "@value": "Facilities-type, geographic location",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1416,7 +1518,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Pre-Service training and production: categories of information by discipline within medical, nursing, and public health schools and other training and health institutions"
+          "@value": "Pre-Service training and production: categories of information by discipline within medical, nursing, and public health schools and other training and health institutions",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1441,7 +1544,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "In-service training and continuing professional development"
+          "@value": "In-service training and continuing professional development",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1466,7 +1570,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Manage staff vacancies"
+          "@value": "Manage staff vacancies",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1491,7 +1596,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Planning and forecasting staff needs"
+          "@value": "Planning and forecasting staff needs",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1516,7 +1622,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Manage promotion, retention, and pension"
+          "@value": "Manage promotion, retention, and pension",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1541,7 +1648,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Workforce credential management"
+          "@value": "Workforce credential management",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1566,7 +1674,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Document employee performance management"
+          "@value": "Document employee performance management",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1591,7 +1700,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Document data on quality and quantity indicators"
+          "@value": "Document data on quality and quantity indicators",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (information-need-table-row), word for word from pages 21-24.",
@@ -1616,7 +1726,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Address policy and governance mechanism"
+          "@value": "Address policy and governance mechanism",
+          "@language": "en"
         }
       ],
       "skos:notation": "b)",
@@ -1637,7 +1748,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Agree on a location to operate the registry"
+          "@value": "Agree on a location to operate the registry",
+          "@language": "en"
         }
       ],
       "skos:notation": "e)",
@@ -1658,7 +1770,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Assure privacy, security and confidentiality of health workforce data"
+          "@value": "Assure privacy, security and confidentiality of health workforce data",
+          "@language": "en"
         }
       ],
       "skos:notation": "i)",
@@ -1679,7 +1792,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Establish standardized reports"
+          "@value": "Establish standardized reports",
+          "@language": "en"
         }
       ],
       "skos:notation": "j)",
@@ -1700,7 +1814,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Number of health workforce by cadre, gender and facility"
+          "@value": "Number of health workforce by cadre, gender and facility",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-list-item), word for word from pages 52-56.",
@@ -1720,7 +1835,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Number of expected retirements"
+          "@value": "Number of expected retirements",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-list-item), word for word from pages 52-56.",
@@ -1740,7 +1856,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Number of expected and completed renewals of license/credentials"
+          "@value": "Number of expected and completed renewals of license/credentials",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-list-item), word for word from pages 52-56.",
@@ -1760,7 +1877,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Number of vacant positions by facility"
+          "@value": "Number of vacant positions by facility",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-list-item), word for word from pages 52-56.",
@@ -1780,7 +1898,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Geographic distribution of total workforce by facility"
+          "@value": "Geographic distribution of total workforce by facility",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-list-item), word for word from pages 52-56.",
@@ -1800,7 +1919,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Geographic distribution (by district) of male and female employees"
+          "@value": "Geographic distribution (by district) of male and female employees",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (function-list-item), word for word from pages 52-56.",
@@ -1820,7 +1940,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Develop, test, and deploy a functional electronic health workforce registry"
+          "@value": "Develop, test, and deploy a functional electronic health workforce registry",
+          "@language": "en"
         }
       ],
       "skos:notation": "k)",
@@ -1841,7 +1962,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Establish appropriate access controls based on an agreed policies."
+          "@value": "Establish appropriate access controls based on an agreed policies.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 56-60.",
@@ -1861,7 +1983,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Design, test and deploy the electronic web-enabled registry based on national eHealth enterprise architecture."
+          "@value": "Design, test and deploy the electronic web-enabled registry based on national eHealth enterprise architecture.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 56-60.",
@@ -1881,7 +2004,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Make available, at sub-national level, a replica of the registry with similar structure and functions, in order to collect and manage the minimum data set from authorized entities at sub-national-level."
+          "@value": "Make available, at sub-national level, a replica of the registry with similar structure and functions, in order to collect and manage the minimum data set from authorized entities at sub-national-level.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 56-60.",
@@ -1901,7 +2025,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adhere to best practices in information systems design to assure accuracy, timeliness, completeness, reliability, privacy, security, and confidentiality of data and information systems and assets."
+          "@value": "Adhere to best practices in information systems design to assure accuracy, timeliness, completeness, reliability, privacy, security, and confidentiality of data and information systems and assets.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "An inspirational, non-definitional functional requirement (system-requirement-statement), word for word from pages 56-60.",
@@ -1921,7 +2046,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Illustration depicting a web-enabled electronic Health Workforce Registry with person-centric data entry screen and analytics display abilities"
+          "@value": "Illustration depicting a web-enabled electronic Health Workforce Registry with person-centric data entry screen and analytics display abilities",
+          "@language": "en"
         }
       ],
       "skos:notation": "Annex A",
@@ -1942,7 +2068,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Based on national or sub-national eHealth enterprise information architecture, national and sub-national health authorities shall develop and deploy the registry."
+          "@value": "Based on national or sub-national eHealth enterprise information architecture, national and sub-national health authorities shall develop and deploy the registry.",
+          "@language": "en"
         }
       ],
       "skos:notation": "12",
@@ -1963,7 +2090,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "The registry shall conform to best practices in information systems design in order to assure quality, accuracy, timeliness, completeness, reliability, privacy, security, and confidentiality of the data and information systems and assets."
+          "@value": "The registry shall conform to best practices in information systems design in order to assure quality, accuracy, timeliness, completeness, reliability, privacy, security, and confidentiality of the data and information systems and assets.",
+          "@language": "en"
         }
       ],
       "skos:notation": "13",
@@ -1984,7 +2112,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Legally authorized users of the registry shall be required to have unique user names and passwords that will be provided by the national Steering Committee, on the approval of the highest health authority at national and sub-national levels. Level of access to the registry shall be determined by the national Steering Committee or its authorized agent."
+          "@value": "Legally authorized users of the registry shall be required to have unique user names and passwords that will be provided by the national Steering Committee, on the approval of the highest health authority at national and sub-national levels. Level of access to the registry shall be determined by the national Steering Committee or its authorized agent.",
+          "@language": "en"
         }
       ],
       "skos:notation": "15",
@@ -2005,7 +2134,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "The registry must be in compliance with all applicable national and sub-national laws related to privacy, security, and confidentiality of data."
+          "@value": "The registry must be in compliance with all applicable national and sub-national laws related to privacy, security, and confidentiality of data.",
+          "@language": "en"
         }
       ],
       "skos:notation": "16",
@@ -2026,7 +2156,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "The registry and its related physical assets shall be secured in accordance with applicable national and sub-national laws."
+          "@value": "The registry and its related physical assets shall be secured in accordance with applicable national and sub-national laws.",
+          "@language": "en"
         }
       ],
       "skos:notation": "17",
@@ -2047,7 +2178,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Minimum data set for health workforce registry"
+          "@value": "Minimum data set for health workforce registry",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Table 3 (pages 24-25): ten data sets, each a group of data elements, with one data-element sheet per element on the pages that follow. Represented here for cross-reference only (owner, 2026-11-12: the 2015 MDS is cross-referenced from DTH-HRH, not the basis of its core data elements). Non-definitional.",
@@ -2067,7 +2199,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Identification Number"
+          "@value": "Identification Number",
+          "@language": "en"
         }
       ],
       "skos:notation": "1",
@@ -2088,7 +2221,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Full Name"
+          "@value": "Full Name",
+          "@language": "en"
         }
       ],
       "skos:notation": "2",
@@ -2109,7 +2243,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Birth History"
+          "@value": "Birth History",
+          "@language": "en"
         }
       ],
       "skos:notation": "3",
@@ -2130,7 +2265,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Citizenship, Country of Residence, and Language"
+          "@value": "Citizenship, Country of Residence, and Language",
+          "@language": "en"
         }
       ],
       "skos:notation": "4",
@@ -2151,7 +2287,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Address"
+          "@value": "Address",
+          "@language": "en"
         }
       ],
       "skos:notation": "5",
@@ -2172,7 +2309,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Contact Information"
+          "@value": "Contact Information",
+          "@language": "en"
         }
       ],
       "skos:notation": "6",
@@ -2193,7 +2331,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Professional License and Certification"
+          "@value": "Professional License and Certification",
+          "@language": "en"
         }
       ],
       "skos:notation": "7",
@@ -2214,7 +2353,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Employment Status"
+          "@value": "Employment Status",
+          "@language": "en"
         }
       ],
       "skos:notation": "8",
@@ -2235,7 +2375,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Employment Address"
+          "@value": "Employment Address",
+          "@language": "en"
         }
       ],
       "skos:notation": "9",
@@ -2256,7 +2397,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Data Submission Institution"
+          "@value": "Data Submission Institution",
+          "@language": "en"
         }
       ],
       "skos:notation": "10",
@@ -2277,7 +2419,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Address (physical)"
+          "@value": "Address (physical)",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 25-26). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2305,7 +2448,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Address (electronic mail)"
+          "@value": "Address (electronic mail)",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 26-27). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2330,7 +2474,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Country"
+          "@value": "Country",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 27-28). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2361,7 +2506,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Date"
+          "@value": "Date",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 28-29). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2392,7 +2538,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Disciplinary action"
+          "@value": "Disciplinary action",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 29-30). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2417,7 +2564,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Education"
+          "@value": "Education",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 30-31). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2442,7 +2590,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Employment occupational category"
+          "@value": "Employment occupational category",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 31-32). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2467,7 +2616,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Employment status"
+          "@value": "Employment status",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 32-33). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2492,7 +2642,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Employment title"
+          "@value": "Employment title",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 33-34). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2517,7 +2668,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Facility type and ownership"
+          "@value": "Facility type and ownership",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 34-35). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2542,7 +2694,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Full name"
+          "@value": "Full name",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 35-36). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2567,7 +2720,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GPS coordinates"
+          "@value": "GPS coordinates",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 36-37). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2592,7 +2746,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Identification number"
+          "@value": "Identification number",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 37-38). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2617,7 +2772,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Language"
+          "@value": "Language",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 38-39). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2642,7 +2798,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "License, registration, and certification"
+          "@value": "License, registration, and certification",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 39-40). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2667,7 +2824,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Photograph"
+          "@value": "Photograph",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 40-41). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2695,7 +2853,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Postal code"
+          "@value": "Postal code",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 41-42). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2720,7 +2879,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sex at birth"
+          "@value": "Sex at birth",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 42-43). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",
@@ -2745,7 +2905,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Telephone number"
+          "@value": "Telephone number",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "A data-element sheet (PDF pages 43-48). The sheet's contextual definition, representation and suggested values are in the source and are not carried as skos:definition: these concepts are for cross-reference only. Non-definitional.",

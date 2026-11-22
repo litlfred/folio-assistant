@@ -367,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "ci-standing-repin",
       "title": "Run a layer's standing re-pin",
-      "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`, open or update ONE repin PR and label it `needs-repin` for the merge manager, creating that label first in a repository that has none (owner, card 2026-11-18); it never merges. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
       "install": {
         "cli": "gh"
       },

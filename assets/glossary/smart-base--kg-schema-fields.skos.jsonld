@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Comparison.findings"
+          "@value": "Comparison.findings",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What moved, one line each; empty when the two match."
+          "@value": "What moved, one line each; empty when the two match.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/compare-extract.ts#Comparison.findings",
@@ -40,12 +46,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakDataDictionaryAnnexSchema.idColumn"
+          "@value": "DakDataDictionaryAnnexSchema.idColumn",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The column key that identifies a data element."
+          "@value": "The column key that identifies a data element.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-annexes.ts#DakDataDictionaryAnnexSchema.idColumn",
@@ -59,12 +67,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakDataDictionaryAnnexSchema.source"
+          "@value": "DakDataDictionaryAnnexSchema.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The workbook it was read from, and the sha256 of its bytes."
+          "@value": "The workbook it was read from, and the sha256 of its bytes.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-annexes.ts#DakDataDictionaryAnnexSchema.source",
@@ -78,12 +88,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakSwimlaneMapSchema.notPersonas"
+          "@value": "DakSwimlaneMapSchema.notPersonas",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lane words that are deliberately not personas -> why."
+          "@value": "Lane words that are deliberately not personas -> why.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapSchema.notPersonas",
@@ -97,12 +109,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakSwimlaneMapSchema.personas"
+          "@value": "DakSwimlaneMapSchema.personas",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Persona as named on the personas page -> the words a lane uses for it."
+          "@value": "Persona as named on the personas page -> the words a lane uses for it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapSchema.personas",
@@ -116,12 +130,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BusinessProcessBlock.objectives"
+          "@value": "BusinessProcessBlock.objectives",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`objectives`: what the workflow is for."
+          "@value": "`objectives`: what the workflow is for.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock.objectives",
@@ -135,12 +151,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BusinessProcessBlock.scenarios"
+          "@value": "BusinessProcessBlock.scenarios",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`scenario`: labels of the user-scenario blocks this workflow serves."
+          "@value": "`scenario`: labels of the user-scenario blocks this workflow serves.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock.scenarios",
@@ -154,12 +172,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BusinessProcessBlock.tasks"
+          "@value": "BusinessProcessBlock.tasks",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`task`: the workflow's tasks, each with an identifier, name and description."
+          "@value": "`task`: the workflow's tasks, each with an identifier, name and description.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock.tasks",
@@ -173,12 +193,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakBlockBase.layer"
+          "@value": "DakBlockBase.layer",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The WHO knowledge layer this block belongs to."
+          "@value": "The WHO knowledge layer this block belongs to.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#DakBlockBase.layer",
@@ -192,12 +214,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakBlockBase.realises"
+          "@value": "DakBlockBase.realises",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Label of the L1 recommendation or L2 component this block realises."
+          "@value": "Label of the L1 recommendation or L2 component this block realises.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#DakBlockBase.realises",
@@ -211,12 +235,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DataElementBlock.canonical"
+          "@value": "DataElementBlock.canonical",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`CoreDataElement.canonical`: the canonical IRI of that artefact."
+          "@value": "`CoreDataElement.canonical`: the canonical IRI of that artefact.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#DataElementBlock.canonical",
@@ -230,12 +256,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DataElementBlock.cdeType"
+          "@value": "DataElementBlock.cdeType",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`CoreDataElement.type`, from `CoreDataElementTypeVS`."
+          "@value": "`CoreDataElement.type`, from `CoreDataElementTypeVS`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#DataElementBlock.cdeType",
@@ -249,12 +277,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DublinCoreRef.source"
+          "@value": "DublinCoreRef.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Canonical URI — an IRIS handle, for WHO publications."
+          "@value": "Canonical URI — an IRIS handle, for WHO publications.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#DublinCoreRef.source",
@@ -268,12 +298,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FunctionalRequirementBlock.activity"
+          "@value": "FunctionalRequirementBlock.activity",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`activity`: the activity being performed."
+          "@value": "`activity`: the activity being performed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.activity",
@@ -287,12 +319,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FunctionalRequirementBlock.actors"
+          "@value": "FunctionalRequirementBlock.actors",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`actor`: labels of the persona blocks that fulfil it."
+          "@value": "`actor`: labels of the persona blocks that fulfil it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.actors",
@@ -306,12 +340,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FunctionalRequirementBlock.benefit"
+          "@value": "FunctionalRequirementBlock.benefit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`benefit`: \"so that\"."
+          "@value": "`benefit`: \"so that\".",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.benefit",
@@ -325,12 +361,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FunctionalRequirementBlock.capability"
+          "@value": "FunctionalRequirementBlock.capability",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`capability`: \"I want\"."
+          "@value": "`capability`: \"I want\".",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.capability",
@@ -344,12 +382,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FunctionalRequirementBlock.classification"
+          "@value": "FunctionalRequirementBlock.classification",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`classification`: codes classifying the requirement."
+          "@value": "`classification`: codes classifying the requirement.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.classification",
@@ -363,12 +403,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FunctionalRequirementBlock.requirementId"
+          "@value": "FunctionalRequirementBlock.requirementId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`FunctionalRequirement.id`, the requirement's own code (e.g. FR-LC-01)."
+          "@value": "`FunctionalRequirement.id`, the requirement's own code (e.g. FR-LC-01).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.requirementId",
@@ -382,12 +424,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "HealthInterventionBlock.references"
+          "@value": "HealthInterventionBlock.references",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Dublin Core references to the guideline this intervention comes from."
+          "@value": "Dublin Core references to the guideline this intervention comes from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#HealthInterventionBlock.references",
@@ -401,12 +445,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndicatorBlock.indicatorId"
+          "@value": "IndicatorBlock.indicatorId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`ProgramIndicator.id`."
+          "@value": "`ProgramIndicator.id`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#IndicatorBlock.indicatorId",
@@ -420,12 +466,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndicatorBlock.references"
+          "@value": "IndicatorBlock.references",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`references`: labels of the health-intervention blocks giving context."
+          "@value": "`references`: labels of the health-intervention blocks giving context.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#IndicatorBlock.references",
@@ -439,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "NonFunctionalRequirementBlock.category"
+          "@value": "NonFunctionalRequirementBlock.category",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`category`: its category (availability, security, …)."
+          "@value": "`category`: its category (availability, security, …).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.category",
@@ -458,12 +508,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "NonFunctionalRequirementBlock.classification"
+          "@value": "NonFunctionalRequirementBlock.classification",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`classification`: codes classifying the requirement."
+          "@value": "`classification`: codes classifying the requirement.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.classification",
@@ -477,12 +529,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "NonFunctionalRequirementBlock.requirement"
+          "@value": "NonFunctionalRequirementBlock.requirement",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`requirement`: the requirement itself."
+          "@value": "`requirement`: the requirement itself.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.requirement",
@@ -496,12 +550,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "NonFunctionalRequirementBlock.requirementId"
+          "@value": "NonFunctionalRequirementBlock.requirementId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`NonFunctionalRequirement.id`."
+          "@value": "`NonFunctionalRequirement.id`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.requirementId",
@@ -515,12 +571,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PersonaBlock.iscoCodes"
+          "@value": "PersonaBlock.iscoCodes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`GenericPersona.iscoCode`: ISCO-08 occupation codes (one to four digits)."
+          "@value": "`GenericPersona.iscoCode`: ISCO-08 occupation codes (one to four digits).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#PersonaBlock.iscoCodes",
@@ -534,12 +592,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PersonaBlock.otherNames"
+          "@value": "PersonaBlock.otherNames",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`GenericPersona.otherNames`: other names or examples."
+          "@value": "`GenericPersona.otherNames`: other names or examples.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#PersonaBlock.otherNames",
@@ -553,12 +613,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PersonaBlock.personaType"
+          "@value": "PersonaBlock.personaType",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`Persona.type`, from `SGPersonaTypesVS`: key, related, system or hardware."
+          "@value": "`Persona.type`, from `SGPersonaTypesVS`: key, related, system or hardware.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#PersonaBlock.personaType",
@@ -572,12 +634,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UserScenarioBlock.personas"
+          "@value": "UserScenarioBlock.personas",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ids of the personas this scenario involves, at least one."
+          "@value": "Ids of the personas this scenario involves, at least one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#UserScenarioBlock.personas",
@@ -591,12 +655,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakDeclaration.canonicalUrl"
+          "@value": "DakDeclaration.canonicalUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the published DAK lives — the base its `@id`s are minted against."
+          "@value": "Where the published DAK lives — the base its `@id`s are minted against.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak.ts#DakDeclaration.canonicalUrl",
@@ -610,12 +676,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakDeclaration.name"
+          "@value": "DakDeclaration.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The instance's name, e.g. the immunizations DAK's own instance name."
+          "@value": "The instance's name, e.g. the immunizations DAK's own instance name.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak.ts#DakDeclaration.name",
@@ -629,12 +697,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakDeclaration.previewUrl"
+          "@value": "DakDeclaration.previewUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where CI previews are served."
+          "@value": "Where CI previews are served.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak.ts#DakDeclaration.previewUrl",
@@ -648,12 +718,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakDeclaration.publicationUrl"
+          "@value": "DakDeclaration.publicationUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the built IG is published, when that differs from `canonicalUrl`."
+          "@value": "Where the built IG is published, when that differs from `canonicalUrl`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dak.ts#DakDeclaration.publicationUrl",
@@ -667,12 +739,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.affectedRoleIris"
+          "@value": "BarrierSolutionEntrySchema.affectedRoleIris",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Persona or governance-role IRIs affected by this barrier."
+          "@value": "Persona or governance-role IRIs affected by this barrier.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.affectedRoleIris",
@@ -686,12 +760,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.archimateAssessmentIri"
+          "@value": "BarrierSolutionEntrySchema.archimateAssessmentIri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional `smart-ra` ArchiMate Motivation `Assessment` or `Driver` element IRI."
+          "@value": "Optional `smart-ra` ArchiMate Motivation `Assessment` or `Driver` element IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.archimateAssessmentIri",
@@ -705,12 +781,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.barrier"
+          "@value": "BarrierSolutionEntrySchema.barrier",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Statement of the barrier or root cause identified in the handbook."
+          "@value": "Statement of the barrier or root cause identified in the handbook.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.barrier",
@@ -724,12 +802,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.barrierId"
+          "@value": "BarrierSolutionEntrySchema.barrierId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the barrier entry (e.g. `\"SFP-BAR-01\"` or `\"PHC-BAR-01\"`)."
+          "@value": "Stable identifier for the barrier entry (e.g. `\"SFP-BAR-01\"` or `\"PHC-BAR-01\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.barrierId",
@@ -743,12 +823,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.candidateSolutions"
+          "@value": "BarrierSolutionEntrySchema.candidateSolutions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Candidate digital or operational solutions addressing this barrier."
+          "@value": "Candidate digital or operational solutions addressing this barrier.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.candidateSolutions",
@@ -762,12 +844,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.category"
+          "@value": "BarrierSolutionEntrySchema.category",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Barrier category (e.g. `\"Awareness and reporting culture\"`, `\"Connectivity\"`, `\"Feedback loop\"`)."
+          "@value": "Barrier category (e.g. `\"Awareness and reporting culture\"`, `\"Connectivity\"`, `\"Feedback loop\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.category",
@@ -781,12 +865,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.relatedRequirementIds"
+          "@value": "BarrierSolutionEntrySchema.relatedRequirementIds",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Identifiers of functional or non-functional requirements that realise the candidate solutions."
+          "@value": "Identifiers of functional or non-functional requirements that realise the candidate solutions.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.relatedRequirementIds",
@@ -800,12 +886,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionEntrySchema.sourceRef"
+          "@value": "BarrierSolutionEntrySchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional row-level L1 handbook citation."
+          "@value": "Optional row-level L1 handbook citation.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionEntrySchema.sourceRef",
@@ -819,12 +907,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionMapSchema.entries"
+          "@value": "BarrierSolutionMapSchema.entries",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Barrier-to-candidate-solution mapping entries."
+          "@value": "Barrier-to-candidate-solution mapping entries.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.entries",
@@ -838,12 +928,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionMapSchema.id"
+          "@value": "BarrierSolutionMapSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the barrier-solution map."
+          "@value": "Stable identifier for the barrier-solution map.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.id",
@@ -857,12 +949,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionMapSchema.sourceRef"
+          "@value": "BarrierSolutionMapSchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "L1 handbook citation for the barrier map."
+          "@value": "L1 handbook citation for the barrier map.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.sourceRef",
@@ -876,12 +970,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BarrierSolutionMapSchema.title"
+          "@value": "BarrierSolutionMapSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable title of the barrier-solution map."
+          "@value": "Human-readable title of the barrier-solution map.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#BarrierSolutionMapSchema.title",
@@ -895,12 +991,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DthStructuredSourceRefSchema.libraryId"
+          "@value": "DthStructuredSourceRefSchema.libraryId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Publication identifier in `who-iris/library/`, e.g. `\"9789240120747-eng\"`."
+          "@value": "Publication identifier in `who-iris/library/`, e.g. `\"9789240120747-eng\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.libraryId",
@@ -914,12 +1012,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DthStructuredSourceRefSchema.pages"
+          "@value": "DthStructuredSourceRefSchema.pages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Printed page range in the source handbook, e.g. `\"14-17\"`."
+          "@value": "Printed page range in the source handbook, e.g. `\"14-17\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.pages",
@@ -933,12 +1033,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DthStructuredSourceRefSchema.quote"
+          "@value": "DthStructuredSourceRefSchema.quote",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional verbatim quote from the L1 source passage."
+          "@value": "Optional verbatim quote from the L1 source passage.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.quote",
@@ -952,12 +1054,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DthStructuredSourceRefSchema.sectionId"
+          "@value": "DthStructuredSourceRefSchema.sectionId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Section identifier in the ingested L1 entry, e.g. `\"sec-008\"`."
+          "@value": "Section identifier in the ingested L1 entry, e.g. `\"sec-008\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.sectionId",
@@ -971,12 +1075,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DthStructuredSourceRefSchema.tableOrAnnex"
+          "@value": "DthStructuredSourceRefSchema.tableOrAnnex",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Table, figure, section, or annex label, e.g. `\"Table 5\"` or `\"Annex 4\"`."
+          "@value": "Table, figure, section, or annex label, e.g. `\"Table 5\"` or `\"Annex 4\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#DthStructuredSourceRefSchema.tableOrAnnex",
@@ -990,12 +1096,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.archimateElementIri"
+          "@value": "GovernanceRoleSchema.archimateElementIri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Link to the corresponding `smart-ra` ArchiMate Business Role, Actor, or Collaboration IRI."
+          "@value": "Link to the corresponding `smart-ra` ArchiMate Business Role, Actor, or Collaboration IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.archimateElementIri",
@@ -1009,12 +1117,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.chairOrLeadRoleIri"
+          "@value": "GovernanceRoleSchema.chairOrLeadRoleIri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "IRI of the chairing or leading role/actor."
+          "@value": "IRI of the chairing or leading role/actor.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.chairOrLeadRoleIri",
@@ -1028,12 +1138,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.decisionRights"
+          "@value": "GovernanceRoleSchema.decisionRights",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Explicit decision rights or approval authorities held by this body/role."
+          "@value": "Explicit decision rights or approval authorities held by this body/role.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.decisionRights",
@@ -1047,12 +1159,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.id"
+          "@value": "GovernanceRoleSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the governance role or body (e.g. `\"SFP-GOV-01\"`)."
+          "@value": "Stable identifier for the governance role or body (e.g. `\"SFP-GOV-01\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.id",
@@ -1066,12 +1180,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.mandate"
+          "@value": "GovernanceRoleSchema.mandate",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Mandate, terms of reference, or core responsibility statement."
+          "@value": "Mandate, terms of reference, or core responsibility statement.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.mandate",
@@ -1085,12 +1201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.meetingCadence"
+          "@value": "GovernanceRoleSchema.meetingCadence",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stated meeting cadence or review frequency (e.g. `\"Quarterly\"`, `\"Monthly during rollout\"`)."
+          "@value": "Stated meeting cadence or review frequency (e.g. `\"Quarterly\"`, `\"Monthly during rollout\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.meetingCadence",
@@ -1104,12 +1222,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.memberRoleIris"
+          "@value": "GovernanceRoleSchema.memberRoleIris",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "IRIs of constituent member roles or stakeholder organisations."
+          "@value": "IRIs of constituent member roles or stakeholder organisations.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.memberRoleIris",
@@ -1123,12 +1243,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.name"
+          "@value": "GovernanceRoleSchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable name of the governance body or leadership role."
+          "@value": "Human-readable name of the governance body or leadership role.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.name",
@@ -1142,12 +1264,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.roleType"
+          "@value": "GovernanceRoleSchema.roleType",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Classification of the governance body or leadership role."
+          "@value": "Classification of the governance body or leadership role.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.roleType",
@@ -1161,12 +1285,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GovernanceRoleSchema.sourceRef"
+          "@value": "GovernanceRoleSchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "L1 handbook citation from which this governance role was extracted."
+          "@value": "L1 handbook citation from which this governance role was extracted.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#GovernanceRoleSchema.sourceRef",
@@ -1180,12 +1306,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciActivitySchema.activity"
+          "@value": "RaciActivitySchema.activity",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Description of the activity, deliverable, or decision task."
+          "@value": "Description of the activity, deliverable, or decision task.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.activity",
@@ -1199,12 +1327,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciActivitySchema.activityId"
+          "@value": "RaciActivitySchema.activityId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the activity row (e.g. `\"SFP-RACI-ACT-01\"`)."
+          "@value": "Stable identifier for the activity row (e.g. `\"SFP-RACI-ACT-01\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.activityId",
@@ -1218,12 +1348,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciActivitySchema.assignments"
+          "@value": "RaciActivitySchema.assignments",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Map from `roleId` (or role IRI) to one or more RACI codes (`\"R\"`, `\"A\"`, `\"C\"`, `\"I\"`)."
+          "@value": "Map from `roleId` (or role IRI) to one or more RACI codes (`\"R\"`, `\"A\"`, `\"C\"`, `\"I\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.assignments",
@@ -1237,12 +1369,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciActivitySchema.phase"
+          "@value": "RaciActivitySchema.phase",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Implementation or DIIG phase name/number (e.g. `\"Phase 1: Assess current state\"`)."
+          "@value": "Implementation or DIIG phase name/number (e.g. `\"Phase 1: Assess current state\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciActivitySchema.phase",
@@ -1256,12 +1390,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciMatrixSchema.activities"
+          "@value": "RaciMatrixSchema.activities",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Sequenced activities with per-role RACI assignments."
+          "@value": "Sequenced activities with per-role RACI assignments.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.activities",
@@ -1275,12 +1411,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciMatrixSchema.id"
+          "@value": "RaciMatrixSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the RACI matrix (e.g. `\"SFP-RACI-ANNEX-04\"`)."
+          "@value": "Stable identifier for the RACI matrix (e.g. `\"SFP-RACI-ANNEX-04\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.id",
@@ -1294,12 +1432,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciMatrixSchema.mode"
+          "@value": "RaciMatrixSchema.mode",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Whether this matrix is fully populated (`\"populated\"`) or a blank/partial worksheet template (`\"template\"`)."
+          "@value": "Whether this matrix is fully populated (`\"populated\"`) or a blank/partial worksheet template (`\"template\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.mode",
@@ -1313,12 +1453,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciMatrixSchema.roles"
+          "@value": "RaciMatrixSchema.roles",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Declared roles (persona IRIs or governance-role IRIs) participating in the matrix."
+          "@value": "Declared roles (persona IRIs or governance-role IRIs) participating in the matrix.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.roles",
@@ -1332,12 +1474,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciMatrixSchema.sourceRef"
+          "@value": "RaciMatrixSchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "L1 handbook citation for the RACI matrix."
+          "@value": "L1 handbook citation for the RACI matrix.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.sourceRef",
@@ -1351,12 +1495,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciMatrixSchema.title"
+          "@value": "RaciMatrixSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable title of the RACI matrix."
+          "@value": "Human-readable title of the RACI matrix.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciMatrixSchema.title",
@@ -1370,12 +1516,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciRoleColumnSchema.label"
+          "@value": "RaciRoleColumnSchema.label",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Display label for the role column header."
+          "@value": "Display label for the role column header.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciRoleColumnSchema.label",
@@ -1389,12 +1537,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciRoleColumnSchema.roleId"
+          "@value": "RaciRoleColumnSchema.roleId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Short role key used as a key in `activity.assignments` (e.g. `\"nmra-lead\"`)."
+          "@value": "Short role key used as a key in `activity.assignments` (e.g. `\"nmra-lead\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciRoleColumnSchema.roleId",
@@ -1408,12 +1558,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RaciRoleColumnSchema.roleIri"
+          "@value": "RaciRoleColumnSchema.roleIri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Formal persona or governance-role IRI."
+          "@value": "Formal persona or governance-role IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RaciRoleColumnSchema.roleIri",
@@ -1427,12 +1579,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskEntrySchema.category"
+          "@value": "RiskEntrySchema.category",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Risk category or domain (e.g. `\"Governance\"`, `\"Technical\"`, `\"Data privacy\"`)."
+          "@value": "Risk category or domain (e.g. `\"Governance\"`, `\"Technical\"`, `\"Data privacy\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.category",
@@ -1446,12 +1600,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskEntrySchema.impact"
+          "@value": "RiskEntrySchema.impact",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Qualitative impact rating, optional when unstated in L1."
+          "@value": "Qualitative impact rating, optional when unstated in L1.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.impact",
@@ -1465,12 +1621,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskEntrySchema.likelihood"
+          "@value": "RiskEntrySchema.likelihood",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Qualitative likelihood rating, optional when unstated in L1."
+          "@value": "Qualitative likelihood rating, optional when unstated in L1.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.likelihood",
@@ -1484,12 +1642,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskEntrySchema.priority"
+          "@value": "RiskEntrySchema.priority",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Qualitative overall priority rating."
+          "@value": "Qualitative overall priority rating.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.priority",
@@ -1503,12 +1663,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskEntrySchema.sourceRef"
+          "@value": "RiskEntrySchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional row-level L1 handbook citation."
+          "@value": "Optional row-level L1 handbook citation.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskEntrySchema.sourceRef",
@@ -1522,12 +1684,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskRegisterSchema.entries"
+          "@value": "RiskRegisterSchema.entries",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Risk and mitigation entries (must be non-empty when `mode === \"populated\"`)."
+          "@value": "Risk and mitigation entries (must be non-empty when `mode === \"populated\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.entries",
@@ -1541,12 +1705,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskRegisterSchema.id"
+          "@value": "RiskRegisterSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the risk register (e.g. `\"PC-RISK-REG-CH02\"`)."
+          "@value": "Stable identifier for the risk register (e.g. `\"PC-RISK-REG-CH02\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.id",
@@ -1560,12 +1726,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskRegisterSchema.mode"
+          "@value": "RiskRegisterSchema.mode",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Whether this register is populated with concrete risks or is a worksheet template."
+          "@value": "Whether this register is populated with concrete risks or is a worksheet template.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.mode",
@@ -1579,12 +1747,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskRegisterSchema.sourceRef"
+          "@value": "RiskRegisterSchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "L1 handbook citation for the risk register."
+          "@value": "L1 handbook citation for the risk register.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.sourceRef",
@@ -1598,12 +1768,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RiskRegisterSchema.title"
+          "@value": "RiskRegisterSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable title of the risk register."
+          "@value": "Human-readable title of the risk register.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#RiskRegisterSchema.title",
@@ -1617,12 +1789,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderAnalysisSchema.id"
+          "@value": "StakeholderAnalysisSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the stakeholder analysis table."
+          "@value": "Stable identifier for the stakeholder analysis table.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.id",
@@ -1636,12 +1810,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderAnalysisSchema.sourceRef"
+          "@value": "StakeholderAnalysisSchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "L1 handbook citation for the stakeholder analysis table."
+          "@value": "L1 handbook citation for the stakeholder analysis table.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.sourceRef",
@@ -1655,12 +1831,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderAnalysisSchema.stakeholders"
+          "@value": "StakeholderAnalysisSchema.stakeholders",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stakeholder mapping rows."
+          "@value": "Stakeholder mapping rows.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.stakeholders",
@@ -1674,12 +1852,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderAnalysisSchema.title"
+          "@value": "StakeholderAnalysisSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable title of the stakeholder analysis table."
+          "@value": "Human-readable title of the stakeholder analysis table.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderAnalysisSchema.title",
@@ -1693,12 +1873,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.archimateStakeholderIri"
+          "@value": "StakeholderEntrySchema.archimateStakeholderIri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional link to the `smart-ra` ArchiMate Motivation `Stakeholder` or Business `Actor`/`Role` IRI."
+          "@value": "Optional link to the `smart-ra` ArchiMate Motivation `Stakeholder` or Business `Actor`/`Role` IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.archimateStakeholderIri",
@@ -1712,12 +1894,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.engagementMechanism"
+          "@value": "StakeholderEntrySchema.engagementMechanism",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Mechanism or channel for engaging this stakeholder across DIIG phases."
+          "@value": "Mechanism or channel for engaging this stakeholder across DIIG phases.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.engagementMechanism",
@@ -1731,12 +1915,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.interestOrInfluence"
+          "@value": "StakeholderEntrySchema.interestOrInfluence",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Statement of the stakeholder's interest, motivation, or influence in the digital transformation."
+          "@value": "Statement of the stakeholder's interest, motivation, or influence in the digital transformation.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.interestOrInfluence",
@@ -1750,12 +1936,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.name"
+          "@value": "StakeholderEntrySchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Name of the stakeholder group or institution (e.g. `\"National Medicines Regulatory Authority (NMRA)\"`)."
+          "@value": "Name of the stakeholder group or institution (e.g. `\"National Medicines Regulatory Authority (NMRA)\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.name",
@@ -1769,12 +1957,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.roleInSystem"
+          "@value": "StakeholderEntrySchema.roleInSystem",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Description of the stakeholder's functional role in the health/regulatory system."
+          "@value": "Description of the stakeholder's functional role in the health/regulatory system.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.roleInSystem",
@@ -1788,12 +1978,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.roleIri"
+          "@value": "StakeholderEntrySchema.roleIri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional link to a DAK persona or `GovernanceRole` IRI when this stakeholder also acts in a workflow lane or governance body."
+          "@value": "Optional link to a DAK persona or `GovernanceRole` IRI when this stakeholder also acts in a workflow lane or governance body.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.roleIri",
@@ -1807,12 +1999,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.sector"
+          "@value": "StakeholderEntrySchema.sector",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Sector classification (e.g. `\"Public health & regulation\"`, `\"Law enforcement & customs\"`, `\"Supply chain & industry\"`, `\"Civil society & patients\"`)."
+          "@value": "Sector classification (e.g. `\"Public health & regulation\"`, `\"Law enforcement & customs\"`, `\"Supply chain & industry\"`, `\"Civil society & patients\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.sector",
@@ -1826,12 +2020,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.sourceRef"
+          "@value": "StakeholderEntrySchema.sourceRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional row-level L1 handbook citation."
+          "@value": "Optional row-level L1 handbook citation.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.sourceRef",
@@ -1845,12 +2041,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StakeholderEntrySchema.stakeholderId"
+          "@value": "StakeholderEntrySchema.stakeholderId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier for the stakeholder entry (e.g. `\"SFP-STK-01\"`)."
+          "@value": "Stable identifier for the stakeholder entry (e.g. `\"SFP-STK-01\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/schemas/dth-planning-schemas.ts#StakeholderEntrySchema.stakeholderId",
@@ -1864,12 +2062,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BpmnStats.taskNames"
+          "@value": "BpmnStats.taskNames",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Task name -> task IRI; null when the name is not unique in the file."
+          "@value": "Task name -> task IRI; null when the name is not unique in the file.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/extract-bpmn.ts#BpmnStats.taskNames",
@@ -1883,12 +2083,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FshFile.path"
+          "@value": "FshFile.path",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Path relative to the smart-base repository root."
+          "@value": "Path relative to the smart-base repository root.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/fsh.ts#FshFile.path",
@@ -1902,12 +2104,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "HeldLayer.dir"
+          "@value": "HeldLayer.dir",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The schemas directory that holds it, relative to the repository root."
+          "@value": "The schemas directory that holds it, relative to the repository root.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/layers.ts#HeldLayer.dir",
@@ -1921,12 +2125,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "HeldLayer.file"
+          "@value": "HeldLayer.file",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The source file, relative to the repository root, for generated banners."
+          "@value": "The source file, relative to the repository root, for generated banners.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/layers.ts#HeldLayer.file",
@@ -1940,12 +2146,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "HeldLayer.key"
+          "@value": "HeldLayer.key",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The layer's id as a document names it: `l1`, `l1-library`, `l2-bpmn`, …"
+          "@value": "The layer's id as a document names it: `l1`, `l1-library`, `l2-bpmn`, …",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/layers.ts#HeldLayer.key",
@@ -1959,12 +2167,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ClassSpec.correspondsTo"
+          "@value": "ClassSpec.correspondsTo",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "An existing smart-base model this class corresponds to without deriving from it, and why not."
+          "@value": "An existing smart-base model this class corresponds to without deriving from it, and why not.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#ClassSpec.correspondsTo",
@@ -1978,12 +2188,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ClassSpec.elaborates"
+          "@value": "ClassSpec.elaborates",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The class of a lower layer this one describes the interior of, at the same IRI (smart-kg `elaborates`)."
+          "@value": "The class of a lower layer this one describes the interior of, at the same IRI (smart-kg `elaborates`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#ClassSpec.elaborates",
@@ -1997,12 +2209,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ClassSpec.properties"
+          "@value": "ClassSpec.properties",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Insertion order is the order smart-kg lists them in, and is kept."
+          "@value": "Insertion order is the order smart-kg lists them in, and is kept.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#ClassSpec.properties",
@@ -2016,12 +2230,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LayerSpec.profileNote"
+          "@value": "LayerSpec.profileNote",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "L3's note on profiles (smart-kg l3.json `profileNote`)."
+          "@value": "L3's note on profiles (smart-kg l3.json `profileNote`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#LayerSpec.profileNote",
@@ -2035,12 +2251,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ParentModel.name"
+          "@value": "ParentModel.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FSH name or FHIR type: `DublinCore` (smart-base), `Coding` (FHIR core)."
+          "@value": "FSH name or FHIR type: `DublinCore` (smart-base), `Coding` (FHIR core).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#ParentModel.name",
@@ -2054,12 +2272,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PropertySpec.binding"
+          "@value": "PropertySpec.binding",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A value set id from the layer, for `fhir: \"code\"`."
+          "@value": "A value set id from the layer, for `fhir: \"code\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.binding",
@@ -2073,12 +2293,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PropertySpec.children"
+          "@value": "PropertySpec.children",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For `fhir: \"BackboneElement\"`: its child elements."
+          "@value": "For `fhir: \"BackboneElement\"`: its child elements.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.children",
@@ -2092,12 +2314,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PropertySpec.inherited"
+          "@value": "PropertySpec.inherited",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Set when the class's {@link ClassSpec.parent} already defines this element."
+          "@value": "Set when the class's {@link ClassSpec.parent} already defines this element.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.inherited",
@@ -2111,12 +2335,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PropertySpec.max"
+          "@value": "PropertySpec.max",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`\"*\"` when the element repeats (FHIR `0..*`)."
+          "@value": "`\"*\"` when the element repeats (FHIR `0..*`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.max",
@@ -2130,12 +2356,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PropertySpec.schema"
+          "@value": "PropertySpec.schema",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The value's schema. Every L1 property is optional on an instance."
+          "@value": "The value's schema. Every L1 property is optional on an instance.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/ontology.ts#PropertySpec.schema",
@@ -2149,12 +2377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AnnotationSourceSchema.document"
+          "@value": "AnnotationSourceSchema.document",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The L1 library document id (who-iris `library/<id>/`)."
+          "@value": "The L1 library document id (who-iris `library/<id>/`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema.document",
@@ -2168,12 +2398,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AnnotationSourceSchema.item"
+          "@value": "AnnotationSourceSchema.item",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The item's number as printed: `1`, `2.3`."
+          "@value": "The item's number as printed: `1`, `2.3`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema.item",
@@ -2187,12 +2419,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AnnotationSourceSchema.page"
+          "@value": "AnnotationSourceSchema.page",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The page the item starts on, when the extraction recorded one."
+          "@value": "The page the item starts on, when the extraction recorded one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#AnnotationSourceSchema.page",
@@ -2206,12 +2440,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakTaskAnnotationsSchema.bpmn"
+          "@value": "DakTaskAnnotationsSchema.bpmn",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The BPMN file these annotate, relative to this file (its basename)."
+          "@value": "The BPMN file these annotate, relative to this file (its basename).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.bpmn",
@@ -2225,12 +2461,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakTaskAnnotationsSchema.document"
+          "@value": "DakTaskAnnotationsSchema.document",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The L1 document and the heading of the annotations block."
+          "@value": "The L1 document and the heading of the annotations block.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.document",
@@ -2244,12 +2482,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakTaskAnnotationsSchema.process"
+          "@value": "DakTaskAnnotationsSchema.process",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The DAK process id: `IMMZ.B`."
+          "@value": "The DAK process id: `IMMZ.B`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.process",
@@ -2263,12 +2503,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DakTaskAnnotationsSchema.unannotated"
+          "@value": "DakTaskAnnotationsSchema.unannotated",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "BPMN task ids with no annotation item."
+          "@value": "BPMN task ids with no annotation item.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#DakTaskAnnotationsSchema.unannotated",
@@ -2282,12 +2524,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.activityId"
+          "@value": "TaskAnnotationSchema.activityId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The DAK activity id (`IMMZ.B1`, `TB.A5`): the join key into the spreadsheets."
+          "@value": "The DAK activity id (`IMMZ.B1`, `TB.A5`): the join key into the spreadsheets.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.activityId",
@@ -2301,12 +2545,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.bpmnTask"
+          "@value": "TaskAnnotationSchema.bpmnTask",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The BPMN task's `@id`: the join key into the diagram."
+          "@value": "The BPMN task's `@id`: the join key into the diagram.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.bpmnTask",
@@ -2320,12 +2566,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.dataElements"
+          "@value": "TaskAnnotationSchema.dataElements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Data element ids the data dictionary keys to this activity."
+          "@value": "Data element ids the data dictionary keys to this activity.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.dataElements",
@@ -2339,12 +2587,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.decisionTables"
+          "@value": "TaskAnnotationSchema.decisionTables",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Decision table ids keyed to this activity, or named by the task's calledDecision."
+          "@value": "Decision table ids keyed to this activity, or named by the task's calledDecision.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.decisionTables",
@@ -2358,12 +2608,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.description"
+          "@value": "TaskAnnotationSchema.description",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The annotation's bullets, as Markdown, one `- ` line per `»`."
+          "@value": "The annotation's bullets, as Markdown, one `- ` line per `»`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.description",
@@ -2377,12 +2629,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.name"
+          "@value": "TaskAnnotationSchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The step's name as the annotation prints it."
+          "@value": "The step's name as the annotation prints it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.name",
@@ -2396,12 +2650,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.personas"
+          "@value": "TaskAnnotationSchema.personas",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Personas performing the task, as the BPMN lane names them."
+          "@value": "Personas performing the task, as the BPMN lane names them.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.personas",
@@ -2415,12 +2671,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TaskAnnotationSchema.requirements"
+          "@value": "TaskAnnotationSchema.requirements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Functional requirement ids keyed to this activity."
+          "@value": "Functional requirement ids keyed to this activity.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L2-bpmn/schemas/task-annotations.ts#TaskAnnotationSchema.requirements",
@@ -2434,12 +2692,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CodeList.name"
+          "@value": "CodeList.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FSH name of the CodeSystem; its all-codes ValueSet is `<name>VS`."
+          "@value": "FSH name of the CodeSystem; its all-codes ValueSet is `<name>VS`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/vocab.ts#CodeList.name",
@@ -2453,12 +2713,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CodeList.source"
+          "@value": "CodeList.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the list came from, so a reviewer can check the migration."
+          "@value": "Where the list came from, so a reviewer can check the migration.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "smart-base/L1/schemas/vocab.ts#CodeList.source",

@@ -2,7 +2,13 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#",
+    "fa": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -74,12 +80,74 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-zh"
+        }
+      ],
       "skos:closeMatch": [
         {
           "@id": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "مسرد",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "glosario",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "glossaire",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "глоссарий",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/platform/glossary#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "术语表",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     }
   ]
 }

@@ -2433,7 +2433,7 @@
       "post": {
         "operationId": "ci-pr-checks",
         "summary": "Run a layer's PR checks",
-        "description": "Dispatch the layer's `harness-pr-checks.yml`, which calls the tools layer's reusable `layer-pr-checks.yml` (mount the pinned layers, run every gate of the layer's dependency harness, compare head against base) and, on main, `layer-main-qa.yml`. The workflow is the Tool: its helper scripts (run-gates, compare-gates, main-verdict, …) are its steps. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+        "description": "Dispatch the layer's `harness-pr-checks.yml`, which calls the tools layer's reusable `layer-pr-checks.yml` (mount the pinned layers, run every gate of the layer's dependency harness, compare head against base) and, on main, `layer-main-qa.yml`. On a PR without `release` / `ready-to-merge` it runs the fast tier, which is ADVISORY (owner, card 2026-11-18): no job concludes `failure`, and the verdict (`fast-verdict`, green or RED) is in the summary and warnings; the full tier fails hard, and merge-guard `--full-tier` still refuses a head whose full tier is not green. The workflow is the Tool: its helper scripts (run-gates, compare-gates, main-verdict, …) are its steps. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
           "cache-first-ci"
         ],
@@ -2877,7 +2877,7 @@
       "post": {
         "operationId": "ci-standing-repin",
         "summary": "Run a layer's standing re-pin",
-        "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+        "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`, open or update ONE repin PR and label it `needs-repin` for the merge manager, creating that label first in a repository that has none (owner, card 2026-11-18); it never merges. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
         "tags": [
           "remote-mount"
         ],
@@ -9742,6 +9742,78 @@
           "when": "A licence id must be checked against a fixed, named edition of the SPDX License List rather than against whatever spdx.org serves today.",
           "limits": "Ids, names and the deprecated flag only — not licence texts, URLs or OSI/FSF flags. The version comes from the pin record, never from this script; refreshing means moving the pin first.",
           "cost": "Two JSON files (~380 KB) fetched once by hand; the ~105 KB snapshot is committed, so nothing runs at check time."
+        }
+      }
+    },
+    "/tools/precheck": {
+      "post": {
+        "operationId": "precheck",
+        "summary": "Precheck a push",
+        "description": "Run, before a push leaves the machine, only the fast checks whose inputs the push changed: `lock:coherence:check` (agreement and freshness) and `mount:remote:check` for a change to `index.lock.json` or `index.config.json`, `check:workflow-pins` for a change under `.github/workflows/`, and the typecheck for a `.ts` change. Nothing runs when the push changed none of them, and the full tier never runs. It is git's `pre-push` hook (`scripts/git-hooks/pre-push`), installed by the session-start primer; the same command runs it by hand (as the hook it is `--git-hook <remote>`, with the pushed refs on stdin).",
+        "tags": [
+          "platform-gates",
+          "continual-progress"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "precheck/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dry-run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Print the checks this push owes and why, running none."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "One line per check run (✓, ✗ or ?), then the red checks' output. Exit 0: every check passed, none was owed, or none could be judged here (no bun, `cat` runner or `node_modules`; a dirty tree; a check that exited 2 or ran past `CAT_PRECHECK_TIMEOUT`, 90 s), each said in one line. Exit 1: a check is red, and the push is refused."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/precheck.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat precheck"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "platform-gates",
+          "continual-progress"
+        ],
+        "x-selection": {
+          "when": "Every push: the hook runs it. By hand before pushing a lock, workflow or TypeScript change, to see in seconds what CI would fail on, since every red CI run emails the owner (owner, card 2026-11-18).",
+          "limits": "Only the checks the push's own changes can break; it is a floor, not `gates`. It judges the working tree, so it judges nothing when the pushed commit is not HEAD or tracked files differ from it. `git push --no-verify` skips it; `CAT_PRECHECK=0` turns it off.",
+          "cost": "15–60 s when a check is owed; nothing otherwise."
         }
       }
     },

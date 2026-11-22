@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Dependency probe"
+          "@value": "Dependency probe",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks."
+          "@value": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
+          "@language": "en"
         }
       ],
       "skos:notation": "check-dependencies",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Content manifest validation"
+          "@value": "Content manifest validation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Validate the block manifests under a path against their schemas."
+          "@value": "Validate the block manifests under a path against their schemas.",
+          "@language": "en"
         }
       ],
       "skos:notation": "content-manifest-validate",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Headless render QC (Playwright)"
+          "@value": "Headless render QC (Playwright)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures."
+          "@value": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures.",
+          "@language": "en"
         }
       ],
       "skos:notation": "headless-render-qc",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Compile LaTeX in a container"
+          "@value": "Compile LaTeX in a container",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first."
+          "@value": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-image",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LaTeX overfull-box report"
+          "@value": "LaTeX overfull-box report",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones."
+          "@value": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-overfull",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LaTeX preflight"
+          "@value": "LaTeX preflight",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build."
+          "@value": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-preflight",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean vacuity audit"
+          "@value": "Lean vacuity audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise."
+          "@value": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-audit",
@@ -161,12 +179,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean build"
+          "@value": "Lean build",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run."
+          "@value": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-build",
@@ -181,12 +201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lake olean cache"
+          "@value": "Lake olean cache",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two."
+          "@value": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-cache",
@@ -201,12 +223,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean coverage"
+          "@value": "Lean coverage",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap."
+          "@value": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-coverage",
@@ -221,12 +245,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Formal edges from the Lean build"
+          "@value": "Formal edges from the Lean build",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\"."
+          "@value": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-formal-edges",
@@ -241,12 +267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Build a Lean package's HTML docs (doc-gen4)"
+          "@value": "Build a Lean package's HTML docs (doc-gen4)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Build the doc-gen4 HTML render of a folio's Lake package — the visualiser of a declared `lean` directory — with `lake -R -Kenv=dev build <Lib>:docs`, cache-aware: refuses while another lake/lean process holds `.lake/`, refuses on a restored tree that carries no traces (a Lake build there EVICTS the cache), checks or restores the warm cache first, and enables a sentinel-commented doc-gen4 `[[require]]` for this build only, restoring the lakefile on exit. Never runs `lake update`. Output: `<lake-root>/.lake/build/doc`."
+          "@value": "Build the doc-gen4 HTML render of a folio's Lake package — the visualiser of a declared `lean` directory — with `lake -R -Kenv=dev build <Lib>:docs`, cache-aware: refuses while another lake/lean process holds `.lake/`, refuses on a restored tree that carries no traces (a Lake build there EVICTS the cache), checks or restores the warm cache first, and enables a sentinel-commented doc-gen4 `[[require]]` for this build only, restoring the lakefile on exit. Never runs `lake update`. Output: `<lake-root>/.lake/build/doc`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-html-docs",
@@ -261,12 +289,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish the dynamic Lean viewer: doc-gen4 declaration data as knowledge-graph shards"
+          "@value": "Publish the dynamic Lean viewer: doc-gen4 declaration data as knowledge-graph shards",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ingest doc-gen4's per-module declaration data (`.lake/build/doc-data/declaration-data-<Module>.bmp`) into JSON-LD shards — one per module, with declaration nodes, `imports` edges and `formalizes` edges to the content blocks whose `lean.ref` names each declaration — and publish them under the folio's site with a single viewer page that loads modules, signature chunks and the search list on demand. Signatures are chunked 500 declarations per file so a 12,804-declaration module stays usable. With `--base` it writes a STAGING overlay: only modules whose content hash differs from the published base, plus `overlay.json`; the viewer loads the rest from the base. Rails the viewer page with the same pass as `lean-render-publish`."
+          "@value": "Ingest doc-gen4's per-module declaration data (`.lake/build/doc-data/declaration-data-<Module>.bmp`) into JSON-LD shards — one per module, with declaration nodes, `imports` edges and `formalizes` edges to the content blocks whose `lean.ref` names each declaration — and publish them under the folio's site with a single viewer page that loads modules, signature chunks and the search list on demand. Signatures are chunked 500 declarations per file so a 12,804-declaration module stays usable. With `--base` it writes a STAGING overlay: only modules whose content hash differs from the published base, plus `overlay.json`; the viewer loads the rest from the base. Rails the viewer page with the same pass as `lean-render-publish`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-kg-publish",
@@ -281,12 +311,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish a Lean render under a folio site, with the harness rail"
+          "@value": "Publish a Lean render under a folio site, with the harness rail",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stage a doc-gen4 render under a folio's built site (`<site>/<route>/`, default `lean/`) and give every page the harness navbar and rail by running `cat-harness/scripts/rail-standalone-pages.ts --foreign-site` over the site — the same rail `stage-folio-local.ts` applies to the folio's own pages. Leaves out Lake's `.hash`/`.trace` bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect `folio-navbar: none` so no rail is drawn inside the sidebar, adds a layout shim so the rail does not cover doc-gen4's fixed sidebar, and with `--modules` prunes to the folio's own modules, repointing links into dropped ones to the community docs. Then asserts every staged page is railed or declined."
+          "@value": "Stage a doc-gen4 render under a folio's built site (`<site>/<route>/`, default `lean/`) and give every page the harness navbar and rail by running `cat-harness/scripts/rail-standalone-pages.ts --foreign-site` over the site — the same rail `stage-folio-local.ts` applies to the folio's own pages. Leaves out Lake's `.hash`/`.trace` bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect `folio-navbar: none` so no rail is drawn inside the sidebar, adds a layout shim so the rail does not cover doc-gen4's fixed sidebar, and with `--modules` prunes to the folio's own modules, repointing links into dropped ones to the community docs. Then asserts every staged page is railed or declined.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-render-publish",
@@ -301,12 +333,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean toolchain install"
+          "@value": "Lean toolchain install",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading."
+          "@value": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-toolchain-setup",
@@ -321,12 +355,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Paper feature build (changed chapters + latexdiff)"
+          "@value": "Paper feature build (changed chapters + latexdiff)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. A preview, never a publish build. Run from the folio."
+          "@value": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. A preview, never a publish build. Run from the folio.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-feature-build",
@@ -341,12 +377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Paper build to LaTeX chapters"
+          "@value": "Paper build to LaTeX chapters",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none."
+          "@value": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-latex-build",
@@ -361,12 +399,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Rendering preferences"
+          "@value": "Rendering preferences",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode."
+          "@value": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-preferences",
@@ -381,12 +421,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open a render"
+          "@value": "Open a render",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open."
+          "@value": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-preview",
@@ -401,12 +443,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Proof dependency graph"
+          "@value": "Proof dependency graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF."
+          "@value": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-dependency-graph",
@@ -421,12 +465,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Proof-object extraction"
+          "@value": "Proof-object extraction",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read."
+          "@value": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-objects-extract",
@@ -441,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Proof status from a Lean build"
+          "@value": "Proof status from a Lean build",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status."
+          "@value": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-status-update",
@@ -461,12 +509,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Install TeX Live in a sandbox"
+          "@value": "Install TeX Live in a sandbox",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. Run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal)."
+          "@value": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. Run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+          "@language": "en"
         }
       ],
       "skos:notation": "tex-install",
@@ -481,12 +531,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TeX snippet validation (AST)"
+          "@value": "TeX snippet validation (AST)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one."
+          "@value": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+          "@language": "en"
         }
       ],
       "skos:notation": "tex-snippet-validate",
@@ -501,12 +553,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TeX-source hazard audit"
+          "@value": "TeX-source hazard audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript."
+          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript.",
+          "@language": "en"
         }
       ],
       "skos:notation": "tex-source-audit",

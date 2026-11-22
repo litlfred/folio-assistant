@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "build-docs"
+          "@value": "build-docs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package."
+          "@value": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.",
+          "@language": "en"
         }
       ],
       "skos:notation": "build-docs",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "build-pdf"
+          "@value": "build-pdf",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs."
+          "@value": "Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs.",
+          "@language": "en"
         }
       ],
       "skos:notation": "build-pdf",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "category-theory"
+          "@value": "category-theory",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4. Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs."
+          "@value": "Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4. Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs.",
+          "@language": "en"
         }
       ],
       "skos:notation": "category-theory",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "chapter-analysis"
+          "@value": "chapter-analysis",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Thorough analysis and Lean 4 formalization of a single manuscript chapter. Extracts all narrative definitions/propositions (excluding remarks), identifies missing glossary terms, writes comprehensive Lean stubs using mathlib, and proves limiting-case and structural theorems where possible."
+          "@value": "Thorough analysis and Lean 4 formalization of a single manuscript chapter. Extracts all narrative definitions/propositions (excluding remarks), identifies missing glossary terms, writes comprehensive Lean stubs using mathlib, and proves limiting-case and structural theorems where possible.",
+          "@language": "en"
         }
       ],
       "skos:notation": "chapter-analysis",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "compute-audit"
+          "@value": "compute-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit compute scripts for a catalogue of correctness and performance antipatterns. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines."
+          "@value": "Audit compute scripts for a catalogue of correctness and performance antipatterns. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines.",
+          "@language": "en"
         }
       ],
       "skos:notation": "compute-audit",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "compute-author"
+          "@value": "compute-author",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to `compute-audit` (post-hoc); this skill is pre-work."
+          "@value": "Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to `compute-audit` (post-hoc); this skill is pre-work.",
+          "@language": "en"
         }
       ],
       "skos:notation": "compute-author",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "compute-integration-watcher"
+          "@value": "compute-integration-watcher",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring)."
+          "@value": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
+          "@language": "en"
         }
       ],
       "skos:notation": "compute-integration-watcher",
@@ -161,12 +179,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "content-block-review"
+          "@value": "content-block-review",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Reviews existing content blocks for adherence to all requirements — structural integrity, Lean proof rules, cross-reference consistency, status accuracy, and naming conventions. Flags violations with actionable diagnostics."
+          "@value": "Reviews existing content blocks for adherence to all requirements — structural integrity, Lean proof rules, cross-reference consistency, status accuracy, and naming conventions. Flags violations with actionable diagnostics.",
+          "@language": "en"
         }
       ],
       "skos:notation": "content-block-review",
@@ -181,7 +201,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "content-validation"
+          "@value": "content-validation",
+          "@language": "en"
         }
       ],
       "skos:notation": "content-validation",
@@ -196,12 +217,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "critical-path-analysis"
+          "@value": "critical-path-analysis",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups. Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions."
+          "@value": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups. Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions.",
+          "@language": "en"
         }
       ],
       "skos:notation": "critical-path-analysis",
@@ -216,12 +239,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "definition-clarity-audit"
+          "@value": "definition-clarity-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised, the definition is buried under paragraphs of motivation, or one `definition` block silently bundles three or four distinct definienda. Use when asked to \"bold defined terms\", \"tighten definitions\", \"no rambling definitions\", \"one definition per block\", \"tight theorem/proposition/lemma statements\", or to set up / run a clarity audit. Also runs the inverse audit — a non-`definition` block that secretly carries a definition (`clarity-defn-misplaced`) — plus a statement-purity check (`clarity-stmt-pure`: a theorem/prop/lemma/conjecture carries only its claim; embedded remark / interpretation moves to a follow-on `remark`) and a register check (`clarity-grad-style`: graduate-level formal-math prose — no contractions, second-person, hype, colloquialism, or emoji). Emits per-block QA sidecar params under the `clarity-*` criteria via `content/pipeline/definition-clarity-audit.ts`."
+          "@value": "Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised, the definition is buried under paragraphs of motivation, or one `definition` block silently bundles three or four distinct definienda. Use when asked to \"bold defined terms\", \"tighten definitions\", \"no rambling definitions\", \"one definition per block\", \"tight theorem/proposition/lemma statements\", or to set up / run a clarity audit. Also runs the inverse audit — a non-`definition` block that secretly carries a definition (`clarity-defn-misplaced`) — plus a statement-purity check (`clarity-stmt-pure`: a theorem/prop/lemma/conjecture carries only its claim; embedded remark / interpretation moves to a follow-on `remark`) and a register check (`clarity-grad-style`: graduate-level formal-math prose — no contractions, second-person, hype, colloquialism, or emoji). Emits per-block QA sidecar params under the `clarity-*` criteria via `content/pipeline/definition-clarity-audit.ts`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "definition-clarity-audit",
@@ -236,12 +261,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "detangler-integration-watcher"
+          "@value": "detangler-integration-watcher",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `integration-watcher`."
+          "@value": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `integration-watcher`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "detangler-integration-watcher",
@@ -256,12 +283,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "devils-advocate-paper"
+          "@value": "devils-advocate-paper",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What the harness's devils-advocate-watcher means for a paper folio: its claim-bearing kinds and formal tree, the Lean vacuity shapes the Formalist lens looks for, and the paper watchers the adversary sits beside."
+          "@value": "What the harness's devils-advocate-watcher means for a paper folio: its claim-bearing kinds and formal tree, the Lean vacuity shapes the Formalist lens looks for, and the paper watchers the adversary sits beside.",
+          "@language": "en"
         }
       ],
       "skos:notation": "devils-advocate-paper",
@@ -276,12 +305,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ffi-roundtrip-audit"
+          "@value": "ffi-roundtrip-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change."
+          "@value": "Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ffi-roundtrip-audit",
@@ -296,12 +327,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "formal-accuracy"
+          "@value": "formal-accuracy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple."
+          "@value": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple.",
+          "@language": "en"
         }
       ],
       "skos:notation": "formal-accuracy",
@@ -316,12 +349,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "formal-layer-editing"
+          "@value": "formal-layer-editing",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The formal-layer half of the harness's editor: the heavy-proof discipline, the routing rows for formal requests, the proof-block workflow and the pre-merge formal audits, for a paper folio with a Lean layer."
+          "@value": "The formal-layer half of the harness's editor: the heavy-proof discipline, the routing rows for formal requests, the proof-block workflow and the pre-merge formal audits, for a paper folio with a Lean layer.",
+          "@language": "en"
         }
       ],
       "skos:notation": "formal-layer-editing",
@@ -336,12 +371,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "formalizer"
+          "@value": "formalizer",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks. Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile."
+          "@value": "Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks. Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile.",
+          "@language": "en"
         }
       ],
       "skos:notation": "formalizer",
@@ -356,12 +393,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "groebner-basis"
+          "@value": "groebner-basis",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Compute Gröbner bases and normal forms for (possibly non-commutative) algebraic structures using a CAS (e.g. Singular letterplace) or an instrumented project routine. Reduce words to normal form with step-by-step logging, extract invariants, and emit witness JSON."
+          "@value": "Compute Gröbner bases and normal forms for (possibly non-commutative) algebraic structures using a CAS (e.g. Singular letterplace) or an instrumented project routine. Reduce words to normal form with step-by-step logging, extract invariants, and emit witness JSON.",
+          "@language": "en"
         }
       ],
       "skos:notation": "groebner-basis",
@@ -376,12 +415,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "hypothesis-generation"
+          "@value": "hypothesis-generation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts."
+          "@value": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.",
+          "@language": "en"
         }
       ],
       "skos:notation": "hypothesis-generation",
@@ -396,7 +437,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "latex-authoring"
+          "@value": "latex-authoring",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-authoring",
@@ -411,12 +453,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "latex-build-cache"
+          "@value": "latex-build-cache",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "LaTeX build performance. What works is the iterative loop: a static preflight with no TeX, Tool `tex-install` for an engine, Tool `paper-feature-build` for quick changed-chapter builds with latexdiff, then the full build. Both standard preamble/diagram caching mechanisms failed on this toolchain, so there is no cache; read the negative results before attempting one."
+          "@value": "LaTeX build performance. What works is the iterative loop: a static preflight with no TeX, Tool `tex-install` for an engine, Tool `paper-feature-build` for quick changed-chapter builds with latexdiff, then the full build. Both standard preamble/diagram caching mechanisms failed on this toolchain, so there is no cache; read the negative results before attempting one.",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-build-cache",
@@ -431,12 +475,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "latex-compilation"
+          "@value": "latex-compilation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Compile LaTeX source documents into PDF using latexmk and pdflatex, with safe shell-escape isolation across trusted and untrusted environments."
+          "@value": "Compile LaTeX source documents into PDF using latexmk and pdflatex, with safe shell-escape isolation across trusted and untrusted environments.",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-compilation",
@@ -451,7 +497,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "latex-validation"
+          "@value": "latex-validation",
+          "@language": "en"
         }
       ],
       "skos:notation": "latex-validation",
@@ -466,12 +513,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-build-fix"
+          "@value": "lean-build-fix",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Iteratively fix Lean build errors and linter warnings until the build passes cleanly. Uses MCP diagnostics when available, falls back to parsing lake build output."
+          "@value": "Iteratively fix Lean build errors and linter warnings until the build passes cleanly. Uses MCP diagnostics when available, falls back to parsing lake build output.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-build-fix",
@@ -486,12 +535,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-cache-restore"
+          "@value": "lean-cache-restore",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The Lean build loop — restore a warm cache before working, and contribute your build back when done. One command each. A restore is ~2 minutes; a cold Mathlib build is 30-60."
+          "@value": "The Lean build loop — restore a warm cache before working, and contribute your build back when done. One command each. A restore is ~2 minutes; a cold Mathlib build is 30-60.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-cache-restore",
@@ -506,12 +557,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-completeness-audit"
+          "@value": "lean-completeness-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit Lean formalization completeness across all papers: verify Lake project setup, check import coverage, identify missing .lean files for content blocks that require them, report formalization gaps, and detect stale witnesses."
+          "@value": "Audit Lean formalization completeness across all papers: verify Lake project setup, check import coverage, identify missing .lean files for content blocks that require them, report formalization gaps, and detect stale witnesses.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-completeness-audit",
@@ -526,12 +579,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-content-test"
+          "@value": "lean-content-test",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The paper-folio half of the harness's content-test: run Lean proof verification and LaTeX compilation, dispatch the repo's Lean CI, and check how much of the corpus a Lake build reaches before reading its numbers."
+          "@value": "The paper-folio half of the harness's content-test: run Lean proof verification and LaTeX compilation, dispatch the repo's Lean CI, and check how much of the corpus a Lake build reaches before reading its numbers.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-content-test",
@@ -546,12 +601,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-environment-setup"
+          "@value": "lean-environment-setup",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Sets up and troubleshoots the Lean 4 environment for Claude Code sessions. Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean tools are operational. Handles sandboxed/cloud environments where downloads may be restricted."
+          "@value": "Sets up and troubleshoots the Lean 4 environment for Claude Code sessions. Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean tools are operational. Handles sandboxed/cloud environments where downloads may be restricted.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-environment-setup",
@@ -566,12 +623,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-formal-edges"
+          "@value": "lean-formal-edges",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \\uses), when `lean-formal-graph` reports source \"scan\", or before trusting a type/value split."
+          "@value": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \\uses), when `lean-formal-graph` reports source \"scan\", or before trusting a type/value split.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-formal-edges",
@@ -586,12 +645,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-formal-graph"
+          "@value": "lean-formal-graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Build and query the FORMAL dependency graph — what a proof actually invokes, derived from `lean.ref`. Distinct from `uses[]`, which is editorial. Use for impact analysis, exposition gaps, and declaration ownership."
+          "@value": "Build and query the FORMAL dependency graph — what a proof actually invokes, derived from `lean.ref`. Distinct from `uses[]`, which is editorial. Use for impact analysis, exposition gaps, and declaration ownership.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-formal-graph",
@@ -606,7 +667,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-formalization"
+          "@value": "lean-formalization",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-formalization",
@@ -621,12 +683,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-generation"
+          "@value": "lean-generation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract theorem-like objects from LaTeX source and generate corresponding Lean 4 stub files with `sorry` placeholders. Maintains the proof-objects.json manifest linking LaTeX labels to Lean declarations by doc-gen4 URL."
+          "@value": "Extract theorem-like objects from LaTeX source and generate corresponding Lean 4 stub files with `sorry` placeholders. Maintains the proof-objects.json manifest linking LaTeX labels to Lean declarations by doc-gen4 URL.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-generation",
@@ -641,12 +705,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-html-docs"
+          "@value": "lean-html-docs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Build and publish the visualiser of a folio's declared `lean` directory: the package's doc-gen4 HTML render, staged under the folio's site and wrapped in the harness navbar and rail. Use when a folio's Lean docs are missing, stale, or published without the harness chrome, or when declaring a `lean` directory and its `coverage.visualiser`."
+          "@value": "Build and publish the visualiser of a folio's declared `lean` directory: the package's doc-gen4 HTML render, staged under the folio's site and wrapped in the harness navbar and rail. Use when a folio's Lean docs are missing, stale, or published without the harness chrome, or when declaring a `lean` directory and its `coverage.visualiser`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-html-docs",
@@ -661,12 +727,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-mathlibext-curator"
+          "@value": "lean-mathlibext-curator",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Curate `<Paper>/MathlibExt.lean` — the staging area for upstream- candidate lemmas (List/sort plumbing, Foldl/foldr at Monoid level, Real-function bridges). Decide what lives in `MathlibExt` vs inline, and tag candidates with `-- TODO upstream: …`."
+          "@value": "Curate `<Paper>/MathlibExt.lean` — the staging area for upstream- candidate lemmas (List/sort plumbing, Foldl/foldr at Monoid level, Real-function bridges). Decide what lives in `MathlibExt` vs inline, and tag candidates with `-- TODO upstream: …`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-mathlibext-curator",
@@ -681,12 +749,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-proof-review"
+          "@value": "lean-proof-review",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Review Lean 4 proofs for correctness, style, and completeness. Tracks review scores from multiple reviewers (human and agentic) in proof-objects.json. Integrates with the agent-review pipeline."
+          "@value": "Review Lean 4 proofs for correctness, style, and completeness. Tracks review scores from multiple reviewers (human and agentic) in proof-objects.json. Integrates with the agent-review pipeline.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-proof-review",
@@ -701,12 +771,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-proof-vacuity-audit"
+          "@value": "lean-proof-vacuity-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Detect and fix Lean \"vacuous proof\" anti-patterns — declarations that type-check, are sorry-free and axiom-clean, and whose statement matches the .md, yet carry NO mathematical content (they assume what they claim, conclude something trivially true, or rest on a false premise). These slip past `proof-statement-integrity` (which only checks signature-stability + an axiom sweep), so detection is semantic and agent-checked. Use when auditing Lean for circular / vacuous / trivially-true proofs, after a batch proof-statement-integrity normalization (the batch \"wrap the conclusion in a structure field and project it\" fix produces these), or when a \"theorem\" looks too easy. Emits per-block QA sidecar params under the `proof-no-*` criteria."
+          "@value": "Detect and fix Lean \"vacuous proof\" anti-patterns — declarations that type-check, are sorry-free and axiom-clean, and whose statement matches the .md, yet carry NO mathematical content (they assume what they claim, conclude something trivially true, or rest on a false premise). These slip past `proof-statement-integrity` (which only checks signature-stability + an axiom sweep), so detection is semantic and agent-checked. Use when auditing Lean for circular / vacuous / trivially-true proofs, after a batch proof-statement-integrity normalization (the batch \"wrap the conclusion in a structure field and project it\" fix produces these), or when a \"theorem\" looks too easy. Emits per-block QA sidecar params under the `proof-no-*` criteria.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-proof-vacuity-audit",
@@ -721,12 +793,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-substantive-pass"
+          "@value": "lean-substantive-pass",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convert abstract `holds : Prop` / `claim : Prop` placeholder Lean stubs into typed sub-claim contexts with manuscript-semantic field names. Three escalation levels: hand-craft per-block (highest fidelity), bulk-script split on numbered sub-claims, and docstring enrichment (extract first-sentence summaries from .md). Use this skill after `lean-generation` has created the placeholder stubs and the backlog is structurally closed."
+          "@value": "Convert abstract `holds : Prop` / `claim : Prop` placeholder Lean stubs into typed sub-claim contexts with manuscript-semantic field names. Three escalation levels: hand-craft per-block (highest fidelity), bulk-script split on numbered sub-claims, and docstring enrichment (extract first-sentence summaries from .md). Use this skill after `lean-generation` has created the placeholder stubs and the backlog is structurally closed.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-substantive-pass",
@@ -741,12 +815,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-toolchain-contract"
+          "@value": "lean-toolchain-contract",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read."
+          "@value": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-toolchain-contract",
@@ -761,12 +837,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "lean-witness-audit"
+          "@value": "lean-witness-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit computation scripts (typically Python) that produce witness statements for Lean formalization. Verify witnesses are complete, self-documenting, use paper notation, link to a content block, and emit Lean-compatible declarations. Detects staleness via script content hash and git commit SHA."
+          "@value": "Audit computation scripts (typically Python) that produce witness statements for Lean formalization. Verify witnesses are complete, self-documenting, use paper notation, link to a content block, and emit Lean-compatible declarations. Detects staleness via script content hash and git commit SHA.",
+          "@language": "en"
         }
       ],
       "skos:notation": "lean-witness-audit",
@@ -781,12 +859,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "math-md-authoring"
+          "@value": "math-md-authoring",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks."
+          "@value": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks.",
+          "@language": "en"
         }
       ],
       "skos:notation": "math-md-authoring",
@@ -801,12 +881,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "math-readability-editing"
+          "@value": "math-readability-editing",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The math half of the harness's readability-editing: math-specific style checks, the blueprint and formal-proof index cross-checks, and the mandatory TeX snippet validation after editing a paper folio's blocks."
+          "@value": "The math half of the harness's readability-editing: math-specific style checks, the blueprint and formal-proof index cross-checks, and the mandatory TeX snippet validation after editing a paper folio's blocks.",
+          "@language": "en"
         }
       ],
       "skos:notation": "math-readability-editing",
@@ -821,12 +903,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "math-render-check"
+          "@value": "math-render-check",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The math half of the harness's markdown-render-check: grep checks for display math, KaTeX and LaTeX patterns that GitHub's renderer breaks, and the fix recipe for multi-line display equations."
+          "@value": "The math half of the harness's markdown-render-check: grep checks for display math, KaTeX and LaTeX patterns that GitHub's renderer breaks, and the fix recipe for multi-line display equations.",
+          "@language": "en"
         }
       ],
       "skos:notation": "math-render-check",
@@ -841,12 +925,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "milnor-exposition-standard"
+          "@value": "milnor-exposition-standard",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so."
+          "@value": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so.",
+          "@language": "en"
         }
       ],
       "skos:notation": "milnor-exposition-standard",
@@ -861,12 +947,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "paper-chapter-complexity"
+          "@value": "paper-chapter-complexity",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The paper-folio half of the harness's chapter-complexity-review and block-density skills: the mathematical block-kind classifier for logical vs. storytelling backward edges, cross-paper uses[] filtering, and table-extraction and density rules for formal statement blocks."
+          "@value": "The paper-folio half of the harness's chapter-complexity-review and block-density skills: the mathematical block-kind classifier for logical vs. storytelling backward edges, cross-paper uses[] filtering, and table-extraction and density rules for formal statement blocks.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-chapter-complexity",
@@ -881,12 +969,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "paper-glossary-build"
+          "@value": "paper-glossary-build",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The paper half of core's glossary-build: the typeset glossary chapter, the defined-term markers in `.tex`, and the formal synonyms module a paper with a Lean pipeline regenerates from `glossary.json`."
+          "@value": "The paper half of core's glossary-build: the typeset glossary chapter, the defined-term markers in `.tex`, and the formal synonyms module a paper with a Lean pipeline regenerates from `glossary.json`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-glossary-build",
@@ -901,12 +991,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "paper-importer"
+          "@value": "paper-importer",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper."
+          "@value": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-importer",
@@ -921,12 +1013,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "paper-voice-audit"
+          "@value": "paper-voice-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The paper-folio half of the harness's one-voice-audit, one-voice-integration-watcher, and one-voice-style-guide: scholarly voice across proof bodies, pdflatex Unicode crash remediation, mathematical hedging patterns, conditional-theorem banners, and paper watcher triggers."
+          "@value": "The paper-folio half of the harness's one-voice-audit, one-voice-integration-watcher, and one-voice-style-guide: scholarly voice across proof bodies, pdflatex Unicode crash remediation, mathematical hedging patterns, conditional-theorem banners, and paper watcher triggers.",
+          "@language": "en"
         }
       ],
       "skos:notation": "paper-voice-audit",
@@ -941,12 +1035,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-conciseness"
+          "@value": "proof-conciseness",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Tighten narrative (human-readable) proofs without changing mathematical content. Targets verbose prose patterns in `.md` proof files — padding phrases, re-explained elementary steps, redundant restatement, long case analyses that collapse into tables. Complements proof-simplifier (Lean tactics) and readability-editing (chapter prose); this skill operates on the proof block's `.md` specifically and preserves every logical step."
+          "@value": "Tighten narrative (human-readable) proofs without changing mathematical content. Targets verbose prose patterns in `.md` proof files — padding phrases, re-explained elementary steps, redundant restatement, long case analyses that collapse into tables. Complements proof-simplifier (Lean tactics) and readability-editing (chapter prose); this skill operates on the proof block's `.md` specifically and preserves every logical step.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-conciseness",
@@ -961,12 +1057,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-editor"
+          "@value": "proof-editor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Coordinator skill for proof review and repair. Runs the full proof skill suite (gap audit, lean review, completeness, simplifier, triage), deduplicates findings across reviewers, ranks by severity and dependency order, and delivers a single author-ready action plan with concrete suggested edits (never applying them without author approval)."
+          "@value": "Coordinator skill for proof review and repair. Runs the full proof skill suite (gap audit, lean review, completeness, simplifier, triage), deduplicates findings across reviewers, ranks by severity and dependency order, and delivers a single author-ready action plan with concrete suggested edits (never applying them without author approval).",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-editor",
@@ -981,12 +1079,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-exposition-review"
+          "@value": "proof-exposition-review",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Paper-wide retrospective review of a single proof block. Given the current state of the paper — including all blocks added since the proof was written — suggest simplifications to the statement, proof, or surrounding exposition. Complements proof-simplifier (which operates on 2-4 block local clusters) by considering the full dependency graph and all recently-added content."
+          "@value": "Paper-wide retrospective review of a single proof block. Given the current state of the paper — including all blocks added since the proof was written — suggest simplifications to the statement, proof, or surrounding exposition. Complements proof-simplifier (which operates on 2-4 block local clusters) by considering the full dependency graph and all recently-added content.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-exposition-review",
@@ -1001,12 +1101,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-gap-audit"
+          "@value": "proof-gap-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together)."
+          "@value": "Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together).",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-gap-audit",
@@ -1021,12 +1123,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-integration-watcher"
+          "@value": "proof-integration-watcher",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `integration-watcher`."
+          "@value": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `integration-watcher`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-integration-watcher",
@@ -1041,12 +1145,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-narrative-lean-equivalence"
+          "@value": "proof-narrative-lean-equivalence",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For each content block with both a narrative proof (.md) and a Lean sibling (.lean), verify the two prove the same thing. Detect stub-weakening (Lean claims less than the paper), overreach (Lean claims more than the paper), hypothesis mismatches, and notation drift. Produces a structured equivalence report; no edits."
+          "@value": "For each content block with both a narrative proof (.md) and a Lean sibling (.lean), verify the two prove the same thing. Detect stub-weakening (Lean claims less than the paper), overreach (Lean claims more than the paper), hypothesis mismatches, and notation drift. Produces a structured equivalence report; no edits.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-narrative-lean-equivalence",
@@ -1061,12 +1167,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-simplifier"
+          "@value": "proof-simplifier",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Analyse small clusters (2–4) of connected proofs to find simplifications: shared lemmas, redundant constructions, factored abstractions, or shorter proof paths through the dependency graph."
+          "@value": "Analyse small clusters (2–4) of connected proofs to find simplifications: shared lemmas, redundant constructions, factored abstractions, or shorter proof paths through the dependency graph.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-simplifier",
@@ -1081,12 +1189,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-status-tracking"
+          "@value": "proof-status-tracking",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages. Generate status dashboards and enforce review policies."
+          "@value": "Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages. Generate status dashboards and enforce review policies.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-status-tracking",
@@ -1101,12 +1211,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-triage"
+          "@value": "proof-triage",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Systematically triages and resolves `sorry` stubs across the Lean codebase. Inventories all sorry sites, orders them by dependency, attempts proofs using mathlib/library search, and escalates to a proof writer with similar-lemma suggestions when stuck."
+          "@value": "Systematically triages and resolves `sorry` stubs across the Lean codebase. Inventories all sorry sites, orders them by dependency, attempts proofs using mathlib/library search, and escalates to a proof writer with similar-lemma suggestions when stuck.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-triage",
@@ -1121,7 +1233,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proof-verification"
+          "@value": "proof-verification",
+          "@language": "en"
         }
       ],
       "skos:notation": "proof-verification",
@@ -1136,12 +1249,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "proposition-consolidation-audit"
+          "@value": "proposition-consolidation-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit \"specialisation of\"/\"case of\"/\"corollary of\" wording in `.md`, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases."
+          "@value": "Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit \"specialisation of\"/\"case of\"/\"corollary of\" wording in `.md`, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases.",
+          "@language": "en"
         }
       ],
       "skos:notation": "proposition-consolidation-audit",
@@ -1156,12 +1271,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "q-usage-watcher"
+          "@value": "q-usage-watcher",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `integration-watcher`."
+          "@value": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `integration-watcher`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "q-usage-watcher",
@@ -1176,12 +1293,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "reference-dataset-ingestion"
+          "@value": "reference-dataset-ingestion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as {{ <instance>.library.<entry>.<slug> }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a \"vendored snapshot\" of someone else's numbers."
+          "@value": "Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as {{ <instance>.library.<entry>.<slug> }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a \"vendored snapshot\" of someone else's numbers.",
+          "@language": "en"
         }
       ],
       "skos:notation": "reference-dataset-ingestion",
@@ -1196,12 +1315,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "remark-audit"
+          "@value": "remark-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization."
+          "@value": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization.",
+          "@language": "en"
         }
       ],
       "skos:notation": "remark-audit",
@@ -1216,12 +1337,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "rendering-auditor"
+          "@value": "rendering-auditor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports."
+          "@value": "Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports.",
+          "@language": "en"
         }
       ],
       "skos:notation": "rendering-auditor",
@@ -1236,12 +1359,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "rendering-fixes"
+          "@value": "rendering-fixes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Quick-fix reference for common rendering errors found by the rendering-auditor. Agents should consult this when editing content blocks to avoid introducing issues and to fix flagged problems efficiently."
+          "@value": "Quick-fix reference for common rendering errors found by the rendering-auditor. Agents should consult this when editing content blocks to avoid introducing issues and to fix flagged problems efficiently.",
+          "@language": "en"
         }
       ],
       "skos:notation": "rendering-fixes",
@@ -1256,12 +1381,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "scientific-critical-thinking"
+          "@value": "scientific-critical-thinking",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review."
+          "@value": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.",
+          "@language": "en"
         }
       ],
       "skos:notation": "scientific-critical-thinking",
@@ -1276,12 +1403,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "scientific-visualization"
+          "@value": "scientific-visualization",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
+          "@value": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
+          "@language": "en"
         }
       ],
       "skos:notation": "scientific-visualization",
@@ -1296,12 +1425,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "semantic-review-scoping"
+          "@value": "semantic-review-scoping",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Decide what to review FIRST. Computes which blocks' semantic correctness can actually affect a target theorem, so agent-adjudicated criteria are spent where they matter instead of swept in file order."
+          "@value": "Decide what to review FIRST. Computes which blocks' semantic correctness can actually affect a target theorem, so agent-adjudicated criteria are spent where they matter instead of swept in file order.",
+          "@language": "en"
         }
       ],
       "skos:notation": "semantic-review-scoping",
@@ -1316,7 +1447,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "simulator"
+          "@value": "simulator",
+          "@language": "en"
         }
       ],
       "skos:notation": "simulator",
@@ -1331,12 +1463,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "simulator-math-audit"
+          "@value": "simulator-math-audit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit simulator content objects against the formal mathematics they visualise — formulas and physical constants must be derived from the paper's canonical sources, never hardcoded in the visualisation."
+          "@value": "Audit simulator content objects against the formal mathematics they visualise — formulas and physical constants must be derived from the paper's canonical sources, never hardcoded in the visualisation.",
+          "@language": "en"
         }
       ],
       "skos:notation": "simulator-math-audit",
@@ -1351,12 +1485,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "uses-formal-comparison"
+          "@value": "uses-formal-comparison",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How a paper folio's formal dependency graph (from Lean) relates to the editorial `uses[]` relation the harness's uses-editorial-review audits: why they diverge, why `uses[]` is never populated from Lean, and how to read the advisory `uses-formal-coverage` finding."
+          "@value": "How a paper folio's formal dependency graph (from Lean) relates to the editorial `uses[]` relation the harness's uses-editorial-review audits: why they diverge, why `uses[]` is never populated from Lean, and how to read the advisory `uses-formal-coverage` finding.",
+          "@language": "en"
         }
       ],
       "skos:notation": "uses-formal-comparison",
@@ -1371,12 +1507,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "verify-local-substrate"
+          "@value": "verify-local-substrate",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Verify that every result block of a designated class traces back to a designated anchor definition through the uses[] dependency graph. Identifies gaps where claims lack a formal connection to the anchor, and suggests fixes."
+          "@value": "Verify that every result block of a designated class traces back to a designated anchor definition through the uses[] dependency graph. Identifies gaps where claims lack a formal connection to the anchor, and suggests fixes.",
+          "@language": "en"
         }
       ],
       "skos:notation": "verify-local-substrate",
@@ -1391,7 +1529,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "witnessed-values"
+          "@value": "witnessed-values",
+          "@language": "en"
         }
       ],
       "skos:notation": "witnessed-values",

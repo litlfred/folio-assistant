@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "bootstrap-contract-semver"
+          "@value": "bootstrap-contract-semver",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one."
+          "@value": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
+          "@language": "en"
         }
       ],
       "skos:notation": "bootstrap-contract-semver",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "github-pages"
+          "@value": "github-pages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against."
+          "@value": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
+          "@language": "en"
         }
       ],
       "skos:notation": "github-pages",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "render-kg-to-github-pages"
+          "@value": "render-kg-to-github-pages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs."
+          "@value": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
+          "@language": "en"
         }
       ],
       "skos:notation": "render-kg-to-github-pages",

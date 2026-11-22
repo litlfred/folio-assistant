@@ -2,7 +2,13 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#",
+    "fa": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -75,7 +81,69 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-zh"
+        }
+      ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#AssociatedHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "إطار مرتبط",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "arnés asociado",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "harnais associé",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "связанная обвязка",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/associated-harness#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "关联工具框架",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy",
@@ -135,12 +203,74 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-zh"
+        }
+      ],
       "skos:exactMatch": [
         {
           "@id": "http://www.w3.org/ns/odrl/2/Policy"
         }
       ],
       "dcterms:source": "cat-harness/schemas/odrl.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "سياسة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "política",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "politique",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "политика",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "策略",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission",
@@ -200,6 +330,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-zh"
+        }
+      ],
       "skos:broader": [
         {
           "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/policy"
@@ -211,6 +358,51 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/odrl.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "إذن",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "permiso",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "permission",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "разрешение",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/permission#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "许可",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run",
@@ -270,12 +462,74 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-zh"
+        }
+      ],
       "skos:closeMatch": [
         {
           "@id": "http://www.w3.org/ns/prov#Activity"
         }
       ],
       "dcterms:source": "cat-harness/schemas/prov.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "تنفيذ المهمة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "ejecución de tarea",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "exécution de tâche",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "выполнение задачи",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/task-run#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "任务执行",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor",
@@ -335,12 +589,74 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-zh"
+        }
+      ],
       "skos:closeMatch": [
         {
           "@id": "http://www.w3.org/ns/prov#Agent"
         }
       ],
       "dcterms:source": "cat-harness/skills/process/process-core/role-model.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الفاعل",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "actor",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "acteur",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "актор",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "行动者",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role",
@@ -400,6 +716,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-zh"
+        }
+      ],
       "skos:related": [
         {
           "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/actor"
@@ -419,6 +752,51 @@
       "dcterms:source": "cat-harness/skills/process/process-core/role-model.md"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الدور",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "rol",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "rôle",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "роль",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/role#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "角色",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/platform/user-story",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -426,12 +804,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "user story"
+          "@value": "user story",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What a reader acting in a Role is trying to do, told as that role: as a <role>, I want <want>, so that <so that>. The story points at its role; the role names no story."
+          "@value": "What a reader acting in a Role is trying to do, told as that role: as a <role>, I want <want>, so that <so that>. The story points at its role; the role names no story.",
+          "@language": "en"
         }
       ],
       "skos:closeMatch": [
@@ -449,12 +829,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "test run"
+          "@value": "test run",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One measurement of a Skill: which skill it tests, the cases it exercised, and a hash of the data and a hash of the process that produced the result, so a third party can redo it. Its cases are checked against the skill's input and output contracts."
+          "@value": "One measurement of a Skill: which skill it tests, the cases it exercised, and a hash of the data and a hash of the process that produced the result, so a third party can redo it. Its cases are checked against the skill's input and output contracts.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "cat-harness/schemas/test-run.ts"
@@ -467,12 +849,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "voice"
+          "@value": "voice",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A named set of writing rules for prose, active in the roles and processes it names. The voice points at the role it is written for; the role names no voice."
+          "@value": "A named set of writing rules for prose, active in the roles and processes it names. The voice points at the role it is written for; the role names no voice.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts"
@@ -485,12 +869,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "external schema"
+          "@value": "external schema",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A record of a specification the platform depends on but does not hold: which authority publishes it, which version is conformed to, and the operative terms used from it."
+          "@value": "A record of a specification the platform depends on but does not hold: which authority publishes it, which version is conformed to, and the operative terms used from it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "cat-harness/schemas/external-schema.ts"
@@ -503,12 +889,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KG QA report"
+          "@value": "KG QA report",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A committed QA sidecar recording, for one knowledge-graph subject such as a process, role or skill, which of its references fail to resolve under each audit criterion."
+          "@value": "A committed QA sidecar recording, for one knowledge-graph subject such as a process, role or skill, which of its references fail to resolve under each audit criterion.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg-qa.ts"
@@ -521,12 +909,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "todo"
+          "@value": "todo",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One person's outstanding work, as a content node the folio owns, tagged with the roles, processes and tasks it concerns. Not the agent work plan, which is beans."
+          "@value": "One person's outstanding work, as a content node the folio owns, tagged with the roles, processes and tasks it concerns. Not the agent work plan, which is beans.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "cat-harness/schemas/todo.ts"
@@ -539,12 +929,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "bean"
+          "@value": "bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One item of the agent work plan, held by the beans CLI in the committed beans/ store, with a status, a parent and the beans it blocks."
+          "@value": "One item of the agent work plan, held by the beans CLI in the committed beans/ store, with a status, a parent and the beans it blocks.",
+          "@language": "en"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -560,12 +952,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "JSON Schema"
+          "@value": "JSON Schema",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A JSON document that describes the shape of other JSON documents. In the platform, a node schema and a skill's input and output contracts are each a JSON Schema file."
+          "@value": "A JSON document that describes the shape of other JSON documents. In the platform, a node schema and a skill's input and output contracts are each a JSON Schema file.",
+          "@language": "en"
         }
       ],
       "skos:closeMatch": [

@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,7 +25,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Detangled?"
+          "@value": "Detangled?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_DetanglementGate",
@@ -36,7 +41,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Stands alone?"
+          "@value": "Stands alone?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_IsolationGate",
@@ -51,7 +57,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "All five answered, none refused?"
+          "@value": "All five answered, none refused?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_MaterializationGate",
@@ -66,7 +73,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Is this merge authorised?"
+          "@value": "Is this merge authorised?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_MergeAuthorisation",
@@ -81,7 +89,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "What does the head's evidence say?"
+          "@value": "What does the head's evidence say?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_MergeEvidence",
@@ -96,7 +105,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Where does this PR go?"
+          "@value": "Where does this PR go?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_MergePriority",
@@ -111,7 +121,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Is the sign-off recorded, and does it let the work proceed?"
+          "@value": "Is the sign-off recorded, and does it let the work proceed?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_RequirementSignoffRecorded",
@@ -126,7 +137,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ready to seed?"
+          "@value": "Ready to seed?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_SeedReadiness",
@@ -141,7 +153,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Which signing route?"
+          "@value": "Which signing route?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_SigningRoute",
@@ -156,7 +169,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Declared in place?"
+          "@value": "Declared in place?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_SubgraphDeclaredGate",
@@ -171,7 +185,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Are the plan's exit criteria met?"
+          "@value": "Are the plan's exit criteria met?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_TestCertification",

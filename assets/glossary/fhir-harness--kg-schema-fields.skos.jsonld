@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.builtAt"
+          "@value": "FhirArtifactIndexSchema.builtAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription."
+          "@value": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.builtAt",
@@ -40,12 +46,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.canonicalBase"
+          "@value": "FhirArtifactIndexSchema.canonicalBase",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The canonical base every artefact's canonical URL extends, e.g. `http://hl7.org/fhir/uv/ips`."
+          "@value": "The canonical base every artefact's canonical URL extends, e.g. `http://hl7.org/fhir/uv/ips`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.canonicalBase",
@@ -59,12 +67,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.id"
+          "@value": "FhirArtifactIndexSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Instance id — the directory this index lives in, e.g. `<ig>`."
+          "@value": "Instance id — the directory this index lives in, e.g. `<ig>`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.id",
@@ -78,12 +88,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.igApiHub"
+          "@value": "FhirArtifactIndexSchema.igApiHub",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG API hub: the region of the IG's hub page between the two markers its post-processing writes after the Publisher has run (`ig-api.html` between `IG_API_HUB_START` and `IG_API_HUB_END` by default; an overlay whose post-processing uses other names passes them to the ingest). `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised."
+          "@value": "The IG API hub: the region of the IG's hub page between the two markers its post-processing writes after the Publisher has run (`ig-api.html` between `IG_API_HUB_START` and `IG_API_HUB_END` by default; an overlay whose post-processing uses other names passes them to the ingest). `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.igApiHub",
@@ -97,12 +109,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.package"
+          "@value": "FhirArtifactIndexSchema.package",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held."
+          "@value": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.package",
@@ -116,12 +130,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.packageId"
+          "@value": "FhirArtifactIndexSchema.packageId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "NPM-style package id, e.g. `hl7.fhir.uv.ips`."
+          "@value": "NPM-style package id, e.g. `hl7.fhir.uv.ips`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.packageId",
@@ -135,12 +151,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.sidecarBase"
+          "@value": "FhirArtifactIndexSchema.sidecarBase",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the bound sidecars' bytes are read from when the site does not hold them: an absolute base, the IG API in the AST cache commit (`https://raw.githubusercontent.com/<owner>/<repo>/<sha>/ig-api/sidecars`; owner, 2026-11-10, card \"A\"). A sidecar is then fetched at `<sidecarBase>/<file>` (`ig-api-hub.ts` `sidecarHref`), and its `localPath` stays the path it would be held at. Absent, each is served at its `localPath`."
+          "@value": "Where the bound sidecars' bytes are read from when the site does not hold them: an absolute base, the IG API in the AST cache commit (`https://raw.githubusercontent.com/<owner>/<repo>/<sha>/ig-api/sidecars`; owner, 2026-11-10, card \"A\"). A sidecar is then fetched at `<sidecarBase>/<file>` (`ig-api-hub.ts` `sidecarHref`), and its `localPath` stays the path it would be held at. Absent, each is served at its `localPath`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.sidecarBase",
@@ -154,12 +172,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.sidecarsUnbound"
+          "@value": "FhirArtifactIndexSchema.sidecarsUnbound",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Sidecars an enumeration listed that bound to no artefact. Absent means none; an empty array is not written. See {@link UnboundSidecarSchema} for why these are recorded rather than warned about and forgotten."
+          "@value": "Sidecars an enumeration listed that bound to no artefact. Absent means none; an empty array is not written. See {@link UnboundSidecarSchema} for why these are recorded rather than warned about and forgotten.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.sidecarsUnbound",
@@ -173,12 +193,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactIndexSchema.status"
+          "@value": "FhirArtifactIndexSchema.status",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG's own publication status (`draft`, `active`, `retired`), from its ImplementationGuide resource."
+          "@value": "The IG's own publication status (`draft`, `active`, `retired`), from its ImplementationGuide resource.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.status",
@@ -192,12 +214,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactSchema.canonical"
+          "@value": "FhirArtifactSchema.canonical",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FHIR canonical URL. Absent for examples and instances; see the doc above."
+          "@value": "FHIR canonical URL. Absent for examples and instances; see the doc above.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.canonical",
@@ -211,12 +235,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactSchema.category"
+          "@value": "FhirArtifactSchema.category",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
+          "@value": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.category",
@@ -230,12 +256,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactSchema.code"
+          "@value": "FhirArtifactSchema.code",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The resource's own `code` when it is a concept (`Basic.code`, a CodeableConcept; `Questionnaire.code`, a list of Codings, kept as the codings with no text). A string `code` (SearchParameter's) is a computable name, not a concept, and is not this. Copied, never looked up: a coding with no display stays without one."
+          "@value": "The resource's own `code` when it is a concept (`Basic.code`, a CodeableConcept; `Questionnaire.code`, a list of Codings, kept as the codings with no text). A string `code` (SearchParameter's) is a computable name, not a concept, and is not this. Copied, never looked up: a coding with no display stays without one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.code",
@@ -249,12 +277,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactSchema.key"
+          "@value": "FhirArtifactSchema.key",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not."
+          "@value": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.key",
@@ -268,12 +298,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactSchema.listedAt"
+          "@value": "FhirArtifactSchema.listedAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Position on the Publisher's `artifacts.html`, 0-based, first appearance. The category's order and the artefact's order within it are both read off this — a renderer that must match the Publisher's page (owner, 2026-10-01: every phase renders equivalent to the standard IG render) has no other source for either. Absent exactly when `category` is."
+          "@value": "Position on the Publisher's `artifacts.html`, 0-based, first appearance. The category's order and the artefact's order within it are both read off this — a renderer that must match the Publisher's page (owner, 2026-10-01: every phase renders equivalent to the standard IG render) has no other source for either. Absent exactly when `category` is.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.listedAt",
@@ -287,12 +319,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirArtifactSchema.profiles"
+          "@value": "FhirArtifactSchema.profiles",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The resource's own `meta.profile`: the profiles it says it conforms to, as written. An instance has no canonical, title or description of its own, and this and `code` are what it does state; a list that showed neither showed an empty row. Absent when the resource claims none."
+          "@value": "The resource's own `meta.profile`: the profiles it says it conforms to, as written. An instance has no canonical, title or description of its own, and this and `code` are what it does state; a list that showed neither showed an empty row. Absent when the resource claims none.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.profiles",
@@ -306,12 +340,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgSourceSchema.of"
+          "@value": "IgSourceSchema.of",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The URI the artefacts are published AT — what a `published` URL is resolved against."
+          "@value": "The URI the artefacts are published AT — what a `published` URL is resolved against.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema.of",
@@ -325,12 +361,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgSourceSchema.readAt"
+          "@value": "IgSourceSchema.readAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When the source was read. An index with no read date cannot be told from a current one."
+          "@value": "When the source was read. An index with no read date cannot be told from a current one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema.readAt",
@@ -344,12 +382,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgSourceSchema.revision"
+          "@value": "IgSourceSchema.revision",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Git revision of the branch read, when the source was a checkout. Absent means not established."
+          "@value": "Git revision of the branch read, when the source was a checkout. Absent means not established.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema.revision",
@@ -363,12 +403,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexProvenanceSchema.artifactsHtml"
+          "@value": "IndexProvenanceSchema.artifactsHtml",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`artifacts.html` — the ONLY source of an artefact's editorial category."
+          "@value": "`artifacts.html` — the ONLY source of an artefact's editorial category.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.artifactsHtml",
@@ -382,12 +424,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexProvenanceSchema.canonicals"
+          "@value": "IndexProvenanceSchema.canonicals",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`canonicals.json` — the spine for anything with a canonical URL."
+          "@value": "`canonicals.json` — the spine for anything with a canonical URL.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.canonicals",
@@ -401,12 +445,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexProvenanceSchema.packageIndex"
+          "@value": "IndexProvenanceSchema.packageIndex",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc."
+          "@value": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.packageIndex",
@@ -420,12 +466,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexProvenanceSchema.packageManifest"
+          "@value": "IndexProvenanceSchema.packageManifest",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`package.manifest.json` — package id, version, FHIR version, build date."
+          "@value": "`package.manifest.json` — package id, version, FHIR version, build date.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.packageManifest",
@@ -439,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexProvenanceSchema.sidecarEnumerations"
+          "@value": "IndexProvenanceSchema.sidecarEnumerations",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG API enumeration schemas, when present."
+          "@value": "The IG API enumeration schemas, when present.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.sidecarEnumerations",
@@ -458,12 +508,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "JsonLdContextSchema.binds"
+          "@value": "JsonLdContextSchema.binds",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Canonical URLs of the artefacts whose terms this context binds, where that could be established."
+          "@value": "Canonical URLs of the artefacts whose terms this context binds, where that could be established.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema.binds",
@@ -477,12 +529,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RepresentationSchema.localPath"
+          "@value": "RepresentationSchema.localPath",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Instance-relative path, present iff these bytes were materialised."
+          "@value": "Instance-relative path, present iff these bytes were materialised.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema.localPath",
@@ -496,12 +550,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SidecarOverlaySchema.codeCount"
+          "@value": "SidecarOverlaySchema.codeCount",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Number of codes, for a ValueSet."
+          "@value": "Number of codes, for a ValueSet.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.codeCount",
@@ -515,12 +571,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SidecarOverlaySchema.displays"
+          "@value": "SidecarOverlaySchema.displays",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`schemas/<name>.displays.json` — display strings, keyed by code."
+          "@value": "`schemas/<name>.displays.json` — display strings, keyed by code.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.displays",
@@ -534,12 +592,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SidecarOverlaySchema.jsonld"
+          "@value": "SidecarOverlaySchema.jsonld",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`."
+          "@value": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.jsonld",
@@ -553,12 +613,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SidecarOverlaySchema.openapi"
+          "@value": "SidecarOverlaySchema.openapi",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc."
+          "@value": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.openapi",
@@ -572,12 +634,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SidecarOverlaySchema.propertyCount"
+          "@value": "SidecarOverlaySchema.propertyCount",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Number of properties, for a logical model."
+          "@value": "Number of properties, for a logical model.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.propertyCount",
@@ -591,12 +655,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SidecarOverlaySchema.schema"
+          "@value": "SidecarOverlaySchema.schema",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`schemas/<name>.schema.json` — the JSON Schema for this artefact."
+          "@value": "`schemas/<name>.schema.json` — the JSON Schema for this artefact.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.schema",
@@ -610,12 +676,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UnboundSidecarSchema.enumeration"
+          "@value": "UnboundSidecarSchema.enumeration",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Which enumeration listed it."
+          "@value": "Which enumeration listed it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.enumeration",
@@ -629,12 +697,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UnboundSidecarSchema.filename"
+          "@value": "UnboundSidecarSchema.filename",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The sidecar file the enumeration named."
+          "@value": "The sidecar file the enumeration named.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.filename",
@@ -648,12 +718,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UnboundSidecarSchema.reason"
+          "@value": "UnboundSidecarSchema.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why no artefact matched: the strategies tried, in order."
+          "@value": "Why no artefact matched: the strategies tried, in order.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.reason",
@@ -667,12 +739,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UnboundSidecarSchema.title"
+          "@value": "UnboundSidecarSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Its title, as the enumeration gives it — usually the only human handle on what was missed."
+          "@value": "Its title, as the enumeration gives it — usually the only human handle on what was missed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.title",
@@ -686,12 +760,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AttributeTypeSchema.code"
+          "@value": "AttributeTypeSchema.code",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`type.code`, verbatim (a core type, or a FHIRPath system type URL on a primitive's value)."
+          "@value": "`type.code`, verbatim (a core type, or a FHIRPath system type URL on a primitive's value).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#AttributeTypeSchema.code",
@@ -705,12 +781,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AttributeTypeSchema.targets"
+          "@value": "AttributeTypeSchema.targets",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The classes a `Reference`/`canonical` may point to, from `type.targetProfile`, by core type name."
+          "@value": "The classes a `Reference`/`canonical` may point to, from `type.targetProfile`, by core type name.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#AttributeTypeSchema.targets",
@@ -724,12 +802,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ClassAttributeSchema.contentReference"
+          "@value": "ClassAttributeSchema.contentReference",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`ElementDefinition.contentReference`'s target, as a class name (`Questionnaire.item`)."
+          "@value": "`ElementDefinition.contentReference`'s target, as a class name (`Questionnaire.item`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#ClassAttributeSchema.contentReference",
@@ -743,12 +823,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ClassAttributeSchema.element"
+          "@value": "ClassAttributeSchema.element",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The element's id in the definition the class cites: the attribute's source."
+          "@value": "The element's id in the definition the class cites: the attribute's source.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#ClassAttributeSchema.element",
@@ -762,12 +844,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ClassAttributeSchema.types"
+          "@value": "ClassAttributeSchema.types",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Absent when the element re-uses another's structure ({@link contentReference}), or when it only prohibits an inherited element (`max` 0, as `xhtml.extension`)."
+          "@value": "Absent when the element re-uses another's structure ({@link contentReference}), or when it only prohibits an inherited element (`max` 0, as `xhtml.extension`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#ClassAttributeSchema.types",
@@ -781,12 +865,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CoreDefinitionSchema.derivation"
+          "@value": "CoreDefinitionSchema.derivation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Absent on a root type: `Element` and `Resource` in R4/R4B, `Base` in R5."
+          "@value": "Absent on a root type: `Element` and `Resource` in R4/R4B, `Base` in R5.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.derivation",
@@ -800,12 +886,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CoreDefinitionSchema.file"
+          "@value": "CoreDefinitionSchema.file",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The file in HL7's package (under `package/`) the definition was read from; a cached copy has the same name."
+          "@value": "The file in HL7's package (under `package/`) the definition was read from; a cached copy has the same name.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.file",
@@ -819,12 +907,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CoreDefinitionSchema.published"
+          "@value": "CoreDefinitionSchema.published",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's published JSON of this definition ({@link publishedDefinition}): where a reader is sent."
+          "@value": "HL7's published JSON of this definition ({@link publishedDefinition}): where a reader is sent.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.published",
@@ -838,12 +928,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CoreDefinitionSchema.sha256"
+          "@value": "CoreDefinitionSchema.sha256",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "sha256 of that file's bytes in HL7's package."
+          "@value": "sha256 of that file's bytes in HL7's package.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.sha256",
@@ -857,12 +949,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CoreDefinitionSchema.version"
+          "@value": "CoreDefinitionSchema.version",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The SD's own `version`, which is the release's FHIR version."
+          "@value": "The SD's own `version`, which is the release's FHIR version.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CoreDefinitionSchema.version",
@@ -876,12 +970,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CountsSchema.excluded"
+          "@value": "CountsSchema.excluded",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "StructureDefinitions in the package the selection left out (profiles, extensions, logical models)."
+          "@value": "StructureDefinitions in the package the selection left out (profiles, extensions, logical models).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#CountsSchema.excluded",
@@ -895,12 +991,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreClassModelObject.derivation"
+          "@value": "FhirCoreClassModelObject.derivation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The rule the writer applies, in words."
+          "@value": "The rule the writer applies, in words.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreClassModelObject.derivation",
@@ -914,12 +1012,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreClassModelObject.derivedFrom"
+          "@value": "FhirCoreClassModelObject.derivedFrom",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's package every class is read from, by URL and sha1."
+          "@value": "HL7's package every class is read from, by URL and sha1.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreClassModelObject.derivedFrom",
@@ -933,12 +1033,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreMirrorSchema.note"
+          "@value": "FhirCoreMirrorSchema.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How this copy relates to HL7's bytes, as checked when the mirror was pinned."
+          "@value": "How this copy relates to HL7's bytes, as checked when the mirror was pinned.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreMirrorSchema.note",
@@ -952,12 +1054,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCorePackageSchema.integrity"
+          "@value": "FhirCorePackageSchema.integrity",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "sha512 of HL7's bytes."
+          "@value": "sha512 of HL7's bytes.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.integrity",
@@ -971,12 +1075,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCorePackageSchema.shasum"
+          "@value": "FhirCorePackageSchema.shasum",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "sha1 of HL7's bytes, hex."
+          "@value": "sha1 of HL7's bytes, hex.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.shasum",
@@ -990,12 +1096,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCorePackageSchema.tarball"
+          "@value": "FhirCorePackageSchema.tarball",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's own URL for the package: `https://hl7.org/fhir/<release>/hl7.fhir.<r>.core.tgz`."
+          "@value": "HL7's own URL for the package: `https://hl7.org/fhir/<release>/hl7.fhir.<r>.core.tgz`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePackageSchema.tarball",
@@ -1009,12 +1117,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCorePinObject.spec"
+          "@value": "FhirCorePinObject.spec",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's published specification for this release."
+          "@value": "HL7's published specification for this release.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePinObject.spec",
@@ -1028,12 +1138,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCorePinsObject.authority"
+          "@value": "FhirCorePinsObject.authority",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Whose publication the definitions are: HL7's, always."
+          "@value": "Whose publication the definitions are: HL7's, always.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePinsObject.authority",
@@ -1047,12 +1159,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCorePinsObject.note"
+          "@value": "FhirCorePinsObject.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What a reviewer needs to re-check the pins by hand."
+          "@value": "What a reviewer needs to re-check the pins by hand.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCorePinsObject.note",
@@ -1066,12 +1180,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreReleaseObject.counts"
+          "@value": "FhirCoreReleaseObject.counts",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`read` only."
+          "@value": "`read` only.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.counts",
@@ -1085,12 +1201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreReleaseObject.definitions"
+          "@value": "FhirCoreReleaseObject.definitions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`read` only, and never empty. An `unread` release has NO `definitions`: unread is not empty."
+          "@value": "`read` only, and never empty. An `unread` release has NO `definitions`: unread is not empty.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.definitions",
@@ -1104,12 +1222,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreReleaseObject.package"
+          "@value": "FhirCoreReleaseObject.package",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's package the manifest was read from: always HL7's own bytes, never a mirror's."
+          "@value": "HL7's package the manifest was read from: always HL7's own bytes, never a mirror's.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.package",
@@ -1123,12 +1243,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreReleaseObject.reason"
+          "@value": "FhirCoreReleaseObject.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`unread` only: why the package could not be read."
+          "@value": "`unread` only: why the package could not be read.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.reason",
@@ -1142,12 +1264,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreReleaseObject.selection"
+          "@value": "FhirCoreReleaseObject.selection",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The rule {@link isCoreDefinition} applies, in words."
+          "@value": "The rule {@link isCoreDefinition} applies, in words.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.selection",
@@ -1161,12 +1285,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FhirCoreReleaseObject.spec"
+          "@value": "FhirCoreReleaseObject.spec",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's published specification for this release: the authority."
+          "@value": "HL7's published specification for this release: the authority.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#FhirCoreReleaseObject.spec",
@@ -1180,12 +1306,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UmlClassSchema.definition"
+          "@value": "UmlClassSchema.definition",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The canonical URL of the HL7 definition this class is read from."
+          "@value": "The canonical URL of the HL7 definition this class is read from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.definition",
@@ -1199,12 +1327,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UmlClassSchema.element"
+          "@value": "UmlClassSchema.element",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The element id in that definition this class is: the type itself, or the backbone element."
+          "@value": "The element id in that definition this class is: the type itself, or the backbone element.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.element",
@@ -1218,12 +1348,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UmlClassSchema.generalization"
+          "@value": "UmlClassSchema.generalization",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The class it specialises: the base definition's type, or the backbone element's own type. Absent on a root type."
+          "@value": "The class it specialises: the base definition's type, or the backbone element's own type. Absent on a root type.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.generalization",
@@ -1237,12 +1369,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UmlClassSchema.name"
+          "@value": "UmlClassSchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The type's name, or `<Type>.<path>` for a backbone element's class."
+          "@value": "The type's name, or `<Type>.<path>` for a backbone element's class.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.name",
@@ -1256,12 +1390,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UmlClassSchema.owner"
+          "@value": "UmlClassSchema.owner",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Backbone classes only: the class whose attribute this structure is."
+          "@value": "Backbone classes only: the class whose attribute this structure is.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.owner",
@@ -1275,12 +1411,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "UmlClassSchema.published"
+          "@value": "UmlClassSchema.published",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "HL7's published JSON of that definition."
+          "@value": "HL7's published JSON of that definition.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-core.ts#UmlClassSchema.published",
@@ -1294,12 +1432,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAnnexRecordSchema.columns"
+          "@value": "IgAnnexRecordSchema.columns",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Column keys shown before a row is opened. Default: the first six."
+          "@value": "Column keys shown before a row is opened. Default: the first six.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-annexes.ts#IgAnnexRecordSchema.columns",
@@ -1313,12 +1453,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAnnexRecordSchema.file"
+          "@value": "IgAnnexRecordSchema.file",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The annex, relative to the directory that holds this declaration."
+          "@value": "The annex, relative to the directory that holds this declaration.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-annexes.ts#IgAnnexRecordSchema.file",
@@ -1332,12 +1474,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAnnexRecordSchema.page"
+          "@value": "IgAnnexRecordSchema.page",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The page file under `input/pagecontent/`, e.g. `dictionary.md`."
+          "@value": "The page file under `input/pagecontent/`, e.g. `dictionary.md`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-annexes.ts#IgAnnexRecordSchema.page",
@@ -1351,12 +1495,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgArtifactEncodingSchema.dcterms:source"
+          "@value": "IgArtifactEncodingSchema.dcterms:source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`local`: a copy this site serves (the reduced `<Type>-<id>.json` at the site root, listed first); `mirror`: the full copy in the IG's AST cache, by raw URL pinned to the cache commit; `upstream`: the file where the IG publishes it."
+          "@value": "`local`: a copy this site serves (the reduced `<Type>-<id>.json` at the site root, listed first); `mirror`: the full copy in the IG's AST cache, by raw URL pinned to the cache commit; `upstream`: the file where the IG publishes it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncodingSchema.dcterms:source",
@@ -1370,12 +1516,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgArtifactIndexEntrySchema.schema:contentUrl"
+          "@value": "IgArtifactIndexEntrySchema.schema:contentUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The resource this site serves at its root, `<Type>-<id>.json` (the node's first `local` encoding), so a harvester finds every file from this one list."
+          "@value": "The resource this site serves at its root, `<Type>-<id>.json` (the node's first `local` encoding), so a harvester finds every file from this one list.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema.schema:contentUrl",
@@ -1389,12 +1537,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAstPinSchema.branch"
+          "@value": "IgAstPinSchema.branch",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The cache branch the commit was read from, for the reader; the commit is what is fetched."
+          "@value": "The cache branch the commit was read from, for the reader; the commit is what is fetched.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema.branch",
@@ -1408,12 +1558,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAstPinSchema.instance"
+          "@value": "IgAstPinSchema.instance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG instance, as `index.lock.json` names it."
+          "@value": "The IG instance, as `index.lock.json` names it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema.instance",
@@ -1427,12 +1579,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAstPinSchema.repository"
+          "@value": "IgAstPinSchema.repository",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The repository the cache branch lives in: the IG's own."
+          "@value": "The repository the cache branch lives in: the IG's own.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema.repository",
@@ -1446,12 +1600,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAstPinSchema.sha"
+          "@value": "IgAstPinSchema.sha",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The pinned cache commit."
+          "@value": "The pinned cache commit.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema.sha",
@@ -1465,12 +1621,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgAstPinSchema.sourceRevision"
+          "@value": "IgAstPinSchema.sourceRevision",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG commit the AST says it was compiled from (`manifest.json` `inputs.sourceRevision`), when it says."
+          "@value": "The IG commit the AST says it was compiled from (`manifest.json` `inputs.sourceRevision`), when it says.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema.sourceRevision",
@@ -1484,12 +1642,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AstManifestSchema.inputs"
+          "@value": "AstManifestSchema.inputs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What the AST is valid for, in `CompiledInputsSchema`'s shape."
+          "@value": "What the AST is valid for, in `CompiledInputsSchema`'s shape.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs",
@@ -1503,12 +1663,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AstManifestSchema.provisional"
+          "@value": "AstManifestSchema.provisional",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What stays provisional until a full Publisher run."
+          "@value": "What stays provisional until a full Publisher run.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional",
@@ -1522,12 +1684,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AstResourceSchema.builtAt"
+          "@value": "AstResourceSchema.builtAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "On a merged (mixed-provenance) AST: the revision that built this resource."
+          "@value": "On a merged (mixed-provenance) AST: the revision that built this resource.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt",
@@ -1541,12 +1705,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AstResourceSchema.file"
+          "@value": "AstResourceSchema.file",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The resource's JSON file, relative to the AST directory."
+          "@value": "The resource's JSON file, relative to the AST directory.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file",
@@ -1560,12 +1726,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AstResourceSchema.source"
+          "@value": "AstResourceSchema.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG source file it was built from, where known."
+          "@value": "The IG source file it was built from, where known.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source",
@@ -1579,12 +1747,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeConflictSchema.kind"
+          "@value": "IgChromeConflictSchema.kind",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`shape` — the layers agree the token exists and disagree about what KIND of value it holds, so a consumer substituting one into the other's rule emits something invalid."
+          "@value": "`shape` — the layers agree the token exists and disagree about what KIND of value it holds, so a consumer substituting one into the other's rule emits something invalid.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeConflictSchema.kind",
@@ -1598,12 +1768,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeConflictSchema.sites"
+          "@value": "IgChromeConflictSchema.sites",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where it was seen. `min(1)` rather than `min(2)`: a `shape` conflict needs two layers by definition, but a `malformed` value needs only one, and requiring two would have made the second kind unrepresentable in the schema written to hold it."
+          "@value": "Where it was seen. `min(1)` rather than `min(2)`: a `shape` conflict needs two layers by definition, but a `malformed` value needs only one, and requiring two would have made the second kind unrepresentable in the schema written to hold it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeConflictSchema.sites",
@@ -1617,12 +1789,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeLayerSchema.of"
+          "@value": "IgChromeLayerSchema.of",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The repository the bytes were read from."
+          "@value": "The repository the bytes were read from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.of",
@@ -1636,12 +1810,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeLayerSchema.package"
+          "@value": "IgChromeLayerSchema.package",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The `fhir.template` package name, e.g. `who.template.root`."
+          "@value": "The `fhir.template` package name, e.g. `who.template.root`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.package",
@@ -1655,12 +1831,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeLayerSchema.path"
+          "@value": "IgChromeLayerSchema.path",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The stylesheet within that repository."
+          "@value": "The stylesheet within that repository.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.path",
@@ -1674,12 +1852,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeLayerSchema.ref"
+          "@value": "IgChromeLayerSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The commit they were read at. Provenance."
+          "@value": "The commit they were read at. Provenance.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.ref",
@@ -1693,12 +1873,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeLayerSchema.version"
+          "@value": "IgChromeLayerSchema.version",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Its declared version, e.g. `0.5.0`."
+          "@value": "Its declared version, e.g. `0.5.0`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.version",
@@ -1712,12 +1894,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeRuleSchema.from"
+          "@value": "IgChromeRuleSchema.from",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The package the rule was read from."
+          "@value": "The package the rule was read from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeRuleSchema.from",
@@ -1731,12 +1915,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeRuleSchema.selector"
+          "@value": "IgChromeRuleSchema.selector",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The selector, verbatim, e.g. `#ig-status.ig-status-draft`."
+          "@value": "The selector, verbatim, e.g. `#ig-status.ig-status-draft`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeRuleSchema.selector",
@@ -1750,12 +1936,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeSchema.id"
+          "@value": "IgChromeSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The chain's TOP layer — the template package an IG names — e.g. `who.template.root`. v1 put the id of the IG it was ingested beside here; v2 keys the chrome by the template, because every IG building with that chain wears it. An IG's own id and status are its artefact index's."
+          "@value": "The chain's TOP layer — the template package an IG names — e.g. `who.template.root`. v1 put the id of the IG it was ingested beside here; v2 keys the chrome by the template, because every IG building with that chain wears it. An IG's own id and status are its artefact index's.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.id",
@@ -1769,12 +1957,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeSchema.layers"
+          "@value": "IgChromeSchema.layers",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The chain, BASE FIRST, so index order is override order."
+          "@value": "The chain, BASE FIRST, so index order is override order.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.layers",
@@ -1788,12 +1978,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeSchema.version"
+          "@value": "IgChromeSchema.version",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The top layer's version, e.g. `0.5.0`."
+          "@value": "The top layer's version, e.g. `0.5.0`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.version",
@@ -1807,12 +1999,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeTokenSchema.from"
+          "@value": "IgChromeTokenSchema.from",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The package whose declaration wins."
+          "@value": "The package whose declaration wins.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.from",
@@ -1826,12 +2020,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeTokenSchema.name"
+          "@value": "IgChromeTokenSchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The custom property, including its leading `--`."
+          "@value": "The custom property, including its leading `--`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.name",
@@ -1845,12 +2041,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeTokenSchema.overrides"
+          "@value": "IgChromeTokenSchema.overrides",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lower layers this shadows, nearest first. Empty when only one declared it."
+          "@value": "Lower layers this shadows, nearest first. Empty when only one declared it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.overrides",
@@ -1864,12 +2062,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeTokenSchema.value"
+          "@value": "IgChromeTokenSchema.value",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The winning value, verbatim."
+          "@value": "The winning value, verbatim.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.value",
@@ -1883,12 +2083,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgSection.include"
+          "@value": "IgSection.include",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Repository-relative POSIX paths. A trailing `/` marks a directory."
+          "@value": "Repository-relative POSIX paths. A trailing `/` marks a directory.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-content-type.ts#IgSection.include",
@@ -1902,12 +2104,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgSection.trustedScripts"
+          "@value": "IgSection.trustedScripts",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Same-site scripts the IG's own pages load, as each page's script `src` writes them (owner, 2026-11-12, cards Q-TRP-3 and Q-RAIL-2). The injection gate (`scripts/ig-content-qa.ts`) accepts, on a page and only there, a script element whose `src` is on this list and that has no body; every other script, and any script in a resource's narrative or markdown, is still refused. Absent means none."
+          "@value": "Same-site scripts the IG's own pages load, as each page's script `src` writes them (owner, 2026-11-12, cards Q-TRP-3 and Q-RAIL-2). The injection gate (`scripts/ig-content-qa.ts`) accepts, on a page and only there, a script element whose `src` is on this list and that has no body; every other script, and any script in a resource's narrative or markdown, is still refused. Absent means none.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-content-type.ts#IgSection.trustedScripts",
@@ -1921,12 +2125,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgSection.trustedSvgs"
+          "@value": "IgSection.trustedSvgs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Same-site SVG drawings the IG's own pages embed with `<object>`, as each element's `data` writes them, so the drawing's links work (owner, 2026-11-12: the onboarding diagrams' drill-down). The injection gate accepts, on a page and only there, an `<object>` opening tag whose `data` is on this list, whose `type` (if any) is `image/svg+xml`, and whose other attributes are presentational (`style`, `width`, `height`, `class`, `id`, `title`, `role`, `aria-*`). The element's body is still scanned. Absent means none."
+          "@value": "Same-site SVG drawings the IG's own pages embed with `<object>`, as each element's `data` writes them, so the drawing's links work (owner, 2026-11-12: the onboarding diagrams' drill-down). The injection gate accepts, on a page and only there, an `<object>` opening tag whose `data` is on this list, whose `type` (if any) is `image/svg+xml`, and whose other attributes are presentational (`style`, `width`, `height`, `class`, `id`, `title`, `role`, `aria-*`). The element's body is still scanned. Absent means none.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-content-type.ts#IgSection.trustedSvgs",
@@ -1940,12 +2146,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMenuGroupSchema.href"
+          "@value": "IgMenuGroupSchema.href",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Set when the group itself is a page rather than only a container."
+          "@value": "Set when the group itself is a page rather than only a container.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-menu.ts#IgMenuGroupSchema.href",
@@ -1959,12 +2167,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMenuSchema.canonical"
+          "@value": "IgMenuSchema.canonical",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Its `canonical`, the base every `href` is relative to."
+          "@value": "Its `canonical`, the base every `href` is relative to.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-menu.ts#IgMenuSchema.canonical",
@@ -1978,12 +2188,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMenuSchema.id"
+          "@value": "IgMenuSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG's `id` from `sushi-config.yaml`, e.g. `hl7.fhir.uv.ips`."
+          "@value": "The IG's `id` from `sushi-config.yaml`, e.g. `hl7.fhir.uv.ips`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-menu.ts#IgMenuSchema.id",
@@ -1997,12 +2209,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMenuSourceSchema.of"
+          "@value": "IgMenuSourceSchema.of",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The repository the config was read from."
+          "@value": "The repository the config was read from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-menu.ts#IgMenuSourceSchema.of",
@@ -2016,12 +2230,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMenuSourceSchema.path"
+          "@value": "IgMenuSourceSchema.path",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The path within that repository."
+          "@value": "The path within that repository.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-menu.ts#IgMenuSourceSchema.path",
@@ -2035,12 +2251,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMenuSourceSchema.ref"
+          "@value": "IgMenuSourceSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The commit it was read at. Provenance."
+          "@value": "The commit it was read at. Provenance.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
@@ -2054,12 +2272,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgIdentitySchema.canonical"
+          "@value": "IgIdentitySchema.canonical",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG's canonical URL, where it declares one."
+          "@value": "The IG's canonical URL, where it declares one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.canonical",
@@ -2073,12 +2293,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgIdentitySchema.packageId"
+          "@value": "IgIdentitySchema.packageId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The NPM-style package id, e.g. `who.smart.trust`."
+          "@value": "The NPM-style package id, e.g. `who.smart.trust`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.packageId",
@@ -2092,12 +2314,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgIdentitySchema.version"
+          "@value": "IgIdentitySchema.version",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG version this harvest was taken at. An id alone collides across versions."
+          "@value": "The IG version this harvest was taken at. An id alone collides across versions.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.version",
@@ -2111,12 +2335,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMetadataSourceSchema.harvestedAt"
+          "@value": "IgMetadataSourceSchema.harvestedAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When the harvest ran."
+          "@value": "When the harvest ran.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedAt",
@@ -2130,12 +2356,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMetadataSourceSchema.harvestedFrom"
+          "@value": "IgMetadataSourceSchema.harvestedFrom",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The published site or package the exports were read out of."
+          "@value": "The published site or package the exports were read out of.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedFrom",
@@ -2149,12 +2377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgMetadataSourceSchema.runUrl"
+          "@value": "IgMetadataSourceSchema.runUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A URL for the harvest run, if one exists."
+          "@value": "A URL for the harvest run, if one exists.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
@@ -2168,12 +2398,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgReleaseSchema.ast"
+          "@value": "IgReleaseSchema.ast",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The IG AST cache commit compiled from this release's tag, where one was seeded (fhir-harness#329): a page reads the release's resources by raw URL at it. Absent for a release cut before the cache kept its commits (#326); its AST is in its `ast-data.zip`."
+          "@value": "The IG AST cache commit compiled from this release's tag, where one was seeded (fhir-harness#329): a page reads the release's resources by raw URL at it. Absent for a release cut before the cache kept its commits (#326); its AST is in its `ast-data.zip`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.ast",
@@ -2187,12 +2419,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgReleaseSchema.commitish"
+          "@value": "IgReleaseSchema.commitish",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The commit the tag points at, where GitHub reports it."
+          "@value": "The commit the tag points at, where GitHub reports it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.commitish",
@@ -2206,12 +2440,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgReleaseSchema.url"
+          "@value": "IgReleaseSchema.url",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The release's page on GitHub."
+          "@value": "The release's page on GitHub.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.url",
@@ -2225,12 +2461,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgReleasesSchema.readAt"
+          "@value": "IgReleasesSchema.readAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When they were read (UTC date). A release made later is not here until the next read."
+          "@value": "When they were read (UTC date). A release made later is not here until the next read.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.readAt",
@@ -2244,12 +2482,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgReleasesSchema.releases"
+          "@value": "IgReleasesSchema.releases",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published."
+          "@value": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.releases",
@@ -2263,12 +2503,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IgReleasesSchema.repository"
+          "@value": "IgReleasesSchema.repository",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`owner/repo` the releases were read from."
+          "@value": "`owner/repo` the releases were read from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.repository",
@@ -2282,12 +2524,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseAssetSchema.digest"
+          "@value": "ReleaseAssetSchema.digest",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests."
+          "@value": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.digest",
@@ -2301,12 +2545,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseAssetSchema.url"
+          "@value": "ReleaseAssetSchema.url",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where to fetch the bytes: GitHub's `browser_download_url`."
+          "@value": "Where to fetch the bytes: GitHub's `browser_download_url`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.url",
@@ -2320,12 +2566,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108CacheOptions.clock"
+          "@value": "Iti108CacheOptions.clock",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Clock for expiry, in epoch milliseconds (tests). Defaults to `Date.now`."
+          "@value": "Clock for expiry, in epoch milliseconds (tests). Defaults to `Date.now`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108CacheOptions.clock",
@@ -2339,12 +2587,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108CacheOptions.ttlMs"
+          "@value": "Iti108CacheOptions.ttlMs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How long a determined result may be reused, in milliseconds."
+          "@value": "How long a determined result may be reused, in milliseconds.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108CacheOptions.ttlMs",
@@ -2358,12 +2608,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108DeterminedResult.bundleTotal"
+          "@value": "Iti108DeterminedResult.bundleTotal",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Total reported by the first Bundle page, if present."
+          "@value": "Total reported by the first Bundle page, if present.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108DeterminedResult.bundleTotal",
@@ -2377,12 +2629,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108DeterminedResult.consents"
+          "@value": "Iti108DeterminedResult.consents",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Active, non-expired FHIR R4 `Consent` resources returned by the registry."
+          "@value": "Active, non-expired FHIR R4 `Consent` resources returned by the registry.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108DeterminedResult.consents",
@@ -2396,12 +2650,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108DeterminedResult.evaluatedAt"
+          "@value": "Iti108DeterminedResult.evaluatedAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "ISO-8601 timestamp against which `provision.period` validity was evaluated."
+          "@value": "ISO-8601 timestamp against which `provision.period` validity was evaluated.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108DeterminedResult.evaluatedAt",
@@ -2415,12 +2671,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108DeterminedResult.ignored"
+          "@value": "Iti108DeterminedResult.ignored",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Entries in the searchset `Bundle` that were filtered out (inactive, expired, not-yet-valid, informational `OperationOutcome`, etc.)."
+          "@value": "Entries in the searchset `Bundle` that were filtered out (inactive, expired, not-yet-valid, informational `OperationOutcome`, etc.).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108DeterminedResult.ignored",
@@ -2434,12 +2692,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108DeterminedResult.requestUrl"
+          "@value": "Iti108DeterminedResult.requestUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The initial ITI-108 search URL issued to the Consent Registry."
+          "@value": "The initial ITI-108 search URL issued to the Consent Registry.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108DeterminedResult.requestUrl",
@@ -2453,12 +2713,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.action"
+          "@value": "Iti108Query.action",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Action token(s)."
+          "@value": "Action token(s).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.action",
@@ -2472,12 +2734,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.actor"
+          "@value": "Iti108Query.actor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Actor reference(s) (e.g. `\"Practitioner/prac-1\"` or `\"Organization/org-1\"`)."
+          "@value": "Actor reference(s) (e.g. `\"Practitioner/prac-1\"` or `\"Organization/org-1\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.actor",
@@ -2491,12 +2755,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.baseUrl"
+          "@value": "Iti108Query.baseUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Base URL of the FHIR R4 Consent Registry (e.g. `\"https://registry.example.org/fhir\"`)."
+          "@value": "Base URL of the FHIR R4 Consent Registry (e.g. `\"https://registry.example.org/fhir\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.baseUrl",
@@ -2510,12 +2776,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.category"
+          "@value": "Iti108Query.category",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Category token(s) (e.g. `\"http://loinc.org|59284-0\"`)."
+          "@value": "Category token(s) (e.g. `\"http://loinc.org|59284-0\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.category",
@@ -2529,12 +2797,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.date"
+          "@value": "Iti108Query.date",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Date filter(s), e.g. `\"ge2026-01-01\"`."
+          "@value": "Date filter(s), e.g. `\"ge2026-01-01\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.date",
@@ -2548,12 +2818,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.fetchImpl"
+          "@value": "Iti108Query.fetchImpl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Custom `fetch` implementation (defaults to `globalThis.fetch`)."
+          "@value": "Custom `fetch` implementation (defaults to `globalThis.fetch`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.fetchImpl",
@@ -2567,12 +2839,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.followNext"
+          "@value": "Iti108Query.followNext",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Follow `Bundle.link[relation=\"next\"]` pagination links (defaults to `true`)."
+          "@value": "Follow `Bundle.link[relation=\"next\"]` pagination links (defaults to `true`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.followNext",
@@ -2586,12 +2860,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.headers"
+          "@value": "Iti108Query.headers",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional HTTP headers (e.g. `{ Authorization: \"Bearer ...\" }`); no IUA claim is required."
+          "@value": "Optional HTTP headers (e.g. `{ Authorization: \"Bearer ...\" }`); no IUA claim is required.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.headers",
@@ -2605,12 +2881,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.maxPages"
+          "@value": "Iti108Query.maxPages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Maximum number of Bundle pages to fetch when `followNext` is `true` (defaults to `10`)."
+          "@value": "Maximum number of Bundle pages to fetch when `followNext` is `true` (defaults to `10`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.maxPages",
@@ -2624,12 +2902,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.now"
+          "@value": "Iti108Query.now",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Reference timestamp (`ISO-8601` string or `Date`) used to evaluate `provision.period` expiry (defaults to `new Date()`)."
+          "@value": "Reference timestamp (`ISO-8601` string or `Date`) used to evaluate `provision.period` expiry (defaults to `new Date()`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.now",
@@ -2643,12 +2923,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.patient"
+          "@value": "Iti108Query.patient",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Patient reference (e.g. `\"Patient/pat-1\"` or `\"pat-1\"`)."
+          "@value": "Patient reference (e.g. `\"Patient/pat-1\"` or `\"pat-1\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.patient",
@@ -2662,12 +2944,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.patientIdentifier"
+          "@value": "Iti108Query.patientIdentifier",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Patient business identifier token (e.g. `\"urn:oid:1.2.3|12345\"`), sent as `patient.identifier`."
+          "@value": "Patient business identifier token (e.g. `\"urn:oid:1.2.3|12345\"`), sent as `patient.identifier`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.patientIdentifier",
@@ -2681,12 +2965,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.profile"
+          "@value": "Iti108Query.profile",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Profile canonical URL filter(s), sent as `_profile`."
+          "@value": "Profile canonical URL filter(s), sent as `_profile`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.profile",
@@ -2700,12 +2986,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.purpose"
+          "@value": "Iti108Query.purpose",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "PurposeOfUse token(s) (e.g. `\"TREAT\"`, `\"HRESCH\"`)."
+          "@value": "PurposeOfUse token(s) (e.g. `\"TREAT\"`, `\"HRESCH\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.purpose",
@@ -2719,12 +3007,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.securityLabel"
+          "@value": "Iti108Query.securityLabel",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Security label token(s), sent as `security-label`."
+          "@value": "Security label token(s), sent as `security-label`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.securityLabel",
@@ -2738,12 +3028,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.sourceReference"
+          "@value": "Iti108Query.sourceReference",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Source reference filter, sent as `source-reference`."
+          "@value": "Source reference filter, sent as `source-reference`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.sourceReference",
@@ -2757,12 +3049,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.status"
+          "@value": "Iti108Query.status",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Status parameter sent on the query (defaults to `\"active\"`)."
+          "@value": "Status parameter sent on the query (defaults to `\"active\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.status",
@@ -2776,12 +3070,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Iti108Query.timeoutMs"
+          "@value": "Iti108Query.timeoutMs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Request timeout in milliseconds (defaults to `10_000`)."
+          "@value": "Request timeout in milliseconds (defaults to `10_000`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/iti-108-consent-client.ts#Iti108Query.timeoutMs",
@@ -2795,12 +3091,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DroppedOdrlTerm.disposition"
+          "@value": "DroppedOdrlTerm.disposition",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`\"dropped\"` when omitted entirely from the FHIR R5 Permission output; `\"lossy\"` when approximated in a FHIR R5 Permission element that does not preserve full ODRL semantics."
+          "@value": "`\"dropped\"` when omitted entirely from the FHIR R5 Permission output; `\"lossy\"` when approximated in a FHIR R5 Permission element that does not preserve full ODRL semantics.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#DroppedOdrlTerm.disposition",
@@ -2814,12 +3112,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DroppedOdrlTerm.path"
+          "@value": "DroppedOdrlTerm.path",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "JSONPath-style location in the input ODRL Agreement or DCAT record."
+          "@value": "JSONPath-style location in the input ODRL Agreement or DCAT record.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#DroppedOdrlTerm.path",
@@ -2833,12 +3133,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DroppedOdrlTerm.reason"
+          "@value": "DroppedOdrlTerm.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why FHIR R5 Permission has no exact home for this term, or how it was approximated."
+          "@value": "Why FHIR R5 Permission has no exact home for this term, or how it was approximated.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#DroppedOdrlTerm.reason",
@@ -2852,12 +3154,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DroppedOdrlTerm.term"
+          "@value": "DroppedOdrlTerm.term",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The ODRL 2.2 (or DCAT 3 / SPDX) term name that has no exact FHIR R5 Permission home."
+          "@value": "The ODRL 2.2 (or DCAT 3 / SPDX) term name that has no exact FHIR R5 Permission home.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#DroppedOdrlTerm.term",
@@ -2871,12 +3175,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DroppedOdrlTerm.value"
+          "@value": "DroppedOdrlTerm.value",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The input value that was dropped or only lossily approximated."
+          "@value": "The input value that was dropped or only lossily approximated.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#DroppedOdrlTerm.value",
@@ -2890,12 +3196,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.agreementDisplay"
+          "@value": "OdrlToFhirR5PermissionOptions.agreementDisplay",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional display label for the agreement's fixed-version `uid` on `justification.evidence[0].display`."
+          "@value": "Optional display label for the agreement's fixed-version `uid` on `justification.evidence[0].display`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.agreementDisplay",
@@ -2909,12 +3217,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.dcat"
+          "@value": "OdrlToFhirR5PermissionOptions.dcat",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional DCAT 3 `dcat:Resource` metadata for the agreement version."
+          "@value": "Optional DCAT 3 `dcat:Resource` metadata for the agreement version.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.dcat",
@@ -2928,12 +3238,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.id"
+          "@value": "OdrlToFhirR5PermissionOptions.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional FHIR resource `id` for the rendered `Permission`."
+          "@value": "Optional FHIR resource `id` for the rendered `Permission`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.id",
@@ -2947,12 +3259,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.partyReferences"
+          "@value": "OdrlToFhirR5PermissionOptions.partyReferences",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional map from party/target IRIs (e.g. `\"https://ministry-m.example.org/\"`) to FHIR `Reference`s (e.g. `{ reference: \"Organization/MinistryM\" }` or display strings)."
+          "@value": "Optional map from party/target IRIs (e.g. `\"https://ministry-m.example.org/\"`) to FHIR `Reference`s (e.g. `{ reference: \"Organization/MinistryM\" }` or display strings).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.partyReferences",
@@ -2966,12 +3280,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.purposeDisplays"
+          "@value": "OdrlToFhirR5PermissionOptions.purposeDisplays",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional human-readable display labels for HL7 `PurposeOfUse` codes."
+          "@value": "Optional human-readable display labels for HL7 `PurposeOfUse` codes.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.purposeDisplays",
@@ -2985,12 +3301,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.status"
+          "@value": "OdrlToFhirR5PermissionOptions.status",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Explicit `Permission.status` (`active | entered-in-error | draft | rejected`). If omitted, derived from `dcat[\"adms:status\"]` when provided, or defaults to `\"active\"`."
+          "@value": "Explicit `Permission.status` (`active | entered-in-error | draft | rejected`). If omitted, derived from `dcat[\"adms:status\"]` when provided, or defaults to `\"active\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.status",
@@ -3004,12 +3322,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionOptions.targetDisplays"
+          "@value": "OdrlToFhirR5PermissionOptions.targetDisplays",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional map from dataset/target IRIs to human-readable display labels on `rule.data.resource.reference.display`."
+          "@value": "Optional map from dataset/target IRIs to human-readable display labels on `rule.data.resource.reference.display`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionOptions.targetDisplays",
@@ -3023,12 +3343,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionResult.dropped"
+          "@value": "OdrlToFhirR5PermissionResult.dropped",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every ODRL 2.2 (or DCAT 3 / SPDX) term from the input that has no exact home in FHIR R5 `Permission` (either omitted or only lossily approximated)."
+          "@value": "Every ODRL 2.2 (or DCAT 3 / SPDX) term from the input that has no exact home in FHIR R5 `Permission` (either omitted or only lossily approximated).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionResult.dropped",
@@ -3042,12 +3364,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "OdrlToFhirR5PermissionResult.permission"
+          "@value": "OdrlToFhirR5PermissionResult.permission",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The rendered FHIR R5 `Permission` resource, validated against `FhirR5PermissionSchema`."
+          "@value": "The rendered FHIR R5 `Permission` resource, validated against `FhirR5PermissionSchema`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/odrl-to-fhir-r5-permission.ts#OdrlToFhirR5PermissionResult.permission",
@@ -3061,12 +3385,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AgreementVersion.policy"
+          "@value": "AgreementVersion.policy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The version's ODRL policy; its `uid` is the fixed-version URL."
+          "@value": "The version's ODRL policy; its `uid` is the fixed-version URL.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#AgreementVersion.policy",
@@ -3080,12 +3406,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AgreementVersion.previousVersion"
+          "@value": "AgreementVersion.previousVersion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The fixed-version URL of the version this one amends (`dcat:previousVersion`)."
+          "@value": "The fixed-version URL of the version this one amends (`dcat:previousVersion`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#AgreementVersion.previousVersion",
@@ -3099,12 +3427,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConsentToOdrlOptions.defaultAction"
+          "@value": "ConsentToOdrlOptions.defaultAction",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Default ODRL action when `provision.action` is omitted (default: `\"odrl:use\"`)."
+          "@value": "Default ODRL action when `provision.action` is omitted (default: `\"odrl:use\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#ConsentToOdrlOptions.defaultAction",
@@ -3118,12 +3448,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConsentToOdrlOptions.profile"
+          "@value": "ConsentToOdrlOptions.profile",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "ODRL profile URI written into `Set.profile` (default: {@link PCF_IG_CANONICAL})."
+          "@value": "ODRL profile URI written into `Set.profile` (default: {@link PCF_IG_CANONICAL}).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#ConsentToOdrlOptions.profile",
@@ -3137,12 +3469,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConsentToOdrlOptions.uidPrefix"
+          "@value": "ConsentToOdrlOptions.uidPrefix",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Prefix for minted policy `uid`s (default: `\"urn:ihe:pcf:consent:\"`)."
+          "@value": "Prefix for minted policy `uid`s (default: `\"urn:ihe:pcf:consent:\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#ConsentToOdrlOptions.uidPrefix",
@@ -3156,12 +3490,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecideOptions.actionGraph"
+          "@value": "PcfDecideOptions.actionGraph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Custom ODRL action graph (defaults to `ODRL_ACTIONS`)."
+          "@value": "Custom ODRL action graph (defaults to `ODRL_ACTIONS`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecideOptions.actionGraph",
@@ -3175,12 +3511,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecideOptions.implicitPolicy"
+          "@value": "PcfDecideOptions.implicitPolicy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Overarching implicit policy (`Policy-basic-normal`, `Policy-all-normal`, `Policy-break-glass-only`, `Policy-deny`, or a custom `PcfOdrlSet`) used when no active Consent is on file or when the Consent has expired (IHE PCF Volume 1 §1:53.2.1 & §1:53.4.2.5)."
+          "@value": "Overarching implicit policy (`Policy-basic-normal`, `Policy-all-normal`, `Policy-break-glass-only`, `Policy-deny`, or a custom `PcfOdrlSet`) used when no active Consent is on file or when the Consent has expired (IHE PCF Volume 1 §1:53.2.1 & §1:53.4.2.5).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecideOptions.implicitPolicy",
@@ -3194,12 +3532,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.action"
+          "@value": "PcfDecisionRequest.action",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Requested ODRL action (defaults to `\"odrl:use\"`)."
+          "@value": "Requested ODRL action (defaults to `\"odrl:use\"`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.action",
@@ -3213,12 +3553,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.actor"
+          "@value": "PcfDecisionRequest.actor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Requesting actor (FHIR reference such as `\"Practitioner/ex-practitioner\"`, DID, actor id, or `null`)."
+          "@value": "Requesting actor (FHIR reference such as `\"Practitioner/ex-practitioner\"`, DID, actor id, or `null`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.actor",
@@ -3232,12 +3574,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.actorGroups"
+          "@value": "PcfDecisionRequest.actorGroups",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Groups or organizations the actor belongs to (e.g. `[\"Group/ex-privilegedUsers\"]`)."
+          "@value": "Groups or organizations the actor belongs to (e.g. `[\"Group/ex-privilegedUsers\"]`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.actorGroups",
@@ -3251,12 +3595,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.actorRoles"
+          "@value": "PcfDecisionRequest.actorRoles",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Roles the actor holds (or group memberships)."
+          "@value": "Roles the actor holds (or group memberships).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.actorRoles",
@@ -3270,12 +3616,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.author"
+          "@value": "PcfDecisionRequest.author",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `author` when `scope.author` is not passed."
+          "@value": "Convenience shorthand: top-level `author` when `scope.author` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.author",
@@ -3289,12 +3637,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.dataPeriod"
+          "@value": "PcfDecisionRequest.dataPeriod",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `dataPeriod` / `dataDateTime` when `scope.dataPeriod` is not passed."
+          "@value": "Convenience shorthand: top-level `dataPeriod` / `dataDateTime` when `scope.dataPeriod` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.dataPeriod",
@@ -3308,12 +3658,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.dateTime"
+          "@value": "PcfDecisionRequest.dateTime",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `dateTime` when `scope.dateTime` is not passed."
+          "@value": "Convenience shorthand: top-level `dateTime` when `scope.dateTime` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.dateTime",
@@ -3327,12 +3679,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.encounter"
+          "@value": "PcfDecisionRequest.encounter",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `encounter` when `scope.encounter` is not passed."
+          "@value": "Convenience shorthand: top-level `encounter` when `scope.encounter` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.encounter",
@@ -3346,12 +3700,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.purpose"
+          "@value": "PcfDecisionRequest.purpose",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `purpose` when `scope.purpose` is not passed."
+          "@value": "Convenience shorthand: top-level `purpose` when `scope.purpose` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.purpose",
@@ -3365,12 +3721,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.scope"
+          "@value": "PcfDecisionRequest.scope",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Request context: `purpose`, `dateTime`, `target`, `securityLabel`, `dataPeriod`, `author`, `encounter`."
+          "@value": "Request context: `purpose`, `dateTime`, `target`, `securityLabel`, `dataPeriod`, `author`, `encounter`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.scope",
@@ -3384,12 +3742,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.securityLabel"
+          "@value": "PcfDecisionRequest.securityLabel",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `securityLabel` when `scope.securityLabel` is not passed."
+          "@value": "Convenience shorthand: top-level `securityLabel` when `scope.securityLabel` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.securityLabel",
@@ -3403,12 +3763,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PcfDecisionRequest.target"
+          "@value": "PcfDecisionRequest.target",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Convenience shorthand: top-level `target` when `scope.target` is not passed."
+          "@value": "Convenience shorthand: top-level `target` when `scope.target` is not passed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/pcf-consent.ts#PcfDecisionRequest.target",
@@ -3422,12 +3784,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Loss.path"
+          "@value": "Loss.path",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where in the table, e.g. `group[0].element[2].target[1]`."
+          "@value": "Where in the table, e.g. `group[0].element[2].target[1]`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "fhir-harness/schemas/vocab-mapping-fhir.ts#Loss.path",

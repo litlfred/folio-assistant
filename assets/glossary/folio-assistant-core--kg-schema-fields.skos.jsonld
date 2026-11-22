@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationAssetSchema.at"
+          "@value": "AdjudicationAssetSchema.at",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the bytes are, when they are anywhere. Required when `materialized`: a materialized asset with no locator is a claim that something is here without saying where, which is the one shape the state exists to rule out."
+          "@value": "Where the bytes are, when they are anywhere. Required when `materialized`: a materialized asset with no locator is a claim that something is here without saying where, which is the one shape the state exists to rule out.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema.at",
@@ -40,12 +46,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationAssetSchema.note"
+          "@value": "AdjudicationAssetSchema.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What it is, in a few words, so a reader of the record can follow it."
+          "@value": "What it is, in a few words, so a reader of the record can follow it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema.note",
@@ -59,12 +67,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationAssetSchema.ref"
+          "@value": "AdjudicationAssetSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier — a bib-slug, a block id, a path."
+          "@value": "Stable identifier — a bib-slug, a block id, a path.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAssetSchema.ref",
@@ -78,12 +88,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationOutcomeSchema.by"
+          "@value": "AdjudicationOutcomeSchema.by",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Who adjudicated, and of which kind. An outcome with no adjudicator is indistinguishable from a default."
+          "@value": "Who adjudicated, and of which kind. An outcome with no adjudicator is indistinguishable from a default.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.by",
@@ -97,12 +109,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationOutcomeSchema.code"
+          "@value": "AdjudicationOutcomeSchema.code",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The chosen code. Must be one of `codes`."
+          "@value": "The chosen code. Must be one of `codes`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.code",
@@ -116,12 +130,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationOutcomeSchema.codes"
+          "@value": "AdjudicationOutcomeSchema.codes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The enum in force when this was adjudicated."
+          "@value": "The enum in force when this was adjudicated.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.codes",
@@ -135,12 +151,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationOutcomeSchema.debate"
+          "@value": "AdjudicationOutcomeSchema.debate",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional structured debate record formalizing debate rounds conducted prior to the adjudicator's verdict (SWE-Debate / 2507.23348v1)."
+          "@value": "Optional structured debate record formalizing debate rounds conducted prior to the adjudicator's verdict (SWE-Debate / 2507.23348v1).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.debate",
@@ -154,12 +172,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationOutcomeSchema.reasoning"
+          "@value": "AdjudicationOutcomeSchema.reasoning",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why, as markdown. REQUIRED, and never empty."
+          "@value": "Why, as markdown. REQUIRED, and never empty.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.reasoning",
@@ -173,12 +193,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationOutcomeSchema.request"
+          "@value": "AdjudicationOutcomeSchema.request",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The request this answers."
+          "@value": "The request this answers.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.request",
@@ -192,12 +214,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationRequestSchema.assets"
+          "@value": "AdjudicationRequestSchema.assets",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Everything the adjudicator is shown, and **nothing else is**."
+          "@value": "Everything the adjudicator is shown, and **nothing else is**.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema.assets",
@@ -211,12 +235,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationRequestSchema.codes"
+          "@value": "AdjudicationRequestSchema.codes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The permitted answers — the owner's *\"list of judgement codes\"*."
+          "@value": "The permitted answers — the owner's *\"list of judgement codes\"*.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema.codes",
@@ -230,12 +256,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationRequestSchema.id"
+          "@value": "AdjudicationRequestSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable id, so an outcome can point back at the exact question asked."
+          "@value": "Stable id, so an outcome can point back at the exact question asked.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema.id",
@@ -249,12 +277,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AdjudicationRequestSchema.prompt"
+          "@value": "AdjudicationRequestSchema.prompt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The question, as markdown."
+          "@value": "The question, as markdown.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema.prompt",
@@ -268,12 +298,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "JudgementCodeSchema.means"
+          "@value": "JudgementCodeSchema.means",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What choosing this code means. Required — see the type docstring."
+          "@value": "What choosing this code means. Required — see the type docstring.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#JudgementCodeSchema.means",
@@ -287,12 +319,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BitstreamSchema.maskedRegions"
+          "@value": "BitstreamSchema.maskedRegions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Regions blanked out of these bytes before they were written."
+          "@value": "Regions blanked out of these bytes before they were written.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema.maskedRegions",
@@ -306,12 +340,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BitstreamSchema.materialization"
+          "@value": "BitstreamSchema.materialization",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Its own materialisation state. An item may be referenced while one of its bitstreams is materialised — which is exactly the worked example."
+          "@value": "Its own materialisation state. An item may be referenced while one of its bitstreams is materialised — which is exactly the worked example.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema.materialization",
@@ -325,12 +361,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BitstreamSchema.pixelWidth"
+          "@value": "BitstreamSchema.pixelWidth",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Pixel dimensions, where the bitstream is a raster."
+          "@value": "Pixel dimensions, where the bitstream is a raster.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema.pixelWidth",
@@ -344,12 +382,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueNodeSchema.childCountUpstream"
+          "@value": "CatalogueNodeSchema.childCountUpstream",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How many children the SOURCE says this container has — not how many are modelled here. The gap between the two is the whole point of a catalogue by reference, and a renderer that counted `children.length` would report the model's size as the collection's."
+          "@value": "How many children the SOURCE says this container has — not how many are modelled here. The gap between the two is the whole point of a catalogue by reference, and a renderer that counted `children.length` would report the model's size as the collection's.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.childCountUpstream",
@@ -363,12 +403,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueNodeSchema.flavour"
+          "@value": "CatalogueNodeSchema.flavour",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The source system's own word for this node — `community`, `collection`, `set`, `prefix`. Display and provenance only; nothing branches on it."
+          "@value": "The source system's own word for this node — `community`, `collection`, `set`, `prefix`. Display and provenance only; nothing branches on it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.flavour",
@@ -382,12 +424,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueNodeSchema.handle"
+          "@value": "CatalogueNodeSchema.handle",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The node's Handle, where the source mints one — PREFERRED over any host URL for resolution ({@link resolvableIri}). Recorded only when read off the source; never derived for a node that shows none (a DSpace community or collection has a Handle upstream, but none is recorded here until one is read)."
+          "@value": "The node's Handle, where the source mints one — PREFERRED over any host URL for resolution ({@link resolvableIri}). Recorded only when read off the source; never derived for a node that shows none (a DSpace community or collection has a Handle upstream, but none is recorded here until one is read).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.handle",
@@ -401,12 +445,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueNodeSchema.libraryId"
+          "@value": "CatalogueNodeSchema.libraryId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The local library slug, where this item has been ingested. Present iff something under `library/` corresponds."
+          "@value": "The local library slug, where this item has been ingested. Present iff something under `library/` corresponds.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.libraryId",
@@ -420,12 +466,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueNodeSchema.metadataRef"
+          "@value": "CatalogueNodeSchema.metadataRef",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The item's metadata record, by reference to a `folio-dublin-core/v1` file."
+          "@value": "The item's metadata record, by reference to a `folio-dublin-core/v1` file.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.metadataRef",
@@ -439,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueNodeSchema.parents"
+          "@value": "CatalogueNodeSchema.parents",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Containment, as paths from the catalogue root. A LIST, because an item may be mapped into several collections and because the breadcrumb on the one measured item is four levels deep."
+          "@value": "Containment, as paths from the catalogue root. A LIST, because an item may be mapped into several collections and because the breadcrumb on the one measured item is four levels deep.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.parents",
@@ -458,12 +508,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueSchema.sizeBasis"
+          "@value": "CatalogueSchema.sizeBasis",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check."
+          "@value": "How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sizeBasis",
@@ -477,12 +529,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueSchema.sourceLoss"
+          "@value": "CatalogueSchema.sourceLoss",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What survives if the SOURCE goes away, stated per node kind — not only for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked only of a materialization; a referenced node never meets it, so without this the answer for 10 of 13 nodes was silence."
+          "@value": "What survives if the SOURCE goes away, stated per node kind — not only for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked only of a materialization; a referenced node never meets it, so without this the answer for 10 of 13 nodes was silence.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sourceLoss",
@@ -496,12 +550,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueSchema.system"
+          "@value": "CatalogueSchema.system",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The source system, e.g. `DSpace 7`."
+          "@value": "The source system, e.g. `DSpace 7`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.system",
@@ -515,12 +571,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueSchema.totalFilesUpstream"
+          "@value": "CatalogueSchema.totalFilesUpstream",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FILES upstream, where the source publishes that separately."
+          "@value": "FILES upstream, where the source publishes that separately.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.totalFilesUpstream",
@@ -534,12 +592,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CatalogueSchema.totalItemsUpstream"
+          "@value": "CatalogueSchema.totalItemsUpstream",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "ITEMS upstream — the things a person cites, not the files they are made of."
+          "@value": "ITEMS upstream — the things a person cites, not the files they are made of.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.totalItemsUpstream",
@@ -553,12 +613,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaskedRegionSchema.reason"
+          "@value": "MaskedRegionSchema.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why this region is masked, in a person's words. Never generated."
+          "@value": "Why this region is masked, in a person's words. Never generated.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema.reason",
@@ -572,12 +634,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaskedRegionSchema.x1"
+          "@value": "MaskedRegionSchema.x1",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Exclusive."
+          "@value": "Exclusive.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema.x1",
@@ -591,12 +655,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaskedRegionSchema.y1"
+          "@value": "MaskedRegionSchema.y1",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Exclusive."
+          "@value": "Exclusive.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#MaskedRegionSchema.y1",
@@ -610,12 +676,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BlockAtSchema.file"
+          "@value": "BlockAtSchema.file",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Manifest path relative to the folio root."
+          "@value": "Manifest path relative to the folio root.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#BlockAtSchema.file",
@@ -629,12 +697,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BlockAtSchema.index"
+          "@value": "BlockAtSchema.index",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Zero-based position within that section."
+          "@value": "Zero-based position within that section.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#BlockAtSchema.index",
@@ -648,12 +718,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BlockAtSchema.section"
+          "@value": "BlockAtSchema.section",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The section listing it: `{manifest dir}::{section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build). Absent when no manifest lists the block — an orphan, which is itself worth a reviewer's attention and is not guessed at."
+          "@value": "The section listing it: `{manifest dir}::{section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build). Absent when no manifest lists the block — an orphan, which is itself worth a reviewer's attention and is not guessed at.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#BlockAtSchema.section",
@@ -667,12 +739,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BlockSideTextSchema.html"
+          "@value": "BlockSideTextSchema.html",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The same, rendered by the platform's Markdown renderer."
+          "@value": "The same, rendered by the platform's Markdown renderer.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#BlockSideTextSchema.html",
@@ -686,12 +760,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BlockSideTextSchema.prose"
+          "@value": "BlockSideTextSchema.prose",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The Markdown source, exactly as committed."
+          "@value": "The Markdown source, exactly as committed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#BlockSideTextSchema.prose",
@@ -705,12 +781,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ChangeSetSchema.changes"
+          "@value": "ChangeSetSchema.changes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every block that differs, in head reading order, then removed blocks."
+          "@value": "Every block that differs, in head reading order, then removed blocks.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema.changes",
@@ -724,12 +802,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ChangeSetSchema.folio"
+          "@value": "ChangeSetSchema.folio",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Folio root, relative to the repository root."
+          "@value": "Folio root, relative to the repository root.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema.folio",
@@ -743,12 +823,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ComputeOptions.base"
+          "@value": "ComputeOptions.base",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Default `origin/main`."
+          "@value": "Default `origin/main`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ComputeOptions.base",
@@ -762,12 +844,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ComputeOptions.builders"
+          "@value": "ComputeOptions.builders",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contributed builders, so contributed (DAK) blocks are blocks too. See {@link snapshot}."
+          "@value": "The contributed builders, so contributed (DAK) blocks are blocks too. See {@link snapshot}.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ComputeOptions.builders",
@@ -781,12 +865,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ComputeOptions.folio"
+          "@value": "ComputeOptions.folio",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Folio root, relative to `repoRoot`."
+          "@value": "Folio root, relative to `repoRoot`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ComputeOptions.folio",
@@ -800,12 +886,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ComputeOptions.head"
+          "@value": "ComputeOptions.head",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A ref, or {@link WORKTREE} (the default) for the files on disk."
+          "@value": "A ref, or {@link WORKTREE} (the default) for the files on disk.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ComputeOptions.head",
@@ -819,12 +907,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ComputeOptions.repoRoot"
+          "@value": "ComputeOptions.repoRoot",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Repository holding the folio."
+          "@value": "Repository holding the folio.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#ComputeOptions.repoRoot",
@@ -838,12 +928,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefSchema.commit"
+          "@value": "RefSchema.commit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The commit it resolved to; `null` for the uncommitted working tree."
+          "@value": "The commit it resolved to; `null` for the uncommitted working tree.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#RefSchema.commit",
@@ -857,12 +949,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefSchema.ref"
+          "@value": "RefSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What was asked for — `origin/main`, a branch, or `worktree`."
+          "@value": "What was asked for — `origin/main`, a branch, or `worktree`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#RefSchema.ref",
@@ -876,12 +970,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Snap.fields"
+          "@value": "Snap.fields",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A contributed (structured) kind's manifest fields, read as text (bean f327). Never serialised."
+          "@value": "A contributed (structured) kind's manifest fields, read as text (bean f327). Never serialised.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#Snap.fields",
@@ -895,12 +991,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Snap.mdPath"
+          "@value": "Snap.mdPath",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Absolute path of the prose sidecar, when there is one. Never serialised."
+          "@value": "Absolute path of the prose sidecar, when there is one. Never serialised.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/changeset.ts#Snap.mdPath",
@@ -914,12 +1012,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DctermsMapping.range"
+          "@value": "DctermsMapping.range",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no range and the value is prose; `resource` when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is \"intended to be used with non-literal values\"."
+          "@value": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no range and the value is prose; `resource` when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is \"intended to be used with non-literal values\".",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.range",
@@ -933,12 +1033,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DctermsMapping.ses"
+          "@value": "DctermsMapping.ses",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+          "@value": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ses",
@@ -952,12 +1054,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DctermsMapping.term"
+          "@value": "DctermsMapping.term",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The local name under `http://purl.org/dc/terms/`."
+          "@value": "The local name under `http://purl.org/dc/terms/`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.term",
@@ -971,12 +1075,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DctermsMapping.ves"
+          "@value": "DctermsMapping.ves",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+          "@value": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ves",
@@ -990,12 +1096,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DcFieldSchema.schema"
+          "@value": "DcFieldSchema.schema",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The namespace prefix. `dc` throughout the measured record; DSpace also mints `dcterms`, `local` and others."
+          "@value": "The namespace prefix. `dc` throughout the measured record; DSpace also mints `dcterms`, `local` and others.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DcFieldSchema.schema",
@@ -1009,12 +1117,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DcFieldSchema.values"
+          "@value": "DcFieldSchema.values",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every value, in the order the source gave them. Never collapsed."
+          "@value": "Every value, in the order the source gave them. Never collapsed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DcFieldSchema.values",
@@ -1028,12 +1138,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DcValueSchema.authority"
+          "@value": "DcValueSchema.authority",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The authority record this value is controlled by, where there is one. `dc.subject.mesh` is a controlled vocabulary with its own resolution; a free-text keyword is not. Keeping the distinction addressable is what lets a later tool ask \"which of these subjects can I look up\"."
+          "@value": "The authority record this value is controlled by, where there is one. `dc.subject.mesh` is a controlled vocabulary with its own resolution; a free-text keyword is not. Keeping the distinction addressable is what lets a later tool ask \"which of these subjects can I look up\".",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DcValueSchema.authority",
@@ -1047,12 +1159,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DcValueSchema.language"
+          "@value": "DcValueSchema.language",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "BCP 47, as DSpace stores it (`en`, `en_US`, `fr`)."
+          "@value": "BCP 47, as DSpace stores it (`en`, `en_US`, `fr`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DcValueSchema.language",
@@ -1066,12 +1180,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DublinCoreRecordSchema.id"
+          "@value": "DublinCoreRecordSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The repository's own identifier for the item — a DSpace UUID here. NOT the library slug: the slug is derived downstream and is the weakest of the three identifiers this repository holds for the one worked item."
+          "@value": "The repository's own identifier for the item — a DSpace UUID here. NOT the library slug: the slug is derived downstream and is the weakest of the three identifiers this repository holds for the one worked item.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DublinCoreRecordSchema.id",
@@ -1085,12 +1201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DublinCoreRecordSchema.provenance"
+          "@value": "DublinCoreRecordSchema.provenance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where this record was read from, and when. A metadata record with no provenance is the `source: null` defect bean `r1lz` was opened over, wearing a different hat."
+          "@value": "Where this record was read from, and when. A metadata record with no provenance is the `source: null` defect bean `r1lz` was opened over, wearing a different hat.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DublinCoreRecordSchema.provenance",
@@ -1104,12 +1222,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ExtractedStatementSchema.derivedFrom"
+          "@value": "ExtractedStatementSchema.derivedFrom",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The id of the statement this one was derived from, when it was: a scenario candidate written from a recommendation names that recommendation, so a reviewer can check one against the other. Its `source` is still the library source, never the other statement."
+          "@value": "The id of the statement this one was derived from, when it was: a scenario candidate written from a recommendation names that recommendation, so a reviewer can check one against the other. Its `source` is still the library source, never the other statement.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.derivedFrom",
@@ -1123,12 +1243,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ExtractedStatementSchema.id"
+          "@value": "ExtractedStatementSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable within the list; the anchor the statement's row is published under."
+          "@value": "Stable within the list; the anchor the statement's row is published under.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.id",
@@ -1142,12 +1264,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ExtractedStatementSchema.kind"
+          "@value": "ExtractedStatementSchema.kind",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The kind the extraction gave it: recommendation, requirement, candidate, …"
+          "@value": "The kind the extraction gave it: recommendation, requirement, candidate, …",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.kind",
@@ -1161,12 +1285,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ExtractedStatementSchema.statement"
+          "@value": "ExtractedStatementSchema.statement",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The statement as captured, verbatim. Never paraphrased here."
+          "@value": "The statement as captured, verbatim. Never paraphrased here.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.statement",
@@ -1180,12 +1306,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ExtractedStatementSchema.status"
+          "@value": "ExtractedStatementSchema.status",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Its review state, as the extraction records it: published as is."
+          "@value": "Its review state, as the extraction records it: published as is.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.status",
@@ -1199,12 +1327,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ExtractedStatementsSchema.title"
+          "@value": "ExtractedStatementsSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What the list is, in a reader's words: a heading for its part of the page."
+          "@value": "What the list is, in a reader's words: a heading for its part of the page.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementsSchema.title",
@@ -1218,12 +1348,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementPageSchema.entryBase"
+          "@value": "StatementPageSchema.entryBase",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "URL prefix of the library viewer: an entry's link is `<entryBase>/<libraryId>/`."
+          "@value": "URL prefix of the library viewer: an entry's link is `<entryBase>/<libraryId>/`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.entryBase",
@@ -1237,12 +1369,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementPageSchema.out"
+          "@value": "StatementPageSchema.out",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The page to write."
+          "@value": "The page to write.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.out",
@@ -1256,12 +1390,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementPageSchema.sectionBase"
+          "@value": "StatementPageSchema.sectionBase",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "URL prefix of the sources: a section's link is `<sectionBase>/<repo-relative section file>`."
+          "@value": "URL prefix of the sources: a section's link is `<sectionBase>/<repo-relative section file>`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.sectionBase",
@@ -1275,12 +1411,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementPageSchema.statements"
+          "@value": "StatementPageSchema.statements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The statement lists, in the order their parts appear."
+          "@value": "The statement lists, in the order their parts appear.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.statements",
@@ -1294,12 +1432,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementPageSchema.tableAttr"
+          "@value": "StatementPageSchema.tableAttr",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The content type's look, written after each table (for example a kramdown class)."
+          "@value": "The content type's look, written after each table (for example a kramdown class).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.tableAttr",
@@ -1313,12 +1453,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementSourceSchema.instance"
+          "@value": "StatementSourceSchema.instance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the layer holding the library; absent means this layer."
+          "@value": "The DECLARED NAME of the layer holding the library; absent means this layer.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.instance",
@@ -1332,12 +1474,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementSourceSchema.libraryId"
+          "@value": "StatementSourceSchema.libraryId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The library entry: `library/<libraryId>/`."
+          "@value": "The library entry: `library/<libraryId>/`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.libraryId",
@@ -1351,12 +1495,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementSourceSchema.page"
+          "@value": "StatementSourceSchema.page",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The page (or slide) the statement was read from, in the source's own numbering."
+          "@value": "The page (or slide) the statement was read from, in the source's own numbering.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.page",
@@ -1370,12 +1516,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StatementSourceSchema.sectionId"
+          "@value": "StatementSourceSchema.sectionId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The section the statement was read from, when the extraction knows it."
+          "@value": "The section the statement was read from, when the extraction knows it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.sectionId",
@@ -1389,12 +1537,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnFigureSchema.omitted"
+          "@value": "AsDrawnFigureSchema.omitted",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What the PDF paints that the transcription leaves out, and why."
+          "@value": "What the PDF paints that the transcription leaves out, and why.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnFigureSchema.omitted",
@@ -1408,12 +1558,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnImageSchema.png"
+          "@value": "AsDrawnImageSchema.png",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Base64 PNG cropped from a 600 dpi render of the page."
+          "@value": "Base64 PNG cropped from a 600 dpi render of the page.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnImageSchema.png",
@@ -1427,12 +1579,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnShapeSchema.clip"
+          "@value": "AsDrawnShapeSchema.clip",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Indices into `clips`: the shape is drawn inside all of them."
+          "@value": "Indices into `clips`: the shape is drawn inside all of them.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnShapeSchema.clip",
@@ -1446,12 +1600,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnTextSchema.link"
+          "@value": "AsDrawnTextSchema.link",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The glossary concept the label names (exact prefLabel or altLabel match)."
+          "@value": "The glossary concept the label names (exact prefLabel or altLabel match).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.link",
@@ -1465,12 +1621,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnTextSchema.rotate"
+          "@value": "AsDrawnTextSchema.rotate",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Degrees clockwise, about the origin."
+          "@value": "Degrees clockwise, about the origin.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.rotate",
@@ -1484,12 +1642,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnTextSchema.width"
+          "@value": "AsDrawnTextSchema.width",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The printed width, so the run keeps its place in another font."
+          "@value": "The printed width, so the run keeps its place in another font.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.width",
@@ -1503,15 +1663,80 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AsDrawnTextSchema.x"
+          "@value": "AsDrawnTextSchema.x",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The baseline origin of the run."
+          "@value": "The baseline origin of the run.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/figure-data.ts#AsDrawnTextSchema.x",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary-namespace.namespacescheme.pageof",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NamespaceScheme.pageOf",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A term's own page, relative to the namespace document's directory, when it has one.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary-namespace.ts#NamespaceScheme.pageOf",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary-namespace.namespacescheme.skos",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NamespaceScheme.skos",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the scheme's full SKOS is published, relative to the namespace document's directory.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary-namespace.ts#NamespaceScheme.skos",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary-namespace.serveddocument.linksof",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ServedDocument.linksOf",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Links shown at the head of the page of the node with this IRI; `href` is site-relative, without a leading `/`.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary-namespace.ts#ServedDocument.linksOf",
       "skos:note": "candidate"
     },
     {
@@ -1522,12 +1747,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.hasVersion"
+          "@value": "GlossarySchema.hasVersion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "dcterms:hasVersion."
+          "@value": "dcterms:hasVersion.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.hasVersion",
@@ -1541,12 +1768,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.id"
+          "@value": "GlossarySchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The scheme's local id: the tail of its IRI."
+          "@value": "The scheme's local id: the tail of its IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.id",
@@ -1560,12 +1789,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.license"
+          "@value": "GlossarySchema.license",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The licence the terms are published under: an SPDX id or a URL."
+          "@value": "The licence the terms are published under: an SPDX id or a URL.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.license",
@@ -1579,12 +1810,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.members"
+          "@value": "GlossarySchema.members",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "External concept IRIs this glossary lists without copying: a `skos:Collection`."
+          "@value": "External concept IRIs this glossary lists without copying: a `skos:Collection`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.members",
@@ -1598,12 +1831,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.modified"
+          "@value": "GlossarySchema.modified",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "dcterms:modified, a date."
+          "@value": "dcterms:modified, a date.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.modified",
@@ -1617,12 +1852,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.ordered"
+          "@value": "GlossarySchema.ordered",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The terms are in a LOGICAL order, each defined only by terms above it, and a reader should meet them in that order — not alphabetically. The owner, 2026-09-29, of bootstrap's terms: keep \"logical rather than alphabetical order\". Published as a skos:OrderedCollection."
+          "@value": "The terms are in a LOGICAL order, each defined only by terms above it, and a reader should meet them in that order — not alphabetically. The owner, 2026-09-29, of bootstrap's terms: keep \"logical rather than alphabetical order\". Published as a skos:OrderedCollection.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.ordered",
@@ -1636,15 +1873,38 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.source"
+          "@value": "GlossarySchema.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "dcterms:source: what the terms were drawn from."
+          "@value": "dcterms:source: what the terms were drawn from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.glossaryschema.sourcelanguage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySchema.sourceLanguage",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The language the scheme is authored in (BCP 47): what a plain-string label or definition is in, and which entry of a per-language one is the source. Absent means `en`.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.sourceLanguage",
       "skos:note": "candidate"
     },
     {
@@ -1655,12 +1915,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GlossarySchema.subject"
+          "@value": "GlossarySchema.subject",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The subject area this scheme's translations bind in ({@link SubjectSchema}): `dcterms:subject`."
+          "@value": "The subject area this scheme's translations bind in ({@link SubjectSchema}): `dcterms:subject`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.subject",
@@ -1674,12 +1936,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.broader"
+          "@value": "TermSchema.broader",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Local term ids or absolute IRIs."
+          "@value": "Local term ids or absolute IRIs.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.broader",
@@ -1693,12 +1957,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.editorialNote"
+          "@value": "TermSchema.editorialNote",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A note for the editors, not part of the meaning (`skos:editorialNote`): the document's own marks such as \"Under review\" or \"To be included before publication\". A table drawn from the glossary prints it in brackets after the definition, as the document does (smart-ra Q-RAC-8 A)."
+          "@value": "A note for the editors, not part of the meaning (`skos:editorialNote`): the document's own marks such as \"Under review\" or \"To be included before publication\". A table drawn from the glossary prints it in brackets after the definition, as the document does (smart-ra Q-RAC-8 A).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.editorialNote",
@@ -1712,12 +1978,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.example"
+          "@value": "TermSchema.example",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "An instance of the concept (`skos:example`), such as \"The Client Registry\" for Application Component. A table drawn from the glossary prints it in its own column (smart-ra Q-RAC-7 A, Table 3.1)."
+          "@value": "An instance of the concept (`skos:example`), such as \"The Client Registry\" for Application Component. A table drawn from the glossary prints it in its own column (smart-ra Q-RAC-7 A, Table 3.1).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.example",
@@ -1731,12 +1999,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.focus"
+          "@value": "TermSchema.focus",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The thing the concept is about, an organization or an architecture element ({@link FocusSchema}): `foaf:focus`."
+          "@value": "The thing the concept is about, an organization or an architecture element ({@link FocusSchema}): `foaf:focus`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.focus",
@@ -1750,12 +2020,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.iri"
+          "@value": "TermSchema.iri",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The concept's IRI when its defining vocabulary already mints one. The glossary then DESCRIBES that concept — its labels, translations, order — rather than minting a second IRI for the same term. Owner, 2026-09-30 (bean `xsqm`, \"one SKOS\", option A): bootstrap's terms are `<bootstrap>/ns/Node`, not also `…ns/glossary/terms/node`."
+          "@value": "The concept's IRI when its defining vocabulary already mints one. The glossary then DESCRIBES that concept — its labels, translations, order — rather than minting a second IRI for the same term. Owner, 2026-09-30 (bean `xsqm`, \"one SKOS\", option A): bootstrap's terms are `<bootstrap>/ns/Node`, not also `…ns/glossary/terms/node`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.iri",
@@ -1769,12 +2041,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.isDefinedBy"
+          "@value": "TermSchema.isDefinedBy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The schema or standard that defines the term (rdfs:isDefinedBy)."
+          "@value": "The schema or standard that defines the term (rdfs:isDefinedBy).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.isDefinedBy",
@@ -1788,12 +2062,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.notation"
+          "@value": "TermSchema.notation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The code. SKOS's own word for it."
+          "@value": "The code. SKOS's own word for it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.notation",
@@ -1807,12 +2083,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.reason"
+          "@value": "TermSchema.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Required for `could-not-extract`: a person must be able to act on it."
+          "@value": "Required for `could-not-extract`: a person must be able to act on it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.reason",
@@ -1826,12 +2104,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.requires"
+          "@value": "TermSchema.requires",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Local ids of the terms this definition USES — what a reader must know first (dcterms:requires). In an `ordered` glossary each must come earlier; the scheme refuses one that does not."
+          "@value": "Local ids of the terms this definition USES — what a reader must know first (dcterms:requires). In an `ordered` glossary each must come earlier; the scheme refuses one that does not.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.requires",
@@ -1845,12 +2125,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.source"
+          "@value": "TermSchema.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the term came from: a repository path (with #anchor) or an IRI."
+          "@value": "Where the term came from: a repository path (with #anchor) or an IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.source",
@@ -1864,15 +2146,38 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.subject"
+          "@value": "TermSchema.subject",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Overrides the scheme's {@link SubjectSchema subject area} for this term."
+          "@value": "Overrides the scheme's {@link SubjectSchema subject area} for this term.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.subject",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.termschema.translationsource",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.translationSource",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per locale, where that locale's text came from ({@link TranslationSourceSchema}): an UNTERM record, a published glossary, a translator. Read by {@link translationStateOf}.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.translationSource",
       "skos:note": "candidate"
     },
     {
@@ -1883,12 +2188,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TermSchema.translationStatus"
+          "@value": "TermSchema.translationStatus",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Per locale, whether this term's translation is signed off. The translation itself is in the scheme's `.po`, never here: this records only who stands behind it. A locale not listed is `unofficial`."
+          "@value": "Per locale, whether this term's translation is signed off. The translation itself is the locale's entry of `prefLabel`/`definition` (owner, option C, 2026-11-18) or the scheme's `.po`: this records only who stands behind it. A locale not listed is `unofficial`, unless {@link translationStateOf} finds an exact UNTERM record.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.translationStatus",
@@ -1902,12 +2209,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgDecisionsSchema.decidedBy"
+          "@value": "KgDecisionsSchema.decidedBy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Who decided, applied to every gate that does not name its own `decidedBy`."
+          "@value": "Who decided, applied to every gate that does not name its own `decidedBy`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.decidedBy",
@@ -1921,12 +2230,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgDecisionsSchema.expiresAt"
+          "@value": "KgDecisionsSchema.expiresAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When the copy expires; recorded as `expiresAt`."
+          "@value": "When the copy expires; recorded as `expiresAt`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.expiresAt",
@@ -1940,12 +2251,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgDecisionsSchema.maxBytes"
+          "@value": "KgDecisionsSchema.maxBytes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}."
+          "@value": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.maxBytes",
@@ -1959,12 +2272,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgFileRecordSchema.name"
+          "@value": "KgFileRecordSchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Path relative to the part's `tree/` (or the licence's own name)."
+          "@value": "Path relative to the part's `tree/` (or the licence's own name).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema.name",
@@ -1978,12 +2293,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgMaterializationRecordSchema.files"
+          "@value": "KgMaterializationRecordSchema.files",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A held SUBGRAPH: one record per file under `tree/`."
+          "@value": "A held SUBGRAPH: one record per file under `tree/`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.files",
@@ -1997,12 +2314,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgMaterializationRecordSchema.licence"
+          "@value": "KgMaterializationRecordSchema.licence",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The upstream licence, copied beside the tree so its notice travels with the copy."
+          "@value": "The upstream licence, copied beside the tree so its notice travels with the copy.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.licence",
@@ -2016,12 +2335,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgMaterializationRecordSchema.ref"
+          "@value": "KgMaterializationRecordSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The pin the part was asked at — the subscription's `ref` when it was written."
+          "@value": "The pin the part was asked at — the subscription's `ref` when it was written.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.ref",
@@ -2035,12 +2356,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgMaterializationRecordSchema.refusal"
+          "@value": "KgMaterializationRecordSchema.refusal",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Present iff the part stayed referenced."
+          "@value": "Present iff the part stayed referenced.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.refusal",
@@ -2054,12 +2377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgMaterializationRecordSchema.subscription"
+          "@value": "KgMaterializationRecordSchema.subscription",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The `subscriptions[].id` this part belongs to."
+          "@value": "The `subscriptions[].id` this part belongs to.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.subscription",
@@ -2073,12 +2398,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgNodesRecordSchema.members"
+          "@value": "KgNodesRecordSchema.members",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file."
+          "@value": "Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.members",
@@ -2092,12 +2419,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgNodesRecordSchema.ref"
+          "@value": "KgNodesRecordSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The pin the file was fetched at — the subscription's `ref` when it was written."
+          "@value": "The pin the file was fetched at — the subscription's `ref` when it was written.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.ref",
@@ -2111,12 +2440,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgNodesRecordSchema.size"
+          "@value": "KgNodesRecordSchema.size",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The one gate that applies: MEASURED bytes against `maxBytes`."
+          "@value": "The one gate that applies: MEASURED bytes against `maxBytes`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.size",
@@ -2130,12 +2461,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgNodesRecordSchema.state"
+          "@value": "KgNodesRecordSchema.state",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so."
+          "@value": "`materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.state",
@@ -2149,12 +2482,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "KgRefusalSchema.purposeMissing"
+          "@value": "KgRefusalSchema.purposeMissing",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A purpose is asked FIRST; a part with none cannot have its gates judged."
+          "@value": "A purpose is asked FIRST; a part with none cannot have its gates judged.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema.purposeMissing",
@@ -2168,12 +2503,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LibraryRef.instance"
+          "@value": "LibraryRef.instance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the layer holding the corpus — not a path."
+          "@value": "The DECLARED NAME of the layer holding the corpus — not a path.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/library-ref.ts#LibraryRef.instance",
@@ -2187,12 +2524,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CompiledInputsSchema.inputDigest"
+          "@value": "CompiledInputsSchema.inputDigest",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A sha256 over the build inputs, where the builder can produce one."
+          "@value": "A sha256 over the build inputs, where the builder can produce one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema.inputDigest",
@@ -2206,12 +2545,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CompiledInputsSchema.sourceRevision"
+          "@value": "CompiledInputsSchema.sourceRevision",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The revision of the source the artefact was built from, e.g. a commit sha."
+          "@value": "The revision of the source the artefact was built from, e.g. a commit sha.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema.sourceRevision",
@@ -2225,12 +2566,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CompiledInputsSchema.toolchain"
+          "@value": "CompiledInputsSchema.toolchain",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The compiler and its version: `leanprover/lean4:v4.24.0`, `sushi 3.12.0`."
+          "@value": "The compiler and its version: `leanprover/lean4:v4.24.0`, `sushi 3.12.0`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema.toolchain",
@@ -2244,12 +2587,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GateSchema.basis"
+          "@value": "GateSchema.basis",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why. REQUIRED on every verdict including `permitted`, because \"we checked and it is fine\" and \"nobody looked\" are indistinguishable from a bare `permitted`, and this whole module exists to keep such pairs apart."
+          "@value": "Why. REQUIRED on every verdict including `permitted`, because \"we checked and it is fine\" and \"nobody looked\" are indistinguishable from a bare `permitted`, and this whole module exists to keep such pairs apart.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#GateSchema.basis",
@@ -2263,12 +2608,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GateSchema.decidedAt"
+          "@value": "GateSchema.decidedAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Who or what decided, and when. A verdict with no date cannot be re-checked."
+          "@value": "Who or what decided, and when. A verdict with no date cannot be re-checked.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#GateSchema.decidedAt",
@@ -2282,12 +2629,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.bytes"
+          "@value": "MaterializationSchema.bytes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Bytes held locally. Absent means not measured, which is not zero."
+          "@value": "Bytes held locally. Absent means not measured, which is not zero.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.bytes",
@@ -2301,12 +2650,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.collectionBytes"
+          "@value": "MaterializationSchema.collectionBytes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Bytes the WHOLE remote collection holds, where it is known. This is what makes a `size` gate answerable: 3 items of 361.55 GB is a fraction, and \"3 items\" alone is not."
+          "@value": "Bytes the WHOLE remote collection holds, where it is known. This is what makes a `size` gate answerable: 3 items of 361.55 GB is a fraction, and \"3 items\" alone is not.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.collectionBytes",
@@ -2320,12 +2671,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.expiresAt"
+          "@value": "MaterializationSchema.expiresAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When this copy expires. Absent on a `working` copy is a `retention` finding, not a default of \"forever\". Absent on an `archival` one is the SPECIFICATION — see {@link freshness}, which reports the two differently."
+          "@value": "When this copy expires. Absent on a `working` copy is a `retention` finding, not a default of \"forever\". Absent on an `archival` one is the SPECIFICATION — see {@link freshness}, which reports the two differently.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.expiresAt",
@@ -2339,12 +2692,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.fixity"
+          "@value": "MaterializationSchema.fixity",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Required when `purpose` is `archival` or `both`."
+          "@value": "Required when `purpose` is `archival` or `both`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.fixity",
@@ -2358,12 +2713,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.inputs"
+          "@value": "MaterializationSchema.inputs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Required when `purpose` is `compiled`, and only allowed then. See {@link CompiledInputsSchema}."
+          "@value": "Required when `purpose` is `compiled`, and only allowed then. See {@link CompiledInputsSchema}.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.inputs",
@@ -2377,12 +2734,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.lastReadAt"
+          "@value": "MaterializationSchema.lastReadAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When this copy was last read. Absent means 'not recorded'."
+          "@value": "When this copy was last read. Absent means 'not recorded'.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.lastReadAt",
@@ -2396,12 +2755,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.localPath"
+          "@value": "MaterializationSchema.localPath",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the bytes landed, layer-relative. Present iff `materialized`."
+          "@value": "Where the bytes landed, layer-relative. Present iff `materialized`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.localPath",
@@ -2415,12 +2776,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.materializedAt"
+          "@value": "MaterializationSchema.materializedAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When the local copy was taken, and against what upstream version."
+          "@value": "When the local copy was taken, and against what upstream version.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.materializedAt",
@@ -2434,12 +2797,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.note"
+          "@value": "MaterializationSchema.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why the record cannot say more than it does."
+          "@value": "Why the record cannot say more than it does.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.note",
@@ -2453,12 +2818,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.provenance"
+          "@value": "MaterializationSchema.provenance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "WHERE THIS CAME FROM — see {@link SourceProvenanceSchema}."
+          "@value": "WHERE THIS CAME FROM — see {@link SourceProvenanceSchema}.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.provenance",
@@ -2472,12 +2839,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MaterializationSchema.purpose"
+          "@value": "MaterializationSchema.purpose",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why the bytes were taken. Required on anything materialized — the gates mean different things under each."
+          "@value": "Why the bytes were taken. Required on anything materialized — the gates mean different things under each.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.purpose",
@@ -2491,12 +2860,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AnchorSchema.candidates"
+          "@value": "AnchorSchema.candidates",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Other plausible targets, for triage to choose between."
+          "@value": "Other plausible targets, for triage to choose between.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.candidates",
@@ -2510,12 +2881,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AnchorSchema.note"
+          "@value": "AnchorSchema.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why, in a sentence a triager can check."
+          "@value": "Why, in a sentence a triager can check.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.note",
@@ -2529,12 +2902,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "AnchorSchema.targetLabel"
+          "@value": "AnchorSchema.targetLabel",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A block or section label in the folio; null when unplaced."
+          "@value": "A block or section label in the folio; null when unplaced.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.targetLabel",
@@ -2548,12 +2923,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ChangeSetCommitteeMoveSchema.url"
+          "@value": "ChangeSetCommitteeMoveSchema.url",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The GitHub comment or issue it came from, when moved on GitHub."
+          "@value": "The GitHub comment or issue it came from, when moved on GitHub.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetCommitteeMoveSchema.url",
@@ -2567,12 +2944,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ChangeSetHistorySchema.url"
+          "@value": "ChangeSetHistorySchema.url",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The GitHub comment, issue or PR it came from."
+          "@value": "The GitHub comment, issue or PR it came from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema.url",
@@ -2586,12 +2965,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ChangeSetRefSchema.before"
+          "@value": "ChangeSetRefSchema.before",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Before/after deep links to the comment's anchor."
+          "@value": "Before/after deep links to the comment's anchor.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.before",
@@ -2605,12 +2986,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ChangeSetRefSchema.stagingUrl"
+          "@value": "ChangeSetRefSchema.stagingUrl",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The staging preview of the change set."
+          "@value": "The staging preview of the change set.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.stagingUrl",
@@ -2624,12 +3007,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CitationSchema.caption"
+          "@value": "CitationSchema.caption",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "\"Table 3.1\" / \"Figure 2.2\" as parsed from the line or comment."
+          "@value": "\"Table 3.1\" / \"Figure 2.2\" as parsed from the line or comment.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#CitationSchema.caption",
@@ -2643,12 +3028,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "CitationSchema.raw"
+          "@value": "CitationSchema.raw",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The cell or phrase exactly as given."
+          "@value": "The cell or phrase exactly as given.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#CitationSchema.raw",
@@ -2662,12 +3049,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DecisionSchema.changeSet"
+          "@value": "DecisionSchema.changeSet",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the change is made, for a decision that changes the document."
+          "@value": "Where the change is made, for a decision that changes the document.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema.changeSet",
@@ -2681,12 +3070,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PublicFieldsSchema.discussion"
+          "@value": "PublicFieldsSchema.discussion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "GitHub issue holding this comment's discussion, once one is opened."
+          "@value": "GitHub issue holding this comment's discussion, once one is opened.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.discussion",
@@ -2700,12 +3091,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PublicFieldsSchema.labels"
+          "@value": "PublicFieldsSchema.labels",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Categorisations the intake log carried, keyed by its column header and kept verbatim: a theme, a stakeholder type, a review question, a priority, a committee routing. Read, never re-coded, so a log can grow a column without a schema change."
+          "@value": "Categorisations the intake log carried, keyed by its column header and kept verbatim: a theme, a stakeholder type, a review question, a priority, a committee routing. Read, never re-coded, so a log can grow a column without a schema change.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.labels",
@@ -2719,12 +3112,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PublicFieldsSchema.ref"
+          "@value": "PublicFieldsSchema.ref",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "\"PC-0042\": the number a committee and a commenter refer to."
+          "@value": "\"PC-0042\": the number a committee and a commenter refer to.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.ref",
@@ -2738,12 +3133,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PublicFieldsSchema.text"
+          "@value": "PublicFieldsSchema.text",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The comment as written."
+          "@value": "The comment as written.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.text",
@@ -2757,12 +3154,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RecommendationSchema.by"
+          "@value": "RecommendationSchema.by",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "GitHub login of the committee member."
+          "@value": "GitHub login of the committee member.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.by",
@@ -2776,12 +3175,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RecommendationSchema.url"
+          "@value": "RecommendationSchema.url",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The issue or PR comment it was given in."
+          "@value": "The issue or PR comment it was given in.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.url",
@@ -2795,12 +3196,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewerSchema.id"
+          "@value": "ReviewerSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable pseudonym: a hash of the normalised email or name."
+          "@value": "Stable pseudonym: a hash of the normalised email or name.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.id",
@@ -2814,12 +3217,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewerSchema.name"
+          "@value": "ReviewerSchema.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Only when `acknowledge` is true."
+          "@value": "Only when `acknowledge` is true.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.name",
@@ -2833,12 +3238,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewLogColumnSchema.role"
+          "@value": "ReviewLogColumnSchema.role",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Absent when the header carries no role colour."
+          "@value": "Absent when the header carries no role colour.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewLogColumnSchema.role",
@@ -2852,12 +3259,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewLogTabSchema.headerRow"
+          "@value": "ReviewLogTabSchema.headerRow",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "1-based row of the column headers (a tab may open with an instructions row)."
+          "@value": "1-based row of the column headers (a tab may open with an instructions row).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewLogTabSchema.headerRow",
@@ -2871,12 +3280,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SourceSchema.batch"
+          "@value": "SourceSchema.batch",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The intake batch: a file name, a form export, a letter."
+          "@value": "The intake batch: a file name, a form export, a letter.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.batch",
@@ -2890,12 +3301,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SourceSchema.entry"
+          "@value": "SourceSchema.entry",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The log's OWN number for the row (\"No.\"), within its sheet. A review log is re-sent as it is worked, so a later copy is a different file with the same rows: this, with the sheet and the series, is what recognises them."
+          "@value": "The log's OWN number for the row (\"No.\"), within its sheet. A review log is re-sent as it is worked, so a later copy is a different file with the same rows: this, with the sheet and the series, is what recognises them.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.entry",
@@ -2909,12 +3322,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SourceSchema.segment"
+          "@value": "SourceSchema.segment",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For a narrative: which passage of the letter this comment is."
+          "@value": "For a narrative: which passage of the letter this comment is.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment",
@@ -2928,12 +3343,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SourceSchema.series"
+          "@value": "SourceSchema.series",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The log this row belongs to, across the copies of it that are re-sent."
+          "@value": "The log this row belongs to, across the copies of it that are re-sent.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.series",
@@ -2947,12 +3364,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SourceSchema.sha256"
+          "@value": "SourceSchema.sha256",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "sha256 of the intake file, so a re-import is recognised."
+          "@value": "sha256 of the intake file, so a re-import is recognised.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.sha256",
@@ -2966,12 +3385,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SourceSchema.url"
+          "@value": "SourceSchema.url",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For a GitHub comment: its URL."
+          "@value": "For a GitHub comment: its URL.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.url",
@@ -2985,12 +3406,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TransitionInput.decision"
+          "@value": "TransitionInput.decision",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`at` and `by` default to the transition's."
+          "@value": "`at` and `by` default to the transition's.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.decision",
@@ -3004,12 +3427,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TransitionInput.recommendation"
+          "@value": "TransitionInput.recommendation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`at` defaults to the transition's."
+          "@value": "`at` defaults to the transition's.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation",
@@ -3023,12 +3448,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceNodeSchema.derivedFrom"
+          "@value": "ReferenceNodeSchema.derivedFrom",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The asset it was taken from: a DC record, a library manifest, a paper's references section. Repo-relative path or IRI."
+          "@value": "The asset it was taken from: a DC record, a library manifest, a paper's references section. Repo-relative path or IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.derivedFrom",
@@ -3042,12 +3469,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceNodeSchema.heldAt"
+          "@value": "ReferenceNodeSchema.heldAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The library asset that holds a copy of the work, when one is held. Repo-relative path or IRI."
+          "@value": "The library asset that holds a copy of the work, when one is held. Repo-relative path or IRI.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.heldAt",
@@ -3061,12 +3490,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceNodeSchema.printed"
+          "@value": "ReferenceNodeSchema.printed",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The entry exactly as the citing document prints it, when no citation style reproduces that wording (a committee's own short form, two works in one entry). A reference list drawn from the node (`scripts/references-render.ts`) prints this text verbatim instead of formatting the CSL fields, so the KG stays the one source without changing a word. Not CSL: dropped from CSL-JSON exports."
+          "@value": "The entry exactly as the citing document prints it, when no citation style reproduces that wording (a committee's own short form, two works in one entry). A reference list drawn from the node (`scripts/references-render.ts`) prints this text verbatim instead of formatting the CSL fields, so the KG stays the one source without changing a word. Not CSL: dropped from CSL-JSON exports.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.printed",
@@ -3080,12 +3511,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceNodeSchema.provenance"
+          "@value": "ReferenceNodeSchema.provenance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the reference came from. Absent means `authored`."
+          "@value": "Where the reference came from. Absent means `authored`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.provenance",
@@ -3099,12 +3532,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceNodeSchema.sources"
+          "@value": "ReferenceNodeSchema.sources",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every place the work can be read, beyond `URL`: alternates, mirrors, repository records. Not CSL."
+          "@value": "Every place the work can be read, beyond `URL`: alternates, mirrors, repository records. Not CSL.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.sources",
@@ -3118,12 +3553,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceSourceSchema.kind"
+          "@value": "ReferenceSourceSchema.kind",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What kind of place it is: `canonical`, `repository`, `pinned`, `handle`, `doi`, `arxiv`, `mirror`."
+          "@value": "What kind of place it is: `canonical`, `repository`, `pinned`, `handle`, `doi`, `arxiv`, `mirror`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema.kind",
@@ -3137,12 +3574,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReferenceSourceSchema.label"
+          "@value": "ReferenceSourceSchema.label",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What a reader sees for the link."
+          "@value": "What a reader sees for the link.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema.label",
@@ -3156,12 +3595,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "StandaloneReferenceInput.raw"
+          "@value": "StandaloneReferenceInput.raw",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional raw BibTeX or CSL-JSON / JSON-LD text to parse before applying explicit fields."
+          "@value": "Optional raw BibTeX or CSL-JSON / JSON-LD text to parse before applying explicit fields.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/reference.ts#StandaloneReferenceInput.raw",
@@ -3175,12 +3616,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BlockAnchor.section"
+          "@value": "BlockAnchor.section",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The section listing the block (the ChangeSet's form). The heat map's row for its comments (bean `qbfi`)."
+          "@value": "The section listing the block (the ChangeSet's form). The heat map's row for its comments (bean `qbfi`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#BlockAnchor.section",
@@ -3194,12 +3637,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DecisionResult.applied"
+          "@value": "DecisionResult.applied",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Decisions applied by this run, as `<decision comment id> → <review comment id>: <status>`."
+          "@value": "Decisions applied by this run, as `<decision comment id> → <review comment id>: <status>`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionResult.applied",
@@ -3213,12 +3658,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DecisionResult.refused"
+          "@value": "DecisionResult.refused",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A decision tag that could not be applied, and why: said, never silently dropped."
+          "@value": "A decision tag that could not be applied, and why: said, never silently dropped.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionResult.refused",
@@ -3232,12 +3679,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DecisionResult.tagged"
+          "@value": "DecisionResult.tagged",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How many PR comments carried a decision tag, so they are not counted as conversation."
+          "@value": "How many PR comments carried a decision tag, so they are not counted as conversation.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionResult.tagged",
@@ -3251,12 +3700,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DecisionTag.target"
+          "@value": "DecisionTag.target",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The review comment's id."
+          "@value": "The review comment's id.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionTag.target",
@@ -3270,12 +3721,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DecisionTag.text"
+          "@value": "DecisionTag.text",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Everything after the header, trimmed: the reason."
+          "@value": "Everything after the header, trimmed: the reason.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionTag.text",
@@ -3289,12 +3742,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IngestResult.malformed"
+          "@value": "IngestResult.malformed",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Tagged but malformed: said, not dropped, so the reviewer can fix it."
+          "@value": "Tagged but malformed: said, not dropped, so the reviewer can fix it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#IngestResult.malformed",
@@ -3308,12 +3763,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IngestResult.unchanged"
+          "@value": "IngestResult.unchanged",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Already ingested. Same id, so nothing new."
+          "@value": "Already ingested. Same id, so nothing new.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#IngestResult.unchanged",
@@ -3327,12 +3784,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IngestResult.untagged"
+          "@value": "IngestResult.untagged",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "No tag: ordinary conversation. Counted so \"nothing ingested\" is explained."
+          "@value": "No tag: ordinary conversation. Counted so \"nothing ingested\" is explained.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#IngestResult.untagged",
@@ -3346,12 +3805,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "PrComment.association"
+          "@value": "PrComment.association",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "GitHub's `author_association`: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, NONE… Absent when not known."
+          "@value": "GitHub's `author_association`: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, NONE… Absent when not known.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#PrComment.association",
@@ -3365,12 +3826,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ProcessTask.process"
+          "@value": "ProcessTask.process",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The `<bpmn:process id>`."
+          "@value": "The `<bpmn:process id>`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ProcessTask.process",
@@ -3384,12 +3847,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ProcessTask.task"
+          "@value": "ProcessTask.task",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The task's id in that process."
+          "@value": "The task's id in that process.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ProcessTask.task",
@@ -3403,12 +3868,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewCommentsFileSchema.commit"
+          "@value": "ReviewCommentsFileSchema.commit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The head commit whose blocks the comments were anchored against."
+          "@value": "The head commit whose blocks the comments were anchored against.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema.commit",
@@ -3422,12 +3889,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewCommentsFileSchema.verdicts"
+          "@value": "ReviewCommentsFileSchema.verdicts",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Reviewers' per-block verdicts (`folio-review-verdict/v1`, bean `px0t`), ingested from the same PR comments. Default `[]`, so a file written before verdicts existed still reads."
+          "@value": "Reviewers' per-block verdicts (`folio-review-verdict/v1`, bean `px0t`), ingested from the same PR comments. Default `[]`, so a file written before verdicts existed still reads.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema.verdicts",
@@ -3441,12 +3910,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.anchoredFrom"
+          "@value": "ReviewFieldsSchema.anchoredFrom",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The labels this comment was anchored to before a rename re-anchored it."
+          "@value": "The labels this comment was anchored to before a rename re-anchored it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.anchoredFrom",
@@ -3460,12 +3931,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.blockHash"
+          "@value": "ReviewFieldsSchema.blockHash",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The block's content hash when the comment was ingested. `null` when the block was not in the head at all, so the comment was orphaned from the start. Recorded rather than refused, because a reviewer's words are kept."
+          "@value": "The block's content hash when the comment was ingested. `null` when the block was not in the head at all, so the comment was orphaned from the start. Recorded rather than refused, because a reviewer's words are kept.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.blockHash",
@@ -3479,12 +3952,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.commentId"
+          "@value": "ReviewFieldsSchema.commentId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "GitHub's id of the conversation comment this was ingested from."
+          "@value": "GitHub's id of the conversation comment this was ingested from.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.commentId",
@@ -3498,12 +3973,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.commit"
+          "@value": "ReviewFieldsSchema.commit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The head commit the comment was ingested against."
+          "@value": "The head commit the comment was ingested against.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.commit",
@@ -3517,12 +3994,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.decision"
+          "@value": "ReviewFieldsSchema.decision",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The 9gyz Decision that closed it. Required once resolved or adjudicated."
+          "@value": "The 9gyz Decision that closed it. Required once resolved or adjudicated.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.decision",
@@ -3536,12 +4015,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.decisions"
+          "@value": "ReviewFieldsSchema.decisions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The PR conversation comments whose `resolve:` tag has moved this comment ({@link applyDecisions}), in the order applied. A rebuild applies each one once: the record, not the build count, says what has been decided."
+          "@value": "The PR conversation comments whose `resolve:` tag has moved this comment ({@link applyDecisions}), in the order applied. A rebuild applies each one once: the record, not the build count, says what has been decided.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.decisions",
@@ -3555,12 +4036,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.orphaned"
+          "@value": "ReviewFieldsSchema.orphaned",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The block the label names is gone. Kept and shown, never dropped. An anchor fact, not a status: the review process still decides what happens to the comment."
+          "@value": "The block the label names is gone. Kept and shown, never dropped. An anchor fact, not a status: the review process still decides what happens to the comment.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.orphaned",
@@ -3574,12 +4057,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.pr"
+          "@value": "ReviewFieldsSchema.pr",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The edit-set's pull request."
+          "@value": "The edit-set's pull request.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.pr",
@@ -3593,12 +4078,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.repo"
+          "@value": "ReviewFieldsSchema.repo",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`owner/name` of the repository the pull request is in."
+          "@value": "`owner/name` of the repository the pull request is in.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.repo",
@@ -3612,12 +4099,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.reviewer"
+          "@value": "ReviewFieldsSchema.reviewer",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "GitHub login of the reviewer."
+          "@value": "GitHub login of the reviewer.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.reviewer",
@@ -3631,12 +4120,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewFieldsSchema.role"
+          "@value": "ReviewFieldsSchema.role",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The lane they reviewed in: a role id from `roles.json`."
+          "@value": "The lane they reviewed in: a role id from `roles.json`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.role",
@@ -3650,12 +4141,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewTag.text"
+          "@value": "ReviewTag.text",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Everything after the header, trimmed."
+          "@value": "Everything after the header, trimmed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewTag.text",
@@ -3669,12 +4162,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewTransition.from"
+          "@value": "ReviewTransition.from",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`null` for creation."
+          "@value": "`null` for creation.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition.from",
@@ -3688,12 +4183,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewTransition.needsDecision"
+          "@value": "ReviewTransition.needsDecision",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A transition that closes a comment must name the Decision that closed it."
+          "@value": "A transition that closes a comment must name the Decision that closed it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition.needsDecision",
@@ -3707,12 +4204,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.changed"
+          "@value": "Coverage.changed",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The changed blocks that need review, in ChangeSet order."
+          "@value": "The changed blocks that need review, in ChangeSet order.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.changed",
@@ -3726,12 +4225,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.measured"
+          "@value": "Coverage.measured",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Whether the build was measured against its base."
+          "@value": "Whether the build was measured against its base.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.measured",
@@ -3745,12 +4246,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.missedPages"
+          "@value": "Coverage.missedPages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Pages the build measured and the prediction missed, not reviewed since. Counted only when `measured` is `known`."
+          "@value": "Pages the build measured and the prediction missed, not reviewed since. Counted only when `measured` is `known`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.missedPages",
@@ -3764,12 +4267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.openDefects"
+          "@value": "Coverage.openDefects",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`GW_Covered`'s fact: review comments of kind `defect` still open or addressed."
+          "@value": "`GW_Covered`'s fact: review comments of kind `defect` still open or addressed.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.openDefects",
@@ -3783,12 +4288,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.rendered"
+          "@value": "Coverage.rendered",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Whether a rendered impact was given; when `absent` the three lists below are empty because UNKNOWN."
+          "@value": "Whether a rendered impact was given; when `absent` the three lists below are empty because UNKNOWN.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.rendered",
@@ -3802,12 +4309,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.stale"
+          "@value": "Coverage.stale",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Verdicts on an OLDER version of what they are on, which therefore do not count."
+          "@value": "Verdicts on an OLDER version of what they are on, which therefore do not count.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.stale",
@@ -3821,12 +4330,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.uncovered"
+          "@value": "Coverage.uncovered",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Of those, the ones with no current verdict."
+          "@value": "Of those, the ones with no current verdict.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.uncovered",
@@ -3840,12 +4351,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.uncoveredBlocks"
+          "@value": "Coverage.uncoveredBlocks",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`GW_Covered`'s fact: changed blocks with no CURRENT verdict."
+          "@value": "`GW_Covered`'s fact: changed blocks with no CURRENT verdict.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.uncoveredBlocks",
@@ -3859,12 +4372,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.undeterminedInputs"
+          "@value": "Coverage.undeterminedInputs",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Inputs no renderer could place, with neither a current verdict nor a waiver."
+          "@value": "Inputs no renderer could place, with neither a current verdict nor a waiver.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.undeterminedInputs",
@@ -3878,12 +4393,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Coverage.unreviewedPages"
+          "@value": "Coverage.unreviewedPages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Rendered pages (and data files) on the review list that nobody has reviewed at their current pin."
+          "@value": "Rendered pages (and data files) on the review list that nobody has reviewed at their current pin.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.unreviewedPages",
@@ -3897,12 +4414,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RenderedFacts.files"
+          "@value": "RenderedFacts.files",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The predicted files and undetermined inputs, every renderer's, each pinned."
+          "@value": "The predicted files and undetermined inputs, every renderer's, each pinned.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts.files",
@@ -3916,12 +4435,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RenderedFacts.measured"
+          "@value": "RenderedFacts.measured",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The build's measurement, when it was measured."
+          "@value": "The build's measurement, when it was measured.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts.measured",
@@ -3935,12 +4456,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.blockHash"
+          "@value": "ReviewVerdictSchema.blockHash",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The block's content hash (a page's or input's pin) when the verdict was given. It counts only while current."
+          "@value": "The block's content hash (a page's or input's pin) when the verdict was given. It counts only while current.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.blockHash",
@@ -3954,12 +4477,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.commit"
+          "@value": "ReviewVerdictSchema.commit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The head commit the verdict was ingested against."
+          "@value": "The head commit the verdict was ingested against.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.commit",
@@ -3973,12 +4498,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.id"
+          "@value": "ReviewVerdictSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`verdict-pr<n>-c<comment id>-<label>`: derived, so a re-run finds it rather than adding one."
+          "@value": "`verdict-pr<n>-c<comment id>-<label>`: derived, so a re-run finds it rather than adding one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.id",
@@ -3992,12 +4519,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.reason"
+          "@value": "ReviewVerdictSchema.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Required for `waived`: why this block needs no review."
+          "@value": "Required for `waived`: why this block needs no review.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.reason",
@@ -4011,12 +4540,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.reviewer"
+          "@value": "ReviewVerdictSchema.reviewer",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "GitHub login."
+          "@value": "GitHub login.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.reviewer",
@@ -4030,12 +4561,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.role"
+          "@value": "ReviewVerdictSchema.role",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The lane they reviewed in: a role id from `roles.json`."
+          "@value": "The lane they reviewed in: a role id from `roles.json`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.role",
@@ -4049,12 +4582,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.target"
+          "@value": "ReviewVerdictSchema.target",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Absent on verdicts written before pages could be reviewed: those are all on blocks."
+          "@value": "Absent on verdicts written before pages could be reviewed: those are all on blocks.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.target",
@@ -4068,12 +4603,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReviewVerdictSchema.targetLabel"
+          "@value": "ReviewVerdictSchema.targetLabel",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A block's label, or a page's or an input's path, as `target` says."
+          "@value": "A block's label, or a page's or an input's path, as `target` says.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.targetLabel",
@@ -4087,12 +4624,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "VerdictIngestResult.malformed"
+          "@value": "VerdictIngestResult.malformed",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Said, not dropped, so the reviewer can fix it."
+          "@value": "Said, not dropped, so the reviewer can fix it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#VerdictIngestResult.malformed",

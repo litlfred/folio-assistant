@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Check what is served"
+          "@value": "Check what is served",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ask the root URL and every document address. 2xx or 3xx answers; 404 is not there; 403, 407, 5xx or no answer is about the way here and could not be determined."
+          "@value": "Ask the root URL and every document address. 2xx or 3xx answers; 404 is not there; 403, 407, 5xx or no answer is about the way here and could not be determined.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_CheckServed",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Check what was staged"
+          "@value": "Check what was staged",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "site.ts --check and readme-book.ts --check: every document at its address, no address taken by another file, every link on the page landing. This is the QA of what would be pushed."
+          "@value": "site.ts --check and readme-book.ts --check: every document at its address, no address taken by another file, every link on the page landing. This is the QA of what would be pushed.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_CheckStaged",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Deploy the rendering"
+          "@value": "Deploy the rendering",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "publish-site.ts commits the staged tree onto gh-pages as a full replace (run by the instance's Pages workflow on a push to main, or by an agent with its own git credentials); GitHub Pages then builds it from the branch. Rebuild and retry on a rejected push; never rebase the branch. The report names the gh-pages commit SHA."
+          "@value": "publish-site.ts commits the staged tree onto gh-pages as a full replace (run by the instance's Pages workflow on a push to main, or by an agent with its own git credentials); GitHub Pages then builds it from the branch. Rebuild and retry on a rejected push; never rebase the branch. The report names the gh-pages commit SHA.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_Deploy",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Make sure gh-pages exists and Pages serves it"
+          "@value": "Make sure gh-pages exists and Pages serves it",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Provisioning the target, owned by this process rather than by the publication step that calls it. Pages cannot serve a branch that does not exist, so in order: (1) an orphan gh-pages branch exists — git ls-remote --heads origin gh-pages; if absent, push a placeholder (index.html + .nojekyll); (2) Pages is on, Source = the gh-pages branch at / — gh api -X POST repos/<o>/<r>/pages -f source[branch]=gh-pages -f source[path]=/ when gh is signed in, otherwise the exact manual step (Settings → Pages → Deploy from a branch → gh-pages, / (root)). Each half is done, not done, or could not be determined; never assumed."
+          "@value": "Provisioning the target, owned by this process rather than by the publication step that calls it. Pages cannot serve a branch that does not exist, so in order: (1) an orphan gh-pages branch exists — git ls-remote --heads origin gh-pages; if absent, push a placeholder (index.html + .nojekyll); (2) Pages is on, Source = the gh-pages branch at / — gh api -X POST repos/<o>/<r>/pages -f source[branch]=gh-pages -f source[path]=/ when gh is signed in, otherwise the exact manual step (Settings → Pages → Deploy from a branch → gh-pages, / (root)). Each half is done, not done, or could not be determined; never assumed.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_Provision",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Report the push: status and message"
+          "@value": "Report the push: status and message",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "pages-status.ts: pushed, not-pushed or could-not-determine, and one line — the commit, the root URL, and the QA of both the staging and what is served. On the path from a failed staging it says not-pushed and names the problem. Required on every path: a caller that gets no status cannot tell a push from nothing."
+          "@value": "pages-status.ts: pushed, not-pushed or could-not-determine, and one line — the commit, the root URL, and the QA of both the staging and what is served. On the path from a failed staging it says not-pushed and names the problem. Required on every path: a caller that gets no status cannot tell a push from nothing.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_Report",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Resolve the Subgraphs and the root URL"
+          "@value": "Resolve the Subgraphs and the root URL",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Read the instance's declaration. Every Subgraph id asked for must be one it declares; none asked for means the whole graph. The root URL is the one given, else the declaration's iriBase, else https://<owner>.github.io/<repo>/. An unknown id is refused, never rendered as a smaller site."
+          "@value": "Read the instance's declaration. Every Subgraph id asked for must be one it declares; none asked for means the whole graph. The root URL is the one given, else the declaration's iriBase, else https://<owner>.github.io/<repo>/. An unknown id is refused, never rendered as a smaller site.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_ResolveInputs",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Stage the rendering"
+          "@value": "Stage the rendering",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "site.ts --root <instance> --out <dir> [--subgraph <id>]…: every JSON Schema and JSON-LD document at the IRI it names, the files as they sit, the README page as README.md (served as README.html), and index.html as a redirect to it — the default landing page, which an index.html or index.md at the instance root replaces. Generated pages carry the generated-by notice at their top, and a footer that links their generator and source, never an edit page."
+          "@value": "site.ts --root <instance> --out <dir> [--subgraph <id>]…: every JSON Schema and JSON-LD document at the IRI it names, the files as they sit, the README page as README.md (served as README.html), and index.html as a redirect to it — the default landing page, which an index.html or index.md at the instance root replaces. Generated pages carry the generated-by notice at their top, and a footer that links their generator and source, never an edit page.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_Stage",

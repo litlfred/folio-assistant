@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,7 +25,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Draft QA green?"
+          "@value": "Draft QA green?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_DraftQaGate",
@@ -36,7 +41,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "What is the user asking for?"
+          "@value": "What is the user asking for?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_FolioIntent",
@@ -51,7 +57,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Is the published site answering?"
+          "@value": "Is the published site answering?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_PagesLive",
@@ -66,7 +73,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Every changed block and rendered page reviewed?"
+          "@value": "Every changed block and rendered page reviewed?",
+          "@language": "en"
         }
       ],
       "skos:notation": "Decision_ReviewCoverageGate",

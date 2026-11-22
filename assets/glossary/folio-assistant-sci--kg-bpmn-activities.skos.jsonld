@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Check AtomicMass.lean is in sync"
+          "@value": "Check AtomicMass.lean is in sync",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces."
+          "@value": "Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Drift",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Build the doc-gen4 render over the warm cache"
+          "@value": "Build the doc-gen4 render over the warm cache",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Tool `lean-html-docs` (`adapters/paper/lean/lean-docs-build.sh --lake-root <pkg> --lib <Lib>`). Refuses while another lake/lean process holds `.lake/`, refuses over a restored tree with no traces, checks or restores the warm cache, enables the sentinel-commented doc-gen4 require for this build only, then `lake -R -Kenv=dev build <Lib>:docs`. Output: `<pkg>/.lake/build/doc`."
+          "@value": "Tool `lean-html-docs` (`adapters/paper/lean/lean-docs-build.sh --lake-root <pkg> --lib <Lib>`). Refuses while another lake/lean process holds `.lake/`, refuses over a restored tree with no traces, checks or restores the warm cache, enables the sentinel-commented doc-gen4 require for this build only, then `lake -R -Kenv=dev build <Lib>:docs`. Output: `<pkg>/.lake/build/doc`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Build",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Stage the render under the site and rail every page"
+          "@value": "Stage the render under the site and rail every page",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Tool `lean-render-publish` (`adapters/paper/lean/lean-render.ts --docs <render> --site <site>`). Copies the render to `<site>/lean/` without Lake's bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect rail-declined, adds the layout shim, optionally prunes to the folio's modules, then runs `rail-standalone-pages.ts --foreign-site` over the whole site and checks every staged page."
+          "@value": "Tool `lean-render-publish` (`adapters/paper/lean/lean-render.ts --docs <render> --site <site>`). Copies the render to `<site>/lean/` without Lake's bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect rail-declined, adds the layout shim, optionally prunes to the folio's modules, then runs `rail-standalone-pages.ts --foreign-site` over the whole site and checks every staged page.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Publish",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the bean"
+          "@value": "Close the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open the bean"
+          "@value": "Open the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish extracted statements"
+          "@value": "Publish extracted statements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The paper draws on library sources; every statement quoted or extracted from them is published in an appendix page of the paper and in the shared extraction viewer, each linked to its library entry and section, before the paper is rendered. These pages are EXPOSITION about sources, never part of a proof: nothing published here enters a formal statement or its Lean sibling. The sub-process is core's, the same for every content type; the paper supplies only the page look."
+          "@value": "The paper draws on library sources; every statement quoted or extracted from them is published in an appendix page of the paper and in the shared extraction viewer, each linked to its library entry and section, before the paper is rendered. These pages are EXPOSITION about sources, never part of a proof: nothing published here enters a formal statement or its Lean sibling. The sub-process is core's, the same for every content type; the paper supplies only the page look.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_PublishStatements",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review and publish"
+          "@value": "Review and publish",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Core's shared review-and-publish process (Process_FolioReviewPublish): the reviewer reads the rendered folio and approves it, asks for changes, or sends a working draft to the Authoring Committee."
+          "@value": "Core's shared review-and-publish process (Process_FolioReviewPublish): the reviewer reads the rendered folio and approves it, asks for changes, or sends a working draft to the Authoring Committee.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_ReviewPublish",
@@ -161,12 +179,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author blocks"
+          "@value": "Author blocks",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn."
+          "@value": "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorBlocks",
@@ -181,12 +201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Formalise in Lean"
+          "@value": "Formalise in Lean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification."
+          "@value": "Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Formalize",
@@ -201,12 +223,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Plan the paper"
+          "@value": "Plan the paper",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Scope the paper: chapters, the blocks each needs, what gets formalised."
+          "@value": "Scope the paper: chapters, the blocks each needs, what gets formalised.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Plan",
@@ -221,12 +245,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Render PDF and HTML"
+          "@value": "Render PDF and HTML",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Typeset the paper through LaTeX to PDF and HTML. Run `latex-preflight` first to catch compile-breaking source patterns before a full compile. The preamble, class and macros belong to the folio, never to the platform."
+          "@value": "Typeset the paper through LaTeX to PDF and HTML. Run `latex-preflight` first to catch compile-breaking source patterns before a full compile. The preamble, class and macros belong to the folio, never to the platform.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Render",
@@ -241,12 +267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Scaffold the folio repo"
+          "@value": "Scaffold the folio repo",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Create the folio repository with `bun run cat init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied."
+          "@value": "Create the folio repository with `bun run cat init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Scaffold",
@@ -261,12 +289,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Seed the work plan"
+          "@value": "Seed the work plan",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_SeedPlan",
@@ -281,12 +311,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Validate"
+          "@value": "Validate",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure."
+          "@value": "Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Validate",

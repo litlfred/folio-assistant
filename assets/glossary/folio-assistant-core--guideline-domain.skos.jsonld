@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -23,16 +27,24 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "clinical"
+          "@value": "clinical",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "clinical guideline",
-        "clinical health"
+        {
+          "@value": "clinical guideline",
+          "@language": "en"
+        },
+        {
+          "@value": "clinical health",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A guideline whose recommendations address the care of individual patients by health workers: assessment, diagnosis, treatment and management of a condition in a person."
+          "@value": "A guideline whose recommendations address the care of individual patients by health workers: assessment, diagnosis, treatment and management of a condition in a person.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Looked up against the MeSH RDF API (https://id.nlm.nih.gov/mesh/, 2026-10-23): closeMatch to MeSH D017065 ('Practice Guideline', Publication Type; entry terms 'Clinical Guideline', 'Clinical Practice Guideline') and D015510 ('Clinical Medicine', Topical Descriptor). Neither is an exactMatch because this concept classifies a guideline's domain within a three-way partition (clinical, public health, health system strengthening) rather than publication form or the medical discipline as a whole.",
@@ -54,15 +66,20 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "public health"
+          "@value": "public health",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "public health guideline"
+        {
+          "@value": "public health guideline",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A guideline whose recommendations address the health of populations rather than of an individual patient: prevention, health promotion, immunization and screening programmes, surveillance, and policy or environmental measures."
+          "@value": "A guideline whose recommendations address the health of populations rather than of an individual patient: prevention, health promotion, immunization and screening programmes, surveillance, and policy or environmental measures.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Looked up against the MeSH RDF API (https://id.nlm.nih.gov/mesh/, 2026-10-23): closeMatch to MeSH D011634 ('Public Health', Topical Descriptor) and D015980 ('Public Health Practice', Topical Descriptor). Recorded as closeMatch rather than exactMatch because this concept classifies a guideline's domain rather than the field of public health itself.",
@@ -84,16 +101,24 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "health system strengthening"
+          "@value": "health system strengthening",
+          "@language": "en"
         }
       ],
       "skos:altLabel": [
-        "health systems strengthening",
-        "HSS"
+        {
+          "@value": "health systems strengthening",
+          "@language": "en"
+        },
+        {
+          "@value": "HSS",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
-          "@value": "A guideline whose recommendations address how the health system itself is organised and resourced — service delivery, health workforce, health information systems, access to medical products, financing, and leadership and governance — rather than a particular condition or population intervention."
+          "@value": "A guideline whose recommendations address how the health system itself is organised and resourced — service delivery, health workforce, health information systems, access to medical products, financing, and leadership and governance — rather than a particular condition or population intervention.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "The six areas follow WHO's health-system building blocks (Everybody's business, 2007). Looked up against the MeSH RDF API (https://id.nlm.nih.gov/mesh/, 2026-10-23): MeSH holds no single descriptor for 'health system strengthening' (none found for the compound term); recorded as closeMatch to MeSH D003695 ('Delivery of Health Care', entry terms 'Health Care Systems', 'Healthcare Systems') and D057191 ('Capacity Building').",

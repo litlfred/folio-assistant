@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "core-schemas": {
-      "count": 42,
+      "count": 45,
       "unit": "modules"
     }
   },
@@ -3670,12 +3670,37 @@
       "isTest": true
     },
     {
+      "module": "folio-assistant-core/schemas/glossary-namespace.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary-namespace.test",
+      "graphNode": "undeclared",
+      "summary": "The namespace document carries every glossary concept a layer mints",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/glossary-namespace.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary-namespace",
+      "graphNode": "none",
+      "reason": "a rendering of the glossary graph, not a schema of it",
+      "summary": "A layer's namespace document, with its glossary concepts in it.",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/glossary-tables.ts",
       "instance": "folio-assistant-core",
       "name": "glossary-tables",
       "graphNode": "schema",
       "summary": "`folio-glossary-tables/v1`: which document blocks show which glossary as a",
       "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/glossary-translations.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary-translations.test",
+      "graphNode": "undeclared",
+      "summary": "Glossary translations held in the glossary itself (owner, option C,",
+      "isTest": true
     },
     {
       "module": "folio-assistant-core/schemas/glossary.test.ts",
@@ -116854,6 +116879,97 @@
       "exported": false
     },
     {
+      "id": "folio-assistant-core/schemas/glossary-namespace.ts#NamespaceScheme",
+      "name": "NamespaceScheme",
+      "module": "folio-assistant-core/schemas/glossary-namespace.ts",
+      "kind": "interface",
+      "doc": "One scheme as the namespace document needs it.",
+      "fields": [
+        {
+          "name": "glossary",
+          "type": "Pick<Glossary, \"id\" | \"title\" | \"description\" | \"terms\">",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "skos",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Where the scheme's full SKOS is published, relative to the namespace document's directory."
+        },
+        {
+          "name": "pageOf",
+          "type": "(termId: string) => string | undefined",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "doc": "A term's own page, relative to the namespace document's directory, when it has one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/glossary.ts#Glossary"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary-namespace.ts#Node",
+      "name": "Node",
+      "module": "folio-assistant-core/schemas/glossary-namespace.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary-namespace.ts#ServedDocument",
+      "name": "ServedDocument",
+      "module": "folio-assistant-core/schemas/glossary-namespace.ts",
+      "kind": "interface",
+      "doc": "A published JSON-LD document whose top-level nodes this site serves, with what each node's page links back to.",
+      "fields": [
+        {
+          "name": "doc",
+          "type": "Node",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "linksOf",
+          "type": "(iri: string) => ReadonlyArray<{ label: string; href: string }>",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "doc": "Links shown at the head of the page of the node with this IRI; `href` is site-relative, without a leading `/`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/glossary-namespace.ts#Node"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/glossary-tables.ts#GlossaryTables",
       "name": "GlossaryTables",
       "module": "folio-assistant-core/schemas/glossary-tables.ts",
@@ -117252,6 +117368,18 @@
           "doc": "The licence the terms are published under: an SPDX id or a URL."
         },
         {
+          "name": "sourceLanguage",
+          "type": "z.string().regex(BCP47).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "The language the scheme is authored in (BCP 47): what a plain-string"
+        },
+        {
           "name": "terms",
           "type": "z.array(TermSchema).default([])",
           "optional": true,
@@ -117290,6 +117418,7 @@
       ],
       "unresolved": [],
       "external": [
+        "BCP47",
         "GLOSSARY_SCHEMA_ID",
         "LOCAL_ID",
         "z"
@@ -117644,6 +117773,18 @@
           "doc": "Per locale, whether this term's translation is signed off. The"
         },
         {
+          "name": "translationSource",
+          "type": "z.record(z.string().regex(BCP47), TranslationSourceSchema).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "record",
+          "links": {
+            "record": "https://zod.dev/api#records"
+          },
+          "doc": "Per locale, where that locale's text came from ({@link TranslationSourceSchema}):"
+        },
+        {
           "name": "focus",
           "type": "FocusSchema.optional()",
           "optional": true,
@@ -117694,7 +117835,8 @@
         "folio-assistant-core/schemas/glossary.ts#FocusSchema",
         "folio-assistant-core/schemas/glossary.ts#Iri",
         "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
-        "folio-assistant-core/schemas/glossary.ts#SubjectSchema"
+        "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+        "folio-assistant-core/schemas/glossary.ts#TranslationSourceSchema"
       ],
       "unresolved": [],
       "external": [
@@ -117710,6 +117852,74 @@
     {
       "id": "folio-assistant-core/schemas/glossary.ts#TermStatus",
       "name": "TermStatus",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TranslationSource",
+      "name": "TranslationSource",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TranslationSourceSchema",
+      "name": "TranslationSourceSchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-object",
+      "doc": "Where one locale's translation of a term came from (owner, option C,",
+      "fields": [
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "sourceText",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TranslationState",
+      "name": "TranslationState",
       "module": "folio-assistant-core/schemas/glossary.ts",
       "kind": "type-alias",
       "fields": [],
@@ -171180,6 +171390,22 @@
       "array": false
     },
     {
+      "from": "folio-assistant-core/schemas/glossary-namespace.ts#NamespaceScheme",
+      "to": "folio-assistant-core/schemas/glossary.ts#Glossary",
+      "via": "glossary",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary-namespace.ts#ServedDocument",
+      "to": "folio-assistant-core/schemas/glossary-namespace.ts#Node",
+      "via": "doc",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "folio-assistant-core/schemas/glossary-tables.ts#GlossaryTablesSchema",
       "to": "folio-assistant-core/schemas/glossary-tables.ts#RelPath",
       "via": "tables",
@@ -171335,6 +171561,14 @@
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
       "to": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
       "via": "subject",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#TranslationSourceSchema",
+      "via": "translationSource",
       "kind": "field",
       "optional": true,
       "array": false

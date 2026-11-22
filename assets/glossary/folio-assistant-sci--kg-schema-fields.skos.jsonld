@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureAttemptSchema.beanId"
+          "@value": "ConjectureAttemptSchema.beanId",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Work-plan bean identifier (e.g. `qou-1234` or `folio-assistant-ckej`)."
+          "@value": "Work-plan bean identifier (e.g. `qou-1234` or `folio-assistant-ckej`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureAttemptSchema.beanId",
@@ -40,12 +46,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureAttemptSchema.commit"
+          "@value": "ConjectureAttemptSchema.commit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional git commit SHA or ref where the attempt was recorded."
+          "@value": "Optional git commit SHA or ref where the attempt was recorded.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureAttemptSchema.commit",
@@ -59,12 +67,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureAttemptSchema.outcome"
+          "@value": "ConjectureAttemptSchema.outcome",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Outcome of the attempt."
+          "@value": "Outcome of the attempt.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureAttemptSchema.outcome",
@@ -78,12 +88,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureAttemptSchema.recordedAt"
+          "@value": "ConjectureAttemptSchema.recordedAt",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "ISO-8601 date or timestamp when the attempt was recorded."
+          "@value": "ISO-8601 date or timestamp when the attempt was recorded.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureAttemptSchema.recordedAt",
@@ -97,12 +109,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureAttemptSchema.summary"
+          "@value": "ConjectureAttemptSchema.summary",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Short summary of what was tried and why it succeeded, stalled, or refuted the claim."
+          "@value": "Short summary of what was tried and why it succeeded, stalled, or refuted the claim.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureAttemptSchema.summary",
@@ -116,12 +130,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.assumedBy"
+          "@value": "ConjectureRegisterNodeSchema.assumedBy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Critical-path theorem/provable declarations or block labels that assume this conjecture (reverse edges of `lean-formal-graph`)."
+          "@value": "Critical-path theorem/provable declarations or block labels that assume this conjecture (reverse edges of `lean-formal-graph`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.assumedBy",
@@ -135,12 +151,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.attempts"
+          "@value": "ConjectureRegisterNodeSchema.attempts",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Work-traceability attempts (beans and commits) against this conjecture."
+          "@value": "Work-traceability attempts (beans and commits) against this conjecture.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.attempts",
@@ -154,12 +172,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.conjectureKind"
+          "@value": "ConjectureRegisterNodeSchema.conjectureKind",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Distinguishes a formal mathematical conjecture (`\"formal\"`) from an identification (`\"identification\"`, a numerical/structural match awaiting proof)."
+          "@value": "Distinguishes a formal mathematical conjecture (`\"formal\"`) from an identification (`\"identification\"`, a numerical/structural match awaiting proof).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.conjectureKind",
@@ -173,12 +193,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.id"
+          "@value": "ConjectureRegisterNodeSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "File-stem identifier (`<id>.json`)."
+          "@value": "File-stem identifier (`<id>.json`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.id",
@@ -192,12 +214,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.leanStub"
+          "@value": "ConjectureRegisterNodeSchema.leanStub",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional Lean stub for the conjecture statement (`class` or `axiom` or `theorem`)."
+          "@value": "Optional Lean stub for the conjecture statement (`class` or `axiom` or `theorem`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.leanStub",
@@ -211,12 +235,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.notes"
+          "@value": "ConjectureRegisterNodeSchema.notes",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional notes on strategy or obstructions."
+          "@value": "Optional notes on strategy or obstructions.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.notes",
@@ -230,12 +256,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.resolvedBy"
+          "@value": "ConjectureRegisterNodeSchema.resolvedBy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional block label, Lean declaration, or commit ref that resolved or superseded this conjecture."
+          "@value": "Optional block label, Lean declaration, or commit ref that resolved or superseded this conjecture.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.resolvedBy",
@@ -249,12 +277,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.sourceBlock"
+          "@value": "ConjectureRegisterNodeSchema.sourceBlock",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Source `conjecture()` block label (`conj:...`)."
+          "@value": "Source `conjecture()` block label (`conj:...`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.sourceBlock",
@@ -268,12 +298,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.status"
+          "@value": "ConjectureRegisterNodeSchema.status",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lifecycle status governed by `conjecture-status-lifecycle.dmn`."
+          "@value": "Lifecycle status governed by `conjecture-status-lifecycle.dmn`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.status",
@@ -287,12 +319,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureRegisterNodeSchema.title"
+          "@value": "ConjectureRegisterNodeSchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable title of the open problem."
+          "@value": "Human-readable title of the open problem.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/conjecture-register.ts#ConjectureRegisterNodeSchema.title",
@@ -306,12 +340,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.check"
+          "@value": "EditorCheckerNodeSchema.check",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`checkSuggestion(before, after, ctx)` → findings. Errors are syntax errors; warnings never block."
+          "@value": "`checkSuggestion(before, after, ctx)` → findings. Errors are syntax errors; warnings never block.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.check",
@@ -325,12 +361,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.contentType"
+          "@value": "EditorCheckerNodeSchema.contentType",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The content type whose blocks this profile serves (a declared `contentAdapters[].contentType`)."
+          "@value": "The content type whose blocks this profile serves (a declared `contentAdapters[].contentType`).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.contentType",
@@ -344,12 +382,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.crepe"
+          "@value": "EditorCheckerNodeSchema.crepe",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Crepe settings for the profile."
+          "@value": "Crepe settings for the profile.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.crepe",
@@ -363,12 +403,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.kinds"
+          "@value": "EditorCheckerNodeSchema.kinds",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Block kinds it is limited to. Absent means every Markdown block of the content type."
+          "@value": "Block kinds it is limited to. Absent means every Markdown block of the content type.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.kinds",
@@ -382,12 +424,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.macros"
+          "@value": "EditorCheckerNodeSchema.macros",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`(katexMacros) => macros`: the profile's macro table from the page's KaTeX macros, passed to `check` (as `macros`) and to `crepe.remarkFirst`. Absent: the checker's own defaults."
+          "@value": "`(katexMacros) => macros`: the profile's macro table from the page's KaTeX macros, passed to `check` (as `macros`) and to `crepe.remarkFirst`. Absent: the checker's own defaults.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.macros",
@@ -401,12 +445,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.rawFirstFor"
+          "@value": "EditorCheckerNodeSchema.rawFirstFor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Block kinds whose raw pane (for a paper, the raw-LaTeX pane) is offered up front (owner, 2026-10-14: \"both\")."
+          "@value": "Block kinds whose raw pane (for a paper, the raw-LaTeX pane) is offered up front (owner, 2026-10-14: \"both\").",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.rawFirstFor",
@@ -420,12 +466,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "EditorCheckerNodeSchema.tokens"
+          "@value": "EditorCheckerNodeSchema.tokens",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`() => TokenRule[]`: the profile's own syntax, for the runtime to keep intact and check while the profile's module is not loaded (`adapters/paper/suggest/latex-tokens.ts`). Called at build time by cat-harness-tools' editor-profiles bundler, which serialises each pattern."
+          "@value": "`() => TokenRule[]`: the profile's own syntax, for the runtime to keep intact and check while the profile's module is not loaded (`adapters/paper/suggest/latex-tokens.ts`). Called at build time by cat-harness-tools' editor-profiles bundler, which serialises each pattern.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.tokens",
@@ -439,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureBlock.conjectureKind"
+          "@value": "ConjectureBlock.conjectureKind",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Distinguishes a formal mathematical conjecture (`\"formal\"`) from an identification (`\"identification\"`, a numerical or structural match awaiting proof). Bean `folio-assistant-ckej`."
+          "@value": "Distinguishes a formal mathematical conjecture (`\"formal\"`) from an identification (`\"identification\"`, a numerical or structural match awaiting proof). Bean `folio-assistant-ckej`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ConjectureBlock.conjectureKind",
@@ -458,12 +508,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureBlock.formality"
+          "@value": "ConjectureBlock.formality",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Alias for {@link conjectureKind}: `\"formal\"` | `\"identification\"`."
+          "@value": "Alias for {@link conjectureKind}: `\"formal\"` | `\"identification\"`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ConjectureBlock.formality",
@@ -477,12 +529,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ConjectureBlock.lean"
+          "@value": "ConjectureBlock.lean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional Lean stub for the conjecture statement."
+          "@value": "Optional Lean stub for the conjecture statement.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ConjectureBlock.lean",
@@ -496,12 +550,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DefinitionBlock.examples"
+          "@value": "DefinitionBlock.examples",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Labels of example blocks illustrating this definition."
+          "@value": "Labels of example blocks illustrating this definition.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#DefinitionBlock.examples",
@@ -515,12 +571,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DefinitionBlock.lean"
+          "@value": "DefinitionBlock.lean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Required: every definition must be formalized."
+          "@value": "Required: every definition must be formalized.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#DefinitionBlock.lean",
@@ -534,12 +592,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MathpaperConstraintContext.lakeTreeContainsBasename"
+          "@value": "MathpaperConstraintContext.lakeTreeContainsBasename",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Basename lookup under a Lake package root (for the `lean.ref` fallback)."
+          "@value": "Basename lookup under a Lake package root (for the `lean.ref` fallback).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#MathpaperConstraintContext.lakeTreeContainsBasename",
@@ -553,12 +613,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "MathpaperConstraintContext.leanContent"
+          "@value": "MathpaperConstraintContext.leanContent",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lean sibling stub content (for the §3b-cond kind check), if the file exists."
+          "@value": "Lean sibling stub content (for the §3b-cond kind check), if the file exists.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#MathpaperConstraintContext.leanContent",
@@ -572,12 +634,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ProofBlock.computation"
+          "@value": "ProofBlock.computation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional computational verification (Python/SnapPea/sympy/etc.)."
+          "@value": "Optional computational verification (Python/SnapPea/sympy/etc.).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.computation",
@@ -591,12 +655,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ProofBlock.lean"
+          "@value": "ProofBlock.lean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional Lean formalization of the proof."
+          "@value": "Optional Lean formalization of the proof.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.lean",
@@ -610,12 +676,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ProofBlock.of"
+          "@value": "ProofBlock.of",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Label of the provable block this proof establishes (reverse link of `ProvableBase.proofs[]`). Canonical field name — use in preference to `proves`."
+          "@value": "Label of the provable block this proof establishes (reverse link of `ProvableBase.proofs[]`). Canonical field name — use in preference to `proves`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.of",
@@ -629,12 +697,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "precisionScalar.dps"
+          "@value": "precisionScalar.dps",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Significant decimal digits in `value`."
+          "@value": "Significant decimal digits in `value`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/precision-scalar.ts#precisionScalar.dps",
@@ -648,12 +718,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "precisionScalar.value"
+          "@value": "precisionScalar.value",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Signed decimal: optional `-`, integer part, optional `.<frac>`, optional `[eE][+-]?<int>` exponent. Includes uppercase `E` and explicit positive sign on the exponent — both produced by various MPFR / mpmath formatting paths."
+          "@value": "Signed decimal: optional `-`, integer part, optional `.<frac>`, optional `[eE][+-]?<int>` exponent. Includes uppercase `E` and explicit positive sign on the exponent — both produced by various MPFR / mpmath formatting paths.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/precision-scalar.ts#precisionScalar.value",
@@ -667,12 +739,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LeanVersionRange.max"
+          "@value": "LeanVersionRange.max",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "e.g. `\"4.30.0\"`. Omit for \"no known upper bound\"."
+          "@value": "e.g. `\"4.30.0\"`. Omit for \"no known upper bound\".",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#LeanVersionRange.max",
@@ -686,12 +760,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LeanVersionRange.min"
+          "@value": "LeanVersionRange.min",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "e.g. `\"4.17.0\"`. Omit for \"no lower bound known\"."
+          "@value": "e.g. `\"4.17.0\"`. Omit for \"no lower bound known\".",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#LeanVersionRange.min",
@@ -705,12 +781,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "LeanVersionRange.note"
+          "@value": "LeanVersionRange.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Free-text note on why a bound exists (which lemma moved, etc.)."
+          "@value": "Free-text note on why a bound exists (which lemma moved, etc.).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#LeanVersionRange.note",
@@ -724,12 +802,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.caveat"
+          "@value": "RefactorStrategy.caveat",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why NOT to apply this in some cases. Populated where known."
+          "@value": "Why NOT to apply this in some cases. Populated where known.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.caveat",
@@ -743,12 +823,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.description"
+          "@value": "RefactorStrategy.description",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One-line statement of the rewrite."
+          "@value": "One-line statement of the rewrite.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.description",
@@ -762,12 +844,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.example"
+          "@value": "RefactorStrategy.example",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Illustrative before/after, always populated — it is the doc."
+          "@value": "Illustrative before/after, always populated — it is the doc.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.example",
@@ -781,12 +865,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.expected_gain"
+          "@value": "RefactorStrategy.expected_gain",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Expected gain, as a rough multiplier on the affected span (0.5 = \"about half the length/cost\"). Indicative only; the measured `proof-compile-cost` metric is the real evidence."
+          "@value": "Expected gain, as a rough multiplier on the affected span (0.5 = \"about half the length/cost\"). Indicative only; the measured `proof-compile-cost` metric is the real evidence.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.expected_gain",
@@ -800,12 +886,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.id"
+          "@value": "RefactorStrategy.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable kebab-case id, e.g. `drop-by-exact-wrapper`."
+          "@value": "Stable kebab-case id, e.g. `drop-by-exact-wrapper`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.id",
@@ -819,12 +907,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.lean"
+          "@value": "RefactorStrategy.lean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lean versions this is known-good for. An empty/absent range means UNKNOWN, not \"all versions\" — the query treats it as non-applicable under strict gating, because an unbounded claim is exactly the assumption that breaks on upgrade."
+          "@value": "Lean versions this is known-good for. An empty/absent range means UNKNOWN, not \"all versions\" — the query treats it as non-applicable under strict gating, because an unbounded claim is exactly the assumption that breaks on upgrade.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.lean",
@@ -838,12 +928,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.match"
+          "@value": "RefactorStrategy.match",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Regex (JS syntax, source form) matching the shape to rewrite. Optional: some strategies are structural and only an agent can recognise them."
+          "@value": "Regex (JS syntax, source form) matching the shape to rewrite. Optional: some strategies are structural and only an agent can recognise them.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.match",
@@ -857,12 +949,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.replace"
+          "@value": "RefactorStrategy.replace",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Replacement template, when the rewrite is purely mechanical."
+          "@value": "Replacement template, when the rewrite is purely mechanical.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.replace",
@@ -876,12 +970,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.source"
+          "@value": "RefactorStrategy.source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Provenance — paper, PR, or observation that produced it."
+          "@value": "Provenance — paper, PR, or observation that produced it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.source",
@@ -895,12 +991,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategy.superseded_by"
+          "@value": "RefactorStrategy.superseded_by",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For `deprecated`: the strategy that replaces this one."
+          "@value": "For `deprecated`: the strategy that replaces this one.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategy.superseded_by",
@@ -914,12 +1012,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategyFile.$schema"
+          "@value": "RefactorStrategyFile.$schema",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Schema marker — value: `refactor-strategy/v1`."
+          "@value": "Schema marker — value: `refactor-strategy/v1`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategyFile.$schema",
@@ -933,12 +1033,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RefactorStrategyFile.family"
+          "@value": "RefactorStrategyFile.family",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Grouping label, e.g. `mechanical`, `structural`."
+          "@value": "Grouping label, e.g. `mechanical`, `structural`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "folio-assistant-sci/schemas/refactor-strategy.ts#RefactorStrategyFile.family",

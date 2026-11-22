@@ -1,0 +1,56 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/tools/precheck/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/precheck.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Run, before a push leaves the machine, only the fast checks whose inputs the push changed: `lock:coherence:check` (agreement and freshness) and `mount:remote:check` for a change to `index.lock.json` or `index.config.json`, `check:workflow-pins` for a change under `.github/workflows/`, and the typecheck for a `.ts` change. Nothing runs when the push changed none of them, and the full tier never runs. It is git's `pre-push` hook (`scripts/git-hooks/pre-push`), installed by the session-start primer; the same command runs it by hand (as the hook it is `--git-hook <remote>`, with the pushed refs on stdin).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat precheck"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--dry-run"
+            },
+            "description": "Print the checks this push owes and why, running none.",
+            "name": "dry-run",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One line per check run (✓, ✗ or ?), then the red checks' output. Exit 0: every check passed, none was owed, or none could be judged here (no bun, `cat` runner or `node_modules`; a dirty tree; a check that exited 2 or ran past `CAT_PRECHECK_TIMEOUT`, 90 s), each said in one line. Exit 1: a check is red, and the push is refused.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "precheck",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress"
+      ],
+      "title": "Precheck a push"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "sdlc/tools/precheck",
+  "path": "sdlc/tools/precheck/"
+}

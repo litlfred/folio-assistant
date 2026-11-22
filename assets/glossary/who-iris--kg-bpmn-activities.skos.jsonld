@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Build the graph partitions"
+          "@value": "Build the graph partitions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The platform process nquads-distribution (cat-harness): spine plus one partition per community, zero blank nodes, sorted N-Quads."
+          "@value": "The platform process nquads-distribution (cat-harness): spine plus one partition per community, zero blank nodes, sorted N-Quads.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BuildGraph",
@@ -41,7 +47,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sign and publish the release"
+          "@value": "Sign and publish the release",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_SignPublish",
@@ -56,12 +63,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Commit the batch checkpoint"
+          "@value": "Commit the batch checkpoint",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "state/initial-load.json in the Cloudflare git repository. A restarted load reads it and skips finished batches."
+          "@value": "state/initial-load.json in the Cloudflare git repository. A restarted load reads it and skips finished batches.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Checkpoint",
@@ -76,12 +85,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Fetch bitstreams not already held"
+          "@value": "Fetch bitstreams not already held",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A bitstream is stored under its SHA-256. If that object already exists it is not downloaded again; a re-run of a batch therefore moves no bytes."
+          "@value": "A bitstream is stored under its SHA-256. If that object already exists it is not downloaded again; a re-run of a batch therefore moves no bytes.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FetchBitstreams",
@@ -96,12 +107,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Harvest a batch of item records (REST)"
+          "@value": "Harvest a batch of item records (REST)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DSpace REST: the item, its metadata, bundles and bitstream descriptors. Written as canonical JSON (sorted keys, LF, no fetch timestamp inside the record) so the same item always serialises to the same bytes."
+          "@value": "DSpace REST: the item, its metadata, bundles and bitstream descriptors. Written as canonical JSON (sorted keys, LF, no fetch timestamp inside the record) so the same item always serialises to the same bytes.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_HarvestBatch",
@@ -116,12 +129,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Plan batches by community and collection"
+          "@value": "Plan batches by community and collection",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One batch per collection (large collections split by page)."
+          "@value": "One batch per collection (large collections split by page).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_PlanBatches",
@@ -136,12 +151,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Quarantine and report the mismatch"
+          "@value": "Quarantine and report the mismatch",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Not published, not retried silently. The record keeps its reference to IRIS and the bitstream is marked unknown."
+          "@value": "Not published, not retried silently. The record keeps its reference to IRIS and the bitstream is marked unknown.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Quarantine",
@@ -156,7 +173,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review the load report; open beans for gaps"
+          "@value": "Review the load report; open beans for gaps",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewLoad",
@@ -171,12 +189,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "State scope and budget, with denominators"
+          "@value": "State scope and budget, with denominators",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Items, files and bytes upstream (273,559 items, 1,057,223 files, 361.55 GiB as last transcribed), the storage target for each kind of file, and a request rate IRIS will tolerate. A budget with no denominator is a preference, not a limit."
+          "@value": "Items, files and bytes upstream (273,559 items, 1,057,223 files, 361.55 GiB as last transcribed), the storage target for each kind of file, and a request rate IRIS will tolerate. A budget with no denominator is a preference, not a limit.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_StateBudget",
@@ -191,7 +211,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Store bytes under SHA-256 (skip if held)"
+          "@value": "Store bytes under SHA-256 (skip if held)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_StoreBytes",
@@ -206,7 +227,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Rebuild the whole graph (sorted output)"
+          "@value": "Rebuild the whole graph (sorted output)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Rebuild",
@@ -221,7 +243,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sign and publish the release"
+          "@value": "Sign and publish the release",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_SignPublish",
@@ -236,12 +259,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Commit the advanced cursor"
+          "@value": "Commit the advanced cursor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Only after the release verified. A failed night leaves the cursor where it was, so the next night re-reads the same window."
+          "@value": "Only after the release verified. A failed night leaves the cursor where it was, so the next night re-reads the same window.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdvanceCursor",
@@ -256,7 +281,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Fetch the changed records and bitstream lists"
+          "@value": "Fetch the changed records and bitstream lists",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FetchChanged",
@@ -271,7 +297,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Fetch only bitstreams whose checksum changed"
+          "@value": "Fetch only bitstreams whose checksum changed",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FetchNewBytes",
@@ -286,12 +313,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "List items changed since the cursor"
+          "@value": "List items changed since the cursor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "scripts/iris-cdn/rest-feed.ts changedSince: a Discovery search for lastModified at or after the cursor, sorted by dc.date.accessioned (IRIS rejects a lastModified sort), paged until an item is older than the cursor. Inclusive of the cursor second, de-duplicated by uuid, returned oldest first."
+          "@value": "scripts/iris-cdn/rest-feed.ts changedSince: a Discovery search for lastModified at or after the cursor, sorted by dc.date.accessioned (IRIS rejects a lastModified sort), paged until an item is older than the cursor. Inclusive of the cursor second, de-duplicated by uuid, returned oldest first.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ListChanged",
@@ -306,12 +335,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Read the cursor of the last published run"
+          "@value": "Read the cursor of the last published run",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "state/cursor.json in the Cloudflare git repository: the lastModified of the newest item in the last VERIFIED release."
+          "@value": "state/cursor.json in the Cloudflare git repository: the lastModified of the newest item in the last VERIFIED release.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReadCursor",
@@ -326,12 +357,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review the run report; open beans for anomalies"
+          "@value": "Review the run report; open beans for anomalies",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Anomalies: a change count far from the recent median, quarantined bitstreams, a verification that came back unknown, a partition over its size ceiling."
+          "@value": "Anomalies: a change count far from the recent median, quarantined bitstreams, a verification that came back unknown, a partition over its size ceiling.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Review",
@@ -346,12 +379,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Write canonical records into the library"
+          "@value": "Write canonical records into the library",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A record whose canonical bytes equal the held ones is not rewritten. A touched-but-unchanged item therefore produces no diff."
+          "@value": "A record whose canonical bytes equal the held ones is not rewritten. A touched-but-unchanged item therefore produces no diff.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_WriteRecords",
@@ -366,7 +401,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Rebuild the whole graph (sorted output)"
+          "@value": "Rebuild the whole graph (sorted output)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Rebuild",
@@ -381,7 +417,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sign and publish the release"
+          "@value": "Sign and publish the release",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_SignPublish",
@@ -396,7 +433,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Compare with the ids the library holds"
+          "@value": "Compare with the ids the library holds",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Compare",
@@ -411,7 +449,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Treat the listing as faulty; escalate"
+          "@value": "Treat the listing as faulty; escalate",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Escalate",
@@ -426,7 +465,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "List every item id IRIS reports"
+          "@value": "List every item id IRIS reports",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ListAll",
@@ -441,12 +481,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Mark confirmed items withdrawn (keep bytes)"
+          "@value": "Mark confirmed items withdrawn (keep bytes)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The record gets a withdrawn state; its bitstreams stay addressable, because a citation to them may exist."
+          "@value": "The record gets a withdrawn state; its bitstreams stay addressable, because a citation to them may exist.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_MarkWithdrawn",
@@ -461,7 +503,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Re-check each missing item by id"
+          "@value": "Re-check each missing item by id",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Recheck",
@@ -476,12 +519,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Write the BagIt tag files (sorted, no dates)"
+          "@value": "Write the BagIt tag files (sorted, no dates)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "scripts/iris-cdn/bag.ts tagFiles: manifest-sha256.txt sorted by path, bag-info.txt with Payload-Oxum and no Bagging-Date."
+          "@value": "scripts/iris-cdn/bag.ts tagFiles: manifest-sha256.txt sorted by path, bag-info.txt with Payload-Oxum and no Bagging-Date.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_BuildBag",
@@ -496,7 +541,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Diff against the published manifest"
+          "@value": "Diff against the published manifest",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Diff",
@@ -511,12 +557,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Commit tag files and signature, last"
+          "@value": "Commit tag files and signature, last",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One commit to the Cloudflare git repository, after every payload object is in place, so a reader never sees a manifest naming bytes that are not there yet."
+          "@value": "One commit to the Cloudflare git repository, after every payload object is in place, so a reader never sees a manifest naming bytes that are not there yet.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_PublishTags",
@@ -531,7 +579,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Revert to the previous release"
+          "@value": "Revert to the previous release",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Revert",
@@ -546,12 +595,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sign the release tag manifest (ES256)"
+          "@value": "Sign the release tag manifest (ES256)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "scripts/iris-cdn/signing.ts signDetached. kid is a did:web DID URL listed under assertionMethod."
+          "@value": "scripts/iris-cdn/signing.ts signDetached. kid is a did:web DID URL listed under assertionMethod.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Sign",
@@ -566,12 +617,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Sign each changed item manifest (ES256)"
+          "@value": "Sign each changed item manifest (ES256)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A signature on each library item: items/<handle>/manifest-sha256.txt lists the item record and its files; its detached JWS sits beside it. Only items whose manifest bytes changed are signed: ES256 is randomised, so re-signing an unchanged item would be churn. The item manifests and their signatures join the payload, so the tag files are refreshed to cover them before the release is signed."
+          "@value": "A signature on each library item: items/<handle>/manifest-sha256.txt lists the item record and its files; its detached JWS sits beside it. Only items whose manifest bytes changed are signed: ES256 is randomised, so re-signing an unchanged item would be churn. The item manifests and their signatures join the payload, so the tag files are refreshed to cover them before the release is signed.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_SignItems",
@@ -586,12 +639,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Store new objects (never overwrite)"
+          "@value": "Store new objects (never overwrite)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Content-addressed: an object whose SHA-256 is already stored is skipped. Published objects are never deleted by a nightly run."
+          "@value": "Content-addressed: an object whose SHA-256 is already stored is skipped. Published objects are never deleted by a nightly run.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Upload",
@@ -606,12 +661,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Resolve did:web; verify JWS and digests"
+          "@value": "Resolve did:web; verify JWS and digests",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "scripts/iris-cdn/run.ts checkRelease: every tag file against tagmanifest-sha256.txt, then scripts/iris-cdn/signing.ts verifyDetached against the DID document fetched from its did:web URL."
+          "@value": "scripts/iris-cdn/run.ts checkRelease: every tag file against tagmanifest-sha256.txt, then scripts/iris-cdn/signing.ts verifyDetached against the DID document fetched from its did:web URL.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Verify",

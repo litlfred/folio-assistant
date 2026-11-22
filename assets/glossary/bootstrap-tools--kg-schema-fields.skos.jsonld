@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GraphExportSchema.@graph"
+          "@value": "GraphExportSchema.@graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Subjects, and for one release a tombstone per pre-path `#fragment` (https://github.com/litlfred/cat-harness-tools/issues/958)."
+          "@value": "Subjects, and for one release a tombstone per pre-path `#fragment` (https://github.com/litlfred/cat-harness-tools/issues/958).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.@graph",
@@ -40,12 +46,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GraphExportSchema.comment"
+          "@value": "GraphExportSchema.comment",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Says it is generated, and by what (owner, 2026-09-30)."
+          "@value": "Says it is generated, and by what (owner, 2026-09-30).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.comment",
@@ -59,12 +67,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GraphExportSchema.generatedAtTime"
+          "@value": "GraphExportSchema.generatedAtTime",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "PROV, only when built with `--provenance`: the publish build, never the tests."
+          "@value": "PROV, only when built with `--provenance`: the publish build, never the tests.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.generatedAtTime",
@@ -78,12 +88,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "GraphExportSchema.omitted"
+          "@value": "GraphExportSchema.omitted",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Subgraphs declared but whose contents were not read — never an unexplained empty."
+          "@value": "Subgraphs declared but whose contents were not read — never an unexplained empty.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.omitted",
@@ -97,12 +109,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.id"
+          "@value": "ModelEntrySchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The model identifier, exactly as the runtime reports it."
+          "@value": "The model identifier, exactly as the runtime reports it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.id",
@@ -116,12 +130,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.note"
+          "@value": "ModelEntrySchema.note",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Anything a reader needs that the fields above cannot carry."
+          "@value": "Anything a reader needs that the fields above cannot carry.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.note",
@@ -135,12 +151,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.preferredLanguages"
+          "@value": "ModelEntrySchema.preferredLanguages",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "BCP 47 tags, best first."
+          "@value": "BCP 47 tags, best first.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.preferredLanguages",
@@ -154,12 +172,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.title"
+          "@value": "ModelEntrySchema.title",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Human-readable name, for a report a person reads."
+          "@value": "Human-readable name, for a report a person reads.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.title",
@@ -173,12 +193,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.validatedBy"
+          "@value": "ModelEntrySchema.validatedBy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Who checked, when `validation` is `human-validated`."
+          "@value": "Who checked, when `validation` is `human-validated`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validatedBy",
@@ -192,12 +214,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.validatedOn"
+          "@value": "ModelEntrySchema.validatedOn",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "ISO date of that check. A validation with no date cannot go stale."
+          "@value": "ISO date of that check. A validation with no date cannot go stale.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validatedOn",
@@ -211,12 +235,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ModelEntrySchema.validation"
+          "@value": "ModelEntrySchema.validation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How the list above came to be believed. Required — see the header."
+          "@value": "How the list above came to be believed. Required — see the header.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validation",
@@ -230,12 +256,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseIris.agent"
+          "@value": "ReleaseIris.agent",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`<iriBase>v<major>/` — what a program reads (owner, 2026-10-23: the major, not the full version)."
+          "@value": "`<iriBase>v<major>/` — what a program reads (owner, 2026-10-23: the major, not the full version).",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.agent",
@@ -249,12 +277,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseIris.human"
+          "@value": "ReleaseIris.human",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`<iriBase>v<major>/` — what a person reads; the same address as {@link agent}."
+          "@value": "`<iriBase>v<major>/` — what a person reads; the same address as {@link agent}.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.human",
@@ -268,12 +298,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseIris.iriBase"
+          "@value": "ReleaseIris.iriBase",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The declared `iriBase`, ending in `/`."
+          "@value": "The declared `iriBase`, ending in `/`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.iriBase",
@@ -287,12 +319,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseIris.major"
+          "@value": "ReleaseIris.major",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`MAJOR` alone, as a number."
+          "@value": "`MAJOR` alone, as a number.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.major",
@@ -306,12 +340,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ReleaseIris.version"
+          "@value": "ReleaseIris.version",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The declared version, `MAJOR.MINOR.PATCH`."
+          "@value": "The declared version, `MAJOR.MINOR.PATCH`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.version",
@@ -325,12 +361,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementSetFields.document"
+          "@value": "RequirementSetFields.document",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the document is, as a path or a link."
+          "@value": "Where the document is, as a path or a link.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.document",
@@ -344,12 +382,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementSetFields.issue"
+          "@value": "RequirementSetFields.issue",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The issue (or other review surface) the set is decided on."
+          "@value": "The issue (or other review surface) the set is decided on.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.issue",
@@ -363,12 +403,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementSetFields.methodology"
+          "@value": "RequirementSetFields.methodology",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The requirements methodology that governs it, by the harness's own name for it."
+          "@value": "The requirements methodology that governs it, by the harness's own name for it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.methodology",
@@ -382,12 +424,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementSetFields.workPlan"
+          "@value": "RequirementSetFields.workPlan",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The work plan: work-item ids, one or more per member."
+          "@value": "The work plan: work-item ids, one or more per member.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.workPlan",
@@ -401,12 +445,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SignOffSchema.actor"
+          "@value": "SignOffSchema.actor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The declared actor this signer acted as, when the harness declares actors."
+          "@value": "The declared actor this signer acted as, when the harness declares actors.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.actor",
@@ -420,12 +466,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SignOffSchema.evidence"
+          "@value": "SignOffSchema.evidence",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the decision can be read: a link to the comment it was made in."
+          "@value": "Where the decision can be read: a link to the comment it was made in.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.evidence",
@@ -439,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SignOffSchema.id"
+          "@value": "SignOffSchema.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier — a login, an agent's name, a script path."
+          "@value": "Stable identifier — a login, an agent's name, a script path.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.id",
@@ -458,12 +508,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SignOffSchema.reason"
+          "@value": "SignOffSchema.reason",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Why — the dispensation, in the signer's words or quoting them."
+          "@value": "Why — the dispensation, in the signer's words or quoting them.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.reason",
@@ -477,12 +529,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SignOffSchema.scope"
+          "@value": "SignOffSchema.scope",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The set's id, or a member's reference."
+          "@value": "The set's id, or a member's reference.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.scope",
@@ -496,12 +550,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SignOffSchema.stage"
+          "@value": "SignOffSchema.stage",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The stage this sign-off moves the set to, when its scope is the set."
+          "@value": "The stage this sign-off moves the set to, when its scope is the set.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.stage",
@@ -515,12 +571,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementFields.derivedFrom"
+          "@value": "RequirementFields.derivedFrom",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Broader requirements this one specialises, by id."
+          "@value": "Broader requirements this one specialises, by id.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.derivedFrom",
@@ -534,12 +592,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementFields.id"
+          "@value": "RequirementFields.id",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`req:<slug>`."
+          "@value": "`req:<slug>`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.id",
@@ -553,12 +613,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementFields.proposedIn"
+          "@value": "RequirementFields.proposedIn",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`."
+          "@value": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.proposedIn",
@@ -572,12 +634,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementFields.supersededBy"
+          "@value": "RequirementFields.supersededBy",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "When `superseded`: what replaced it."
+          "@value": "When `superseded`: what replaced it.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.supersededBy",
@@ -591,12 +655,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.activity"
+          "@value": "RequirementStatementFields.activity",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FUNCTIONAL — the activity the statement is part of."
+          "@value": "FUNCTIONAL — the activity the statement is part of.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.activity",
@@ -610,12 +676,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.actors"
+          "@value": "RequirementStatementFields.actors",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The roles it is about, by id in the harness's own role registry."
+          "@value": "The roles it is about, by id in the harness's own role registry.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.actors",
@@ -629,12 +697,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.benefit"
+          "@value": "RequirementStatementFields.benefit",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FUNCTIONAL — why (\"so that …\")."
+          "@value": "FUNCTIONAL — why (\"so that …\").",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.benefit",
@@ -648,12 +718,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.capability"
+          "@value": "RequirementStatementFields.capability",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\")."
+          "@value": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\").",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.capability",
@@ -667,12 +739,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.category"
+          "@value": "RequirementStatementFields.category",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "NON-FUNCTIONAL — which quality it constrains."
+          "@value": "NON-FUNCTIONAL — which quality it constrains.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.category",
@@ -686,12 +760,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.conformance"
+          "@value": "RequirementStatementFields.conformance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file."
+          "@value": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.conformance",
@@ -705,12 +781,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.dependsOn"
+          "@value": "RequirementStatementFields.dependsOn",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Other statements this one presupposes, by {@link requirementRef}."
+          "@value": "Other statements this one presupposes, by {@link requirementRef}.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.dependsOn",
@@ -724,12 +802,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.key"
+          "@value": "RequirementStatementFields.key",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Unique within its requirement; with the requirement's id it is the statement's address."
+          "@value": "Unique within its requirement; with the requirement's id it is the statement's address.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.key",
@@ -743,12 +823,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.requirement"
+          "@value": "RequirementStatementFields.requirement",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The statement itself, as one sentence a reviewer can say yes or no to."
+          "@value": "The statement itself, as one sentence a reviewer can say yes or no to.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.requirement",
@@ -762,12 +844,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "RequirementStatementFields.successCriteria"
+          "@value": "RequirementStatementFields.successCriteria",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How it will be judged met — at least one {@link SuccessCriterionSchema} when present. OPTIONAL FOR NOW, and deliberately so: statements filed before this field existed carry none, and they gain criteria by migration rather than by a grandfather date. A harness's own checker warns on a statement without it; once every filed statement carries one, the field becomes required."
+          "@value": "How it will be judged met — at least one {@link SuccessCriterionSchema} when present. OPTIONAL FOR NOW, and deliberately so: statements filed before this field existed carry none, and they gain criteria by migration rather than by a grandfather date. A harness's own checker warns on a statement without it; once every filed statement carries one, the field becomes required.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.successCriteria",
@@ -781,12 +865,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SuccessCriterionSchema.criterion"
+          "@value": "SuccessCriterionSchema.criterion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One sentence a reviewer can say yes or no to, without asking what it means."
+          "@value": "One sentence a reviewer can say yes or no to, without asking what it means.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.criterion",
@@ -800,12 +886,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SuccessCriterionSchema.key"
+          "@value": "SuccessCriterionSchema.key",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Unique within its statement; `req:<id>#<statement>/<key>` is its address."
+          "@value": "Unique within its statement; `req:<id>#<statement>/<key>` is its address.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.key",
@@ -819,12 +907,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SubgraphNodeBase.holdsGraph"
+          "@value": "SubgraphNodeBase.holdsGraph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The graph typologies it holds, as bootstrap's graph-typology individuals."
+          "@value": "The graph typologies it holds, as bootstrap's graph-typology individuals.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph",
@@ -838,12 +928,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SubgraphNodeBase.name"
+          "@value": "SubgraphNodeBase.name",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The repository's or harness's name at the two top levels; the layer-relative path below them."
+          "@value": "The repository's or harness's name at the two top levels; the layer-relative path below them.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name",
@@ -857,12 +949,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SubgraphNodeBase.path"
+          "@value": "SubgraphNodeBase.path",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Layer-relative, ending in `/`; `./` at the two top levels."
+          "@value": "Layer-relative, ending in `/`; `./` at the two top levels.",
+          "@language": "en"
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path",

@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/42bd8d605d8c4416656611be69def69e6e855367",
-  "sourceCommitSha": "42bd8d605d8c4416656611be69def69e6e855367",
-  "sourceTree": "3f69182f217b04b0a7f55bb73e01242166676a70",
-  "sourceCommitAt": "2026-11-21T23:27:21Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
+  "sourceCommitSha": "6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
+  "sourceTree": "90d72f5514d61ba20e4bd53deb7c176452aff8c6",
+  "sourceCommitAt": "2026-11-22T01:49:44Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -635,7 +635,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 568,
+      "instructionLines": 572,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

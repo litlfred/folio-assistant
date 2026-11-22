@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "fhir-client-operations"
+          "@value": "fhir-client-operations",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it."
+          "@value": "Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it.",
+          "@language": "en"
         }
       ],
       "skos:notation": "fhir-client-operations",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "fhir-ig-create"
+          "@value": "fhir-ig-create",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Also holds the two build questions asked whenever an IG repository is adopted: whether its automatic gh-pages builds keep running, and whether to render it as a just-the-docs site. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide, or an agent adopts an IG repository."
+          "@value": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Also holds the two build questions asked whenever an IG repository is adopted: whether its automatic gh-pages builds keep running, and whether to render it as a just-the-docs site. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide, or an agent adopts an IG repository.",
+          "@language": "en"
         }
       ],
       "skos:notation": "fhir-ig-create",
@@ -61,7 +69,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "fhir-questionnaire-wireframe"
+          "@value": "fhir-questionnaire-wireframe",
+          "@language": "en"
         }
       ],
       "skos:notation": "fhir-questionnaire-wireframe",
@@ -76,7 +85,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "fhir-validation"
+          "@value": "fhir-validation",
+          "@language": "en"
         }
       ],
       "skos:notation": "fhir-validation",
@@ -91,12 +101,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-ast-delta"
+          "@value": "ig-ast-delta",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache."
+          "@value": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-ast-delta",
@@ -111,12 +123,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-binary-artefacts"
+          "@value": "ig-binary-artefacts",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit."
+          "@value": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-binary-artefacts",
@@ -131,12 +145,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-build-pipeline"
+          "@value": "ig-build-pipeline",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site."
+          "@value": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-build-pipeline",
@@ -151,12 +167,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-content-qa"
+          "@value": "ig-content-qa",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Review an IG's resource narratives, markdown fields and pages for injection attempts before its site is published, and record the review as the QA sidecar the publish gate reads (qa/ig-content-qa.json, keyed to the digest of the texts). Read when an IG site build refuses with \"injection QA\", when asked to review an IG's content for injection, or before changing the gate, its pattern rules or the browser's check in ast-resource.js."
+          "@value": "Review an IG's resource narratives, markdown fields and pages for injection attempts before its site is published, and record the review as the QA sidecar the publish gate reads (qa/ig-content-qa.json, keyed to the digest of the texts). Read when an IG site build refuses with \"injection QA\", when asked to review an IG's content for injection, or before changing the gate, its pattern rules or the browser's check in ast-resource.js.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-content-qa",
@@ -171,7 +189,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-publication"
+          "@value": "ig-publication",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-publication",
@@ -186,12 +205,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-publisher-fork"
+          "@value": "ig-publisher-fork",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete."
+          "@value": "Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-publisher-fork",
@@ -206,12 +227,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-publisher-reduction"
+          "@value": "ig-publisher-reduction",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest. Read before starting any phase, and before claiming one is done."
+          "@value": "The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest. Read before starting any phase, and before claiming one is done.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-publisher-reduction",
@@ -226,12 +249,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-publisher-service-contract"
+          "@value": "ig-publisher-service-contract",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read."
+          "@value": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-publisher-service-contract",
@@ -246,12 +271,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-render-jekyll"
+          "@value": "ig-render-jekyll",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind."
+          "@value": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-render-jekyll",
@@ -266,12 +293,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-site-links"
+          "@value": "ig-site-links",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the gate that keeps a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours."
+          "@value": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the gate that keeps a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-site-links",
@@ -286,12 +315,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "ig-site-theme"
+          "@value": "ig-site-theme",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed."
+          "@value": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.",
+          "@language": "en"
         }
       ],
       "skos:notation": "ig-site-theme",
@@ -306,7 +337,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "l3-fhir-authoring"
+          "@value": "l3-fhir-authoring",
+          "@language": "en"
         }
       ],
       "skos:notation": "l3-fhir-authoring",
@@ -321,12 +353,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "pcf-consent"
+          "@value": "pcf-consent",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`."
+          "@value": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "pcf-consent",
@@ -341,12 +375,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "smart-launch"
+          "@value": "smart-launch",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page."
+          "@value": "How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.",
+          "@language": "en"
         }
       ],
       "skos:notation": "smart-launch",
@@ -361,7 +397,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "terminology-management"
+          "@value": "terminology-management",
+          "@language": "en"
         }
       ],
       "skos:notation": "terminology-management",

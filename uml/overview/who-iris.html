@@ -545,6 +545,7 @@
       iri [0..1] string
       subject [0..1] string
       translationStatus [0..1] map~official | unofficial~
+      translationSource [0..1] map~object~
       focus [0..1] object
       source [0..1] string
       status [1] authored | candidate | could-not-extract
@@ -561,6 +562,7 @@
       source [0..1] string
       subject [0..1] string
       license [0..1] string
+      sourceLanguage [0..1] string
       terms [0..*] Term[]
       ordered [0..1] boolean
       members [0..*] string[]

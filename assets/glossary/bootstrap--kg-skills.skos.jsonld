@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "bootstrap-graph-emission"
+          "@value": "bootstrap-graph-emission",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy."
+          "@value": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy.",
+          "@language": "en"
         }
       ],
       "skos:notation": "bootstrap-graph-emission",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "bootstrap-graph-publication"
+          "@value": "bootstrap-graph-publication",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository. Also what each subject in it is named: a path under the Harness's address, never a `#fragment` of the file."
+          "@value": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository. Also what each subject in it is named: a path under the Harness's address, never a `#fragment` of the file.",
+          "@language": "en"
         }
       ],
       "skos:notation": "bootstrap-graph-publication",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "bootstrap-kg-navigation"
+          "@value": "bootstrap-kg-navigation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed."
+          "@value": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed.",
+          "@language": "en"
         }
       ],
       "skos:notation": "bootstrap-kg-navigation",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "confirm-harness"
+          "@value": "confirm-harness",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent."
+          "@value": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.",
+          "@language": "en"
         }
       ],
       "skos:notation": "confirm-harness",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "discussion"
+          "@value": "discussion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Settle which harness, and which repositories, when no file says: the output is a document conforming to `discussion.output.schema.json`."
+          "@value": "Settle which harness, and which repositories, when no file says: the output is a document conforming to `discussion.output.schema.json`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "discussion",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "human-agent-discussion"
+          "@value": "human-agent-discussion",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question."
+          "@value": "Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question.",
+          "@language": "en"
         }
       ],
       "skos:notation": "human-agent-discussion",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "initialization-steps"
+          "@value": "initialization-steps",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Walk every initialization step the declarations name (the layer's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated."
+          "@value": "Walk every initialization step the declarations name (the layer's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.",
+          "@language": "en"
         }
       ],
       "skos:notation": "initialization-steps",
@@ -161,12 +179,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "knowledge-graph-data-store"
+          "@value": "knowledge-graph-data-store",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new layer's declaration once it is written. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against."
+          "@value": "The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new layer's declaration once it is written. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against.",
+          "@language": "en"
         }
       ],
       "skos:notation": "knowledge-graph-data-store",
@@ -181,12 +201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "log-message"
+          "@value": "log-message",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some."
+          "@value": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
+          "@language": "en"
         }
       ],
       "skos:notation": "log-message",
@@ -201,12 +223,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "logger"
+          "@value": "logger",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contract a Logger keeps: accept a complete log message, record it unchanged where a person can read it, attributed to the actor the message names. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against."
+          "@value": "The contract a Logger keeps: accept a complete log message, record it unchanged where a person can read it, attributed to the actor the message names. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against.",
+          "@language": "en"
         }
       ],
       "skos:notation": "logger",
@@ -221,12 +245,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "publish-documents"
+          "@value": "publish-documents",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The primary step of initializing a Knowledge Graph harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram vocabulary, graph export, each with its @context) is published AT that address, and the address answers. Checked first, right after the declaration is read."
+          "@value": "The primary step of initializing a Knowledge Graph harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram vocabulary, graph export, each with its @context) is published AT that address, and the address answers. Checked first, right after the declaration is read.",
+          "@language": "en"
         }
       ],
       "skos:notation": "publish-documents",
@@ -241,12 +267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "publish-site"
+          "@value": "publish-site",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Give a layer a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's."
+          "@value": "Give a layer a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's.",
+          "@language": "en"
         }
       ],
       "skos:notation": "publish-site",
@@ -261,12 +289,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "root-readme"
+          "@value": "root-readme",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded."
+          "@value": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.",
+          "@language": "en"
         }
       ],
       "skos:notation": "root-readme",

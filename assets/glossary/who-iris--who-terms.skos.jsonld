@@ -2,7 +2,13 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#",
+    "fa": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -50,8 +56,14 @@
         }
       ],
       "skos:altLabel": [
-        "certainty of the evidence",
-        "confidence in the estimates of effect"
+        {
+          "@value": "certainty of the evidence",
+          "@language": "en"
+        },
+        {
+          "@value": "confidence in the estimates of effect",
+          "@language": "en"
+        }
       ],
       "skos:definition": [
         {
@@ -79,8 +91,70 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-ar"
+        },
+        {
+          "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-es"
+        },
+        {
+          "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-fr"
+        },
+        {
+          "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-ru"
+        },
+        {
+          "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-zh"
+        }
+      ],
       "skos:scopeNote": "The WHO handbook for guideline development (2nd edition, §9.1, p. 122) names both alternatives: \"Alternative terms to describe the quality of the evidence are 'certainty of the evidence' or 'confidence in the estimates of effect'.\" The handbook uses 'quality of the evidence' 77 times and 'certainty of the evidence' once; the who-guideline-development voice and the platform's `grade-certainty` code list use 'certainty', GRADE's later name. Rated for a body of evidence per outcome, never for a single study. Not the strength of a recommendation, which the handbook keeps apart throughout.",
       "dcterms:source": "who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "جودة البيّنات",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "calidad de la evidencia",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "qualité des données probantes",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "качество доказательств",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://worldhealthorganization.github.io/who-iris/v0/ns/glossary/who-terms/quality-of-the-evidence#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "证据质量",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     }
   ]
 }

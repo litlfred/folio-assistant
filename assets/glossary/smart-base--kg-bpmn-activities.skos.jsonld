@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Update the care plan"
+          "@value": "Update the care plan",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Make each accepted request active (intent plan or order) and reference it from the client's CarePlan, in one transaction; write nothing for a declined action."
+          "@value": "Make each accepted request active (intent plan or order) and reference it from the client's CarePlan, in one transaction; write nothing for a declined action.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Activate",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Apply the PlanDefinition"
+          "@value": "Apply the PlanDefinition",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "PlanDefinition/$apply for this client (or a CDS Hooks call): every proposed request is a draft proposal, and nothing is written to the record."
+          "@value": "PlanDefinition/$apply for this client (or a CDS Hooks call): every proposed request is a draft proposal, and nothing is written to the record.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Apply",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Note the reason (optional)"
+          "@value": "Note the reason (optional)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Optional: pick a coded reason or type one, or neither; one FHIR Provenance records who decided what about which guidance, and why. Never required, never waited for."
+          "@value": "Optional: pick a coded reason or type one, or neither; one FHIR Provenance records who decided what about which guidance, and why. Never required, never waited for.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Rationale",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Accept or decline the guidance"
+          "@value": "Accept or decline the guidance",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "See the proposed actions on the device and accept or decline each one, one tap each (\"accept all\" is one tap); modify one only where the device offers it. Nothing else is asked; an \"add a reason\" link is shown, never required."
+          "@value": "See the proposed actions on the device and accept or decline each one, one tap each (\"accept all\" is one tap); modify one only where the device offers it. Nothing else is asked; an \"add a reason\" link is shown, never required.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Review",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Identify slots and proposed exclusions"
+          "@value": "Identify slots and proposed exclusions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Enumerate the classifiable slots in the L1 statements or L2 component (condition, intervention, persona, medicine, domain, business-process, recommendation-strength, recommendation-direction, evidence-certainty) and any proposed L1 coverage exclusions in exclusions.proposed.json naming l1-extraction-reviewer as signerRole."
+          "@value": "Enumerate the classifiable slots in the L1 statements or L2 component (condition, intervention, persona, medicine, domain, business-process, recommendation-strength, recommendation-direction, evidence-certainty) and any proposed L1 coverage exclusions in exclusions.proposed.json naming l1-extraction-reviewer as signerRole.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_IdentifySlots",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run reuse-first lookup and record candidates"
+          "@value": "Run reuse-first lookup and record candidates",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run the terminology-lookup Tool down the four reuse-first rungs of the terminology-coding methodology: (1) target guide vocabulary, (2) smart-base generic personas, GRADE code lists and guideline-domain glossary, (3) external WHO-FIC/ILO standards (ICD-11, ICHI/CDHIv2, ISCO-08, ATC), (4) local glossary candidate (status: candidate, source: extracted), or could-not-determine for business-process with its WARNING line."
+          "@value": "Run the terminology-lookup Tool down the four reuse-first rungs of the terminology-coding methodology: (1) target guide vocabulary, (2) smart-base generic personas, GRADE code lists and guideline-domain glossary, (3) external WHO-FIC/ILO standards (ICD-11, ICHI/CDHIv2, ISCO-08, ATC), (4) local glossary candidate (status: candidate, source: extracted), or could-not-determine for business-process with its WARNING line.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_LookupAndCode",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate slot codings and glossary candidates"
+          "@value": "Adjudicate slot codings and glossary candidates",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Review each slot's classification and code against the terminology-coding methodology: the authoritative scheme for the slot, the reuse-first rung, skos:exactMatch vs skos:closeMatch precision (ontologist), and any Rung 4 glossary candidates (promote valid ones from candidate to authored per glossary-terms, or replace them with an existing code)."
+          "@value": "Review each slot's classification and code against the terminology-coding methodology: the authoritative scheme for the slot, the reuse-first rung, skos:exactMatch vs skos:closeMatch precision (ontologist), and any Rung 4 glossary candidates (promote valid ones from candidate to authored per glossary-terms, or replace them with an existing code).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewCodings",
@@ -161,12 +179,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Check exclusions against page and sign"
+          "@value": "Check exclusions against page and sign",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Open library/<doc_id>/sections/page-NNN.md beside exclusions.proposed.json. Read each candidate sentence on the printed page, check that the proposed reason (background-fact, manufacturer-statement, editorial, research-question, duplicate-of) holds without dropping normative guidance, and sign the exclusion (signedOffBy) or reject it with a reason."
+          "@value": "Open library/<doc_id>/sections/page-NNN.md beside exclusions.proposed.json. Read each candidate sentence on the printed page, check that the proposed reason (background-fact, manufacturer-statement, editorial, research-question, duplicate-of) holds without dropping normative guidance, and sign the exclusion (signedOffBy) or reject it with a reason.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewExclusions",
@@ -181,12 +201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Stage codings, warnings and exclusions for review"
+          "@value": "Stage codings, warnings and exclusions for review",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Write the candidate codings, provenance bases, warnings report and any unsigned exclusions.proposed.json entries, and request review with deep links to the staged pages and the printed page sections."
+          "@value": "Write the candidate codings, provenance bases, warnings report and any unsigned exclusions.proposed.json entries, and request review with deep links to the staged pages and the printed page sections.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_StageForReview",
@@ -201,12 +223,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "L3 FHIR IG pipeline (fhir-harness)"
+          "@value": "L3 FHIR IG pipeline (fhir-harness)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "fhir-harness's l3-fhir-pipeline.bpmn, from its StartEvent_ModelReady with the mapping above as the source model: author FSH, SUSHI, validate, QC, IG Publisher, publish. Called, not copied, so a change to the generic pipeline reaches every IG built on it."
+          "@value": "fhir-harness's l3-fhir-pipeline.bpmn, from its StartEvent_ModelReady with the mapping above as the source model: author FSH, SUSHI, validate, QC, IG Publisher, publish. Called, not copied, so a change to the generic pipeline reaches every IG built on it.",
+          "@language": "en"
         }
       ],
       "skos:notation": "CallActivity_L3Fhir",
@@ -221,12 +245,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Map L2 → L3"
+          "@value": "Map L2 → L3",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; l2-dak-authoring, bound beside it, carries the WHO L2 → L3 ordering, which the generic skill does not name."
+          "@value": "Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; l2-dak-authoring, bound beside it, carries the WHO L2 → L3 ordering, which the generic skill does not name.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_MapL2",
@@ -241,12 +267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Determine appropriate digital health interventions"
+          "@value": "Determine appropriate digital health interventions",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 4. Select interventions for the prioritized challenges, assess whether the enabling environment can support them, identify functional requirements and user stories, map the future-state workflow, and check whether existing applications already meet the requirements. The interventions CONSIDERED AND NOT CHOSEN are part of the output, with why — `methodology-adoption`'s fourth refusal. A deleted alternative leaves the next reader unable to tell a decision from an oversight. Selection is from the Classification, and the `who-digital-health` voice governs the naming: an intervention is a capability, not the software that delivers it."
+          "@value": "DIIG Chapter 4. Select interventions for the prioritized challenges, assess whether the enabling environment can support them, identify functional requirements and user stories, map the future-state workflow, and check whether existing applications already meet the requirements. The interventions CONSIDERED AND NOT CHOSEN are part of the output, with why — `methodology-adoption`'s fourth refusal. A deleted alternative leaves the next reader unable to tell a decision from an oversight. Selection is from the Classification, and the `who-digital-health` voice governs the naming: an intervention is a capability, not the software that delivers it.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_DetermineInterventions",
@@ -261,12 +289,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Develop a budget"
+          "@value": "Develop a budget",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 7. Phases of implementation, cost drivers, and the budget matrix. This is the chapter that turns the preceding six into a COSTED implementation plan, which is the artefact the whole Guide exists to produce and the one a funder reads."
+          "@value": "DIIG Chapter 7. Phases of implementation, cost drivers, and the budget matrix. This is the chapter that turns the preceding six into a COSTED implementation plan, which is the artefact the whole Guide exists to produce and the one a funder reads.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_DevelopBudget",
@@ -281,12 +311,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Form the team and establish goals"
+          "@value": "Form the team and establish goals",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 2. Determine roles and responsibilities; develop a common understanding of the health programme's needs and goals; understand programme operations across levels of the health system."
+          "@value": "DIIG Chapter 2. Determine roles and responsibilities; develop a common understanding of the health programme's needs and goals; understand programme operations across levels of the health system.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_FormTeam",
@@ -301,12 +333,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Link to the enterprise architecture"
+          "@value": "Link to the enterprise architecture",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 6. Assess the digital health enterprise architecture, identify the common and enabling components and shared services that make up the digital health platform, and link the investment to both."
+          "@value": "DIIG Chapter 6. Assess the digital health enterprise architecture, identify the common and enabling components and shared services that make up the digital health platform, and link the investment to both.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_LinkEnterpriseArchitecture",
@@ -321,12 +355,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Map the current state and confirm bottlenecks"
+          "@value": "Map the current state and confirm bottlenecks",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 3.1. Determine the health programme processes to target, map their workflows, identify and confirm bottlenecks. Then 3.2, a root cause analysis. This is where DIIG builds on CRDM, and it says so: \"This process builds on the Public Health Informatics Institute's Collaborative Requirements Development Methodology (CRDM)\". Its three areas of concentration are business process analysis, business process redesign and requirements definition — two of which name diagrams this platform already executes. They are parallel tracks, not a composite: pick one per decision and name it."
+          "@value": "DIIG Chapter 3.1. Determine the health programme processes to target, map their workflows, identify and confirm bottlenecks. Then 3.2, a root cause analysis. This is where DIIG builds on CRDM, and it says so: \"This process builds on the Public Health Informatics Institute's Collaborative Requirements Development Methodology (CRDM)\". Its three areas of concentration are business process analysis, business process redesign and requirements definition — two of which name diagrams this platform already executes. They are parallel tracks, not a composite: pick one per decision and name it.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_MapCurrentState",
@@ -341,12 +377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Monitor, and use data effectively"
+          "@value": "Monitor, and use data effectively",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, `9789241511766-eng`, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two."
+          "@value": "DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, `9789241511766-eng`, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_MonitorAndUseData",
@@ -361,12 +399,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Plan the implementation"
+          "@value": "Plan the implementation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 5. Infrastructure; legislation, policy and compliance, including data management, privacy and security, and the regulation of new technologies; leadership and governance, including external partnerships; workforce and training; services and applications."
+          "@value": "DIIG Chapter 5. Infrastructure; legislation, policy and compliance, including data management, privacy and security, and the regulation of new technologies; leadership and governance, including external partnerships; workforce and training; services and applications.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_PlanImplementation",
@@ -381,12 +421,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Prioritize, and map to health system challenges"
+          "@value": "Prioritize, and map to health system challenges",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapters 3.3 and 3.4. Prioritize the bottlenecks, then map the programme-specific ones onto the generic health system challenges. THE ARITHMETIC IS REFUSED HERE. DIIG Table 3.3.1 asks three questions, each scored 1-3 — how much impact does this bottleneck have on the process, what is the likelihood of overcoming it, is it important to a wide range of stakeholders — and sums them into a Score and a Prioritized Ranking. The three criteria are adopted whole; the total is not. Record each criterion's answer AND its reason, and order by argument. A ranked list reads as evidence in a way three stated judgements do not, and the weights were invented."
+          "@value": "DIIG Chapters 3.3 and 3.4. Prioritize the bottlenecks, then map the programme-specific ones onto the generic health system challenges. THE ARITHMETIC IS REFUSED HERE. DIIG Table 3.3.1 asks three questions, each scored 1-3 — how much impact does this bottleneck have on the process, what is the likelihood of overcoming it, is it important to a wide range of stakeholders — and sums them into a Score and a Prioritized Ranking. The three criteria are adopted whole; the total is not. Record each criterion's answer AND its reason, and order by argument. A ranked list reads as evidence in a way three stated judgements do not, and the weights were invented.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_PrioritizeBottlenecks",
@@ -401,12 +443,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Make the value proposition and set next steps"
+          "@value": "Make the value proposition and set next steps",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "DIIG Chapter 9. The case made to whoever pays, and what follows. Scaling up is a different method and a different publication — `9789241509510-eng`, The MAPS Toolkit — which begins where this implementation ends."
+          "@value": "DIIG Chapter 9. The case made to whoever pays, and what follows. Scaling up is a different method and a different publication — `9789241509510-eng`, The MAPS Toolkit — which begins where this implementation ends.",
+          "@language": "en"
         }
       ],
       "skos:notation": "A_ValueProposition",
@@ -421,12 +465,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the bean"
+          "@value": "Close the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -441,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open the bean"
+          "@value": "Open the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -461,12 +509,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Link to smart-ra ArchiMate [archimate-models]"
+          "@value": "Link to smart-ra ArchiMate [archimate-models]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every block that names an architecture element links to its smart-ra element or view; new elements go to smart-ra, not the handbook. Placeholder: no platform subprocess; done by hand, as for dth-hrh. Calls Process_L2ComponentEditReview."
+          "@value": "Every block that names an architecture element links to its smart-ra element or view; new elements go to smart-ra, not the handbook. Placeholder: no platform subprocess; done by hand, as for dth-hrh. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Archimate",
@@ -481,12 +531,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Business processes · BPMN [bpmn-authoring]"
+          "@value": "Business processes · BPMN [bpmn-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One BPMN per business process; every lane bound to a persona or role id. Calls Process_L2ComponentEditReview."
+          "@value": "One BPMN per business process; every lane bound to a persona or role id. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Bpmn",
@@ -501,12 +553,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "The DAK content as a FHIR IG [dak-l3-ig]"
+          "@value": "The DAK content as a FHIR IG [dak-l3-ig]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Stages 5 and 6 of smart-guideline-end-to-end for the handbook: its DAK-kind assets become a FHIR IG on smart-base (personas as ActorDefinitions, processes and decision tables as PlanDefinitions with CQL Libraries, data elements as logical models, ValueSets and Questionnaires, indicators as Measures, requirements as Requirements). An asset goes to L3 once its L2 review is requested; its SME review at L3 re-runs the L2 dummy clients through the built logic. Runs beside the drafting reviews and never holds the zero draft. Calls Process_DakL3Ig; the agent writes the gap report (guideline-gap-report) after it."
+          "@value": "Stages 5 and 6 of smart-guideline-end-to-end for the handbook: its DAK-kind assets become a FHIR IG on smart-base (personas as ActorDefinitions, processes and decision tables as PlanDefinitions with CQL Libraries, data elements as logical models, ValueSets and Questionnaires, indicators as Measures, requirements as Requirements). An asset goes to L3 once its L2 review is requested; its SME review at L3 re-runs the L2 dummy clients through the built logic. Runs beside the drafting reviews and never holds the zero draft. Calls Process_DakL3Ig; the agent writes the gap report (guideline-gap-report) after it.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_DakL3",
@@ -521,12 +575,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Data elements, indicators, requirements [l2-dak-authoring]"
+          "@value": "Data elements, indicators, requirements [l2-dak-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "data-element, indicator, functional and non-functional requirement blocks, with their fields as data rather than Markdown tables. Calls Process_L2ComponentEditReview."
+          "@value": "data-element, indicator, functional and non-functional requirement blocks, with their fields as data rather than Markdown tables. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Data",
@@ -541,12 +597,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Decision tables · DMN [dmn-authoring]"
+          "@value": "Decision tables · DMN [dmn-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Only rules the text states. A decision the text names without a rule is recorded as a decision point, not filled in. Calls Process_L2ComponentEditReview."
+          "@value": "Only rules the text states. A decision the text names without a rule is recorded as a decision point, not filled in. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Dmn",
@@ -561,12 +619,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Link glossary to smart-ra SKOS [terminology-management]"
+          "@value": "Link glossary to smart-ra SKOS [terminology-management]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Each handbook term is exactMatch, closeMatch or narrower to a smart-ra concept; conflicts are raised as issues on smart-ra. Calls Process_L2ComponentEditReview."
+          "@value": "Each handbook term is exactMatch, closeMatch or narrower to a smart-ra concept; conflicts are raised as issues on smart-ra. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Glossary",
@@ -581,12 +641,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Personas and roles [l2-dak-authoring]"
+          "@value": "Personas and roles [l2-dak-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Persona and actor-definition blocks; organisational roles and governance bodies get their own kind once it exists. Calls Process_L2ComponentEditReview."
+          "@value": "Persona and actor-definition blocks; organisational roles and governance bodies get their own kind once it exists. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Personas",
@@ -601,12 +663,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish extracted statements"
+          "@value": "Publish extracted statements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Statements extracted from the L1 sources (recommendations, requirements, scenario candidates) are published as pages of the handbook and in the shared l1-extraction viewer, each linked to its library entry and section, once coverage has accounted for every normative sentence and before the library is frozen. The sub-process is core's, the same for every content type; smart-base supplies the collector (`l1-statement-lists`) and the handbook only the page look."
+          "@value": "Statements extracted from the L1 sources (recommendations, requirements, scenario candidates) are published as pages of the handbook and in the shared l1-extraction viewer, each linked to its library entry and section, once coverage has accounted for every normative sentence and before the library is frozen. The sub-process is core's, the same for every content type; smart-base supplies the collector (`l1-statement-lists`) and the handbook only the page look.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_PublishStatements",
@@ -621,12 +685,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "User scenarios [l2-dak-authoring]"
+          "@value": "User scenarios [l2-dak-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "User-scenario blocks naming their personas by id. Calls Process_L2ComponentEditReview."
+          "@value": "User-scenario blocks naming their personas by id. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Scenarios",
@@ -641,12 +707,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Planning steps per chapter [document-authoring]"
+          "@value": "Planning steps per chapter [document-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Each chapter's inputs, steps, resources, outputs, risks and mitigations as the shared step table. Calls Process_L2ComponentEditReview."
+          "@value": "Each chapter's inputs, steps, resources, outputs, risks and mitigations as the shared step table. Calls Process_L2ComponentEditReview.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Steps",
@@ -661,12 +729,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M0 · Charter recorded [todo-manager]"
+          "@value": "Record milestone M0 · Charter recorded [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: repository, declaration, TWG, roles and RACI exist. Recorded, not enforced."
+          "@value": "Milestone: repository, declaration, TWG, roles and RACI exist. Recorded, not enforced.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M0",
@@ -681,12 +751,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M1 · Library frozen [todo-manager]"
+          "@value": "Record milestone M1 · Library frozen [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: every source in library/, coverage accounted. Recorded, not enforced."
+          "@value": "Milestone: every source in library/, coverage accounted. Recorded, not enforced.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M1",
@@ -701,12 +773,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M2 · Outline agreed [todo-manager]"
+          "@value": "Record milestone M2 · Outline agreed [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: the outline's round-1 comments are dispositioned. Recorded, not enforced."
+          "@value": "Milestone: the outline's round-1 comments are dispositioned. Recorded, not enforced.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M2",
@@ -721,12 +795,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M3 · Zero draft [todo-manager]"
+          "@value": "Record milestone M3 · Zero draft [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: every required section drafted and every structured block validates. Recorded, not enforced."
+          "@value": "Milestone: every required section drafted and every structured block validates. Recorded, not enforced.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M3",
@@ -741,12 +817,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M4 · Working-group draft [todo-manager]"
+          "@value": "Record milestone M4 · Working-group draft [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: all working-group comments dispositioned. Recorded, not enforced."
+          "@value": "Milestone: all working-group comments dispositioned. Recorded, not enforced.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M4",
@@ -761,12 +839,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M5 · Public draft released [todo-manager]"
+          "@value": "Record milestone M5 · Public draft released [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: the public draft is out for comment."
+          "@value": "Milestone: the public draft is out for comment.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M5",
@@ -781,12 +861,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record milestone M6 · Comments dispositioned [todo-manager]"
+          "@value": "Record milestone M6 · Comments dispositioned [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Milestone: every public comment dispositioned."
+          "@value": "Milestone: every public comment dispositioned.",
+          "@language": "en"
         }
       ],
       "skos:notation": "M6",
@@ -801,12 +883,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Architect group and handbook owners review [content-review]"
+          "@value": "Architect group and handbook owners review [content-review]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Runs beside validation, as QA. New kinds and shared schemas are reviewed here before they are built."
+          "@value": "Runs beside validation, as QA. New kinds and shared schemas are reviewed here before they are built.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ArchReview",
@@ -821,12 +905,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "4 · Comment via contributor log sheet or GitHub pc: [content-feedback]"
+          "@value": "4 · Comment via contributor log sheet or GitHub pc: [content-feedback]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The contributor log (Google Sheet) and pc: lines on GitHub issues and PRs."
+          "@value": "The contributor log (Google Sheet) and pc: lines on GitHub issues and PRs.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Comments",
@@ -841,12 +927,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Account for every normative sentence [l1-coverage]"
+          "@value": "Account for every normative sentence [l1-coverage]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Each normative sentence is captured or excluded; exclusions are signed by a person, never by the agent that proposed them."
+          "@value": "Each normative sentence is captured or excluded; exclusions are signed by a person, never by the agent that proposed them.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Coverage",
@@ -861,12 +949,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Disposition comments and apply change sets [public-comment]"
+          "@value": "Disposition comments and apply change sets [public-comment]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Changes to structured content go back through its kind's edit-and-review subprocess."
+          "@value": "Changes to structured content go back through its kind's edit-and-review subprocess.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Disposition",
@@ -881,12 +971,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Build glossary candidates from the TWG workbook [terminology-management]"
+          "@value": "Build glossary candidates from the TWG workbook [terminology-management]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One SKOS candidate per (concept, source); only a person moves a term to authored."
+          "@value": "One SKOS candidate per (concept, source); only a person moves a term to authored.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_GlossaryCandidates",
@@ -901,12 +993,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Import into review/wg-comment and form change sets [public-comment]"
+          "@value": "Import into review/wg-comment and form change sets [public-comment]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "public-comment import --store review/wg-comment; change sets group comments that change the same text."
+          "@value": "public-comment import --store review/wg-comment; change sets group comments that change the same text.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Import",
@@ -921,12 +1015,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "1 · Ingest sources into library/ [library-ingestion]"
+          "@value": "1 · Ingest sources into library/ [library-ingestion]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every source as received, frozen: WHO publications through who-iris, the TWG outline and workbooks from uploads/."
+          "@value": "Every source as received, frozen: WHO publications through who-iris, the TWG outline and workbooks from uploads/.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Ingest",
@@ -941,12 +1037,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Draft introduction, audience and DIIG alignment [document-authoring]"
+          "@value": "Draft introduction, audience and DIIG alignment [document-authoring]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The three required opening sections of the dth kind: audience and how to use, DIIG and SMART alignment, health programme context."
+          "@value": "The three required opening sections of the dth kind: audience and how to use, DIIG and SMART alignment, health programme context.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Intro",
@@ -961,12 +1059,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "List processes, roles, decisions and indicators to model [content-plan]"
+          "@value": "List processes, roles, decisions and indicators to model [content-plan]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The inventory that seeds the structured-drafting tracks: each business process becomes BPMN, each role a structured block, each stated decision rule a DMN table."
+          "@value": "The inventory that seeds the structured-drafting tracks: each business process becomes BPMN, each role a structured block, each stated decision rule a DMN table.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Inventory",
@@ -981,12 +1081,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Extract L1 from WHO publications [l1-document-ingestion]"
+          "@value": "Extract L1 from WHO publications [l1-document-ingestion]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Sections, figures, tables and the L1 knowledge graph for each WHO publication the handbook draws on."
+          "@value": "Sections, figures, tables and the L1 knowledge graph for each WHO publication the handbook draws on.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_L1",
@@ -1001,12 +1103,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "5 · Open public comment [public-comment]"
+          "@value": "5 · Open public comment [public-comment]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A separate store, review/public-comment, and the public-comment review sheet."
+          "@value": "A separate store, review/public-comment, and the public-comment review sheet.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_OpenPublic",
@@ -1021,12 +1125,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "2 · Outline chapters against the dth kind [document-structure]"
+          "@value": "2 · Outline chapters against the dth kind [document-structure]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Map the outline onto the dth document kind's sections and report every required section that is missing. dth-hrh's build_from_outline.py is the only instance; there is no general outline seed. Placeholder: no platform subprocess; done by hand, as for dth-hrh."
+          "@value": "Map the outline onto the dth document kind's sections and report every required section that is missing. dth-hrh's build_from_outline.py is the only instance; there is no general outline seed. Placeholder: no platform subprocess; done by hand, as for dth-hrh.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Outline",
@@ -1041,12 +1147,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TWG reviews the outline [content-feedback]"
+          "@value": "TWG reviews the outline [content-feedback]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "First contributor-feedback round, through the contributor log sheet and GitHub."
+          "@value": "First contributor-feedback round, through the contributor log sheet and GitHub.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_OutlineReview",
@@ -1061,7 +1169,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Public comments [content-feedback]"
+          "@value": "Public comments [content-feedback]",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_PublicComments",
@@ -1076,7 +1185,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish the handbook [document-publishing]"
+          "@value": "Publish the handbook [document-publishing]",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Publish",
@@ -1091,12 +1201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "6 · Editorial, voice and translation QA [quality-control]"
+          "@value": "6 · Editorial, voice and translation QA [quality-control]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The DTH voice (smart-base skills/voices/who-digital-transformation-handbook), figures and translations."
+          "@value": "The DTH voice (smart-base skills/voices/who-digital-transformation-handbook), figures and translations.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Qa",
@@ -1111,12 +1223,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Create the DTH repository from the DTH layout [document-structure]"
+          "@value": "Create the DTH repository from the DTH layout [document-structure]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run `bun run smart-base/scripts/dth-init.ts` with --pins-from an existing DTH's index.config.json. It writes the instance declaration (folio, glossary, uploads, beans and todos branches), index.config.json (mounting who-iris, smart-base, the platform layers and smart-ra), package.json scripts for the shared checks, the review sheet sync (--sheet) and the files from templates/dth/ (AGENTS.md, session-start hook, PR checks workflow)."
+          "@value": "Run `bun run smart-base/scripts/dth-init.ts` with --pins-from an existing DTH's index.config.json. It writes the instance declaration (folio, glossary, uploads, beans and todos branches), index.config.json (mounting who-iris, smart-base, the platform layers and smart-ra), package.json scripts for the shared checks, the review sheet sync (--sheet) and the files from templates/dth/ (AGENTS.md, session-start hook, PR checks workflow).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Scaffold",
@@ -1131,12 +1245,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "0 · Scope the DTH and place it in the DIIG [content-plan]"
+          "@value": "0 · Scope the DTH and place it in the DIIG [content-plan]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Name the health-system area, the audience and the DIIG phase the handbook supports, citing the one DIIG phase figure (DIIG section 1.1, Figure 1.1.1). Decide which DTHs and which smart-ra content it builds on."
+          "@value": "Name the health-system area, the audience and the DIIG phase the handbook supports, citing the one DIIG phase figure (DIIG section 1.1, Figure 1.1.1). Decide which DTHs and which smart-ra content it builds on.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Scope",
@@ -1151,12 +1267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Seed the work plan [todo-manager]"
+          "@value": "Seed the work plan [todo-manager]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One bean per stage and per drafting track, children of the handbook's epic."
+          "@value": "One bean per stage and per drafting track, children of the handbook's epic.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_SeedBeans",
@@ -1171,12 +1289,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Form the TWG; record roles and RACI [content-plan]"
+          "@value": "Form the TWG; record roles and RACI [content-plan]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Record who is involved and in which role. Roles are named by id, never free text, so they can bind BPMN lanes later. There is no RACI kind; the RACI is a table block."
+          "@value": "Record who is involved and in which role. Roles are named by id, never free text, so they can bind BPMN lanes later. There is no RACI kind; the RACI is a table block.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Team",
@@ -1191,12 +1311,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Validate the draft [content-validate]"
+          "@value": "Validate the draft [content-validate]",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every structured block validates against its kind; required dth sections present; no unlinked architecture names; no empirical claims in formal content."
+          "@value": "Every structured block validates against its kind; required dth sections present; no unlinked architecture names; no empirical claims in formal content.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Validate",
@@ -1211,12 +1333,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review the staged component"
+          "@value": "Review the staged component",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "cat-harness's generic review, called: classify what changed, review it, and record a qa-review/v1 QaReview whose subject is the component and whose Decision carries the reviewing role. The reviewer reads the staged page and the before/after; for a figure or table, the visual-diff picture and its changed-pixel count; for a form, the wireframe (wireframe-design-review; at L3 its Questionnaire follows fhir-questionnaire-wireframe). What to judge per component is in the skill's column \"the reviewer judges\"."
+          "@value": "cat-harness's generic review, called: classify what changed, review it, and record a qa-review/v1 QaReview whose subject is the component and whose Decision carries the reviewing role. The reviewer reads the staged page and the before/after; for a figure or table, the visual-diff picture and its changed-pixel count; for a form, the wireframe (wireframe-design-review; at L3 its Questionnaire follows fhir-questionnaire-wireframe). What to judge per component is in the skill's column \"the reviewer judges\".",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_Review",
@@ -1231,12 +1355,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run the component's checker"
+          "@value": "Run the component's checker",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The mechanical checks for this component, before anyone is asked (skill l2-component-edit-review, column \"checker\"): BPMN imports in bpmn-js with no warnings and its lanes map to personas (dak-swimlanes.ts); DMN loads, its decisions are reachable (artefact-reachability, audit:reachability) and its test cases run (content-test); the data dictionary web annex's ids are unique and its references and terminology bindings resolve (check-web-annexes.ts); personas, scenarios and requirements each trace to an L1 recommendation (recommendation-extraction's implementedBy edges). Findings go with the review request; a failing check does not stop the hand-on."
+          "@value": "The mechanical checks for this component, before anyone is asked (skill l2-component-edit-review, column \"checker\"): BPMN imports in bpmn-js with no warnings and its lanes map to personas (dak-swimlanes.ts); DMN loads, its decisions are reachable (artefact-reachability, audit:reachability) and its test cases run (content-test); the data dictionary web annex's ids are unique and its references and terminology bindings resolve (check-web-annexes.ts); personas, scenarios and requirements each trace to an L1 recommendation (recommendation-extraction's implementedBy edges). Findings go with the review request; a failing check does not stop the hand-on.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Check",
@@ -1251,12 +1377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Edit the component"
+          "@value": "Edit the component",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Create or change the component with the authoring skill the call names, one component per pass. On rework, apply the review's findings; a fix written in an AuditNote is applied as given. An adapted component is edited against its pinned upstream, so the before side of the diff is that upstream, not an empty file."
+          "@value": "Create or change the component with the authoring skill the call names, one component per pass. On rework, apply the review's findings; a fix written in an AuditNote is applied as given. An adapted component is edited against its pinned upstream, so the before side of the diff is that upstream, not an empty file.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Edit",
@@ -1271,12 +1399,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Render, stage, before/after"
+          "@value": "Render, stage, before/after",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Render the component the way its reviewer reads it (column \"renderer and diff\"): the BPMN diagram (render:bpmn) with a visual-diff picture; the DMN decision table (smart-base-transform.py dmn2html) with each rule's L1 citation; the data dictionary's term diff (dak-data-dictionary-diff.ts) and the chosen wireframe of each form; personas, scenarios and requirements as a prose diff. Commit to the feature branch so it is staged as branches/<slug>/ on the platform's just-the-docs site (for smart-base, a folio-assistant staging re-pin, never the IG's /deploy), and make the before/after preview here so it exists when review starts."
+          "@value": "Render the component the way its reviewer reads it (column \"renderer and diff\"): the BPMN diagram (render:bpmn) with a visual-diff picture; the DMN decision table (smart-base-transform.py dmn2html) with each rule's L1 citation; the data dictionary's term diff (dak-data-dictionary-diff.ts) and the chosen wireframe of each form; personas, scenarios and requirements as a prose diff. Commit to the feature branch so it is staged as branches/<slug>/ on the platform's just-the-docs site (for smart-base, a folio-assistant staging re-pin, never the IG's /deploy), and make the before/after preview here so it exists when review starts.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_RenderStage",
@@ -1291,12 +1421,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Reopen upstream, flag derived assets"
+          "@value": "Reopen upstream, flag derived assets",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "File a bean against the stage that chose the rejected source or dependency (check for an existing one first), and mark every asset derived from this component adjudication: rejected-upstream on its wasDerivedFrom edge. Nothing is deleted: the re-derivation may come out the same."
+          "@value": "File a bean against the stage that chose the rejected source or dependency (check for an existing one first), and mark every asset derived from this component adjudication: rejected-upstream on its wasDerivedFrom edge. Nothing is deleted: the re-derivation may come out the same.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReopenUpstream",
@@ -1311,12 +1443,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ask for review with staging deep links"
+          "@value": "Ask for review with staging deep links",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ask the person in the reviewing role, following staging-review's deep-link rule: one deep link per changed page and anchor on branches/<slug>/, each beside the same page on main (or \"new page\"), the pages taken from the change (rendered-impact); say so if there is no preview yet. Lead with what changed in prose, then the links, the before/after and the checker's findings; put the question in interaction-modality's form. Post it where the work is discussed (this conversation, the originating GitHub issue, the pull request), with the same links in each. A comment tagged on the PR becomes a review-comment todo (review-comments)."
+          "@value": "Ask the person in the reviewing role, following staging-review's deep-link rule: one deep link per changed page and anchor on branches/<slug>/, each beside the same page on main (or \"new page\"), the pages taken from the change (rendered-impact); say so if there is no preview yet. Lead with what changed in prose, then the links, the before/after and the checker's findings; put the question in interaction-modality's form. Post it where the work is discussed (this conversation, the originating GitHub issue, the pull request), with the same links in each. A comment tagged on the PR becomes a review-comment todo (review-comments).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_RequestReview",
@@ -1331,12 +1465,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the bean"
+          "@value": "Close the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why: complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. Placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why: complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. Placed straight before the end so the engine's resolve sees nothing left but the archive step.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -1351,12 +1487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the bean"
+          "@value": "Close the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why: complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. Placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why: complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. Placed straight before the end so the engine's resolve sees nothing left but the archive step.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanClose_2",
@@ -1371,12 +1509,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open the bean"
+          "@value": "Open the bean",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before creating, find out whose the bean is, and claim it, or leave it alone when it is someone else's. The gateway after it reads which end it reached."
+          "@value": "Process_BeanOpen: check before creating, find out whose the bean is, and claim it, or leave it alone when it is someone else's. The gateway after it reads which end it reached.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -1391,12 +1531,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish extracted statements"
+          "@value": "Publish extracted statements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Statements extracted from the Component 1 sources are published as pages of the DAK and in the shared l1-extraction viewer, each linked to its library entry and section, before L2 authoring starts from them. The sub-process is core's, the same for every content type; smart-base supplies the collector (`l1-statement-lists`) and the DAK only the page look."
+          "@value": "Statements extracted from the Component 1 sources are published as pages of the DAK and in the shared l1-extraction viewer, each linked to its library entry and section, before L2 authoring starts from them. The sub-process is core's, the same for every content type; smart-base supplies the collector (`l1-statement-lists`) and the DAK only the page look.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Call_PublishStatements",
@@ -1411,12 +1553,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Assemble and validate the DAK"
+          "@value": "Assemble and validate the DAK",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
+          "@value": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AssembleDak",
@@ -1431,12 +1575,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Business processes · BPMN 2.0"
+          "@value": "Business processes · BPMN 2.0",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Author the DAK's L2 business processes as BPMN 2.0 with Diagram Interchange: a .bpmn with no x/y on its shapes renders blank. Stay at L2, reviewable by a clinician, not FHIR. Calls Process_L2ComponentEditReview with the BPMN inputs of the skill l2-component-edit-review (checker: bpmn-js import with no warnings, dak-swimlanes.ts, artefact-reachability; renderer: render:bpmn with a visual-diff before/after; reviewer: clinical SME)."
+          "@value": "Author the DAK's L2 business processes as BPMN 2.0 with Diagram Interchange: a .bpmn with no x/y on its shapes renders blank. Stay at L2, reviewable by a clinician, not FHIR. Calls Process_L2ComponentEditReview with the BPMN inputs of the skill l2-component-edit-review (checker: bpmn-js import with no warnings, dak-swimlanes.ts, artefact-reachability; renderer: render:bpmn with a visual-diff before/after; reviewer: clinical SME).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Bpmn",
@@ -1451,12 +1597,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Data dictionary and core data elements"
+          "@value": "Data dictionary and core data elements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Author the data dictionary and core data elements: structured but not FHIR, reviewable by a clinician, so L3 can be derived from them rather than written twice. Calls Process_L2ComponentEditReview with the glossary inputs of the skill l2-component-edit-review (checker: check-web-annexes.ts on the data dictionary web annex; renderer: the term diff from dak-data-dictionary-diff.ts and each form's chosen wireframe; reviewer: clinical SME, terminologist for codes)."
+          "@value": "Author the data dictionary and core data elements: structured but not FHIR, reviewable by a clinician, so L3 can be derived from them rather than written twice. Calls Process_L2ComponentEditReview with the glossary inputs of the skill l2-component-edit-review (checker: check-web-annexes.ts on the data dictionary web annex; renderer: the term diff from dak-data-dictionary-diff.ts and each form's chosen wireframe; reviewer: clinical SME, terminologist for codes).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DataDict",
@@ -1471,12 +1619,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Decision logic · DMN tables"
+          "@value": "Decision logic · DMN tables",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Author the decision and scheduling logic as DMN tables within the FEEL subset the interpreter implements (any, literals, comparisons, one-of); ranges, not() and function calls are refused at load. Calls Process_L2ComponentEditReview with the DMN inputs of the skill l2-component-edit-review (checker: load, reachability, test cases; renderer: dmn2html table before/after, each rule beside its L1 citation; reviewer: clinical SME)."
+          "@value": "Author the decision and scheduling logic as DMN tables within the FEEL subset the interpreter implements (any, literals, comparisons, one-of); ranges, not() and function calls are refused at load. Calls Process_L2ComponentEditReview with the DMN inputs of the skill l2-component-edit-review (checker: load, reachability, test cases; renderer: dmn2html table before/after, each rule beside its L1 citation; reviewer: clinical SME).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Dmn",
@@ -1491,12 +1641,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Indicators and requirements"
+          "@value": "Indicators and requirements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Author the indicators and the functional and non-functional requirements. These are the DAK's requirements, not skills/requirements/*.json (this harness's own conformance obligations). Calls Process_L2ComponentEditReview with the indicators-and-requirements inputs of the skill l2-component-edit-review (checker: each names the persona and process it serves and traces to L1; renderer: prose diff; reviewer: business analyst with the programme manager)."
+          "@value": "Author the indicators and the functional and non-functional requirements. These are the DAK's requirements, not skills/requirements/*.json (this harness's own conformance obligations). Calls Process_L2ComponentEditReview with the indicators-and-requirements inputs of the skill l2-component-edit-review (checker: each names the persona and process it serves and traces to L1; renderer: prose diff; reviewer: business analyst with the programme manager).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Indicators",
@@ -1511,12 +1663,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Build the L1 library from Component 1"
+          "@value": "Build the L1 library from Component 1",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ingest the DAK into the library; it is L2, so it gets no L1 graph. Read Component 1 §1.2 for its sources (extract-dak-l1-references.ts --context-only), fetch each L1 source (fetch-dspace-item.ts for an IRIS handle, fetch-who-publication.ts for a who.int item page) and ingest it. Record on its intake whether each is L1 (declared > context > inferred; --record-context writes §1.2's context). For each L1 source, run l1-specialise.ts: its publication, sections and elements as specialisations of its library nodes, since the library is upstream of L1. Validate with the smart-base Zod validator. Citation fidelity (does each citation name the source it resolves to) and a cited edition older than the one fetched are left to a person, never passed automatically."
+          "@value": "Ingest the DAK into the library; it is L2, so it gets no L1 graph. Read Component 1 §1.2 for its sources (extract-dak-l1-references.ts --context-only), fetch each L1 source (fetch-dspace-item.ts for an IRIS handle, fetch-who-publication.ts for a who.int item page) and ingest it. Record on its intake whether each is L1 (declared > context > inferred; --record-context writes §1.2's context). For each L1 source, run l1-specialise.ts: its publication, sections and elements as specialisations of its library nodes, since the library is upstream of L1. Validate with the smart-base Zod validator. Citation fidelity (does each citation name the source it resolves to) and a cited edition older than the one fetched are left to a person, never passed automatically.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_L1Library",
@@ -1531,12 +1685,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Personas and scenarios"
+          "@value": "Personas and scenarios",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Author the DAK's personas and the user scenarios they appear in. Calls Process_L2ComponentEditReview with the personas-and-scenarios inputs of the skill l2-component-edit-review (checker: dak-swimlanes.ts and traceability to L1 recommendations; renderer: the persona card and a prose diff; reviewer: clinical SME). These are the DAK's own actors, not this harness's scenarios/roles.json; do not conflate the two."
+          "@value": "Author the DAK's personas and the user scenarios they appear in. Calls Process_L2ComponentEditReview with the personas-and-scenarios inputs of the skill l2-component-edit-review (checker: dak-swimlanes.ts and traceability to L1 recommendations; renderer: the persona card and a prose diff; reviewer: clinical SME). These are the DAK's own actors, not this harness's scenarios/roles.json; do not conflate the two.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Personas",
@@ -1551,12 +1707,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Scope the DAK"
+          "@value": "Scope the DAK",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors."
+          "@value": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ScopeDak",
@@ -1571,12 +1729,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Seed the work plan"
+          "@value": "Seed the work plan",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Turn the scope into child beans of the DAK's bean, one per DAK component: the DAK's work plan holds the work plan of each component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
+          "@value": "Turn the scope into child beans of the DAK's bean, one per DAK component: the DAK's work plan holds the work plan of each component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_SeedBeans",
@@ -1591,12 +1751,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Clinical validation"
+          "@value": "Clinical validation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ground truth: does the DAK say what the guideline says? The whole-DAK reading across components: whether personas, processes, decisions, data elements and indicators tell one consistent story. Per-component reviews already happened inside each track (Process_L2ComponentEditReview) and are not repeated."
+          "@value": "Ground truth: does the DAK say what the guideline says? The whole-DAK reading across components: whether personas, processes, decisions, data elements and indicators tell one consistent story. Per-component reviews already happened inside each track (Process_L2ComponentEditReview) and are not repeated.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_SmeValidate",
@@ -1611,12 +1773,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Terminology bindings"
+          "@value": "Terminology bindings",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "ICD-11, SNOMED CT and LOINC bindings, governed separately from the artefacts that cite them. Calls Process_L2ComponentEditReview with the terminology inputs of the skill l2-component-edit-review (checker: bindings resolve and unmappedConcepts is reported; renderer: the term diff on the code columns; reviewer: a terminologist other than the one who bound it)."
+          "@value": "ICD-11, SNOMED CT and LOINC bindings, governed separately from the artefacts that cite them. Calls Process_L2ComponentEditReview with the terminology inputs of the skill l2-component-edit-review (checker: bindings resolve and unmappedConcepts is reported; renderer: the term diff on the code columns; reviewer: a terminologist other than the one who bound it).",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Terminology",
@@ -1631,7 +1795,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Approve IG for publication"
+          "@value": "Approve IG for publication",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ApprovePublication",
@@ -1646,7 +1811,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Assign work and begin sprint cycle"
+          "@value": "Assign work and begin sprint cycle",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AssignWork",
@@ -1661,7 +1827,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author ActorDefinitions (reuse Commons)"
+          "@value": "Author ActorDefinitions (reuse Commons)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorActors",
@@ -1676,7 +1843,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author BPMN business processes (Component 4)"
+          "@value": "Author BPMN business processes (Component 4)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorBPMN",
@@ -1691,7 +1859,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author CQL (decision logic, scheduling, indicators)"
+          "@value": "Author CQL (decision logic, scheduling, indicators)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorCQL",
@@ -1706,7 +1875,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author logical models from L2 data dictionary"
+          "@value": "Author logical models from L2 data dictionary",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorLogicalModels",
@@ -1721,7 +1891,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author generic personas (Component 2)"
+          "@value": "Author generic personas (Component 2)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorPersonas",
@@ -1736,7 +1907,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author PlanDefinitions (processes, decision tables)"
+          "@value": "Author PlanDefinitions (processes, decision tables)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorPlanDefs",
@@ -1751,7 +1923,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author FHIR profiles"
+          "@value": "Author FHIR profiles",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorProfiles",
@@ -1766,7 +1939,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author questionnaires and structure maps"
+          "@value": "Author questionnaires and structure maps",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorQuestionnaires",
@@ -1781,7 +1955,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author Measures, Requirements, Scenarios, Tests"
+          "@value": "Author Measures, Requirements, Scenarios, Tests",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorRemainingL3",
@@ -1796,7 +1971,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author user scenarios (Component 3)"
+          "@value": "Author user scenarios (Component 3)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorScenarios",
@@ -1811,7 +1987,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Author CodeSystems, ValueSets, ConceptMaps"
+          "@value": "Author CodeSystems, ValueSets, ConceptMaps",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AuthorTerminology",
@@ -1826,7 +2003,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "L3 authoring complete - ready for review"
+          "@value": "L3 authoring complete - ready for review",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_CompleteL3",
@@ -1841,7 +2019,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Submit translations for review"
+          "@value": "Submit translations for review",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_CompleteTranslation",
@@ -1856,7 +2035,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Create publication-request.json"
+          "@value": "Create publication-request.json",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_CreatePubRequest",
@@ -1871,7 +2051,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Optionally create release-candidate branch"
+          "@value": "Optionally create release-candidate branch",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_CreateReleaseBranch",
@@ -1886,7 +2067,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Create GitHub release and tag (vX.Y.Z)"
+          "@value": "Create GitHub release and tag (vX.Y.Z)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_CreateReleaseTag",
@@ -1901,7 +2083,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Define core data elements (Component 5)"
+          "@value": "Define core data elements (Component 5)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DefineDataElements",
@@ -1916,7 +2099,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Define functional/non-functional requirements (Component 9)"
+          "@value": "Define functional/non-functional requirements (Component 9)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DefineRequirements",
@@ -1931,7 +2115,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Draft detailed workflow annotations"
+          "@value": "Draft detailed workflow annotations",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DetailWorkflow",
@@ -1946,7 +2131,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Develop decision-support logic (Component 6)"
+          "@value": "Develop decision-support logic (Component 6)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DevelopDecisionLogic",
@@ -1961,7 +2147,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Develop scheduling logic (Component 7)"
+          "@value": "Develop scheduling logic (Component 7)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DevelopSchedulingLogic",
@@ -1976,7 +2163,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Streamline and cross-check all DAK components"
+          "@value": "Streamline and cross-check all DAK components",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DraftDAKComponents",
@@ -1991,7 +2179,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Establish development process (Agile/Scrum) and tooling"
+          "@value": "Establish development process (Agile/Scrum) and tooling",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_EstablishProcess",
@@ -2006,7 +2195,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run final IG Publisher build and verify"
+          "@value": "Run final IG Publisher build and verify",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FinalBuild",
@@ -2021,7 +2211,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Finalize L2 DAK for L3 authoring"
+          "@value": "Finalize L2 DAK for L3 authoring",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FinalizeL2",
@@ -2036,7 +2227,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Fix QA issues from review"
+          "@value": "Fix QA issues from review",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FixIssues",
@@ -2051,7 +2243,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Form DAK development team and define RASCI matrix"
+          "@value": "Form DAK development team and define RASCI matrix",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_FormTeam",
@@ -2066,7 +2259,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Gather source documents (guidelines, registers, policies)"
+          "@value": "Gather source documents (guidelines, registers, policies)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_GatherDocs",
@@ -2081,7 +2275,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ground-truth with field practice (country visits/interviews)"
+          "@value": "Ground-truth with field practice (country visits/interviews)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_GroundTruth",
@@ -2096,7 +2291,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Identify interventions and recommendations (Component 1)"
+          "@value": "Identify interventions and recommendations (Component 1)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_IdentifyInterventions",
@@ -2111,7 +2307,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Incorporate SME feedback into DAK components"
+          "@value": "Incorporate SME feedback into DAK components",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_IncorporateFeedback",
@@ -2126,7 +2323,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "List indicators and metrics (Component 8)"
+          "@value": "List indicators and metrics (Component 8)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ListIndicators",
@@ -2141,7 +2339,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Map concepts to WHO Commons dictionary"
+          "@value": "Map concepts to WHO Commons dictionary",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_MapToCommons",
@@ -2156,7 +2355,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Map to ICD-11, SNOMED CT, LOINC"
+          "@value": "Map to ICD-11, SNOMED CT, LOINC",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_MapToStandards",
@@ -2171,7 +2371,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Onboard new concepts to Commons (governance)"
+          "@value": "Onboard new concepts to Commons (governance)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_OnboardConcepts",
@@ -2186,7 +2387,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Plan SME consultation schedule and format"
+          "@value": "Plan SME consultation schedule and format",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_PlanConsultations",
@@ -2201,7 +2403,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Draft project roadmap, backlog, and sprint cadence"
+          "@value": "Draft project roadmap, backlog, and sprint cadence",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_PlanTimeline",
@@ -2216,7 +2419,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review changes and determine version number"
+          "@value": "Review changes and determine version number",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_PrepareRelease",
@@ -2231,7 +2435,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Provide clinical feedback and identify gaps"
+          "@value": "Provide clinical feedback and identify gaps",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ProvideFeedback",
@@ -2246,7 +2451,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Report issues to author for resolution"
+          "@value": "Report issues to author for resolution",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReportIssues",
@@ -2261,7 +2467,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Request WHO team to update smart.who.int"
+          "@value": "Request WHO team to update smart.who.int",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_RequestWHOUpdate",
@@ -2276,7 +2483,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Reset main branch to draft, update version"
+          "@value": "Reset main branch to draft, update version",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ResetToDraft",
@@ -2291,7 +2499,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review L1 and L2 checklist items"
+          "@value": "Review L1 and L2 checklist items",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewChecklistL1L2",
@@ -2306,7 +2515,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review L3 and L4 checklist items"
+          "@value": "Review L3 and L4 checklist items",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewChecklistL3L4",
@@ -2321,7 +2531,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review L1 source documents for current sprint scope"
+          "@value": "Review L1 source documents for current sprint scope",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewL1",
@@ -2336,7 +2547,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review IG Publisher QA report (qa.html)"
+          "@value": "Review IG Publisher QA report (qa.html)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewQA",
@@ -2351,7 +2563,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review terminology bindings and code systems"
+          "@value": "Review terminology bindings and code systems",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewTermBindings",
@@ -2366,7 +2579,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review translated content for completeness"
+          "@value": "Review translated content for completeness",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ReviewTranslatedContent",
@@ -2381,7 +2595,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run IG Publisher build"
+          "@value": "Run IG Publisher build",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_RunBuild",
@@ -2396,7 +2611,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Define DAK scope, purpose, and target audience"
+          "@value": "Define DAK scope, purpose, and target audience",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Scoping",
@@ -2411,7 +2627,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Set up IG repository from template"
+          "@value": "Set up IG repository from template",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_SetupIG",
@@ -2426,7 +2643,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Test L3 functionality (StructureMaps, CQL, Measures)"
+          "@value": "Test L3 functionality (StructureMaps, CQL, Measures)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_TestFunctionality",
@@ -2441,7 +2659,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Translate narrative and resource metadata"
+          "@value": "Translate narrative and resource metadata",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_TranslateContent",
@@ -2456,7 +2675,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Create example resources per UN language"
+          "@value": "Create example resources per UN language",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_TranslateExamples",
@@ -2471,7 +2691,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Update IG status to active, set version, date"
+          "@value": "Update IG status to active, set version, date",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_UpdateIGStatus",
@@ -2486,7 +2707,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Validate DAK components against L1 recommendations"
+          "@value": "Validate DAK components against L1 recommendations",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ValidateClinical",
@@ -2501,7 +2723,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Validate artifact conformance (CRMI profiles)"
+          "@value": "Validate artifact conformance (CRMI profiles)",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_ValidateConformance",
@@ -2516,7 +2739,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Verify automated publication workflow succeeded"
+          "@value": "Verify automated publication workflow succeeded",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_VerifyAutomation",
@@ -2531,7 +2755,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Verify L2 input availability and consistency"
+          "@value": "Verify L2 input availability and consistency",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_VerifyL2Input",
@@ -2546,12 +2771,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Complete the form"
+          "@value": "Complete the form",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Complete the SDC Questionnaire as the device renders it: confirm or correct each pre-populated answer, answer every enabled required item within its constraints, and submit. The result is a completed QuestionnaireResponse."
+          "@value": "Complete the SDC Questionnaire as the device renders it: confirm or correct each pre-populated answer, answer every enabled required item within its constraints, and submit. The result is a completed QuestionnaireResponse.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Complete",
@@ -2566,12 +2793,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Extract and save the resources"
+          "@value": "Extract and save the resources",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run SDC $extract by the method the Questionnaire declares and save the resulting transaction Bundle whole, queued when offline."
+          "@value": "Run SDC $extract by the method the Questionnaire declares and save the resulting transaction Bundle whole, queued when offline.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_Extract",
@@ -2586,12 +2815,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate the L4 wireframes and application"
+          "@value": "Adjudicate the L4 wireframes and application",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Business analyst and clinical SME walk it through each L2 user scenario; FHIR modeller checks L3 conformance."
+          "@value": "Business analyst and clinical SME walk it through each L2 user scenario; FHIR modeller checks L3 conformance.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjApp",
@@ -2606,12 +2837,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate L2 dependencies"
+          "@value": "Adjudicate L2 dependencies",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Programme manager and business analyst: one row per candidate DAK, rejected ones included."
+          "@value": "Programme manager and business analyst: one row per candidate DAK, rejected ones included.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjDepsL2",
@@ -2626,12 +2859,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate L3 dependencies"
+          "@value": "Adjudicate L3 dependencies",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "FHIR modeller and terminologist: one row per candidate IG, rejected ones included."
+          "@value": "FHIR modeller and terminologist: one row per candidate IG, rejected ones included.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjDepsL3",
@@ -2646,12 +2881,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate the L1 KG"
+          "@value": "Adjudicate the L1 KG",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "l1-extraction-reviewer signs exclusions and coverage; Clinical SME reviews recommendations beside the printed page."
+          "@value": "l1-extraction-reviewer signs exclusions and coverage; Clinical SME reviews recommendations beside the printed page.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjKg",
@@ -2666,12 +2903,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate the L1 source list"
+          "@value": "Adjudicate the L1 source list",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Clinical SME: each source with why it was included or left out."
+          "@value": "Clinical SME: each source with why it was included or left out.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjL1",
@@ -2686,12 +2925,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review each L2 asset (before / after if adapted)"
+          "@value": "Review each L2 asset (before / after if adapted)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One review item per created or changed asset, shown as its reviewer reads it (diagram, table, data-dictionary rows); an adapted asset as a diff against its pinned upstream. Each form's wireframe candidates are reviewed blind and one is chosen (Process_Adjudication, Process_OptionsAnalysis). For each L2 component this is the review that forks inside its edit-and-review subprocess (l2-component-edit-review.bpmn), with the renderer, checker and reviewing role that skill tables. Each review item goes to the role whose expertise its question needs: clinical and programme SMEs see rendered diagrams, tables and forms with made-up clients walked through them, never .bpmn, .dmn or FSH; terminologists and the business analyst review codes and structure in their own items."
+          "@value": "One review item per created or changed asset, shown as its reviewer reads it (diagram, table, data-dictionary rows); an adapted asset as a diff against its pinned upstream. Each form's wireframe candidates are reviewed blind and one is chosen (Process_Adjudication, Process_OptionsAnalysis). For each L2 component this is the review that forks inside its edit-and-review subprocess (l2-component-edit-review.bpmn), with the renderer, checker and reviewing role that skill tables. Each review item goes to the role whose expertise its question needs: clinical and programme SMEs see rendered diagrams, tables and forms with made-up clients walked through them, never .bpmn, .dmn or FSH; terminologists and the business analyst review codes and structure in their own items.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjL2",
@@ -2706,12 +2947,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review each L3 asset (before / after if adapted)"
+          "@value": "Review each L3 asset (before / after if adapted)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "One review item per created or changed resource: differential, each Questionnaire against the L2 wireframe it was derived from (field to item: fhir-harness fhir-questionnaire-wireframe, whose check is check-wireframe-questionnaire), CQL beside its DMN rule with test results, terminology expansions. The clinical SME reviews behaviour, not resources: the stage-4 dummy clients re-run through the built PlanDefinition / CQL and the filled-in Questionnaire, outcome beside outcome. The FHIR modeller reviews the resources."
+          "@value": "One review item per created or changed resource: differential, each Questionnaire against the L2 wireframe it was derived from (field to item: fhir-harness fhir-questionnaire-wireframe, whose check is check-wireframe-questionnaire), CQL beside its DMN rule with test results, terminology expansions. The clinical SME reviews behaviour, not resources: the stage-4 dummy clients re-run through the built PlanDefinition / CQL and the filled-in Questionnaire, outcome beside outcome. The FHIR modeller reviews the resources.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_AdjL3",
@@ -2726,12 +2969,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "8b · L4: build the consuming application"
+          "@value": "8b · L4: build the consuming application",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Against the stage-6 IG build, with conformance tests from the IG's examples and test cases. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "Against the stage-6 IG build, with conformance tests from the IG's examples and test cases. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_BuildApp",
@@ -2746,12 +2991,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)"
+          "@value": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "From the L1 KG: which existing DAKs to reuse, adapt, extend or reject, each with evidence and reason. Reuse first; prefer the jurisdiction's adaptation, recording the WHO original as its upstream. For each component kept, record how the candidate produces it (the tools graph, the candidate repository's source spreadsheets and converters, WHO's DAK toolchain); stage 4 uses that toolchain. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "From the L1 KG: which existing DAKs to reuse, adapt, extend or reject, each with evidence and reason. Reuse first; prefer the jurisdiction's adaptation, recording the WHO original as its upstream. For each component kept, record how the candidate produces it (the tools graph, the candidate repository's source spreadsheets and converters, WHO's DAK toolchain); stage 4 uses that toolchain. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DepsL2",
@@ -2766,12 +3013,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)"
+          "@value": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Index each candidate IG, then match the L1 KG and the L2 assets against it: reuse, adapt, extend or reject per IG, and record per artefact type the candidate's toolchain (CQL refresh, test-case format, example generator), which stage 6 then uses. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "Index each candidate IG, then match the L1 KG and the L2 assets against it: reuse, adapt, extend or reject per IG, and record per artefact type the candidate's toolchain (CQL refresh, test-case format, example generator), which stage 6 then uses. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DepsL3",
@@ -2786,12 +3035,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "7 · L4: describe the consuming application"
+          "@value": "7 · L4: describe the consuming application",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Who uses it, on what device, which L2 processes and L3 resources it covers, connectivity, the systems it talks to. The agent offers options drawn from the L2 personas and processes. This is the written intent wireframe-design-review starts from."
+          "@value": "Who uses it, on what device, which L2 processes and L3 resources it covers, connectivity, the systems it talks to. The agent offers options drawn from the L2 personas and processes. This is the written intent wireframe-design-review starts from.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DescribeApp",
@@ -2806,12 +3057,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "0 · Describe the use case"
+          "@value": "0 · Describe the use case",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Population, setting, jurisdiction, interventions in scope. The user's own words; the agent asks a numbered question if the request did not say."
+          "@value": "Population, setting, jurisdiction, interventions in scope. The user's own words; the agent asks a numbered question if the request did not say.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_DescribeUseCase",
@@ -2826,12 +3079,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "1 · Identify L1 guidelines and recommendations"
+          "@value": "1 · Identify L1 guidelines and recommendations",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Component 1 sources of any DAK already in scope first, then WHO IRIS and the jurisdiction's own guidelines. Each candidate marked in-library / in-KG / not yet. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "Component 1 sources of any DAK already in scope first, then WHO IRIS and the jurisdiction's own guidelines. Each candidate marked in-library / in-KG / not yet. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_IdentifyL1",
@@ -2846,12 +3101,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "2 · Ingest into the L1 KG"
+          "@value": "2 · Ingest into the L1 KG",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Per source not yet extracted: cat ingest into library/, the generic-document layer (l1-library), then the L1 layer (recommendations, remarks, practices, scenario candidates) into library/<bib>/l1-extraction/. A figure or table that carries a process, a decision or data is cut out with its page and transcribed verbatim (a table stays a table, a figure's boxes and arrows as printed), for stage 4 to model as BPMN, DMN or data elements, each naming the transcription in wasDerivedFrom. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "Per source not yet extracted: cat ingest into library/, the generic-document layer (l1-library), then the L1 layer (recommendations, remarks, practices, scenario candidates) into library/<bib>/l1-extraction/. A figure or table that carries a process, a decision or data is cut out with its page and transcribed verbatim (a table stays a table, a figure's boxes and arrows as printed), for stage 4 to model as BPMN, DMN or data elements, each naming the transcription in wasDerivedFrom. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_IngestKg",
@@ -2866,12 +3123,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "4 · Create / adapt L2 DAK assets"
+          "@value": "4 · Create / adapt L2 DAK assets",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The authoring steps of l2-dak-authoring.bpmn (personas and scenarios, BPMN, DMN, data dictionary, indicators and requirements, terminology), plus the design of each data-entry form as wireframe candidates (wireframe-design-review, design use) from the persona, the user scenario and the core data elements. Its clinical validation is this stage's adjudication and does not hold up stage 5. The IG is built through fhir-harness's AST cache lifecycle (ig-ast-refresh.yml), with the DAK pre-processing as smart-base's pre-export overlay (dak-preprocessing, dak-pre-export.sh) and the DAK sidecars made from the AST (dak-postprocessing). A transcribed figure or table becomes its BPMN process, DMN table or data elements, adding nothing it does not show. Each process and decision table gets dummy clients (test scenarios, component 9) for its SME review to run. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "The authoring steps of l2-dak-authoring.bpmn (personas and scenarios, BPMN, DMN, data dictionary, indicators and requirements, terminology), plus the design of each data-entry form as wireframe candidates (wireframe-design-review, design use) from the persona, the user scenario and the core data elements. Its clinical validation is this stage's adjudication and does not hold up stage 5. The IG is built through fhir-harness's AST cache lifecycle (ig-ast-refresh.yml), with the DAK pre-processing as smart-base's pre-export overlay (dak-preprocessing, dak-pre-export.sh) and the DAK sidecars made from the AST (dak-postprocessing). A transcribed figure or table becomes its BPMN process, DMN table or data elements, adding nothing it does not show. Each process and decision table gets dummy clients (test scenarios, component 9) for its SME review to run. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_L2",
@@ -2886,12 +3145,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "6 · Produce L3 assets"
+          "@value": "6 · Produce L3 assets",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The mapping and pipeline of dak-l3-ig.bpmn, up to a clean IG build. Every L3 asset names the L2 asset it implements in wasDerivedFrom, with that edge's adjudication state. Each Questionnaire is derived from the chosen L2 wireframe of its form. Publication continues in that process and is not on the path to stage 8. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request."
+          "@value": "The mapping and pipeline of dak-l3-ig.bpmn, up to a clean IG build. Every L3 asset names the L2 asset it implements in wasDerivedFrom, with that edge's adjudication state. Each Questionnaire is derived from the chosen L2 wireframe of its form. Publication continues in that process and is not on the path to stage 8. After the stage the agent writes and stages the guideline gap report (guideline-gap-report), linked from every review request.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_L3",
@@ -2906,12 +3167,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Check L3 readiness"
+          "@value": "Check L3 readiness",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The order rule as a check with its own contract (skill l3-readiness). Every source has its L1 extraction, every L2 asset names an L1 node, every L3 artefact about to be written names its L2 asset, and the review of each extraction and L2 asset has been requested. Returns ready and the findings, each with the stage that fixes it."
+          "@value": "The order rule as a check with its own contract (skill l3-readiness). Every source has its L1 extraction, every L2 asset names an L1 node, every L3 artefact about to be written names its L2 asset, and the review of each extraction and L2 asset has been requested. Returns ready and the findings, each with the stage that fixes it.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_L3Ready",
@@ -2926,12 +3189,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "8a · L4: wireframe the application"
+          "@value": "8a · L4: wireframe the application",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "To-be mode, from the stage-7 intent: two or more candidates, web and mobile, with real content from the L2 personas and scenarios. The agent goes on with its recommended candidate; the requester may choose another during adjudication."
+          "@value": "To-be mode, from the stage-7 intent: two or more candidates, web and mobile, with real content from the L2 personas and scenarios. The agent goes on with its recommended candidate; the requester may choose another during adjudication.",
+          "@language": "en"
         }
       ],
       "skos:notation": "Task_WireframeApp",

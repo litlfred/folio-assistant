@@ -233,13 +233,17 @@ who.template.root=WorldHealthOrganization/smart-ig-template</code> for a WHO
 IG, whose <code class="language-plaintext highlighter-rouge">#current</code> template the build server does not list), then <code class="language-plaintext highlighter-rouge">bash fhir-harness/scripts/ig-cache.sh seed
 --ig-root . --push</code> on the default branch, then the publish. Do not wait on
 a queued runner for a publish an agent can do.</li></ol><p><strong>Who writes the cache: one workflow, here.</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/.github/workflows/ig-ast-refresh.yml"><code class="language-plaintext highlighter-rouge">.github/workflows/ig-ast-refresh.yml</code></a>
-(<code class="language-plaintext highlighter-rouge">workflow_call</code>) is the only writer. The IG repository’s <code class="language-plaintext highlighter-rouge">site-publish.yml</code>
-(the <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/templates/ig-repo-site/site-publish.yml">template</a>) calls it as its
-first job, <code class="language-plaintext highlighter-rouge">ast</code>, so a publish refreshes the cache before it builds: a no-op
-when the cache is valid for the commit. No IG repository carries a workflow of
-its own for it. A repository that wants the cache refreshed on every push to
-its IG sources may add the optional caller
-<a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/templates/ig-repo-site/ig-ast-refresh.yml"><code class="language-plaintext highlighter-rouge">templates/ig-repo-site/ig-ast-refresh.yml</code></a>. One run:</p><ol><li>mounts the layers the IG repository’s <code class="language-plaintext highlighter-rouge">index.lock.json</code> pins;</li><li>restores and judges the cache for <code class="language-plaintext highlighter-rouge">ref</code> (default <code class="language-plaintext highlighter-rouge">main</code>);</li><li>if the cache is not valid, or <code class="language-plaintext highlighter-rouge">force</code> is set, runs the caller’s
+(<code class="language-plaintext highlighter-rouge">workflow_call</code>) is the only writer. The IG repository calls it from
+<a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/templates/ig-repo-site/ig-ast-refresh.yml"><code class="language-plaintext highlighter-rouge">templates/ig-repo-site/ig-ast-refresh.yml</code></a>,
+copied unchanged, which runs on a push to the default branch that changes the
+IG’s inputs or that file, and by hand. The repository’s <code class="language-plaintext highlighter-rouge">site-publish.yml</code>
+(the <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/templates/ig-repo-site/site-publish.yml">template</a>) does not
+seed the cache: it waits for this commit’s refresh, because the IG publisher
+declares <code class="language-plaintext highlighter-rouge">after: ["ig-ast-refresh.yml"]</code> (<a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/scripts/ig-publisher.ts"><code class="language-plaintext highlighter-rouge">scripts/ig-publisher.ts</code></a>;
+cat-harness-tools <code class="language-plaintext highlighter-rouge">site-publish-after.ts</code>), and then restores the cache. The
+push that adds the caller runs it, so a repository’s first publish has an
+AST; when the cache branch is still missing, <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/scripts/ig-repo-site.ts"><code class="language-plaintext highlighter-rouge">ig-site:ast</code></a> refuses and says to
+dispatch the refresh once. One run:</p><ol><li>mounts the layers the IG repository’s <code class="language-plaintext highlighter-rouge">index.lock.json</code> pins;</li><li>restores and judges the cache for <code class="language-plaintext highlighter-rouge">ref</code> (default <code class="language-plaintext highlighter-rouge">main</code>);</li><li>if the cache is not valid, or <code class="language-plaintext highlighter-rouge">force</code> is set, runs the caller’s
 <code class="language-plaintext highlighter-rouge">pre-export</code> command when it gives one, then builds the IG with
 <code class="language-plaintext highlighter-rouge">AstExportCli</code> (Tool <code class="language-plaintext highlighter-rouge">ig-ast-export</code>, pinned <code class="language-plaintext highlighter-rouge">ast-export-ref</code>). The
 exporter comes from its published bundle, the release

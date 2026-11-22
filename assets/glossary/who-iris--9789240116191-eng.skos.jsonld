@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -19,12 +23,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Data element"
+          "@value": "Data element",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A unit of data that has a specific and precise meaning."
+          "@value": "A unit of data that has a specific and precise meaning.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -39,12 +45,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digitization"
+          "@value": "Digitization",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The process of converting and organizing data from paper records into a digital format for easier entry, storage and retrieval. Digitization is the initial step towards digital transformation."
+          "@value": "The process of converting and organizing data from paper records into a digital format for easier entry, storage and retrieval. Digitization is the initial step towards digital transformation.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -59,12 +67,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digitalization"
+          "@value": "Digitalization",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The process of digitally automating and simplifying processes to streamline individual health programmes and reducing manual efforts for greater efficiency. Digitalization is the second step towards digital transformation."
+          "@value": "The process of digitally automating and simplifying processes to streamline individual health programmes and reducing manual efforts for greater efficiency. Digitalization is the second step towards digital transformation.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -79,12 +89,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digital transformation"
+          "@value": "Digital transformation",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The process of digitally optimizing and driving systems-level changes by leveraging innovation, analytics, and feedback mechanisms to improve person centred health systems. Digital technologies are used to fundamentally change and improve how health services are delivered and accessed across all health programme areas."
+          "@value": "The process of digitally optimizing and driving systems-level changes by leveraging innovation, analytics, and feedback mechanisms to improve person centred health systems. Digital technologies are used to fundamentally change and improve how health services are delivered and accessed across all health programme areas.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -99,12 +111,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "End user"
+          "@value": "End user",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "People who will be using the digital system(s)."
+          "@value": "People who will be using the digital system(s).",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -119,12 +133,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Features"
+          "@value": "Features",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The characteristics of your system that include look and feel as well as what the system can do (e.g., “approval workflow” can be a feature of a product master data management solution)."
+          "@value": "The characteristics of your system that include look and feel as well as what the system can do (e.g., “approval workflow” can be a feature of a product master data management solution).",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -139,12 +155,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Functional requirements"
+          "@value": "Functional requirements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Description of what the digital system needs to do to support the tasks that make up the health system process and address the identified challenges (e.g., a product master data management solution must be able to define categories and attributes to organize product information)."
+          "@value": "Description of what the digital system needs to do to support the tasks that make up the health system process and address the identified challenges (e.g., a product master data management solution must be able to define categories and attributes to organize product information).",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -159,12 +177,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Generic product or product information"
+          "@value": "Generic product or product information",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "In this handbook, the terms ‘generic product,’ ‘product,’ or ‘product information’ pertain to the general identifying details of a health product, excluding any manufacturer-specific information."
+          "@value": "In this handbook, the terms ‘generic product,’ ‘product,’ or ‘product information’ pertain to the general identifying details of a health product, excluding any manufacturer-specific information.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -179,12 +199,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Interoperability"
+          "@value": "Interoperability",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Ability of different applications to access, exchange, integrate and use data in a coordinated and consistent manner through the use of shared application interfaces, value sets, concepts and standards, within and across organizational, regional and national boundaries, to provide timely and seamless portability of information and optimize health outcomes."
+          "@value": "Ability of different applications to access, exchange, integrate and use data in a coordinated and consistent manner through the use of shared application interfaces, value sets, concepts and standards, within and across organizational, regional and national boundaries, to provide timely and seamless portability of information and optimize health outcomes.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -199,12 +221,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Non-functional requirements"
+          "@value": "Non-functional requirements",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Description of the attributes and constraints that the system must have to ensure its quality and performance. These requirements do not specify what the system should do, but rather how the system should perform its functions. (e.g., a product master data management solution must be able to support offline mode when network connectivity is not available)"
+          "@value": "Description of the attributes and constraints that the system must have to ensure its quality and performance. These requirements do not specify what the system should do, but rather how the system should perform its functions. (e.g., a product master data management solution must be able to support offline mode when network connectivity is not available)",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -219,12 +243,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open source"
+          "@value": "Open source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Open-source software is software with source code that is published and made freely available to the public, enabling anyone to inspect, modify and enhance the code.8 While the source code is open to everyone, this does not mean that implementation of software is necessarily without costs. An open-source software must have a license approved by the Open-Source Initiative."
+          "@value": "Open-source software is software with source code that is published and made freely available to the public, enabling anyone to inspect, modify and enhance the code.8 While the source code is open to everyone, this does not mean that implementation of software is necessarily without costs. An open-source software must have a license approved by the Open-Source Initiative.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -239,12 +265,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open standards"
+          "@value": "Open standards",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Standards that are documented and made freely available to the public, which are developed, approved, and maintained via a collaborative and consensus driven process. Open standards facilitate interoperability and data exchange and are intended for widespread adoption."
+          "@value": "Standards that are documented and made freely available to the public, which are developed, approved, and maintained via a collaborative and consensus driven process. Open standards facilitate interoperability and data exchange and are intended for widespread adoption.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -259,12 +287,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Organogram"
+          "@value": "Organogram",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A visual representation of the organization structure showing the hierarchy of various roles and their reporting relationships Registry A governed, authoritative and centralized information system that captures, stores, and maintains the unique attributes and identifiers of health facilities, health service users, products and/or health workforce using a predefined canonical minimum data set."
+          "@value": "A visual representation of the organization structure showing the hierarchy of various roles and their reporting relationships Registry A governed, authoritative and centralized information system that captures, stores, and maintains the unique attributes and identifiers of health facilities, health service users, products and/or health workforce using a predefined canonical minimum data set.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -279,12 +309,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "SMART Guidelines"
+          "@value": "SMART Guidelines",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "WHO standards-based, machine-readable, adaptive, requirements-based, and testable Guidelines are recommended digital capabilities, health and data content. They represent a comprehensive set of reusable digital health components (e.g., interoperability standards, code libraries, algorithms, technical and operational specifications) that transform the guideline adaptation and implementation process to preserve fidelity and accelerate uptake. SMART Guidelines provide a five-step pathway to advance the adoption of best clinical and data practices, even if a country is not yet fully digital."
+          "@value": "WHO standards-based, machine-readable, adaptive, requirements-based, and testable Guidelines are recommended digital capabilities, health and data content. They represent a comprehensive set of reusable digital health components (e.g., interoperability standards, code libraries, algorithms, technical and operational specifications) that transform the guideline adaptation and implementation process to preserve fidelity and accelerate uptake. SMART Guidelines provide a five-step pathway to advance the adoption of best clinical and data practices, even if a country is not yet fully digital.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -299,12 +331,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Trade item"
+          "@value": "Trade item",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Products or services that are priced, ordered or invoiced at any point in the supply chain."
+          "@value": "Products or services that are priced, ordered or invoiced at any point in the supply chain.",
+          "@language": "en"
         }
       ],
       "skos:scopeNote": "Verbatim from the source; a candidate until an editor adopts it (glossary-from-source).",
@@ -319,12 +353,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "User acceptance testing"
+          "@value": "User acceptance testing",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "UAT is done to see whether the end-users are satisfied with the end product."
+          "@value": "UAT is done to see whether the end-users are satisfied with the end product.",
+          "@language": "en"
         }
       ],
       "skos:notation": "UAT",
@@ -340,7 +376,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adverse effects following immunisation"
+          "@value": "Adverse effects following immunisation",
+          "@language": "en"
         }
       ],
       "skos:notation": "AEFI",
@@ -356,7 +393,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Automatic identification and data capture"
+          "@value": "Automatic identification and data capture",
+          "@language": "en"
         }
       ],
       "skos:notation": "AIDC",
@@ -372,7 +410,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Anatomical therapeutic chemical classification system"
+          "@value": "Anatomical therapeutic chemical classification system",
+          "@language": "en"
         }
       ],
       "skos:notation": "ATC",
@@ -388,7 +427,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digital adaptation kit"
+          "@value": "Digital adaptation kit",
+          "@language": "en"
         }
       ],
       "skos:notation": "DAK",
@@ -404,7 +444,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digital health and interoperability"
+          "@value": "Digital health and interoperability",
+          "@language": "en"
         }
       ],
       "skos:notation": "DH&I",
@@ -420,7 +461,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digital health supply chain"
+          "@value": "Digital health supply chain",
+          "@language": "en"
         }
       ],
       "skos:notation": "DHSC",
@@ -436,7 +478,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Digital implementation investment guide"
+          "@value": "Digital implementation investment guide",
+          "@language": "en"
         }
       ],
       "skos:notation": "DIIG",
@@ -452,7 +495,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Electronic logistic management information system"
+          "@value": "Electronic logistic management information system",
+          "@language": "en"
         }
       ],
       "skos:notation": "eLMIS",
@@ -468,7 +512,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Food and Drugs Authority"
+          "@value": "Food and Drugs Authority",
+          "@language": "en"
         }
       ],
       "skos:notation": "FDA",
@@ -484,7 +529,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Fast Healthcare Interoperability Resources®"
+          "@value": "Fast Healthcare Interoperability Resources®",
+          "@language": "en"
         }
       ],
       "skos:notation": "FHIR",
@@ -500,7 +546,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Global Data Synchronisation Network"
+          "@value": "Global Data Synchronisation Network",
+          "@language": "en"
         }
       ],
       "skos:notation": "GDSN",
@@ -516,7 +563,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Global trade item number"
+          "@value": "Global trade item number",
+          "@language": "en"
         }
       ],
       "skos:notation": "GTIN",
@@ -532,7 +580,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Health Level Seven®"
+          "@value": "Health Level Seven®",
+          "@language": "en"
         }
       ],
       "skos:notation": "HL7",
@@ -548,7 +597,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "International classification of diseases, 11th Revision"
+          "@value": "International classification of diseases, 11th Revision",
+          "@language": "en"
         }
       ],
       "skos:notation": "ICD-11",
@@ -564,7 +614,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "International classification of health interventions"
+          "@value": "International classification of health interventions",
+          "@language": "en"
         }
       ],
       "skos:notation": "ICHI",
@@ -580,7 +631,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Identity/identification"
+          "@value": "Identity/identification",
+          "@language": "en"
         }
       ],
       "skos:notation": "ID",
@@ -596,7 +648,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Identification of medicinal products – a suite of five standards developed within the International Organization for Standardization (ISO) to facilitate the unique identification of medicinal products"
+          "@value": "Identification of medicinal products – a suite of five standards developed within the International Organization for Standardization (ISO) to facilitate the unique identification of medicinal products",
+          "@language": "en"
         }
       ],
       "skos:notation": "IDMP",
@@ -612,7 +665,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "International non-proprietary name"
+          "@value": "International non-proprietary name",
+          "@language": "en"
         }
       ],
       "skos:notation": "INN",
@@ -628,7 +682,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Information technology"
+          "@value": "Information technology",
+          "@language": "en"
         }
       ],
       "skos:notation": "IT",
@@ -644,7 +699,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "National Agency for Food and Drug Administration and Control"
+          "@value": "National Agency for Food and Drug Administration and Control",
+          "@language": "en"
         }
       ],
       "skos:notation": "NAFDAC",
@@ -660,7 +716,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Non-governmental organisation"
+          "@value": "Non-governmental organisation",
+          "@language": "en"
         }
       ],
       "skos:notation": "NGO",
@@ -676,7 +733,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "National product catalog"
+          "@value": "National product catalog",
+          "@language": "en"
         }
       ],
       "skos:notation": "NPC",
@@ -692,7 +750,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "National Regulatory Authority"
+          "@value": "National Regulatory Authority",
+          "@language": "en"
         }
       ],
       "skos:notation": "NRA",
@@ -708,7 +767,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open Health Information Exchange"
+          "@value": "Open Health Information Exchange",
+          "@language": "en"
         }
       ],
       "skos:notation": "OpenHIE",
@@ -724,7 +784,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Product catalog management tool"
+          "@value": "Product catalog management tool",
+          "@language": "en"
         }
       ],
       "skos:notation": "PCMT",
@@ -740,7 +801,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Request for proposal"
+          "@value": "Request for proposal",
+          "@language": "en"
         }
       ],
       "skos:notation": "RFP",
@@ -756,7 +818,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Request for quote"
+          "@value": "Request for quote",
+          "@language": "en"
         }
       ],
       "skos:notation": "RFQ",
@@ -772,7 +835,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Rwanda Medical Supply Ltd."
+          "@value": "Rwanda Medical Supply Ltd.",
+          "@language": "en"
         }
       ],
       "skos:notation": "RMS",
@@ -788,7 +852,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Supply chain information systems maturity model"
+          "@value": "Supply chain information systems maturity model",
+          "@language": "en"
         }
       ],
       "skos:notation": "SCISMM",
@@ -804,7 +869,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Standards-based, machine-readable, adaptive, requirements-based and testable"
+          "@value": "Standards-based, machine-readable, adaptive, requirements-based and testable",
+          "@language": "en"
         }
       ],
       "skos:notation": "SMART",
@@ -820,7 +886,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Standard operating procedure"
+          "@value": "Standard operating procedure",
+          "@language": "en"
         }
       ],
       "skos:notation": "SOP",
@@ -836,7 +903,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Small working group"
+          "@value": "Small working group",
+          "@language": "en"
         }
       ],
       "skos:notation": "SWG",
@@ -852,7 +920,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Terms of reference"
+          "@value": "Terms of reference",
+          "@language": "en"
         }
       ],
       "skos:notation": "TOR",
@@ -868,7 +937,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Target Software Standards"
+          "@value": "Target Software Standards",
+          "@language": "en"
         }
       ],
       "skos:notation": "TSS",
@@ -884,7 +954,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Uppsala Monitoring Centre"
+          "@value": "Uppsala Monitoring Centre",
+          "@language": "en"
         }
       ],
       "skos:notation": "UMC",
@@ -900,7 +971,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "United States Agency for International Development"
+          "@value": "United States Agency for International Development",
+          "@language": "en"
         }
       ],
       "skos:notation": "USAID",
@@ -916,7 +988,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "USAID Global Health Supply Chain Program-Procurement and Supply Management"
+          "@value": "USAID Global Health Supply Chain Program-Procurement and Supply Management",
+          "@language": "en"
         }
       ],
       "skos:notation": "USAID GHSC-PSM",
@@ -932,7 +1005,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "World Health Organization"
+          "@value": "World Health Organization",
+          "@language": "en"
         }
       ],
       "skos:notation": "WHO",
@@ -948,7 +1022,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "International reference for medicinal product information, maintained by the Swedish foundation, UMC"
+          "@value": "International reference for medicinal product information, maintained by the Swedish foundation, UMC",
+          "@language": "en"
         }
       ],
       "skos:notation": "WHODrug",
@@ -964,7 +1039,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Warehouse management system"
+          "@value": "Warehouse management system",
+          "@language": "en"
         }
       ],
       "skos:notation": "WMS",
@@ -980,7 +1056,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Zambia Medicines and Medical Supplies Agency"
+          "@value": "Zambia Medicines and Medical Supplies Agency",
+          "@language": "en"
         }
       ],
       "skos:notation": "ZAMMSA",
@@ -996,7 +1073,8 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Zambia Medicines Regulatory Authority"
+          "@value": "Zambia Medicines Regulatory Authority",
+          "@language": "en"
         }
       ],
       "skos:notation": "ZAMRA",

@@ -2,7 +2,13 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#",
+    "fa": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -73,10 +79,72 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-zh"
+        }
+      ],
       "rdfs:isDefinedBy": {
         "@id": "https://www.w3.org/TR/json-ld11/#node-objects"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Node"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "العقدة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Nodo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Nœud",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Узел",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "节点",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference",
@@ -136,6 +204,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node"
@@ -145,6 +230,51 @@
         "@id": "https://www.rfc-editor.org/rfc/rfc3987"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Reference"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "المرجع",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Referencia",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Référence",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ссылка",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Reference#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "引用",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema",
@@ -204,6 +334,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node"
@@ -213,6 +360,51 @@
         "@id": "http://json-schema.org/draft-07/schema#"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeSchema"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "مخطط العقدة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Esquema de nodo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Schéma de nœud",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Схема узла",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "节点模式",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind",
@@ -272,6 +464,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema"
@@ -281,6 +490,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/properties/nodeSchemas"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeKind"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "نوع العقدة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Tipo de nodo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Type de nœud",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Вид узла",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "节点类型",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind",
@@ -340,6 +594,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind"
@@ -355,6 +626,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Subkind"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Subkind"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "النوع الفرعي",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Subtipo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Sous-type",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Подвид",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subkind#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "子类型",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance",
@@ -414,6 +730,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Node"
@@ -429,6 +762,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/NodeInstance"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeInstance"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "مثيل العقدة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Instancia de nodo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Instance de nœud",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Экземпляр узла",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "节点实例",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
@@ -488,6 +866,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeKind"
@@ -497,6 +892,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/GraphTypology"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/GraphTypology"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "نوع الرسم البياني",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Tipo de grafo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Type de graphe",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Вид графа",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "图类型",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration",
@@ -556,10 +996,72 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-zh"
+        }
+      ],
       "rdfs:isDefinedBy": {
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Declaration"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الإعلان",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Declaración",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Déclaration",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Декларация",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "声明",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension",
@@ -619,6 +1121,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration"
@@ -628,6 +1147,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Extension"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Extension"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الامتداد",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Extensión",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Extension",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Расширение",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Extension#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "扩展",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
@@ -687,6 +1251,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration"
@@ -702,6 +1283,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Subgraph"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Subgraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الرسم البياني الفرعي",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Subgrafo",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Sous-graphe",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Подграф",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "子图",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
@@ -761,6 +1387,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration"
@@ -770,6 +1413,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Asset"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Asset"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الأصل",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Recurso",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ressource",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Ресурс",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Asset#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "资产",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph",
@@ -829,6 +1517,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeSchema"
@@ -850,6 +1555,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/KnowledgeGraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الرسم البياني المعرفي",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Grafo de conocimiento",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Graphe de connaissances",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Граф знаний",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "知识图谱",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency",
@@ -909,6 +1659,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Declaration"
@@ -927,6 +1694,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Dependency"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Dependency"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "التبعية",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Dependencia",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Dépendance",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Зависимость",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Dependency#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "依赖",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content",
@@ -986,6 +1798,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance"
@@ -998,6 +1827,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Content"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Content"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "المحتوى",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Contenido",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Contenu",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Содержимое",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Content#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "内容",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task",
@@ -1057,10 +1931,72 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-zh"
+        }
+      ],
       "rdfs:isDefinedBy": {
         "@id": "https://www.omg.org/spec/BPMN/2.0/#task"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "المهمة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Tarea",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Tâche",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Задача",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "任务",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
@@ -1120,6 +2056,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/Task"
@@ -1129,6 +2082,51 @@
         "@id": "http://www.w3.org/ns/prov#Agent"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Actor"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الفاعل",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Actor",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Acteur",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Актор",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Actor#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "行动者",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
@@ -1164,7 +2162,25 @@
       ],
       "skos:definition": [
         {
-          "@value": "A Node Instance stating a responsibility an Actor carries out to complete a Task: as natural-language instructions to follow, as a contract to be tested against, or both."
+          "@value": "A Node Instance stating a responsibility an Actor carries out to complete a Task: as natural-language instructions to follow, as a contract to be tested against, or both.",
+          "@language": "en"
+        }
+      ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-zh"
         }
       ],
       "dcterms:requires": [
@@ -1182,6 +2198,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Skill"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "المهارة",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Habilidad",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Compétence",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Навык",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Skill#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "技能",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role",
@@ -1241,6 +2302,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance"
@@ -1259,6 +2337,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json#/$defs/Role"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Role"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الدور",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Rol",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Rôle",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Роль",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Role#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "角色",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
@@ -1318,10 +2441,72 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-zh"
+        }
+      ],
       "rdfs:isDefinedBy": {
         "@id": "https://www.omg.org/spec/BPMN/2.0/#flowNode"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/ProcessNode"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "عقدة العملية",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Nodo de proceso",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Nœud de processus",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Узел процесса",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "流程节点",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
@@ -1381,6 +2566,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode"
@@ -1390,6 +2592,51 @@
         "@id": "https://www.omg.org/spec/BPMN/2.0/#sequenceFlow"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "تدفق التسلسل",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Flujo de secuencia",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Flux de séquence",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Поток последовательности",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "顺序流",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process",
@@ -1449,6 +2696,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/NodeInstance"
@@ -1470,6 +2734,51 @@
         "@id": "https://www.omg.org/spec/BPMN/2.0/#process"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Process"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "العملية",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Proceso",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Processus",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Процесс",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Process#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "流程",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
@@ -1529,6 +2838,23 @@
           "@language": "zh"
         }
       ],
+      "skosxl:prefLabel": [
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-ar"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-es"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-fr"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-ru"
+        },
+        {
+          "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-zh"
+        }
+      ],
       "dcterms:requires": [
         {
           "@id": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph"
@@ -1553,6 +2879,51 @@
         "@id": "https://litlfred.github.io/bootstrap/v0/schemas/graph.schema.json"
       },
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-ar",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "الإطار",
+        "@language": "ar"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-es",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Arnés",
+        "@language": "es"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-fr",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Harnais",
+        "@language": "fr"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-ru",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "Обвязка",
+        "@language": "ru"
+      },
+      "fa:translationStatus": "unofficial"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/Harness#label-zh",
+      "@type": "skosxl:Label",
+      "skosxl:literalForm": {
+        "@value": "工具框架",
+        "@language": "zh"
+      },
+      "fa:translationStatus": "unofficial"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/glossary/terms#order",

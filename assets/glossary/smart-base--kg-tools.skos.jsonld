@@ -2,7 +2,11 @@
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/generatedNote",
+      "@type": "@json"
+    }
   },
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
@@ -21,12 +25,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BPMN → Diagram Interchange, laid out by Graphviz"
+          "@value": "BPMN → Diagram Interchange, laid out by Graphviz",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Lay out a BPMN that carries no Diagram Interchange (`bpmn_to_svg.py` beside this file, moved from `.github/skills/bpmn_layout/` by bean folio-assistant-tgaj): one Graphviz cluster per participant, the coordinates written back into the BPMN as `<bpmndi:BPMNDiagram>`, and Graphviz's own SVG. cat-harness-tools' `render:bpmn` draws only the DI a file already has (bpmn-js does not lay out), so this is the step before it for a DAK process written, or imported, without one."
+          "@value": "Lay out a BPMN that carries no Diagram Interchange (`bpmn_to_svg.py` beside this file, moved from `.github/skills/bpmn_layout/` by bean folio-assistant-tgaj): one Graphviz cluster per participant, the coordinates written back into the BPMN as `<bpmndi:BPMNDiagram>`, and Graphviz's own SVG. cat-harness-tools' `render:bpmn` draws only the DI a file already has (bpmn-js does not lay out), so this is the step before it for a DAK process written, or imported, without one.",
+          "@language": "en"
         }
       ],
       "skos:notation": "bpmn-graphviz-layout",
@@ -41,12 +47,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BPMN → FHIR Shorthand"
+          "@value": "BPMN → FHIR Shorthand",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Derive FSH from a DAK's BPMN business processes (the inverse of the extractors)."
+          "@value": "Derive FSH from a DAK's BPMN business processes (the inverse of the extractors).",
+          "@language": "en"
         }
       ],
       "skos:notation": "bpmn-to-fsh",
@@ -61,12 +69,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BPMN structure, vendor namespaces and lane → actor"
+          "@value": "BPMN structure, vendor namespaces and lane → actor",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Check a DAK's BPMN (`validate.ts` beside this file; bean folio-assistant-tgaj, which replaced four Python validators with it): well-formed XML whose root is `<bpmn:definitions>`, no Camunda or Zeebe namespace, no duplicate id, at least one process, no bpmn-moddle (bpmn-js) import warning; every process has a `<laneSet>`, every flow node sits in a lane, and lane ids are unique and valid FSH ids; and every innermost lane names its actor by id: its `partitionElementRef` (a top-level `<bpmn:resource>`), else its own id, matched exactly against the `Instance:` ids of the ActorDefinitions in the IG's FSH (or JSON) and, for a harness process, the role ids of the mounted layers' `scenarios/roles.json`. Never by file name or title. With no file named it reads the declared process directories, `smart-base/**/processes/` and an IG's `input/bpmn/`."
+          "@value": "Check a DAK's BPMN (`validate.ts` beside this file; bean folio-assistant-tgaj, which replaced four Python validators with it): well-formed XML whose root is `<bpmn:definitions>`, no Camunda or Zeebe namespace, no duplicate id, at least one process, no bpmn-moddle (bpmn-js) import warning; every process has a `<laneSet>`, every flow node sits in a lane, and lane ids are unique and valid FSH ids; and every innermost lane names its actor by id: its `partitionElementRef` (a top-level `<bpmn:resource>`), else its own id, matched exactly against the `Instance:` ids of the ActorDefinitions in the IG's FSH (or JSON) and, for a harness process, the role ids of the mounted layers' `scenarios/roles.json`. Never by file name or title. With no file named it reads the declared process directories, `smart-base/**/processes/` and an IG's `input/bpmn/`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "bpmn-validate",
@@ -81,12 +91,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DAK API hub"
+          "@value": "DAK API hub",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Generate `dak-api.html`, the DAK API's entry page, and the per-artefact `.openapi.json` / `.displays.json` sidecars."
+          "@value": "Generate `dak-api.html`, the DAK API's entry page, and the per-artefact `.openapi.json` / `.displays.json` sidecars.",
+          "@language": "en"
         }
       ],
       "skos:notation": "dak-api-hub",
@@ -101,12 +113,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "sushi-config.yaml → index.config.json#contentTypes.dak"
+          "@value": "sushi-config.yaml → index.config.json#contentTypes.dak",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Derive the DAK configuration from `sushi-config.yaml` plus repository and branch context."
+          "@value": "Derive the DAK configuration from `sushi-config.yaml` plus repository and branch context.",
+          "@language": "en"
         }
       ],
       "skos:notation": "dak-config-from-sushi",
@@ -121,12 +135,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DAK task annotations → BPMN sidecars"
+          "@value": "DAK task annotations → BPMN sidecars",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Read a DAK document's per-task \"NOTES AND ANNOTATIONS\" from its L1 section text (who-iris), match each numbered item to the BPMN task it describes (by @id, then the label's step number with the file's process letter, then the name), add the persona from the task's lane or pool and the data elements, functional requirements and decision tables the DAK workbooks key to the activity id, and write one `dak-task-annotations/v1` sidecar (`<file>.tasks.json`) beside each BPMN (`smart-base/L2-bpmn/scripts/dak-task-annotations.ts`, schema `smart-base/L2-bpmn/schemas/task-annotations.ts`). Items no task matches are listed for a person to adjudicate; a re-run keeps adjudicated matches. `--report` prints what a set of sidecars covers and never fails. The BPMN is read, never written, and nothing FHIR-specific is involved."
+          "@value": "Read a DAK document's per-task \"NOTES AND ANNOTATIONS\" from its L1 section text (who-iris), match each numbered item to the BPMN task it describes (by @id, then the label's step number with the file's process letter, then the name), add the persona from the task's lane or pool and the data elements, functional requirements and decision tables the DAK workbooks key to the activity id, and write one `dak-task-annotations/v1` sidecar (`<file>.tasks.json`) beside each BPMN (`smart-base/L2-bpmn/scripts/dak-task-annotations.ts`, schema `smart-base/L2-bpmn/schemas/task-annotations.ts`). Items no task matches are listed for a person to adjudicate; a re-run keeps adjudicated matches. `--report` prints what a set of sidecars covers and never fails. The BPMN is read, never written, and nothing FHIR-specific is involved.",
+          "@language": "en"
         }
       ],
       "skos:notation": "dak-task-annotations",
@@ -141,12 +157,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DMN → HTML"
+          "@value": "DMN → HTML",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Render each DMN decision table to an HTML fragment for a page, via `dmn2html.xslt` and `dmn.css`."
+          "@value": "Render each DMN decision table to an HTML fragment for a page, via `dmn2html.xslt` and `dmn.css`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "dmn-to-html",
@@ -161,12 +179,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DMN → FHIR Questionnaire"
+          "@value": "DMN → FHIR Questionnaire",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: the IG Publisher validates and indexes them like any other resource."
+          "@value": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: the IG Publisher validates and indexes them like any other resource.",
+          "@language": "en"
         }
       ],
       "skos:notation": "dmn-to-questionnaire",
@@ -181,12 +201,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
+          "@value": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run WHO's `extract_dak.py` in a DAK or IG repository. It reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes DMN decision tables, CPG recommendation PlanDefinitions with citations, CQL library skeletons, Requirements and logical-model FSH. Per the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`), an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format."
+          "@value": "Run WHO's `extract_dak.py` in a DAK or IG repository. It reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes DMN decision tables, CPG recommendation PlanDefinitions with citations, CQL library skeletons, Requirements and logical-model FSH. Per the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`), an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format.",
+          "@language": "en"
         }
       ],
       "skos:notation": "extract-dak",
@@ -201,12 +223,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run the immunization schedule-check app locally on a WHO or country IG"
+          "@value": "Run the immunization schedule-check app locally on a WHO or country IG",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Start litlfred/awho-mcp's schedule-check web form on this machine: a HAPI FHIR server in Docker, the WHO SMART Immunizations IG loaded, then optionally a country adaptation IG (its decision-logic tables replace WHO's; its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served. Both listen on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. A re-run reuses a server loaded from the same commits; `--down` stops both."
+          "@value": "Start litlfred/awho-mcp's schedule-check web form on this machine: a HAPI FHIR server in Docker, the WHO SMART Immunizations IG loaded, then optionally a country adaptation IG (its decision-logic tables replace WHO's; its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served. Both listen on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. A re-run reuses a server loaded from the same commits; `--down` stops both.",
+          "@language": "en"
         }
       ],
       "skos:notation": "immz-schedule-app-local",
@@ -221,12 +245,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "BPMN → L2-BPMN knowledge graph"
+          "@value": "BPMN → L2-BPMN knowledge graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. When a `dak-task-annotations/v1` sidecar sits beside the file (`<file>.tasks.json`), each of its entries becomes an l2 `dak-task` that `describes` its BPMN task, with `performedBy`, `usesDataElement`, `specifiedBy` and `invokesDecision` edges by the DAK's own ids. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`."
+          "@value": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. When a `dak-task-annotations/v1` sidecar sits beside the file (`<file>.tasks.json`), each of its entries becomes an l2 `dak-task` that `describes` its BPMN task, with `performedBy`, `usesDataElement`, `specifiedBy` and `invokesDecision` edges by the DAK's own ids. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "kg-extract-bpmn",
@@ -241,12 +267,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DMN reference column → L1 citations"
+          "@value": "DMN reference column → L1 citations",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document."
+          "@value": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document.",
+          "@language": "en"
         }
       ],
       "skos:notation": "kg-extract-citations",
@@ -261,12 +289,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "dak.json + FSH tree → L2 DAK component graph"
+          "@value": "dak.json + FSH tree → L2 DAK component graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor)."
+          "@value": "Extract the DAK component layer (L2) from a smart-base-shaped IG (`smart-base/L2/schemas/extract-dak.ts`, ported from WHO smart-kg `tools/extract-dak.mjs`): a `dak` node from dak.json, a `persona` node per ActorDefinition, a `functional`/`non-functional-requirement` node per requirement instance with its `requirement-statement`s, the `hasComponent`/`hasStatement` edges, and the `fulfilledBy` edges that resolve each requirement's `actor = Canonical(...)` against a persona's instance id. Coverage is reported across all nine DAK components, including the empty ones, and files present with no component declaring them are listed. Distinct from the existing `extract-dak` tool (WHO's spreadsheet extractor).",
+          "@language": "en"
         }
       ],
       "skos:notation": "kg-extract-dak",
@@ -281,12 +311,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "DMN → L2-DMN knowledge graph"
+          "@value": "DMN → L2-DMN knowledge graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract the interior of one DMN decision table as the L2-DMN subgraph (`smart-base/L2-dmn/schemas/extract-dmn.ts`, ported from WHO smart-kg `tools/extract-dmn.mjs`): a `dmn-definitions` node and its decisions, decision tables, input and output clauses and rules, the `reads` edges to the data elements recovered from input expressions, the `citesSource` edges to the L1 citations each rule's reference column names, and the `invokedBy` edge to the BPMN task the `usingTask` href names. Pass `--bpmn` to resolve that task by name instead of recording it unresolved."
+          "@value": "Extract the interior of one DMN decision table as the L2-DMN subgraph (`smart-base/L2-dmn/schemas/extract-dmn.ts`, ported from WHO smart-kg `tools/extract-dmn.mjs`): a `dmn-definitions` node and its decisions, decision tables, input and output clauses and rules, the `reads` edges to the data elements recovered from input expressions, the `citesSource` edges to the L1 citations each rule's reference column names, and the `invokedBy` edge to the BPMN task the `usingTask` href names. Pass `--bpmn` to resolve that task by name instead of recording it unresolved.",
+          "@language": "en"
         }
       ],
       "skos:notation": "kg-extract-dmn",
@@ -301,12 +333,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "FHIR IG → L3 knowledge graph"
+          "@value": "FHIR IG → L3 knowledge graph",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type."
+          "@value": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type.",
+          "@language": "en"
         }
       ],
       "skos:notation": "kg-extract-l3",
@@ -321,12 +355,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "L1 extraction viewer: a hub and a page per instance with `l1-extraction` directories"
+          "@value": "L1 extraction viewer: a hub and a page per instance with `l1-extraction` directories",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For every visualiser an instance declares with `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each page shows, from what the files declare: the L1 statements (graph nodes with a `statement`, and an authored L1 source's `recommendations`); the candidate work list's counts, coverage and decisions; each graph document's nodes by type and edges by predicate (L2 scenario candidates included); counts of curation, mapping, vocabulary, exclusions and run context; and a link from every file to its published copy (cat-harness's `library:viz`), when the site has it, and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never zero."
+          "@value": "For every visualiser an instance declares with `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each page shows, from what the files declare: the L1 statements (graph nodes with a `statement`, and an authored L1 source's `recommendations`); the candidate work list's counts, coverage and decisions; each graph document's nodes by type and edges by predicate (L2 scenario candidates included); counts of curation, mapping, vocabulary, exclusions and run context; and a link from every file to its published copy (cat-harness's `library:viz`), when the site has it, and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never zero.",
+          "@language": "en"
         }
       ],
       "skos:notation": "l1-extraction-pages",
@@ -341,12 +377,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "L1 guideline → recommendation candidates (L1 3.0)"
+          "@value": "L1 guideline → recommendation candidates (L1 3.0)",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `L1/schemas/validate.ts`) with coverage and proposed, unsigned exclusions."
+          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `L1/schemas/validate.ts`) with coverage and proposed, unsigned exclusions.",
+          "@language": "en"
         }
       ],
       "skos:notation": "l1-recommendation-candidates",
@@ -361,12 +399,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "L1 recommendations → L2 user-scenario candidates"
+          "@value": "L1 recommendations → L2 user-scenario candidates",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "From an agent's `l1-scenario-mapping/v1`, write one smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by smart-kg L2's existing edges. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process."
+          "@value": "From an agent's `l1-scenario-mapping/v1`, write one smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by smart-kg L2's existing edges. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process.",
+          "@language": "en"
         }
       ],
       "skos:notation": "l1-recommendation-scenarios",
@@ -381,12 +421,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "L1 extraction → statement lists"
+          "@value": "L1 extraction → statement lists",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The smart-base collector for core's `publish-extracted-statements` step: an `l1-extraction` directory's authored L1 sources (`recommendations:` rows) and scenario-candidate graphs (`user-scenario` nodes whose `evidence.location` names a row), written as `folio-extracted-statements/v1` lists, each statement with the library entry its L1 source names and the page it was read from. Core's `statements:pages` then renders them with links to the entry and section."
+          "@value": "The smart-base collector for core's `publish-extracted-statements` step: an `l1-extraction` directory's authored L1 sources (`recommendations:` rows) and scenario-candidate graphs (`user-scenario` nodes whose `evidence.location` names a row), written as `folio-extracted-statements/v1` lists, each statement with the library entry its L1 source names and the page it was read from. Core's `statements:pages` then renders them with links to the entry and section.",
+          "@language": "en"
         }
       ],
       "skos:notation": "l1-statement-lists",
@@ -401,12 +443,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Authored L1 → verbatim against transcriptions and image narratives"
+          "@value": "Authored L1 → verbatim against transcriptions and image narratives",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names; every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`; keys must be unique."
+          "@value": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names; every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`; keys must be unique.",
+          "@language": "en"
         }
       ],
       "skos:notation": "l1-transcription-verbatim",
@@ -421,12 +465,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Seed the FHIR package cache, with WHO's published site as a source"
+          "@value": "Seed the FHIR package cache, with WHO's published site as a source",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`), so `smart.who.int.*` packages can also be read from WHO's published-site repository, each fetch verified against the tarball's own package.json. All other sources and checks are the seeder's."
+          "@value": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`), so `smart.who.int.*` packages can also be read from WHO's published-site repository, each fetch verified against the tarball's own package.json. All other sources and checks are the seeder's.",
+          "@language": "en"
         }
       ],
       "skos:notation": "smart-fhir-cache-seed",
@@ -441,12 +487,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "IG metadata → Liquid variables"
+          "@value": "IG metadata → Liquid variables",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource."
+          "@value": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",
+          "@language": "en"
         }
       ],
       "skos:notation": "smart-liquid-variables",
@@ -461,12 +509,14 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Reuse-first terminology and code-list lookup"
+          "@value": "Reuse-first terminology and code-list lookup",
+          "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Look up a concept or code token for a semantic slot across the four reuse-first rungs of the `terminology-coding` methodology: (1) the target guide's `l1-scenario-vocabulary/v1`; (2) smart-base's generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and the `guideline-domain` SKOS glossary; (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`); (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`), or `could-not-determine` for `business-process`."
+          "@value": "Look up a concept or code token for a semantic slot across the four reuse-first rungs of the `terminology-coding` methodology: (1) the target guide's `l1-scenario-vocabulary/v1`; (2) smart-base's generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and the `guideline-domain` SKOS glossary; (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`); (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`), or `could-not-determine` for `business-process`.",
+          "@language": "en"
         }
       ],
       "skos:notation": "terminology-lookup",
