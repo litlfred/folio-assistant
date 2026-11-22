@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-0044/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-0044/cat-harness-tools/softwareLibrary/typescript.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-0044/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/softwareLibrary/typescript.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1122-0044",
+    "sha": "0c359cda5b862845877530125b7f5b311cda81ba",
+    "pr": "3192/merge",
+    "run": "44968454432"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/softwareLibrary/typescript",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SoftwareLibrary",
+      "title": "typescript@6.0.3",
+      "description": "The outside library typescript 6.0.3 (a dev dependency), licensed Apache-2.0, as the layer's lockfile pins it.",
+      "sourceKind": "software-library",
+      "sourcePath": "libraries/typescript.library.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-libraries"
+    }
+  ]
+}
