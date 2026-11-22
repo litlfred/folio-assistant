@@ -1,0 +1,1306 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2405.14766v2",
+ "source": {
+  "file": "arxiv-2405.14766v2.pdf",
+  "sha256": "07248c8e1578d9ea00b42f7b527674b472870c86ee7399b27a2bd185d85f09c9",
+  "bytes": 1357250,
+  "pages": 36,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-08T09:49:14Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2405.14766",
+   "version": "2",
+   "primary_class": "cs.CL",
+   "stamp_date": "19 Feb 2025"
+  },
+  "doi": null,
+  "title": "Evaluating Large Language Models for Public Health Classification and Extraction Tasks",
+  "authors_raw": "Joshua Harris1,\u2020, Timothy Laurence1, Leo Loman1, Fan Grayson1, Toby Nonnenmacher1, Harry",
+  "title_lines": [
+   "Evaluating Large Language Models for Public Health",
+   "Classification and Extraction Tasks"
+  ],
+  "abstract": "Advances in Large Language Models (LLMs) have led to significant interest in their potential to support human experts across a range of domains, including public health. In this work we present automated evaluations of LLMs for public health tasks involving the classification and extraction of free text. We combine six externally annotated datasets with seven new internally annotated datasets to evaluate LLMs for processing text related to: health burden, epidemiological risk factors, and public health interventions. We evaluate eleven open-weight LLMs (7-123 billion parameters) across all tasks using zero-shot in-context learning. We find that Llama-3.3-70B-Instruct is the highest performing model, achieving the best results on 8/16 tasks (using micro-F1 scores). We see significant variation across tasks with all open-weight LLMs scoring below 60% micro-F1 on some challenging tasks, such as Contact Classification, while all LLMs achieve greater than 80% micro-F1 on others, such as GI Illness Classification. For a subset of 11 tasks, we also evaluate three GPT-4 and GPT-4o series models and find comparable results to Llama-3.3-70B-Instruct. Overall, based on these initial results we find promising signs that LLMs may be useful tools for public health experts to extract information from a wide variety of free text sources, and support public health surveillance, research, and interventions. Figure 1: Public Health Large Language Model (LLM) Evaluation Areas [Number of Evalua- tions] and Task Evaluation Micro-F1 Scores by Model. (Left) We divide public health free text processing into three sub-domains: (1) burden, such as reports of disease symptoms, cases, morbidity, or mortality; (2) risk factors, such as environmental, behavioural, or biological contributors; (3) interventions, pharmaceutical and non-pharmaceutical. (Right) Evaluation results (micro-F1 scores) for seven open-weight LLM architectures (highest performing model evaluated from each) across the 16 task",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.25",
+   "Creator": "LaTeX with hyperref",
+   "CreationDate": "D:20250220014843Z"
+  },
+  "title_raw": "Evaluating Large Language Models for Public Health Classification and Extraction Tasks",
+  "title_source": "heading",
+  "title_verified": true,
+  "title_evidence": {
+   "heading": "Evaluating Large Language Models for Public Health Classification and Extraction Tasks",
+   "outline": "Introduction",
+   "text": "Evaluating Large Language Models for Public Health Classification and Extraction Tasks",
+   "corroborated_by": [
+    "text"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 1,
+   "title": "Methods",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 2,
+   "title": "Public Health Evaluation Tasks and Datasets",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "3"
+  },
+  {
+   "level": 3,
+   "title": "Burden",
+   "page": 4,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "4"
+  },
+  {
+   "level": 3,
+   "title": "Risk Factors",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "5"
+  },
+  {
+   "level": 3,
+   "title": "Interventions",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "7"
+  },
+  {
+   "level": 3,
+   "title": "Summary",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "8"
+  },
+  {
+   "level": 2,
+   "title": "Evaluation Methodology",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 3,
+   "title": "Large Language Models",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 3,
+   "title": "Prompting",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 3,
+   "title": "Sampling",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 3,
+   "title": "Dataset Splits",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 3,
+   "title": "Evaluation Metrics",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 2,
+   "title": "Model Results",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 2,
+   "title": "Task Results",
+   "page": 12,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "12"
+  },
+  {
+   "level": 2,
+   "title": "Few-shot Prompting",
+   "page": 12,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "12"
+  },
+  {
+   "level": 2,
+   "title": "GPT-4 and GPT-4o Comparison",
+   "page": 13,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "13"
+  },
+  {
+   "level": 2,
+   "title": "Quantization Performance Impact",
+   "page": 14,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "14"
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "15"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "17"
+  },
+  {
+   "level": 1,
+   "title": "Appendix: Literature on Domain Specific Evaluations",
+   "page": 27,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "27"
+  },
+  {
+   "level": 2,
+   "title": "Approaches to Domain Specific LLM Evaluations",
+   "page": 27,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "27"
+  },
+  {
+   "level": 3,
+   "title": "Level of Generality",
+   "page": 27,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "27"
+  },
+  {
+   "level": 3,
+   "title": "Types of Task",
+   "page": 28,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "28"
+  },
+  {
+   "level": 3,
+   "title": "Outcome of Interest",
+   "page": 29,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "29"
+  },
+  {
+   "level": 3,
+   "title": "Summary",
+   "page": 29,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "29"
+  },
+  {
+   "level": 2,
+   "title": "Existing Evaluations of LLMs in Public Health and Related Fields",
+   "page": 29,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "29"
+  },
+  {
+   "level": 3,
+   "title": "Disease and Health Issue Classification and Extraction",
+   "page": 30,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "30"
+  },
+  {
+   "level": 3,
+   "title": "Drug and Intervention Extraction",
+   "page": 31,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "31"
+  },
+  {
+   "level": 3,
+   "title": "Relevant Sub-sets of General Evaluations",
+   "page": 31,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "31"
+  },
+  {
+   "level": 1,
+   "title": "Appendix: Annotations",
+   "page": 33,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "33"
+  },
+  {
+   "level": 1,
+   "title": "Appendix: Example Prompts",
+   "page": 35,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "35"
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Public Health Large Language Model (LLM) Evaluation Areas [Number of Evaluations] and Task Evaluation Micro-F1 Scores by Model. (Left) We divide public health free text processing into three sub-domains: (1) burden, such as reports of disease symptoms, cases, morbidity, or mortality; (2) risk factor",
+   "page": 1,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "1"
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "Evaluation Tasks by Public Health Area. A summary of different tasks which we use to evaluate the LLMs, grouped by public health area. See 2.1.1, 2.1.2, and 2.1.3 for full descriptions",
+   "page": 3,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "3"
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Overview of Public Health Evaluation Tasks. In order to capture a broad range of free text, the 16 tasks we use draw on 13 distinct datasets from internal and external sources. \"Text length\" refers to the average number of characters in the free text (excluding the prompt template and question). \"Pu",
+   "page": 5,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "5"
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Overview of Large Language Models Evaluated",
+   "page": 9,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "9"
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Zero-shot Results (Micro-F1 Scores) for Open-Weight Models. Bold indicates the highest open-weight model micro-F1 score on a given task. Underlined indicates the highest micro-F1 score across all models evaluated (inc. GPT-4 series for a subset of tasks). Mean Task Rank is calculated as the rank of",
+   "page": 11,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "11"
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "Comparison of zero-shot and few-shot prompting on challenging tasks (Contact Classification). We compare the baseline zero-shot prompt to a 10-shot prompt for Contact Classification",
+   "page": 12,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "12"
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Comparison of zero-shot and few-shot prompting on challenging tasks (Health Causal Claims Classification). We compare the baseline zero-shot prompt to a 7-shot prompt for Health Causal Claims Classification",
+   "page": 13,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "13"
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Zero-shot GPT-4 Results. Bold indicates the highest open-weight model micro-F1 score on a given task. Underlined indicates the highest micro-F1 score across all models",
+   "page": 14,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "14"
+  },
+  {
+   "kind": "table",
+   "number": "5",
+   "title": "INT-4 AWQ Quantization Impact on Micro-F1 Scores. All numbers are the percentage point difference between the micro F1 score for the FP16 model and the INT-4 AWQ quantized model on the given task",
+   "page": 14,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "14"
+  },
+  {
+   "kind": "figure",
+   "number": "5",
+   "title": "LLM Evaluation Spectrum. In this paper we focus on a combination of domain and task specific LLM evaluations within public health in order to inform our understanding of where LLMs may be successfully deployed within the field. The area marked by the (*) - denotes how our evaluations compare to othe",
+   "page": 27,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "27"
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "Overview of Evaluations. We focus on automated evaluations of classification and extraction tasks",
+   "page": 30,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "30"
+  },
+  {
+   "kind": "table",
+   "number": "6",
+   "title": "Manual Annotation. Summary of the approach to manual annotation for each task",
+   "page": 33,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "33"
+  },
+  {
+   "kind": "table",
+   "number": "7",
+   "title": "Manual Annotation continued. Summary of the approach to manual annotation for each task",
+   "page": 34,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "34"
+  },
+  {
+   "kind": "figure",
+   "number": "7",
+   "title": "Example Few Shot Prompt for Health Causal Claims Classification. This is an example of the 7 shot prompt used in the Health Causal Claims Classification task structured with the Stable- Beluga-2 prompt template. Few-shot examples taken from Yu et al. [52]",
+   "page": 35,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "35"
+  },
+  {
+   "kind": "figure",
+   "number": "8",
+   "title": "Example Zero Shot Prompt for NCBI Disease Extraction. This is an example of the zero shot prompt used in the NCBI Disease Extraction task structured with the Stable-Beluga-2 prompt template",
+   "page": 36,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "36"
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": "1",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 2,
+   "label": "2",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 3,
+   "label": "3",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 4,
+   "label": "4",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 5,
+   "label": "5",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 6,
+   "label": "6",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 7,
+   "label": "7",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 8,
+   "label": "8",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 9,
+   "label": "9",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 10,
+   "label": "10",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 11,
+   "label": "11",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 12,
+   "label": "12",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 13,
+   "label": "13",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 14,
+   "label": "14",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 15,
+   "label": "15",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 16,
+   "label": "16",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 17,
+   "label": "17",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 18,
+   "label": "18",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 19,
+   "label": "19",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 20,
+   "label": "20",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 21,
+   "label": "21",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 22,
+   "label": "22",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 23,
+   "label": "23",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 24,
+   "label": "24",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 25,
+   "label": "25",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 26,
+   "label": "26",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 27,
+   "label": "27",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 28,
+   "label": "28",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 29,
+   "label": "29",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 30,
+   "label": "30",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 31,
+   "label": "31",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 32,
+   "label": "32",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 33,
+   "label": "33",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 34,
+   "label": "34",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 35,
+   "label": "35",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 36,
+   "label": "36",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 2602,
+   "n_words": 359,
+   "label_start": "1",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 2143,
+   "n_words": 333,
+   "label_start": "2",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-001-methods",
+   "number": null,
+   "title": "Methods",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 2322,
+   "n_words": 366,
+   "label_start": "2",
+   "label_end": "3"
+  },
+  {
+   "id": "sec-002-public-health-evaluation-tasks-and-datasets",
+   "number": null,
+   "title": "Public Health Evaluation Tasks and Datasets",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 371,
+   "n_words": 55,
+   "label_start": "3",
+   "label_end": "3"
+  },
+  {
+   "id": "sec-003-burden",
+   "number": null,
+   "title": "Burden",
+   "level": 3,
+   "page_start": 3,
+   "page_end": 5,
+   "n_chars": 6488,
+   "n_words": 987,
+   "label_start": "3",
+   "label_end": "5"
+  },
+  {
+   "id": "sec-004-risk-factors",
+   "number": null,
+   "title": "Risk Factors",
+   "level": 3,
+   "page_start": 5,
+   "page_end": 7,
+   "n_chars": 4114,
+   "n_words": 639,
+   "label_start": "5",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-005-interventions",
+   "number": null,
+   "title": "Interventions",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 984,
+   "n_words": 131,
+   "label_start": "7",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-006-summary",
+   "number": null,
+   "title": "Summary",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 9,
+   "n_chars": 4600,
+   "n_words": 715,
+   "label_start": "7",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-007-evaluation-methodology",
+   "number": null,
+   "title": "Evaluation Methodology",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 173,
+   "n_words": 28,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-008-prompting",
+   "number": null,
+   "title": "Prompting",
+   "level": 3,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-009-sampling",
+   "number": null,
+   "title": "Sampling",
+   "level": 3,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 1436,
+   "n_words": 186,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-010-large-language-models",
+   "number": null,
+   "title": "Large Language Models",
+   "level": 3,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 1648,
+   "n_words": 257,
+   "label_start": "9",
+   "label_end": "10"
+  },
+  {
+   "id": "sec-011-results",
+   "number": null,
+   "title": "Results",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 579,
+   "n_words": 90,
+   "label_start": "10",
+   "label_end": "10"
+  },
+  {
+   "id": "sec-012-dataset-splits",
+   "number": null,
+   "title": "Dataset Splits",
+   "level": 3,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 223,
+   "n_words": 38,
+   "label_start": "10",
+   "label_end": "10"
+  },
+  {
+   "id": "sec-013-evaluation-metrics",
+   "number": null,
+   "title": "Evaluation Metrics",
+   "level": 3,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 3609,
+   "n_words": 591,
+   "label_start": "10",
+   "label_end": "11"
+  },
+  {
+   "id": "sec-014-model-results",
+   "number": null,
+   "title": "Model Results",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 1560,
+   "n_words": 238,
+   "label_start": "11",
+   "label_end": "12"
+  },
+  {
+   "id": "sec-015-task-results",
+   "number": null,
+   "title": "Task Results",
+   "level": 2,
+   "page_start": 12,
+   "page_end": 12,
+   "n_chars": 582,
+   "n_words": 84,
+   "label_start": "12",
+   "label_end": "12"
+  },
+  {
+   "id": "sec-016-few-shot-prompting",
+   "number": null,
+   "title": "Few-shot Prompting",
+   "level": 2,
+   "page_start": 12,
+   "page_end": 13,
+   "n_chars": 2338,
+   "n_words": 347,
+   "label_start": "12",
+   "label_end": "13"
+  },
+  {
+   "id": "sec-017-gpt-4-and-gpt-4o-comparison",
+   "number": null,
+   "title": "GPT-4 and GPT-4o Comparison",
+   "level": 2,
+   "page_start": 13,
+   "page_end": 14,
+   "n_chars": 1245,
+   "n_words": 195,
+   "label_start": "13",
+   "label_end": "14"
+  },
+  {
+   "id": "sec-018-quantization-performance-impact",
+   "number": null,
+   "title": "Quantization Performance Impact",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 15,
+   "n_chars": 1976,
+   "n_words": 315,
+   "label_start": "14",
+   "label_end": "15"
+  },
+  {
+   "id": "sec-019-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 17,
+   "n_chars": 6400,
+   "n_words": 948,
+   "label_start": "15",
+   "label_end": "17"
+  },
+  {
+   "id": "sec-020-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 17,
+   "page_end": 27,
+   "n_chars": 31305,
+   "n_words": 4391,
+   "label_start": "17",
+   "label_end": "27"
+  },
+  {
+   "id": "sec-021-appendix-literature-on-domain-specific-evaluatio",
+   "number": null,
+   "title": "Appendix: Literature on Domain Specific Evaluations",
+   "level": 1,
+   "page_start": 27,
+   "page_end": 27,
+   "n_chars": 722,
+   "n_words": 114,
+   "label_start": "27",
+   "label_end": "27"
+  },
+  {
+   "id": "sec-022-approaches-to-domain-specific-llm-evaluations",
+   "number": null,
+   "title": "Approaches to Domain Specific LLM Evaluations",
+   "level": 2,
+   "page_start": 27,
+   "page_end": 27,
+   "n_chars": 83,
+   "n_words": 14,
+   "label_start": "27",
+   "label_end": "27"
+  },
+  {
+   "id": "sec-023-level-of-generality",
+   "number": null,
+   "title": "Level of Generality",
+   "level": 3,
+   "page_start": 27,
+   "page_end": 29,
+   "n_chars": 4348,
+   "n_words": 651,
+   "label_start": "27",
+   "label_end": "29"
+  },
+  {
+   "id": "sec-024-outcome-of-interest",
+   "number": null,
+   "title": "Outcome of Interest",
+   "level": 3,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 2038,
+   "n_words": 313,
+   "label_start": "29",
+   "label_end": "29"
+  },
+  {
+   "id": "sec-025-summary",
+   "number": null,
+   "title": "Summary",
+   "level": 3,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 248,
+   "n_words": 43,
+   "label_start": "29",
+   "label_end": "29"
+  },
+  {
+   "id": "sec-026-existing-evaluations-of-llms-in-public-health-an",
+   "number": null,
+   "title": "Existing Evaluations of LLMs in Public Health and Related Fields",
+   "level": 2,
+   "page_start": 29,
+   "page_end": 30,
+   "n_chars": 303,
+   "n_words": 46,
+   "label_start": "29",
+   "label_end": "30"
+  },
+  {
+   "id": "sec-027-disease-and-health-issue-classification-and-extr",
+   "number": null,
+   "title": "Disease and Health Issue Classification and Extraction",
+   "level": 3,
+   "page_start": 30,
+   "page_end": 31,
+   "n_chars": 2187,
+   "n_words": 326,
+   "label_start": "30",
+   "label_end": "31"
+  },
+  {
+   "id": "sec-028-drug-and-intervention-extraction",
+   "number": null,
+   "title": "Drug and Intervention Extraction",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 2577,
+   "n_words": 379,
+   "label_start": "31",
+   "label_end": "31"
+  },
+  {
+   "id": "sec-029-relevant-sub-sets-of-general-evaluations",
+   "number": null,
+   "title": "Relevant Sub-sets of General Evaluations",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 33,
+   "n_chars": 1354,
+   "n_words": 202,
+   "label_start": "31",
+   "label_end": "33"
+  },
+  {
+   "id": "sec-030-appendix-annotations",
+   "number": null,
+   "title": "Appendix: Annotations",
+   "level": 1,
+   "page_start": 33,
+   "page_end": 35,
+   "n_chars": 6588,
+   "n_words": 1026,
+   "label_start": "33",
+   "label_end": "35"
+  },
+  {
+   "id": "sec-031-appendix-example-prompts",
+   "number": null,
+   "title": "Appendix: Example Prompts",
+   "level": 1,
+   "page_start": 35,
+   "page_end": 36,
+   "n_chars": 473,
+   "n_words": 77,
+   "label_start": "35",
+   "label_end": "36"
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 33,
+  "toc_inferred_entries": 0,
+  "figure_entries": 15,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 33,
+  "chars_total": 97619
+ }
+}
