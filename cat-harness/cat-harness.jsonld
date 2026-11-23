@@ -363,10 +363,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
-  "sourceCommitSha": "6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
-  "sourceTree": "90d72f5514d61ba20e4bd53deb7c176452aff8c6",
-  "sourceCommitAt": "2026-11-22T01:49:44Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7c9641a461c8c752ab5af2757e05ab012e55cf5d",
+  "sourceCommitSha": "7c9641a461c8c752ab5af2757e05ab012e55cf5d",
+  "sourceTree": "7da9f1e95d58f9a1701df2b13a452b1563200518",
+  "sourceCommitAt": "2026-11-22T21:24:06-05:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -383,7 +383,7 @@
     "Tool": 204,
     "Schema": 198,
     "TranslationSource": 636,
-    "ExternalSchema": 32,
+    "ExternalSchema": 33,
     "SoftwareLibrary": 11,
     "GraphTypology": 53,
     "QaAttestation": 21,
@@ -1526,7 +1526,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/remote-mount.md",
-      "instructionLines": 570,
+      "instructionLines": 616,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -64483,6 +64483,19 @@
       "specUrl": "https://www.hydra-cg.com/spec/latest/core/",
       "namespace": [
         "http://www.w3.org/ns/hydra/core#"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-json-ld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "w3c-json-ld",
+      "title": "JSON-LD 1.1: A JSON-based Serialization for Linked Data",
+      "authority": "W3C",
+      "specVersion": "2020-07-16",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/2020/REC-json-ld11-20200716/",
+      "namespace": [
+        "http://www.w3.org/ns/json-ld#"
       ]
     },
     {
