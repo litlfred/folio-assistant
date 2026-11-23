@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/content-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/content-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-review",
+      "title": "Content Review",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-review.md",
+      "instructionLines": 64,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skills/content-review/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skills/content-review/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
+    }
+  ]
+}

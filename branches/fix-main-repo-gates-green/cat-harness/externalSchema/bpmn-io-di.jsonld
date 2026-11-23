@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/externalSchema/bpmn-io-di.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/externalSchema/bpmn-io-di",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "bpmn-io-di",
+      "title": "bpmn.io Diagram Interchange Extensions (bioc 1.0, biodi 2.0)",
+      "authority": "other",
+      "specVersion": "1.0 / 2.0",
+      "specUse": "reads",
+      "specUrl": "https://github.com/bpmn-io/bpmn-moddle",
+      "namespace": [
+        "http://bpmn.io/schema/bpmn/biocolor/1.0",
+        "http://bpmn.io/schema/dmn/biodi/2.0"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/bpmn-io-di"
+    }
+  ]
+}

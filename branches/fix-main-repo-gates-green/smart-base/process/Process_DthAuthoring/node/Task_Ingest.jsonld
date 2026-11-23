@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/process/Process_DthAuthoring/node/Task_Ingest.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Ingest.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Ingest",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "1 · Ingest sources into library/",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    }
+  ]
+}

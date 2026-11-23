@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/tool-types/Slug.schema.json",
+  "title": "Slug (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/tool-types/Slug.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/tool-types/Slug.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/tool-types/Slug.schema.json"
+    }
+  ],
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

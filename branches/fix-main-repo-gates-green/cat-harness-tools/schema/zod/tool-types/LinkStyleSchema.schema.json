@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/LinkStyle",
+  "definitions": {
+    "LinkStyle": {
+      "type": "string",
+      "enum": [
+        "blob",
+        "pages",
+        "raw"
+      ],
+      "description": "How a README link addresses its target."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LinkStyleSchema.schema.json",
+  "title": "LinkStyleSchema",
+  "description": "Generated from `LinkStyleSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

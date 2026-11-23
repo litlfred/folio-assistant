@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-sci/skill/ffi-roundtrip-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-sci/skill/ffi-roundtrip-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "ffi-roundtrip-audit",
+      "title": "FFI roundtrip audit",
+      "description": "Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change.",
+      "instructionsPath": "skills/content/folio-paper-adapter/ffi-roundtrip-audit.md",
+      "instructionLines": 170,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/ffi-roundtrip-audit"
+    }
+  ]
+}

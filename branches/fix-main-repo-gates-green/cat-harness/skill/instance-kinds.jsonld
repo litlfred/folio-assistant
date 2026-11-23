@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/instance-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/instance-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "instance-kinds",
+      "title": "Layer kinds — naming one, and what a new kind must declare",
+      "description": "How to make a new KIND of harness layer — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new layer, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/instance-kinds.md",
+      "instructionLines": 234,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/instance-kinds"
+    }
+  ]
+}

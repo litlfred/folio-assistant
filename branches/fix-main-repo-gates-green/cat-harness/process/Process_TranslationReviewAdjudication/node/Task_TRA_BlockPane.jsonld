@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Open a block's 🌐 translation pane",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/translation-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/translation-adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_EntryPane"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_PaneDone"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Task_TRA_BlockPane"
+    }
+  ]
+}

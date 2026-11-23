@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/GovernanceRoleType",
+  "definitions": {
+    "GovernanceRoleType": {
+      "type": "string",
+      "enum": [
+        "steering-committee",
+        "technical-working-group",
+        "advisory-council",
+        "project-champion",
+        "coordinator",
+        "regulator"
+      ]
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dth-planning-schemas/GovernanceRoleTypeSchema.schema.json",
+  "title": "GovernanceRoleTypeSchema",
+  "description": "Generated from `GovernanceRoleTypeSchema` in schemas/dth-planning-schemas.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

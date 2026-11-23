@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/fhir-harness/schema/fhir-core.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-core.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/fhir-core",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "fhir-core",
+      "title": "fhir-core",
+      "summary": "fhir-core.ts — the FHIR core specification's StructureDefinitions, one graph",
+      "module": "schemas/fhir-core.ts"
+    }
+  ]
+}

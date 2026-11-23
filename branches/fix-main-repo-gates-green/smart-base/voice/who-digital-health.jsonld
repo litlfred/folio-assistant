@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/voice/who-digital-health.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/voice/who-digital-health.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/voice/who-digital-health",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "WHO digital health terminology",
+      "description": "The controlled vocabulary WHO uses to describe digital health implementations: what a digital health intervention is against the software that delivers it, what separates a bottleneck from a health system challenge, and how the two editions of the classification name themselves — including the first edition's title, which WHO says was wrong. Derived rule by rule from the ingested publications; every rule cites the section it was read from.",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/who-digital-health/voice.json",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

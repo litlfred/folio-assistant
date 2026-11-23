@@ -1,0 +1,178 @@
+{
+  "$ref": "#/definitions/DakTaskAnnotations",
+  "definitions": {
+    "DakTaskAnnotations": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "dak-task-annotations/v1"
+        },
+        "bpmn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "process": {
+          "type": "string",
+          "minLength": 1
+        },
+        "document": {
+          "type": "string",
+          "minLength": 1
+        },
+        "heading": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bpmnTask": {
+                "type": "string",
+                "minLength": 1
+              },
+              "activityId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string"
+              },
+              "personas": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "dataElements": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "requirements": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "decisionTables": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "matchedBy": {
+                "type": "string",
+                "enum": [
+                  "id",
+                  "step-number",
+                  "name",
+                  "adjudicated"
+                ]
+              },
+              "source": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "page": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "item": {
+                    "type": "string",
+                    "pattern": "^\\d+(\\.\\d+)*$"
+                  }
+                },
+                "required": [
+                  "document",
+                  "item"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "bpmnTask",
+              "activityId",
+              "name",
+              "description",
+              "matchedBy",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unmatched": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "item": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "item",
+              "name",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unannotated": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "bpmn",
+        "process",
+        "document",
+        "heading",
+        "tasks"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/task-annotations/DakTaskAnnotationsSchema.schema.json",
+  "title": "DakTaskAnnotationsSchema",
+  "description": "Generated from `DakTaskAnnotationsSchema` in L2-bpmn/schemas/task-annotations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

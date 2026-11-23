@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/user.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/user",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "User",
+      "title": "User",
+      "notation": "user",
+      "description": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/dispatch-agent",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/folio-init",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/kg-affordances",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/kg-subscription",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/materialize-remote",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/merge-to-main",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/skill/agent-permissions"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/user"
+    }
+  ]
+}

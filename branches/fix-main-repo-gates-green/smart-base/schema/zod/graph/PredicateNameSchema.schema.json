@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/PredicateName",
+  "definitions": {
+    "PredicateName": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$",
+      "description": "A predicate name. Membership is checked at tier 2 against ontology/l1.json; this only rules out strings that could never be one. Deliberately not an enum: the predicate set belongs to the ontology and changes with it, so a list here would be a second copy that drifts."
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/graph/PredicateNameSchema.schema.json",
+  "title": "PredicateNameSchema",
+  "description": "Generated from `PredicateNameSchema` in L1/schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

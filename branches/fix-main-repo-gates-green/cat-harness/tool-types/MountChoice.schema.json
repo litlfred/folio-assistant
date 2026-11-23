@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/tool-types/MountChoice.schema.json",
+  "title": "MountChoice",
+  "type": "string",
+  "pattern": "^[a-z0-9][a-z0-9-]*(?::[a-z0-9][a-z0-9-]*)?$",
+  "description": "A mount entry and instance to write a choice to, e.g. cat-harness or cat-harness:cat-harness-tools",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

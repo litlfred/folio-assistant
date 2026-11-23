@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/catalogue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/catalogue",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "catalogue",
+      "title": "catalogue",
+      "summary": "A remote catalogue, modelled in the graph without holding it.",
+      "module": "schemas/catalogue.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/catalogue",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/zod/catalogue/BitstreamSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/zod/catalogue/CatalogueNodeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/zod/catalogue/CatalogueSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/zod/catalogue/HandleSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/folio-assistant-core/schema/zod/catalogue/MaskedRegionSchema.schema.json"
+      ]
+    }
+  ]
+}

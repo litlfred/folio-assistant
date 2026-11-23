@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/IndicatorCohortCase",
+  "definitions": {
+    "IndicatorCohortCase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "indicatorRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "populationSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "anyOf": [
+            {
+              "minItems": 1,
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          ]
+        },
+        "expectedValue": {},
+        "computedValue": {},
+        "numerator": {
+          "type": "number"
+        },
+        "denominator": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "summary",
+        "indicatorRef",
+        "populationSize",
+        "inputs",
+        "expectedValue",
+        "computedValue"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/IndicatorCohortCaseSchema.schema.json",
+  "title": "IndicatorCohortCaseSchema",
+  "description": "Generated from `IndicatorCohortCaseSchema` in schemas/sdlc/test-data.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

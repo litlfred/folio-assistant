@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/actor/admin.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/actor/admin",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "admin",
+      "actorKind": "person",
+      "title": "Administrator",
+      "description": "Full administrative access. `roles` is what it may act AS and `capabilities` what its machine has. What it may DO is no longer written here: it is an ODRL rule in cat-harness/policies/folio-defaults.jsonld (issue #1180).",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/administrator",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/publication-manager",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/editor",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/author",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/cat-harness/role/code-reviewer"
+      ],
+      "permissionName": [
+        "admin-settings",
+        "role-management",
+        "release-authorization"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/admin"
+    }
+  ]
+}

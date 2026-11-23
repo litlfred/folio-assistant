@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/CommitSha",
+  "definitions": {
+    "CommitSha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/CommitShaSchema.schema.json",
+  "title": "CommitShaSchema",
+  "description": "Generated from `CommitShaSchema` in schemas/kg/remote-mount.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

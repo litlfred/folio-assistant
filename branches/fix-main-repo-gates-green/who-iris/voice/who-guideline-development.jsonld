@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/who-iris/voice/who-guideline-development.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/who-iris/voice/who-guideline-development",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "WHO guideline development",
+      "description": "How a WHO recommendation is worded and what must travel with it: strength, certainty, justification, remarks and a link to the evidence. Derived from the WHO handbook for guideline development, 2nd edition. This voice governs the language of normative statements, not the process that produces them — the process is the handbook's subject and belongs in a workflow, not a style rule.",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/who-guideline-development/voice.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/voice/who-guideline-development"
+    }
+  ]
+}

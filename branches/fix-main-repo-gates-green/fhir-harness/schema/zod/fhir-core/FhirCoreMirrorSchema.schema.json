@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/FhirCoreMirror",
+  "definitions": {
+    "FhirCoreMirror": {
+      "type": "object",
+      "properties": {
+        "tarball": {
+          "type": "string",
+          "pattern": "^https:\\/\\/[a-z0-9.-]+\\/\\S+$"
+        },
+        "shasum": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "integrity": {
+          "type": "string",
+          "pattern": "^sha512-[A-Za-z0-9+/]{86}==$"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "tarball",
+        "shasum",
+        "integrity",
+        "note"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCoreMirrorSchema.schema.json",
+  "title": "FhirCoreMirrorSchema",
+  "description": "Generated from `FhirCoreMirrorSchema` in schemas/fhir-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

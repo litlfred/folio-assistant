@@ -1,0 +1,102 @@
+{
+  "$ref": "#/definitions/BarrierSolutionEntry",
+  "definitions": {
+    "BarrierSolutionEntry": {
+      "type": "object",
+      "properties": {
+        "barrierId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "barrier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "affectedRoleIris": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "candidateSolutions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "relatedRequirementIds": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "archimateAssessmentIri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRef": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "object",
+              "properties": {
+                "libraryId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sectionId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pages": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tableOrAnnex": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "libraryId"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "barrierId",
+        "category",
+        "barrier",
+        "affectedRoleIris",
+        "candidateSolutions"
+      ]
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dth-planning-schemas/BarrierSolutionEntrySchema.schema.json",
+  "title": "BarrierSolutionEntrySchema",
+  "description": "Generated from `BarrierSolutionEntrySchema` in schemas/dth-planning-schemas.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  }
+}

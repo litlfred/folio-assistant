@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/voice/who-digital-transformation-handbook.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/fix-main-repo-gates-green/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/voice/who-digital-transformation-handbook.jsonld",
+  "staging": {
+    "branch": "fix/main-repo-gates-green",
+    "sha": "54995f72b8198e7c127d58223d7373cfb24ff088",
+    "pr": "3197/merge",
+    "run": "45221163270"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/voice/who-digital-transformation-handbook",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "WHO Digital Transformation Handbook",
+      "description": "The register of WHO's Digital Transformation Handbooks (DTHs) — the guidance publications that take one area of a health system from paper to digital within the DIIG process: the order of digitization, digitalization and digital transformation, what a registry is against a register, what master data excludes, and how the draft DPI-H Reference Architecture names its own layers. Derived rule by rule from the three DTHs and the draft Reference Architecture ingested in smart-base/library; every rule cites the section it was read from, and a rule resting on the DRAFT says so.",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/who-digital-transformation-handbook/voice.json",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}
