@@ -16,6 +16,6 @@ on:
 permissions: { contents: read, pull-requests: read, issues: read, actions: read, checks: read, statuses: write }
 jobs:
   guard:
-    uses: litlfred/cat-harness-tools/.github/workflows/layer-merge-guard.yml@6d48e106ffd75e4a49bc466068e5f1df1d5d3e2e # index.lock.json
+    uses: litlfred/cat-harness-tools/.github/workflows/layer-merge-guard.yml@4026199a2a73b0dd7c83114cdd706684c558b902 # index.lock.json
     # No `No new failures` judge runs on an ordinary PR here (only on re-pin trains), so the full tier could never go green.
     with: { pr: "${{ inputs.pr || '' }}", full-tier: false }
