@@ -40,6 +40,7 @@
 
 | | |
 |---|---|
+| **0. Did the session-start hook run?** | It runs only when the session **starts inside this checkout**. If the repository was attached or cloned partway through the session, or the session opened in another directory, it did not run, and nothing says so: the work plan, the remote-mounted layers and the platform tools are then simply missing. Run its commands by hand from the checkout root, in order (`jq -r '.hooks.SessionStart[].hooks[].command' .claude/settings.json` lists them), before anything else. See [`remote-mount`](cat-harness/skills/kg/kg-core/remote-mount.md#when-the-session-start-hook-did-not-run). |
 | **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
 | **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |
 | **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph typology whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/process/workflow/process-state.md). |
