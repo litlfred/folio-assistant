@@ -1,15 +1,15 @@
   writer skip: ON (records of 6dec66b760bf, 17 writer(s))
   ig-index:build runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json) [decided in 0.0s]
-  ran ig-index:build (reuse off) [18.3s]
+  ran ig-index:build (reuse off) [13.1s]
   uml:overview runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/folio-assistant-core/glossary/index.md) [decided in 0.0s]
   smart-base:document-kinds runs: not recorded: the run reached a traced input site (layer-output: build/layers/smart-base/fhir-artifact-index/index.json) [decided in 0.4s]
-  ran smart-base:document-kinds (reuse off) [0.8s]
+  ran smart-base:document-kinds (reuse off) [0.9s]
 qa:refresh: kg:audit:all runs: cat-harness-tools/package.json changed (+1 more: index.lock.json)
 qa:refresh: kg:detangle runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/detangle/bootstrap-tools/skills.detangle.json)
 qa:refresh: translation:block-qa runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/block-qa/docs/source/process-crdm-methodology/agent-skills-and-tooling.qa.json)
 qa:refresh: qa-sweep:docs runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/test/results/block-qa/docs/source/process-crdm-methodology/agent-skills-and-tooling.qa.json)
   voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
-  subgraph:jsonld runs: not recorded: the trace is 833481127 bytes, more than 536870912 [decided in 2.2s]
+  subgraph:jsonld runs: not recorded: the trace is 833481127 bytes, more than 536870912 [decided in 1.9s]
 qa:refresh: check:l1-complete runs: cat-harness-tools/package.json changed (+6 more: cat-harness/docs, cat-harness/external-schemas, cat-harness/index.lock.json, folio-assistant-core/index.lock.json, index.config.json, index.lock.json)
 qa:refresh: p2:refusals runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)
 qa:refresh: lsi:index:cat-harness:skills runs: cat-harness-tools/package.json changed (+4 more: cat-harness/docs, cat-harness/external-schemas, cat-harness/skills/kg/kg-core/remote-mount.md, index.lock.json)
@@ -23,72 +23,72 @@ qa:refresh: skill:register runs: not recorded: the run reached a traced input si
 qa:refresh: term:mapping runs: not recorded: the run reached a traced input site (check-term-mapping: clock)
 qa:refresh: check:harness-state runs: cat-harness-tools/package.json changed (+13 more: cat-harness-tools/pipeline/readme-sections.ts, cat-harness-tools/scripts/ingest-document.ts, cat-harness-tools/scripts/tests/library/iris-extraction.test.ts, cat-harness-tools/scripts/tests/vector-figures.test.ts, cat-harness-tools/test/coordinator/viewer-declarations-checkout.test.ts, cat-harness-tools/test/one-rail.e2e.ts, cat-harness/docs, and 6 others)
 qa:refresh: check:wireframes runs: cat-harness-tools/package.json changed (+1 more: index.lock.json)
-qa:refresh: check:source-licence runs: .github/workflows/cancel-on-close.yml changed (+16 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, cat-harness-tools/package.json, cat-harness/docs, and 9 others)
+qa:refresh: check:source-licence runs: .github/workflows/cancel-on-close.yml changed (+18 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, AGENTS.md, README.md, and 11 others)
 qa:refresh: check:layout-norms runs: cat-harness-tools/package.json changed (+4 more: cat-harness/docs, cat-harness/external-schemas, index.config.json, index.lock.json)
 qa:refresh: check:rendered-labels runs: cat-harness-tools/package.json changed (+9 more: cat-harness/docs, cat-harness/docs/assets/img, cat-harness/docs/en, cat-harness/docs/en/cat-harness, cat-harness/external-schemas, index.lock.json, smart-base/document-kinds, and 2 others)
-qa:refresh: check:lane-documentation runs: .github/workflows/cancel-on-close.yml changed (+16 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, cat-harness-tools/package.json, cat-harness/docs, and 9 others)
+qa:refresh: check:lane-documentation runs: .github/workflows/cancel-on-close.yml changed (+18 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, AGENTS.md, README.md, and 11 others)
 qa:refresh: check:methodology-evidence runs: cat-harness-tools/package.json changed (+5 more: cat-harness/docs, cat-harness/external-schemas, cat-harness/skills/kg/kg-core/remote-mount.md, index.config.json, index.lock.json)
 qa:refresh: check:avatar-coverage runs: cat-harness-tools/package.json changed (+1 more: index.lock.json)
 qa:refresh: check:unlinked-beans runs: cat-harness-tools/package.json changed (+4 more: cat-harness/docs, cat-harness/external-schemas, index.config.json, index.lock.json)
 qa:refresh: kg:export runs: not recorded: git status is not a read-only command the cone replays
 qa:refresh: check:library-qa runs: cat-harness-tools/package.json changed (+6 more: cat-harness/docs, cat-harness/external-schemas, cat-harness/index.lock.json, folio-assistant-core/index.lock.json, index.config.json, index.lock.json)
-qa:refresh: check:reference-direction runs: .github/workflows/cancel-on-close.yml changed (+8019 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, _kg/cat-harness/actor/admin.jsonld, _kg/cat-harness/actor/attestation-service.jsonld, and 8012 others)
+qa:refresh: check:reference-direction runs: .github/workflows/cancel-on-close.yml changed (+8021 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, AGENTS.md, README.md, and 8014 others)
 qa:refresh: audit:coverage runs: .github/workflows/cancel-on-close.yml changed (+21 more: .github/workflows/ci-image.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/merge-guard.yml, build/layers/cat-harness/test/results/kg-qa/scenarios/kg.kg-qa.json, build/layers/cat-harness/test/results/kg-qa/sdlc/processes/cache.kg-qa.json, and 14 others)
 qa:refresh: readme:subgraphs runs: cat-harness-tools/package.json changed (+1 more: index.lock.json)
-  ran subgraph:jsonld (reuse off) [31.6s]
+  ran subgraph:jsonld (reuse off) [29.2s]
   library:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html) [decided in 0.1s]
-  library:keywords runs: its script, imports, audited environment or tools changed [decided in 0.1s]
-  ran library:keywords (reuse off) [204.0s]
+  library:keywords runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  ran library:keywords (reuse off) [194.9s]
   voices:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json) [decided in 0.1s]
   ran voices:viz (reuse off) [0.9s]
   theme:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
   ran theme:viz (reuse off) [0.6s]
-  uploads:viz runs: cat-harness-tools/package.json changed (+5 more: cat-harness/external-schemas, cat-harness/index.lock.json, folio-assistant-core/index.lock.json, index.config.json, index.lock.json) [decided in 1.5s]
-  ran uploads:viz (reuse off) [4.0s]
+  uploads:viz runs: cat-harness-tools/package.json changed (+5 more: cat-harness/external-schemas, cat-harness/index.lock.json, folio-assistant-core/index.lock.json, index.config.json, index.lock.json) [decided in 1.4s]
+  ran uploads:viz (reuse off) [3.5s]
   document-kinds:viz runs: cat-harness-tools/package.json changed (+5 more: cat-harness/external-schemas, cat-harness/index.lock.json, folio-assistant-core/index.lock.json, index.config.json, index.lock.json) [decided in 0.0s]
   ran document-kinds:viz (reuse off) [0.6s]
-  skills:docs runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.2s]
-  ran skills:docs (reuse off) [19.2s]
+  skills:docs runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.1s]
+  ran skills:docs (reuse off) [16.4s]
   node-kinds runs: cat-harness-tools/package.json changed (+3 more: cat-harness/external-schemas, index.config.json, index.lock.json) [decided in 0.0s]
-  ran node-kinds (reuse off) [0.9s]
+  ran node-kinds (reuse off) [0.8s]
   node-kind:pages runs: main's copy from 6dec66b760bf builds nothing at cat-harness/docs/en/cat-harness/node-kind-index/, cat-harness/docs/en/cat-harness/bean/, cat-harness/docs/en/cat-harness/software-library/, cat-harness/docs/en/cat-harness/sme-case-verdict/, cat-harness/docs/en/cat-harness/test-data-fixed/, cat-harness/docs/en/cat-harness/test-data-generated/, cat-harness/docs/en/cat-harness/cat-harness-declaration/, cat-harness/docs/en/cat-harness/document-kind/, cat-harness/docs/en/cat-harness/document-kind-coverage/, cat-harness/docs/en/cat-harness/work-plan/, cat-harness/docs/en/cat-harness/qa-script/, cat-harness/docs/en/cat-harness-tools/qa-attestations/, cat-harness/docs/en/folio-assistant-core/changeset/, cat-harness/docs/en/folio-assistant-core/public-comment/, declared since [decided in 0.0s]
-  ran node-kind:pages (reuse off) [12.6s]
-  bibliography:page runs: cat-harness-tools/package.json changed (+3 more: cat-harness/external-schemas, index.config.json, index.lock.json) [decided in 0.2s]
-  ran bibliography:page (reuse off) [1.5s]
+  ran node-kind:pages (reuse off) [11.9s]
+  bibliography:page runs: cat-harness-tools/package.json changed (+3 more: cat-harness/external-schemas, index.config.json, index.lock.json) [decided in 0.1s]
+  ran bibliography:page (reuse off) [1.3s]
   ig-ast:pages runs: not recorded: git ls-remote is not a read-only command the cone replays [decided in 0.0s]
-  ran ig-ast:pages (reuse off) [1.1s]
+  ran ig-ast:pages (reuse off) [0.8s]
   smart:pages runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json) [decided in 0.0s]
-  ran smart:pages (reuse off) [0.7s]
-  jsonld:contexts runs: bootstrap changed (+14 more: cat-harness-tools/package.json, cat-harness/docs/assets/img, cat-harness/external-schemas, cat-harness/ns, cat-harness/skills/kg/kg-core/remote-mount.prov.jsonld, fhir-harness, folio-assistant-core, and 7 others) [decided in 0.5s]
+  ran smart:pages (reuse off) [0.6s]
+  jsonld:contexts runs: bootstrap changed (+14 more: cat-harness-tools/package.json, cat-harness/docs/assets/img, cat-harness/external-schemas, cat-harness/ns, cat-harness/skills/kg/kg-core/remote-mount.prov.jsonld, fhir-harness, folio-assistant-core, and 7 others) [decided in 0.4s]
   ran jsonld:contexts (reuse off) [2.5s]
   smart-base:pages runs: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json) [decided in 0.0s]
   smart-trust:pages runs: not recorded: the run reached a traced input site (layer-output: smart-trust/fhir-artifact-index/index.json) [decided in 0.0s]
   smart-trust-phw:pages runs: not recorded: the run reached a traced input site (layer-output: smart-trust-phw/fhir-artifact-index/index.json) [decided in 0.0s]
-  ran smart-trust-phw:pages (reuse off) [0.5s]
-  ran smart-base:pages (reuse off) [0.7s]
+  ran smart-trust-phw:pages (reuse off) [0.4s]
+  ran smart-base:pages (reuse off) [0.6s]
   smart-base:l1-extraction:pages runs: cat-harness-tools/package.json changed (+3 more: cat-harness/external-schemas, index.config.json, index.lock.json) [decided in 0.0s]
   ran smart-trust:pages (reuse off) [0.7s]
   ran smart-base:l1-extraction:pages (reuse off) [0.5s]
   tools:viz runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.0s]
-  ran tools:viz (reuse off) [43.8s]
+  ran tools:viz (reuse off) [40.7s]
   auto:docs runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html) [decided in 0.0s]
-  ran auto:docs (reuse off) [6.9s]
+  ran auto:docs (reuse off) [6.5s]
   web-apps:build runs: cat-harness-tools/package.json changed (+2 more: cat-harness/external-schemas, index.lock.json) [decided in 0.0s]
   ran web-apps:build (reuse off) [0.3s]
   openapi:viz runs: cat-harness-tools/package.json changed (+1 more: index.lock.json) [decided in 0.0s]
   ran openapi:viz (reuse off) [0.2s]
   schema:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html) [decided in 0.0s]
-  ran schema:viz (reuse off) [2.4s]
+  ran schema:viz (reuse off) [2.3s]
   methodologies:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json) [decided in 0.0s]
-  ran methodologies:viz (reuse off) [1.7s]
+  ran methodologies:viz (reuse off) [1.6s]
   external-schemas:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran external-schemas:viz (reuse off) [6.7s]
+  ran external-schemas:viz (reuse off) [6.8s]
   subscriptions:viz runs: cat-harness-tools/package.json changed (+1 more: index.config.json) [decided in 0.0s]
   ran subscriptions:viz (reuse off) [0.2s]
   docs:pages runs: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state) [decided in 0.2s]
   ran docs:pages (reuse off) [2.0s]
   docs:harness runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json) [decided in 0.0s]
-  ran docs:harness (reuse off) [2.7s]
+  ran docs:harness (reuse off) [2.6s]
   navbar:include runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json) [decided in 0.0s]
   ran navbar:include (reuse off) [0.1s]
   kind:table runs: cat-harness-tools/package.json changed (+1 more: cat-harness/external-schemas) [decided in 0.0s]
@@ -102,16 +102,16 @@ qa:refresh: readme:subgraphs runs: cat-harness-tools/package.json changed (+1 mo
   kg:viewer runs: cat-harness-tools/package.json changed (+3 more: cat-harness/external-schemas, index.config.json, index.lock.json) [decided in 0.0s]
   ran kg:viewer (reuse off) [0.4s]
   state:visualizer runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/validators/cat-harness/index.html) [decided in 0.0s]
-  ran state:visualizer (reuse off) [13.1s]
+  ran state:visualizer (reuse off) [12.2s]
   site:viz runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
-  ran site:viz (reuse off) [2.0s]
+  ran site:viz (reuse off) [1.7s]
   slice:sqlite runs: main's copy from 6dec66b760bf builds nothing at cat-harness/docs/assets/slices/, declared since [decided in 0.0s]
   ran slice:sqlite (reuse off) [9.9s]
   render:bpmn runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/img/workflows/render-kg-to-github-pages.svg) [decided in 0.0s]
-  ran render:bpmn (reuse off) [8.7s]
+  ran render:bpmn (reuse off) [8.9s]
   processes:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html) [decided in 0.0s]
-  ran processes:viz (reuse off) [7.1s]
+  ran processes:viz (reuse off) [6.6s]
   fsh-guts:viz runs: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html) [decided in 0.0s]
-  ran fsh-guts:viz (reuse off) [1.4s]
+  ran fsh-guts:viz (reuse off) [1.3s]
   kind:json-schemas runs: cat-harness-tools/package.json changed (+4 more: cat-harness/external-schemas, cat-harness/schemas, index.config.json, index.lock.json) [decided in 0.0s]
-  ran kind:json-schemas (reuse off) [0.8s]
+  ran kind:json-schemas (reuse off) [0.7s]

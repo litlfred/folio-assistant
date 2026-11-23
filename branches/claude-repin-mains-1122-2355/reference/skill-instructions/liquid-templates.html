@@ -143,7 +143,7 @@ grouping, choosing a link target, collapsing a long list. The template sees
 results (<code class="language-plaintext highlighter-rouge">subdirs[].count</code>, <code class="language-plaintext highlighter-rouge">summary</code>), not inputs to derive them from.</li><li><strong>A missing value is shown as missing</strong>, never papered over:
 <code class="language-plaintext highlighter-rouge">{{ subgraph.title | default: subgraph.id }}</code> and
 “<em>No description is declared for …</em>” are the pattern. The generator records
-the gap as a QA finding in <code class="language-plaintext highlighter-rouge">test/results/subgraph-readmes.qa-results.json</code>
+the gap as a QA finding in <a href="https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/qa-reports/pr/3196/8d8c4a50b33d4dd5f3c3fa371493323df3670c6c/cat-harness/test/results/subgraph-readmes.qa-results.json"><code class="language-plaintext highlighter-rouge">test/results/subgraph-readmes.qa-results.json</code></a>
 (a derived result, stored on the <a href="qa-reports.html"><code class="language-plaintext highlighter-rouge">qa-reports</code></a> branch by <code class="language-plaintext highlighter-rouge">qa-publish</code>);
 the template must not make it look filled.</li><li><strong>A new variable is a generator change first.</strong> Add it to the object passed
 to <code class="language-plaintext highlighter-rouge">renderFile</code>, list it in the template’s comment, then use it.</li></ul><h2 id="versions-are-variables-never-numbers"><a href="#versions-are-variables-never-numbers" class="anchor-heading" aria-labelledby="versions-are-variables-never-numbers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Versions are variables, never numbers

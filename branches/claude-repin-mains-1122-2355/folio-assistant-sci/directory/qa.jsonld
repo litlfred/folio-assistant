@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-mains-1122-2355",
-    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "sha": "0e369e788be7a945c6d8d7b352557d17dc5c9ff2",
     "pr": "3196/merge",
-    "run": "45086180885"
+    "run": "45094602647"
   },
   "@graph": [
     {
@@ -25,6 +25,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/folio-assistant-sci/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/qa"
     }

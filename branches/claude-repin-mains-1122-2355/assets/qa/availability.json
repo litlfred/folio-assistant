@@ -1,17 +1,18 @@
 {
   "$schema": "folio-qa-availability/v1",
-  "source": "unavailable",
+  "source": "fetched-fallback",
   "requested": [
-    "pr/3196/8d8c4a50b33d4dd5f3c3fa371493323df3670c6c",
+    "pr/3196/a0cef04b9a72f15ce5e9c826786d21f3a738b8c1",
     "pr/3196"
   ],
-  "reason": "QA not available for this ref: the checkout holds no QA corpus and qa-reports had no entry for any requested ref",
+  "key": "pr/3196/8d8c4a50b33d4dd5f3c3fa371493323df3670c6c",
+  "reason": "no entry for the requested ref; fetched pr/3196/8d8c4a50b33d4dd5f3c3fa371493323df3670c6c instead — QA evidence from ANOTHER commit, labelled as such",
   "expected": {
-    "witnesses": 0,
-    "results": 0
+    "witnesses": 95,
+    "results": 19
   },
   "published": {
-    "witnesses": 0,
-    "results": 0
+    "witnesses": 110,
+    "results": 19
   }
 }
