@@ -1,17 +1,17 @@
 ---
 # folio-assistant-pb15
 $schema: bean/1.0.0
-title: 'Harness PR backlog plan 2026-11-15'
-status: in-progress
+title: Harness PR backlog plan 2026-11-15
+status: completed
 type: task
 priority: high
-created_at: 2026-11-15T07:15:00Z
-updated_at: 2026-11-15T18:02:00Z
-parent: folio-assistant-v8bg
 tags:
     - handover
     - pr-backlog
     - handover-2026-11-15
+created_at: 2026-11-15T07:15:00Z
+updated_at: 2026-11-23T20:26:07Z
+parent: folio-assistant-v8bg
 ---
 
 Plan to clear the open-PR backlog in the harness repos (all litlfred repos except qou, sgex, pqtorus, folio-test, fmlrunner). Owner ask 07:00Z "for harness repos: make a plan to resolve", then 07:01Z "coordinate w/ merge manager. stack merges and fix issues afterwards, send agents to complete work on stalled PRs" and 07:03Z "dispatch siblings fix existing reds". The merge manager (thread cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR, handover bean folio-assistant-mm15) does every merge. Re-check each PR live before acting.
@@ -66,3 +66,6 @@ _2026-11-15T18:02:00Z_ — Live audit of all backlog groups and `cat-tools-pfng`
 - **G3 `smart-ra` CS-* change sets (`folio-assistant-g3ra`, now `completed`)**: All 9 placed change-set PRs (`#151` `26f4d9aad6`, `#152` `33d2623889`, `#156` `37add8ee2b`, `#158` `98d367cab4`, `#197` `d16a7ad5a5`, `#199` `9fa1e5695f`, `#203` `9503db9686`, `#218` `4041fd5033`, `#221` `13e9d3f298`) plus `#185` (`b8883738e0`) and `cat-harness-tools#2275` (`103bd471fe`) are **MERGED**; `#189`, `#193`, `#194`, `#196` remain parked as drafts held for committee.
 - **G4 Single code reds (`folio-assistant-g4rf`)**: **4 of 7 MERGED** (`cat-harness-tools#2229` `496c5e95b8`, `cat-harness-tools#2130` `3f6222dd63`, `cat-harness#1329` `d41ff7ce99`, `smart-base#259` `8f73764bea`); only `fhir-harness#426` (paired with `cat-harness-tools#2182`), `smart-base#405`, and `smart-pcmt#5` remain **OPEN**.
 - **Former Drafts & Content awaiting owner or committee**: `dth-hrh#81` (`7984d5795e`), `dth-hrh#82` (`1152db3925`), `dth-hrh#83` (`9ea2aef491`), `dth-phc#47` (`a26afea6e7`), `who-iris#279` (`6ae868df1e`), `who-iris#282` (`da02cdfd01`), `who-iris#288` (`16226eb7dc`), `who-iris#290` (`b6403fad91`), `smart-ra#185` (`b8883738e0`), `smart-ra#236` (`5c8105126a`), `smart-trust-phw#82` (`2f52835b15`), `folio-assistant#3126` (`fad46c20e7`), `folio-assistant#3129` (`5863dd5f85`), `folio-assistant#3130` (`4c14ab8028`), `folio-assistant#3132` (`82b389982a`), `folio-assistant-core#808` (`d0139cbfbc`), and `cat-harness-tools#2243` (`d75228735c`) are all **MERGED**.
+
+
+_2026-11-23T20:40Z_ — Closed: its only child (`folio-assistant-g1oc`) is `completed`, and the 18:02Z audit shows every group resolved or handed on. The plan is a 2026-11-15 snapshot, and `check:bean-rollup` flagged it as `in-progress` with no open child. Still open at that audit, not re-checked here: `cat-harness-tools#2182` with `fhir-harness#426`, `smart-base#405` and `smart-pcmt#5`. Each is the merge manager's to drive, not this plan's.
