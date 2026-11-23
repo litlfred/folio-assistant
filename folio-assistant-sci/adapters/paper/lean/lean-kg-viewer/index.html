@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lean declarations</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="viewer.css">
+<!--
+  Third-party scripts are pinned and carry Subresource Integrity hashes, computed
+  from the files in each package's npm tarball (jsDelivr's /npm/ path serves them
+  unchanged). Bumping a version means recomputing its hash:
+    curl -sL <url> | openssl dgst -sha384 -binary | openssl base64 -A
+  DOMPurify sanitises every piece of HTML viewer.js puts into the page; without it
+  the viewer shows plain text. MathJax's ui/safe extension filters the URLs and
+  attributes TeX can set; MathJax loads it (and any autoloaded TeX extension) from
+  the same pinned directory, which SRI cannot cover.
+-->
+<script>window.MathJax = { loader: { load: ["ui/safe"] }, tex: { inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]] }, options: { skipHtmlTags: ["script", "style", "textarea", "pre", "code"] } };</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" integrity="sha384-/TQbtLCAerC3jgaim+N78RZSDYV7ryeoBCVqTuzRrFec2akfBkHS7ACQ3PQhvMVi" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.4.17/dist/purify.min.js" integrity="sha384-P0JNneQf81HOl9VwNXK76cQ9VMD6Nfsnepxb0cCOg8+UzEdzgPHAPV4wVQrvYQSx" crossorigin="anonymous"></script>
+<script type="module" src="viewer.js"></script>
+</head>
+<body class="lkg">
+<header class="lkg-head">
+  <a class="lkg-title" href="#/">Lean declarations</a>
+  <span class="lkg-totals" id="totals"></span>
+  <form id="search" class="lkg-search" role="search" onsubmit="return false">
+    <input id="q" type="search" placeholder="Search declarations…" autocomplete="off" aria-label="Search declarations">
+    <ol id="hits" class="lkg-hits" hidden></ol>
+  </form>
+</header>
+<div class="lkg-body">
+  <nav class="lkg-tree" aria-label="Modules">
+    <input id="filter" type="search" placeholder="Filter modules…" aria-label="Filter modules">
+    <div id="tree"></div>
+  </nav>
+  <main id="main" class="lkg-main"><p class="lkg-note">Loading…</p></main>
+</div>
+</body>
+</html>

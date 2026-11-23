@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant-sci/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2512.09874v3/blocks/figure-img-p005-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p005-1.png",
+  "pageStart": 5,
+  "pageEnd": 5,
+  "narrative": [
+    {
+      "text": "Figure 1, part 3 'Evaluation Pipeline': a PDF-Parser produces Parsed Text (TXT); together with Ground Truth (JSON list of text, inline-formula and display-formula items) it feeds 'LLM-Based Matching (+ Rule-Based Post-Verification)', which outputs Formula Pairs (JSON of gt_formula/parsed_formula, e.g. $a+1$ vs $a+I$) and then 'Evaluation for all formula pairs'.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5"
+      },
+      "drafted_at": "2026-10-11",
+      "lang": "en"
+    },
+    {
+      "text": "Figure 1, partie 3 « Evaluation Pipeline » : un analyseur PDF (PDF-Parser) produit du texte analysé (Parsed Text, TXT) ; associé à la vérité terrain (Ground Truth, liste JSON d'éléments de texte, de formules en ligne et de formules hors texte), il alimente « LLM-Based Matching (+ Rule-Based Post-Verification) », qui génère des paires de formules (Formula Pairs, JSON de gt_formula/parsed_formula, p. ex. $a+1$ contre $a+I$) puis l'« Evaluation for all formula pairs ».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+      },
+      "drafted_at": "2026-10-28",
+      "lang": "fr"
+    },
+    {
+      "text": "Figura 1, parte 3 «Evaluation Pipeline»: un analizador de PDF (PDF-Parser) produce texto analizado (Parsed Text, TXT); junto con la verdad fundamental (Ground Truth, lista JSON de elementos de texto, fórmulas en línea y fórmulas en bloque) alimenta «LLM-Based Matching (+ Rule-Based Post-Verification)», que genera pares de fórmulas (Formula Pairs, JSON de gt_formula/parsed_formula, p. ej., $a+1$ frente a $a+I$) y luego «Evaluation for all formula pairs».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+      },
+      "drafted_at": "2026-10-28",
+      "lang": "es"
+    },
+    {
+      "text": "الشكل 1، الجزء 3 'Evaluation Pipeline': يُنتج محلل PDF (PDF-Parser) نصاً محللاً (Parsed Text بصيغة TXT)؛ ومع بيانات الحقيقة المرجعية (Ground Truth، وهي قائمة JSON تضم عناصر نصية وصيغاً مضمّنة وصيغاً معروضة) يغذّي مرحلة 'LLM-Based Matching (+ Rule-Based Post-Verification)'، التي تُخرج أزواج الصيغ (Formula Pairs بصيغة JSON لـ gt_formula/parsed_formula، مثل $a+1$ مقابل $a+I$) ثم مرحلة 'Evaluation for all formula pairs'.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+      },
+      "drafted_at": "2026-10-28",
+      "lang": "ar"
+    },
+    {
+      "text": "Рисунок 1, часть 3 «Evaluation Pipeline»: PDF-парсер (PDF-Parser) создаёт распознанный текст (Parsed Text, TXT); вместе с эталонными данными (Ground Truth, JSON-список текстовых фрагментов, строчных и выносных формул) он подаётся в блок «LLM-Based Matching (+ Rule-Based Post-Verification)», который формирует пары формул (Formula Pairs, JSON с полями gt_formula/parsed_formula, например $a+1$ против $a+I$), а затем в блок «Evaluation for all formula pairs».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+      },
+      "drafted_at": "2026-10-28",
+      "lang": "ru"
+    },
+    {
+      "text": "图 1 第 3 部分“Evaluation Pipeline”：PDF 解析器（PDF-Parser）生成解析文本（Parsed Text，TXT）；它与真值数据（Ground Truth，包含文本、行内公式和行间公式项的 JSON 列表）一起输入“LLM-Based Matching (+ Rule-Based Post-Verification)”，输出公式对（Formula Pairs，包含 gt_formula/parsed_formula 的 JSON，例如 $a+1$ 对 $a+I$），随后进入“Evaluation for all formula pairs”。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+      },
+      "drafted_at": "2026-10-28",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2512.09874v3/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/folio-assistant-sci/source/arxiv-2512.09874v3",
+  "provenance": "ingested"
+}
