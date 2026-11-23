@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p008",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p008.png",
+  "pageStart": 8,
+  "pageEnd": 8,
+  "narrative": [
+    {
+      "text": "Figure 3: Impact of Chain Depth on file-level localization accuracy Acc@1(File) evaluated on SWE-Bench-Verified-S (75 instances). Acc@1(File) increases from 70.7% at depth 1, to 72.0% at depth 3, peaking at 86.7% at depth 5, before declining to 82.7% at depth 7 due to extraneous noise in excessively long dependency chains.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2507.23348v1/sections/sec-017",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2507.23348v1",
+  "provenance": "ingested"
+}

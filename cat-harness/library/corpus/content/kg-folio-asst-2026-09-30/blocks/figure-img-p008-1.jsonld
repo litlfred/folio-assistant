@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/kg-folio-asst-2026-09-30/blocks/figure-img-p008-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../../../../../docs/assets/img/kg-deck/img-p008-1.webp",
+  "pageStart": 8,
+  "pageEnd": 8,
+  "narrative": [
+    {
+      "text": "UML class diagram \"Harness schemas — attributes derived from JSON Schema\", in four packages. test: KG QA Report (kg-qa/v1; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) and Test Run (folio-test-run/v1; skill, subject, data and process hashes, outcome, cases). process: Task (process, task; BPMN callActivity, serviceTask, task and userTask) 'in process' Process (external OMG BPMN 2.0; start and end events, gateways, lanes, sequence flows) — noted as XSD, not JSON Schema. scenario: Actor (id, title, kind person|agent|system|external, roles) 'takes on roles' Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly); User Story (role, want, soThat) 'as a role'; Role 'carries skills' Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema: JSON Schema (draft-07, from Zod) and External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other; use conforms|reads|cites). Edges: KG QA Report audits subject kind; Test Run tests Skill; Task in lane of Role and uses Skill; every class conforms to JSON Schema.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+      },
+      "drafted_at": "2026-09-30",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML « Harness schemas — attributes derived from JSON Schema », en quatre paquetages. test : KG QA Report (kg-qa/v1 ; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) et Test Run (folio-test-run/v1 ; skill, subject, data and process hashes, outcome, cases). process : Task (process, task ; BPMN callActivity, serviceTask, task et userTask) « in process » Process (OMG BPMN 2.0 externe ; start and end events, gateways, lanes, sequence flows) — noté comme XSD et non JSON Schema. scenario : Actor (id, title, kind person|agent|system|external, roles) « takes on roles » Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly) ; User Story (role, want, soThat) « as a role » ; Role « carries skills » Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema : JSON Schema (draft-07, issu de Zod) et External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other ; use conforms|reads|cites). Relations : KG QA Report audite subject kind ; Test Run teste Skill ; Task dans le couloir de Role et utilise Skill ; chaque classe est conforme à JSON Schema.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML «Harness schemas — attributes derived from JSON Schema», en cuatro paquetes. test: KG QA Report (kg-qa/v1; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) y Test Run (folio-test-run/v1; skill, subject, data and process hashes, outcome, cases). process: Task (process, task; BPMN callActivity, serviceTask, task y userTask) «in process» Process (OMG BPMN 2.0 externo; start and end events, gateways, lanes, sequence flows) — anotado como XSD, no JSON Schema. scenario: Actor (id, title, kind person|agent|system|external, roles) «takes on roles» Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly); User Story (role, want, soThat) «as a role»; Role «carries skills» Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema: JSON Schema (draft-07, derivado de Zod) y External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other; use conforms|reads|cites). Aristas: KG QA Report audita subject kind; Test Run prueba Skill; Task en el carril de Role y usa Skill; cada clase se ajusta a JSON Schema.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط فئات UML بعنوان «Harness schemas — attributes derived from JSON Schema» في أربع حزم. حزمة test: الفئة KG QA Report ‏(kg-qa/v1؛ بالحقول subject kind ‏process|decision|role|requirement|skill|graph|tool، وcriteria، وtotals، وpair_attestations) والفئة Test Run ‏(folio-test-run/v1؛ بالحقول skill، وsubject، وdata and process hashes، وoutcome، وcases). حزمة process: الفئة Task ‏(process، وtask؛ وعناصر BPMN ‏callActivity وserviceTask وtask وuserTask) بعلاقة «in process» مع Process (معيار OMG BPMN 2.0 الخارجي؛ أحداث البداية والنهاية، والبوابات، والمسارات، وتدفقات التسلسل) — مع الإشارة إلى أنه XSD وليس JSON Schema. حزمة scenario: الفئة Actor ‏(id، وtitle، وkind بقيم person|agent|system|external، وroles) بعلاقة «takes on roles» مع Role ‏(persona، وactorKinds، وskills، وinherits، وactedUpon، وjudgementOnly)؛ والفئة User Story ‏(role، وwant، وsoThat) بعلاقة «as a role»؛ وRole بعلاقة «carries skills» مع Skill ‏(id، وname، وdescription، وroles، وrequiredCapabilities، وdependsOn، وallowedTools، وroutingPatterns، وtags، وpackage، وlifecycleStages بقيم plan|author|validate|review|test|publish|feedback|retire). حزمة schema: ‏JSON Schema ‏(draft-07، المشتق من Zod) وExternal Schema ‏(authority بقيم OMG|DCMI|W3C|IETF|ISO|HL7|other؛ وuse بقيم conforms|reads|cites). الروابط: KG QA Report يدقق subject kind؛ وTest Run يختبر Skill؛ وTask يقع في مسار Role ويستخدم Skill؛ وكل فئة تتوافق مع JSON Schema.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "ar"
+    },
+    {
+      "text": "UML-диаграмма классов «Harness schemas — attributes derived from JSON Schema» в четырёх пакетах. test: KG QA Report (kg-qa/v1; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) и Test Run (folio-test-run/v1; skill, subject, data and process hashes, outcome, cases). process: Task (process, task; BPMN callActivity, serviceTask, task и userTask) со связью «in process» к Process (внешний стандарт OMG BPMN 2.0; стартовые и конечные события, шлюзы, дорожки, потоки управления) — отмечен как XSD, а не JSON Schema. scenario: Actor (id, title, kind person|agent|system|external, roles) «takes on roles» Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly); User Story (role, want, soThat) «as a role»; Role «carries skills» Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema: JSON Schema (draft-07, из Zod) и External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other; use conforms|reads|cites). Рёбра: KG QA Report проверяет subject kind; Test Run тестирует Skill; Task находится на дорожке Role и использует Skill; каждый класс соответствует JSON Schema.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "ru"
+    },
+    {
+      "text": "题为“Harness schemas — attributes derived from JSON Schema”的 UML 类图，包含四个包。test 包：KG QA Report（kg-qa/v1；含 subject kind process|decision|role|requirement|skill|graph|tool、criteria、totals、pair_attestations）与 Test Run（folio-test-run/v1；含 skill、subject、data and process hashes、outcome、cases）。process 包：Task（process、task；含 BPMN callActivity、serviceTask、task 和 userTask）通过“in process”关联至 Process（外部 OMG BPMN 2.0；含开始与结束事件、网关、泳道、顺序流）——注明为 XSD 而非 JSON Schema。scenario 包：Actor（id、title、kind person|agent|system|external、roles）“takes on roles”关联至 Role（persona、actorKinds、skills、inherits、actedUpon、judgementOnly）；User Story（role、want、soThat）“as a role”；Role“carries skills”关联至 Skill（id、name、description、roles、requiredCapabilities、dependsOn、allowedTools、routingPatterns、tags、package、lifecycleStages plan|author|validate|review|test|publish|feedback|retire）。schema 包：JSON Schema（draft-07，由 Zod 导出）与 External Schema（authority OMG|DCMI|W3C|IETF|ISO|HL7|other；use conforms|reads|cites）。边关系：KG QA Report 审计 subject kind；Test Run 测试 Skill；Task 位于 Role 泳道并使用 Skill；每个类均符合 JSON Schema。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/kg-folio-asst-2026-09-30/sections/slide-008",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/kg-folio-asst-2026-09-30",
+  "provenance": "ingested"
+}

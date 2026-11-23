@@ -1,0 +1,133 @@
+{
+  "$schema": "refactor-strategy/v1",
+  "family": "mechanical",
+  "strategies": [
+    {
+      "id": "drop-by-exact-wrapper",
+      "description": "`by exact X` is a tactic wrapper around a term that needs none — use the term directly.",
+      "objectives": ["length", "compile-cost", "legibility"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "match": "\\bby\\s+exact\\s+",
+      "example": { "before": "theorem foo : P := by exact h", "after": "theorem foo : P := h" },
+      "expected_gain": 0.6,
+      "caveat": "Keep `by exact` when the elaborator needs the tactic block to postpone unification — if the term form fails to elaborate, revert.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "term-mode-rfl",
+      "description": "`by rfl` has a term form.",
+      "objectives": ["length", "compile-cost"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "match": "\\bby\\s+rfl\\b",
+      "replace": "rfl",
+      "example": { "before": ":= by rfl", "after": ":= rfl" },
+      "expected_gain": 0.5,
+      "caveat": "`by rfl` and `rfl` can differ in reducibility settings; if the term form fails, the tactic was doing real work.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "fold-unfold-into-simp",
+      "description": "`unfold f; simp [...]` folds into a single `simp [f, ...]`.",
+      "objectives": ["length", "compile-cost"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "example": { "before": "unfold f; simp [h]", "after": "simp [f, h]" },
+      "expected_gain": 0.5,
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "fold-unfold-rw-into-simp",
+      "description": "`unfold f; rw [h₁, h₂]` folds into `simp [f, h₁, h₂]`.",
+      "objectives": ["length"],
+      "confidence": "proposed",
+      "lean": { "min": "4.0.0" },
+      "example": { "before": "unfold f; rw [h₁, h₂]", "after": "simp [f, h₁, h₂]" },
+      "expected_gain": 0.5,
+      "caveat": "NOT equivalent in general: `rw` rewrites left-to-right once at the first match, `simp` rewrites to normal form. Can close goals `rw` would leave open, or loop where `rw` terminated. Verify the build before accepting.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "inline-have-into-linarith",
+      "description": "`have h := foo; linarith` passes the fact directly: `linarith [foo]`.",
+      "objectives": ["length", "legibility"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "example": { "before": "have h := foo\nlinarith", "after": "linarith [foo]" },
+      "expected_gain": 0.6,
+      "caveat": "Only when `h` is used once. A reused `have` is a legibility gain, not a redundancy.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "collapse-have-exact",
+      "description": "`have h := foo; exact h` is an indirection — `exact foo`.",
+      "objectives": ["length", "legibility"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "example": { "before": "have h := foo\nexact h", "after": "exact foo" },
+      "expected_gain": 0.5,
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "compose-apply-chain",
+      "description": "`apply f; apply g x` composes into `exact f (g x)`.",
+      "objectives": ["length", "compile-cost"],
+      "confidence": "proposed",
+      "lean": { "min": "4.0.0" },
+      "example": { "before": "apply f\napply g x", "after": "exact f (g x)" },
+      "expected_gain": 0.5,
+      "caveat": "`apply` postpones metavariables; the composed term may need explicit arguments the tactic chain inferred.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "explicit-zero-coercion",
+      "description": "`@Zero.zero T inst.toZero` is the elaborator's output, not something to write — use `(0 : T)`.",
+      "objectives": ["legibility"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "match": "@Zero\\.zero\\s+\\S+\\s+\\S+",
+      "example": { "before": "@Zero.zero T inst.toZero", "after": "(0 : T)" },
+      "expected_gain": 0.4,
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "delete-structure-field-restatement",
+      "description": "A theorem whose entire content is restating a structure field should be deleted; use the field directly.",
+      "objectives": ["length", "legibility"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "example": {
+        "before": "theorem foo (d : D) : C := d.claim",
+        "after": "-- deleted; use `d.claim` at the use sites"
+      },
+      "expected_gain": 0.0,
+      "caveat": "Overlaps `proof-no-self-assuming-projection`, which treats this as a CRITICAL vacuity defect rather than a tidiness win. Route through `lean-proof-review` first — if the field IS the goal, the problem is the statement, not its length.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "congr-fun-retraction",
+      "description": "`rw [retraction]; rfl` on a coerced function application has a direct term form.",
+      "objectives": ["compile-cost"],
+      "confidence": "proposed",
+      "lean": { "min": "4.0.0" },
+      "example": {
+        "before": "rw [retraction]; rfl",
+        "after": "congr_fun (congr_arg DFunLike.coe retraction) x"
+      },
+      "expected_gain": 0.7,
+      "caveat": "DFunLike is Mathlib-version sensitive — this was FunLike before the Mathlib rename. Re-verify the bound before applying on an older pin.",
+      "source": "proof-simplifier anti-pattern table"
+    },
+    {
+      "id": "dedupe-field-docstring",
+      "description": "Duplicate docstrings on a structure field: keep the latest.",
+      "objectives": ["legibility"],
+      "confidence": "verified",
+      "lean": { "min": "4.0.0" },
+      "example": { "before": "/-- old -/\n/-- new -/\nfield : T", "after": "/-- new -/\nfield : T" },
+      "expected_gain": 0.5,
+      "source": "proof-simplifier anti-pattern table"
+    }
+  ]
+}
