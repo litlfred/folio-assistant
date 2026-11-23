@@ -1,0 +1,68 @@
+# Build the clarabel-MPFR operator-selection-LP binary and publish it as an
+# artifact, so a paper folio's witness computations can download a prebuilt
+# binary instead of compiling it on every run.
+#
+# A REUSABLE workflow, owned here and run by the folio (owner, 2026-10-22:
+# "move clarabel to folio-asst-sci"). It came from folio-assistant's
+# `.github/workflows/`, where it could not run: it builds a FOLIO's Rust crate
+# (`tools/hecke-engine` by default), which the platform does not carry, and
+# the witness pipeline it fed was retired (bean `1l13`). `actions/checkout`
+# in a called workflow checks out the CALLER, so the crate is the folio's.
+#
+# A folio calls it from its own workflow, on the triggers it wants (a change
+# to the crate, a weekly refresh):
+#
+#   jobs:
+#     clarabel:
+#       uses: litlfred/folio-assistant-sci/.github/workflows/build-clarabel-mpfr.yml@main
+#       with:
+#         crate: tools/hecke-engine
+name: Build clarabel-MPFR binary
+
+on:
+  workflow_call:
+    inputs:
+      crate:
+        description: "The folio's Rust crate that builds the binary, relative to its root."
+        type: string
+        default: tools/hecke-engine
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CRATE: ${{ inputs.crate }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install MPFR/GMP system libs
+        run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev
+
+      - name: Cache cargo + target
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ${{ inputs.crate }}/target
+          key: clarabel-mpfr-${{ runner.os }}-${{ hashFiles(format('{0}/Cargo.toml', inputs.crate), format('{0}/Cargo.lock', inputs.crate)) }}
+          restore-keys: clarabel-mpfr-${{ runner.os }}-
+
+      - name: Build clarabel-MPFR operator-selection-lp
+        run: |
+          cargo build --release \
+            --manifest-path "$CRATE/Cargo.toml" \
+            --features clarabel-mpfr \
+            --bin clarabel-operator-selection-lp
+          test -x "$CRATE/target/release/clarabel-operator-selection-lp"
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: clarabel-operator-selection-lp
+          path: ${{ inputs.crate }}/target/release/clarabel-operator-selection-lp
+          retention-days: 30
+          if-no-files-found: error
