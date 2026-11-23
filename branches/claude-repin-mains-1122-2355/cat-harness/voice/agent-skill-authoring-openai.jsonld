@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/voice/agent-skill-authoring-openai.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1122-2355",
+    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "pr": "3196/merge",
+    "run": "45086180885"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/voice/agent-skill-authoring-openai",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "Agent skill authoring — OpenAI override",
+      "description": "What OpenAI's 'Skills in OpenAI API' cookbook notebook adds to the shared base voice agent-skill-authoring: front matter as the router, explicit use/don't-use routing with negative examples, scripts that behave like tiny CLIs, verification in SKILL.md, what may leave over the network, version pinning, and the platform's upload limits. MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Read from the full notebook (ingested through the notebook rung, MIT-licensed), not the one-page PDF capture skills-in-openai-api, which is almost all code. Rules the base already carries — description states function and trigger, one default, state dependencies — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/vendors/agent-skill-authoring-openai/voice.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/voice/agent-skill-authoring-openai"
+    }
+  ]
+}

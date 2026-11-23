@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/FhirCorePackage",
+  "definitions": {
+    "FhirCorePackage": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^hl7\\.fhir\\.r[0-9]+b?\\.core$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "tarball": {
+          "type": "string",
+          "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\.tgz$"
+        },
+        "shasum": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "integrity": {
+          "type": "string",
+          "pattern": "^sha512-[A-Za-z0-9+/]{86}==$"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "tarball",
+        "shasum",
+        "integrity"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCorePackageSchema.schema.json",
+  "title": "FhirCorePackageSchema",
+  "description": "Generated from `FhirCorePackageSchema` in schemas/fhir-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1122-2355",
+    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "pr": "3196/merge",
+    "run": "45086180885"
+  }
+}

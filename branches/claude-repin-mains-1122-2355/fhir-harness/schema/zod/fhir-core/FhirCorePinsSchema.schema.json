@@ -1,0 +1,134 @@
+{
+  "$ref": "#/definitions/FhirCorePins",
+  "definitions": {
+    "FhirCorePins": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-fhir-core-pins/v2"
+        },
+        "authority": {
+          "type": "string",
+          "const": "https://hl7.org/fhir"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "releases": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "release": {
+                "type": "string",
+                "enum": [
+                  "R4",
+                  "R4B",
+                  "R5"
+                ]
+              },
+              "fhirVersion": {
+                "type": "string",
+                "pattern": "^\\d+\\.\\d+\\.\\d+$"
+              },
+              "spec": {
+                "type": "string",
+                "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/$"
+              },
+              "package": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^hl7\\.fhir\\.r[0-9]+b?\\.core$"
+                  },
+                  "version": {
+                    "type": "string",
+                    "pattern": "^\\d+\\.\\d+\\.\\d+$"
+                  },
+                  "tarball": {
+                    "type": "string",
+                    "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\.tgz$"
+                  },
+                  "shasum": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "integrity": {
+                    "type": "string",
+                    "pattern": "^sha512-[A-Za-z0-9+/]{86}==$"
+                  }
+                },
+                "required": [
+                  "name",
+                  "version",
+                  "tarball",
+                  "shasum",
+                  "integrity"
+                ],
+                "additionalProperties": false
+              },
+              "mirrors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "tarball": {
+                      "type": "string",
+                      "pattern": "^https:\\/\\/[a-z0-9.-]+\\/\\S+$"
+                    },
+                    "shasum": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{40}$"
+                    },
+                    "integrity": {
+                      "type": "string",
+                      "pattern": "^sha512-[A-Za-z0-9+/]{86}==$"
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "tarball",
+                    "shasum",
+                    "integrity",
+                    "note"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "release",
+              "fhirVersion",
+              "spec",
+              "package"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "authority",
+        "note",
+        "releases"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCorePinsSchema.schema.json",
+  "title": "FhirCorePinsSchema",
+  "description": "Generated from `FhirCorePinsSchema` in schemas/fhir-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1122-2355",
+    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "pr": "3196/merge",
+    "run": "45086180885"
+  }
+}

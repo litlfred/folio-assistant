@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Verdict.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1122-2355",
+    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "pr": "3196/merge",
+    "run": "45086180885"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Verdict",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Acceptable?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/role/translation-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication/lane/Lane_TRA_Reviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Acceptable",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/process/Process_TranslationReviewAdjudication#flow/Flow_TRA_Mistranslation"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationReviewAdjudication/node/Gateway_TRA_Verdict"
+    }
+  ]
+}

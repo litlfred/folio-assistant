@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/ProvenanceSource",
+  "definitions": {
+    "ProvenanceSource": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string",
+          "description": "What the hash covers, where that is not obvious. A directory hashed as a unit needs this; a single file does not."
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/graph/ProvenanceSourceSchema.schema.json",
+  "title": "ProvenanceSourceSchema",
+  "description": "Generated from `ProvenanceSourceSchema` in L1/schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1122-2355",
+    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "pr": "3196/merge",
+    "run": "45086180885"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/role/programme-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1122-2355",
+    "sha": "4e04a56052858f76b9af89b18d40bbed1e6ddafe",
+    "pr": "3196/merge",
+    "run": "45086180885"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/role/programme-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Programme manager",
+      "title": "Programme manager",
+      "notation": "programme-manager",
+      "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/skill/release-epic-planning",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/skill/release-lifecycle",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1122-2355/cat-harness/skill/decision-methodology-selector"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager"
+    }
+  ]
+}
