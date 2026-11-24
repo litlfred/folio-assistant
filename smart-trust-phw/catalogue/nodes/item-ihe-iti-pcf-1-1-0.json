@@ -1,0 +1,138 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/ihe-iti-pcf-1-1-0",
+  "kind": "item",
+  "flavour": "item",
+  "title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)",
+  "parents": [],
+  "libraryId": "ihe-iti-pcf-1-1-0",
+  "metadataRef": "catalogue/records/ihe-iti-pcf-1-1-0.dc.json",
+  "bitstreams": [
+    {
+      "name": "ihe-iti-pcf-1-1-0.md",
+      "bundle": "ORIGINAL",
+      "bytes": 11771,
+      "mediaType": "text/markdown",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://profiles.ihe.net/ITI/PCF/1.1.0/"
+        },
+        "localPath": "library/ihe-iti-pcf-1-1-0/ihe-iti-pcf-1-1-0.md",
+        "purpose": "both",
+        "bytes": 11771,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "c0b86193d6ac3abb2addfdf6bdc4c8bbf8397f168546e4e14b7cc8ad16af3822",
+          "verifiedAt": "2026-10-30"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "Compact normative markdown and structure snapshot of IHE ITI PCF v1.1.0"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) by IHE International (https://profiles.ihe.net/ITI/PCF/1.1.0/); only attribution is required, which `licence.json` and `catalogue/records/` provide.",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival and working L1 specification snapshot kept in `library/` with SHA-256 fixity"
+          },
+          "sourceLoss": {
+            "verdict": "permitted",
+            "basis": "materialized snapshot held locally with recorded SHA-256 digest verified by `check:materialized-fixity`"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "IHE International grants a permanent, royalty-free, non-exclusive license under CC BY 4.0 (https://profiles.ihe.net/ITI/PCF/1.1.0/, `license: \"CC-BY-4.0\"` in ImplementationGuide resource).",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          }
+        }
+      }
+    },
+    {
+      "name": "structure.json",
+      "bundle": "TEXT",
+      "bytes": 5000,
+      "mediaType": "application/json",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "library/ihe-iti-pcf-1-1-0/ihe-iti-pcf-1-1-0.md"
+        },
+        "localPath": "library/ihe-iti-pcf-1-1-0/structure.json",
+        "purpose": "working",
+        "bytes": 5000,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "50e51a41d58a7acbbfce87353474ab0a0462b7a2d88e42c5d0684c1cb79f0f1f",
+          "verifiedAt": "2026-10-30"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "Compact normative markdown and structure snapshot of IHE ITI PCF v1.1.0"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) by IHE International (https://profiles.ihe.net/ITI/PCF/1.1.0/); only attribution is required, which `licence.json` and `catalogue/records/` provide.",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival and working L1 specification snapshot kept in `library/` with SHA-256 fixity"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "derived structure is not the archival source; the ORIGINAL bitstream answers sourceLoss"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "IHE International grants a permanent, royalty-free, non-exclusive license under CC BY 4.0 (https://profiles.ihe.net/ITI/PCF/1.1.0/, `license: \"CC-BY-4.0\"` in ImplementationGuide resource).",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          }
+        }
+      }
+    }
+  ],
+  "materialization": {
+    "state": "materialized",
+    "provenance": {
+      "upstream": "https://profiles.ihe.net/ITI/PCF/1.1.0/"
+    },
+    "localPath": "library/ihe-iti-pcf-1-1-0",
+    "purpose": "working",
+    "gates": {
+      "size": {
+        "verdict": "permitted",
+        "basis": "Compact normative markdown and structure snapshot of IHE ITI PCF v1.1.0"
+      },
+      "restrictions": {
+        "verdict": "permitted",
+        "basis": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) by IHE International (https://profiles.ihe.net/ITI/PCF/1.1.0/); only attribution is required, which `licence.json` and `catalogue/records/` provide.",
+        "decidedAt": "2026-10-30",
+        "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+      },
+      "retention": {
+        "verdict": "permitted",
+        "basis": "archival and working L1 specification snapshot kept in `library/` with SHA-256 fixity"
+      },
+      "sourceLoss": {
+        "verdict": "unknown",
+        "basis": "derived sections are not the archival source; the ORIGINAL bitstream answers sourceLoss"
+      },
+      "copyright": {
+        "verdict": "permitted",
+        "basis": "IHE International grants a permanent, royalty-free, non-exclusive license under CC BY 4.0 (https://profiles.ihe.net/ITI/PCF/1.1.0/, `license: \"CC-BY-4.0\"` in ImplementationGuide resource).",
+        "decidedAt": "2026-10-30",
+        "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+      }
+    }
+  }
+}
