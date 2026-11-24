@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T19:40:00Z
+updated_at: 2026-11-24T08:30:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -17,6 +17,7 @@ Full thread link: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?t
 - CI emails/red mains …7hzuBmHhA1AVDQwkGAEKoK (closed). CI email alerts 11-12 …6etWUsHcNFgYZFJZ29PDz9. Umbrella …DEZk3DJmX24MEwH1cdheht. qa.json …6zELz1Am66C2Vzg5yT1cQV. Gutter …Wyw7xcUYv4wkPgN73AoVxC. Contents card …AHPLQzwq76eDZbcNy1iDiT. Forks …DLyZ6UzButa8bWRejYKBw3. si …XqKVGpzpLAbWKjURUeqy2S. Subgraphs …R5a3GBLL4iHycFjXrEiM4Q. Pilgrimage …MT3iozhosq8B91wftEBtBz. IRIS …URtoXkkMHFsrXX8CVbmjs6. IRIS summaries …VCWXXaJxjKVF8xNjpQFvuw. IRIS figures+tables …MgLzYE4CC933YWuugjFYV2. IRIS source fixes …3WQmGmifCFfexR63a3h4wh. Thin HTML …JUYkFEpA2dkxbquPXVJpQw. Navbar …Uq91sTds9G2jUcijzQhagX. DTH gutter …A4FVReTMWQNcJHJWxMVMtd. jtd landing …98z3cnMESAZVypuU1jG4cac. Biblio …G6g9EGbG9kGSg8u3W5fieF. MeSH …5xcPV1zXPt2N1Twnrpakp3. smart-anc …T6S81BrHvJkrNa5sDBQzcU. smart-fp …98UERBkphEj357Ss5QsbWzt. smart-trust-phw …AonKYSN5pzp1WvC45sYU7Q. Actions …QGpcoGu6tbBreoK3fpomEb. who.int bar …H4y59JJUXX6HZUDnWpY5BX. WHO template …Jm25MGmifeTXJkEQYJbqw7. GH Actions as Tools …GNoutbFEkQcDun1pouuzLM. Demo right rail …SxasfQF7Sm49rzpH7s62Bp.
 - Merge manager …HtujCofFVVPVPppfDRTSNR. CI …S6hQK9aQqtGErPT2gmEEUW. Meta-merge …KFRqmaNst8GCREzncWoicQ. MVP …91qa3xg86ZCWdyH2spZ7FS. Slash IRIs …5HvJ9m7xBV6qWhqn6M2rVj. Code.gs …VHDRMJhDdGxmnuvJ2VhfLC. DPI-H watcher …VZ4HJjDbGFC5aMakt3gA63. Leftovers …LgKFyTqSdjwVs6ULk3L9Mv. CDE/NHWA …WwtQiEUvdGPQ4efY1dCDAo. Translation …VgTfgdAaK8cZ7FPYJ6EN2B. ArchiMate …CeyoE3tpEGKkXscFgDH1Uv. smart-trust translations publish …5t7cWfzxEoMPbkQnqw15f9.
 - GDHCN game …W4ycZUem317FyqV1hm7vd3. Game translation (ar/es/ru/zh) …SUGnv8bi9W7m7VwpL78GZ8. Journeys rename …68BAvjQLFviuzhdSETh1je. Journeys code gaps/style beans …44mnj777QrpP5JgRCK7Pxk. Pilgrimage fictional countries …H4QQDJuKJoHovczmJDnoGf. WHO migration …AUsbwQds8zeTj52BZYspkj. WHO tooling T3 …4LP89hFRgqUtvWcbaP433v (bean wt3x).
+- Ingest new uploads (11-15) …NK8WvwNs3G8PZxDh7i6cG2: new uploads were all in qou (handed over as qou#7897); 3 decision papers already held, moved content/→process/ (cat-harness#1352/#1353).
 - PR wrap-up siblings (11-11): publish-on-push …GSmgusK4K8TCWBQfu5rM7S; tools#1715 …43AtUQ8QatBRm1UxwqTukG; fa#3075 …PbWitDFoMA8PsoXrCfeqpx; dth-* prep …485GDkaugFAYVaNMpCMzaR; smart-ra prep …E6HFb4KEYDjMgq6a8AyeRu.
 - 11-12 siblings: Green tools PR queue …4UB5EYmCsnRRgSrAY3jYwq; Green smart-ra drafts …6fbDk8ZG5kaLTpD1m7m7RP; HRH split (dth-hrh#69/#119) …P2GGAjGMvE2u8HqJwVqJE8; BPMN labels phw …RNhrJzoJY1rEuGLF6ojzbx; Demo ArchiMate → smart-ra links …RBRzWsBEvv2Z19MPdrGVRt.
 - Detail files in Library (*.md, e.g. who-forks-harness-2026-11-10.md, ig-qa-json-carry-2026-11-10.md, subgraph-groupings-2026-11-10.md, thin-html-node-linking-2026-11-10/analysis.md, iris-summaries-2026-11-11/source-oddities.md).
@@ -37,3 +38,7 @@ _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://c
 _2026-11-15T08:45Z_ — qou coordinator (tracker qou#7735, bean qc15) …DeM3N13zuCshZeKt1kDnkw.
 
 _2026-11-15T19:40Z_ — added WHO tooling T3 thread (bean wt3x).
+
+_2026-11-15T13:15:00Z_ — added "Ingest new uploads" thread (session https://claude.ai/code/session_01Qmmkt7BEJYQF4FdsHoDuVL).
+
+_2026-11-24T08:30:00Z_ — Filed from folio-assistant#3152 because beans/ on main is no longer the store (the work plan lives on the state branch). Merged with the store version (kept the WHO tooling T3 line and the former memory records). Verified by git: litlfred/cat-harness#1353 (the content/→process/ move) is open and not yet merged into cat-harness main d4f461f3 (merge manager reports it approved); cat-harness#1352 has no pull ref, so it is an issue (state unverified). qou#7897 reported handed over by the merge manager (issue state unverified).
