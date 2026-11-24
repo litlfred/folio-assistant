@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8282bc42a06456d63a633b6538916612444ffb52",
-  "sourceCommitSha": "8282bc42a06456d63a633b6538916612444ffb52",
-  "sourceTree": "9b0cd72c5655bd37e9812ccf1136c7291b508ead",
-  "sourceCommitAt": "2026-11-24T05:35:28-05:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d64773af05f7deff8c247a342dcfc297d26b3615",
+  "sourceCommitSha": "d64773af05f7deff8c247a342dcfc297d26b3615",
+  "sourceTree": "69e4b1732b798610b5a24187575ab303cf900de0",
+  "sourceCommitAt": "2026-11-24T07:08:43-05:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -386,6 +386,19 @@
     "Schema": 6
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bootstrap-contract-semver",
+      "title": "Bootstrap contract semver",
+      "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
+      "instructionsPath": "skills/bootstrap-contract-semver.md",
+      "instructionLines": 94,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-skills"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/render-kg-to-github-pages",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
@@ -407,19 +420,6 @@
       "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
       "instructionsPath": "skills/github-pages.md",
       "instructionLines": 39,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "bootstrap-contract-semver",
-      "title": "Bootstrap contract semver",
-      "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
-      "instructionsPath": "skills/bootstrap-contract-semver.md",
-      "instructionLines": 94,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
