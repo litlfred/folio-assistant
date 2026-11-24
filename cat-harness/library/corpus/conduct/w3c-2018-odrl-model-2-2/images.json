@@ -1,0 +1,383 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "w3c-2018-odrl-model-2-2",
+  "images": [
+    {
+      "id": "img-p001-1",
+      "file": "images/img-p001-1.png",
+      "role": "chrome",
+      "basis": {
+        "method": "capture",
+        "producer": "Skia/PDF m141",
+        "creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "coverage": 0.000227,
+        "imagesOnPage": 1,
+        "page": 1
+      }
+    },
+    {
+      "id": "img-p004-1",
+      "file": "images/img-p004-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+        },
+        "at": "2026-10-01",
+        "saw": "captioned 'Figure 1 ODRL Information Model' in the text layer of page 4; a UML-style class diagram of every ODRL class and property, not decoration",
+        "page": 4
+      },
+      "narrative": [
+        {
+          "text": "Figure 1, the ODRL Information Model: a class diagram centred on Policy (uid, profile; subclasses Set, Offer and Agreement; inheritFrom pointing to itself; conflict pointing to ConflictTerm), whose permission, obligation and prohibition properties point to Rule (uid). Rule has the subclasses Permission, Duty and Prohibition, with duty from Permission to Duty, remedy from Prohibition to Duty, consequence from Duty to Duty, and failure from Rule to itself. Rule links by action to Action (includedIn, implies); by the relation sub-property target to Asset (uid; hasPolicy to Policy; subclass AssetCollection with source, and partOf); by the function sub-properties assigner and assignee to Party (uid; subclass PartyCollection with source, and partOf); and by constraint to Constraint (uid, rightOperandReference, dataType, unit, status; leftOperand to LeftOperand, operator to Operator, rightOperand to RightOperand) or LogicalConstraint (uid; operand, a list of Constraints). A refinement property links Action, AssetCollection and PartyCollection to Constraint and LogicalConstraint.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+          },
+          "drafted_at": "2026-10-01",
+          "lang": "en"
+        },
+        {
+          "text": "Figure 1, le modèle d'information ODRL (ODRL Information Model) : un diagramme de classes centré sur Policy (uid, profile ; sous-classes Set, Offer et Agreement ; inheritFrom pointant vers elle-même ; conflict pointant vers ConflictTerm), dont les propriétés permission, obligation et prohibition pointent vers Rule (uid). Rule possède les sous-classes Permission, Duty et Prohibition, avec duty de Permission vers Duty, remedy de Prohibition vers Duty, consequence de Duty vers Duty, et failure de Rule vers elle-même. Rule est reliée par action à Action (includedIn, implies) ; par la sous-propriété de relation target à Asset (uid ; hasPolicy vers Policy ; sous-classe AssetCollection avec source, et partOf) ; par les sous-propriétés de fonction assigner et assignee à Party (uid ; sous-classe PartyCollection avec source, et partOf) ; et par constraint à Constraint (uid, rightOperandReference, dataType, unit, status ; leftOperand vers LeftOperand, operator vers Operator, rightOperand vers RightOperand) ou LogicalConstraint (uid ; operand, une liste de Constraints). Une propriété refinement relie Action, AssetCollection et PartyCollection à Constraint et LogicalConstraint.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "fr"
+        },
+        {
+          "text": "Figura 1, el modelo de información ODRL (ODRL Information Model): un diagrama de clases centrado en Policy (uid, profile; subclases Set, Offer y Agreement; inheritFrom apuntando a sí misma; conflict apuntando a ConflictTerm), cuyas propiedades permission, obligation y prohibition apuntan a Rule (uid). Rule tiene las subclases Permission, Duty y Prohibition, con duty de Permission a Duty, remedy de Prohibition a Duty, consequence de Duty a Duty, y failure de Rule a sí misma. Rule se vincula mediante action con Action (includedIn, implies); mediante la subpropiedad de relación target con Asset (uid; hasPolicy hacia Policy; subclase AssetCollection con source, y partOf); mediante las subpropiedades de función assigner y assignee con Party (uid; subclase PartyCollection con source, y partOf); y mediante constraint con Constraint (uid, rightOperandReference, dataType, unit, status; leftOperand hacia LeftOperand, operator hacia Operator, rightOperand hacia RightOperand) o LogicalConstraint (uid; operand, una lista de Constraints). Una propiedad refinement vincula Action, AssetCollection y PartyCollection con Constraint y LogicalConstraint.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "es"
+        },
+        {
+          "text": "الشكل 1، نموذج معلومات ODRL ‏(ODRL Information Model): مخطط فئات يتمحور حول الفئة Policy ‏(uid، وprofile؛ والفئات الفرعية Set وOffer وAgreement؛ وخاصية inheritFrom تشير إلى نفسها؛ وconflict تشير إلى ConflictTerm)، وتشير خصائصها permission وobligation وprohibition إلى Rule ‏(uid). وللفئة Rule الفئات الفرعية Permission وDuty وProhibition، مع رابط duty من Permission إلى Duty، وremedy من Prohibition إلى Duty، وconsequence من Duty إلى Duty، وfailure من Rule إلى نفسها. وترتبط Rule عبر action بالفئة Action ‏(includedIn، وimplies)؛ وعبر الخاصية الفرعية للعلاقة target بالفئة Asset ‏(uid؛ وhasPolicy إلى Policy؛ والفئة الفرعية AssetCollection مع source وpartOf)؛ وعبر الخاصيتين الفرعيتين للوظيفة assigner وassignee بالفئة Party ‏(uid؛ والفئة الفرعية PartyCollection مع source وpartOf)؛ وعبر constraint بالفئة Constraint ‏(uid، وrightOperandReference، وdataType، وunit، وstatus؛ وleftOperand إلى LeftOperand، وoperator إلى Operator، وrightOperand إلى RightOperand) أو LogicalConstraint ‏(uid؛ وoperand وهي قائمة من Constraints). وتربط خاصية refinement كلًا من Action وAssetCollection وPartyCollection بالفئتين Constraint وLogicalConstraint.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ar"
+        },
+        {
+          "text": "Рисунок 1, информационная модель ODRL (ODRL Information Model): диаграмма классов с центром в Policy (uid, profile; подклассы Set, Offer и Agreement; inheritFrom указывает на саму Policy; conflict указывает на ConflictTerm), свойства которой permission, obligation и prohibition указывают на Rule (uid). Класс Rule имеет подклассы Permission, Duty и Prohibition со связями duty от Permission к Duty, remedy от Prohibition к Duty, consequence от Duty к Duty и failure от Rule к самому себе. Rule связывается через action с Action (includedIn, implies); через подсвойство отношения target — с Asset (uid; hasPolicy к Policy; подкласс AssetCollection со свойствами source и partOf); через функциональные подсвойства assigner и assignee — с Party (uid; подкласс PartyCollection со свойствами source и partOf); и через constraint — с Constraint (uid, rightOperandReference, dataType, unit, status; leftOperand к LeftOperand, operator к Operator, rightOperand к RightOperand) или LogicalConstraint (uid; operand — список объектов Constraint). Свойство refinement связывает Action, AssetCollection и PartyCollection с Constraint и LogicalConstraint.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ru"
+        },
+        {
+          "text": "图 1，ODRL 信息模型（ODRL Information Model）：以 Policy（uid、profile；子类 Set、Offer 和 Agreement；指向自身的 inheritFrom；指向 ConflictTerm 的 conflict）为中心的类图，其 permission、obligation 和 prohibition 属性指向 Rule（uid）。Rule 拥有子类 Permission、Duty 和 Prohibition，其中 duty 从 Permission 指向 Duty，remedy 从 Prohibition 指向 Duty，consequence 从 Duty 指向 Duty，failure 从 Rule 指向自身。Rule 通过 action 关联至 Action（includedIn、implies）；通过关系子属性 target 关联至 Asset（uid；指向 Policy 的 hasPolicy；含 source 与 partOf 的子类 AssetCollection）；通过功能子属性 assigner 与 assignee 关联至 Party（uid；含 source 与 partOf 的子类 PartyCollection）；并通过 constraint 关联至 Constraint（uid、rightOperandReference、dataType、unit、status；指向 LeftOperand 的 leftOperand、指向 Operator 的 operator、指向 RightOperand 的 rightOperand）或 LogicalConstraint（uid；operand，即 Constraint 列表）。refinement 属性将 Action、AssetCollection 和 PartyCollection 关联至 Constraint 与 LogicalConstraint。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p014-1",
+      "file": "images/img-p014-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+        },
+        "at": "2026-10-01",
+        "saw": "captioned 'Figure 2 ODRL Constraint Relationships' on page 14; four rows of boxes and labelled arrows",
+        "page": 14
+      },
+      "narrative": [
+        {
+          "text": "Figure 2, ODRL Constraint Relationships: a Rule reaches constraints in four ways. Its assignee is a PartyCollection, its target an AssetCollection and its action an Action, and each of these has a refinement to one or more Constraints or LogicalConstraints. The Rule's own constraint property points to Constraints or LogicalConstraints directly. In every row a LogicalConstraint points back to the Constraints it combines. Stacked boxes mean one or more.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+          },
+          "drafted_at": "2026-10-01",
+          "lang": "en"
+        },
+        {
+          "text": "Figure 2, relations de contrainte ODRL (ODRL Constraint Relationships) : une règle (Rule) atteint des contraintes de quatre manières. Son assignee est une PartyCollection, sa cible (target) une AssetCollection et son action une Action, et chacune d'elles possède un raffinement (refinement) vers une ou plusieurs Constraints ou LogicalConstraints. La propriété constraint propre à la Rule pointe directement vers des Constraints ou des LogicalConstraints. Dans chaque rangée, une LogicalConstraint pointe en retour vers les Constraints qu'elle combine. Les boîtes empilées signifient « un ou plusieurs ».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "fr"
+        },
+        {
+          "text": "Figura 2, relaciones de restricción ODRL (ODRL Constraint Relationships): una regla (Rule) alcanza restricciones de cuatro maneras. Su assignee es una PartyCollection, su target una AssetCollection y su action una Action, y cada una de ellas tiene un refinamiento (refinement) hacia una o más Constraints o LogicalConstraints. La propia propiedad constraint de Rule apunta directamente a Constraints o LogicalConstraints. En cada fila, una LogicalConstraint apunta de vuelta a las Constraints que combina. Las cajas apiladas significan «uno o más».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "es"
+        },
+        {
+          "text": "الشكل 2، علاقات القيود في ODRL ‏(ODRL Constraint Relationships): تصل القاعدة (Rule) إلى القيود بأربع طرق. فخاصية assignee الخاصة بها هي PartyCollection، وهدفها (target) هو AssetCollection، وإجراؤها (action) هو Action، ولكل من هذه خاصية تضييق (refinement) تشير إلى واحد أو أكثر من Constraints أو LogicalConstraints. كما تشير خاصية constraint الخاصة بالقاعدة Rule مباشرةً إلى Constraints أو LogicalConstraints. وفي كل صف تشير LogicalConstraint رجوعًا إلى عناصر Constraint التي تجمعها. وتعني الصناديق المتراكمة «واحدًا أو أكثر».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ar"
+        },
+        {
+          "text": "Рисунок 2, связи ограничений в ODRL (ODRL Constraint Relationships): правило (Rule) связывается с ограничениями четырьмя способами. Его свойство assignee указывает на PartyCollection, target — на AssetCollection, а action — на Action, и у каждого из них есть уточнение (refinement) к одному или нескольким объектам Constraint или LogicalConstraint. Собственное свойство constraint класса Rule указывает непосредственно на Constraint или LogicalConstraint. В каждом ряду LogicalConstraint ссылается обратно на объединяемые им объекты Constraint. Стопки прямоугольников означают «один или более».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ru"
+        },
+        {
+          "text": "图 2，ODRL 约束关系（ODRL Constraint Relationships）：一条规则（Rule）可通过四种方式关联约束。其 assignee 为 PartyCollection，target 为 AssetCollection，action 为 Action，且三者均通过 refinement 指向一个或多个 Constraint 或 LogicalConstraint。Rule 自身的 constraint 属性也直接指向 Constraint 或 LogicalConstraint。在每一行中，LogicalConstraint 均指回其所组合的各个 Constraint。叠放的方框表示“一个或多个”。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p019-1",
+      "file": "images/img-p019-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+        },
+        "at": "2026-10-01",
+        "saw": "captioned 'Figure 3 ODRL Rule Relationships' on page 19; Policy on the left fanning out to three rows of rule boxes",
+        "page": 19
+      },
+      "narrative": [
+        {
+          "text": "Figure 3, ODRL Rule Relationships: a Policy holds one or more Permissions, one or more Prohibitions and one or more obligations. A Permission has a duty to one or more Duties, which may have a consequence to further Duties. A Prohibition has a remedy to one or more Duties. An obligation is a Duty, with its own consequence Duties.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+          },
+          "drafted_at": "2026-10-01",
+          "lang": "en"
+        },
+        {
+          "text": "Figure 3, relations entre règles ODRL (ODRL Rule Relationships) : une politique (Policy) contient une ou plusieurs Permissions, une ou plusieurs Prohibitions et une ou plusieurs obligations. Une Permission a un devoir (duty) vers un ou plusieurs Duties, qui peuvent avoir une conséquence (consequence) vers d'autres Duties. Une Prohibition a un remède (remedy) vers un ou plusieurs Duties. Une obligation est un Duty, avec ses propres Duties de conséquence (consequence).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "fr"
+        },
+        {
+          "text": "Figura 3, relaciones entre reglas ODRL (ODRL Rule Relationships): una política (Policy) contiene una o más Permissions, una o más Prohibitions y una o más obligations. Una Permission tiene un deber (duty) hacia uno o más Duties, que pueden tener una consecuencia (consequence) hacia otros Duties. Una Prohibition tiene un remedio (remedy) hacia uno o más Duties. Una obligation es un Duty, con sus propios Duties de consecuencia (consequence).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "es"
+        },
+        {
+          "text": "الشكل 3، علاقات القواعد في ODRL ‏(ODRL Rule Relationships): تحوي السياسة (Policy) إذنًا واحدًا أو أكثر (Permissions)، وحظرًا واحدًا أو أكثر (Prohibitions)، والتزامًا واحدًا أو أكثر (obligations). وللإذن (Permission) خاصية واجب (duty) تشير إلى واجب واحد أو أكثر (Duties)، والتي قد يكون لها أثر مترتب (consequence) يشير إلى واجبات إضافية. وللحظر (Prohibition) خاصية معالجة (remedy) تشير إلى واجب واحد أو أكثر (Duties). أما الالتزام (obligation) فهو واجب (Duty) له واجبات أثر مترتب (consequence) خاصة به.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ar"
+        },
+        {
+          "text": "Рисунок 3, связи правил в ODRL (ODRL Rule Relationships): политика (Policy) содержит одно или несколько разрешений (Permission), один или несколько запретов (Prohibition) и одно или несколько обязательств (obligation). Разрешение (Permission) связано свойством duty с одной или несколькими обязанностями (Duty), которые могут иметь следствие (consequence) в виде других обязанностей (Duty). Запрет (Prohibition) связан свойством remedy с одной или несколькими обязанностями (Duty). Обязательство (obligation) представляет собой обязанность (Duty) со своими собственными следствиями (consequence) Duty.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ru"
+        },
+        {
+          "text": "图 3，ODRL 规则关系（ODRL Rule Relationships）：一项策略（Policy）包含一个或多个许可（Permission）、一个或多个禁止（Prohibition）以及一个或多个义务（obligation）。Permission 具有指向一个或多个责任（Duty）的 duty 属性，而这些 Duty 又可具有指向更多 Duty 的 consequence（后果）属性。Prohibition 具有指向一个或多个 Duty 的 remedy（补救）属性。一项 obligation 本身就是一个带有自身 consequence Duty 的 Duty。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p026-1",
+      "file": "images/img-p026-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+        },
+        "at": "2026-10-01",
+        "saw": "captioned 'Figure 4 ODRL Shared Properties' on page 26; Policy with dashed arrows to Party, Asset and Action and solid arrows to Rule 1..n",
+        "page": 26
+      },
+      "narrative": [
+        {
+          "text": "Figure 4, ODRL Shared Properties: a Policy linked to Rule 1, Rule 2 and so on to Rule n. Dashed arrows show properties declared once on the Policy and shared by all its Rules: the function properties assigner and assignee to a Party (uid), the relation property target to an Asset, and action to an Action.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+          },
+          "drafted_at": "2026-10-01",
+          "lang": "en"
+        },
+        {
+          "text": "Figure 4, propriétés partagées ODRL (ODRL Shared Properties) : une politique (Policy) liée à Rule 1, Rule 2 et ainsi de suite jusqu'à Rule n. Les flèches en pointillés montrent les propriétés déclarées une seule fois sur la Policy et partagées par toutes ses Rules : les propriétés de fonction assigner et assignee vers une Party (uid), la propriété de relation target vers un Asset, et action vers une Action.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "fr"
+        },
+        {
+          "text": "Figura 4, propiedades compartidas ODRL (ODRL Shared Properties): una política (Policy) vinculada a Rule 1, Rule 2 y así sucesivamente hasta Rule n. Las flechas discontinuas muestran propiedades declaradas una sola vez en la Policy y compartidas por todas sus Rules: las propiedades de función assigner y assignee hacia una Party (uid), la propiedad de relación target hacia un Asset, y action hacia una Action.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "es"
+        },
+        {
+          "text": "الشكل 4، الخصائص المشتركة في ODRL ‏(ODRL Shared Properties): سياسة (Policy) مرتبطة بـ Rule 1 وRule 2 وهكذا حتى Rule n. وتُظهر الأسهم المتقطعة الخصائص المصرّح بها مرة واحدة على مستوى Policy والمشتركة بين جميع قواعدها (Rules): خاصيتا الوظيفة assigner وassignee إلى Party ‏(uid)، وخاصية العلاقة target إلى Asset، وخاصية action إلى Action.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ar"
+        },
+        {
+          "text": "Рисунок 4, общие свойства в ODRL (ODRL Shared Properties): политика (Policy), связанная с правилами Rule 1, Rule 2 и так далее до Rule n. Пунктирные стрелки показывают свойства, объявляемые один раз на уровне Policy и разделяемые всеми её правилами (Rule): функциональные свойства assigner и assignee, указывающие на Party (uid), свойство отношения target, указывающее на Asset, и свойство action, указывающее на Action.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "ru"
+        },
+        {
+          "text": "图 4，ODRL 共享属性（ODRL Shared Properties）：与 Rule 1、Rule 2 直至 Rule n 相关联的策略（Policy）。虚线箭头表示在 Policy 上声明一次并由其所有 Rule 共享的属性：指向 Party（uid）的功能属性 assigner 与 assignee、指向 Asset 的关系属性 target，以及指向 Action 的 action。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://9e08175e-ef9c-4ab7-8485-35aa6f567502"
+          },
+          "drafted_at": "2026-10-26",
+          "lang": "zh"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_Good" targetNamespace="urn:test">
+  <bpmn:resource id="DAK.Persona.HealthWorker" name="Health worker" />
+  <bpmn:resource id="reviewer" name="Reviewer" />
+  <bpmn:process id="Process_Good" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Good">
+      <bpmn:lane id="Lane.HealthWorker" name="Health worker" partitionElementRef="DAK.Persona.HealthWorker">
+        <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task.Record</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane.Reviewer" name="Reviewer" partitionElementRef="reviewer">
+        <bpmn:flowNodeRef>Task.Review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="DAK.Persona.Client" name="Client">
+        <bpmn:flowNodeRef>Task.Consent</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start" />
+    <bpmn:userTask id="Task.Consent" name="Give consent" />
+    <bpmn:userTask id="Task.Record" name="Record the visit" />
+    <bpmn:userTask id="Task.Review" name="Review the record" />
+    <bpmn:endEvent id="End" />
+    <bpmn:sequenceFlow id="Flow.1" sourceRef="Start" targetRef="Task.Consent" />
+    <bpmn:sequenceFlow id="Flow.2" sourceRef="Task.Consent" targetRef="Task.Record" />
+    <bpmn:sequenceFlow id="Flow.3" sourceRef="Task.Record" targetRef="Task.Review" />
+    <bpmn:sequenceFlow id="Flow.4" sourceRef="Task.Review" targetRef="End" />
+  </bpmn:process>
+</bpmn:definitions>
