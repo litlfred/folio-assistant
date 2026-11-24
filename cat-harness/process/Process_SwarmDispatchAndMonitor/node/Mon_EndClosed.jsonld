@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_EndClosed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_EndClosed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Swarm closed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_23"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
+    }
+  ]
+}

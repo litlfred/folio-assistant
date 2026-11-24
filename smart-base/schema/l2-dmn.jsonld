@@ -1,0 +1,17 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/schema/l2-dmn.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/l2-dmn.jsonld",
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/l2-dmn",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l2-dmn",
+      "title": "l2-dmn",
+      "summary": "Knowledge-graph layer L2-DMN, version 3.0, as typed data.",
+      "module": "L2-dmn/schemas/l2-dmn.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-dmn"
+    }
+  ]
+}

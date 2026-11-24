@@ -3,6 +3,75 @@
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/",
   "@type": "bootstrap:Subgraph",
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/schema/graph",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/graph/ClassIdSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/DerivationSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/EdgeSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/EvidenceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/GraphDocumentSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/NodePropertiesSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/NodeSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/PredicateNameSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/ProvenanceSourceSchema.schema.json"
+      ],
+      "module": "L1/schemas/graph.ts",
+      "name": "graph",
+      "summary": "A knowledge-graph DOCUMENT — tier 1, its form.",
+      "title": "graph"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l1",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "module": "L1/schemas/l1.ts",
+      "name": "l1",
+      "summary": "The L1 layer of the SMART Guidelines knowledge graph, 3.0 — layout",
+      "title": "l1"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l1-library",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "module": "L1/schemas/l1-library.ts",
+      "name": "l1-library",
+      "summary": "L1 bound to the library it is read from — an extension layer over L1 3.0.",
+      "title": "l1-library"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/ontology",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/ontology/BindingSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/ClassKindSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/EdgeRuleSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/GroundingSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/OmissionSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/OntologyClassSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/OntologyLayerSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/PredicateSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/ValueSetSchema.schema.json"
+      ],
+      "module": "L1/schemas/ontology.ts",
+      "name": "ontology",
+      "summary": "The shape of an ontology LAYER — what `ontology/<layer>/<layer>.json` holds",
+      "title": "ontology"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/vocab",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "module": "L1/schemas/vocab.ts",
+      "name": "vocab",
+      "summary": "Code lists, as the FHIR projection needs them.",
+      "title": "vocab"
+    }
+  ],
   "hasSubgraph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/docs/",

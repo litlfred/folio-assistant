@@ -91,7 +91,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Owner",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Owner"
       ]
     },
     {
@@ -264,6 +265,15 @@
       "label": "User",
       "scopeNote": "Decides one theme at a time: continue, fold into the plan, new epic, park, or scrap.",
       "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "label": "Owner",
+      "scopeNote": "Grants or declines per-swarm spawn permission on a tappable decision card after reading worker count, model tiers, relative token cost, and status reporting preference (on-demand vs periodic) in chat, unless a bounded swarm-spawn waiver already covers the scope.",
+      "source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -1237,7 +1247,8 @@
         "Dispatched agent",
         "Drainer",
         "Query Caller (CLI / MCP / Web)",
-        "Triage agent"
+        "Triage agent",
+        "Worker agents"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
@@ -1274,6 +1285,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Workers",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent"
@@ -1577,6 +1589,15 @@
       "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Workers",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "label": "Worker agents",
+      "scopeNote": "Background workers operating in isolated git worktrees, one disjoint slice and one child work item per worker (plus right-scoped non-heavy idle-backlog items in separate worktrees while waiting on single-core compute). Each worker emits live progress and completion blocks and pushes its branch without merging.",
+      "source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1799,7 +1820,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Steward",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Steward"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Steward",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_MergeSteward"
       ]
     },
     {
@@ -1837,6 +1859,15 @@
       "label": "Merge steward",
       "scopeNote": "The merge manager, acting as merge steward for the duration of the drain. It notices the runners are saturated, holds the swarm, dry-runs the meta-merge and asks the owner with every PR named; on a yes it cancels the queued PR runs, builds and lands the meta-merge branch, releases the hold and reports. It never lands anything the owner's card did not name.",
       "source": "cat-harness/sdlc/processes/saturation-meta-merge.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_MergeSteward",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "label": "Merge steward",
+      "scopeNote": "Receives six-line merge requests for independently verified pull requests and routes them through the merge train or direct merge guard under the owner's batch approval, keeping merge-wave state reflected in the shared work plan.",
+      "source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -2557,6 +2588,7 @@
       "notation": "session-coordinator",
       "definition": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
       "altLabel": [
+        "Coordinator",
         "Discussion agent",
         "Merge steward",
         "Queue keeper"
@@ -2566,7 +2598,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Discussion",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Coordinator"
       ]
     },
     {
@@ -2604,6 +2637,46 @@
       "label": "Merge steward",
       "scopeNote": "Receives the open PRs that lost their driver: which are green and ready, which are mid-merge, which must be re-driven from their PR head.",
       "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Coordinator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "label": "Coordinator",
+      "scopeNote": "Finds, cold-resumes, or idempotently initializes the parent Swarm Work Item (acceptance criteria EC-1..EC-k, child queues, and handover runbook), decomposes disjoint sub-beans and non-heavy idle-backlog items, opens the swarm epic via Process_BeanOpen, and dispatches isolated-worktree workers with the mandatory fresh-context Process &amp; Skill Launch Block, progress contract, and wakeup schedule.",
+      "source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+      "@type": "skos:Concept",
+      "prefLabel": "Swarm monitor",
+      "title": "Swarm monitor",
+      "notation": "swarm-monitor",
+      "definition": "Supervises any active swarm bound to a parent Swarm Work Item (`epic` or `milestone` in `beans`) on reactive completion wakeups and a 2-to-4-minute fallback timer: extracts live worker progress, checks CPU load, root disk headroom, and compressed or swapped memory footprint, halts runaway leaks or pulls the Andon cord on structural defects, assigns right-scoped non-heavy `idle-backlog` items to workers waiting on single-core compute without mid-build `git checkout`, refreshes and pushes the parent Swarm Work Item's Cold-Start Handover Runbook on every check-in (`swarm-epic-sync`), independently verifies completed branches before handing six-line merge requests to the merge steward, refills freed worker slots, and publishes standardized two-table human status reports (`on-demand` or `periodic`) free of session shorthands.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmMonitorSweep/Lane_SweepMonitor",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Monitor"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmMonitorSweep/Lane_SweepMonitor",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+      "label": "Swarm monitor",
+      "scopeNote": "Runs every monitor wake (event-driven completion, routine check-in tick, or on-demand owner request): checks worker progress and compressed/swap headroom, keeps compute-bound workers productive on non-heavy idle backlog, syncs the Cold-Start Handover Runbook to the shared beans branch on every tick so any cold successor can take over in under 60 seconds, and publishes the anti-shorthand two-table status report according to the user's selected cadence.",
+      "source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Monitor",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "label": "Swarm monitor",
+      "scopeNote": "Runs Process_SwarmMonitorSweep on reactive worker events, routine check-in ticks, or on-demand status requests to check progress and compressed/swap headroom, assign idle-on-compute backlog, refresh and push the Swarm Work Item's Cold-Start Handover Runbook, and publish anti-shorthand status tables; then hands verified PRs to the merge steward, refills freed slots, and closes via Process_BeanClose when drained.",
+      "source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/integration-watcher",

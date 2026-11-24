@@ -1,0 +1,17 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/schema/l2.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/l2.jsonld",
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/l2",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l2",
+      "title": "l2",
+      "summary": "Knowledge-graph layer L2, version 3.0, as typed data.",
+      "module": "L2/schemas/l2.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    }
+  ]
+}

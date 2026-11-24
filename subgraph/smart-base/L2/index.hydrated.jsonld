@@ -2492,6 +2492,17 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/schemas/",
       "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/schema/l2",
+          "@type": "cat-harness:Schema",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+          "module": "L2/schemas/l2.ts",
+          "name": "l2",
+          "summary": "Knowledge-graph layer L2, version 3.0, as typed data.",
+          "title": "l2"
+        }
+      ],
       "hasSubgraph": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/schemas/generated/",

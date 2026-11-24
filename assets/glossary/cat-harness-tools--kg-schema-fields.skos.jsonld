@@ -8775,6 +8775,27 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cat-harness.catharnessdeclaration.qa",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.qa",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance's QA publish runs and which QA axes it answers for — {@link QaDeclaration} (`schemas/sdlc/qa-axis.ts`). Owner, 2026-11-24: one integrated QA page per instance, drawn by the platform. Absent: the platform's own KG audit only, and the axes the published entry holds.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.qa",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cat-harness.catharnessdeclaration.remotegraphs",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10494,6 +10515,27 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiserSchema.renderedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cat-harness.harnessvisualiserschema.sections",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessVisualiserSchema.sections",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Other visualisers of THIS harness whose per-instance page is a section of this one's, linked from it at `../../<id>/<instance>/` (owner, 2026-11-24: one integrated QA page per instance; translation status, health and attestations stay their own pages and are reached from it). Every id must be declared by this harness — refined with the other visualiser checks.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiserSchema.sections",
       "skos:note": "candidate"
     },
     {
@@ -32439,6 +32481,90 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#StoredAdversarialReviews.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/qa-axis.qaformatrule.paths",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaFormatRule.paths",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path suffixes or `/`-segments (`/block-qa/`) this rule claims when no `$schema` decides.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaFormatRule.paths",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/qa-axis.qaformatrule.schemas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaFormatRule.schemas",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`$schema` values (exact) this rule claims.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaFormatRule.schemas",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/qa-axis.qarecordsummary.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaRecordSummary.path",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Entry-relative path.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/qa-axis.qarecordsummary.subject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaRecordSummary.subject",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A short subject label (`kind:id`, a block label, a locale).",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary.subject",
       "skos:note": "candidate"
     },
     {

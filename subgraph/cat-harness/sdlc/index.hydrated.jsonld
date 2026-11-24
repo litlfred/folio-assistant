@@ -5642,7 +5642,7 @@
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
           "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_17",
-          "name": "Merge it through merge:guard",
+          "name": "Merge single PR to main",
           "nodeKind": "activity",
           "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_18",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
@@ -11244,6 +11244,914 @@
           "touchesWorkPlan": false
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/swarm-dispatch-and-monitor.svg",
+          "description": "Binds or cold-resumes any multi-agent swarm on a parent Swarm Work Item (epic or milestone in beans, for example a repository Stability epic, a proof-closure epic, or a literature-audit epic) carrying measurable exit criteria (EC-1..EC-k), structured child queues (completed, active, queued, idle-backlog), and a live Cold-Start Handover Runbook, then dispatches isolated-worktree workers under a per-swarm spawn gate and supervises them through Process_SwarmMonitorSweep until the epic drains or halts.",
+          "enforcement": "strict",
+          "flowCount": 20,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Swarm dispatch and monitor",
+          "nodeCount": 18,
+          "sourcePath": "sdlc/processes/swarm-dispatch-and-monitor.bpmn",
+          "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/swarm-dispatch-and-monitor.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_Start",
+          "summary": "Binds or cold-resumes any multi-agent swarm on a parent Swarm Work Item (epic or milestone in beans, for example a repository Stability epic, a proof-closure epic, or a literature-audit epic) carrying measurable exit criteria (EC-1..EC-k), structured child qu…"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_Start",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Task_InitOrClaimSwarmEpic"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_10",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Work_Execute",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Call_MonitorSweep"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_15",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Call_MonitorSweep",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwReadyPr"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_16",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwReadyPr",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Steward_QueuePr"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_17",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwReadyPr",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "No",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwJoinNext"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_18",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Steward_QueuePr",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwJoinNext"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_19",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwJoinNext",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwContinue"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_1b",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Task_InitOrClaimSwarmEpic",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_Decompose"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_Decompose",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwWaived"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_20",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwContinue",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_Refill"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_21",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_Refill",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Work_Execute"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_22",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwContinue",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Drained",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_CloseBean"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_23",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_CloseBean",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_EndClosed"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwWaived",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "No",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Owner_DecideSpawn"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwWaived",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_OpenBean"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_5",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Owner_DecideSpawn",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwApproved"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_6",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwApproved",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "No",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_EndSerial"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_7",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwApproved",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_OpenBean"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_8",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_OpenBean",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Task_DispatchWorker"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_9",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Task_DispatchWorker",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Work_Execute"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Coordinator",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_MergeSteward",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Merge steward",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Swarm monitor",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Owner",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Owner",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Workers",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Worker agents",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Call_MonitorSweep",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_10",
+          "name": "Sweep, triage and sync handover",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_15",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_CloseBean",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_22",
+          "name": "Close or park swarm epic",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_23",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_EndClosed",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_23",
+          "name": "Swarm closed",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwContinue",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_19",
+          "name": "Slots active or refillable?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_20",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_22"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwJoinNext",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_17",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_18"
+          ],
+          "name": "Mon_GwJoinNext",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_19",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_GwReadyPr",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_15",
+          "name": "Verified PR ready?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_16",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_17"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Mon_Refill",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_20",
+          "name": "Refill slots and re-arm timer",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_21",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Owner_DecideSpawn",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Owner",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_3",
+          "name": "Decide swarm card",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_5",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Steward_QueuePr",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_MergeSteward",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_16",
+          "name": "Queue PR in merge watch",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_18",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_Decompose",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_1b",
+          "name": "Decompose disjoint sub-beans",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_EndSerial",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_6",
+          "name": "Run serially",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwApproved",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_5",
+          "name": "Spawn approved?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_6",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_7"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_GwWaived",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_2",
+          "name": "Swarm-spawn waived?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_3",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_4"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/confirmation-waiver",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_OpenBean",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_4",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_7"
+          ],
+          "name": "Open the swarm epic",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_8",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Swarm_Start",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Swarm start or takeover",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Task_DispatchWorker",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_8",
+          "name": "Dispatch workers with skill brief",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_9",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Task_InitOrClaimSwarmEpic",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_1",
+          "name": "Bind or resume swarm epic",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_1b",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Work_Execute",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_Workers",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_9",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_21"
+          ],
+          "name": "Execute slice or idle backlog",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_10",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/swarm-dispatch-and-monitor-sweep.svg",
+          "description": "Executes one stall-safe Swarm Monitor check-in sweep inside Process_SwarmDispatchAndMonitor: extracts live worker progress, measures repository queues and host CPU, disk, and compressed or swapped memory, intervenes on leaks or stalls, assigns right-scoped non-heavy idle-backlog work to workers waiting on single-core compute without checking out mid-build, refreshes and pushes the parent Swarm Work Item's Cold-Start Handover Runbook to the shared beans store on every sweep, and publishes the standardized two-table Human-Consumable Swarm Status Report when requested on-demand or scheduled periodically.",
+          "enforcement": "strict",
+          "flowCount": 15,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Swarm monitor sweep and handover sync",
+          "nodeCount": 13,
+          "sourcePath": "sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn",
+          "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Sweep_Start",
+          "summary": "Executes one stall-safe Swarm Monitor check-in sweep inside Process_SwarmDispatchAndMonitor: extracts live worker progress, measures repository queues and host CPU, disk, and compressed or swapped memory, intervenes on leaks or stalls, assigns right-scoped no…"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Sweep_Start",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Sweep"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_10",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinIdle",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Task_RefreshSwarmHandover"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_11",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Task_RefreshSwarmHandover",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwReportDue"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_12",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwReportDue",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Report"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_13",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwReportDue",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Quiet",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinReport"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_14",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Report",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinReport"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_15",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinReport",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Sweep_End"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Sweep",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwHealthy"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwHealthy",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Triage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwHealthy",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "No",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinTriage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_5",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Triage",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinTriage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_6",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinTriage",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwIdleCompute"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_7",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwIdleCompute",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Task_AssignIdleComputeBacklog"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_8",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwIdleCompute",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "No",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinIdle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_9",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Task_AssignIdleComputeBacklog",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinIdle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Swarm monitor",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwHealthy",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_2",
+          "name": "Stall, drift or swap leak?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_3",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_4"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwIdleCompute",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_6",
+          "name": "Worker idle on compute?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_7",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_8"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/idle-backlog",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinIdle",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_8",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_9"
+          ],
+          "name": "Mon_GwJoinIdle",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_10",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinReport",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_13",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_14"
+          ],
+          "name": "Mon_GwJoinReport",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_15",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwJoinTriage",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_4",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_5"
+          ],
+          "name": "Mon_GwJoinTriage",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_6",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_GwReportDue",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_11",
+          "name": "Report requested or periodic?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_12",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_13"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Report",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_12",
+          "name": "Publish scoreboard and status table",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_14",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Sweep",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_1",
+          "name": "Sweep progress, queues and swap",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Mon_Triage",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_3",
+          "name": "Nudge, kill leak or pull Andon",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_5",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Sweep_End",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_15",
+          "name": "Sweep complete",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Sweep_Start",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "Monitor wakeup or check-in",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Task_AssignIdleComputeBacklog",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_7",
+          "name": "Assign non-heavy idle backlog",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_9",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/idle-backlog",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/node/Task_RefreshSwarmHandover",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep/lane/Lane_SweepMonitor",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_10",
+          "name": "Refresh and push epic handover",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep#flow/SFlow_11",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmMonitorSweep",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+          "touchesWorkPlan": true,
+          "workPlanOp": "note"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
           "@type": "bootstrap:Process",
           "conformsTo": [
@@ -13809,20 +14717,20 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat. Every dispatched agent emits consistent DID/DOING/NEXT/BLOCKERS blocks with real log output (not static \"still running\"); the parent extracts the latest block from each agent every ~120 s and posts one consolidated synthesis table. Use when the user says \"dispatch agents\", \"fan out\", \"run these in parallel with monitoring\", \"give me status every 2 minutes\", or when you are about to launch ≥ 2 background Agents on independent work.",
+              "description": "Dispatches one or more background subagents against disjoint workstreams with a standardized live progress contract, reactive wakeup plus fallback timer heartbeat, and human-consumable status synthesis through swarm-monitor. Every dispatched worker emits machine-greppable DID/DOING/NEXT/BLOCKERS blocks with live command evidence; the coordinator extracts the latest block on event wakeup or a 2-to-4-minute fallback timer and translates multi-worker state into anti-shorthand queue scoreboards and milestone rollups. Use when asked to dispatch agents, fan out parallel work with monitoring, or launch two or more background workers.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 256,
+              "instructionLines": 204,
               "instructionsPath": "sdlc/skills/sdlc-core/dispatch-agent.md",
               "name": "dispatch-agent",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4daaeb0f250c47588c4e26a3f31d141190a3c4ab977d2fec534988461127fad4",
-                "bytes": 12441,
-                "sha256": "4daaeb0f250c47588c4e26a3f31d141190a3c4ab977d2fec534988461127fad4"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b8249bb92409bc74703430785a62f7e41d9edcf57bc553ea9b7b17e1200c6ad1",
+                "bytes": 21917,
+                "sha256": "b8249bb92409bc74703430785a62f7e41d9edcf57bc553ea9b7b17e1200c6ad1"
               },
-              "title": "/dispatch-agent — parallel dispatch with a live 2-minute status heartbeat"
+              "title": "Parallel worker dispatch with live progress telemetry and human-consumable monitoring"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/finding-software",
@@ -13928,13 +14836,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 148,
+              "instructionLines": 149,
               "instructionsPath": "sdlc/skills/sdlc-core/handover-report.md",
               "name": "handover-report",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d7ecbdf3ab8b61871e3c9e8e119865321d62f1e7cc8a7307f84a4453e5156b5a",
-                "bytes": 6281,
-                "sha256": "d7ecbdf3ab8b61871e3c9e8e119865321d62f1e7cc8a7307f84a4453e5156b5a"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa9694429ab8164fcfcf5f029db179a2b511076761ee425627a4cd5e63d97877",
+                "bytes": 6901,
+                "sha256": "fa9694429ab8164fcfcf5f029db179a2b511076761ee425627a4cd5e63d97877"
               },
               "title": "Handover report"
             },
@@ -14042,13 +14950,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 694,
+              "instructionLines": 690,
               "instructionsPath": "sdlc/skills/sdlc-core/merge-manager-watcher.md",
               "name": "merge-manager-watcher",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/94483f58103a588670d317e18633e27fe53c38bb3d89673402427e840145e53c",
-                "bytes": 41152,
-                "sha256": "94483f58103a588670d317e18633e27fe53c38bb3d89673402427e840145e53c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cbcc7a87ffdbfad16e8c6e2a27ca4609c72990127be14b199d3d5a7006ed4e58",
+                "bytes": 45078,
+                "sha256": "cbcc7a87ffdbfad16e8c6e2a27ca4609c72990127be14b199d3d5a7006ed4e58"
               },
               "title": "Merge manager watcher — the loop that runs the merge-steward role"
             },
@@ -14061,13 +14969,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 1104,
+              "instructionLines": 1118,
               "instructionsPath": "sdlc/skills/sdlc-core/merge-queue.md",
               "name": "merge-queue",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ed02f9a480fad2be444a9eed4ea6bb4a7fefb84fb7442f3fdf0a116a93756a3e",
-                "bytes": 64306,
-                "sha256": "ed02f9a480fad2be444a9eed4ea6bb4a7fefb84fb7442f3fdf0a116a93756a3e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c6d9250d449bc0038eeca29f97164445bb8e882faf833147c45d5b39605d48c",
+                "bytes": 67774,
+                "sha256": "4c6d9250d449bc0038eeca29f97164445bb8e882faf833147c45d5b39605d48c"
               },
               "title": "Merge queue — what lands next, and as what"
             },
@@ -14084,9 +14992,9 @@
               "instructionsPath": "sdlc/skills/sdlc-core/merge-to-main.md",
               "name": "merge-to-main",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2e2d17598ff219667f4e87999b0126530e14550c484907019b1b662953e86b23",
-                "bytes": 18020,
-                "sha256": "2e2d17598ff219667f4e87999b0126530e14550c484907019b1b662953e86b23"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5be7acf1ae67b0efca8ca92b383484dd1832de4d861a848b97cfea51d424fa1e",
+                "bytes": 18964,
+                "sha256": "5be7acf1ae67b0efca8ca92b383484dd1832de4d861a848b97cfea51d424fa1e"
               },
               "title": "Merge to `main` — a sub-process with its own gate"
             },
@@ -14554,15 +15462,34 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 195,
+              "instructionLines": 215,
               "instructionsPath": "sdlc/skills/sdlc-core/swarm-management.md",
               "name": "swarm-management",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a197116d917509cf5ee2707bb5216b096d5c32e4c64ecb6b69535ba933190fc3",
-                "bytes": 10886,
-                "sha256": "a197116d917509cf5ee2707bb5216b096d5c32e4c64ecb6b69535ba933190fc3"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a41ffbe38007379cd50f65f9f19205b7c4cc8cc94848deb30695d1b2c3e7b59e",
+                "bytes": 18258,
+                "sha256": "a41ffbe38007379cd50f65f9f19205b7c4cc8cc94848deb30695d1b2c3e7b59e"
               },
               "title": "Swarm management"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Supervises any active multi-agent swarm bound to a parent Swarm Work Item (`epic` or `milestone` in `beans`) on event-driven wakeups and a 2-to-4-minute fallback timer: maintains measurable exit criteria (`EC-1..EC-k`), structured child queues (`completed`, `active`, `queued`, `idle-backlog`), and a live Cold-Start Handover Runbook pushed to `cat/cat-harness/beans` on every routine check-in; checks CPU, disk, and compressed/swap memory headroom; keeps compute-bound workers productive on non-heavy `idle-backlog` work; hands verified pull requests to the merge steward; and publishes standardized two-table human status reports (`on-demand` or `periodic`) free of internal session shorthands.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+              "instructionLines": 462,
+              "instructionsPath": "sdlc/skills/sdlc-core/swarm-monitor.md",
+              "name": "swarm-monitor",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52af6d25ba2f1a24f6099cd27700ca0c37c426c0dacaf4454c89279f73a18f41",
+                "bytes": 40322,
+                "sha256": "52af6d25ba2f1a24f6099cd27700ca0c37c426c0dacaf4454c89279f73a18f41"
+              },
+              "title": "Supervising active swarms, maintaining cold-start handover continuity, and translating worker state for humans"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
@@ -16017,6 +16944,133 @@
           ],
           "name": "sdlc/tools/release-please",
           "path": "sdlc/tools/release-please/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/tools/swarm-epic-sync/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/swarm-epic-sync.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Idempotently create, claim, or refresh any parent Swarm Work Item (`epic` or `milestone`, parameterized by `--epic-id` or `--swarm-slug`, for example a repository `stability` merge swarm, a proof-closure swarm, a graph-detangling swarm, or a literature-audit swarm) with a live Cold-Start Handover Runbook synthesized from `git worktree list`, forge pull-request queues, host process/memory/swap headroom, and `beans` child queues, then push the updated handover note and state to the shared `beans` branch (`cat/cat-harness/beans`).",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "python3 -m swarm_epic_sync"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--epic-id"
+                    },
+                    "description": "Existing parent Swarm Work Item identifier in `beans`; when omitted, resolved or idempotently created from `--swarm-slug`.",
+                    "name": "epic-id",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--swarm-slug"
+                    },
+                    "description": "Goal-specific slug identifying the swarm when `--epic-id` is omitted (for example `stability`, `proof-closure`, `kg-detangle`, or `literature-audit`).",
+                    "name": "swarm-slug",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--repo"
+                    },
+                    "description": "Forge `<owner>/<repo>` queried over REST for open and recently merged pull requests; defaults to the checkout's `origin` remote.",
+                    "name": "repo",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--base"
+                    },
+                    "description": "Default branch ref fetched and recorded in the handover header; default `main`.",
+                    "name": "base",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--state-branch"
+                    },
+                    "description": "Shared work-plan state branch receiving the pushed handover update; default `cat/cat-harness/beans`.",
+                    "name": "state-branch",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--push"
+                    },
+                    "description": "Push the updated work-item handover snapshot to `--state-branch` immediately after writing.",
+                    "name": "push",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--dry-run"
+                    },
+                    "description": "Render the Cold-Start Handover Runbook Markdown to stdout without mutating `beans` or pushing.",
+                    "name": "dry-run",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  },
+                  {
+                    "arg": {
+                      "stdin": true
+                    },
+                    "description": "Optional standing owner directives, acceptance criteria (`EC-1..EC-k`), safety fences, and takeover notes supplied on stdin.",
+                    "name": "notes",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The parent Swarm Work Item created or refreshed.",
+                    "name": "epic",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
+                  },
+                  {
+                    "description": "The synthesized Cold-Start Handover Runbook Markdown (exit criteria, child queues, live worktree/branch/HEAD/PID table, PR wave queues, standing fences, and under-60-second takeover commands).",
+                    "name": "snapshot",
+                    "render": {
+                      "as": "markdown",
+                      "reason": "the cold-start handover runbook is structured Markdown tables and fenced takeover commands rendered on the parent work item"
+                    },
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "swarm-epic-sync",
+              "requirements": {
+                "network": true,
+                "runtime": [
+                  "python3"
+                ]
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/handover-report",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-for-handover"
+              ],
+              "title": "Sync a swarm work item's cold-start handover runbook"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "sdlc/tools/swarm-epic-sync",
+          "path": "sdlc/tools/swarm-epic-sync/"
         }
       ],
       "holdsGraph": [

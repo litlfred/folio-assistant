@@ -262,20 +262,20 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat. Every dispatched agent emits consistent DID/DOING/NEXT/BLOCKERS blocks with real log output (not static \"still running\"); the parent extracts the latest block from each agent every ~120 s and posts one consolidated synthesis table. Use when the user says \"dispatch agents\", \"fan out\", \"run these in parallel with monitoring\", \"give me status every 2 minutes\", or when you are about to launch ≥ 2 background Agents on independent work.",
+      "description": "Dispatches one or more background subagents against disjoint workstreams with a standardized live progress contract, reactive wakeup plus fallback timer heartbeat, and human-consumable status synthesis through swarm-monitor. Every dispatched worker emits machine-greppable DID/DOING/NEXT/BLOCKERS blocks with live command evidence; the coordinator extracts the latest block on event wakeup or a 2-to-4-minute fallback timer and translates multi-worker state into anti-shorthand queue scoreboards and milestone rollups. Use when asked to dispatch agents, fan out parallel work with monitoring, or launch two or more background workers.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 256,
+      "instructionLines": 204,
       "instructionsPath": "sdlc/skills/sdlc-core/dispatch-agent.md",
       "name": "dispatch-agent",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4daaeb0f250c47588c4e26a3f31d141190a3c4ab977d2fec534988461127fad4",
-        "bytes": 12441,
-        "sha256": "4daaeb0f250c47588c4e26a3f31d141190a3c4ab977d2fec534988461127fad4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b8249bb92409bc74703430785a62f7e41d9edcf57bc553ea9b7b17e1200c6ad1",
+        "bytes": 21917,
+        "sha256": "b8249bb92409bc74703430785a62f7e41d9edcf57bc553ea9b7b17e1200c6ad1"
       },
-      "title": "/dispatch-agent — parallel dispatch with a live 2-minute status heartbeat"
+      "title": "Parallel worker dispatch with live progress telemetry and human-consumable monitoring"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/finding-software",
@@ -381,13 +381,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 148,
+      "instructionLines": 149,
       "instructionsPath": "sdlc/skills/sdlc-core/handover-report.md",
       "name": "handover-report",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d7ecbdf3ab8b61871e3c9e8e119865321d62f1e7cc8a7307f84a4453e5156b5a",
-        "bytes": 6281,
-        "sha256": "d7ecbdf3ab8b61871e3c9e8e119865321d62f1e7cc8a7307f84a4453e5156b5a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa9694429ab8164fcfcf5f029db179a2b511076761ee425627a4cd5e63d97877",
+        "bytes": 6901,
+        "sha256": "fa9694429ab8164fcfcf5f029db179a2b511076761ee425627a4cd5e63d97877"
       },
       "title": "Handover report"
     },
@@ -495,13 +495,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 694,
+      "instructionLines": 690,
       "instructionsPath": "sdlc/skills/sdlc-core/merge-manager-watcher.md",
       "name": "merge-manager-watcher",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/94483f58103a588670d317e18633e27fe53c38bb3d89673402427e840145e53c",
-        "bytes": 41152,
-        "sha256": "94483f58103a588670d317e18633e27fe53c38bb3d89673402427e840145e53c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cbcc7a87ffdbfad16e8c6e2a27ca4609c72990127be14b199d3d5a7006ed4e58",
+        "bytes": 45078,
+        "sha256": "cbcc7a87ffdbfad16e8c6e2a27ca4609c72990127be14b199d3d5a7006ed4e58"
       },
       "title": "Merge manager watcher — the loop that runs the merge-steward role"
     },
@@ -514,13 +514,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 1104,
+      "instructionLines": 1118,
       "instructionsPath": "sdlc/skills/sdlc-core/merge-queue.md",
       "name": "merge-queue",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ed02f9a480fad2be444a9eed4ea6bb4a7fefb84fb7442f3fdf0a116a93756a3e",
-        "bytes": 64306,
-        "sha256": "ed02f9a480fad2be444a9eed4ea6bb4a7fefb84fb7442f3fdf0a116a93756a3e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c6d9250d449bc0038eeca29f97164445bb8e882faf833147c45d5b39605d48c",
+        "bytes": 67774,
+        "sha256": "4c6d9250d449bc0038eeca29f97164445bb8e882faf833147c45d5b39605d48c"
       },
       "title": "Merge queue — what lands next, and as what"
     },
@@ -537,9 +537,9 @@
       "instructionsPath": "sdlc/skills/sdlc-core/merge-to-main.md",
       "name": "merge-to-main",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2e2d17598ff219667f4e87999b0126530e14550c484907019b1b662953e86b23",
-        "bytes": 18020,
-        "sha256": "2e2d17598ff219667f4e87999b0126530e14550c484907019b1b662953e86b23"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5be7acf1ae67b0efca8ca92b383484dd1832de4d861a848b97cfea51d424fa1e",
+        "bytes": 18964,
+        "sha256": "5be7acf1ae67b0efca8ca92b383484dd1832de4d861a848b97cfea51d424fa1e"
       },
       "title": "Merge to `main` — a sub-process with its own gate"
     },
@@ -1007,15 +1007,34 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 195,
+      "instructionLines": 215,
       "instructionsPath": "sdlc/skills/sdlc-core/swarm-management.md",
       "name": "swarm-management",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a197116d917509cf5ee2707bb5216b096d5c32e4c64ecb6b69535ba933190fc3",
-        "bytes": 10886,
-        "sha256": "a197116d917509cf5ee2707bb5216b096d5c32e4c64ecb6b69535ba933190fc3"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a41ffbe38007379cd50f65f9f19205b7c4cc8cc94848deb30695d1b2c3e7b59e",
+        "bytes": 18258,
+        "sha256": "a41ffbe38007379cd50f65f9f19205b7c4cc8cc94848deb30695d1b2c3e7b59e"
       },
       "title": "Swarm management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-monitor",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Supervises any active multi-agent swarm bound to a parent Swarm Work Item (`epic` or `milestone` in `beans`) on event-driven wakeups and a 2-to-4-minute fallback timer: maintains measurable exit criteria (`EC-1..EC-k`), structured child queues (`completed`, `active`, `queued`, `idle-backlog`), and a live Cold-Start Handover Runbook pushed to `cat/cat-harness/beans` on every routine check-in; checks CPU, disk, and compressed/swap memory headroom; keeps compute-bound workers productive on non-heavy `idle-backlog` work; hands verified pull requests to the merge steward; and publishes standardized two-table human status reports (`on-demand` or `periodic`) free of internal session shorthands.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 462,
+      "instructionsPath": "sdlc/skills/sdlc-core/swarm-monitor.md",
+      "name": "swarm-monitor",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52af6d25ba2f1a24f6099cd27700ca0c37c426c0dacaf4454c89279f73a18f41",
+        "bytes": 40322,
+        "sha256": "52af6d25ba2f1a24f6099cd27700ca0c37c426c0dacaf4454c89279f73a18f41"
+      },
+      "title": "Supervising active swarms, maintaining cold-start handover continuity, and translating worker state for humans"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",

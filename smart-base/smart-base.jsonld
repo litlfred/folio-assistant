@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d64773af05f7deff8c247a342dcfc297d26b3615",
-  "sourceCommitSha": "d64773af05f7deff8c247a342dcfc297d26b3615",
-  "sourceTree": "69e4b1732b798610b5a24187575ab303cf900de0",
-  "sourceCommitAt": "2026-11-24T07:08:43-05:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/74fd719c7aea9d6c339877024bfd30352a566dce",
+  "sourceCommitSha": "74fd719c7aea9d6c339877024bfd30352a566dce",
+  "sourceTree": "3d178aa9673cc54027f00a080de09d3e65a39d1e",
+  "sourceCommitAt": "2026-11-24T15:47:47-05:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -387,7 +387,7 @@
     "Theme": 1,
     "Asset": 3,
     "Tool": 23,
-    "Schema": 10
+    "Schema": 19
   },
   "@graph": [
     {
@@ -9949,6 +9949,91 @@
       ]
     },
     {
+      "@id": "http://smart.who.int/base/schema/graph",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "graph",
+      "title": "graph",
+      "summary": "A knowledge-graph DOCUMENT — tier 1, its form.",
+      "module": "L1/schemas/graph.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/graph/ClassIdSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/DerivationSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/EdgeSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/EvidenceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/GraphDocumentSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/NodePropertiesSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/NodeSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/PredicateNameSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/graph/ProvenanceSourceSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l1-library",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l1-library",
+      "title": "l1-library",
+      "summary": "L1 bound to the library it is read from — an extension layer over L1 3.0.",
+      "module": "L1/schemas/l1-library.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l1",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l1",
+      "title": "l1",
+      "summary": "The L1 layer of the SMART Guidelines knowledge graph, 3.0 — layout",
+      "module": "L1/schemas/l1.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/ontology",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "ontology",
+      "title": "ontology",
+      "summary": "The shape of an ontology LAYER — what `ontology/<layer>/<layer>.json` holds",
+      "module": "L1/schemas/ontology.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/ontology/BindingSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/ClassKindSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/EdgeRuleSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/GroundingSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/OmissionSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/OntologyClassSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/OntologyLayerSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/PredicateSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/ontology/ValueSetSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/vocab",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "vocab",
+      "title": "vocab",
+      "summary": "Code lists, as the FHIR projection needs them.",
+      "module": "L1/schemas/vocab.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l2",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l2",
+      "title": "l2",
+      "summary": "Knowledge-graph layer L2, version 3.0, as typed data.",
+      "module": "L2/schemas/l2.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l2-bpmn",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l2-bpmn",
+      "title": "l2-bpmn",
+      "summary": "Knowledge-graph layer L2-BPMN, version 3.0, as typed data.",
+      "module": "L2-bpmn/schemas/l2-bpmn.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-bpmn"
+    },
+    {
       "@id": "http://smart.who.int/base/schema/task-annotations",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "task-annotations",
@@ -9962,6 +10047,24 @@
         "http://smart.who.int/base/schema/zod/task-annotations/TaskAnnotationSchema.schema.json",
         "http://smart.who.int/base/schema/zod/task-annotations/UnmatchedItemSchema.schema.json"
       ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l2-dmn",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l2-dmn",
+      "title": "l2-dmn",
+      "summary": "Knowledge-graph layer L2-DMN, version 3.0, as typed data.",
+      "module": "L2-dmn/schemas/l2-dmn.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-dmn"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l3",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "l3",
+      "title": "l3",
+      "summary": "Knowledge-graph layer L3, version 3.0, as typed data.",
+      "module": "L3/schemas/l3.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3"
     }
   ]
 }

@@ -3,6 +3,38 @@
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/",
   "@type": "bootstrap:Subgraph",
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/schema/graph",
+      "@type": "cat-harness:Schema",
+      "name": "graph",
+      "title": "graph"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l1",
+      "@type": "cat-harness:Schema",
+      "name": "l1",
+      "title": "l1"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/l1-library",
+      "@type": "cat-harness:Schema",
+      "name": "l1-library",
+      "title": "l1-library"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/ontology",
+      "@type": "cat-harness:Schema",
+      "name": "ontology",
+      "title": "ontology"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/vocab",
+      "@type": "cat-harness:Schema",
+      "name": "vocab",
+      "title": "vocab"
+    }
+  ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/docs/",
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/generated/",

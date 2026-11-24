@@ -1561,7 +1561,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat. Every dispatched agent emits consistent DID/DOING/NEXT/BLOCKERS blocks with real log output (not static \"still running\"); the parent extracts the latest block from each agent every ~120 s and posts one consolidated synthesis table. Use when the user says \"dispatch agents\", \"fan out\", \"run these in parallel with monitoring\", \"give me status every 2 minutes\", or when you are about to launch ≥ 2 background Agents on independent work.",
+          "@value": "Dispatches one or more background subagents against disjoint workstreams with a standardized live progress contract, reactive wakeup plus fallback timer heartbeat, and human-consumable status synthesis through swarm-monitor. Every dispatched worker emits machine-greppable DID/DOING/NEXT/BLOCKERS blocks with live command evidence; the coordinator extracts the latest block on event wakeup or a 2-to-4-minute fallback timer and translates multi-worker state into anti-shorthand queue scoreboards and milestone rollups. Use when asked to dispatch agents, fan out parallel work with monitoring, or launch two or more background workers.",
           "@language": "en"
         }
       ],
@@ -4427,6 +4427,28 @@
       ],
       "skos:notation": "swarm-management",
       "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/swarm-management.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/swarm-monitor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "swarm-monitor",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Supervises any active multi-agent swarm bound to a parent Swarm Work Item (`epic` or `milestone` in `beans`) on event-driven wakeups and a 2-to-4-minute fallback timer: maintains measurable exit criteria (`EC-1..EC-k`), structured child queues (`completed`, `active`, `queued`, `idle-backlog`), and a live Cold-Start Handover Runbook pushed to `cat/cat-harness/beans` on every routine check-in; checks CPU, disk, and compressed/swap memory headroom; keeps compute-bound workers productive on non-heavy `idle-backlog` work; hands verified pull requests to the merge steward; and publishes standardized two-table human status reports (`on-demand` or `periodic`) free of internal session shorthands.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "swarm-monitor",
+      "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/swarm-monitor.md",
       "skos:note": "candidate"
     },
     {

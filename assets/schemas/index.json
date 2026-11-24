@@ -2482,6 +2482,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "qa-axis.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "instance": "cat-harness-tools",
+      "name": "qa-axis",
+      "graphNode": "undeclared",
+      "summary": "QA axes — what part of an instance a QA record is ABOUT, and one shared",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/qa-report.test.ts",
       "instance": "cat-harness-tools",
       "name": "qa-report.test",
@@ -4193,7 +4208,8 @@
       "module": "smart-base/L1/schemas/compare-extract.ts",
       "instance": "smart-base",
       "name": "compare-extract",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a tool comparing two extractor outputs, not a schema",
       "summary": "Compares two extractor outputs — a committed fixture against a fresh",
       "isTest": false
     },
@@ -4201,7 +4217,8 @@
       "module": "smart-base/L1/schemas/context.ts",
       "instance": "smart-base",
       "name": "context",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "generates JSON-LD contexts from the layer schemas; defines none itself",
       "summary": "JSON-LD contexts for L1 graph documents, generated from the same Zod layer",
       "isTest": false
     },
@@ -4209,7 +4226,8 @@
       "module": "smart-base/L1/schemas/emit.ts",
       "instance": "smart-base",
       "name": "emit",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "the generator that writes artefacts from the Zod source",
       "summary": "Write every artefact generated from the Zod source, or with `--check`, fail",
       "isTest": false
     },
@@ -4217,7 +4235,8 @@
       "module": "smart-base/L1/schemas/exports.ts",
       "instance": "smart-base",
       "name": "exports",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "Turtle and Cypher views generated from the layer schemas",
       "summary": "Turtle and Cypher views of each layer's TYPE graph (classes and licensed",
       "isTest": false
     },
@@ -4225,7 +4244,8 @@
       "module": "smart-base/L1/schemas/extract-doc.ts",
       "instance": "smart-base",
       "name": "extract-doc",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "node and edge builders shared by the extractors",
       "summary": "What every knowledge-graph EXTRACTOR shares: the node and edge builders, the",
       "isTest": false
     },
@@ -4233,7 +4253,8 @@
       "module": "smart-base/L1/schemas/fsh.ts",
       "instance": "smart-base",
       "name": "fsh",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "generates FSH from the layer schemas; defines none itself",
       "summary": "FHIR Shorthand generated from the Zod schema — the bridge to the FHIR",
       "isTest": false
     },
@@ -4241,7 +4262,7 @@
       "module": "smart-base/L1/schemas/graph.ts",
       "instance": "smart-base",
       "name": "graph",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "A knowledge-graph DOCUMENT — tier 1, its form.",
       "isTest": false
     },
@@ -4249,14 +4270,17 @@
       "module": "smart-base/L1/schemas/index.ts",
       "instance": "smart-base",
       "name": "index",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a registry barrel listing the layers this subgraph holds",
+      "summary": "The layers this subgraph's schemas hold, for the engine's registry (layers.ts).",
       "isTest": false
     },
     {
       "module": "smart-base/L1/schemas/kgid.ts",
       "instance": "smart-base",
       "name": "kgid",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "identity and content-hashing functions",
       "summary": "L1 identity and content hashing — a port of WHO smart-kg `tools/kgid.mjs`",
       "isTest": false
     },
@@ -4264,7 +4288,7 @@
       "module": "smart-base/L1/schemas/l1-library.ts",
       "instance": "smart-base",
       "name": "l1-library",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "L1 bound to the library it is read from — an extension layer over L1 3.0.",
       "isTest": false
     },
@@ -4272,7 +4296,8 @@
       "module": "smart-base/L1/schemas/l1-queries.ts",
       "instance": "smart-base",
       "name": "l1-queries",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "query functions over an L1 graph",
       "summary": "The three questions L1 exists to answer (docs/SCOPE.md), as functions over a",
       "isTest": false
     },
@@ -4280,7 +4305,7 @@
       "module": "smart-base/L1/schemas/l1.ts",
       "instance": "smart-base",
       "name": "l1",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "The L1 layer of the SMART Guidelines knowledge graph, 3.0 — layout",
       "isTest": false
     },
@@ -4288,7 +4313,8 @@
       "module": "smart-base/L1/schemas/layers.ts",
       "instance": "smart-base",
       "name": "layers",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "finds the declared layers; a registry, not a schema",
       "summary": "Every knowledge-graph layer smart-base holds, found from its DECLARATIONS",
       "isTest": false
     },
@@ -4296,7 +4322,8 @@
       "module": "smart-base/L1/schemas/loader.ts",
       "instance": "smart-base",
       "name": "loader",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "an offline JSON-LD document loader",
       "summary": "Offline JSON-LD contexts for L1 graph documents.",
       "isTest": false
     },
@@ -4304,7 +4331,7 @@
       "module": "smart-base/L1/schemas/ontology.ts",
       "instance": "smart-base",
       "name": "ontology",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "The shape of an ontology LAYER — what `ontology/<layer>/<layer>.json` holds",
       "isTest": false
     },
@@ -4312,7 +4339,8 @@
       "module": "smart-base/L1/schemas/props.ts",
       "instance": "smart-base",
       "name": "props",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "constructor functions for PropertySpec, used by the layer schemas",
       "summary": "Constructors for {@link PropertySpec}. One per FHIR type, so a property's",
       "isTest": false
     },
@@ -4320,7 +4348,8 @@
       "module": "smart-base/L1/schemas/shape-text.ts",
       "instance": "smart-base",
       "name": "shape-text",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "verbatim prose constants carried from smart-kg",
       "summary": "The prose of smart-kg's graph shape, carried VERBATIM from",
       "isTest": false
     },
@@ -4328,7 +4357,8 @@
       "module": "smart-base/L1/schemas/validate.ts",
       "instance": "smart-base",
       "name": "validate",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a validator over graph documents",
       "summary": "Check a knowledge-graph document: tier 1 (form, `graph.ts`) then tier 2",
       "isTest": false
     },
@@ -4336,7 +4366,7 @@
       "module": "smart-base/L1/schemas/vocab.ts",
       "instance": "smart-base",
       "name": "vocab",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Code lists, as the FHIR projection needs them.",
       "isTest": false
     },
@@ -4344,7 +4374,8 @@
       "module": "smart-base/L2-bpmn/schemas/extract-bpmn.ts",
       "instance": "smart-base",
       "name": "extract-bpmn",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "the L2-BPMN extractor",
       "summary": "Extracts the interior of a BPMN file as the L2-BPMN subgraph — a port of",
       "isTest": false
     },
@@ -4352,14 +4383,16 @@
       "module": "smart-base/L2-bpmn/schemas/index.ts",
       "instance": "smart-base",
       "name": "index",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a registry barrel listing the layers this subgraph holds",
+      "summary": "The layers this subgraph's schemas hold, for the engine in ../../L1/schemas/ (layers.ts).",
       "isTest": false
     },
     {
       "module": "smart-base/L2-bpmn/schemas/l2-bpmn.ts",
       "instance": "smart-base",
       "name": "l2-bpmn",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Knowledge-graph layer L2-BPMN, version 3.0, as typed data.",
       "isTest": false
     },
@@ -4375,7 +4408,8 @@
       "module": "smart-base/L2-dmn/schemas/extract-citations.ts",
       "instance": "smart-base",
       "name": "extract-citations",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "extracts L1 citations from DMN; an extractor",
       "summary": "Extracts L1 citations from a DMN decision table — a port of WHO smart-kg",
       "isTest": false
     },
@@ -4383,7 +4417,8 @@
       "module": "smart-base/L2-dmn/schemas/extract-dmn.ts",
       "instance": "smart-base",
       "name": "extract-dmn",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "the L2-DMN extractor",
       "summary": "Extracts the interior of a DMN file as the L2-DMN subgraph — a port of WHO",
       "isTest": false
     },
@@ -4391,14 +4426,16 @@
       "module": "smart-base/L2-dmn/schemas/index.ts",
       "instance": "smart-base",
       "name": "index",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a registry barrel listing the layers this subgraph holds",
+      "summary": "The layers this subgraph's schemas hold, for the engine in ../../L1/schemas/ (layers.ts).",
       "isTest": false
     },
     {
       "module": "smart-base/L2-dmn/schemas/l2-dmn.ts",
       "instance": "smart-base",
       "name": "l2-dmn",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Knowledge-graph layer L2-DMN, version 3.0, as typed data.",
       "isTest": false
     },
@@ -4406,7 +4443,8 @@
       "module": "smart-base/L2/schemas/extract-dak.ts",
       "instance": "smart-base",
       "name": "extract-dak",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "the L2 DAK extractor",
       "summary": "Extracts the DAK component layer (L2) from a smart-base-shaped IG — a port",
       "isTest": false
     },
@@ -4414,14 +4452,17 @@
       "module": "smart-base/L2/schemas/index.ts",
       "instance": "smart-base",
       "name": "index",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a registry barrel listing the layers this subgraph holds",
+      "summary": "The layers this subgraph's schemas hold, for the engine in ../../L1/schemas/ (layers.ts).",
       "isTest": false
     },
     {
       "module": "smart-base/L2/schemas/kgid-l2.ts",
       "instance": "smart-base",
       "name": "kgid-l2",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "DAK-namespace identity functions",
       "summary": "DAK-namespace identity — the half of WHO smart-kg `tools/kgid.mjs` (main",
       "isTest": false
     },
@@ -4429,7 +4470,7 @@
       "module": "smart-base/L2/schemas/l2.ts",
       "instance": "smart-base",
       "name": "l2",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Knowledge-graph layer L2, version 3.0, as typed data.",
       "isTest": false
     },
@@ -4437,7 +4478,8 @@
       "module": "smart-base/L3/schemas/extract-l3.ts",
       "instance": "smart-base",
       "name": "extract-l3",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "the L3 extractor",
       "summary": "Extracts the L3 index from a SMART Guidelines Implementation Guide's source",
       "isTest": false
     },
@@ -4445,14 +4487,16 @@
       "module": "smart-base/L3/schemas/index.ts",
       "instance": "smart-base",
       "name": "index",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a registry barrel listing the layers this subgraph holds",
+      "summary": "The layers this subgraph's schemas hold, for the engine in ../../L1/schemas/ (layers.ts).",
       "isTest": false
     },
     {
       "module": "smart-base/L3/schemas/l3.ts",
       "instance": "smart-base",
       "name": "l3",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Knowledge-graph layer L3, version 3.0, as typed data.",
       "isTest": false
     },
@@ -34683,6 +34727,14 @@
           "doc": "The visualisers this harness declares, each at `<base>/<name>/<id>/` — {@link HarnessVisualiser}. Owner, 2026-10-09."
         },
         {
+          "name": "qa",
+          "type": "QaDeclaration",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "doc": "What this instance's QA publish runs and which QA axes it answers for —"
+        },
+        {
           "name": "builtAtPublish",
           "type": "BuiltAtPublish[]",
           "optional": true,
@@ -34906,7 +34958,8 @@
         "cat-harness-tools/schemas/kg/kg-node.ts#KgNodeLabels",
         "cat-harness-tools/schemas/kg/remote-mount.ts#MountDefaults",
         "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMount",
-        "cat-harness-tools/schemas/kg/repo-full-name.ts#RepoFullName"
+        "cat-harness-tools/schemas/kg/repo-full-name.ts#RepoFullName",
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclaration"
       ],
       "unresolved": [],
       "external": [],
@@ -36348,6 +36401,18 @@
             "object": "https://zod.dev/api#objects"
           },
           "doc": "Its pages are built at publish on the HOST site (the site owner's, e.g."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a visualiser id\")).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Other visualisers of THIS harness whose per-instance page is a section of"
         }
       ],
       "extendsNames": [
@@ -80799,6 +80864,359 @@
       "unresolved": [],
       "external": [],
       "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+      "name": "QaAxis",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+      "name": "QaAxisSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaCounts",
+      "name": "QaCounts",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "interface",
+      "doc": "One shared vocabulary for counts. Every field optional: an absent field was",
+      "fields": [
+        {
+          "name": "pass",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "fail",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "warn",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "unknown",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "na",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclaration",
+      "name": "QaDeclaration",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclarationSchema",
+      "name": "QaDeclarationSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "zod-object",
+      "doc": "An instance's QA declaration, `qa` in `<instance>.json`.",
+      "fields": [
+        {
+          "name": "writers",
+          "type": "z.array(QaWriterDeclSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "QaWriterDeclSchema[]"
+        },
+        {
+          "name": "axes",
+          "type": "z.array(QaAxisSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "QaAxisSchema[]"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaFormatRule",
+      "name": "QaFormatRule",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "interface",
+      "doc": "How a record's format maps onto an axis: by `$schema` (exact, or a prefix",
+      "fields": [
+        {
+          "name": "axis",
+          "type": "QaAxis",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "schemas",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "`$schema` values (exact) this rule claims."
+        },
+        {
+          "name": "paths",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Path suffixes or `/`-segments (`/block-qa/`) this rule claims when no `$schema` decides."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary",
+      "name": "QaRecordSummary",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "interface",
+      "doc": "What the page needs of one record, without fetching it.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Entry-relative path."
+        },
+        {
+          "name": "schema",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "axis",
+          "type": "QaAxis",
+          "optional": true,
+          "array": false,
+          "card": "0..1"
+        },
+        {
+          "name": "counts",
+          "type": "QaCounts",
+          "optional": true,
+          "array": false,
+          "card": "0..1"
+        },
+        {
+          "name": "subject",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "A short subject label (`kind:id`, a block label, a locale)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaCounts"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDecl",
+      "name": "QaWriterDecl",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema",
+      "name": "QaWriterDeclSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "zod-object",
+      "doc": "One QA writer an instance's publish runs. `run` is a shell command run from",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9:-]*$/, \"a writer id: lower-case letters, digits, `-`, `:`\")",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "axis",
+          "type": "QaAxisSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "run",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "writes",
+          "type": "z.array(z.string().min(1)).nonempty()",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "because",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
       "exported": true
     },
     {
@@ -159982,6 +160400,14 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclaration",
+      "via": "qa",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory",
       "to": "cat-harness-tools/schemas/kg/cat-harness.ts#DirectoryStorage",
       "via": "storage",
@@ -167114,6 +167540,54 @@
       "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsBaseSchema",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclarationSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+      "via": "axes",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclarationSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema",
+      "via": "writers",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaFormatRule",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+      "via": "axis",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+      "via": "axis",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaCounts",
+      "via": "counts",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+      "via": "axis",
+      "kind": "field",
       "optional": false,
       "array": false
     },

@@ -29,6 +29,15 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
+          "@id": "http://smart.who.int/base/schema/l2-bpmn",
+          "@type": "cat-harness:Schema",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-bpmn",
+          "module": "L2-bpmn/schemas/l2-bpmn.ts",
+          "name": "l2-bpmn",
+          "summary": "Knowledge-graph layer L2-BPMN, version 3.0, as typed data.",
+          "title": "l2-bpmn"
+        },
+        {
           "@id": "http://smart.who.int/base/schema/task-annotations",
           "@type": "cat-harness:Schema",
           "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-bpmn",

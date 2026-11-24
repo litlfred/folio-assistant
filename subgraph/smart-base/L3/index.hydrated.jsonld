@@ -159,6 +159,17 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/",
       "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/schema/l3",
+          "@type": "cat-harness:Schema",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+          "module": "L3/schemas/l3.ts",
+          "name": "l3",
+          "summary": "Knowledge-graph layer L3, version 3.0, as typed data.",
+          "title": "l3"
+        }
+      ],
       "hasSubgraph": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/generated/",

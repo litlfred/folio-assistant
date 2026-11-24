@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Steward_QueuePr.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/node/Steward_QueuePr",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Queue PR in merge watch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor/lane/Lane_MergeSteward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_16"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwarmDispatchAndMonitor#flow/Flow_18"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
+    }
+  ]
+}

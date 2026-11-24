@@ -6353,7 +6353,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Add the merge-train label instead of merging; the train lands the batch with one CI run.",
+          "@value": "Run Process_MergeTrain across the queued ready PRs: in a CI-runner repository add the merge-train label (or run merge:train) so CI judges the combined batch once; in a local-gate or dispatch-only repository compose 4-8 mutually independent PRs (merge-overlap on authoredPaths) onto merge-train/<base>-<n>, regenerate declared regions once, run Task_LocalGates once on the stack, bisect and eject only any culprit via Process_MergeRefusal, and land surviving members in train order with verify-merge-replay.",
           "@language": "en"
         }
       ],
@@ -6413,13 +6413,13 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Merge it through merge:guard",
+          "@value": "Merge single PR to main",
           "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A).",
+          "@value": "A lone ready PR (queue depth 1), a .github/workflows/ PR (when MERGE_TRAIN_CARRIES_WORKFLOWS is unset), or a subscriptions/ PR lands individually through Process_MergeToMain (merge:guard where present, or head-SHA-pinned merge after Task_LocalGates on no-CI repositories). A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A).",
           "@language": "en"
         }
       ],
@@ -11763,6 +11763,336 @@
       ],
       "skos:notation": "Task_Validate",
       "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.call_monitorsweep",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Sweep, triage and sync handover",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run Process_SwarmMonitorSweep on reactive wakeups, routine check-in ticks, or on-demand status requests: inspect worker progress, queues, and compressed/swap memory, triage leaks or stalls, assign non-heavy idle-backlog items to compute-bound workers, push a fresh Cold-Start Handover Runbook to beans, and emit the two-table status report when due.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Call_MonitorSweep",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Call_MonitorSweep",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.mon_closebean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close or park swarm epic",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Cancel any remaining wakeup or periodic report timer and run Process_BeanClose on the parent Swarm Work Item: complete and archive once EC-1..EC-k are satisfied, or record explicit blockers and cold-takeover dispatch lines in beans and hand back cleanly.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Mon_CloseBean",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Mon_CloseBean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.mon_refill",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refill slots and re-arm timer",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Claim the next unblocked child work items in the shared beans store (pushing updated queue and handover state to the branch store), dispatch fresh isolated-worktree workers into freed slots with the mandatory role-specific Process & Skill Launch Block and progress contract, and re-arm the 2-to-4-minute one-shot fallback timer before ending the turn.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Mon_Refill",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Mon_Refill",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.owner_decidespawn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decide swarm card",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Coordinator posts the full context, exit criteria, worker count, model tiers, relative token cost, reporting mode (on-demand vs periodic), options, and recommendation in chat, followed immediately by a tappable card; the owner approves or declines.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Owner_DecideSpawn",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Owner_DecideSpawn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.steward_queuepr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Queue PR in merge watch",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Hand the verified six-line merge request (or ready-to-merge / needs-repin label) to the active merge steward for batch approval and merge-train landing; neither workers nor monitor self-merge outside the merge-steward lane.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Steward_QueuePr",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Steward_QueuePr",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.swarm_decompose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decompose disjoint sub-beans",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Verify that a swarm is justified over serial execution (swarm-management), partition the goal into child work items with disjoint writable paths, explicit Done-when criteria, and non-compute-heavy idle-backlog items, and size worker count, model tiers (cost-aware routing), and host concurrency bounds.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Swarm_Decompose",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Swarm_Decompose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.swarm_openbean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the swarm epic",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Claim the parent Swarm Work Item and initial worker sub-beans in the shared beans store through Process_BeanOpen and push state to the branch store so sibling sessions see every active claim and handover header.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Swarm_OpenBean",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Swarm_OpenBean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.task_dispatchworker",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Dispatch workers with skill brief",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Spawned siblings start with a blank context: inject the mandatory role-specific Process & Skill Launch Block into every worker prompt (for a Merge Steward: repo local skills, merge-manager-watcher, merge-queue / Process_MergeTrain + merge-overlap + Process_MergeRefusal, merge-to-main + Task_LocalGates + verify-merge-replay, merge-conflict-patterns, and beans show <epic-id>; for any Task Sibling: target repo .claude/skills/local/*.md first, continual-progress, idle-backlog without passive sleep timers or mid-build git checkout, merge-request / merge-queue never-self-merge 6-line handoff, interaction-modality / hand-back-to-discussion, one-voice-style-guide, and repo fences), plus the verbatim PROGRESS contract; arm the 2-to-4-minute fallback timer.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_DispatchWorker",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Task_DispatchWorker",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.task_initorclaimswarmepic",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bind or resume swarm epic",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Query beans for an active parent Swarm Work Item (epic or milestone, parameterized by --epic-id or --swarm-title; check before creating). On cold takeover after a stall, read its Cold-Start Handover Runbook first; otherwise define measurable exit criteria (EC-1..EC-k), structured child queues (completed, active, queued, idle-backlog), and user-selected status cadence (on-demand vs periodic).",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_InitOrClaimSwarmEpic",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Task_InitOrClaimSwarmEpic",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmdispatchandmonitor.work_execute",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Execute slice or idle backlog",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Each worker executes its claimed disjoint slice in its worktree (or advances a right-scoped non-heavy idle-backlog item in a separate worktree while waiting on single-core compute, never checking out mid-build), emits live progress blocks, runs verification, pushes its branch and PR, and emits DONE without merging.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Work_Execute",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor.bpmn#Work_Execute",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmmonitorsweep.mon_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish scoreboard and status table",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Publish the standardized two-table Human-Consumable Swarm Status Report with zero naked worker codes, bare PR ranges, or unglossed bean IDs: (Table 1) Live Repository Queue Scoreboard across PRs, Work Items, and Issues with host headroom, and (Table 2) Full Multi-Track End-State, Queue, and Worker Status Table stating EC-1..EC-k progress and plain-English proved or measured outcomes.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Mon_Report",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn#Mon_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmmonitorsweep.mon_sweep",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Sweep progress, queues and swap",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run the targeted JSONL progress extractor, query live forge PR/issue counts and synced beans states against origin/main, and inspect CPU load, root disk free space (df -h /), and total plus compressed/swap memory (top -l 1 -o mem -stats pid,command,mem,cmprs on macOS or VmRSS + VmSwap on Linux, never ps -o rss alone).",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Mon_Sweep",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn#Mon_Sweep",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmmonitorsweep.mon_triage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Nudge, kill leak or pull Andon",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Immediately SIGKILL any runaway subprocess leaking into compressed memory or swapfiles and message its worker; nudge a silent worker via SendMessage; route dead sessions through stalled-agent-triage; or pull the Andon cord to halt remaining workers on structural divergence or host exhaustion.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Mon_Triage",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn#Mon_Triage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmmonitorsweep.task_assignidlecomputebacklog",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Assign non-heavy idle backlog",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Assign a right-scoped, non-compute-heavy item from the parent Swarm Work Item's idle-backlog queue (documentation, metadata, review checklists, or disjoint lightweight edits in a separate git worktree, never running git checkout inside the active build's worktree) instead of letting the worker sleep on passive timers.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_AssignIdleComputeBacklog",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn#Task_AssignIdleComputeBacklog",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_swarmmonitorsweep.task_refreshswarmhandover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refresh and push epic handover",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On every routine monitor check-in tick and milestone transition (whether chat reporting is periodic or quiet on-demand), update the parent Swarm Work Item's Cold-Start Handover Runbook (origin/main SHA, EC-1..EC-k exit status, merged/open PR wave queues, worktree-to-branch-to-HEAD-to-role/PID table, verbatim owner directives and safety fences, and under-60-second cold-takeover commands plus dispatch lines) and push immediately to cat/cat-harness/beans via swarm-epic-sync / state:push.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_RefreshSwarmHandover",
+      "dcterms:source": "cat-harness/sdlc/processes/swarm-dispatch-and-monitor-sweep.bpmn#Task_RefreshSwarmHandover",
       "skos:note": "candidate"
     },
     {

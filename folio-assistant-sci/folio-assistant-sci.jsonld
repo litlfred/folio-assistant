@@ -367,18 +367,18 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d64773af05f7deff8c247a342dcfc297d26b3615",
-  "sourceCommitSha": "d64773af05f7deff8c247a342dcfc297d26b3615",
-  "sourceTree": "69e4b1732b798610b5a24187575ab303cf900de0",
-  "sourceCommitAt": "2026-11-24T07:08:43-05:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/74fd719c7aea9d6c339877024bfd30352a566dce",
+  "sourceCommitSha": "74fd719c7aea9d6c339877024bfd30352a566dce",
+  "sourceTree": "3d178aa9673cc54027f00a080de09d3e65a39d1e",
+  "sourceCommitAt": "2026-11-24T15:47:47-05:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 71,
     "Process": 3,
-    "SequenceFlow": 27,
+    "SequenceFlow": 33,
     "Lane": 8,
-    "ProcessNode": 28,
+    "ProcessNode": 34,
     "Decision": 1,
     "TranslationSource": 25,
     "GraphTypology": 25,
@@ -1292,10 +1292,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "lean-html-docs",
-      "title": "Lean HTML docs — the `lean` directory's visualiser",
-      "description": "Build and publish the visualiser of a folio's declared `lean` directory: the package's doc-gen4 HTML render, staged under the folio's site and wrapped in the harness navbar and rail. Use when a folio's Lean docs are missing, stale, or published without the harness chrome, or when declaring a `lean` directory and its `coverage.visualiser`.",
+      "title": "Lean HTML docs — a folio's Lean render, from its branch store to its site",
+      "description": "Build a folio's Lean render (the Lean knowledge-graph viewer made from doc-gen4's declaration data for its Lake packages), keep it on the folio's branch-mounted Lean store, and publish it under the folio's site wrapped in the harness navbar and rail. Use when a folio's Lean docs are missing, stale, or published without the harness chrome, or when declaring the Lean store a folio mounts.",
       "instructionsPath": "skills/lean/lean-html-docs.md",
-      "instructionLines": 181,
+      "instructionLines": 233,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1415,8 +1415,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Publish a folio's Lean render with the harness chrome",
-      "summary": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail.",
-      "description": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail.\n\nTwo steps in two lanes. The build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache (a Lake build over an untraced restore evicts it), so it sits with the Lean toolchain and refuses rather than risks. The publish is a file pass over the build's output that cannot touch the cache; it sits with the build pipeline, after the site is built and before the chrome check and deploy, where `stage-folio-local.ts` rails the folio's own pages.\n\nOnly End_Ready publishes: a refused guard, a failed build and an unrailed page are each reported as such, never as a complete site without Lean docs.",
+      "summary": "Build a folio's Lean render — the doc-gen4 HTML of the Lake packages the folio holds — keep it on its own branch store, and publish it inside the folio's site with the harness navbar and rail.",
+      "description": "Build a folio's Lean render — the doc-gen4 HTML of the Lake packages the folio holds — keep it on its own branch store, and publish it inside the folio's site with the harness navbar and rail.\n\nThe visualiser is the Lean KNOWLEDGE-GRAPH viewer (owner, 2026-11-19: \"use thin html and dynamic loading\"): `lean-kg-publish` turns doc-gen4's per-module declaration data into one viewer page and JSON shards the page loads on demand. doc-gen4's static HTML is a non-default fallback only.\n\nThree places, and each step says which it reads and writes. The SOURCE is the Lake packages in the folio's own tree (`folio/<paper>/lean/`), never moved. The RENDER lives on a branch store the folio declares (a directory of graph typology `lean` with `source: { kind: \"branch\", keyedBy: \"tip\" }`, on a branch under `cat/folio-assistant-sci/`), mounted at the declared path by `state:mount` exactly as `beans/` is; it is never committed to the folio's main. The PUBLISHED pages are the site's route named by that declaration's `coverage.visualiser` (`_site/lean/index.html` → `lean/`).\n\nThe build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache (a Lake build over an untraced restore evicts it), so it sits with the Lean toolchain and refuses rather than risks. Its output is pushed to the branch store (`branch-store.ts push --id <id>`), so a site build needs no Lean toolchain at all: it mounts the store and rails the render, a file pass that cannot touch the cache, after the site is built and before the chrome check and deploy. A site rebuilt without a Lean change starts at the mount.\n\nOnly End_Ready publishes: a refused guard, a failed build, a store that did not take the push, a mount that failed and an unrailed page are each reported as such, never as a complete site without Lean docs.",
       "enforcement": "strict",
       "sourcePath": "processes/content/lean-docs-publish.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/lean-docs-publish.bpmn",
@@ -1424,8 +1424,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Start_Changed"
       ],
-      "nodeCount": 8,
-      "flowCount": 7,
+      "nodeCount": 14,
+      "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
@@ -1447,10 +1447,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_2",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "yes — built",
+      "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Built",
-      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Store",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
@@ -1460,6 +1460,58 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Built",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoRender",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Store",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Stored",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Stored",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Mount",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Stored",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NotStored",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Mount",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Mounted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Mounted",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Mounted",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoMount",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
@@ -1507,7 +1559,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Start_Changed",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "The folio's Lean sources or its site changed",
+      "name": "Lean sources changed",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
@@ -1568,7 +1620,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoRender",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "No render — refused or failed; nothing published",
+      "name": "No render — refused or failed; nothing stored",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
@@ -1584,9 +1636,70 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Store",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Stage the render under the site and rail every page",
+      "name": "Write the KG render to the Lean branch store",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Stored",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Did the store take it?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_8",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NotStored",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Not stored — the previous render stands",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Mount",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Mount the Lean branch store",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
@@ -1598,7 +1711,68 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_2"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/GW_Mounted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Is the render on disk?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_11",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/End_NoMount",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "No mounted render — Lean pages not published",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish the render at its route, railed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_11"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_4"
@@ -2649,7 +2823,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "lean",
       "renderable": false,
-      "summary": "A folio's Lean 4 formalisation: Lake packages, their modules and the declarations in them. Declared by the folio that holds the packages; this harness owns the kind, the Lean tools and the rendering (doc-gen4 HTML wrapped in the harness rail).",
+      "summary": "A folio's Lean 4 formalisation and its render: the Lake packages stay in the folio's tree; the render, the Lean knowledge-graph viewer, is kept on a branch store the folio declares with this kind and mounts. This harness owns the kind, the Lean tools and the publishing (the KG viewer wrapped in the harness rail).",
       "validatorNotApplicable": "a member is Lean 4 source — a Lake package (`lakefile.toml` / `lakefile.lean`, `lean-toolchain`), its modules (`*.lean`) and their declarations — or a template the Lean tooling fills (`*.lean.tmpl`). Its validator is the Lean elaborator itself (`lake build`, or `lean`-direct against a restored cache), never a Zod schema: a file that parses as JSON tells you nothing about whether it typechecks."
     },
     {

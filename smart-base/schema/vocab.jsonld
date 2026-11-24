@@ -1,0 +1,17 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/schema/vocab.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/vocab.jsonld",
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/vocab",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "vocab",
+      "title": "vocab",
+      "summary": "Code lists, as the FHIR projection needs them.",
+      "module": "L1/schemas/vocab.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1"
+    }
+  ]
+}

@@ -40,7 +40,7 @@
   },
   "statusSrc":"../../../../../assets/translation-status/index.json",
   "reviewSrc":"../../../../../assets/translation-status/review.json"
-}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../folio-assistant-core/","jsonld":"../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../../../../../assets/css/docs-ui.css?v=4c7265cca407"><link rel="stylesheet" href="../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../../../../../assets/js/docs-ui.js?v=cae1ad7ba8e7" defer></script><script src="../../../../../assets/js/edit-links.js?v=7b072444cbb5" defer></script><script src="../../../../../assets/js/translation-review.js?v=3ab638979d22" defer></script><script src="../../../../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../folio-assistant-core/","jsonld":"../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../../../../../assets/css/docs-ui.css?v=4c7265cca407"><link rel="stylesheet" href="../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../../../../../assets/js/docs-ui.js?v=cae1ad7ba8e7" defer></script><script src="../../../../../assets/js/edit-links.js?v=56a2d25f0900" defer></script><script src="../../../../../assets/js/translation-review.js?v=3ab638979d22" defer></script><script src="../../../../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
   .folio-landing { position: relative; margin: 0 0 2rem; }
 
   /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
@@ -1166,11 +1166,6 @@ ca&amp;at-harness
   },
   {
     &quot;id&quot;: &quot;cat-harness-libraries&quot;,
-    &quot;coverage&quot;: {
-      &quot;exempt&quot;: {
-        &quot;visualiser&quot;: &quot;Owner, 2026-10-29 (cat-harness#691): no viewer by design. Each node is an outside package whose registry tarball and SPDX licence the node already links, so a viewer would only repeat the registry.&quot;
-      }
-    },
     &quot;path&quot;: &quot;libraries/&quot;,
     &quot;title&quot;: &quot;Software libraries&quot;,
     &quot;description&quot;: &quot;The outside libraries this layer&#39;s code imports, one `software-library` node each: the version and sha512 `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, and the files that import it (`usedBy`). GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, or a shim no node names. The kind is this layer&#39;s own (`schemas/library/software-library.ts`, bean `jbvi`); each layer keeps its own nodes because it pins its own versions.&quot;,
@@ -1178,7 +1173,7 @@ ca&amp;at-harness
       &quot;software-library&quot;
     ]
   }
-]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS HARNESS DECLARES, at its own level — owner, 2026-10-09: &quot;I still want the harness to be where specific visualizers/pages are declared for the harness at the level. And that they are all compliant of &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt; (which is for the full KG) and &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;, &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;/&lt;path to asset&gt; rules … Need harness to declare visualizer is renderedBy&quot;. Each entry is published at &lt;base&gt;/cat-harness/&lt;id&gt;/ — computed by visualiserRoute (schemas/kg/visualiser-route.ts) and by nothing else — and drawn by the Tool `renderedBy` names. A page no longer says what it renders (the `renders:` front matter and &lt;meta name=&quot;renders&quot;&gt; of #1168 B7a-2b are retired); `check:visualiser-routes` refuses two declarations on one route and a page outside its Tool&#39;s declared routes. `alias` is bean t4xb&#39;s opt-in &lt;base&gt;/&lt;alias&gt;/: a redirect composed into the site, never where the page is drawn — kept here for every visualiser that was published at the short URL before 2026-10-09, so no existing link breaks. The state dashboard of `uploads` is `uploads-queue` because `uploads` is the uploads viewer&#39;s route: two visualisers of one directory need two ids, which is exactly the contention the owner named.</dd><dt>visualisers</dt><dd><pre>[
+]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS HARNESS DECLARES, at its own level — owner, 2026-10-09: &quot;I still want the harness to be where specific visualizers/pages are declared for the harness at the level. And that they are all compliant of &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt; (which is for the full KG) and &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;, &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;/&lt;path to asset&gt; rules … Need harness to declare visualizer is renderedBy&quot;. Each entry is published at &lt;base&gt;/cat-harness/&lt;id&gt;/ — computed by visualiserRoute (schemas/kg/visualiser-route.ts) and by nothing else — and drawn by the Tool `renderedBy` names. A page no longer says what it renders (the `renders:` front matter and &lt;meta name=&quot;renders&quot;&gt; of #1168 B7a-2b are retired); `check:visualiser-routes` refuses two declarations on one route and a page outside its Tool&#39;s declared routes. `alias` is bean t4xb&#39;s opt-in &lt;base&gt;/&lt;alias&gt;/: a redirect composed into the site, never where the page is drawn — kept here for every visualiser that was published at the short URL before 2026-10-09, so no existing link breaks. The state dashboard of `uploads` is `uploads-queue` because `uploads` is the uploads viewer&#39;s route: two visualisers of one directory need two ids, which is exactly the contention the owner named. THE QA PAGE IS ONE PAGE PER INSTANCE (owner, 2026-11-24: &quot;build integrated page into platform&quot;): `qa/&lt;instance&gt;/` draws every QA axis of that instance&#39;s published entry — rendering, Lean, compute, knowledge graph, translations, block QA, bibliography, site build, domain (`schemas/sdlc/qa-axis.ts` in the tools layer) — as one tile and one section each, and its `sections` link the other QA visualisers&#39; pages for the same instance rather than copying them. An instance says which writers its publish runs, and on which axis, in its own `&lt;instance&gt;.json` (`qa.writers`, `qa.axes`); no harness keeps a QA page of its own.</dd><dt>visualisers</dt><dd><pre>[
   {
     &quot;id&quot;: &quot;library&quot;,
     &quot;renderedBy&quot;: &quot;library-viewer&quot;,
@@ -1391,7 +1386,13 @@ ca&amp;at-harness
     ],
     &quot;subgraphs&quot;: &quot;instance&quot;,
     &quot;title&quot;: &quot;QA&quot;,
-    &quot;alias&quot;: &quot;qa&quot;
+    &quot;alias&quot;: &quot;qa&quot;,
+    &quot;sections&quot;: [
+      &quot;translation-status&quot;,
+      &quot;health&quot;,
+      &quot;attestations&quot;,
+      &quot;lsi&quot;
+    ]
   },
   {
     &quot;id&quot;: &quot;health&quot;,
@@ -1528,6 +1529,15 @@ ca&amp;at-harness
     ],
     &quot;subgraphs&quot;: &quot;instance&quot;,
     &quot;title&quot;: &quot;Tool releases&quot;
+  },
+  {
+    &quot;id&quot;: &quot;software-libraries&quot;,
+    &quot;renderedBy&quot;: &quot;state-viewer&quot;,
+    &quot;coversKinds&quot;: [
+      &quot;software-library&quot;
+    ],
+    &quot;subgraphs&quot;: &quot;instance&quot;,
+    &quot;title&quot;: &quot;Software libraries&quot;
   },
   {
     &quot;id&quot;: &quot;vocab-mappings&quot;,
@@ -2445,6 +2455,14 @@ ca&amp;at-harness
     ],
     &quot;because&quot;: &quot;checkout&quot;,
     &quot;reason&quot;: &quot;the tool-releases viewer (bean folio-assistant-6gme, owner 2026-10-20: every kind gets a viewer): a hub and one page per instance in the checkout declaring a tool-release directory, listing each folio-tool-release/v1 node and profile&quot;
+  },
+  {
+    &quot;path&quot;: &quot;docs/en/cat-harness/software-libraries/&quot;,
+    &quot;writer&quot;: [
+      &quot;state:visualizer&quot;
+    ],
+    &quot;because&quot;: &quot;checkout&quot;,
+    &quot;reason&quot;: &quot;the software-libraries viewer (owner, 2026-11-13, node-kind audit: every listed node kind has an IRI, a JSON-LD document, a row and a page, no waivers): a hub and one page per instance in the checkout declaring a software-library directory, listing each library with its node-kind page, IRI and JSON-LD&quot;
   },
   {
     &quot;path&quot;: &quot;docs/en/cat-harness/vocab-mappings/&quot;,

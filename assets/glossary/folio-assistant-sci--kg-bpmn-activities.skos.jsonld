@@ -53,12 +53,34 @@
       ],
       "skos:definition": [
         {
-          "@value": "Tool `lean-html-docs` (`adapters/paper/lean/lean-docs-build.sh --lake-root <pkg> --lib <Lib>`). Refuses while another lake/lean process holds `.lake/`, refuses over a restored tree with no traces, checks or restores the warm cache, enables the sentinel-commented doc-gen4 require for this build only, then `lake -R -Kenv=dev build <Lib>:docs`. Output: `<pkg>/.lake/build/doc`.",
+          "@value": "Tool `lean-html-docs` (`adapters/paper/lean/lean-docs-build.sh --lake-root <pkg> --lib <Lib>`). Reads the SOURCE, the folio's Lake packages. Refuses while another lake/lean process holds `.lake/`, refuses over a restored tree with no traces, checks or restores the warm cache, enables the sentinel-commented doc-gen4 require for this build only, then `lake -R -Kenv=dev build <Lib>:docs`. Output: `<pkg>/.lake/build/doc-data` (the per-module declaration data the viewer is made from) and `<pkg>/.lake/build/doc` (the static HTML, kept only as the fallback): working directories, not yet anything a site reads.",
           "@language": "en"
         }
       ],
       "skos:notation": "Task_Build",
       "dcterms:source": "folio-assistant-sci/processes/content/lean-docs-publish.bpmn#Task_Build",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_leandocspublish.task_mount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mount the Lean branch store",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run cat state:mount` (or `branch-store.ts mount --id <id>`) at the start of the site build, as for `beans/`: puts the branch tip on disk at the declared path. Reads the RENDER; writes nothing to the branch. A site build of a folio whose Lean did not change starts here.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_Mount",
+      "dcterms:source": "folio-assistant-sci/processes/content/lean-docs-publish.bpmn#Task_Mount",
       "skos:note": "candidate"
     },
     {
@@ -69,18 +91,40 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Stage the render under the site and rail every page",
+          "@value": "Publish the render at its route, railed",
           "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Tool `lean-render-publish` (`adapters/paper/lean/lean-render.ts --docs <render> --site <site>`). Copies the render to `<site>/lean/` without Lake's bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect rail-declined, adds the layout shim, optionally prunes to the folio's modules, then runs `rail-standalone-pages.ts --foreign-site` over the whole site and checks every staged page.",
+          "@value": "A site step of the folio's declared build (`site.build.siteSteps`). Reads the mounted RENDER, writes the PUBLISHED pages at `<site>/<route>/`, the route the declaration's `coverage.visualiser` names: the KG viewer and its `data/` shards are copied as they are, and the site build's own rail pass (`rail-standalone-pages.ts --foreign-site`, which runs after every site step) puts the harness rail on the viewer page, so the rail's assets are the site's and nothing extra lands at its root. Fallback, when the store holds doc-gen4's static HTML instead: Tool `lean-render-publish` (`adapters/paper/lean/lean-render.ts --docs <mount path> --site <site> --route <route> --no-rail`) stages it without Lake's bookkeeping, marks its iframe navbar and `find/` redirect rail-declined and adds the layout shim. The document site's ∀ panel links each declaration to the viewer opened at it, `<route>/#/m/<Module>/<name>`.",
           "@language": "en"
         }
       ],
       "skos:notation": "Task_Publish",
       "dcterms:source": "folio-assistant-sci/processes/content/lean-docs-publish.bpmn#Task_Publish",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_leandocspublish.task_store",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the KG render to the Lean branch store",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tool `lean-kg-publish` (`adapters/paper/lean/lean-kg-publish.ts --doc-data <pkg>/.lake/build/doc-data --site <checkout> --route <store path> --no-rail`) writes the viewer page and its `data/` shards into the mounted store's path (the folio's declared `lean` graph, e.g. `lean/`), then `bun folio-assistant/cat-harness-tools/scripts/branch-store.ts push --id <id>`. The store is tip-keyed: the branch tip IS the current render, with a root `manifest.json` (`state-manifest/v1`); the push splices onto the tip and never forces. The render is never committed to the folio's main.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_Store",
+      "dcterms:source": "folio-assistant-sci/processes/content/lean-docs-publish.bpmn#Task_Store",
       "skos:note": "candidate"
     },
     {

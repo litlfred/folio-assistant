@@ -137,6 +137,9 @@
       "name": "graph-rendering"
     },
     {
+      "name": "handover-report"
+    },
+    {
       "name": "harness-tiles"
     },
     {
@@ -275,6 +278,9 @@
       "name": "platform-gates"
     },
     {
+      "name": "prepare-for-handover"
+    },
+    {
       "name": "prepare-merge"
     },
     {
@@ -363,6 +369,9 @@
     },
     {
       "name": "sub-kg-lifecycle"
+    },
+    {
+      "name": "swarm-monitor"
     },
     {
       "name": "tabular-metadata"
@@ -22547,6 +22556,112 @@
         "x-satisfies": [
           "directory-conventions"
         ]
+      }
+    },
+    "/tools/swarm-epic-sync": {
+      "post": {
+        "operationId": "swarm-epic-sync",
+        "summary": "Sync a swarm work item's cold-start handover runbook",
+        "description": "Idempotently create, claim, or refresh any parent Swarm Work Item (`epic` or `milestone`, parameterized by `--epic-id` or `--swarm-slug`, for example a repository `stability` merge swarm, a proof-closure swarm, a graph-detangling swarm, or a literature-audit swarm) with a live Cold-Start Handover Runbook synthesized from `git worktree list`, forge pull-request queues, host process/memory/swap headroom, and `beans` child queues, then push the updated handover note and state to the shared `beans` branch (`cat/cat-harness/beans`).",
+        "tags": [
+          "swarm-monitor",
+          "handover-report",
+          "prepare-for-handover"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "cat-harness/swarm-epic-sync/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "epic-id": {
+                    "$ref": "#/components/schemas/BeanId",
+                    "description": "Existing parent Swarm Work Item identifier in `beans`; when omitted, resolved or idempotently created from `--swarm-slug`."
+                  },
+                  "swarm-slug": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Goal-specific slug identifying the swarm when `--epic-id` is omitted (for example `stability`, `proof-closure`, `kg-detangle`, or `literature-audit`)."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "Forge `<owner>/<repo>` queried over REST for open and recently merged pull requests; defaults to the checkout's `origin` remote."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "Default branch ref fetched and recorded in the handover header; default `main`."
+                  },
+                  "state-branch": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "Shared work-plan state branch receiving the pushed handover update; default `cat/cat-harness/beans`."
+                  },
+                  "push": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Push the updated work-item handover snapshot to `--state-branch` immediately after writing."
+                  },
+                  "dry-run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Render the Cold-Start Handover Runbook Markdown to stdout without mutating `beans` or pushing."
+                  },
+                  "notes": {
+                    "$ref": "#/components/schemas/Markdown",
+                    "description": "Optional standing owner directives, acceptance criteria (`EC-1..EC-k`), safety fences, and takeover notes supplied on stdin."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "epic": {
+                      "$ref": "#/components/schemas/BeanId",
+                      "description": "The parent Swarm Work Item created or refreshed."
+                    },
+                    "snapshot": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The synthesized Cold-Start Handover Runbook Markdown (exit criteria, child queues, live worktree/branch/HEAD/PID table, PR wave queues, standing fences, and under-60-second takeover commands)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/swarm-epic-sync.jsonld",
+        "x-invoke": {
+          "shell": "python3 -m swarm_epic_sync"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "swarm-monitor",
+          "handover-report",
+          "prepare-for-handover"
+        ],
+        "x-selection": {
+          "when": "On every routine Swarm Monitor or Merge Steward check-in tick, at swarm startup or cold takeover, and at milestone transitions when keeping a parent Swarm Work Item's Cold-Start Handover Runbook current in the shared `beans` store.",
+          "limits": "Requires Python 3 standard library plus local `git` (and `beans` or `beans-manual` for store writes, `gh` REST for forge PR wave tables). When offline, omit `--push` to refresh the local snapshot first.",
+          "cost": "Under 2 seconds locally: one `git worktree list`, one `ps`/`top` sample, one `beans list --json`, and one optional forge REST `/pulls` read plus state-branch push."
+        }
       }
     },
     "/tools/tabular-csv": {
