@@ -1,5 +1,5 @@
 ---
-description: "Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat. Every dispatched agent emits..."
+description: "Dispatches one or more background subagents against disjoint workstreams with a standardized live progress contract, reactive wakeup plus fallback timer heartbeat, and human-consumable status synth..."
 argument-hint: "[what to run it on]"
 generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---

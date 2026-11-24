@@ -1,5 +1,5 @@
 ---
-description: "Build and publish the visualiser of a folio's declared `lean` directory: the package's doc-gen4 HTML render, staged under the folio's site and wrapped in the harness navbar and rail. Use when a fol..."
+description: "Build a folio's Lean render (the Lean knowledge-graph viewer made from doc-gen4's declaration data for its Lake packages), keep it on the folio's branch-mounted Lean store, and publish it under the..."
 argument-hint: "[what to run it on]"
 generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
