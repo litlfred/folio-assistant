@@ -1,0 +1,55 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/phii-2023-crdm",
+  "@type": [
+    "cat-harness:SourceDocument"
+  ],
+  "title": "Collaborative Requirements Development Methodology (CRDM): A Collaborative Approach to Public Health Systems",
+  "contains": [
+    "library/phii-2023-crdm/sections/page-001",
+    "library/phii-2023-crdm/sections/page-002",
+    "library/phii-2023-crdm/sections/page-003",
+    "library/phii-2023-crdm/sections/page-004",
+    "library/phii-2023-crdm/sections/page-005",
+    "library/phii-2023-crdm/sections/page-006",
+    "library/phii-2023-crdm/sections/page-007",
+    "library/phii-2023-crdm/sections/page-008",
+    "library/phii-2023-crdm/sections/page-009",
+    "library/phii-2023-crdm/sections/page-010"
+  ],
+  "provenance": "ingested",
+  "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library",
+  "license": "LicenseRef-PHII-Copyright",
+  "licenceRecord": {
+    "status": "stated",
+    "id": "LicenseRef-PHII-Copyright",
+    "basis": "Page 10 footer of the printed web page (https://phii.org/crdm/): \"Copyright © 2026 Public Health Informatics Institute | All rights reserved\". Public Health Informatics Institute is a program of The Task Force for Global Health (330 West Ponce de Leon Ave, Decatur, GA 30030).",
+    "note": "OWNER INSTRUCTION (bean folio-assistant-max2): fetch and ingest the PHII CRDM web page (https://phii.org/crdm/). Source artefacts retrieved 2026-11-05: phii-2023-crdm.pdf (browser print of https://phii.org/crdm/, sha256 873a50591ddd8d1e6d23efa836b3cd314618ddaae6878c60b7c21132f6d00bf0, 569470 bytes, 10 pages), phii-crdm-2023.html (raw HTML of https://phii.org/crdm/, sha256 7eedd9fbba28934c7717bc9bcd66dd949a13458aafe6f367bc287bd2e0affb59, 154381 bytes), phii-crdm-wp-page-12947.json (WordPress REST API record https://phii.org/wp-json/wp/v2/pages/12947, date 2021-06-29T18:24:31, modified 2023-08-29T16:40:28, sha256 93b42ad88f1bcc17fccc3ec3289e297ba7bb508081bd243ea669d0d4080d941b, 33486 bytes), and CRDM-Columns-with-white-margins.png (three-column CRDM overview graphic https://phii.org/wp-content/uploads/2021/07/CRDM-Columns-with-white-margins.png, sha256 0380ddf45a1a7d0a6857ca36cb9dbc0c84d106774e77ab7b086e414d948be808, 457599 bytes)."
+  },
+  "meta": {
+    "doc_id": "phii-2023-crdm",
+    "title_source": "editorial",
+    "title_from": "structure.json metadata.title_correction.title",
+    "title_verified": true,
+    "title_correction": {
+      "title": "Collaborative Requirements Development Methodology (CRDM): A Collaborative Approach to Public Health Systems",
+      "basis": "Page 1 main heading prints \"Collaborative Requirements Development Methodology (CRDM)\" and the subheading prints \"A Collaborative Approach to Public Health Systems\" (extraction truncated at the closing parenthesis).",
+      "corrected_on": "2026-11-05",
+      "bean": "folio-assistant-max2",
+      "extracted": "Collaborative Requirements Development Methodology (CRDM"
+    },
+    "source_file": "phii-2023-crdm.pdf",
+    "source_sha256": "873a50591ddd8d1e6d23efa836b3cd314618ddaae6878c60b7c21132f6d00bf0",
+    "pages": 10,
+    "arxiv": null,
+    "doi": null,
+    "document_class": null,
+    "extractor_validated": null,
+    "disposition": "ingested source material — attributed to its document, not folio content"
+  }
+}
