@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-core/voice/address-business-analyst.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-core/voice/address-business-analyst",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "Addressing the Business analyst",
+      "description": "How to write for a reader acting as Business analyst. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/address-business-analyst/voice.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/voice/address-business-analyst"
+    }
+  ]
+}

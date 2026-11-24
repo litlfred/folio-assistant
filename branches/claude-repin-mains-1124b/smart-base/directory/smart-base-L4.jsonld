@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/smart-base/directory/smart-base-L4.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-L4.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-L4",
+      "path": "L4/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "title": "L4 — the application",
+      "description": "The L4 work as a NAMED SUBGRAPH, OPT-IN like `L1/`..`L3/` (a downstream layer lists `smart-base.smart-base-L4` in its `enableSubgraphs`), beside them (owner, 2026-11-13: an L4 subgraph for the point-of-care and application skills, processes and tools): what a running application does with a DAK at the point of care, and briefing, building and running one. `L4/graph.json` names what it holds FROM WITHIN: `skills/`, `processes/` and `tools/`. No `schemas/`: the knowledge graph has no L4 layer.",
+      "readmePath": "L4/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}

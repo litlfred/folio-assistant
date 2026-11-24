@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness-tools/directory/cat-harness-tools-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-docs.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "cat-harness-tools-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
+      ],
+      "title": "Wireframes of the writers' pages",
+      "description": "The wireframes of the pages this layer's writers draw for other layers' visualisers, under `wireframes/`: an `index.json`, and one directory per wireframe holding `intent.md`, an as-is candidate `.html`, and `checks/report.json` with its screenshots from `bun run cat wireframe:check`. A wireframe here covers a writer by `renderedBy:<tool>`, so every declared visualiser that Tool draws inherits it (`check:wireframes`; owner, 2026-11-17, option b: one shared ArchiMate wireframe). It is this layer's site directory, and declaring it is what makes a mount of this layer bring it, so `check:wireframes` reads it wherever this layer is mounted.",
+      "readmePath": "docs/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-docs"
+    }
+  ]
+}

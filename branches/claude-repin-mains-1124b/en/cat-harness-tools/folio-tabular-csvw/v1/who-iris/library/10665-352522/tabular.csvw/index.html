@@ -1,0 +1,1072 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../../../../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../../../../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../../../../../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>library/10665-352522/tabular.csvw — folio-tabular-csvw/v1 | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="library/10665-352522/tabular.csvw — folio-tabular-csvw/v1" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="library/10665-352522/tabular.csvw — folio-tabular-csvw/v1" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-tools-folio-tabular-csvw-v1-who-iris-library-10665-352522-tabular.csvw-index.html",
+    "src": "../../../../../../../../assets/qa/en-cat-harness-tools-folio-tabular-csvw-v1-who-iris-library-10665-352522-tabular.csvw-index.html/page.translation.json",
+    "index": "../../../../../../../../assets/qa/en-cat-harness-tools-folio-tabular-csvw-v1-who-iris-library-10665-352522-tabular.csvw-index.html/qa-index.json",
+    "list": "../../../../../../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../../../../../../assets/translation-status/index.json",
+  "reviewSrc":"../../../../../../../../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../../../../folio-assistant-core/","jsonld":"../../../../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../../../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../../../../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../../../../../../../../assets/css/docs-ui.css?v=4c7265cca407"><link rel="stylesheet" href="../../../../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../../../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../../../../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../../../../../../../../assets/js/docs-ui.js?v=cae1ad7ba8e7" defer></script><script src="../../../../../../../../assets/js/edit-links.js?v=56a2d25f0900" defer></script><script src="../../../../../../../../assets/js/translation-review.js?v=3ab638979d22" defer></script><script src="../../../../../../../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-instance-theme" data-instance="who-iris">
+  /* IRIS — declared by instance who-iris, theme iris-web. */
+  :root {
+  --sidebar-color: #008dc9;
+  --link-color: #008dc9;
+  --border-color: #ced4da;
+  }
+</style><link rel="stylesheet" href="../../../../../../../../assets/css/navbar.css"><script src="../../../../../../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../../../../../assets/page-layout.js" defer data-fa-page-layout></script><script src="../../../../../../../../assets/draft-banner.js" defer data-fa-page-layout></script><noscript data-fa-draft-noscript><link rel="stylesheet" href="../../../../../../../../assets/draft-banner-noscript.css"></noscript></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../../../../../.." data-fa-to-root="../../../../../../../..">{"data":"rail-giobbw31pa","here":"/en/cat-harness-tools/folio-tabular-csvw/v1/who-iris/library/10665-352522/tabular.csvw/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:var(--fa-font-sans,system-ui,sans-serif)">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+var b=document.querySelector('[data-fa-staging-banner]'),d=document.querySelector('[data-fa-staging-detail]');
+if(b)document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');
+var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);
+if(!m){if(d)d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+var s=document.createElement('script');s.src=m[1]+'staging-banner.js';
+s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
+(document.head||document.documentElement).appendChild(s);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../../../../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><style>
+.nk-page { --nk-line:rgba(127,127,127,.4); --nk-panel:rgba(127,127,127,.12); min-width:0; overflow-wrap:anywhere; }
+.nk-page h1 { margin:0 0 .25rem; } .nk-page h2 { font-size:1.05rem; margin:1.5rem 0 .5rem; }
+/* Secondary by SIZE, not by opacity: these lines carry links, and dimming a
+   link changes the theme's link colour, which is then this page's contrast. */
+.nk-page .m { font-size:.9rem; }
+.nk-page .tiles { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0; padding:0; list-style:none; }
+.nk-page .tiles li { border:1px solid var(--nk-line); border-radius:.4rem; padding:.35rem .7rem; margin:0; }
+.nk-page .tiles li::before { content:none; }
+.nk-page .tiles b { font-size:1.2rem; margin-right:.3rem; }
+.nk-page .clip { width:100%; overflow-x:auto; }
+.nk-page table { display:table; width:100%; border-collapse:collapse; font-size:.92rem; }
+.nk-page th, .nk-page td { text-align:left; vertical-align:top; padding:.35rem .5rem; border:0; border-bottom:1px solid var(--nk-line); background:transparent; }
+.nk-page th { background:var(--nk-panel); white-space:nowrap; }
+/* Only the node's path and long text may break mid-word; a status or a date
+   broken across lines ("in_pr ogres s") is unreadable. */
+.nk-page td { overflow-wrap:normal; } .nk-page td.p, .nk-page td.t { overflow-wrap:anywhere; } .nk-page td.s { white-space:nowrap; }
+.nk-page dl { display:grid; grid-template-columns:minmax(8rem,14rem) 1fr; gap:.25rem 1rem; }
+.nk-page dt { font-weight:600; } .nk-page dd { margin:0; }
+.nk-page pre { background:var(--nk-panel); padding:.75rem; overflow-x:auto; font-size:.85rem; }
+.nk-page label { margin-right:1rem; }
+@media (max-width:40rem) { .nk-page dl { grid-template-columns:1fr; } }
+</style><div class="nk-page" data-fa-node-kind-page><h1 id="nk-title"><a href="#nk-title" class="anchor-heading" aria-labelledby="nk-title"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> library/10665-352522/tabular.csvw
+  
+  
+</h1><p class="m">A <a href="../../../../">folio-tabular-csvw/v1</a> node held by <a href="../../../">who-iris</a>, at <code>who-iris/library/10665-352522/tabular.csvw.json</code>.</p><h2 id="fields"><a href="#fields" class="anchor-heading" aria-labelledby="fields"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fields
+  
+  
+</h2><dl><dt>$schema</dt><dd>folio-tabular-csvw/v1</dd><dt>doc_id</dt><dd>10665-352522</dd><dt>tables</dt><dd><pre>[
+  {
+    &quot;url&quot;: &quot;tables/table-1.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;no&quot;,
+          &quot;titles&quot;: &quot;No.&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        },
+        {
+          &quot;name&quot;: &quot;recommendation&quot;,
+          &quot;titles&quot;: &quot;Recommendation&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 11,
+      &quot;columns&quot;: 2,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:merged&quot;: [
+      &quot;A2:B2&quot;,
+      &quot;A5:B5&quot;,
+      &quot;A10:B10&quot;
+    ],
+    &quot;fac:label&quot;: &quot;Table 1&quot;,
+    &quot;fac:caption&quot;: &quot;Table 1: New recommendations in the WHO consolidated guidelines on tuberculosis. Module 5: management of tuberculosis in children and adolescents, 2022&quot;,
+    &quot;fac:pages&quot;: [
+      20,
+      21
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;¹⁴ This recommendation applies to and complements the 2020 WHO recommendations on shorter and longer regimens that contain bedaquiline: A shorter all-oral bedaquiline-containing regimen of 9–12 months duration is recommended in eligible patients with confirmed multidrug- or rifampicin-resistant tuberculosis (MDR/RR-TB) who have not been exposed to treatment with second-line TB medicines used in this regimen for more than one month, and in whom resistance to fluoroquinolones has been excluded (Conditional recommendation, very low certainty in the evidence); bedaquiline should be included in longer multidrug-resistant TB (MDR-TB) regimens for patients aged 18 years or more (Strong recommendation, moderate certainty in the estimates of effect); bedaquiline may also be included in longer MDR-TB regimens for patients aged 6–17 years; (Conditional recommendation, very low certainty in the estimates of effect) (9). ¹⁵ This recommendation complements the 2020 WHO recommendation on longer regimens that contain delamanid: Delamanid may be included in the treatment of MDR/RR-TB patients aged 3 years or more on longer regimens (Conditional recommendation, moderate certainty in the estimates of effect) (9). [Transcriber: the table has no column header; the &#39;No.&#39; and &#39;Recommendation&#39; column titles are supplied.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table lists the eight new or updated recommendations on the management of TB in children and adolescents from the 2022 WHO consolidated guidelines, grouped under diagnostic approaches, treatment regimens and models of TB care. Each recommendation is followed by its status (new or updated), strength and certainty of evidence.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يسرد الجدول التوصيات الثماني الجديدة أو المحدَّثة بشأن تدبير السل لدى الأطفال والمراهقين الواردة في المبادئ التوجيهية الموحدة للمنظمة لعام 2022، مصنفةً تحت النُهج التشخيصية ونظم العلاج ونماذج رعاية مرضى السل. وتُتبع كل توصية بحالتها (جديدة أو محدَّثة) وقوتها ودرجة اليقين في البيّنات.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表列出世卫组织2022年综合指南中关于儿童和青少年结核病管理的八项新的或更新的建议，分为诊断方法、治疗方案和结核病医护模式三组。每项建议后均注明其状态（新的或更新的）、建议强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro enumera las ocho recomendaciones nuevas o actualizadas sobre el manejo de la tuberculosis en niños y adolescentes de las directrices unificadas de la OMS de 2022, agrupadas en métodos de diagnóstico, pautas de tratamiento y modelos de atención de la tuberculosis. Cada recomendación va seguida de su condición (nueva o actualizada), su fuerza y la certeza de la evidencia.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau énumère les huit recommandations nouvelles ou mises à jour sur la prise en charge de la tuberculose chez l’enfant et l’adolescent issues des lignes directrices unifiées de l’OMS de 2022, regroupées sous approches diagnostiques, schémas thérapeutiques et modèles de soins antituberculeux. Chaque recommandation est suivie de son statut (nouvelle ou mise à jour), de sa force et du degré de certitude des données.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице перечислены восемь новых или обновленных рекомендаций по ведению туберкулеза у детей и подростков из сводного руководства ВОЗ 2022 г., сгруппированных по разделам: диагностические подходы, схемы лечения и модели оказания помощи при туберкулезе. После каждой рекомендации указаны ее статус (новая или обновленная), сила и степень достоверности данных.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-2.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;chapter&quot;,
+          &quot;titles&quot;: &quot;Chapter&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        },
+        {
+          &quot;name&quot;: &quot;topic&quot;,
+          &quot;titles&quot;: &quot;Topic&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 54,
+      &quot;columns&quot;: 2,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:merged&quot;: [
+      &quot;A2:A4&quot;,
+      &quot;A5:A17&quot;,
+      &quot;A18:A30&quot;,
+      &quot;A31:A41&quot;,
+      &quot;A42:A46&quot;,
+      &quot;A47:A55&quot;
+    ],
+    &quot;fac:label&quot;: &quot;Table 2&quot;,
+    &quot;fac:caption&quot;: &quot;Table 2: Recommendations in the WHO consolidated guidelines on tuberculosis. Module 5: management of tuberculosis in children and adolescents, 2022, by chapter and topic&quot;,
+    &quot;fac:pages&quot;: [
+      21,
+      22,
+      23
+    ],
+    &quot;fac:headerRows&quot;: 1,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table lists the topics covered by recommendations in the 2022 WHO consolidated guidelines on the management of TB in children and adolescents, by chapter: screening and contact investigation, prevention, diagnostic approaches, treatment, models of TB care and special situations.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يسرد الجدول المواضيع التي تتناولها التوصيات الواردة في المبادئ التوجيهية الموحدة للمنظمة لعام 2022 بشأن تدبير السل لدى الأطفال والمراهقين، حسب الفصل: التحري وتقصي المخالطين، والوقاية، والنُهج التشخيصية، والعلاج، ونماذج رعاية مرضى السل، والحالات الخاصة.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表按章节列出世卫组织2022年儿童和青少年结核病管理综合指南中建议所涵盖的主题：筛查和接触者调查、预防、诊断方法、治疗、结核病医护模式以及特殊情况。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro enumera, por capítulo, los temas abarcados por las recomendaciones de las directrices unificadas de la OMS de 2022 sobre el manejo de la tuberculosis en niños y adolescentes: cribado e investigación de contactos, prevención, métodos de diagnóstico, tratamiento, modelos de atención de la tuberculosis y situaciones especiales.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau énumère, par chapitre, les thèmes couverts par les recommandations des lignes directrices unifiées de l’OMS de 2022 sur la prise en charge de la tuberculose chez l’enfant et l’adolescent : dépistage et recherche des contacts, prévention, approches diagnostiques, traitement, modèles de soins antituberculeux et situations particulières.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице по главам перечислены темы, охваченные рекомендациями сводного руководства ВОЗ 2022 г. по ведению туберкулеза у детей и подростков: скрининг и обследование контактов, профилактика, диагностические подходы, лечение, модели оказания помощи при туберкулезе и особые ситуации.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-3.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;col-1&quot;,
+          &quot;titles&quot;: &quot;&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 19,
+      &quot;columns&quot;: 1,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:label&quot;: &quot;Table 3&quot;,
+    &quot;fac:caption&quot;: &quot;Table 3: WHO recommendations on TB screening and contact investigation relevant to children and adolescents&quot;,
+    &quot;fac:pages&quot;: [
+      33,
+      34
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;[Transcriber: single-column table; rows include the source-guideline headings and topic subheadings as printed, followed by the recommendation cells.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table compiles current WHO recommendations on TB screening and contact investigation that apply to children and adolescents. Recommendations are grouped by source guideline and topic (screening in targeted populations, tools for screening, HIV counselling and testing of contacts), each with its strength and certainty of evidence.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يجمع الجدول توصيات المنظمة الحالية بشأن تحري السل وتقصي المخالطين التي تنطبق على الأطفال والمراهقين. والتوصيات مصنفة حسب المبدأ التوجيهي المصدر والموضوع (التحري في فئات سكانية مستهدفة، وأدوات التحري، وتقديم المشورة بشأن فيروس العوز المناعي البشري واختباره للمخالطين)، مع بيان قوة كل توصية ودرجة اليقين في البيّنات.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表汇集适用于儿童和青少年的现行世卫组织结核病筛查和接触者调查建议。建议按来源指南和主题（目标人群筛查、筛查工具、接触者艾滋病毒咨询和检测）分组，并注明每项建议的强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro reúne las recomendaciones vigentes de la OMS sobre cribado de la tuberculosis e investigación de contactos aplicables a niños y adolescentes. Las recomendaciones se agrupan por directriz de origen y tema (cribado en poblaciones destinatarias, instrumentos de cribado, asesoramiento y pruebas del VIH para los contactos), con su fuerza y la certeza de la evidencia.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau rassemble les recommandations actuelles de l’OMS sur le dépistage de la tuberculose et la recherche des contacts qui s’appliquent aux enfants et aux adolescents. Elles sont regroupées par ligne directrice source et par thème (dépistage dans des populations cibles, outils de dépistage, conseil et dépistage du VIH pour les contacts), avec leur force et le degré de certitude des données.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице собраны действующие рекомендации ВОЗ по скринингу на туберкулез и обследованию контактов, применимые к детям и подросткам. Рекомендации сгруппированы по исходному руководству и теме (скрининг в целевых группах, инструменты скрининга, консультирование и тестирование контактов на ВИЧ) с указанием их силы и степени достоверности данных.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-4.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;col-1&quot;,
+          &quot;titles&quot;: &quot;&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 45,
+      &quot;columns&quot;: 1,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:label&quot;: &quot;Table 4&quot;,
+    &quot;fac:caption&quot;: &quot;Table 4: WHO recommendations on TB infection prevention and control, BCG vaccination and TPT relevant to children and adolescents&quot;,
+    &quot;fac:pages&quot;: [
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;²⁰ TNF: tumour necrosis factor ²¹ In children 2 years and above. ²² In children 13 years and above. [Transcriber: single-column table; rows include the source-guideline headings and topic subheadings as printed, followed by the recommendation cells.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table compiles current WHO recommendations relevant to children and adolescents on TB infection prevention and control (administrative, environmental and respiratory protection controls), BCG vaccination and TB preventive treatment. Recommendations are grouped by source guideline and topic, with their strength and certainty of evidence where given.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يجمع الجدول توصيات المنظمة الحالية ذات الصلة بالأطفال والمراهقين بشأن الوقاية من عدوى السل ومكافحتها (الضوابط الإدارية والبيئية وضوابط الحماية التنفسية)، والتطعيم بلقاح BCG، والعلاج الوقائي من السل. والتوصيات مصنفة حسب المبدأ التوجيهي المصدر والموضوع، مع بيان قوتها ودرجة اليقين في البيّنات حيثما وردت.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表汇集与儿童和青少年相关的现行世卫组织建议，涉及结核感染预防和控制（行政控制、环境控制和呼吸防护）、卡介苗接种以及结核病预防性治疗。建议按来源指南和主题分组，并在有说明时注明其强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro reúne las recomendaciones vigentes de la OMS pertinentes para niños y adolescentes sobre prevención y control de la infección tuberculosa (controles administrativos, ambientales y de protección respiratoria), vacunación con BCG y tratamiento preventivo de la tuberculosis. Se agrupan por directriz de origen y tema, con su fuerza y la certeza de la evidencia cuando se indican.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau rassemble les recommandations actuelles de l’OMS concernant les enfants et les adolescents en matière de prévention et de contrôle de l’infection tuberculeuse (mesures administratives, environnementales et de protection respiratoire), de vaccination par le BCG et de traitement préventif de la tuberculose. Elles sont regroupées par ligne directrice source et par thème, avec leur force et le degré de certitude des données lorsqu’ils sont indiqués.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице собраны действующие рекомендации ВОЗ, касающиеся детей и подростков, по профилактике туберкулезной инфекции и инфекционному контролю (административные меры, меры инженерного контроля и средства защиты органов дыхания), вакцинации БЦЖ и профилактическому лечению туберкулеза. Рекомендации сгруппированы по исходному руководству и теме с указанием их силы и степени достоверности данных, если они приводятся.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-5.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;col-1&quot;,
+          &quot;titles&quot;: &quot;&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 46,
+      &quot;columns&quot;: 1,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:label&quot;: &quot;Table 5&quot;,
+    &quot;fac:caption&quot;: &quot;Table 5: WHO recommendations on diagnostic approaches relevant to children and adolescents&quot;,
+    &quot;fac:pages&quot;: [
+      50,
+      51,
+      52,
+      53,
+      54
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;[Transcriber: single-column table; rows include the source-guideline headings and topic subheadings as printed, followed by the recommendation cells.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table compiles current WHO recommendations on diagnostic approaches relevant to children and adolescents, mainly on rapid molecular tests (Xpert MTB/RIF and Xpert Ultra, Truenat, NAATs, TB-LAMP, LF-LAM and line-probe assays) and on commercial serodiagnostics. Recommendations are grouped by source guideline and topic, each with its strength and certainty of evidence.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يجمع الجدول توصيات المنظمة الحالية بشأن النُهج التشخيصية ذات الصلة بالأطفال والمراهقين، ولا سيما الاختبارات الجزيئية السريعة (Xpert MTB/RIF وXpert Ultra وTruenat واختبارات تضخيم الأحماض النووية وTB-LAMP وLF-LAM ومقايسات المسبار الخطي) والاختبارات المصلية التجارية. والتوصيات مصنفة حسب المبدأ التوجيهي المصدر والموضوع، مع بيان قوة كل توصية ودرجة اليقين في البيّنات.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表汇集与儿童和青少年相关的现行世卫组织诊断方法建议，主要涉及快速分子检测（Xpert MTB/RIF和Xpert Ultra、Truenat、核酸扩增试验、TB-LAMP、LF-LAM和线性探针检测）以及商业血清学诊断。建议按来源指南和主题分组，并注明每项建议的强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro reúne las recomendaciones vigentes de la OMS sobre métodos de diagnóstico pertinentes para niños y adolescentes, principalmente sobre pruebas moleculares rápidas (Xpert MTB/RIF y Xpert Ultra, Truenat, NAAT, TB-LAMP, LF-LAM y ensayos con sondas lineales) y sobre el serodiagnóstico comercial. Se agrupan por directriz de origen y tema, cada una con su fuerza y la certeza de la evidencia.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau rassemble les recommandations actuelles de l’OMS sur les approches diagnostiques concernant les enfants et les adolescents, principalement sur les tests moléculaires rapides (Xpert MTB/RIF et Xpert Ultra, Truenat, TAAN, TB-LAMP, LF-LAM et tests par sondes en ligne) et sur les tests sérodiagnostiques commerciaux. Elles sont regroupées par ligne directrice source et par thème, avec leur force et le degré de certitude des données.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице собраны действующие рекомендации ВОЗ по диагностическим подходам, касающиеся детей и подростков, главным образом по быстрым молекулярным тестам (Xpert MTB/RIF и Xpert Ultra, Truenat, МАНК, TB-LAMP, LF-LAM и тесты гибридизации с типоспецифичными зондами) и коммерческим серодиагностическим тестам. Рекомендации сгруппированы по исходному руководству и теме с указанием их силы и степени достоверности данных.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-6.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;col-1&quot;,
+          &quot;titles&quot;: &quot;&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 35,
+      &quot;columns&quot;: 1,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:label&quot;: &quot;Table 6&quot;,
+    &quot;fac:caption&quot;: &quot;Table 6: WHO recommendations on TB treatment relevant to children and adolescents&quot;,
+    &quot;fac:pages&quot;: [
+      77,
+      78,
+      79,
+      80
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;³⁶ This recommendation is applicable to adolescents from 15 years of age ³⁷ Imipenem-cilastatin and meropenem are administered with clavulanic acid, which is available only in formulations combined with amoxicillin. Amoxicillin-clavulanic acid is not counted as an additional effective TB agent, and should not be used without imipenem- cilastatin or meropenem. [Transcriber: single-column table; rows include the source-guideline headings and topic subheadings as printed, followed by the recommendation cells.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table compiles current WHO recommendations on the treatment of TB relevant to children and adolescents, covering drug-susceptible TB regimens and drug-resistant TB regimens (isoniazid-resistant TB, shorter and longer MDR/RR-TB regimens, BPaL, and monitoring by culture). Recommendations are grouped by source guideline and topic, each with its strength and certainty of evidence.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يجمع الجدول توصيات المنظمة الحالية بشأن علاج السل ذات الصلة بالأطفال والمراهقين، وتشمل نظم علاج السل الحساس للأدوية ونظم علاج السل المقاوم للأدوية (السل المقاوم للإيزونيازيد، والنظم القصيرة والطويلة للسل المقاوم للأدوية المتعددة/للريفامبيسين، ونظام BPaL، والرصد بالمزرعة). والتوصيات مصنفة حسب المبدأ التوجيهي المصدر والموضوع، مع بيان قوة كل توصية ودرجة اليقين في البيّنات.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表汇集与儿童和青少年相关的现行世卫组织结核病治疗建议，涵盖药物敏感结核病治疗方案和耐药结核病治疗方案（耐异烟肼结核病、耐多药/利福平耐药结核病短程和长程方案、BPaL方案以及培养监测）。建议按来源指南和主题分组，并注明每项建议的强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro reúne las recomendaciones vigentes de la OMS sobre el tratamiento de la tuberculosis pertinentes para niños y adolescentes, que abarcan las pautas para la tuberculosis farmacosensible y para la farmacorresistente (tuberculosis resistente a la isoniazida, pautas cortas y largas para la TB-MDR/RR, BPaL y seguimiento mediante cultivo). Se agrupan por directriz de origen y tema, cada una con su fuerza y la certeza de la evidencia.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau rassemble les recommandations actuelles de l’OMS sur le traitement de la tuberculose concernant les enfants et les adolescents, couvrant les schémas pour la tuberculose pharmacosensible et pour la tuberculose pharmacorésistante (tuberculose résistante à l’isoniazide, schémas courts et longs pour la tuberculose MR/RR, BPaL et suivi par culture). Elles sont regroupées par ligne directrice source et par thème, avec leur force et le degré de certitude des données.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице собраны действующие рекомендации ВОЗ по лечению туберкулеза, касающиеся детей и подростков, включая схемы лечения лекарственно-чувствительного и лекарственно-устойчивого туберкулеза (туберкулез, устойчивый к изониазиду, короткие и длительные схемы при МЛУ/РУ-ТБ, BPaL и мониторинг с помощью посева). Рекомендации сгруппированы по исходному руководству и теме с указанием их силы и степени достоверности данных.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-7.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;col-1&quot;,
+          &quot;titles&quot;: &quot;&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 7,
+      &quot;columns&quot;: 1,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:label&quot;: &quot;Table 7&quot;,
+    &quot;fac:caption&quot;: &quot;Table 7: WHO recommendations on models of TB care relevant to children and adolescents&quot;,
+    &quot;fac:pages&quot;: [
+      87,
+      88
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;³⁸ Treatment adherence interventions include social support such as patient education and counselling, material support (e.g. food, financial incentive, and transport fee); psychological support; tracers such as home visit or digital health communication (e.g. SMS, telephone call); medication monitor; and staff education. The interventions should be selected on the basis of the assessment of individual patient’s needs, provider’s resources and conditions for implementation. ³⁹ Suitable treatment administration options include various forms of treatment support, such as video-supported treatment and regular community of home-based treatment support. ⁴⁰ Tracers refer to communication with the patient including via SMS, telephone (voice) calls, or home visit. ⁴¹ A digital medication monitor is a device that can measure the time between openings of the pill box. The medication monitor may have audio reminders or send an SMS to remind patient to take medications, along with recording when the pill box is opened. ⁴² Material support can be food or financial support such as: meals, food baskets, food supplements, food vouchers, transport subsidies, living allowance, housing incentives, or financial bonus. This support addresses indirect costs incurred by patients or their attendants in order to access health services, and possibly tries to mitigate consequences of income loss related to the disease. ⁴³ Psychological support can be counselling sessions or peer-group support. ⁴⁴ Staff education can be adherence education, chart or visual reminder, educational tools and desktop aids for decision-making and reminder. [Transcriber: single-column table; rows include the source-guideline headings and topic subheadings as printed, followed by the recommendation cells.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table compiles current WHO recommendations on models of TB care relevant to children and adolescents, taken from the guidelines on care and support during TB treatment. They cover health education and counselling, treatment adherence interventions, treatment administration options, ambulatory care and decentralized care for MDR-TB, each with its strength and certainty of evidence.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يجمع الجدول توصيات المنظمة الحالية بشأن نماذج رعاية مرضى السل ذات الصلة بالأطفال والمراهقين، والمستمدة من المبادئ التوجيهية بشأن الرعاية والدعم أثناء علاج السل. وتشمل التثقيف الصحي والمشورة، وتدخلات الالتزام بالعلاج، وخيارات إعطاء العلاج، والرعاية الخارجية واللامركزية لمرضى السل المقاوم للأدوية المتعددة، مع بيان قوة كل توصية ودرجة اليقين في البيّنات.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表汇集与儿童和青少年相关的现行世卫组织结核病医护模式建议，取自结核病治疗期间关怀和支持指南。内容涵盖健康教育和咨询、治疗依从性干预措施、治疗给药方式、耐多药结核病门诊治疗和分散式医护，并注明每项建议的强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro reúne las recomendaciones vigentes de la OMS sobre modelos de atención de la tuberculosis pertinentes para niños y adolescentes, tomadas de las directrices sobre atención y apoyo durante el tratamiento. Abarcan la educación sanitaria y el asesoramiento, las intervenciones de adherencia, las opciones de administración del tratamiento y la atención ambulatoria y descentralizada de la TB-MDR, cada una con su fuerza y la certeza de la evidencia.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau rassemble les recommandations actuelles de l’OMS sur les modèles de soins antituberculeux concernant les enfants et les adolescents, tirées des lignes directrices sur les soins et le soutien pendant le traitement. Elles portent sur l’éducation sanitaire et le conseil, les interventions favorisant l’observance, les modalités d’administration du traitement, et les soins ambulatoires et décentralisés de la tuberculose multirésistante, avec leur force et le degré de certitude des données.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице собраны действующие рекомендации ВОЗ по моделям оказания помощи при туберкулезе, касающиеся детей и подростков, из руководства по уходу и поддержке во время лечения туберкулеза. Они охватывают санитарное просвещение и консультирование, меры по повышению приверженности лечению, варианты приема лечения, амбулаторное и децентрализованное лечение МЛУ-ТБ с указанием силы каждой рекомендации и степени достоверности данных.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  },
+  {
+    &quot;url&quot;: &quot;tables/table-8.csv&quot;,
+    &quot;tableSchema&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;name&quot;: &quot;col-1&quot;,
+          &quot;titles&quot;: &quot;&quot;,
+          &quot;datatype&quot;: &quot;any&quot;,
+          &quot;datatypeSource&quot;: &quot;undetermined&quot;
+        }
+      ]
+    },
+    &quot;fac:anchor&quot;: null,
+    &quot;fac:headerRow&quot;: 1,
+    &quot;fac:extent&quot;: {
+      &quot;rows&quot;: 34,
+      &quot;columns&quot;: 1,
+      &quot;source&quot;: &quot;measured&quot;
+    },
+    &quot;fac:label&quot;: &quot;Table 8&quot;,
+    &quot;fac:caption&quot;: &quot;Table 8: WHO recommendations on TB/HIV coinfection and nutrition relevant to children and adolescents&quot;,
+    &quot;fac:pages&quot;: [
+      89,
+      90,
+      91,
+      92
+    ],
+    &quot;fac:headerRows&quot;: 0,
+    &quot;fac:lang&quot;: &quot;en&quot;,
+    &quot;fac:notes&quot;: &quot;⁴⁵ Pyridoxine supplementation is recommended along with isoniazid treatment for all pregnant (or breastfeeding) women, as well as for people with conditions such as HIV infection, alcohol dependency, malnutrition, diabetes, chronic liver disease or renal failure. Pyridoxine provision together with isoniazid treatment was not analysed for the 2013 nutrition guideline. [Transcriber: single-column table; rows include the source-guideline headings and topic subheadings as printed, followed by the recommendation cells.]&quot;,
+    &quot;fac:transcribed&quot;: {
+      &quot;method&quot;: &quot;inspection&quot;,
+      &quot;by&quot;: {
+        &quot;kind&quot;: &quot;agent&quot;,
+        &quot;id&quot;: &quot;claude-code&quot;,
+        &quot;model&quot;: &quot;not-disclosed&quot;,
+        &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+      },
+      &quot;at&quot;: &quot;2026-11-11&quot;,
+      &quot;from&quot;: &quot;the rendered PDF page, checked against its text layer&quot;
+    },
+    &quot;fac:narrative&quot;: [
+      {
+        &quot;text&quot;: &quot;The table compiles current WHO recommendations relevant to children and adolescents on TB/HIV coinfection (HIV testing, co-trimoxazole prophylaxis, eligibility for and timing of ART, first- and second-line ART regimens) and on nutrition (severe acute malnutrition, moderate undernutrition and nutrition screening of contacts). Recommendations are grouped by source guideline and topic, each with its strength and certainty of evidence.&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;يجمع الجدول توصيات المنظمة الحالية ذات الصلة بالأطفال والمراهقين بشأن العدوى المصاحبة بالسل وفيروس العوز المناعي البشري (اختبار الفيروس، والوقاية بالكوتريموكسازول، والأهلية للعلاج بمضادات الفيروسات القهقرية وتوقيته، ونظم الخط الأول والثاني) وبشأن التغذية (سوء التغذية الحاد الوخيم، ونقص التغذية المعتدل، وتحري التغذية لدى المخالطين). والتوصيات مصنفة حسب المبدأ التوجيهي المصدر والموضوع، مع بيان قوة كل توصية ودرجة اليقين في البيّنات.&quot;,
+        &quot;lang&quot;: &quot;ar&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;本表汇集与儿童和青少年相关的现行世卫组织建议，涉及结核病/艾滋病毒合并感染（艾滋病毒检测、复方新诺明预防、抗逆转录病毒治疗的适用条件和时机、一线和二线抗逆转录病毒治疗方案）以及营养（重度急性营养不良、中度营养不足和接触者营养筛查）。建议按来源指南和主题分组，并注明每项建议的强度和证据确定性。&quot;,
+        &quot;lang&quot;: &quot;zh&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;El cuadro reúne las recomendaciones vigentes de la OMS pertinentes para niños y adolescentes sobre la coinfección TB/VIH (pruebas del VIH, profilaxis con cotrimoxazol, criterios y momento de inicio del TAR, pautas de TAR de primera y segunda línea) y sobre nutrición (malnutrición aguda grave, desnutrición moderada y cribado nutricional de los contactos). Se agrupan por directriz de origen y tema, cada una con su fuerza y la certeza de la evidencia.&quot;,
+        &quot;lang&quot;: &quot;es&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;Le tableau rassemble les recommandations actuelles de l’OMS concernant les enfants et les adolescents sur la co-infection tuberculose/VIH (dépistage du VIH, prophylaxie par le cotrimoxazole, critères et moment d’instauration du TAR, schémas de TAR de première et de deuxième intention) et sur la nutrition (malnutrition aiguë sévère, dénutrition modérée et dépistage nutritionnel des contacts). Elles sont regroupées par ligne directrice source et par thème, avec leur force et le degré de certitude des données.&quot;,
+        &quot;lang&quot;: &quot;fr&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      },
+      {
+        &quot;text&quot;: &quot;В таблице собраны действующие рекомендации ВОЗ, касающиеся детей и подростков, по сочетанной инфекции ТБ/ВИЧ (тестирование на ВИЧ, профилактика ко-тримоксазолом, показания и сроки начала АРТ, схемы АРТ первого и второго ряда) и по питанию (тяжелая острая недостаточность питания, умеренная недостаточность питания и скрининг питания контактов). Рекомендации сгруппированы по исходному руководству и теме с указанием их силы и степени достоверности данных.&quot;,
+        &quot;lang&quot;: &quot;ru&quot;,
+        &quot;state&quot;: &quot;draft&quot;,
+        &quot;drafted_by&quot;: {
+          &quot;kind&quot;: &quot;agent&quot;,
+          &quot;id&quot;: &quot;claude-code&quot;,
+          &quot;model&quot;: &quot;not-disclosed&quot;,
+          &quot;session&quot;: &quot;https://claude.ai/code/session_01Qmmkt7LJVddPRBy6F6BnEb&quot;
+        },
+        &quot;drafted_at&quot;: &quot;2026-11-11&quot;
+      }
+    ]
+  }
+]</pre></dd><dt>source</dt><dd><pre>{
+  &quot;file&quot;: &quot;10665-352522.pdf&quot;,
+  &quot;sha256&quot;: &quot;c8db061efbcb04cfe0b60190db11bf85493e04999517a6e83e0ed69a655dfc29&quot;,
+  &quot;note&quot;: &quot;tables transcribed from the PDF pages; the PDF itself is not held&quot;
+}</pre></dd><dt>narrative</dt><dd><pre>{
+  &quot;text&quot;: null,
+  &quot;state&quot;: &quot;not-authored&quot;
+}</pre></dd></dl></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

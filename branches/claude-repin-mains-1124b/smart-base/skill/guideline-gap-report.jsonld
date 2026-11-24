@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/smart-base/skill/guideline-gap-report.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/guideline-gap-report.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/guideline-gap-report",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "guideline-gap-report",
+      "title": "guideline-gap-report",
+      "description": "The QA report smart-guideline-end-to-end writes after every stage: where a guideline's chain from L1 recommendation to L2 asset to L3 resource is broken, which source figures and tables are not yet computable, and which assets have no review requested, a review pending, or a review sent back. Each gap names the asset, the stage that closes it and the role that reviews it. It is staged with the stage's output and linked from every review request, so each reviewer sees where their asset sits and what is still missing. A report, never a gate. Read after any stage of smart-guideline-end-to-end or dth-authoring, and when asked \"what is left to do on this guideline?\".",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-gap-report.md",
+      "instructionLines": 91,
+      "inputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-sci/attestation/kg-qa/processes/content/atomic-mass-drift-check.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-sci/attestation/kg-qa/processes/content/atomic-mass-drift-check",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: process Process_AtomicMassDrift",
+      "description": "The kg-qa judgements recorded for process Process_AtomicMassDrift (processes/content/atomic-mass-drift-check.bpmn), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/kg-qa/processes/content/atomic-mass-drift-check.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/attestation/kg-qa/processes/content/atomic-mass-drift-check"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/schemas/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/schema/l2-bpmn",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-bpmn",
+      "module": "L2-bpmn/schemas/l2-bpmn.ts",
+      "name": "l2-bpmn",
+      "summary": "Knowledge-graph layer L2-BPMN, version 3.0, as typed data.",
+      "title": "l2-bpmn"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/task-annotations",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-bpmn",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/task-annotations/AnnotationSourceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/task-annotations/DakTaskAnnotationsSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/task-annotations/TaskAnnotationSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/task-annotations/UnmatchedItemSchema.schema.json"
+      ],
+      "module": "L2-bpmn/schemas/task-annotations.ts",
+      "name": "task-annotations",
+      "summary": "`dak-task-annotations/v1` — the reviewable record of a DAK's BPMN task",
+      "title": "task-annotations"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/schemas/generated/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L2-bpmn/schemas/generated",
+      "path": "L2-bpmn/schemas/generated/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L2-bpmn/schemas",
+  "path": "L2-bpmn/schemas/"
+}

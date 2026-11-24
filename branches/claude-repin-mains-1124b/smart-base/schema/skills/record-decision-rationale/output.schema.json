@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Record Decision Rationale Output",
+  "description": "Skipped is the default and is a complete answer.",
+  "type": "object",
+  "required": [
+    "recorded"
+  ],
+  "properties": {
+    "recorded": {
+      "type": "boolean",
+      "description": "False when the health worker did not opt in; nothing else is then written."
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "resourceType"
+      ],
+      "properties": {
+        "resourceType": {
+          "const": "Provenance"
+        }
+      },
+      "description": "FHIR R4 Provenance (https://hl7.org/fhir/R4/provenance.html): target the request (or RequestGroup), agent the practitioner, entity source the PlanDefinition, reason the coded or free-text reason."
+    }
+  },
+  "if": {
+    "properties": {
+      "recorded": {
+        "const": true
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "provenance"
+    ]
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  }
+}

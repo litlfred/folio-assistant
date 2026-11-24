@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/schema/subgraph-manifest.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/schema/subgraph-manifest",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "subgraph-manifest",
+      "title": "subgraph-manifest",
+      "summary": "The two files a NAMED SUBGRAPH publishes — `index.jsonld` (referenced) and",
+      "module": "schemas/kg/subgraph-manifest.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/subgraph-manifest"
+    }
+  ]
+}

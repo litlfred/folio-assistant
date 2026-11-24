@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/AsDrawnShape",
+  "definitions": {
+    "AsDrawnShape": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "type": "string",
+          "pattern": "^M[-0-9MLCZ .e]*$"
+        },
+        "fill": {
+          "type": "string",
+          "pattern": "^#[0-9A-F]{6}$"
+        },
+        "evenodd": {
+          "type": "boolean",
+          "const": true
+        },
+        "stroke": {
+          "type": "string",
+          "pattern": "^#[0-9A-F]{6}$"
+        },
+        "strokeWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "dash": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "cap": {
+          "type": "string",
+          "enum": [
+            "round",
+            "square"
+          ]
+        },
+        "join": {
+          "type": "string",
+          "enum": [
+            "round",
+            "bevel"
+          ]
+        },
+        "fillOpacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "strokeOpacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "clip": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "required": [
+        "d"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/folio-assistant-core/schema/zod/figure-data/AsDrawnShapeSchema.schema.json",
+  "title": "AsDrawnShapeSchema",
+  "description": "Generated from `AsDrawnShapeSchema` in schemas/figure-data.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  }
+}

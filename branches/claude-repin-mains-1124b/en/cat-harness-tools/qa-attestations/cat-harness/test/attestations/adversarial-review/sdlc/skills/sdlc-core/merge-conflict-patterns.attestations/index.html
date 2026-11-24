@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../../../../../../../../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>test/attestations/adversarial-review/sdlc/skills/sdlc-core/merge-conflict-patterns.attestations — qa-attestations | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="test/attestations/adversarial-review/sdlc/skills/sdlc-core/merge-conflict-patterns.attestations — qa-attestations" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="test/attestations/adversarial-review/sdlc/skills/sdlc-core/merge-conflict-patterns.attestations — qa-attestations" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-tools-qa-attestations-cat-harness-test-attestations-adversarial-review-sdlc-skills-sdlc-core-merge-conflict-patterns.attestations-index.html",
+    "src": "../../../../../../../../../../../assets/qa/en-cat-harness-tools-qa-attestations-cat-harness-test-attestations-adversarial-review-sdlc-skills-sdlc-core-merge-conflict-patterns.attestations-index.html/page.translation.json",
+    "index": "../../../../../../../../../../../assets/qa/en-cat-harness-tools-qa-attestations-cat-harness-test-attestations-adversarial-review-sdlc-skills-sdlc-core-merge-conflict-patterns.attestations-index.html/qa-index.json",
+    "list": "../../../../../../../../../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../../../../../../../../../assets/translation-status/index.json",
+  "reviewSrc":"../../../../../../../../../../../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../../../../../../../folio-assistant-core/","jsonld":"../../../../../../../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../../../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../../../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../../../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../../../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../../../../../../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../../../../../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../../../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../../../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../../../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/docs-ui.css?v=4c7265cca407"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../../../../../../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../../../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../../../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../../../../../../../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../../../../../../../../../../../assets/js/docs-ui.js?v=cae1ad7ba8e7" defer></script><script src="../../../../../../../../../../../assets/js/edit-links.js?v=56a2d25f0900" defer></script><script src="../../../../../../../../../../../assets/js/translation-review.js?v=3ab638979d22" defer></script><script src="../../../../../../../../../../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../../../../../../../../../assets/css/navbar.css"><script src="../../../../../../../../../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../../../../../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../../../../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../../../../../../../../assets/page-layout.js" defer data-fa-page-layout></script><script src="../../../../../../../../../../../assets/draft-banner.js" defer data-fa-page-layout></script><noscript data-fa-draft-noscript><link rel="stylesheet" href="../../../../../../../../../../../assets/draft-banner-noscript.css"></noscript></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../../../../../../../../.." data-fa-to-root="../../../../../../../../../../..">{"data":"rail-giobbw31pa","here":"/en/cat-harness-tools/qa-attestations/cat-harness/test/attestations/adversarial-review/sdlc/skills/sdlc-core/merge-conflict-patterns.attestations/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../../../../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:var(--fa-font-sans,system-ui,sans-serif)">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+var b=document.querySelector('[data-fa-staging-banner]'),d=document.querySelector('[data-fa-staging-detail]');
+if(b)document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');
+var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);
+if(!m){if(d)d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+var s=document.createElement('script');s.src=m[1]+'staging-banner.js';
+s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
+(document.head||document.documentElement).appendChild(s);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../../../../../../../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><style>
+.nk-page { --nk-line:rgba(127,127,127,.4); --nk-panel:rgba(127,127,127,.12); min-width:0; overflow-wrap:anywhere; }
+.nk-page h1 { margin:0 0 .25rem; } .nk-page h2 { font-size:1.05rem; margin:1.5rem 0 .5rem; }
+/* Secondary by SIZE, not by opacity: these lines carry links, and dimming a
+   link changes the theme's link colour, which is then this page's contrast. */
+.nk-page .m { font-size:.9rem; }
+.nk-page .tiles { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0; padding:0; list-style:none; }
+.nk-page .tiles li { border:1px solid var(--nk-line); border-radius:.4rem; padding:.35rem .7rem; margin:0; }
+.nk-page .tiles li::before { content:none; }
+.nk-page .tiles b { font-size:1.2rem; margin-right:.3rem; }
+.nk-page .clip { width:100%; overflow-x:auto; }
+.nk-page table { display:table; width:100%; border-collapse:collapse; font-size:.92rem; }
+.nk-page th, .nk-page td { text-align:left; vertical-align:top; padding:.35rem .5rem; border:0; border-bottom:1px solid var(--nk-line); background:transparent; }
+.nk-page th { background:var(--nk-panel); white-space:nowrap; }
+/* Only the node's path and long text may break mid-word; a status or a date
+   broken across lines ("in_pr ogres s") is unreadable. */
+.nk-page td { overflow-wrap:normal; } .nk-page td.p, .nk-page td.t { overflow-wrap:anywhere; } .nk-page td.s { white-space:nowrap; }
+.nk-page dl { display:grid; grid-template-columns:minmax(8rem,14rem) 1fr; gap:.25rem 1rem; }
+.nk-page dt { font-weight:600; } .nk-page dd { margin:0; }
+.nk-page pre { background:var(--nk-panel); padding:.75rem; overflow-x:auto; font-size:.85rem; }
+.nk-page label { margin-right:1rem; }
+@media (max-width:40rem) { .nk-page dl { grid-template-columns:1fr; } }
+</style><div class="nk-page" data-fa-node-kind-page><h1 id="nk-title"><a href="#nk-title" class="anchor-heading" aria-labelledby="nk-title"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> test/attestations/adversarial-review/sdlc/skills/sdlc-core/merge-conflict-patterns.attestations
+  
+  
+</h1><p class="m">A <a href="../../../../../../../../">qa-attestations</a> node held by <a href="../../../../../../../">cat-harness</a>, at <code>cat-harness/test/attestations/adversarial-review/sdlc/skills/sdlc-core/merge-conflict-patterns.attestations.json</code>.</p><h2 id="fields"><a href="#fields" class="anchor-heading" aria-labelledby="fields"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fields
+  
+  
+</h2><dl><dt>$schema</dt><dd>qa-attestations/v1</dd><dt>family</dt><dd>adversarial-review</dd><dt>subject</dt><dd><pre>{
+  &quot;kind&quot;: &quot;skill&quot;,
+  &quot;id&quot;: &quot;merge-conflict-patterns&quot;,
+  &quot;path&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md&quot;
+}</pre></dd><dt>adversarial_reviews</dt><dd><pre>[
+  {
+    &quot;reviewer&quot;: {
+      &quot;by&quot;: &quot;agent&quot;,
+      &quot;session&quot;: &quot;session_backfill_lvlv&quot;,
+      &quot;model&quot;: &quot;not-disclosed&quot;
+    },
+    &quot;author_sessions&quot;: [],
+    &quot;skill_hash&quot;: &quot;hash:adversarial-checklist:v1&quot;,
+    &quot;at&quot;: &quot;2026-10-09T16:54:43.277Z&quot;,
+    &quot;coverage&quot;: {
+      &quot;files_total&quot;: 1,
+      &quot;files_reviewed&quot;: 1,
+      &quot;skipped&quot;: []
+    },
+    &quot;result&quot;: &quot;pass&quot;,
+    &quot;flags&quot;: [],
+    &quot;findings&quot;: []
+  },
+  {
+    &quot;reviewer&quot;: {
+      &quot;by&quot;: &quot;agent&quot;,
+      &quot;session&quot;: &quot;session_01VQDpPffYARDQ8juksAZScf&quot;,
+      &quot;model&quot;: &quot;not-disclosed&quot;
+    },
+    &quot;author_sessions&quot;: [],
+    &quot;skill_hash&quot;: &quot;hash:adversarial-checklist:v1&quot;,
+    &quot;at&quot;: &quot;2026-11-05T17:14:24.396Z&quot;,
+    &quot;coverage&quot;: {
+      &quot;files_total&quot;: 1,
+      &quot;files_reviewed&quot;: 1,
+      &quot;skipped&quot;: []
+    },
+    &quot;result&quot;: &quot;fail&quot;,
+    &quot;flags&quot;: [
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-hand-merge-theirs&quot;,
+        &quot;category&quot;: &quot;data-loss&quot;,
+        &quot;severity&quot;: &quot;major&quot;,
+        &quot;weight&quot;: &quot;blocking&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:133-137 (§\&quot;Four things a round needs to know\&quot;, first bullet)&quot;,
+        &quot;evidence&quot;: &quot;The hand recipe says: take each declared path with `git checkout --theirs &lt;path&gt;` and stage it with `git add -f`. For a `readme-generated-regions` path that replaces the whole README with main&#39;s stage-3 blob, discarding the branch&#39;s authored hunks in that README, including ones git had merged cleanly; regen rewrites only the generated regions, and no listed check (the deletion audit is scoped to */test/results/*) sees lost prose. merge-base.ts resolves that pattern hunk by hunk (resolveGeneratedRegions) and refuses a hunk outside a region. The same file says --theirs has nothing to take in a modify/delete (§\&quot;When one side deleted the file\&quot;, l.200-204) and writes marked bytes in a rename/rename payload (l.480-481), and the hand path runs neither droppedInMerge checkpoint (merge-queue: &#39;A hand `git merge` gets no such check&#39;).&quot;,
+        &quot;detail&quot;: &quot;Fix: in the hand recipe, resolve each path by its pattern&#39;s strategy (take-base incl. `git rm` for a base deletion; owned-tree from the parents&#39; commits; region-by-region for READMEs), and run the deletion audit over every path, not only test/results.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      }
+    ],
+    &quot;findings&quot;: [
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-hand-merge-theirs&quot;,
+        &quot;category&quot;: &quot;data-loss&quot;,
+        &quot;severity&quot;: &quot;major&quot;,
+        &quot;weight&quot;: &quot;blocking&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:133-137 (§\&quot;Four things a round needs to know\&quot;, first bullet)&quot;,
+        &quot;evidence&quot;: &quot;The hand recipe says: take each declared path with `git checkout --theirs &lt;path&gt;` and stage it with `git add -f`. For a `readme-generated-regions` path that replaces the whole README with main&#39;s stage-3 blob, discarding the branch&#39;s authored hunks in that README, including ones git had merged cleanly; regen rewrites only the generated regions, and no listed check (the deletion audit is scoped to */test/results/*) sees lost prose. merge-base.ts resolves that pattern hunk by hunk (resolveGeneratedRegions) and refuses a hunk outside a region. The same file says --theirs has nothing to take in a modify/delete (§\&quot;When one side deleted the file\&quot;, l.200-204) and writes marked bytes in a rename/rename payload (l.480-481), and the hand path runs neither droppedInMerge checkpoint (merge-queue: &#39;A hand `git merge` gets no such check&#39;).&quot;,
+        &quot;detail&quot;: &quot;Fix: in the hand recipe, resolve each path by its pattern&#39;s strategy (take-base incl. `git rm` for a base deletion; owned-tree from the parents&#39; commits; region-by-region for READMEs), and run the deletion audit over every path, not only test/results.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-rule3-never-under-report&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;major&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:52-59 (§\&quot;Applying rule 3\&quot;)&quot;,
+        &quot;evidence&quot;: &quot;&#39;A stale tree can only ever over-report authored conflicts, never under-report, because a pattern is added and an authored path is the fallback.&#39; That holds only if declarations are append-only. Nothing makes them so: first match wins (l.614-615), docs-pages enumerates slugs (l.411-417) so a page that becomes authored loses its slug, and the registry&#39;s history rewrites and retires entries (cat-harness-tools 3d7d8832 retired the kg-qa-sidecar strategy). After a narrowing, a stale branch&#39;s `merge:main` (merge-base.ts imports PATTERNS from the running checkout) takes base on a path main now refuses: the silent-discard direction. The remedy offered (`git show origin/&lt;base&gt;:…merge-conflict-patterns.ts`) cannot be given to merge:main; the mechanism CI uses, main&#39;s merge-base.ts run with `--root` on the branch (folio-assistant merge-main.yml, step &#39;merge main in, with main&#39;s merge-base.ts&#39;), is not named.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-ci-section-stale&quot;,
+        &quot;category&quot;: &quot;provenance&quot;,
+        &quot;severity&quot;: &quot;major&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:620-656 (§\&quot;In CI — opt in with the merge-main label\&quot;)&quot;,
+        &quot;evidence&quot;: &quot;Against folio-assistant .github/workflows/merge-main.yml at 575b57e: (a) &#39;runs merge:main on every open, same-repository PR labelled merge-main that is behind main&#39; — a sweep now merges only a CONFLICTED PR (a clean one only when the label is added or a dispatch names it) and never a draft, per the owner ruling of 2026-11-05 that branch-freshness quotes; (b) &#39;one live run per PR (a newer run cancels an older one)&#39; — concurrency is per PR and per event, push-triggered runs queue and are never cancelled in progress, and two runs for one PR can run at once; (c) &#39;pushed with MERGE_MAIN_TOKEN&#39; — the workflow uses the PUSH_BRANCH_TRIGGERING_CI capability (harness App, or a secret of that name); (d) `.github/workflows/merge-main.yml` lives in the folio-assistant index, not in cat-harness, where this skill is read.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-train-resolves-conflicts&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;major&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:660-664 (§\&quot;When a merge-train member is refused\&quot;)&quot;,
+        &quot;evidence&quot;: &quot;A train is described as `merge-base.ts --no-regen` per member, refusing a member &#39;when its merge hits an authored or undeclared conflict&#39;, so declared conflicts are resolved inside the train. merge-queue §&#39;A train admits only members that STACK cleanly (STRICT)&#39; requires &#39;no conflict at all, generated paths included&#39;, checked with merge-tree before admission: &#39;Conflict resolution belongs on the member&#39;s branch, never in the train&#39;; merge-manager-watcher: &#39;It is never fixed inside the train.&#39; One of the two skills is wrong; this one does not mention stacking.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-dispatch-cannot-sign&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;major&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:712-716, 757-775 (§1 Done when; §3 dispatch one agent)&quot;,
+        &quot;evidence&quot;: &quot;§3 fires when the owning session is &#39;gone&#39;, and the dispatched agent&#39;s budget is &#39;one fix, one push, one report&#39;. The work item&#39;s Done-when needs &#39;a new `ready: &lt;sha&gt;`&#39;, and merge:guard accepts a ready marker only from the session the PR body names (merge-queue §&#39;Stalled for days&#39; step 3; an unblocker &#39;never posts a `ready:` marker&#39;). With the owner gone and no takeover of the body&#39;s session line, which §3 does not provide, Done-when cannot be met and the item becomes the &#39;stale hold&#39; §5 warns of.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-fail-thresholds&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:735-741 (§2 Fails if)&quot;,
+        &quot;evidence&quot;: &quot;&#39;no started line within 4 hours; or no push within 24 hours&#39; is given with no ruling or source. merge-manager-watcher routes &#39;a PR whose owner has not pushed or answered for 2+ hours&#39; to stalled-agent-triage, &#39;tell the owner and take it over&#39;; merge-queue&#39;s `stale` row is 24 h without push or human comment. Three thresholds for one situation.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-steward-edits&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:743-746 vs 686-688&quot;,
+        &quot;evidence&quot;: &quot;§2: &#39;After that, the steward does not edit the work item: anything it learns goes to the PR.&#39; §1: a second refusal of the same PR is added to the open work item under `## Attempts` with `--body-append`, by the steward, while the owning session holds it. (§3&#39;s dispatch record and §5&#39;s close follow a takeover or settle the fate, so they are arguably outside §2&#39;s window; §1&#39;s case is not.)&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-read-only-name&quot;,
+        &quot;category&quot;: &quot;provenance&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:589&quot;,
+        &quot;evidence&quot;: &quot;&#39;task-io.ts classifies check:artefact-verification as READ_ONLY&#39;. task-io.ts:136 has `\&quot;check:artefact-verification\&quot;: TREE_READER` ({ inputs: [TRACKED], outputs: [] }); READ_ONLY is a different constant. The substance (no outputs, so no writer and take-base would discard) holds; the identifier does not.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-regen-every-check&quot;,
+        &quot;category&quot;: &quot;provenance&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:35-39, 70&quot;,
+        &quot;evidence&quot;: &quot;Rule 2: regen &#39;asks every check the CI workflow runs&#39;; the round table: a standalone regen after merge:main adds &#39;nothing — same tree, same gate set&#39;. merge:main runs regen with `--changed &lt;fork point&gt;` (merge-base.ts regenArgs, bean 94zs), i.e. only pairs whose inputs changed since the fork; a standalone `regen` asks the full set and can find a pair already stale at both parents. The practical cost is small (CI reports it), but both sentences are false as written.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-unsourced-measurements&quot;,
+        &quot;category&quot;: &quot;provenance&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:66-72, 88-89, 138-140&quot;,
+        &quot;evidence&quot;: &quot;The round table (238-309 s, 601-639 s, 1429 s, ~21.8k tests, 3-4 cores), &#39;Cold, it needs ≥1200 s&#39;, and &#39;the two reds a generated-only merge actually hit in CI&#39; are stated as standing facts with no date, run or re-measure command (cat-harness-tools has scripts/measure-merge-round.ts). They are in tension with each other (5-10 min vs ≥1200 s cold) and with merge-main.yml&#39;s measured 19-46 min round (#1754, 2026-10-01). skill-no-prose-counts.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-touched-code-undefined&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:79-81, 122-123&quot;,
+        &quot;evidence&quot;: &quot;The choice between the trimmed and the full local round turns on &#39;the merge touched code (yours or main&#39;s reconciled against yours)&#39;, which is not defined. Almost every merge of main brings code in; read broadly, the trimmed round never applies, read narrowly (textual conflict only) it admits the semantic conflict l.126-129 says the targeted list cannot see.&quot;,
+        &quot;status&quot;: &quot;open&quot;
+      }
+    ]
+  },
+  {
+    &quot;reviewer&quot;: {
+      &quot;by&quot;: &quot;agent&quot;,
+      &quot;session&quot;: &quot;session_01VQDpPffYARDQ8juksAZScf&quot;,
+      &quot;model&quot;: &quot;not-disclosed&quot;
+    },
+    &quot;author_sessions&quot;: [],
+    &quot;skill_hash&quot;: &quot;hash:adversarial-checklist:v1&quot;,
+    &quot;at&quot;: &quot;2026-11-05T17:29:09.280Z&quot;,
+    &quot;coverage&quot;: {
+      &quot;files_total&quot;: 1,
+      &quot;files_reviewed&quot;: 1,
+      &quot;skipped&quot;: []
+    },
+    &quot;result&quot;: &quot;pass&quot;,
+    &quot;flags&quot;: [],
+    &quot;findings&quot;: [
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-r2-boundary-hunk&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:hand recipe, readme bullet&quot;,
+        &quot;evidence&quot;: &quot;The per-hunk rule named only hunks inside or outside a region; a hunk that moves a region boundary is neither, and the pattern section refuses it. Now named as authored.&quot;,
+        &quot;detail&quot;: &quot;Raised against the fixed text and corrected in the same commit before this review was recorded; the recorded text answers it.&quot;,
+        &quot;status&quot;: &quot;resolved&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-r2-dispatch-events&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:In CI, third bullet&quot;,
+        &quot;evidence&quot;: &quot;The concurrency bullet omitted workflow_dispatch runs, which merge-main.yml cancels per event (cancel-in-progress is true for every event but push), and said &#39;one of each kind&#39; for three event kinds. Now: any non-push event cancels an earlier run of the same event.&quot;,
+        &quot;detail&quot;: &quot;Raised against the fixed text and corrected in the same commit before this review was recorded; the recorded text answers it.&quot;,
+        &quot;status&quot;: &quot;resolved&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-r2-unmerged-workflow&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:train paragraph&quot;,
+        &quot;evidence&quot;: &quot;Said the automated train is &#39;run by merge-train.yml in folio-assistant&#39; and the ruling&#39;s section was &#39;added by cat-harness#1053&#39;; neither is on main (folio-assistant#2960 and cat-harness#1053 are open). Now &#39;proposed in&#39;.&quot;,
+        &quot;detail&quot;: &quot;Raised against the fixed text and corrected in the same commit before this review was recorded; the recorded text answers it.&quot;,
+        &quot;status&quot;: &quot;resolved&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-r2-takeover-owner&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:§3 signing bullet&quot;,
+        &quot;evidence&quot;: &quot;merge-queue §&#39;Stalled for days&#39; has the owner start the takeover agent; the new bullet let a steward-dispatched agent rewrite the PR body&#39;s session line with no owner involvement. Now &#39;with the owner&#39;s go-ahead as there&#39;.&quot;,
+        &quot;detail&quot;: &quot;Raised against the fixed text and corrected in the same commit before this review was recorded; the recorded text answers it.&quot;,
+        &quot;status&quot;: &quot;resolved&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-r2-container-claim&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:timings note&quot;,
+        &quot;evidence&quot;: &quot;&#39;recorded ... in one container&#39; was not shown by any source. Removed; only the date bound (cat-harness seed 6e8a3f85, 2026-10-08) and the re-measure command remain.&quot;,
+        &quot;detail&quot;: &quot;Raised against the fixed text and corrected in the same commit before this review was recorded; the recorded text answers it.&quot;,
+        &quot;status&quot;: &quot;resolved&quot;
+      },
+      {
+        &quot;id&quot;: &quot;adv-merge-conflict-patterns-r2-base-tools&quot;,
+        &quot;category&quot;: &quot;correctness&quot;,
+        &quot;severity&quot;: &quot;minor&quot;,
+        &quot;weight&quot;: &quot;suggestion&quot;,
+        &quot;where&quot;: &quot;sdlc/skills/sdlc-core/merge-conflict-patterns.md:Applying rule 3&quot;,
+        &quot;evidence&quot;: &quot;&#39;classify with the BASE&#39;s own merge-base.ts&#39; did not say where that file comes from. Now: a worktree of the tools at the base.&quot;,
+        &quot;detail&quot;: &quot;Raised against the fixed text and corrected in the same commit before this review was recorded; the recorded text answers it.&quot;,
+        &quot;status&quot;: &quot;resolved&quot;
+      }
+    ]
+  }
+]</pre></dd><dt>source_hash</dt><dd>4a2cf04c8d91</dd></dl></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

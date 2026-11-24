@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/schemas/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/schema/l2-bpmn",
+      "@type": "cat-harness:Schema",
+      "name": "l2-bpmn",
+      "title": "l2-bpmn"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/task-annotations",
+      "@type": "cat-harness:Schema",
+      "name": "task-annotations",
+      "title": "task-annotations"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/schemas/generated/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L2-bpmn/schemas",
+  "path": "L2-bpmn/schemas/"
+}

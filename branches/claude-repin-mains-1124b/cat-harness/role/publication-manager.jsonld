@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/role/publication-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-mains-1124b",
+    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "pr": "3198/merge",
+    "run": "45442311478"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/role/publication-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Publication manager",
+      "title": "Publication manager",
+      "notation": "publication-manager",
+      "description": "Takes an authorised release to its published form and is accountable for what is live.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/publish-verification",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/instance-publication",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/package-release",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/render-kg-to-cdn",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/skill/staging-review"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager"
+    }
+  ]
+}
