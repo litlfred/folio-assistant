@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns/"
+                  id="Definitions_Process_LeanDocsPublish" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_LeanDocsPublish">
+    <bpmn:participant id="Participant_Process_LeanDocsPublish" name="Publish a folio's Lean render with the harness chrome" processRef="Process_LeanDocsPublish"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_LeanDocsPublish" name="Publish a folio's Lean render with the harness chrome" isExecutable="false">
+    <bpmn:documentation>Build a folio's Lean render — the doc-gen4 HTML of the Lake packages the folio holds — keep it on its own branch store, and publish it inside the folio's site with the harness navbar and rail.
+
+The visualiser is the Lean KNOWLEDGE-GRAPH viewer (owner, 2026-11-19: "use thin html and dynamic loading"): `lean-kg-publish` turns doc-gen4's per-module declaration data into one viewer page and JSON shards the page loads on demand. doc-gen4's static HTML is a non-default fallback only.
+
+Three places, and each step says which it reads and writes. The SOURCE is the Lake packages in the folio's own tree (`folio/&lt;paper&gt;/lean/`), never moved. The RENDER lives on a branch store the folio declares (a directory of graph typology `lean` with `source: { kind: "branch", keyedBy: "tip" }`, on a branch under `cat/folio-assistant-sci/`), mounted at the declared path by `state:mount` exactly as `beans/` is; it is never committed to the folio's main. The PUBLISHED pages are the site's route named by that declaration's `coverage.visualiser` (`_site/lean/index.html` → `lean/`).
+
+The build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache (a Lake build over an untraced restore evicts it), so it sits with the Lean toolchain and refuses rather than risks. Its output is pushed to the branch store (`branch-store.ts push --id &lt;id&gt;`), so a site build needs no Lean toolchain at all: it mounts the store and rails the render, a file pass that cannot touch the cache, after the site is built and before the chrome check and deploy. A site rebuilt without a Lean change starts at the mount.
+
+Only End_Ready publishes: a refused guard, a failed build, a store that did not take the push, a mount that failed and an unrailed page are each reported as such, never as a complete site without Lean docs.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- STRICT: the publish step's own last act is an assertion that every
+           staged page is railed or declined, and a partial render must not
+           reach the deploy as though it were whole. -->
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_LeanDocsPublish">
+      <bpmn:lane id="Lane_Lean" name="Lean toolchain">
+        <bpmn:documentation>Owns the Lake run and the write to the branch store. Hands the store a render or reports a refusal; it never publishes, so nothing it does reaches a reader until Lane_Build has mounted, railed and checked it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="lean-toolchain"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Changed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Built</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NoRender</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Store</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Stored</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NotStored</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Build" name="CI/CD Pipeline">
+        <bpmn:documentation>Owns the site. Mounts the render from the branch store, rails it with the platform's own pass, and either hands it on to the folio's chrome check and deploy or stops it at End_NoMount or End_Unrailed.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_Mount</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Mounted</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NoMount</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Publish</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Railed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Ready</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Unrailed</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Changed" name="Lean sources&#10;changed">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Build" name="Build the doc-gen4 render&#10;over the warm cache">
+      <bpmn:documentation>Tool `lean-html-docs` (`adapters/paper/lean/lean-docs-build.sh --lake-root &lt;pkg&gt; --lib &lt;Lib&gt;`). Reads the SOURCE, the folio's Lake packages. Refuses while another lake/lean process holds `.lake/`, refuses over a restored tree with no traces, checks or restores the warm cache, enables the sentinel-commented doc-gen4 require for this build only, then `lake -R -Kenv=dev build &lt;Lib&gt;:docs`. Output: `&lt;pkg&gt;/.lake/build/doc-data` (the per-module declaration data the viewer is made from) and `&lt;pkg&gt;/.lake/build/doc` (the static HTML, kept only as the fallback): working directories, not yet anything a site reads.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="lean-html-docs"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Built" name="Is there a&#10;render?">
+      <bpmn:documentation>Answered by Task_Build's exit code: 0 and a render directory, or a refusal (2: a guard; 3: no warm cache) or a failed build (1). Only 0 continues.</bpmn:documentation>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_NoRender" name="No render — refused&#10;or failed; nothing stored">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Store" name="Write the KG render to&#10;the Lean branch store">
+      <bpmn:documentation>Tool `lean-kg-publish` (`adapters/paper/lean/lean-kg-publish.ts --doc-data &lt;pkg&gt;/.lake/build/doc-data --site &lt;checkout&gt; --route &lt;store path&gt; --no-rail`) writes the viewer page and its `data/` shards into the mounted store's path (the folio's declared `lean` graph, e.g. `lean/`), then `bun folio-assistant/cat-harness-tools/scripts/branch-store.ts push --id &lt;id&gt;`. The store is tip-keyed: the branch tip IS the current render, with a root `manifest.json` (`state-manifest/v1`); the push splices onto the tip and never forces. The render is never committed to the folio's main.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="lean-html-docs"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Stored" name="Did the store&#10;take it?">
+      <bpmn:documentation>Answered by `branch-store.ts push`: `pushed` (or `current`) continues; a `conflict` or a failed push stops here, and the previous render on the branch stays what a site build mounts.</bpmn:documentation>
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_NotStored" name="Not stored — the&#10;previous render stands">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Mount" name="Mount the Lean&#10;branch store">
+      <bpmn:documentation>`bun run cat state:mount` (or `branch-store.ts mount --id &lt;id&gt;`) at the start of the site build, as for `beans/`: puts the branch tip on disk at the declared path. Reads the RENDER; writes nothing to the branch. A site build of a folio whose Lean did not change starts here.</bpmn:documentation>
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Mounted" name="Is the render&#10;on disk?">
+      <bpmn:documentation>Answered by `state:mount`'s row for the store: `mounted` continues; a `miss` (no such branch) or any failure stops here. An empty mount is not a pass: a site published from it would drop its Lean pages without saying so.</bpmn:documentation>
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_NoMount" name="No mounted render —&#10;Lean pages not published">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Publish" name="Publish the render at&#10;its route, railed">
+      <bpmn:documentation>A site step of the folio's declared build (`site.build.siteSteps`). Reads the mounted RENDER, writes the PUBLISHED pages at `&lt;site&gt;/&lt;route&gt;/`, the route the declaration's `coverage.visualiser` names: the KG viewer and its `data/` shards are copied as they are, and the site build's own rail pass (`rail-standalone-pages.ts --foreign-site`, which runs after every site step) puts the harness rail on the viewer page, so the rail's assets are the site's and nothing extra lands at its root. Fallback, when the store holds doc-gen4's static HTML instead: Tool `lean-render-publish` (`adapters/paper/lean/lean-render.ts --docs &lt;mount path&gt; --site &lt;site&gt; --route &lt;route&gt; --no-rail`) stages it without Lake's bookkeeping, marks its iframe navbar and `find/` redirect rail-declined and adds the layout shim. The document site's ∀ panel links each declaration to the viewer opened at it, `&lt;route&gt;/#/m/&lt;Module&gt;/&lt;name&gt;`.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="lean-html-docs"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Railed" name="Every page railed&#10;or declined?">
+      <bpmn:documentation>Answered by Task_Publish's own closing assertion: a staged page carrying neither the harness rail nor the `folio-navbar: none` opt-out fails it (exit 1).</bpmn:documentation>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Ready" name="Lean pages ready for the&#10;chrome check and deploy">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Unrailed" name="Pages without chrome —&#10;not published">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Changed" targetRef="Task_Build"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Task_Build" targetRef="GW_Built"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="GW_Built" targetRef="Task_Store" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Built" targetRef="End_NoRender" name="no"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_Store" targetRef="GW_Stored"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="GW_Stored" targetRef="Task_Mount" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="GW_Stored" targetRef="End_NotStored" name="no"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_Mount" targetRef="GW_Mounted"/>
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="GW_Mounted" targetRef="Task_Publish" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="GW_Mounted" targetRef="End_NoMount" name="no"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_Publish" targetRef="GW_Railed"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="GW_Railed" targetRef="End_Ready" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="GW_Railed" targetRef="End_Unrailed" name="no"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_LeanDocsPublish">
+    <bpmndi:BPMNPlane id="Plane_Process_LeanDocsPublish" bpmnElement="Collaboration_Process_LeanDocsPublish">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_LeanDocsPublish" bpmnElement="Participant_Process_LeanDocsPublish" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="1240" height="480" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Lean" bpmnElement="Lane_Lean" isHorizontal="true">
+        <dc:Bounds x="90" y="60" width="1210" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Build" bpmnElement="Lane_Build" isHorizontal="true">
+        <dc:Bounds x="90" y="300" width="1210" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Changed" bpmnElement="Start_Changed">
+        <dc:Bounds x="150" y="114" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="138" y="154" width="60" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Build" bpmnElement="Task_Build">
+        <dc:Bounds x="220" y="72" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Built" bpmnElement="GW_Built" isMarkerVisible="true">
+        <dc:Bounds x="375" y="107" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="360" y="70" width="80" height="35" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_NoRender" bpmnElement="End_NoRender">
+        <dc:Bounds x="382" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="430" y="222" width="120" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Store" bpmnElement="Task_Store">
+        <dc:Bounds x="480" y="72" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Stored" bpmnElement="GW_Stored" isMarkerVisible="true">
+        <dc:Bounds x="655" y="107" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="640" y="70" width="80" height="35" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_NotStored" bpmnElement="End_NotStored">
+        <dc:Bounds x="780" y="114" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="820" y="110" width="120" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Mount" bpmnElement="Task_Mount">
+        <dc:Bounds x="620" y="340" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Mounted" bpmnElement="GW_Mounted" isMarkerVisible="true">
+        <dc:Bounds x="795" y="375" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="780" y="338" width="80" height="35" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_NoMount" bpmnElement="End_NoMount">
+        <dc:Bounds x="802" y="472" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="846" y="470" width="130" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Publish" bpmnElement="Task_Publish">
+        <dc:Bounds x="900" y="340" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Railed" bpmnElement="GW_Railed" isMarkerVisible="true">
+        <dc:Bounds x="1075" y="375" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1060" y="338" width="90" height="35" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Ready" bpmnElement="End_Ready">
+        <dc:Bounds x="1200" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1150" y="320" width="136" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Unrailed" bpmnElement="End_Unrailed">
+        <dc:Bounds x="1082" y="482" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="980" y="480" width="98" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
+        <di:waypoint x="186" y="132" />
+        <di:waypoint x="220" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="340" y="132" />
+        <di:waypoint x="375" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="425" y="132" />
+        <di:waypoint x="480" y="132" />
+        <bpmndi:BPMNLabel><dc:Bounds x="432" y="112" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="400" y="157" />
+        <di:waypoint x="400" y="222" />
+        <bpmndi:BPMNLabel><dc:Bounds x="404" y="180" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="600" y="132" />
+        <di:waypoint x="655" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="680" y="157" />
+        <di:waypoint x="680" y="340" />
+        <bpmndi:BPMNLabel><dc:Bounds x="684" y="240" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
+        <di:waypoint x="705" y="132" />
+        <di:waypoint x="780" y="132" />
+        <bpmndi:BPMNLabel><dc:Bounds x="735" y="112" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_10" bpmnElement="Flow_10">
+        <di:waypoint x="740" y="400" />
+        <di:waypoint x="795" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_11" bpmnElement="Flow_11">
+        <di:waypoint x="845" y="400" />
+        <di:waypoint x="900" y="400" />
+        <bpmndi:BPMNLabel><dc:Bounds x="852" y="380" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_12" bpmnElement="Flow_12">
+        <di:waypoint x="820" y="425" />
+        <di:waypoint x="820" y="472" />
+        <bpmndi:BPMNLabel><dc:Bounds x="824" y="440" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="1020" y="400" />
+        <di:waypoint x="1075" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="1125" y="400" />
+        <di:waypoint x="1200" y="400" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1150" y="380" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="1100" y="425" />
+        <di:waypoint x="1100" y="482" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1104" y="440" width="30" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

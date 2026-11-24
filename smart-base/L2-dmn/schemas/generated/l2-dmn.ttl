@@ -1,0 +1,146 @@
+@prefix sgkg: <http://smart.who.int/kg/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://smart.who.int/kg/l2-dmn> a owl:Ontology ;
+  owl:imports <http://smart.who.int/kg/l2-bpmn> ;
+  rdfs:label "WHO SMART Guidelines L2-DMN ontology" ;
+  rdfs:comment "The interior of a DMN file, as its own subgraph. It imports l2-bpmn -- not for symmetry, but because a DMN genuinely references a BPMN: dmn:usingTask names the business-rule task that invokes the decision. The dependency runs one way, DMN to BPMN, and modelling them as one subgraph would have hidden that a DMN can be read without a BPMN while the reverse is not true of this edge. Pairwise licensing is carried as sub-properties, because a relationship is licensed between specific class pairs while an OWL object property has one global domain and range." .
+
+### Node kinds
+
+sgkg:Artefact a owl:Class ; rdfs:label "Artefact" ; rdfs:comment "A file, addressed as a whole. Shares its IRI with the L1 reference to the same file, so opening a file does not create a second name for it." .
+sgkg:Structure a owl:Class ; rdfs:label "Structure" ; rdfs:comment "An element inside a file. It has no identity apart from the file that contains it, and its vocabulary is the file format's, not WHO's." .
+
+### Classes
+
+sgkg:DMNFile a owl:Class ;
+  rdfs:subClassOf sgkg:Artefact ;
+  rdfs:label "DMN File" ;
+  skos:notation "dmn-definitions" ;
+  rdfs:subClassOf sgkg:ExternalArtefact ;
+  skos:note "Instances share the IRI of the External artefact they elaborate: one artefact, one address, described opaquely at the layer above and structurally here." ;
+  rdfs:comment "One DMN file as a unit -- the `dmn:definitions` root. Shares its IRI with the l1:external-artifact for the same file, so the l2:decision-support-logic component that points at it and this subgraph name one resource." .
+
+sgkg:DMNDecision a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "DMN Decision" ;
+  skos:notation "dmn-decision" ;
+  rdfs:comment "A `dmn:decision` -- the question being answered, and the node that carries the link back to the BPMN task invoking it. A file may hold several; the BCG file holds one." .
+
+sgkg:DMNDecisionTable a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "DMN Decision Table" ;
+  skos:notation "dmn-decision-table" ;
+  rdfs:comment "The table realising a decision. Separate from dmn-decision because DMN permits other expression kinds -- a literal expression, an invocation -- and collapsing the two would make the graph unable to say which was used." .
+
+sgkg:DMNInputClause a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "DMN Input Clause" ;
+  skos:notation "dmn-input-clause" ;
+  rdfs:comment "An input column. Its expression text is where data element names are embedded, which is the only reason this is a node rather than a property of the table." .
+
+sgkg:DMNOutputClause a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "DMN Output Clause" ;
+  skos:notation "dmn-output-clause" ;
+  rdfs:comment "An output column. The BCG table's four are Care Plan, Guidance displayed to health worker, Annotations and Reference(s). These are column DEFINITIONS in a decision table, not clinical records: no edge from this class reaches an execution artefact, and none may." .
+
+sgkg:DMNRule a owl:Class ;
+  rdfs:subClassOf sgkg:Structure ;
+  rdfs:label "DMN Rule" ;
+  skos:notation "dmn-rule" ;
+  rdfs:comment "One row. Its input and output cells are carried as properties, not nodes: 250 of them in the BCG table alone, none the target of a cross-model edge. What the rule needs a node for is its citation edge into L1." .
+
+### Value sets
+# Closed code lists bound to class properties. validate.ts rejects any other value.
+
+<http://smart.who.int/kg/valueset/dmn-entry-kind> a skos:ConceptScheme ;
+  skos:notation "dmn-entry-kind" ;
+  skos:note "source: OMG DMN 1.3, DecisionRule.outputEntry and annotationEntry" ;
+  skos:note "bound to: dmn-output-clause.serialisedAs" ;
+  rdfs:comment "Which DMN element type a column's cells are serialised as. Added by the smart-base migration from smart-kg's propertyNote, which named the two values in prose." .
+<http://smart.who.int/kg/valueset/dmn-entry-kind#outputEntry> a skos:Concept ; skos:inScheme <http://smart.who.int/kg/valueset/dmn-entry-kind> ; skos:notation "outputEntry" ; skos:definition "The column's cells are the rule's outputEntry elements." .
+<http://smart.who.int/kg/valueset/dmn-entry-kind#annotationEntry> a skos:Concept ; skos:inScheme <http://smart.who.int/kg/valueset/dmn-entry-kind> ; skos:notation "annotationEntry" ; skos:definition "The column's cells are the rule's annotationEntry elements." .
+
+### Object properties
+
+sgkg:invokedBy a owl:ObjectProperty ;
+  rdfs:label "invokedBy" ;
+  rdfs:comment "A decision is invoked by a business-rule task. Read from dmn:usingTask/@href, whose fragment is the URL-encoded task NAME rather than its id -- so it resolves only while that prose stays byte-identical in the BPMN, punctuation and the en dash in \"Calmette-Guerin\" included. Carries a resolutionStatus; the target is a bpmn-task when the BPMN is present and an opaque l1:external-artifact when it is not." .
+
+sgkg:reads a owl:ObjectProperty ;
+  rdfs:label "reads" ;
+  rdfs:comment "An input clause reads a data element. Recovered heuristically from free text, so every instance carries the extraction rule that produced it and a resolutionStatus. The target is an l2:data-element -- the DAK component -- so a recovered name and a declared dictionary entry are the same class and can meet when a dictionary exists." .
+
+sgkg:citesSource a owl:ObjectProperty ;
+  rdfs:label "citesSource" ;
+  rdfs:comment "A decision rule cites an L1 source. The target is an l1:citation minted from the same string by the citation extractor, so the DMN subgraph and the L1 graph join without either knowing the other exists. Grounded but sparse: 1 of 25 BCG rules. The sparseness is the finding -- a rule with no citesSource edge is a rule with no stated source." .
+
+### Licensed edges, as qualified sub-properties
+# One per (source class, predicate, target class) triple the layer licenses.
+# Domain and range on the sub-property is what preserves pairwise licensing: a single global
+# domain/range on the predicate would be a union of everything and would permit pairs the
+# model does not.
+
+sgkg:contains_DMNFile_DMNDecision a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:DMNFile ;
+  rdfs:range sgkg:DMNDecision ;
+  rdfs:label "DMN File contains DMN Decision" .
+
+sgkg:contains_DMNDecision_DMNDecisionTable a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:DMNDecision ;
+  rdfs:range sgkg:DMNDecisionTable ;
+  rdfs:label "DMN Decision contains DMN Decision Table" .
+
+sgkg:contains_DMNDecisionTable_DMNInputClause a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:DMNDecisionTable ;
+  rdfs:range sgkg:DMNInputClause ;
+  rdfs:label "DMN Decision Table contains DMN Input Clause" .
+
+sgkg:contains_DMNDecisionTable_DMNOutputClause a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:DMNDecisionTable ;
+  rdfs:range sgkg:DMNOutputClause ;
+  rdfs:label "DMN Decision Table contains DMN Output Clause" .
+
+sgkg:contains_DMNDecisionTable_DMNRule a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:contains ;
+  rdfs:domain sgkg:DMNDecisionTable ;
+  rdfs:range sgkg:DMNRule ;
+  rdfs:label "DMN Decision Table contains DMN Rule" .
+
+sgkg:invokedBy_DMNDecision_BPMNTask a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:invokedBy ;
+  rdfs:domain sgkg:DMNDecision ;
+  rdfs:range sgkg:BPMNTask ;
+  rdfs:label "DMN Decision invokedBy BPMN Task" .
+
+sgkg:invokedBy_DMNDecision_ExternalArtefact a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:invokedBy ;
+  rdfs:domain sgkg:DMNDecision ;
+  rdfs:range sgkg:ExternalArtefact ;
+  rdfs:label "DMN Decision invokedBy External artefact" .
+
+sgkg:reads_DMNInputClause_CoreDataElement a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:reads ;
+  rdfs:domain sgkg:DMNInputClause ;
+  rdfs:range sgkg:CoreDataElement ;
+  rdfs:label "DMN Input Clause reads Core Data Element" .
+
+sgkg:citesSource_DMNRule_Citation a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:citesSource ;
+  rdfs:domain sgkg:DMNRule ;
+  rdfs:range sgkg:Citation ;
+  rdfs:label "DMN Rule citesSource Citation" .
+
+sgkg:sourcedFrom_DecisionSupportLogic_DMNFile a owl:ObjectProperty ;
+  rdfs:subPropertyOf sgkg:sourcedFrom ;
+  rdfs:domain sgkg:DecisionSupportLogic ;
+  rdfs:range sgkg:DMNFile ;
+  rdfs:label "Decision-Support Logic sourcedFrom DMN File" .
+

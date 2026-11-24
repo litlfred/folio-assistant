@@ -1,0 +1,291 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2602.16554v1",
+  "summaries": [
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-000",
+      "source": "sections/sec-000-framework.md",
+      "source_hash": "57fa9fcc382bad5baa1ec7d5349bc94fad2f4f63e3ce519a8d9d30e3476c016e",
+      "narrative": [
+        {
+          "text": "Lists the title fragment, authors (Yuanjie Ren at MIT, Jinzheng Li and Yidi Qi at Northeastern University), affiliations, and emails for the MerLean paper on agentic autoformalization in quantum computation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-001",
+      "source": "sections/sec-001-autoformalization.md",
+      "source_hash": "b4796f9f011dbfeddf791450d3f719144c329973041dec0251dfa7d58475ace5",
+      "narrative": [
+        {
+          "text": "Presents the abstract for MerLean, an agentic framework that extracts mathematical statements from LaTeX, autoformalizes them into verified Lean 4 code built on Mathlib, and autoinformalizes the result back into human-readable LaTeX blueprints, achieving end-to-end formalization of 114 statements into 2,050 Lean declarations across three theoretical quantum computing papers.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-002",
+      "source": "sections/sec-002-introduction.md",
+      "source_hash": "c952c05d94fb258e8f181e316d9967dd15eec859c00c2f13746101167394de4c",
+      "narrative": [
+        {
+          "text": "Motivates autoformalization for theoretical quantum computation—where 11,891 arXiv quant-ph submissions in 2025 strain peer review—and introduces MerLean's zero-human-in-the-loop formalization and autoinformalization pipeline evaluated on one unpublished and two published quantum computing papers.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-003",
+      "source": "sections/sec-003-related-works.md",
+      "source_hash": "bda297e23b1e5d4329a54e3ef7c8c84cb4fd3f767d9a8a955769b268dc7c17e1",
+      "narrative": [
+        {
+          "text": "Surveys prior work on LLM autoformalization and recent MCP-enabled agentic Lean 4 proving systems (Ax-Prover, Xu and Odersky's System Capless mechanization, and Numina-Lean-Agent), distinguishing MerLean by its fully automated end-to-end formalization of entire research papers without human guidance.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-004",
+      "source": "sections/sec-004-autoinformalization.md",
+      "source_hash": "45e06c01782b75a3b849c077ba025c09894ee5979f8d83d777ad83da4c5270ed",
+      "narrative": [
+        {
+          "text": "Describes the MerLean architecture (Figure 1) and the first three stages of its Claude Code-based autoformalization pipeline: multi-pass structured JSON statement extraction from LaTeX, an iterative compile-fix loop up to 30 attempts augmented with lean-lsp-mcp, leansearch, and loogle, and post-compilation semantic faithfulness checking.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-005",
+      "source": "sections/sec-005-results.md",
+      "source_hash": "5a72ef7683bb4a372257fa41e2d4890009132ad1a9a97c99abe2341e6559b743",
+      "narrative": [
+        {
+          "text": "Explains MerLean's explicit axiom phase—which converts unresolved subgoals or missing Mathlib prerequisites into transparent axiom declarations rather than sorry—and the autoinformalization decoder that translates verified Lean 4 declarations back into an interactive leanblueprint dependency graph and a standalone LaTeX narrative without access to the original paper text.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-006",
+      "source": "sections/sec-006-experiments.md",
+      "source_hash": "ea0ce62274b1459fd1b3f14022f3fc24815cb5c81db8fec6d03552dfa94e932e",
+      "narrative": [
+        {
+          "text": "Reports experimental evaluation of MerLean across three quantum computing papers—Balanced Product Codes (Breuckmann & Eberhardt, 2021), Fault-Tolerant Quantum Computation (Williamson & Yoder, 2024), and an unpublished Quantum Topology manuscript—formalizing all 114 statements into 2,050 Lean declarations (41,315 lines of Lean) in under 42 wall-clock hours, with compile-attempt statistics broken down by paper and statement type.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-007",
+      "source": "sections/sec-007-qualitative-observations.md",
+      "source_hash": "9936d27afb769da8d1614e7c9eaa6610ba35b72a76b8037ac5aba5d8b6ad3d59",
+      "narrative": [
+        {
+          "text": "Presents qualitative observations from the MerLean experiments: common causes of 20+ compile-attempt loops (dependent type arithmetic, missing lemmas, tactic timeouts), examples of agent-discovered helper lemmas bridging implicit mathematical steps, and explicit axiom declarations in Balanced Product Codes for homological algebra machinery absent from Mathlib (Künneth formula, tensor-homology commutativity, and spectral sequences).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-008",
+      "source": "sections/sec-008-discussion.md",
+      "source_hash": "77065cda8fe1551871ba934cfef4df0f9e8a5f7fb63909b25bf0ccebbe807e18",
+      "narrative": [
+        {
+          "text": "Section number stub introducing Section 5.1 of the Discussion chapter.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-009",
+      "source": "sections/sec-009-challenges-in-merlean.md",
+      "source_hash": "b28565771d5e6f7a89883072ed20c33dbb7d6bc4353b31e1415bd5a1b6b258fd",
+      "narrative": [
+        {
+          "text": "Discusses two central challenges in MerLean: handling Mathlib gaps in specialized physics domains via well-calibrated axiom declarations that avoid trivializing main theorems, and combining automated faithfulness checks with autoinformalized blueprints to prevent compiler-satisfying hallucinations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-010",
+      "source": "sections/sec-010-future-applications-of-merlean.md",
+      "source_hash": "3500c0ec1f59911854c9c675398573466bfa73c34d61ab08669f85ac441fe575",
+      "narrative": [
+        {
+          "text": "Outlines four future applications of MerLean: acting as a research assistant that surfaces missing implicit assumptions during manuscript drafting (as demonstrated on the unpublished Quantum Topology paper), enabling machine-verified peer review, generating synthetic (natural language, Lean 4) training data flywheels, and accelerating contributions to physics libraries such as PhysLean and Lean-QuantumInfo.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-011",
+      "source": "sections/sec-011-conclusion.md",
+      "source_hash": "cbd7d5bfac3c3577ea3a712e807ed3775c1cff51a2a0db3a0e56a18bd88544f7",
+      "narrative": [
+        {
+          "text": "Concludes the MerLean paper by summarizing its 2,050-declaration evaluation and future plans for broader mathematical domains and full-paper benchmarks, followed by the ICLR 2026 LLM usage disclosure (Claude Opus 4.5 for MerLean and Claude Code for manuscript editing) and 22 bibliographic references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-012",
+      "source": "sections/sec-012-formalization-examples.md",
+      "source_hash": "1c950814e0e0c65259c00d8a912dccb582df89f2e55c8d554fbebfa51c5c2e16",
+      "narrative": [
+        {
+          "text": "Introductory sentence and section header for Appendix A (Formalization Examples), introducing representative Lean 4 outputs from the Fault-Tolerant QC formalization.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-013",
+      "source": "sections/sec-013-theorem-fault-tolerance-of-gauging-measurement.md",
+      "source_hash": "39b8189c590078294394957cf0581577e80d3e3db01099517aaf504cf3c2f57e",
+      "narrative": [
+        {
+          "text": "Presents Appendix A.1's Lean 4 formalization of Theorem 2 from Williamson & Yoder (2024) (FaultToleranceTheorem), proving via upper and lower bound calc chains and omega that the spacetime fault-distance d_ST equals the code distance d when the Cheeger constant satisfies h(G) >= 1 and measurement rounds satisfy t_o - t_i >= d.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2602.16554v1/blocks/prose-sec-014",
+      "source": "sections/sec-014-agent-discovered-helper-lemma.md",
+      "source_hash": "b10f02765073e57602971423515afec858f874c2aea9437d50477a470129e27a",
+      "narrative": [
+        {
+          "text": "Presents Appendix A.2's agent-discovered helper lemma weight_inequality_core (proving w' - |S| + |∂S| >= min(h(G), 1) * d by case-splitting on h(G) >= 1) and Appendix A.3's Lean 4 formalization of the Künneth formula over F2 (kunnethEquiv) for Breuckmann & Eberhardt (2021), detailing the type definitions and the axiomatized cycle preservation, boundary descent, and bijectivity steps.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    }
+  ]
+}

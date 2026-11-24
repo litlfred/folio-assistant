@@ -1,0 +1,15 @@
+{
+  "id": "proof-verification",
+  "name": "Proof Verification",
+  "description": "Verify Lean 4 proofs, track sorry obligations, and report build diagnostics.",
+  "requiredCapabilities": [
+    { "capabilityId": "lean-toolchain", "degradation": "fail" }
+  ],
+  "dependsOn": [
+    { "ref": "req:lean-verification", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "routingPatterns": ["verify", "check proofs", "sorry", "proof obligations"],
+  "tags": ["math", "lean", "verification", "qa"],
+  "package": "authoring-math",
+  "lifecycleStages": ["validate", "test"]
+}
