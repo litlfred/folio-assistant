@@ -1,0 +1,325 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2602.16554v1",
+ "source": {
+  "file": "2602.16554v1.pdf",
+  "sha256": "765ef86c1c0d4518ba7292a3c64e20e37a61acd63ad1186f673e28bda65caee7",
+  "bytes": 376342,
+  "pages": 13,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T21:41:01Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2602.16554",
+   "version": "1",
+   "primary_class": "cs.LO",
+   "stamp_date": "18 Feb 2026"
+  },
+  "doi": null,
+  "title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+  "authors_raw": "Yuanjie Ren∗",
+  "title_lines": [
+   "MERLEAN: AN AGENTIC FRAMEWORK FOR AUTOFOR-",
+   "MALIZATION IN QUANTUM COMPUTATION"
+  ],
+  "abstract": "We introduce MerLean, a fully automated agentic framework for autoformalization in quantum computation. MerLean extracts mathematical statements from LATEX source files, formalizes them into verified Lean 4 code built on Mathlib, and trans- lates the result back into human-readable LATEX for semantic review. We evaluate MerLean on three theoretical quantum computing papers producing 2,050 Lean dec- larations from 114 statements in total. MerLean achieves end-to-end formalization on all three papers, reducing the verification burden to only the newly introduced definitions and axioms. Our results demonstrate that agentic autoformalization can scale to frontier research, offering both a practical tool for machine-verified peer review and a scalable engine for mining high-quality synthetic data to train future reasoning models. Our approach can also be generalized to any other rigorous research in mathematics and theoretical physics.",
+  "docinfo": {
+   "Title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+   "Author": "Yuanjie Ren; Jinzheng Li; Yidi Qi",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:57610bf)"
+  },
+  "title_raw": "MERLEAN: AN AGENTIC FRAMEWORK FOR AUTOFOR- MALIZATION IN QUANTUM COMPUTATION",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+   "outline": "Introduction",
+   "text": "MERLEAN: AN AGENTIC FRAMEWORK FOR AUTOFOR- MALIZATION IN QUANTUM COMPUTATION",
+   "corroborated_by": [
+    "text"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Related Works",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Framework",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Autoformalization",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Autoinformalization",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experiments",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Results",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Qualitative Observations",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Challenges in MerLean",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Future Applications of MerLean",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Formalization Examples",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Theorem: Fault Tolerance of Gauging Measurement",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Agent-Discovered Helper Lemma",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Axiom Example: Künneth Formula",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-000-framework",
+   "number": null,
+   "title": "Framework",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 281,
+   "n_words": 31
+  },
+  {
+   "id": "sec-001-autoformalization",
+   "number": null,
+   "title": "Autoformalization",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 866,
+   "n_words": 123
+  },
+  {
+   "id": "sec-002-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 2629,
+   "n_words": 357
+  },
+  {
+   "id": "sec-003-related-works",
+   "number": null,
+   "title": "Related Works",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 2056,
+   "n_words": 275
+  },
+  {
+   "id": "sec-004-autoinformalization",
+   "number": null,
+   "title": "Autoinformalization",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 3234,
+   "n_words": 447
+  },
+  {
+   "id": "sec-005-results",
+   "number": null,
+   "title": "Results",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 1696,
+   "n_words": 231
+  },
+  {
+   "id": "sec-006-experiments",
+   "number": null,
+   "title": "Experiments",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 4167,
+   "n_words": 623
+  },
+  {
+   "id": "sec-007-qualitative-observations",
+   "number": null,
+   "title": "Qualitative Observations",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 3025,
+   "n_words": 436
+  },
+  {
+   "id": "sec-008-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-009-challenges-in-merlean",
+   "number": null,
+   "title": "Challenges in MerLean",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 1256,
+   "n_words": 183
+  },
+  {
+   "id": "sec-010-future-applications-of-merlean",
+   "number": null,
+   "title": "Future Applications of MerLean",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 2206,
+   "n_words": 299
+  },
+  {
+   "id": "sec-011-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 9,
+   "n_chars": 8168,
+   "n_words": 1060
+  },
+  {
+   "id": "sec-012-formalization-examples",
+   "number": null,
+   "title": "Formalization Examples",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 126,
+   "n_words": 17
+  },
+  {
+   "id": "sec-013-theorem-fault-tolerance-of-gauging-measurement",
+   "number": null,
+   "title": "Theorem: Fault Tolerance of Gauging Measurement",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 2383,
+   "n_words": 322
+  },
+  {
+   "id": "sec-014-agent-discovered-helper-lemma",
+   "number": null,
+   "title": "Agent-Discovered Helper Lemma",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 13,
+   "n_chars": 7200,
+   "n_words": 1249
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 16,
+  "toc_inferred_entries": 0,
+  "sections": 15,
+  "chars_total": 39296
+ }
+}

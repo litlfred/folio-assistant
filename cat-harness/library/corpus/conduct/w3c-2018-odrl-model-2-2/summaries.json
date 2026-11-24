@@ -1,0 +1,1089 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "w3c-2018-odrl-model-2-2",
+  "summaries": [
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-001",
+      "source": "sections/sec-001-w3c-recommendation-15-february-2018.md",
+      "source_hash": "83c71d28d729c3d8e6dd27ad690fa696866b7f15fc600b401f8b7505154e24ae",
+      "narrative": [
+        {
+          "text": "Publication metadata header for the W3C Recommendation of the ODRL Information Model 2.2 (15 February 2018), listing canonical version URIs, the implementation report link, editors Renato Iannella (Monegraph) and Serena Villata (INRIA), GitHub issue tracker, errata, translations, and W3C copyright and document license notices.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-002",
+      "source": "sections/sec-002-abstract.md",
+      "source_hash": "9db3038eb77adf0b5f17f6664f39946d7042c880524312a956b80108b003c677",
+      "narrative": [
+        {
+          "text": "Abstract introducing the Open Digital Rights Language (ODRL) as a flexible, interoperable policy expression language and summarizing how the ODRL Information Model represents permitted and prohibited actions over assets, stakeholder obligations, temporal or spatial constraints, and duties imposed on permissions.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-003",
+      "source": "sections/sec-003-status-of-this-document.md",
+      "source_hash": "f88b95cbc995b75418df5b3f3f4ca0b991f1efac0063f77267d5edae3d26b682",
+      "narrative": [
+        {
+          "text": "W3C Status of This Document section stating that the specification was published as a W3C Recommendation by the Permissions & Obligations Expression (POE) Working Group, providing the public comment list and implementation report references, and noting governance under the W3C Patent Policy and the 1 February 2018 W3C Process Document.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-008",
+      "source": "sections/sec-008-13-terminology.md",
+      "source_hash": "9853129ab8fc702ec5ce06bdd4489e290f5d78708993bd3010078378ab71041f",
+      "narrative": [
+        {
+          "text": "Table of contents for Sections 2–4 and Appendices A–E followed by the non-normative Section 1 Introduction, which motivates machine-readable policy expressions for communicating permitted and prohibited resource uses, stakeholder roles, and associated constraints and duties between content producers and consumers.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-009",
+      "source": "sections/sec-009-2-odrl-information-model.md",
+      "source_hash": "6436b4180c557ca96b53e3ad2a6aa420721de3e588fe7855b6186a09ca60103b",
+      "narrative": [
+        {
+          "text": "Continuation of Section 1 covering the aims of the model (Section 1.1), RFC 2119 and JSON-LD conformance rules (Section 1.2), and core ODRL terminology definitions (Section 1.3), followed by the Section 2 overview of the ODRL Information Model (Figure 1), its primary classes (Policy, Set, Offer, Agreement, Asset, AssetCollection, Party, PartyCollection, Action, Rule, Permission, Prohibition, Duty, Constraint, LogicalConstraint), and abstract versus explicit relational properties.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-010",
+      "source": "sections/sec-010-21-policy-class.md",
+      "source_hash": "8df138e88e8b63797667b005c5420414ebcec03db0e0ff59eb5a345413d910a1",
+      "narrative": [
+        {
+          "text": "Section 2.1 specification of the Policy class, defining required properties (uid IRI and at least one permission, prohibition, or obligation Rule), optional properties (profile, inheritFrom, conflict), shared policy-level rule properties for compact policies, and the requirement to use either the ODRL Core Vocabulary alone or declared ODRL Profiles.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-011",
+      "source": "sections/sec-011-note.md",
+      "source_hash": "782b805857b7c3036cc2f16a53bdaa007c107a4860337c0825b27bf52f928f12",
+      "narrative": [
+        {
+          "text": "Explanatory note and continuation of Section 2.1 clarifying the distinction between the logical ODRL Information Model and its concrete serialisations in the ODRL Vocabulary & Expression specification, mandatory profile IRI declaration when profile terms are used, and the disjointness rule for Policy subclasses (except Set).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-012",
+      "source": "sections/sec-012-211-set-class.md",
+      "source_hash": "f95e140b86b8dd52387c840b0196eeaf0672cfe12fca235243a04db770745aba",
+      "narrative": [
+        {
+          "text": "Section 2.1.1 definition of the Set Policy subclass, which represents any combination of Rules without granting them, serves as the default Policy subclass when none is specified, and introduces an example use case permitting use of a target movie asset.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-013",
+      "source": "sections/sec-013-212-offer-class.md",
+      "source_hash": "beffef770f274dcdbed92855b7a98bb2599901ba74d981e6c9b7cec78a1ff42c",
+      "narrative": [
+        {
+          "text": "Section 2.1.2 definition of the Offer Policy subclass, which represents Rules offered by an assigner Party to a wider audience without granting them and requires one assigner Party property.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-014",
+      "source": "sections/sec-014-note.md",
+      "source_hash": "feb2df21c411334da9b413c76deeeb7c14ef4adf82121ff3555891763cd602aa",
+      "narrative": [
+        {
+          "text": "Normative cardinality note and JSON-LD Examples 1 and 2 (partial) illustrating a Set Policy using Core Vocabulary terms (where Set and Policy @type tokens are equivalent) and an Offer Policy from an assigner organization offering permission to play a movie asset.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-015",
+      "source": "sections/sec-015-213-agreement-class.md",
+      "source_hash": "aa9e5bdd5e14da2bb3bc6d8cae211ed41c9b13721085827564322e74fa4fd58c",
+      "narrative": [
+        {
+          "text": "Section 2.1.3 definition of the Agreement Policy subclass, which represents Rules granted from an assigner Party to an assignee Party and requires both one assigner property and one assignee property of type Party.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-016",
+      "source": "sections/sec-016-note.md",
+      "source_hash": "e7a6d650d9aaefe07f81e4ea5c5a1e5d0c6e80b0bfe4468038d84f0945be9c24",
+      "narrative": [
+        {
+          "text": "Normative cardinality note for the Agreement subclass and description of Example 3, in which an assigner organization grants an individual assignee Party permission to play a target movie asset.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-017",
+      "source": "sections/sec-017-22-asset-class.md",
+      "source_hash": "2e8ceb179843cf1f759484e9d80e2fa7cb5c0acd0eb3a18b0d88e5a1ccff9af3",
+      "narrative": [
+        {
+          "text": "Section 2.2 specification of the Asset class and its AssetCollection subclass (alongside the JSON-LD remainder of Example 2 and full Example 3), defining Asset properties (uid, partOf) and AssetCollection properties (source, refinement) and recommending external standards such as Dublin Core for media-specific metadata.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-018",
+      "source": "sections/sec-018-221-relation-property.md",
+      "source_hash": "58c37976588ed15fd81776ea69b122b39f3afb8705b26826875c9c73f5d1e277",
+      "narrative": [
+        {
+          "text": "Section 2.2.1 specification of the abstract relation property linking an Action to an Asset, requiring ODRL validators to support the target sub-property, permitting additional relation sub-properties in the Common Vocabulary or Profiles, and presenting Example 4 plus the setup for Example 5 using an AssetCollection and a profile-defined summary relation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-019",
+      "source": "sections/sec-019-222-part-of-property.md",
+      "source_hash": "ec74c509ff0385a069f729e8db86d7d44650d2c2d4db6533a4239ca8c99e0ded",
+      "narrative": [
+        {
+          "text": "Section 2.2.2 specification of the partOf property on an Asset, which asserts membership in an AssetCollection so that collection-targeted Rules apply to individual member Assets and potential rule conflicts can be detected, illustrated by a Dublin Core document metadata use case.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-020",
+      "source": "sections/sec-020-223-target-policy-property.md",
+      "source_hash": "3316a23c4d1a50cef47f013d23c6881f18652f0310384a9c6577191f54026b1a",
+      "narrative": [
+        {
+          "text": "Section 2.2.3 specification of the hasPolicy target policy property—whereby an external metadata expression identifying an Asset links to an ODRL Policy so the Asset is inferred as the target of every Rule in that Policy—accompanied by JSON-LD Examples 5, 6, and the opening of Example 7.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-021",
+      "source": "sections/sec-021-23-party-class.md",
+      "source_hash": "27328fce98010c9ee913493242e5fea99d931961b41e1a81c3a60642f38dd706",
+      "narrative": [
+        {
+          "text": "Section 2.3 specification of the Party class and its PartyCollection subclass, representing persons, organizations, agents, or groups undertaking functional roles in a Rule, defining Party properties (uid, partOf) and PartyCollection properties (source, refinement), and recommending vCard or FOAF for party metadata.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-022",
+      "source": "sections/sec-022-231-function-property.md",
+      "source_hash": "401088e0de3b24225aa4e4a6f81be7ac0da9817bfd896c534cf7556d277b6e05",
+      "narrative": [
+        {
+          "text": "Section 2.3.1 specification of the abstract function property linking a Rule to a Party, requiring ODRL validators to support the assigner (rule issuer) and assignee (rule recipient) sub-properties, with the remainder of Example 7 and the description of Example 8.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-023",
+      "source": "sections/sec-023-note.md",
+      "source_hash": "1277558f792297530247869aef7823a9d064c441b2d61c5940b193a31702808a",
+      "narrative": [
+        {
+          "text": "Informative note on the validation and evaluation implications of omitting a Party uid identifier, followed by the use-case description for Example 9 showing an Agreement between a vcard:Organization assigner Party and a vcard:Group assignee PartyCollection.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-024",
+      "source": "sections/sec-024-232-part-of-property.md",
+      "source_hash": "1f87b985dc18fb894ccb498dd30382ea93968e2b9289e38d833300f03bc874bc",
+      "narrative": [
+        {
+          "text": "Section 2.3.2 specification of the partOf property on a Party for asserting membership in a PartyCollection and detecting potential rule conflicts, accompanied by a vCard membership use case and the JSON-LD listings for Examples 8 and 9.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-025",
+      "source": "sections/sec-025-233-assigned-policy-properties.md",
+      "source_hash": "3de556c24ebf0d850cadead8164469630680969e39fd62c4ca9ba67411666b4f",
+      "narrative": [
+        {
+          "text": "Section 2.3.3 specification of the assignerOf and assigneeOf properties for linking external Party metadata expressions to an ODRL Policy so that the identified Party is inferred as the assigner or assignee for all Rules in that Policy, illustrated by a vCard use case.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-026",
+      "source": "sections/sec-026-24-action-class.md",
+      "source_hash": "d67a990f39da3b062a3eb32a7c9f1f7ded82b23465664e2cc2be1b147d64aca5",
+      "narrative": [
+        {
+          "text": "Section 2.4 opening specification of the Action class representing operations exercised on an Asset under a Permission, Prohibition, or Duty, defining the two top-level Actions (use and transfer) and introducing the optional refinement property.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-027",
+      "source": "sections/sec-027-25-constraints.md",
+      "source_hash": "6195668235804f8ed58377542c9658b23800e0a3bf93167663fea60f8b7061b3",
+      "narrative": [
+        {
+          "text": "Continuation of Section 2.4 defining Action hierarchy and entailment via the transitive includedIn property and the implies property (and how they trigger policy conflicts), together with JSON-LD Examples 10–12 and the Section 2.5 introduction to Constraints and Logical Constraints (Figure 2).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-028",
+      "source": "sections/sec-028-251-constraint-class.md",
+      "source_hash": "7dbf18d59dd8b6b7036e5495496bd948dafdeb8431fd3d169670e3ef591fd28d",
+      "narrative": [
+        {
+          "text": "Section 2.5.1 specification of the Constraint class, which compares a leftOperand and a rightOperand (or dereferenced rightOperandReference) via a relational operator, and defines optional uid, dataType, unit, and dynamic status properties.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-029",
+      "source": "sections/sec-029-252-logical-constraint-class.md",
+      "source_hash": "d7c021d05070ffd09e0a84a4786d5a63e8a95edf68ba3cecae294af7125ef66a",
+      "narrative": [
+        {
+          "text": "Section 2.5.2 specification of the LogicalConstraint class, which combines unique existing Constraint instances via mandatory evaluator-supported operand sub-properties (or, xone, and, andSequence) or profile-defined logical operands.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-031",
+      "source": "sections/sec-031-note.md",
+      "source_hash": "e8b3b2cc3b27484a5a07c041b72dc7d5a114bc2c16a8dfebe30bf6ba86513e19",
+      "narrative": [
+        {
+          "text": "Note on preserving operand list order with JSON-LD @list for sequential logical operands such as andSequence, followed by the Section 2.5.3 specification of the constraint property on a Rule and an example Offer permitting asset distribution until a specified date.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-032",
+      "source": "sections/sec-032-254-refinement-property-with-an-action.md",
+      "source_hash": "8007f78f17cae77b909d88acda2d579c417735a8e92fb3decafb762dbde7ec10",
+      "narrative": [
+        {
+          "text": "Section 2.5.4 specification of the refinement property on an Action, which attaches Constraints or Logical Constraints that must be satisfied to narrow the operational semantics of the Action.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-033",
+      "source": "sections/sec-033-note.md",
+      "source_hash": "954bcb928fb23c9c2bb487b82198915004588e7b39b482b33835c256ad09043f",
+      "narrative": [
+        {
+          "text": "Use-case descriptions and JSON-LD listings for Examples 13 and 14 (plus the heading of Example 15), illustrating a dateTime constraint on a distribute Permission, a 1200 dpi resolution refinement on a print Action, and an exclusive-or (xone) Logical Constraint refining a reproduce Action.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-034",
+      "source": "sections/sec-034-255-refinement-property-with-an-asset-collection.md",
+      "source_hash": "ea78f2528efa6e619f615ee1bc8ec7e39a559b104438635df09e0733e8b81b01",
+      "narrative": [
+        {
+          "text": "Section 2.5.5 specification of the refinement property on an AssetCollection—requiring source rather than uid to identify the collection and filtering individual member Assets by Constraint satisfaction—along with the JSON-LD body of Example 15 and a note on using rdf:value and @id for refined Actions and Constraint references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-035",
+      "source": "sections/sec-035-256-refinement-property-with-a-party-collection.md",
+      "source_hash": "47bf3a229797de45bff8fefdaa5d4d3a0dea603ea0944ac8d62192bafd2325c2",
+      "narrative": [
+        {
+          "text": "Section 2.5.6 specification of the refinement property on a PartyCollection—requiring source rather than uid and filtering collection members by Constraint satisfaction—together with JSON-LD Examples 16 (videos under 60 minutes) and 17 (friends aged over 18).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-036",
+      "source": "sections/sec-036-26-rule-class.md",
+      "source_hash": "b77057a62bb2923364ca311b2f6cd0b70e12351e2c5892929be798d993be0f3f",
+      "narrative": [
+        {
+          "text": "Section 2.6 specification of the abstract, pairwise-disjoint Rule superclass (parent of Permission, Prohibition, and Duty), defining its action, relation, function, failure, constraint, and uid properties and summarizing Rule-to-Duty relationships in Figure 3.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-037",
+      "source": "sections/sec-037-261-permission-class.md",
+      "source_hash": "5c8bb57b2913a81726dcb6363d764275c88d72c3fb49018279ff6825b9c38edf",
+      "narrative": [
+        {
+          "text": "Section 2.6.1 specification of the Permission class, which allows an Action on a required target Asset when all refinements, constraints, and precondition duty rules are fulfilled, with an example use case offering play permission on a game until the end of 2017.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-038",
+      "source": "sections/sec-038-262-prohibition-class.md",
+      "source_hash": "23fa649d424976634b75f9e72ee0c36e63c4e4b545c9ce0118f4d1016b142731",
+      "narrative": [
+        {
+          "text": "Section 2.6.2 specification of the Prohibition class, which disallows an Action on a required target Asset when constraints are satisfied and links via remedy to Duties that must be fulfilled if the Prohibition is infringed, accompanied by Example 18 and the opening of Example 19.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-039",
+      "source": "sections/sec-039-263-duty-class.md",
+      "source_hash": "543e44acd3c156cdb4e6340b1fc672132dd80f2565d0daedbd6cccb090e6c117",
+      "narrative": [
+        {
+          "text": "Section 2.6.3 specification of the Duty class representing an obligation to exercise an Action, detailing its optional target, assigner, assignee, and consequence properties, the requirement that the obligated Party be able to exercise and satisfy the Duty, and the prohibition on chaining consequences on consequence Duties.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-040",
+      "source": "sections/sec-040-264-obligation-property-with-a-policy.md",
+      "source_hash": "a510f1e068f847bcc2c9dc23985a67b1d8e4d16a0163579e8c0a1dda645e5e9c",
+      "narrative": [
+        {
+          "text": "Section 2.6.4 specification of the policy-level obligation property linking a Policy to a Duty that must be fulfilled when its constraints and action refinements are satisfied, alongside the closing JSON-LD fragment of Example 19.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-041",
+      "source": "sections/sec-041-note.md",
+      "source_hash": "dc78adad17f55e3568682a1d5e4620628c899d024a4415b88d7ccf5db4d2f98b",
+      "narrative": [
+        {
+          "text": "Informative note recommending that ODRL implementations allow relaxing expired constraints on an original duty or obligation after a consequence is triggered, followed by the use-case descriptions for Examples 20 and 21 illustrating policy obligations and consequences.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-042",
+      "source": "sections/sec-042-265-duty-property-with-a-permission.md",
+      "source_hash": "d437a379e551fa9fabb1df49856c0edf2e8f353057e700fba8bd88be36e2e40c",
+      "narrative": [
+        {
+          "text": "Section 2.6.5 specification of the duty property on a Permission—expressing precondition Duties that must be agreed to be fulfilled (only once if shared by uid across multiple Permissions) and inheriting function roles when omitted—together with JSON-LD Examples 20 and 21 and the setup for Example 22.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-043",
+      "source": "sections/sec-043-266-consequence-property-with-a-permissionobliga.md",
+      "source_hash": "ce9efdc619153050bc82f4052f7d871fe917be7284795e99d92b48e35492dc0c",
+      "narrative": [
+        {
+          "text": "Section 2.6.6 specification of the consequence sub-property of failure on a Permission duty or Policy obligation, requiring all consequence Duties to be fulfilled alongside the original duty if unfulfilled, with Example 22 and the opening of Example 23.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-044",
+      "source": "sections/sec-044-267-remedy-property-with-a-prohibition.md",
+      "source_hash": "7e9d192f79c78b31baccfaac4ef30c30e27a7870f66659830820aa83cd01f3d4",
+      "narrative": [
+        {
+          "text": "Section 2.6.7 specification of the remedy sub-property of failure on a Prohibition, defining Duties that must be fulfilled to cure an infringement of the Prohibition (and forbidding remedies from having consequence Duties), illustrated by an anonymization remedy use case.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-045",
+      "source": "sections/sec-045-27-policy-rule-composition.md",
+      "source_hash": "ba9e6ea14e458cf085ae718c3aad8030021308d9db5f53833e793345ce3f02b6",
+      "narrative": [
+        {
+          "text": "Section 2.7 specification of Policy Rule Composition, explaining how compound Rules with multiple Assets, Parties, or Actions are expanded into irreducible atomic Rules via three normative validation rules, accompanied by the remainder of Example 23 and Examples 24–27.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-046",
+      "source": "sections/sec-046-271-compact-policy.md",
+      "source_hash": "52987be0c17da72d5c568c0275bae61fa5aeea1a0e77a1272e29792bb2c36247",
+      "narrative": [
+        {
+          "text": "Section 2.7.1 specification of Compact Policies (Figure 4), defining how shared action, relation (e.g., target), and function (e.g., assigner, assignee) properties declared at the Policy level are replicated into each Rule and removed from the Policy level during atomic expansion, with Example 28.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-047",
+      "source": "sections/sec-047-28-policy-metadata.md",
+      "source_hash": "07a039961c023872154b046ce8ad21d73f6ecec6c2baa4da2d505735cbd640fe",
+      "narrative": [
+        {
+          "text": "Section 2.8 specification of Policy Metadata, recommending Dublin Core terms (dc:creator, dc:description, dc:issued, dc:modified, dc:coverage, dc:replaces, dc:isReplacedBy), requiring processors to treat a Policy with dc:isReplacedBy as void and process its replacement, and presenting Example 29 and the start of Example 30.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-048",
+      "source": "sections/sec-048-29-policy-inheritance.md",
+      "source_hash": "1b593254391990709046479e979e238c8d575862741eba5c87a6dcc7fc8347a1",
+      "narrative": [
+        {
+          "text": "Section 2.9 specification of Policy Inheritance via the inheritFrom property, stating rules for multi-level non-circular inheritance and nulling parent constraint status values, detailing validation steps to replicate parent policy-level properties, profiles, conflict strategies, and Rules into the child Policy, and providing the end of Example 30 plus Examples 31 and 32.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-049",
+      "source": "sections/sec-049-210-policy-conflict-strategy.md",
+      "source_hash": "400653539abba9bc580b64f8a9af33e4a0b92da02656cf3abea453fae3e927a1",
+      "narrative": [
+        {
+          "text": "Section 2.10 opening specification of Policy Conflict Strategy, defining the conflict property and its ConflictTerm values—perm (Permissions override Prohibitions), prohibit (Prohibitions override Permissions), and the default invalid (the entire Policy is void on conflict).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-050",
+      "source": "sections/sec-050-3-odrl-profiles.md",
+      "source_hash": "77797202c674836334e271bafb17b310f07534b3af2d0352b6683ac826bbfcb9",
+      "narrative": [
+        {
+          "text": "Continuation of Section 2.10 listing the four normative Conflict Strategy validation requirements, Example 33 (expanded inherited Agreement from Section 2.9), and a conflict resolution use case between two Policies over the same Asset, followed by the Section 3 ODRL Profiles heading.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-051",
+      "source": "sections/sec-051-31-odrl-profile-purpose.md",
+      "source_hash": "791dca476fb35ab20631f245b8693c8b4ec7a978d52845c9198b0ad1561beb6a",
+      "narrative": [
+        {
+          "text": "Section 3.1 explanation of ODRL Profile Purpose, distinguishing the minimal ODRL Core Vocabulary, the reusable ODRL Common Vocabulary, and community-specific ODRL Profiles that define or adopt additional vocabulary terms.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-052",
+      "source": "sections/sec-052-32-odrl-profile-conformance.md",
+      "source_hash": "d92342d1affe7ad4a69f9533ac5efa210559a3ad5b0a5d0198ba7bfb070d00c2",
+      "narrative": [
+        {
+          "text": "Section 3.2 specification of ODRL Profile Conformance (alongside JSON-LD Examples 34 and 35 from Section 2.10), requiring Policies conforming to one or more Profiles to declare their IRIs via the profile property and requiring ODRL processing systems to halt if any declared Profile IRI is unrecognized.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-053",
+      "source": "sections/sec-053-33-odrl-profile-mechanism.md",
+      "source_hash": "0bcefe56f9c4b0ac3832a0ea489274a9b0051bbe758b9a5027b05c1a9c10d15e",
+      "narrative": [
+        {
+          "text": "Section 3.3 specification of the ODRL Profile Mechanism, tabulating how to extend the Core Vocabulary with new Policy and Rule subclasses, relation/function/operand sub-properties, and Action, LeftOperand, RightOperand, Operator, and ConflictTerm instances, and requiring SKOS Concept declarations and human-readable labels and definitions.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-054",
+      "source": "sections/sec-054-34-odrl-core-profile.md",
+      "source_hash": "898587e5533b7eec2369b80ce8752487c32071c72319a6801d5a0d806989a8ee",
+      "narrative": [
+        {
+          "text": "Section 3.4 specification of the ODRL Core Profile identifier (http://www.w3.org/ns/odrl/2/core) for explicitly identifying Policies that conform solely to the ODRL Core Vocabulary.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-055",
+      "source": "sections/sec-055-4-privacy-considerations.md",
+      "source_hash": "80901eedd14e1c7f26061d79a24a617da53c2113992829cea5f1d1308943bdb8",
+      "narrative": [
+        {
+          "text": "Non-normative Section 4 on Privacy Considerations, noting that while the core model does not directly express sensitive personal data, ODRL vocabularies and Profiles may define personal-data terms and should guide implementations to inform users how policies are used and shared.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-056",
+      "source": "sections/sec-056-a-acknowledgements.md",
+      "source_hash": "ae4eedbb99c668ed74227b4a4f95f958cb9ba2d65fd45b54ebbe46f39dfc6eff",
+      "narrative": [
+        {
+          "text": "Appendix A acknowledging the contributions of the W3C ODRL Community Group, the earlier ODRL Initiative, and past editors Susanne Guth, Daniel Paehler, and Andreas Kasten.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-057",
+      "source": "sections/sec-057-b-candidate-recommendation-exit-criteria.md",
+      "source_hash": "47ea1ccb9626d73ac7965c9ff30be195197db38f4d79cb2b7f023311248391db",
+      "narrative": [
+        {
+          "text": "Appendix B listing the Candidate Recommendation exit criteria, requiring at least two independent implementations for each of sixteen enumerated ODRL Policy features.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-058",
+      "source": "sections/sec-058-c-relationship-to-the-w3c-odrl-community-group-r.md",
+      "source_hash": "3b808f0dde73b25f153276d660044b0f38eec8226a63201ce488b46d05b083ef",
+      "narrative": [
+        {
+          "text": "Appendix C describing the relationship between the W3C POE Working Group deliverables and the earlier W3C ODRL Community Group Version 2.0/2.1 report series from which the ODRL Information Model 2.2 was derived.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-059",
+      "source": "sections/sec-059-d-changes-from-previous-versions.md",
+      "source_hash": "1bf5d94b636fe0afe3f20b7e1b4b98ad38b5fa5d108f5b6e465e597ca4d35508",
+      "narrative": [
+        {
+          "text": "Appendix D changelog itemizing substantive and editorial changes made to the specification across the July 2016 First Public Working Draft, February 2017 Working Draft, September 2017 Candidate Recommendation, and January 2018 Proposed Recommendation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-061",
+      "source": "sections/sec-061-e1-normative-references.md",
+      "source_hash": "37365fbc266743a20b08c2183cf8f85870bd8b75c25a9aaf1b467b814ee6ad6f",
+      "narrative": [
+        {
+          "text": "Appendix E.1 listing the three normative references for the specification: ODRL Vocabulary & Expression 2.2 ([odrl-vocab]), IETF RFC 2119 ([RFC2119]), and IETF RFC 3987 on IRIs ([rfc3987]).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-062",
+      "source": "sections/sec-062-e2-informative-references.md",
+      "source_hash": "790af0e1d70a8cfddfae1d9a482ea2ab4c11c73d988acba3b14a83860ac1192f",
+      "narrative": [
+        {
+          "text": "Appendix E.2 listing eleven informative references: DCMI Metadata Terms ([dcterms]), FOAF ([foaf]), JSON-LD 1.0 ([json-ld]), ODRL 1.1 ([odrl]), ODRL 2.0 Requirements ([odrl2-req]), the five ODRL 2.1 Community Group specifications, and the W3C vCard Ontology ([vcard-rdf]).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "777ae8e1fd6d241119cd248017f858924a01ee77712588dab6659d10ddb17843",
+      "narrative": [
+        {
+          "text": "W3C masthead banner label ('W3C') at the top of the specification front matter.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://0f4a617a-003d-4645-b2ba-f6e2c5ff60f5"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    }
+  ]
+}
