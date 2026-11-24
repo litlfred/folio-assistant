@@ -419,7 +419,24 @@ s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
     &quot;because&quot;: &quot;checkout&quot;,
     &quot;reason&quot;: &quot;the prefixes and content-context terms its documents use, flattened with the jsonldPrefixes of the layers it needs at the checkout&#39;s pins&quot;
   }
-]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS LAYER DECLARES, for kinds only it registers (owner, 2026-11-09, card Q-CGI-1 A: move the page to sci). cat-harness declared the Editor checkers page until then, naming `editor-checkers`, a kind this layer registers (typologies/editor-checkers.json), so in a checkout without this layer the reference did not resolve (cat-harness#1150, item 3). The page is drawn by cat-harness&#39;s `state-viewer` Tool on the host site (`builtOnHostSite`), at &lt;base&gt;/folio-assistant-sci/editor-checkers/, a hub plus one page per layer holding an editor-checkers directory. Its wireframe is docs/wireframes/editor-checkers/.</dd><dt>visualisers</dt><dd><pre>[
+]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS LAYER DECLARES, for kinds only it registers (owner, 2026-11-09, card Q-CGI-1 A: move the page to sci). cat-harness declared the Editor checkers page until then, naming `editor-checkers`, a kind this layer registers (typologies/editor-checkers.json), so in a checkout without this layer the reference did not resolve (cat-harness#1150, item 3). The page is drawn by cat-harness&#39;s `state-viewer` Tool on the host site (`builtOnHostSite`), at &lt;base&gt;/folio-assistant-sci/editor-checkers/, a hub plus one page per layer holding an editor-checkers directory. Its wireframe is docs/wireframes/editor-checkers/.</dd><dt>_qa_comment</dt><dd>The QA this layer answers for on its integrated QA page (owner, 2026-11-24: one QA page per instance, drawn by the platform; `schemas/sdlc/qa-axis.ts` in the tools layer). `paper-render-qa` is the RENDERING axis of a paper folio: what a reader of the generated LaTeX would trip on. Here it finds no rendered paper and records every check as not applicable, which is a record, not a clean result; a paper folio declares the same writer over its own LaTeX build output. `lean` is declared with no writer yet, so the page shows it as unknown rather than leaving it out.</dd><dt>qa</dt><dd><pre>{
+  &quot;writers&quot;: [
+    {
+      &quot;id&quot;: &quot;paper-render-qa&quot;,
+      &quot;axis&quot;: &quot;rendering&quot;,
+      &quot;run&quot;: &quot;bun run folio-assistant-sci/scripts/paper-render-qa.ts build/paper --root . --out \&quot;$QA_HOME/rendering/paper.render-qa.json\&quot;&quot;,
+      &quot;writes&quot;: [
+        &quot;rendering/**&quot;
+      ],
+      &quot;title&quot;: &quot;Rendered paper&quot;
+    }
+  ],
+  &quot;axes&quot;: [
+    &quot;rendering&quot;,
+    &quot;lean&quot;,
+    &quot;kg&quot;
+  ]
+}</pre></dd><dt>visualisers</dt><dd><pre>[
   {
     &quot;id&quot;: &quot;editor-checkers&quot;,
     &quot;renderedBy&quot;: &quot;state-viewer&quot;,

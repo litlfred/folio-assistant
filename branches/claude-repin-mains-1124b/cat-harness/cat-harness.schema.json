@@ -1165,6 +1165,14 @@
                   }
                 },
                 "additionalProperties": false
+              },
+              "sections": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
               }
             },
             "required": [
@@ -1172,6 +1180,82 @@
               "renderedBy"
             ]
           }
+        },
+        "qa": {
+          "type": "object",
+          "properties": {
+            "writers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9:-]*$"
+                  },
+                  "axis": {
+                    "type": "string",
+                    "enum": [
+                      "rendering",
+                      "lean",
+                      "compute",
+                      "kg",
+                      "translations",
+                      "block-qa",
+                      "bibliography",
+                      "site-build",
+                      "domain"
+                    ]
+                  },
+                  "run": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "writes": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "because": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "axis",
+                  "run",
+                  "writes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "axes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "rendering",
+                  "lean",
+                  "compute",
+                  "kg",
+                  "translations",
+                  "block-qa",
+                  "bibliography",
+                  "site-build",
+                  "domain"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false
         },
         "builtAtPublish": {
           "type": "array",
@@ -2337,8 +2421,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-mains-1124b",
-    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "sha": "7491db9dce261f8c2a3755bbb2fc0e7bc8f5b9af",
     "pr": "3198/merge",
-    "run": "45442311478"
+    "run": "45473611432"
   }
 }

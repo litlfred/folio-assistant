@@ -371,10 +371,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
-  "sourceCommitSha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
-  "sourceTree": "0f8bf405e418442015580237259c8432013b0b1b",
-  "sourceCommitAt": "2026-11-24T16:53:14Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7491db9dce261f8c2a3755bbb2fc0e7bc8f5b9af",
+  "sourceCommitSha": "7491db9dce261f8c2a3755bbb2fc0e7bc8f5b9af",
+  "sourceTree": "3d178aa9673cc54027f00a080de09d3e65a39d1e",
+  "sourceCommitAt": "2026-11-24T19:45:39Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -3302,6 +3302,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. `qa` is a `perInstance` graph typology (graph-typology-registry.ts), because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-mains-1124b/who-iris/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/qa"
     },
@@ -3712,8 +3713,8 @@
   ],
   "staging": {
     "branch": "claude/repin-mains-1124b",
-    "sha": "caef83a0ba8ac9d2a1ce3b1edf23df8d003a00f9",
+    "sha": "7491db9dce261f8c2a3755bbb2fc0e7bc8f5b9af",
     "pr": "3198/merge",
-    "run": "45442311478"
+    "run": "45473611432"
   }
 }

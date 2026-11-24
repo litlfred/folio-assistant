@@ -2482,6 +2482,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "qa-axis.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "instance": "cat-harness-tools",
+      "name": "qa-axis",
+      "graphNode": "undeclared",
+      "summary": "QA axes — what part of an instance a QA record is ABOUT, and one shared",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/qa-report.test.ts",
       "instance": "cat-harness-tools",
       "name": "qa-report.test",
@@ -34712,6 +34727,14 @@
           "doc": "The visualisers this harness declares, each at `<base>/<name>/<id>/` — {@link HarnessVisualiser}. Owner, 2026-10-09."
         },
         {
+          "name": "qa",
+          "type": "QaDeclaration",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "doc": "What this instance's QA publish runs and which QA axes it answers for —"
+        },
+        {
           "name": "builtAtPublish",
           "type": "BuiltAtPublish[]",
           "optional": true,
@@ -34935,7 +34958,8 @@
         "cat-harness-tools/schemas/kg/kg-node.ts#KgNodeLabels",
         "cat-harness-tools/schemas/kg/remote-mount.ts#MountDefaults",
         "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMount",
-        "cat-harness-tools/schemas/kg/repo-full-name.ts#RepoFullName"
+        "cat-harness-tools/schemas/kg/repo-full-name.ts#RepoFullName",
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclaration"
       ],
       "unresolved": [],
       "external": [],
@@ -36377,6 +36401,18 @@
             "object": "https://zod.dev/api#objects"
           },
           "doc": "Its pages are built at publish on the HOST site (the site owner's, e.g."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a visualiser id\")).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Other visualisers of THIS harness whose per-instance page is a section of"
         }
       ],
       "extendsNames": [
@@ -80828,6 +80864,359 @@
       "unresolved": [],
       "external": [],
       "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+      "name": "QaAxis",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+      "name": "QaAxisSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaCounts",
+      "name": "QaCounts",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "interface",
+      "doc": "One shared vocabulary for counts. Every field optional: an absent field was",
+      "fields": [
+        {
+          "name": "pass",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "fail",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "warn",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "unknown",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        },
+        {
+          "name": "na",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "number": "https://zod.dev/api#numbers"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclaration",
+      "name": "QaDeclaration",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclarationSchema",
+      "name": "QaDeclarationSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "zod-object",
+      "doc": "An instance's QA declaration, `qa` in `<instance>.json`.",
+      "fields": [
+        {
+          "name": "writers",
+          "type": "z.array(QaWriterDeclSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "QaWriterDeclSchema[]"
+        },
+        {
+          "name": "axes",
+          "type": "z.array(QaAxisSchema).optional()",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "utype": "QaAxisSchema[]"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaFormatRule",
+      "name": "QaFormatRule",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "interface",
+      "doc": "How a record's format maps onto an axis: by `$schema` (exact, or a prefix",
+      "fields": [
+        {
+          "name": "axis",
+          "type": "QaAxis",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "schemas",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "`$schema` values (exact) this rule claims."
+        },
+        {
+          "name": "paths",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "card": "0..*",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Path suffixes or `/`-segments (`/block-qa/`) this rule claims when no `$schema` decides."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary",
+      "name": "QaRecordSummary",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "interface",
+      "doc": "What the page needs of one record, without fetching it.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "Entry-relative path."
+        },
+        {
+          "name": "schema",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "axis",
+          "type": "QaAxis",
+          "optional": true,
+          "array": false,
+          "card": "0..1"
+        },
+        {
+          "name": "counts",
+          "type": "QaCounts",
+          "optional": true,
+          "array": false,
+          "card": "0..1"
+        },
+        {
+          "name": "subject",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          },
+          "doc": "A short subject label (`kind:id`, a block label, a locale)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaCounts"
+      ],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDecl",
+      "name": "QaWriterDecl",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema",
+      "name": "QaWriterDeclSchema",
+      "module": "cat-harness-tools/schemas/sdlc/qa-axis.ts",
+      "kind": "zod-object",
+      "doc": "One QA writer an instance's publish runs. `run` is a shell command run from",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9:-]*$/, \"a writer id: lower-case letters, digits, `-`, `:`\")",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "axis",
+          "type": "QaAxisSchema",
+          "optional": false,
+          "array": false,
+          "card": "1..1"
+        },
+        {
+          "name": "run",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "card": "1..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "writes",
+          "type": "z.array(z.string().min(1)).nonempty()",
+          "optional": false,
+          "array": true,
+          "card": "1..*",
+          "utype": "string[]",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        },
+        {
+          "name": "because",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "string",
+          "links": {
+            "string": "https://zod.dev/api#strings"
+          }
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "source": "zod",
       "exported": true
     },
     {
@@ -160011,6 +160400,14 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclaration",
+      "via": "qa",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory",
       "to": "cat-harness-tools/schemas/kg/cat-harness.ts#DirectoryStorage",
       "via": "storage",
@@ -167143,6 +167540,54 @@
       "to": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#QaAttestationsBaseSchema",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclarationSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+      "via": "axes",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaDeclarationSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema",
+      "via": "writers",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaFormatRule",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+      "via": "axis",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxis",
+      "via": "axis",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaRecordSummary",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaCounts",
+      "via": "counts",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaWriterDeclSchema",
+      "to": "cat-harness-tools/schemas/sdlc/qa-axis.ts#QaAxisSchema",
+      "via": "axis",
+      "kind": "field",
       "optional": false,
       "array": false
     },

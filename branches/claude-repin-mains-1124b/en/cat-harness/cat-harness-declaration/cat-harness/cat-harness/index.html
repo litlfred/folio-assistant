@@ -1180,7 +1180,7 @@ ca&amp;at-harness
       &quot;software-library&quot;
     ]
   }
-]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS HARNESS DECLARES, at its own level — owner, 2026-10-09: &quot;I still want the harness to be where specific visualizers/pages are declared for the harness at the level. And that they are all compliant of &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt; (which is for the full KG) and &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;, &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;/&lt;path to asset&gt; rules … Need harness to declare visualizer is renderedBy&quot;. Each entry is published at &lt;base&gt;/cat-harness/&lt;id&gt;/ — computed by visualiserRoute (schemas/kg/visualiser-route.ts) and by nothing else — and drawn by the Tool `renderedBy` names. A page no longer says what it renders (the `renders:` front matter and &lt;meta name=&quot;renders&quot;&gt; of #1168 B7a-2b are retired); `check:visualiser-routes` refuses two declarations on one route and a page outside its Tool&#39;s declared routes. `alias` is bean t4xb&#39;s opt-in &lt;base&gt;/&lt;alias&gt;/: a redirect composed into the site, never where the page is drawn — kept here for every visualiser that was published at the short URL before 2026-10-09, so no existing link breaks. The state dashboard of `uploads` is `uploads-queue` because `uploads` is the uploads viewer&#39;s route: two visualisers of one directory need two ids, which is exactly the contention the owner named.</dd><dt>visualisers</dt><dd><pre>[
+]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS HARNESS DECLARES, at its own level — owner, 2026-10-09: &quot;I still want the harness to be where specific visualizers/pages are declared for the harness at the level. And that they are all compliant of &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt; (which is for the full KG) and &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;, &lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;/&lt;path to asset&gt; rules … Need harness to declare visualizer is renderedBy&quot;. Each entry is published at &lt;base&gt;/cat-harness/&lt;id&gt;/ — computed by visualiserRoute (schemas/kg/visualiser-route.ts) and by nothing else — and drawn by the Tool `renderedBy` names. A page no longer says what it renders (the `renders:` front matter and &lt;meta name=&quot;renders&quot;&gt; of #1168 B7a-2b are retired); `check:visualiser-routes` refuses two declarations on one route and a page outside its Tool&#39;s declared routes. `alias` is bean t4xb&#39;s opt-in &lt;base&gt;/&lt;alias&gt;/: a redirect composed into the site, never where the page is drawn — kept here for every visualiser that was published at the short URL before 2026-10-09, so no existing link breaks. The state dashboard of `uploads` is `uploads-queue` because `uploads` is the uploads viewer&#39;s route: two visualisers of one directory need two ids, which is exactly the contention the owner named. THE QA PAGE IS ONE PAGE PER INSTANCE (owner, 2026-11-24: &quot;build integrated page into platform&quot;): `qa/&lt;instance&gt;/` draws every QA axis of that instance&#39;s published entry — rendering, Lean, compute, knowledge graph, translations, block QA, bibliography, site build, domain (`schemas/sdlc/qa-axis.ts` in the tools layer) — as one tile and one section each, and its `sections` link the other QA visualisers&#39; pages for the same instance rather than copying them. An instance says which writers its publish runs, and on which axis, in its own `&lt;instance&gt;.json` (`qa.writers`, `qa.axes`); no harness keeps a QA page of its own.</dd><dt>visualisers</dt><dd><pre>[
   {
     &quot;id&quot;: &quot;library&quot;,
     &quot;renderedBy&quot;: &quot;library-viewer&quot;,
@@ -1393,7 +1393,13 @@ ca&amp;at-harness
     ],
     &quot;subgraphs&quot;: &quot;instance&quot;,
     &quot;title&quot;: &quot;QA&quot;,
-    &quot;alias&quot;: &quot;qa&quot;
+    &quot;alias&quot;: &quot;qa&quot;,
+    &quot;sections&quot;: [
+      &quot;translation-status&quot;,
+      &quot;health&quot;,
+      &quot;attestations&quot;,
+      &quot;lsi&quot;
+    ]
   },
   {
     &quot;id&quot;: &quot;health&quot;,
