@@ -1,0 +1,1921 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "arxiv-2605.03537v1",
+  "pages": [
+    {
+      "page": 3,
+      "rotation": 0,
+      "drawings": 17,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 1: The four-skill sequential pipeline. Each skill receives the output of the previous stage. Left annotations indicate the primary knowledge sources; right annotations show intermedi- ate data products."
+      ],
+      "labels": [
+        {
+          "text": "2.2",
+          "bbox": [
+            310.98,
+            54.79,
+            325.92,
+            66.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "The Four-Skill Pipeline",
+          "bbox": [
+            337.88,
+            54.79,
+            456.71,
+            66.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "through each stage, the system produces explicit intermediate",
+          "bbox": [
+            54.0,
+            56.37,
+            301.01,
+            66.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.01
+          ]
+        },
+        {
+          "text": "outputs—a concept list, a filtered set of candidate headings,",
+          "bbox": [
+            54.0,
+            68.29,
+            302.26,
+            78.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "The system implements a sequential pipeline in which the out-",
+          "bbox": [
+            310.67,
+            78.08,
+            559.66,
+            88.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.95
+          ]
+        },
+        {
+          "text": "validated authority forms—that are inspectable and correctable",
+          "bbox": [
+            53.75,
+            80.38,
+            301.02,
+            90.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.88
+          ]
+        },
+        {
+          "text": "put of each skill serves as input to the next (Figure 1).",
+          "bbox": [
+            310.98,
+            90.03,
+            525.41,
+            99.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "at each step before proceeding to the next. This design provides",
+          "bbox": [
+            54.0,
+            92.35,
+            301.02,
+            102.21
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "the transparency and auditability that a single-prompt approach",
+          "bbox": [
+            54.0,
+            104.3,
+            301.02,
+            114.17
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "Title + Abstract",
+          "bbox": [
+            413.03,
+            113.29,
+            459.66,
+            120.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "cannot.",
+          "bbox": [
+            54.0,
+            116.18,
+            83.05,
+            126.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "+ Table of Contents",
+          "bbox": [
+            406.31,
+            121.26,
+            466.39,
+            128.23
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Unlike the XMTC approaches of Asula et al. (2021) and",
+          "bbox": [
+            63.96,
+            131.05,
+            301.02,
+            141.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Suominen et al. (2025), the system does not require training",
+          "bbox": [
+            54.0,
+            143.01,
+            301.01,
+            153.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Skill 1",
+          "bbox": [
+            426.27,
+            143.18,
+            446.43,
+            150.16
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Bold"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Wilson, Langridge,",
+          "bbox": [
+            350.33,
+            149.13,
+            391.53,
+            154.12
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Conceptual",
+          "bbox": [
+            418.71,
+            151.15,
+            453.98,
+            158.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "data or corpus-level pattern learning. Unlike the single-prompt",
+          "bbox": [
+            54.0,
+            155.08,
+            301.02,
+            164.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.91
+          ]
+        },
+        {
+          "text": "Joudrey–Taylor",
+          "bbox": [
+            358.05,
+            155.11,
+            391.53,
+            160.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Analysis",
+          "bbox": [
+            423.36,
+            159.12,
+            449.33,
+            166.09
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "LLM approaches of Brzustowicz (2023) and Chow et al. (2024),",
+          "bbox": [
+            54.0,
+            167.07,
+            302.26,
+            176.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "concept list",
+          "bbox": [
+            481.17,
+            172.38,
+            506.08,
+            177.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-ReguItal"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "it explicitly encodes SHM rules at each stage rather than rely-",
+          "bbox": [
+            54.0,
+            178.9,
+            302.68,
+            188.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.02
+          ]
+        },
+        {
+          "text": "Skill 2",
+          "bbox": [
+            426.27,
+            181.98,
+            446.43,
+            188.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Bold"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "SHM H 80, H 180",
+          "bbox": [
+            353.6,
+            188.18,
+            391.52,
+            193.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Quantitative",
+          "bbox": [
+            417.83,
+            189.94,
+            454.86,
+            196.92
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "ing on the model’s internalized knowledge of LCSH conven-",
+          "bbox": [
+            54.0,
+            190.83,
+            302.67,
+            200.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "20% Rule, Rule of 3",
+          "bbox": [
+            347.3,
+            194.16,
+            391.52,
+            199.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Filtering",
+          "bbox": [
+            423.89,
+            197.91,
+            448.8,
+            204.89
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "tions. And unlike the validation-only approach of Tang & Jiang",
+          "bbox": [
+            54.0,
+            202.93,
+            301.02,
+            212.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "candidate headings",
+          "bbox": [
+            481.17,
+            211.25,
+            524.36,
+            216.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-ReguItal"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "(2025), it decomposes the entire subject indexing workflow—",
+          "bbox": [
+            53.67,
+            214.59,
+            303.01,
+            224.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            10.02
+          ]
+        },
+        {
+          "text": "Skill 3",
+          "bbox": [
+            426.27,
+            221.48,
+            446.43,
+            228.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Bold"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "from conceptual analysis through MARC field construction—",
+          "bbox": [
+            54.0,
+            226.73,
+            303.01,
+            236.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.01
+          ]
+        },
+        {
+          "text": "LCSH / LCGFT index",
+          "bbox": [
+            344.62,
+            227.27,
+            391.52,
+            232.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Authority",
+          "bbox": [
+            422.64,
+            229.45,
+            450.05,
+            236.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "LCNAF API",
+          "bbox": [
+            365.78,
+            233.25,
+            391.53,
+            238.23
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Validation",
+          "bbox": [
+            421.28,
+            237.42,
+            451.41,
+            244.39
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "into auditable, policy-grounded stages.",
+          "bbox": [
+            54.0,
+            238.72,
+            208.53,
+            248.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "validated headings",
+          "bbox": [
+            481.17,
+            249.92,
+            522.58,
+            254.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-ReguItal"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "The system described here was developed using Claude Code",
+          "bbox": [
+            63.96,
+            253.74,
+            301.01,
+            263.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "Skill 4",
+          "bbox": [
+            426.27,
+            259.52,
+            446.43,
+            266.49
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Bold"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "(Anthropic) and its agent skill framework. Four skills were",
+          "bbox": [
+            53.67,
+            265.55,
+            301.02,
+            275.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "H 1075, H 830",
+          "bbox": [
+            360.52,
+            265.63,
+            391.52,
+            270.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "MARC 6xx",
+          "bbox": [
+            419.69,
+            267.49,
+            453.01,
+            274.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "J 105, J 110",
+          "bbox": [
+            365.5,
+            271.6,
+            391.52,
+            276.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            4.98
+          ]
+        },
+        {
+          "text": "Synthesis",
+          "bbox": [
+            421.23,
+            275.46,
+            451.46,
+            282.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "authored by translating the normative content of eleven Library",
+          "bbox": [
+            54.0,
+            277.65,
+            301.36,
+            287.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "of Congress policy documents and one academic review article",
+          "bbox": [
+            54.0,
+            289.6,
+            301.02,
+            299.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.87
+          ]
+        },
+        {
+          "text": "MARC 6xx Fields",
+          "bbox": [
+            409.42,
+            298.35,
+            463.28,
+            305.32
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "into machine-executable instructions. The skills were then",
+          "bbox": [
+            54.0,
+            301.41,
+            301.01,
+            311.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "(650, 600, 655, . . . )",
+          "bbox": [
+            406.12,
+            306.32,
+            466.58,
+            313.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "NimbusSanL-Regu"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "evaluated on a corpus of ten books spanning the humanities,",
+          "bbox": [
+            54.0,
+            313.37,
+            302.26,
+            323.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "social sciences, sciences, and fiction.",
+          "bbox": [
+            54.0,
+            325.4,
+            200.92,
+            335.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Figure 1: The four-skill sequential pipeline. Each skill receives",
+          "bbox": [
+            310.98,
+            327.2,
+            558.0,
+            337.06
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "the output of the previous stage. Left annotations indicate the",
+          "bbox": [
+            310.98,
+            339.03,
+            558.0,
+            349.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.02
+          ]
+        },
+        {
+          "text": "primary knowledge sources; right annotations show intermedi-",
+          "bbox": [
+            310.98,
+            351.04,
+            559.65,
+            360.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.94
+          ]
+        },
+        {
+          "text": "ate data products.",
+          "bbox": [
+            310.98,
+            362.98,
+            380.98,
+            372.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "2",
+          "bbox": [
+            54.0,
+            363.41,
+            61.17,
+            377.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            14.35
+          ]
+        },
+        {
+          "text": "Methodology",
+          "bbox": [
+            75.52,
+            363.41,
+            156.02,
+            377.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            14.35
+          ]
+        },
+        {
+          "text": "Skill 1: Conceptual Analysis. Receives the title, abstract,",
+          "bbox": [
+            320.94,
+            386.57,
+            559.25,
+            396.72
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "2.1",
+          "bbox": [
+            54.0,
+            393.47,
+            68.94,
+            405.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "Source Material and Skill Construction",
+          "bbox": [
+            80.9,
+            393.47,
+            281.94,
+            405.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "and table of contents of a work. Applies Wilson’s four meth-",
+          "bbox": [
+            310.98,
+            398.62,
+            559.65,
+            408.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "ods of subject determination (purposive, figure-ground, objec-",
+          "bbox": [
+            310.98,
+            410.63,
+            559.65,
+            420.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.99
+          ]
+        },
+        {
+          "text": "The four agent skills were constructed through close reading",
+          "bbox": [
+            53.69,
+            417.65,
+            301.02,
+            427.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "tive, cohesion) and Langridge’s three questions (“What is it?”,",
+          "bbox": [
+            310.98,
+            422.6,
+            559.25,
+            432.57
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.97
+          ]
+        },
+        {
+          "text": "and systematic encoding of eleven Library of Congress pol-",
+          "bbox": [
+            54.0,
+            429.61,
+            302.67,
+            439.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "“What is it about?”, “What is it for?”) to produce an exhaustive",
+          "bbox": [
+            309.66,
+            434.63,
+            558.0,
+            444.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "icy documents, listed in Table 1. These PDFs, obtained from",
+          "bbox": [
+            54.0,
+            441.56,
+            301.01,
+            451.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "list of potentially significant concepts. The skill intentionally",
+          "bbox": [
+            310.98,
+            446.44,
+            558.35,
+            456.5
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "the Library of Congress Cataloging and Acquisitions division,",
+          "bbox": [
+            54.0,
+            453.58,
+            302.27,
+            463.56
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.97
+          ]
+        },
+        {
+          "text": "over-generates at this stage—filtering is deferred to Skill 2. The",
+          "bbox": [
+            310.98,
+            458.54,
+            558.0,
+            468.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "served as the primary normative source for the rules embedded",
+          "bbox": [
+            54.0,
+            465.6,
+            301.02,
+            475.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.89
+          ]
+        },
+        {
+          "text": "output is an aboutness statement and a flat list of candidate",
+          "bbox": [
+            310.98,
+            470.35,
+            558.0,
+            480.41
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "in each skill.",
+          "bbox": [
+            54.0,
+            477.5,
+            104.64,
+            487.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "concepts with brief justifications.",
+          "bbox": [
+            310.98,
+            482.38,
+            443.25,
+            492.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "In addition to the LC policy documents, the conceptual anal-",
+          "bbox": [
+            63.96,
+            492.5,
+            302.67,
+            502.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.89
+          ]
+        },
+        {
+          "text": "Skill 2: Quantitative Filtering. Receives the concept list",
+          "bbox": [
+            320.94,
+            497.15,
+            558.0,
+            507.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "ysis skill drew on Holley & Joudrey (2021), a review article",
+          "bbox": [
+            53.75,
+            504.33,
+            301.02,
+            514.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "from Skill 1 and applies the quantitative rules codified in SHM",
+          "bbox": [
+            310.98,
+            509.33,
+            558.0,
+            519.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.89
+          ]
+        },
+        {
+          "text": "that synthesizes the theoretical frameworks for aboutness de-",
+          "bbox": [
+            54.0,
+            516.28,
+            302.67,
+            526.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "H 180. The key decision points are:",
+          "bbox": [
+            310.98,
+            521.23,
+            453.28,
+            531.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "termination and conceptual analysis in library and information",
+          "bbox": [
+            54.0,
+            528.34,
+            301.02,
+            538.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.92
+          ]
+        },
+        {
+          "text": "• 20% Rule (H 180 §E): A topic must comprise approximately",
+          "bbox": [
+            314.47,
+            536.07,
+            558.35,
+            546.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "science. Their presentation of Wilson’s four methods of subject",
+          "bbox": [
+            54.0,
+            540.34,
+            301.02,
+            550.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "20% or more of the work to warrant a subject heading, with",
+          "bbox": [
+            322.94,
+            548.18,
+            558.0,
+            558.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.9
+          ]
+        },
+        {
+          "text": "determination (purposive, figure-ground, objective, cohesion),",
+          "bbox": [
+            54.0,
+            552.2,
+            302.27,
+            562.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.99
+          ]
+        },
+        {
+          "text": "exceptions for named entities critical to the work.",
+          "bbox": [
+            322.94,
+            560.08,
+            520.25,
+            570.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Langridge’s three questions, and the Joudrey–Taylor concept",
+          "bbox": [
+            54.0,
+            564.1,
+            301.01,
+            574.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "• Rule of Three (H 180 §I): When four or more subtopics of a",
+          "bbox": [
+            314.47,
+            571.91,
+            558.0,
+            582.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.9,
+            9.96
+          ]
+        },
+        {
+          "text": "identification framework provided the intellectual scaffolding",
+          "bbox": [
+            54.0,
+            576.09,
+            301.02,
+            586.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.01
+          ]
+        },
+        {
+          "text": "broader subject are present, assign only the broader heading.",
+          "bbox": [
+            322.94,
+            584.07,
+            559.75,
+            593.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "for the first stage of the pipeline.",
+          "bbox": [
+            54.0,
+            588.09,
+            183.77,
+            598.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• Specificity (H 180 §G): Headings should be as specific as",
+          "bbox": [
+            314.47,
+            595.7,
+            557.99,
+            605.94
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "Each reference document was read in full and its norma-",
+          "bbox": [
+            63.96,
+            602.96,
+            302.67,
+            613.02
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "the content warrants.",
+          "bbox": [
+            322.94,
+            607.9,
+            406.11,
+            617.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "tive content—rules, exceptions, decision criteria, and worked",
+          "bbox": [
+            54.0,
+            614.93,
+            301.02,
+            624.97
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.04
+          ]
+        },
+        {
+          "text": "• Depth of indexing (H 180 §H): Do not assign both a heading",
+          "bbox": [
+            314.47,
+            619.76,
+            558.0,
+            629.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "examples—was translated into structured instructions within",
+          "bbox": [
+            54.0,
+            626.87,
+            301.01,
+            636.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "and a broader heading that subsumes it unless each captures",
+          "bbox": [
+            322.94,
+            631.88,
+            558.0,
+            641.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.88
+          ]
+        },
+        {
+          "text": "a SKILL.md file. The resulting skills are not simply prompts;",
+          "bbox": [
+            54.0,
+            638.85,
+            301.84,
+            648.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.03
+          ]
+        },
+        {
+          "text": "a distinct facet.",
+          "bbox": [
+            322.94,
+            643.77,
+            383.43,
+            653.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "they are multi-section documents that define terminology, enu-",
+          "bbox": [
+            54.0,
+            650.87,
+            302.67,
+            660.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.94
+          ]
+        },
+        {
+          "text": "• Ordering by predominance (H 80): The first heading as-",
+          "bbox": [
+            314.47,
+            655.47,
+            559.65,
+            665.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "merate decision steps, specify output formats, and include vali-",
+          "bbox": [
+            54.0,
+            662.85,
+            302.67,
+            672.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.9
+          ]
+        },
+        {
+          "text": "signed should represent the primary focus of the work.",
+          "bbox": [
+            322.94,
+            667.68,
+            540.59,
+            677.64
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "dation checks. The complete SKILL.md files for all four skills,",
+          "bbox": [
+            54.0,
+            674.81,
+            302.27,
+            684.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.9
+          ]
+        },
+        {
+          "text": "The skill also applies the 2026 LC policy change on",
+          "bbox": [
+            320.94,
+            682.55,
+            558.0,
+            692.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "along with the Python scripts for authority validation, are avail-",
+          "bbox": [
+            54.0,
+            686.78,
+            302.67,
+            696.66
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.87
+          ]
+        },
+        {
+          "text": "genre/form: rather than assigning form subdivisions ($v) within",
+          "bbox": [
+            310.98,
+            694.66,
+            558.0,
+            704.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "able in the project’s GitHub repository.1",
+          "bbox": [
+            54.0,
+            697.32,
+            212.9,
+            708.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "650 fields, form concepts are routed to LCGFT 655 fields. The",
+          "bbox": [
+            310.98,
+            706.59,
+            558.0,
+            716.48
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.89
+          ]
+        },
+        {
+          "text": "output is an ordered list of candidate headings with their in-",
+          "bbox": [
+            310.98,
+            718.41,
+            559.65,
+            728.48
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "1https://github.com/choweric/",
+          "bbox": [
+            64.86,
+            721.19,
+            202.24,
+            730.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            5.98,
+            7.97
+          ]
+        },
+        {
+          "text": "tended MARC field type (600, 610, 650, 651, or 655).",
+          "bbox": [
+            310.98,
+            730.44,
+            526.27,
+            740.41
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "subject-indexing-skills",
+          "bbox": [
+            54.0,
+            731.55,
+            164.98,
+            739.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusMonL-Regu"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "3",
+          "bbox": [
+            303.51,
+            760.33,
+            308.49,
+            770.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    }
+  ]
+}

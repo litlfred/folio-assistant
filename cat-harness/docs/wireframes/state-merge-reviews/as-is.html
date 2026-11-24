@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: merge reviews</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); background: var(--fill); }
+  .main { min-width: 0; padding: 16px 24px; }
+  .sub { font-size: 0.9rem; }
+  h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; margin: 24px 0 8px; }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .item { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+  .item h3 { font-size: 1rem; margin: 0 0 4px; }
+  .tag { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+  th, td { border: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+  @media (max-width: 799px) { .page { grid-template-columns: 1fr; } .strip { height: 44px; border-right: 0; border-bottom: 1px solid var(--line); } .main { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="strip" aria-label="site navigation strip"></div>
+  <main class="main">
+    <h1>Merge reviews</h1>
+    <p class="sub">merge-reviews/ · merge-reviews</p>
+    <h2>Verdicts — 2 verdict(s), 1 unreadable</h2>
+    <p class="sub">The verdict an independent reviewing session recorded on each pull request's head. Whether that head is still current is GitHub's fact: open the pull request for it.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>pull request</th><th>head</th><th>base</th><th>verdict</th><th>reviewer</th><th>reviewed</th><th>open blocking</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#">litlfred/cat-harness#423</a></td><td><code>3f2a91c0d4e7</code></td><td><code>764f4bdc0a1e</code></td><td>pass</td><td>agent <code>session_01Ab</code><br>claude-opus</td><td>2026-10-23T10:00:00Z</td><td>0</td></tr>
+          <tr><td>#585</td><td><code>9c1e0b77aa02</code></td><td><code>cdfce51f9b3d</code></td><td>fail (+1 earlier)</td><td>agent <code>session_01Cd</code></td><td>2026-10-22T16:40:00Z</td><td>1</td></tr>
+          <tr><td colspan="7"><code>0be1c2.json</code> — not a valid verdict — base_sha: Required</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>State graphs this harness declares</h2>
+    <ul class="list">
+      <li class="item"><h3><a href="#">issue-marks</a> <span class="tag">declared</span></h3><p class="sub">How far an agent has read an issue.</p></li>
+      <li class="item"><h3>merge-reviews <span class="tag">declared</span></h3><p class="sub">The adversarial review verdict on each pull request's head.</p></li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>

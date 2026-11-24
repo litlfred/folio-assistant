@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.G.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.G.Collaboration">
+    <bpmn:participant id="PHW.G.Participant" name="G. Audit, Provenance and Duty Checks under a Data Sharing Agreement (DSA P12)" processRef="PHW.G" />
+  </bpmn:collaboration>
+  <bpmn:dataStore id="PHW.DataStore.ProvenanceLog" name="Provenance Log (W3C PROV-O, hash-chained)">
+    <bpmn:documentation>The harness decision log: one W3C PROV-O record per decision. Each record carries the hash of the one before it, so a removed or changed record is detectable. The hash chain is a LOCAL EXTENSION: a design choice (bean B4), not a standard. A store, not a lane: it only keeps what the audit writers append (WorldHealthOrganization/smart-trust-phw#22).</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="PHW.DataStore.AuditRecordRepository" name="ATNA Audit Record Repository">
+    <bpmn:documentation>IHE ATNA Audit Record Repository, receiving `[ITI-20]` Record Audit Event and storing each event. ATNA is Final Text in the IHE ITI Technical Framework (ITI TF-1: 9 (section from standing knowledge, unverified)). A store, not a lane: it only keeps what the sender writes (WorldHealthOrganization/smart-trust-phw#22).</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:process id="PHW.G" name="G. Audit, Provenance and Duty Checks under a Data Sharing Agreement (DSA P12)" isExecutable="false">
+    <bpmn:documentation>Records every decision under a data sharing agreement in two ways. The first is a W3C PROV-O record, citing the agreement as `prov:used` through its DCAT distribution and `spdx:checksum` (bean yy40), in a hash-chained log that is a labelled local extension. The second is an IHE ATNA audit event (`[ITI-20]` Record Audit Event), following the VHL profile's ATNA grouping. Both cite the same agreement URL. The process also records duty fulfilment, compares duties with records, and supports periodic human review. IHE BALP needs owner approval. Source: the data sharing agreement (DSA) process analysis for litlfred/folio-assistant#2702, §2 and §4.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.G.LaneSet">
+      <bpmn:lane id="PHW.Lane.AuditWriter" name="Enforcement and Decision Points (audit writers)">
+        <bpmn:documentation>The policy enforcement point and the policy decision point, which write one record per decision: a PROV-O record to the Provenance Log (G1) and an ATNA audit event to the Audit Record Repository (G3). Both are data stores, not lanes.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.G.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.G.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.G.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.G.6</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.DataRecipient" name="Data Recipient (duty performer)">
+        <bpmn:documentation>The ODRL `assignee`, who performs the agreement's duties (ODRL 2.2 §2.6.3), for example deleting data by a date.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.G.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.Auditor" name="Auditor (person)">
+        <bpmn:documentation>A person who reviews the records against the agreement. No single spec actor.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.G.7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.G.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.G.Start" name="Decision made, duty due, or review period reached">
+      <bpmn:documentation>Trigger: every decision (processes E, F, H and I), every duty deadline, and each periodic review (DSA P12).</bpmn:documentation>
+      <bpmn:outgoing>PHW.G.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.G.1" name="G1. Write PROV-O record citing the agreement">
+      <bpmn:documentation>One `prov:Activity` per decision. `prov:used` names the agreement version as its DCAT distribution with `spdx:checksum` (DCAT 3 §6.8, §6.8.20; bean yy40), plus the grant or token id. The record is appended to the hash-chained Provenance Log (a local extension, bean B4). `prov:wasAssociatedWith` names the requester, and `prov:actedOnBehalfOf` the principal (the RFC 8693 `act` chain, §4.1). For a consent-based agreement, it also cites `Consent.id` and `Consent.meta.versionId`.</bpmn:documentation>
+      <bpmn:incoming>PHW.G.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.G.Flow2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="PHW.G.1.WritesProvenanceLog">
+        <bpmn:targetRef>PHW.G.ProvenanceLog</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="PHW.G.3" name="G3. Send ATNA audit event citing the agreement [ITI-20] Record Audit Event">
+      <bpmn:documentation>The VHL profile requires the VHL Sharer and the VHL Receiver to be grouped with ATNA Secure Node or Secure Application for ITI-YY5. See VHL Volume 1 §1:XX.3, Table XX.3-1, and §1:XX.6.1 "ATNA - Audit Trail and Node Authentication", which covers secure channel per [ITI-19] and audit logging. Data servers in processes E and G use the same grouping. The event goes to the Audit Record Repository (a data store) by `[ITI-20]` Record Audit Event (ITI TF-2: 3.20 (section from standing knowledge, unverified)). It cites the agreement's fixed-version URL, the receiver or requester, the purpose of use, the documents or data released, and the decision. IHE BALP (Basic Audit Log Patterns) AuditEvent patterns are Trial Implementation and need owner approval before this IG names them as conformance. The harness PROV-O record (G1) cites the same agreement URL, so the two logs agree.</bpmn:documentation>
+      <bpmn:incoming>PHW.G.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.G.Flow3</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="PHW.G.3.WritesAuditRecordRepository">
+        <bpmn:targetRef>PHW.G.AuditRecordRepository</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:sendTask>
+    <bpmn:userTask id="PHW.G.5" name="G5. Record duty fulfilment with evidence hash">
+      <bpmn:documentation>The recipient records that a duty was performed, as its own record (for example "deleted on date X"). ODRL duties (§2.6.3) say what must happen; the record says that it did. Evidence such as a signed deletion certificate is kept with its SHA-256.</bpmn:documentation>
+      <bpmn:incoming>PHW.G.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.G.Flow4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:businessRuleTask id="PHW.G.6" name="G6. Compare duties with records">
+      <bpmn:documentation>Computable agreement: an unmet duty makes later decisions `deny`, and a duty whose state cannot be known makes them `unknown`. Document-only agreement: a person compares.</bpmn:documentation>
+      <bpmn:incoming>PHW.G.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.G.Flow5</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="PHW.G.7" name="G7. Periodic human review and report to the provider">
+      <bpmn:documentation>A person reviews the PROV-O log and the ATNA events against the agreement. Where the agreement requires it, they report to the provider: `odrl:inform` in a computable agreement, or a clause in a PDF.</bpmn:documentation>
+      <bpmn:incoming>PHW.G.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.G.Flow6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="PHW.G.End" name="Records kept and reviewed">
+      <bpmn:documentation>Audit, provenance and duty records are complete for this cycle.</bpmn:documentation>
+      <bpmn:incoming>PHW.G.Flow6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="PHW.G.ProvenanceLog" name="Provenance Log (W3C PROV-O, hash-chained)" dataStoreRef="PHW.DataStore.ProvenanceLog" />
+    <bpmn:dataStoreReference id="PHW.G.AuditRecordRepository" name="ATNA Audit Record Repository" dataStoreRef="PHW.DataStore.AuditRecordRepository" />
+    <bpmn:sequenceFlow id="PHW.G.Flow1" sourceRef="PHW.G.Start" targetRef="PHW.G.1" />
+    <bpmn:sequenceFlow id="PHW.G.Flow2" sourceRef="PHW.G.1" targetRef="PHW.G.3" />
+    <bpmn:sequenceFlow id="PHW.G.Flow3" sourceRef="PHW.G.3" targetRef="PHW.G.5" />
+    <bpmn:sequenceFlow id="PHW.G.Flow4" sourceRef="PHW.G.5" targetRef="PHW.G.6" />
+    <bpmn:sequenceFlow id="PHW.G.Flow5" sourceRef="PHW.G.6" targetRef="PHW.G.7" />
+    <bpmn:sequenceFlow id="PHW.G.Flow6" sourceRef="PHW.G.7" targetRef="PHW.G.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.G.Diagram">
+    <bpmndi:BPMNPlane id="PHW.G.Plane" bpmnElement="PHW.G.Collaboration">
+      <bpmndi:BPMNShape id="PHW.G.Participant_di" bpmnElement="PHW.G.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="1360" height="752" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.AuditWriter_di" bpmnElement="PHW.Lane.AuditWriter" isHorizontal="true"><dc:Bounds x="150" y="60" width="1330" height="364" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.DataRecipient_di" bpmnElement="PHW.Lane.DataRecipient" isHorizontal="true"><dc:Bounds x="150" y="424" width="1330" height="194" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Auditor_di" bpmnElement="PHW.Lane.Auditor" isHorizontal="true"><dc:Bounds x="150" y="618" width="1330" height="194" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.Start_di" bpmnElement="PHW.G.Start"><dc:Bounds x="252" y="139" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.1_di" bpmnElement="PHW.G.1"><dc:Bounds x="390" y="97" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.3_di" bpmnElement="PHW.G.3"><dc:Bounds x="570" y="97" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.5_di" bpmnElement="PHW.G.5"><dc:Bounds x="750" y="461" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.6_di" bpmnElement="PHW.G.6"><dc:Bounds x="930" y="97" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.7_di" bpmnElement="PHW.G.7"><dc:Bounds x="1110" y="655" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.End_di" bpmnElement="PHW.G.End"><dc:Bounds x="1332" y="697" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.ProvenanceLog_di" bpmnElement="PHW.G.ProvenanceLog"><dc:Bounds x="425" y="302" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.G.AuditRecordRepository_di" bpmnElement="PHW.G.AuditRecordRepository"><dc:Bounds x="605" y="302" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.G.Flow1_di" bpmnElement="PHW.G.Flow1">
+        <di:waypoint x="288" y="157" />
+        <di:waypoint x="390" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.Flow2_di" bpmnElement="PHW.G.Flow2">
+        <di:waypoint x="510" y="157" />
+        <di:waypoint x="570" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.Flow3_di" bpmnElement="PHW.G.Flow3">
+        <di:waypoint x="690" y="157" />
+        <di:waypoint x="810" y="157" />
+        <di:waypoint x="810" y="461" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.Flow4_di" bpmnElement="PHW.G.Flow4">
+        <di:waypoint x="870" y="521" />
+        <di:waypoint x="990" y="521" />
+        <di:waypoint x="990" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.Flow5_di" bpmnElement="PHW.G.Flow5">
+        <di:waypoint x="1050" y="157" />
+        <di:waypoint x="1170" y="157" />
+        <di:waypoint x="1170" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.Flow6_di" bpmnElement="PHW.G.Flow6">
+        <di:waypoint x="1230" y="715" />
+        <di:waypoint x="1332" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.1.WritesProvenanceLog_di" bpmnElement="PHW.G.1.WritesProvenanceLog">
+        <di:waypoint x="450" y="217" />
+        <di:waypoint x="450" y="302" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.G.3.WritesAuditRecordRepository_di" bpmnElement="PHW.G.3.WritesAuditRecordRepository">
+        <di:waypoint x="630" y="217" />
+        <di:waypoint x="630" y="302" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
