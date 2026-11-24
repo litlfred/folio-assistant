@@ -1,0 +1,172 @@
+{
+  "_comment": "The roles the lanes of this guide's business processes (input/business-processes/PHW.*.bpmn) name, each with the lane names it covers as otherNames; the description names the ActorDefinition in input/fsh/actors/actors.fsh it specializes, where one exists. Schema: cat-harness-tools/schemas/process/role-graph.ts. Every person is fictional.",
+  "name": "smart-trust-phw",
+  "roles": [
+    {
+      "id": "holder",
+      "title": "Holder",
+      "description": "The person who holds a Personal Health Wallet, records consent, and presents verifiable health links and certificates. Specializes the ActorDefinition Holder (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [],
+      "otherNames": [
+        "VHL Holder (Patient / Personal Health Wallet)",
+        "Certificate Holder (person / Personal Health Wallet)",
+        "Holder (person / Personal Health Wallet)"
+      ]
+    },
+    {
+      "id": "consent-recorder",
+      "title": "Consent Recorder",
+      "description": "The person or system that records a consent directive for the holder (IHE PCF Consent Recorder): the wallet itself, or a health worker on the holder's behalf.",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "PCF Consent Recorder (Wallet / VHL Sharer)",
+        "PCF Consent Recorder (wallet or health worker)"
+      ]
+    },
+    {
+      "id": "consent-registry",
+      "title": "Consent Registry",
+      "description": "Holds consent directives and answers IHE PCF [ITI-108] Access Consent. Specializes the ActorDefinition ConsentRegistry (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "PCF Consent Registry"
+      ]
+    },
+    {
+      "id": "vhl-sharer",
+      "title": "VHL Sharer",
+      "description": "Holds the health information, generates verifiable health links, and enforces consent when a link is redeemed. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "VHL Sharer (grouped with PCF Consent Recorder)",
+        "VHL Sharer (enforcement and decision point)"
+      ]
+    },
+    {
+      "id": "document-source",
+      "title": "Document Source",
+      "description": "The system that assembles a document about the holder before it is signed: the VHL Sharer when a document is shared, the Certificate Issuance Service when a certificate is issued. Adds the consent directives to it (process M).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Document source (VHL Sharer or Certificate Issuance Service)"
+      ]
+    },
+    {
+      "id": "vhl-receiver",
+      "title": "VHL Receiver",
+      "description": "Receives a verifiable health link, checks its signature against the trust list, and retrieves the information. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "VHL Receiver (receiving organisation or application)",
+        "VHL Receiver (Verifier / Relying Party)"
+      ]
+    },
+    {
+      "id": "trust-anchor",
+      "title": "Trust Anchor",
+      "description": "Publishes the trust list of keys that participants use to check signatures. GDHCN is one possible anchor among others. Specializes the ActorDefinition TrustNetworkAnchor (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Trust Anchor (GDHCN or another accepted anchor)"
+      ]
+    },
+    {
+      "id": "certificate-issuer",
+      "title": "Certificate Issuer",
+      "description": "A health worker or issuing system that issues a verifiable digital health certificate. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Certificate Issuer (health worker or issuing system)"
+      ]
+    },
+    {
+      "id": "certificate-verifier",
+      "title": "Verifier",
+      "description": "Checks a certificate and its status, with or without a status checking application. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Verifier (with or without a status checking application)"
+      ]
+    },
+    {
+      "id": "data-provider-administrator",
+      "title": "Data Provider Administrator",
+      "description": "The person at a data provider who registers clients under a data sharing agreement.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Data Provider Administrator (person)"
+      ]
+    },
+    {
+      "id": "data-recipient-system",
+      "title": "Data Recipient System",
+      "description": "A server that accesses data under a data sharing agreement (OAuth client) and performs the agreement's duties.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Data Recipient System (OAuth client)",
+        "Data Recipient (duty performer)"
+      ]
+    },
+    {
+      "id": "provider-authorization-server",
+      "title": "Provider Authorization Server",
+      "description": "Registers clients and decides access under a data sharing agreement (policy decision and enforcement).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Provider Authorization Server (administrator + decision point)",
+        "Policy Decision Point (permits())"
+      ]
+    },
+    {
+      "id": "auditor",
+      "title": "Auditor",
+      "description": "The person who reviews audit and provenance records under a data sharing agreement.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [],
+      "otherNames": [
+        "Auditor (person)"
+      ]
+    }
+  ]
+}
