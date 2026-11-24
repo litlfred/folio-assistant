@@ -11600,6 +11600,71 @@
         }
       }
     },
+    "/tools/site-publish-after": {
+      "post": {
+        "operationId": "site-publish-after",
+        "summary": "Name the workflows a site publish waits for on the same commit",
+        "description": "Print the repository's workflows that a site publish must wait for, on the same commit, before it builds: every workflow that calls a reusable workflow a declared site publisher names in `after` (for example an IG's AST refresh, which seeds the cache the site is built from), plus `site.publishAfter` from `index.config.json`. A workflow that calls the shared site publish is never named: it is the publish itself. The shared `folio-site-publish.yml` runs it and then waits for each workflow it names.",
+        "tags": [
+          "feature-staging"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "site-publish-after/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The repository checkout whose workflows to read. Default: the current directory."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflows": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The workflow file names to wait for, space-separated on one line; empty when there is none."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/site-publish-after.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat site:publish-after"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "feature-staging"
+        ]
+      }
+    },
     "/tools/site-search-index": {
       "post": {
         "operationId": "site-search-index",

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 40,
+      "count": 41,
       "unit": "open beans"
     }
   },
@@ -258,7 +258,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-13T12:07:20Z",
-      "updatedAt": "2026-11-13T12:07:20Z",
+      "updatedAt": "2026-11-23T20:25:53Z",
       "preview": "## Why\n\nParent: `folio-assistant-95e7`. WorldHealthOrganization/smart-base `main` has the same `.github/skills/` library and the same defects: validators glob `input/business-processes/*.bpmn` while its BPMN is in `input/bpmn/`; the actor-file convention matches no file; `/validate` only dispatches `ghbuild.yml`, which never calls the skills. Its downstream DAKs fetch only `input/scripts/` (curl f",
       "file": "beans/defs/folio-assistant-6gnn--worldhealthorganization-smart-base-port-the-github.md"
     },
@@ -748,7 +748,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-15T19:40:00Z",
+      "updatedAt": "2026-11-24T08:30:00Z",
       "preview": "Full thread link: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9<suffix>. Ids below are suffixes after `cmsg_017WNUkNK8kdDziPK58Pv6G9`.\n\n- CI emails/red mains …7hzuBmHhA1AVDQwkGAEKoK (closed). CI email alerts 11-12 …6etWUsHcNFgYZFJZ29PDz9. Umbrella …DEZk3DJmX24MEwH1cdheht. qa.json …6zELz1Am66C2Vzg5yT1cQV. Gutter …Wyw7xcUYv4wkPgN73AoVxC. Contents c",
       "file": "beans/defs/folio-assistant-f7ph--project-thread-directory-thread-ids.md"
     },
@@ -1256,7 +1256,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-12T09:45:00Z",
-      "updatedAt": "2026-11-12T09:45:00Z",
+      "updatedAt": "2026-11-24T08:30:00Z",
       "preview": "Items only the owner can do. Agents: remind the owner with a card, never do these yourselves. Tick an item when the owner confirms.\n\n- [ ] run add-layers-move.sh (publish-on-push-2026-11-11/)\n- [ ] allow litlfred/* actions in WHO org + check WHO gh-pages\n- [ ] publish si v0.2.0 draft release\n- [ ] Q-SLASH-8 command\n- [ ] OK CS-001\n- [ ] merge smart-trust-demo#22\n- [ ] review smart-trust#136\n- [ ] ",
       "file": "beans/defs/folio-assistant-no51--owner-to-do-list-things-only-litlfred-can-do.md"
     },
@@ -1361,14 +1361,14 @@
     {
       "id": "folio-assistant-pb15",
       "title": "Harness PR backlog plan 2026-11-15",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-15T07:15:00Z",
-      "updatedAt": "2026-11-15T18:02:00Z",
+      "updatedAt": "2026-11-23T20:26:07Z",
       "preview": "Plan to clear the open-PR backlog in the harness repos (all litlfred repos except qou, sgex, pqtorus, folio-test, fmlrunner). Owner ask 07:00Z \"for harness repos: make a plan to resolve\", then 07:01Z \"coordinate w/ merge manager. stack merges and fix issues afterwards, send agents to complete work on stalled PRs\" and 07:03Z \"dispatch siblings fix existing reds\". The merge manager (thread cmsg_017W",
       "file": "beans/defs/folio-assistant-pb15--harness-pr-backlog-plan-2026-11-15.md"
     },
@@ -1585,16 +1585,44 @@
     {
       "id": "folio-assistant-sp4k",
       "title": "Content sites: shared site build presets and a link check that refuses the publish",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-v8bg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-16T07:10:00Z",
-      "updatedAt": "2026-11-21T16:49:35Z",
+      "updatedAt": "2026-11-22T15:45:00Z",
       "preview": "Owner chose option A (coordinator card, 2026-11-15/16) after smart-ra's glossary and bibliography 404s: one shared, layered list of site build steps for every content site, and every publish fails on a broken internal link. Thread \"Stop content sites missing pages\" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9TknJmb6WAJuHJXQCHbrj7K).\n\n## Design\n",
       "file": "beans/defs/folio-assistant-sp4k--content-sites-shared-site-build-presets-and-refusing.md"
+    },
+    {
+      "id": "folio-assistant-st16",
+      "title": "Handover 2026-11-16 09:30Z: WHO smart-trust and smart-trust-demo sites",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-16T09:30:00Z",
+      "updatedAt": "2026-11-24T08:30:00Z",
+      "preview": "Thread \"Fix WHO smart-trust-demo 404\" (cmsg_017WNUkNK8kdDziPK58Pv6G9ADCysxC5KzzfLdWqnBQE4a), session https://claude.ai/code/session_01Qmmkt5MLhsZSvtZqzmTnzf. Re-check every PR live before acting.\n\n## Goal\nOwner 06:54Z: why is worldhealthorganization.github.io/smart-trust-demo a 404, and why is /smart-trust not republished. \"ASAP fix, highest priority.\"\n\n## Cause\nNeither repo had moved. WHO/smart-t",
+      "file": "beans/defs/folio-assistant-st16--handover-who-smart-trust-sites-2026-11-16.md"
+    },
+    {
+      "id": "folio-assistant-t15r",
+      "title": "WHO move T15: smart-ra open issues and PRs copied to WorldHealthOrganization/smart-ra",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-wm26",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-16T00:40:00Z",
+      "updatedAt": "2026-11-24T09:00:00Z",
+      "preview": "Plan step T15 (section 11 of `/mnt/project-files/who-migration-plan/who-migration-plan.md`) for smart-ra, after WorldHealthOrganization/smart-ra#46 merged (2026-11-15 22:52Z). Owner choices: Q-WP-7 = A (copy issues, link both ways, close originals, keep a map), Q-WP-8 = A (re-open parked PRs from the same fork branches). Thread: Move smart-ra issues and PRs to WHO (…JVESm8fE54oqPt32e4ZRJ5). Relate",
+      "file": "beans/defs/folio-assistant-t15r--who-move-t15-smart-ra-issues-and-prs-to-who.md"
     },
     {
       "id": "folio-assistant-tgaj",
@@ -1679,6 +1707,20 @@
       "updatedAt": "2026-11-15T17:30:00Z",
       "preview": "Owner thread: merge manager https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR.\n\nCascade onto cat-harness 5244c31 and cat-harness-tools 4216ebb: folio-assistant-core#761 → smart-base → who-iris / smart-ra → dth-hrh. Code-only merge window until 2026-11-12 18:05Z (owner extended \"+12hrs window\" 06:04Z). Per Q-RERUN-1 B, CI is re-r",
       "file": "beans/defs/folio-assistant-um0y--merge-manager-re-pin-cascade-core-761-smart-base-w.md"
+    },
+    {
+      "id": "folio-assistant-un6l",
+      "title": "smart-trust-demo in the six UN languages: journeys viewer, docs pages, ArchiMate",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-v8bg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-16T09:20:00Z",
+      "updatedAt": "2026-11-24T08:45:00Z",
+      "preview": "Owner thread: \"Translate smart-trust-demo into 6 UN languages\" https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9JBstZzkWKmjWConPFCDG7y, session https://claude.ai/code/session_01Qmmkt8x5LVKCLo88LZ6Nyz. Owner ask (11-16 07:32Z): \"i want all 6 UN here https://worldhealthorganization.github.io/smart-trust-demo/\". Scope card answered B (11-16 08:14Z): the",
+      "file": "beans/defs/folio-assistant-un6l--smart-trust-demo-in-the-six-un-languages.md"
     },
     {
       "id": "folio-assistant-untm",
@@ -1791,6 +1833,20 @@
       "updatedAt": "2026-11-12T09:45:00Z",
       "preview": "Re-check live state before acting; these were true at the move.\n\n- Review log sheets: DTH-HRH 136BxUK15IUKEm2u-H6rpUkFac6754aRWTeJFe_UKbdU; DTH-PC 1g9nj4rjK23oBs2of_jMogUcN1y0D6QUTMae-UhKwpV4; DTH-SC 1ZpIOAgRXXpzMKauSzz11nd27VoCTApiMp3rdSL26x9Y; DTH-PHC 1ACmiSvHK2kYlqaL0--p2u4Op7g4R1_BzgNFuW7QUs3Y; DPI-H 1TNr5VP1oiE9N0Wd-XCgmUIdishb_Yl6Rm39mNx-_GQY.\n- Artifacts: drain report https://claude.ai/arti",
       "file": "beans/defs/folio-assistant-wl48--facts-and-references-moved-from-project-memory-202.md"
+    },
+    {
+      "id": "folio-assistant-wm26",
+      "title": "WHO migration: smart-*, dth-*, who-iris to WorldHealthOrganization",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-15T19:40:00Z",
+      "updatedAt": "2026-11-24T08:30:00Z",
+      "preview": "State of the move of the SMART content repositories from `litlfred/` to `WorldHealthOrganization/` (owner card Q-WP-6 = A, 2026-11-15 19:33Z: migration state lives here). Full plan, inventory and evidence: project file `who-migration-plan/who-migration-plan.md`. Earlier prep: project file `who-migration-2026-11-11/migration-runbook.md`, rule line WHO MIGRATION in folio-assistant-php1. Thread: http",
+      "file": "beans/defs/folio-assistant-wm26--who-migration-smart-dth-who-iris-to-worldhealthorg.md"
     },
     {
       "id": "folio-assistant-wox6",
@@ -1990,8 +2046,8 @@
         "share": 0.8095238095238095
       }
     ],
-    "orphanOpen": 27,
-    "openTotal": 40,
+    "orphanOpen": 28,
+    "openTotal": 41,
     "coveredOpen": 12,
     "duplicateIds": 0
   }

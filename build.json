@@ -1,11 +1,11 @@
 {
-  "sha": "7c9641a461c8c752ab5af2757e05ab012e55cf5d",
-  "built": "2026-11-23T02:43:15Z",
-  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/45099991567",
-  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/7c9641a461c8c752ab5af2757e05ab012e55cf5d/checks",
+  "sha": "8282bc42a06456d63a633b6538916612444ffb52",
+  "built": "2026-11-24T10:47:45Z",
+  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/45376236595",
+  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/8282bc42a06456d63a633b6538916612444ffb52/checks",
   "mounts": {
     "attestations": "98a097ba1926bcacc9c1c19ba785242e83a9dc92",
-    "beans": "35e461d6a12a065cdcbc4fae43ea986c3a950dcf",
+    "beans": "1b413b4057ee15d16884ca1bc2a7eb4c96390636",
     "health": "916ac12b3f593a59494f60934e9a263bdd9c7e06",
     "fsh-guts": "0a435d7e89fa4a56466b2c70be6b429540ad0558",
     "issue-marks": "1e9b2ff121470a2fc902728858a8caa7f6ae5590",
@@ -13,13 +13,13 @@
     "merge-reviews": "46afac4960a63ded6ace20c2fd44645a071d34f0",
     "subscribed-harnesses": "4f5ac5ab0b9fc532665ee1e8ddc48af8840c9595",
     "todos": "b4ea49e09fad523fb9675cb22d6e0e3364cc6840",
-    "cat-harness.health": "4f276560dae81dbddd175de53c12f5797d622482",
-    "folio-assistant-core.health": "3da61bbf6474e2f6158a538d97197f23215ac835",
+    "cat-harness.health": "18727342968f231aabb5c97e04ef486110886c9b",
+    "cat-harness-tools.health": "49f7aa6e6f549000fc3d285ea9a5427048b15fd6",
     "who-iris.health": "916ac12b3f593a59494f60934e9a263bdd9c7e06",
-    "cat-harness-tools.health": "49f7aa6e6f549000fc3d285ea9a5427048b15fd6"
+    "folio-assistant-core.health": "3da61bbf6474e2f6158a538d97197f23215ac835"
   },
   "writerVerdicts": {
-    "prev": "6dec66b760bf5fdbab7eeef88c34762c7da9d26a",
+    "prev": "7c9641a461c8c752ab5af2757e05ab012e55cf5d",
     "verdicts": [
       {
         "writer": "handler:index",
@@ -39,7 +39,7 @@
       {
         "writer": "subgraph:jsonld",
         "verdict": "rerun",
-        "why": "not recorded: the trace is 833481127 bytes, more than 536870912"
+        "why": "not recorded: the trace is 834400208 bytes, more than 536870912"
       },
       {
         "writer": "library:viz",
@@ -64,7 +64,7 @@
       {
         "writer": "uploads:viz",
         "verdict": "rerun",
-        "why": "bootstrap changed (+25 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/index.lock.json, cat-harness/ns, cat-harness/schemas, fhir-harness, and 18 others)"
+        "why": "bootstrap changed (+27 more: cat-harness-tools/scripts/external-schemas.ts, cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, and 20 others)"
       },
       {
         "writer": "smart-base:document-kinds",
@@ -74,7 +74,7 @@
       {
         "writer": "document-kinds:viz",
         "verdict": "rerun",
-        "why": "bootstrap changed (+17 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/index.lock.json, cat-harness/ns, cat-harness/schemas, fhir-harness, and 10 others)"
+        "why": "bootstrap changed (+16 more: cat-harness-tools/scripts/lib, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, fhir-harness, folio-assistant-core, and 9 others)"
       },
       {
         "writer": "skills:docs",
@@ -84,7 +84,7 @@
       {
         "writer": "node-kinds",
         "verdict": "rerun",
-        "why": "bootstrap changed (+15 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/ns, cat-harness/schemas, fhir-harness, folio-assistant-core, and 8 others)"
+        "why": "bootstrap changed (+18 more: cat-harness-tools/scripts/external-schemas.ts, cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, and 11 others)"
       },
       {
         "writer": "node-kind:pages",
@@ -94,7 +94,7 @@
       {
         "writer": "bibliography:page",
         "verdict": "rerun",
-        "why": "bootstrap changed (+17 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/ns, cat-harness/schemas, fhir-harness, folio-assistant-core, and 10 others)"
+        "why": "bootstrap changed (+18 more: cat-harness-tools/scripts/lib, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, fhir-harness, folio-assistant-core, and 11 others)"
       },
       {
         "writer": "ig-ast:pages",
@@ -104,7 +104,7 @@
       {
         "writer": "glossary:page",
         "verdict": "rerun",
-        "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/concepts/folio-assistant-core/glossary/index.md)"
+        "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/es/folio-assistant-core/glossary/index.md)"
       },
       {
         "writer": "smart:pages",
@@ -114,7 +114,7 @@
       {
         "writer": "jsonld:contexts",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+14 more: cat-harness/docs, cat-harness/docs/assets, cat-harness/docs/assets/img, cat-harness/docs/cat-harness, cat-harness/docs/en, cat-harness/docs/en/cat-harness, cat-harness/docs/smart-base/artifact-index, and 7 others)"
+        "why": "cat-harness-tools/scripts/lib changed (+19 more: cat-harness-tools/scripts/tests, cat-harness-tools/scripts/tests/features, cat-harness-tools/scripts/tests/process, cat-harness-tools/scripts/tests/process/features, cat-harness-tools/src/workflow, cat-harness/docs, cat-harness/docs/assets, and 12 others)"
       },
       {
         "writer": "smart-base:pages",
@@ -124,7 +124,7 @@
       {
         "writer": "smart-base:l1-extraction:pages",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+5 more: cat-harness/docs, cat-harness/external-schemas, cat-harness/schemas, index.config.json, index.lock.json)"
+        "why": "cat-harness-tools/scripts/lib changed (+6 more: cat-harness/docs, cat-harness/schemas, cat-harness/tools, folio-assistant-core/scripts, index.config.json, index.lock.json)"
       },
       {
         "writer": "tools:viz",
@@ -154,7 +154,7 @@
       {
         "writer": "web-apps:build",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+4 more: cat-harness/docs, cat-harness/external-schemas, cat-harness/schemas, index.lock.json)"
+        "why": "cat-harness-tools/scripts/lib changed (+4 more: cat-harness/docs, cat-harness/schemas, cat-harness/tools, index.lock.json)"
       },
       {
         "writer": "translation:status",
@@ -164,7 +164,7 @@
       {
         "writer": "openapi:viz",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+1 more: index.lock.json)"
+        "why": "cat-harness-tools/scripts/lib changed (+1 more: index.lock.json)"
       },
       {
         "writer": "schema:viz",
@@ -184,7 +184,7 @@
       {
         "writer": "subscriptions:viz",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+1 more: index.config.json)"
+        "why": "cat-harness-tools/scripts/lib changed (+1 more: index.config.json)"
       },
       {
         "writer": "docs:pages",
@@ -204,12 +204,12 @@
       {
         "writer": "kind:table",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+2 more: cat-harness/external-schemas, cat-harness/schemas)"
+        "why": "cat-harness-tools/scripts/lib changed (+2 more: cat-harness/schemas, cat-harness/tools)"
       },
       {
         "writer": "avatars:css",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed"
+        "why": "cat-harness-tools/scripts/lib changed"
       },
       {
         "writer": "themes:css",
@@ -219,12 +219,12 @@
       {
         "writer": "folio:viz",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+4 more: cat-harness/external-schemas, cat-harness/schemas, index.config.json, index.lock.json)"
+        "why": "cat-harness-tools/scripts/external-schemas.ts changed (+6 more: cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/schemas, cat-harness/tools, index.config.json, index.lock.json)"
       },
       {
         "writer": "kg:viewer",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+4 more: cat-harness/external-schemas, cat-harness/schemas, index.config.json, index.lock.json)"
+        "why": "cat-harness-tools/scripts/external-schemas.ts changed (+6 more: cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/schemas, cat-harness/tools, index.config.json, index.lock.json)"
       },
       {
         "writer": "state:visualizer",
@@ -259,63 +259,63 @@
       {
         "writer": "kind:json-schemas",
         "verdict": "rerun",
-        "why": "cat-harness-tools/package.json changed (+3 more: cat-harness/external-schemas, index.config.json, index.lock.json)"
+        "why": "cat-harness-tools/scripts/external-schemas.ts changed (+5 more: cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/tools, index.config.json, index.lock.json)"
       }
     ]
   },
   "writerVerifyLog": [
     "### Writers, rerun and measure — dry run (bean `fwtz`, option B)",
     "",
-    "**safe** · records from 6dec66b760bf · could skip 0 of 48 · would have been stale 0 · must rerun 48",
+    "**safe** · records from 7c9641a461c8 · could skip 0 of 48 · would have been stale 0 · must rerun 48",
     "",
     "- `handler:index` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html)",
     "- `ig-index:build` reruns: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
     "- `uml:overview` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/folio-assistant-core/glossary/index.md)",
-    "- `subgraph:jsonld` reruns: not recorded: the trace is 833481127 bytes, more than 536870912",
+    "- `subgraph:jsonld` reruns: not recorded: the trace is 834400208 bytes, more than 536870912",
     "- `library:viz` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html)",
     "- `library:keywords` reruns: its script, imports, audited environment or tools changed",
     "- `voices:viz` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json)",
     "- `theme:viz` reruns: its script, imports, audited environment or tools changed",
-    "- `uploads:viz` reruns: bootstrap changed (+25 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/index.lock.json, cat-harness/ns, cat-harness/schemas, fhir-harness, and 18 others)",
+    "- `uploads:viz` reruns: bootstrap changed (+27 more: cat-harness-tools/scripts/external-schemas.ts, cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, and 20 others)",
     "- `smart-base:document-kinds` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/smart-base/fhir-artifact-index/index.json)",
-    "- `document-kinds:viz` reruns: bootstrap changed (+17 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/index.lock.json, cat-harness/ns, cat-harness/schemas, fhir-harness, and 10 others)",
+    "- `document-kinds:viz` reruns: bootstrap changed (+16 more: cat-harness-tools/scripts/lib, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, fhir-harness, folio-assistant-core, and 9 others)",
     "- `skills:docs` reruns: not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-    "- `node-kinds` reruns: bootstrap changed (+15 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/ns, cat-harness/schemas, fhir-harness, folio-assistant-core, and 8 others)",
+    "- `node-kinds` reruns: bootstrap changed (+18 more: cat-harness-tools/scripts/external-schemas.ts, cat-harness-tools/scripts/lib, cat-harness-tools/src/workflow, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, and 11 others)",
     "- `node-kind:pages` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/basic-cdn-site/index.html)",
-    "- `bibliography:page` reruns: bootstrap changed (+17 more: cat-harness-tools/package.json, cat-harness/docs, cat-harness/external-schemas, cat-harness/ns, cat-harness/schemas, fhir-harness, folio-assistant-core, and 10 others)",
+    "- `bibliography:page` reruns: bootstrap changed (+18 more: cat-harness-tools/scripts/lib, cat-harness/docs, cat-harness/ns, cat-harness/schemas, cat-harness/tools, fhir-harness, folio-assistant-core, and 11 others)",
     "- `ig-ast:pages` reruns: not recorded: git ls-remote is not a read-only command the cone replays",
-    "- `glossary:page` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/concepts/folio-assistant-core/glossary/index.md)",
+    "- `glossary:page` reruns: not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/es/folio-assistant-core/glossary/index.md)",
     "- `smart:pages` reruns: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
-    "- `jsonld:contexts` reruns: cat-harness-tools/package.json changed (+14 more: cat-harness/docs, cat-harness/docs/assets, cat-harness/docs/assets/img, cat-harness/docs/cat-harness, cat-harness/docs/en, cat-harness/docs/en/cat-harness, cat-harness/docs/smart-base/artifact-index, and 7 others)",
+    "- `jsonld:contexts` reruns: cat-harness-tools/scripts/lib changed (+19 more: cat-harness-tools/scripts/tests, cat-harness-tools/scripts/tests/features, cat-harness-tools/scripts/tests/process, cat-harness-tools/scripts/tests/process/features, cat-harness-tools/src/workflow, cat-harness/docs, cat-harness/docs/assets, and 12 others)",
     "- `smart-base:pages` reruns: not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
     "- … 28 more rerun",
     ""
   ],
   "kgStepTimes": [
-    "1795401621 STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)",
-    "1795401621 bun run cat-harness-tools/scripts/kg-export.ts --scope instance --out \"./_site/${STUB}/${STUB}.jsonld\"",
-    "1795401632 bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site",
-    "1795401633 bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site",
-    "1795401634 BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)",
-    "1795401634 BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap)",
-    "1795401634 bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url \"${SITE}/${BOOT_DIR}/\" --provenance --out \"./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld",
-    "1795401634 bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site",
-    "1795401669 bun run cat-harness-tools/scripts/glossary-export.ts --out \"./_site/${STUB}/${STUB}-glossary.jsonld\"",
-    "1795401673 bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld\"",
-    "1795401674 bun run cat-harness-tools/scripts/kg-locale-export.ts --core \"./_site/${STUB}/${STUB}.jsonld\" --out-dir \"./_site/${STUB}\"",
-    "1795401675 bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir \"./_site/${BOOT_DIR}\"",
-    "1795401677 bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}\" --allow-collision bootstrap.json",
-    "1795401678 bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site",
-    "1795401678 bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs",
-    "1795401718 bun run cat-harness-tools/scripts/fsh-guts-export.ts --out \"./_site/fsh-guts.jsonld\"",
-    "1795401719 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans",
-    "1795401720 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos",
-    "1795401720 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library",
-    "1795401722 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg",
-    "1795401735 bun run cat harness:state --out ./_site/assets/harnesses",
-    "1795401735 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
-    "1795401736 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
-    "1795401736 bun run cat-harness-tools/scripts/root-index.ts --site ./_site",
-    "1795401737 end"
+    "1795517149 STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)",
+    "1795517149 bun run cat-harness-tools/scripts/kg-export.ts --scope instance --out \"./_site/${STUB}/${STUB}.jsonld\"",
+    "1795517155 bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site",
+    "1795517156 bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site",
+    "1795517156 BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)",
+    "1795517156 BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap)",
+    "1795517156 bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url \"${SITE}/${BOOT_DIR}/\" --provenance --out \"./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld",
+    "1795517156 bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site",
+    "1795517178 bun run cat-harness-tools/scripts/glossary-export.ts --out \"./_site/${STUB}/${STUB}-glossary.jsonld\"",
+    "1795517180 bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld\"",
+    "1795517181 bun run cat-harness-tools/scripts/kg-locale-export.ts --core \"./_site/${STUB}/${STUB}.jsonld\" --out-dir \"./_site/${STUB}\"",
+    "1795517182 bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir \"./_site/${BOOT_DIR}\"",
+    "1795517183 bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}\" --allow-collision bootstrap.json",
+    "1795517183 bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site",
+    "1795517183 bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs",
+    "1795517215 bun run cat-harness-tools/scripts/fsh-guts-export.ts --out \"./_site/fsh-guts.jsonld\"",
+    "1795517216 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans",
+    "1795517216 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos",
+    "1795517217 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library",
+    "1795517218 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg",
+    "1795517225 bun run cat harness:state --out ./_site/assets/harnesses",
+    "1795517225 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
+    "1795517225 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
+    "1795517226 bun run cat-harness-tools/scripts/root-index.ts --site ./_site",
+    "1795517226 end"
   ]
 }
