@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "proof-triage",
+    "path": "skills/content/folio-paper-adapter/proof-triage.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/proof-triage.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/proof-triage.ts",
+      "prose_hash": "2dce2f0c0d28",
+      "code_hash": "cb6b6f7d4b39",
+      "by": "baseline"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "ana",
+  "title": "Ana (data provider administrator)",
+  "kind": "person",
+  "description": "Persona: the administrator who registers partner servers under the data sharing agreements her health information exchange signs. Fictional.",
+  "roles": [
+    "data-provider-administrator"
+  ],
+  "capabilities": [],
+  "meta": {
+    "persona": {
+      "name": "Ana",
+      "role": "Data provider administrator",
+      "goal": "Register only the clients an agreement allows, and revoke them the moment it ends.",
+      "needs": [
+        "The agreement's terms in a form the server can check",
+        "One place to suspend a client"
+      ],
+      "frustrations": [
+        "Agreements that exist only as PDFs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of one-voice-audit.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "editorial/skills/editorial-audits/one-voice-audit.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "editorial/skills/editorial-audits/one-voice-audit.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "editorial/skills/editorial-audits/one-voice-audit.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "The voice is addressed TO the role, not carried by it",
+      "prov:value": "The role names no voice and no story\n(#1168): each points at the role, so one is added without editing the role.",
+      "cat-harness:refs": [
+        "#1168"
+      ]
+    }
+  ]
+}
