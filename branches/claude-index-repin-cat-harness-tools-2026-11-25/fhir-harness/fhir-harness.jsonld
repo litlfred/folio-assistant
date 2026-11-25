@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/873682a93ce1c5486ed65ef82ec420fe4dafa91d",
-  "sourceCommitSha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
-  "sourceTree": "426cc0c294c9e49b06a7a5944aee3be1a867f20b",
-  "sourceCommitAt": "2026-11-25T05:12:18-05:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/90a02f8fecd9120838d78d8e403e4ccb0c297465",
+  "sourceCommitSha": "90a02f8fecd9120838d78d8e403e4ccb0c297465",
+  "sourceTree": "3b90e84240bcc0dccc4ccf7f30bd39753ea076f1",
+  "sourceCommitAt": "2026-11-25T11:08:21Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -4513,6 +4513,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 9 files across scenarios (1), skills (6), tools (2). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/qa"
     },
     {
@@ -6990,8 +6991,8 @@
   ],
   "staging": {
     "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
-    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "sha": "90a02f8fecd9120838d78d8e403e4ccb0c297465",
     "pr": "3199/merge",
-    "run": "45592723217"
+    "run": "45601613263"
   }
 }

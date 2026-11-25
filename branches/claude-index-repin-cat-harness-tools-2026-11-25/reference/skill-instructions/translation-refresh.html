@@ -231,7 +231,7 @@ dispatch” with the reason: it is never a pass, and the PR says so.</p><h3 id="
   
 </h3><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>translation:page-qa <span class="nt">--instance</span> &lt;root&gt;
 </code></pre></div></div><p>writes the per-catalogue sidecars under the layer’s
-<code class="language-plaintext highlighter-rouge">test/results/translation-qa/</code>. Beside them, write the locale’s report: the
+<a href="https://github.com/litlfred/folio-assistant/tree/cat/cat-harness/qa-reports/pr/3199/87b4dd123341051d4e6e043d1f88e2576da50732/cat-harness/test/results/translation-qa"><code class="language-plaintext highlighter-rouge">test/results/translation-qa/</code></a>. Beside them, write the locale’s report: the
 strings refreshed, each gate’s result, the round-trip counts (sampled,
 flagged, drift, not drift) with every drift ruling and its fix, the glossary
 violations and sense checks, and the source mistakes found.</p><h3 id="8-one-pr-per-layer-to-main"><a href="#8-one-pr-per-layer-to-main" class="anchor-heading" aria-labelledby="8-one-pr-per-layer-to-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. One PR per layer, to main

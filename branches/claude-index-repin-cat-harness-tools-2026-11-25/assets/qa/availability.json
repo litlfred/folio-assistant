@@ -1,17 +1,18 @@
 {
   "$schema": "folio-qa-availability/v1",
-  "source": "unavailable",
+  "source": "fetched",
   "requested": [
-    "pr/3199/c0fe19d3e9d83b6bcda0856586556fbd89e680cb",
+    "pr/3199/87b4dd123341051d4e6e043d1f88e2576da50732",
     "pr/3199"
   ],
-  "reason": "QA not available for this ref: the checkout holds no QA corpus and qa-reports had no entry for any requested ref",
+  "key": "pr/3199/87b4dd123341051d4e6e043d1f88e2576da50732",
+  "reason": "fetched pr/3199/87b4dd123341051d4e6e043d1f88e2576da50732 from qa-reports",
   "expected": {
-    "witnesses": 0,
-    "results": 0
+    "witnesses": 95,
+    "results": 19
   },
   "published": {
-    "witnesses": 0,
-    "results": 0
+    "witnesses": 110,
+    "results": 19
   }
 }
