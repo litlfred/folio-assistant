@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/schema/kg-node.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/schema/kg-node",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "kg-node",
+      "title": "kg-node",
+      "summary": "The two labels every knowledge-graph node may carry.",
+      "module": "schemas/kg/kg-node.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/kg-node"
+    }
+  ]
+}

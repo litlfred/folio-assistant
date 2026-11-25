@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/smart-base/process/Process_QuestionnaireDataCapture/node/Start_FormDue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Start_FormDue.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Start_FormDue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "A form is due",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}

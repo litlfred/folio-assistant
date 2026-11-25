@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Gap recorded, no recommendation",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_18"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/directory/collab",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded"
+    }
+  ]
+}

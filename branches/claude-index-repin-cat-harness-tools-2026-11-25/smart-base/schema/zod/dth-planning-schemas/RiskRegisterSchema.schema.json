@@ -1,0 +1,187 @@
+{
+  "$ref": "#/definitions/RiskRegister",
+  "definitions": {
+    "RiskRegister": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "default": "dth-risk-register/v1",
+          "type": "string",
+          "const": "dth-risk-register/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "template",
+            "populated"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "risk": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mitigation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ownerRoleId": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+              },
+              "stepIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "category": {
+                "type": "string",
+                "minLength": 1
+              },
+              "likelihood": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "impact": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ]
+              },
+              "sourceRef": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "libraryId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sectionId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "pages": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "tableOrAnnex": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "libraryId"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "risk",
+              "mitigation",
+              "ownerRoleId",
+              "category"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sourceRef": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "object",
+              "properties": {
+                "libraryId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sectionId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pages": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tableOrAnnex": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "libraryId"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "mode",
+        "entries",
+        "sourceRef"
+      ]
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskRegisterSchema.schema.json",
+  "title": "RiskRegisterSchema",
+  "description": "Generated from `RiskRegisterSchema` in schemas/dth-planning-schemas.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

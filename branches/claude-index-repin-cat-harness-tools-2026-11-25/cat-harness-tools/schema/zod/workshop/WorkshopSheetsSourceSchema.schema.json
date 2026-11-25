@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/WorkshopSheetsSource",
+  "definitions": {
+    "WorkshopSheetsSource": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "docx": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pdf": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previews": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "A3",
+            "A4"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopSheetsSourceSchema.schema.json",
+  "title": "WorkshopSheetsSourceSchema",
+  "description": "Generated from `WorkshopSheetsSourceSchema` in schemas/process/workshop.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

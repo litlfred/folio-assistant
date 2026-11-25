@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/voice/agent-skill-authoring-claude.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/voice/agent-skill-authoring-claude",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "Agent skill authoring — Claude override",
+      "description": "What Anthropic's own 'Skill authoring best practices' (Claude Platform Docs) adds to the shared base voice agent-skill-authoring: Claude's front-matter validation, its naming conventions, forward-slash paths, and three authoring methods (plan-validate-execute, no voodoo constants, author with one instance and test with another). MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Rules the base already carries — much of it traceable to this very document (the ~500-line body, one-level references, a table of contents over ~100 lines, third-person descriptions, evaluations before instructions) — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/vendors/agent-skill-authoring-claude/voice.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/voice/agent-skill-authoring-claude"
+    }
+  ]
+}

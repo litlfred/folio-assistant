@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>folio-assistant-sci | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="folio-assistant-sci" /><meta property="og:locale" content="en_US" /><meta name="description" content="Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material." /><meta property="og:description" content="Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="folio-assistant-sci" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "folio-assistant-sci-index",
+    "src": "../assets/qa/folio-assistant-sci-index/page.translation.json",
+    "index": "../assets/qa/folio-assistant-sci-index/qa-index.json",
+    "list": "../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../assets/translation-status/index.json",
+  "reviewSrc":"../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../folio-assistant-core/","jsonld":"../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../assets/harness/site.json"><meta name="fa-todo-src" content="../assets/todos/index.json"><meta name="fa-todo-graph" content="../todos.jsonld"><meta name="fa-zoom-src" content="../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content=".."><script type="application/json" id="fa-page-source">{"blob":"https://github.com/litlfred/folio-assistant-sci/blob/main/docs/index.md","repo":"litlfred/folio-assistant-sci","lines":[{"t":"folio-assistant-sci","l":7},{"t":"What this layer holds","l":13},{"t":"Processes","l":27},{"t":"Guides","l":47},{"t":"A survey: agentic authoring of formalized publications","l":56},{"t":"1. The problem","l":62},{"t":"2. The architecture in one picture","l":75},{"t":"3. Starting a document in a new, empty repository","l":104},{"t":"4. The data models","l":137},{"t":"5. Two kinds of validation: mechanical and agentic","l":160},{"t":"6. Mathematical results as a triple","l":192},{"t":"7. The library: open-access sources inside the knowledge graph","l":235},{"t":"8. Witnesses: binding computation to mathematics","l":268},{"t":"9. Keeping mathematics and measurement apart","l":285},{"t":"10. The process: Formalized Scientific Publication Authoring","l":301},{"t":"11. From guideline authoring to scientific authoring","l":329},{"t":"12. Worked example and licence","l":349}]}</script><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../assets/beans/index.json"><meta name="fa-processes-src" content="../subgraph/index.jsonld"><meta name="fa-build-src" content="../build.json"><meta name="fa-fsh-guts-src" content="../fsh-guts.json"><link rel="stylesheet" href="../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../assets/css/docs-ui.css?v=4c7265cca407"><link rel="stylesheet" href="../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../assets/js/harness-data.js" defer></script><script src="../assets/js/kg-render.js" defer></script><script src="../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../assets/js/docs-ui.js?v=cae1ad7ba8e7" defer></script><script src="../assets/js/edit-links.js?v=56a2d25f0900" defer></script><script src="../assets/js/translation-review.js?v=3ab638979d22" defer></script><script src="../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-4cu2slyicb.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script><script src="../assets/draft-banner.js" defer data-fa-page-layout></script><noscript data-fa-draft-noscript><link rel="stylesheet" href="../assets/draft-banner-noscript.css"></noscript></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-4cu2slyicb","here":"/folio-assistant-sci/","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#what-this-layer-holds","label":"What this layer holds"},{"href":"#processes","label":"Processes"},{"href":"#guides","label":"Guides"},{"href":"#1-the-problem","label":"The problem","icon":"1"},{"href":"#2-the-architecture-in-one-picture","label":"The architecture in one picture","icon":"2"},{"href":"#3-starting-a-document-in-a-new-empty-repository","label":"Starting a document in a new, empty repository","icon":"3"},{"href":"#4-the-data-models","label":"The data models","icon":"4"},{"href":"#5-two-kinds-of-validation-mechanical-and-agentic","label":"Two kinds of validation: mechanical and agentic","icon":"5"},{"href":"#6-mathematical-results-as-a-triple","label":"Mathematical results as a triple","icon":"6"},{"href":"#7-the-library-open-access-sources-inside-the-knowledge-graph","label":"The library: open-access sources inside the knowledge graph","icon":"7"},{"href":"#8-witnesses-binding-computation-to-mathematics","label":"Witnesses: binding computation to mathematics","icon":"8"},{"href":"#9-keeping-mathematics-and-measurement-apart","label":"Keeping mathematics and measurement apart","icon":"9"},{"href":"#10-the-process-formalized-scientific-publication-authoring","label":"The process: Formalized Scientific Publication Authoring","icon":"10"},{"href":"#11-from-guideline-authoring-to-scientific-authoring","label":"From guideline authoring to scientific authoring","icon":"11"},{"href":"#12-worked-example-and-licence","label":"Worked example and licence","icon":"12"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:var(--fa-font-sans,system-ui,sans-serif)">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+var b=document.querySelector('[data-fa-staging-banner]'),d=document.querySelector('[data-fa-staging-detail]');
+if(b)document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');
+var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);
+if(!m){if(d)d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+var s=document.createElement('script');s.src=m[1]+'staging-banner.js';
+s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
+(document.head||document.documentElement).appendChild(s);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><h1 id="folio-assistant-sci"><a href="#folio-assistant-sci" class="anchor-heading" aria-labelledby="folio-assistant-sci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> folio-assistant-sci
+  
+  
+</h1><p>Scientific source material used by folios that formalise mathematics, and the
+methodologies for formalising it in Lean that this layer adopts from that
+material.</p><h2 id="what-this-layer-holds"><a href="#what-this-layer-holds" class="anchor-heading" aria-labelledby="what-this-layer-holds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this layer holds
+  
+  
+</h2><ul><li><strong>The paper content adapter</strong> (<code class="language-plaintext highlighter-rouge">content-adapters/</code>, <code class="language-plaintext highlighter-rouge">adapters/paper/</code>): how a
+paper folio’s blocks become LaTeX, PDF and HTML, and how the suggest editor
+checks paper math.</li><li><strong>Skills</strong> (<code class="language-plaintext highlighter-rouge">skills/</code>): authoring mathematics in Markdown and LaTeX, Lean
+formalisation and proof review, the proof, rendering and compute audits, and
+the integration watchers that run them on every change.</li><li><strong>Tools</strong> (<code class="language-plaintext highlighter-rouge">tools/</code>): one node per command a skill or process calls, such as
+<code class="language-plaintext highlighter-rouge">lean-build</code>, <code class="language-plaintext highlighter-rouge">lean-cache</code>, <code class="language-plaintext highlighter-rouge">latex-preflight</code>, <code class="language-plaintext highlighter-rouge">paper-latex-build</code> and
+<code class="language-plaintext highlighter-rouge">tex-snippet-validate</code>, each with its inputs and outputs.</li><li><strong>Library and methodologies</strong> (<code class="language-plaintext highlighter-rouge">library/</code>, <code class="language-plaintext highlighter-rouge">methodologies/</code>): the papers this
+layer reads, and the Lean formalisation methods adopted from three of them.</li></ul><h2 id="processes"><a href="#processes" class="anchor-heading" aria-labelledby="processes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes
+  
+  
+</h2><p>Four BPMN processes say who does what:</p><ul><li><strong>Authoring a paper.</strong> The author (a person) plans the paper. The authoring
+agent seeds the work plan, scaffolds the folio repository and authors blocks.
+The Lean toolchain role formalises claims in Lean, and the build pipeline
+validates the folio and renders the PDF and HTML.</li><li><strong>Publish a folio’s Lean render.</strong> The doc-gen4 HTML of a folio’s Lean
+package, staged under its site with the harness navbar and rail.</li><li><strong>Formalized Scientific Publication Authoring.</strong> One mathematical result as
+a triple (narrative statement, narrative proof, Lean), checked mechanically
+and then by blind two-way translation and a semantic-equivalence judge. See
+section 10 below.</li><li><strong>Atomic mass drift check.</strong> Whether <code class="language-plaintext highlighter-rouge">AtomicMass.lean</code> still matches its data
+table.</li></ul><p>Each process has a generated checklist beside it for an agent that walks the
+steps by hand.</p><h2 id="guides"><a href="#guides" class="anchor-heading" aria-labelledby="guides"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Guides
+  
+  
+</h2><p>The guide walks the authoring process end to end, from planning the paper to
+publishing it.</p><ul><li><a href="../folio-assistant-sci/guides/writing-a-paper.html">Writing a paper with folio-assistant</a></li></ul><hr /><h1 id="a-survey-agentic-authoring-of-formalized-publications"><a href="#a-survey-agentic-authoring-of-formalized-publications" class="anchor-heading" aria-labelledby="a-survey-agentic-authoring-of-formalized-publications"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A survey: agentic authoring of formalized publications
+  
+  
+</h1><p><em>For newcomers: what folio-assistant does, how a document is started, which
+checks run, which data models it uses, and how this layer extends it to
+machine-checked mathematics.</em></p><h2 id="1-the-problem"><a href="#1-the-problem" class="anchor-heading" aria-labelledby="1-the-problem"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The problem
+  
+  
+</h2><p>A large language model can draft text quickly. It can also state a false result
+fluently, cite a paper that says something else, or let two chapters drift
+apart. For policy guidance this is a quality problem. For mathematics it is
+fatal, because a published proof is a claim that anyone may check.</p><p>folio-assistant treats a publication as a <strong>knowledge graph</strong> of small, typed
+units rather than as one long file. Every unit has a declared kind, declared
+dependencies and a set of checks. Some checks are programs. Others are agents
+that read the unit without seeing who wrote it. The author, human or agent,
+works inside that graph, and the graph refuses changes that break it.</p><h2 id="2-the-architecture-in-one-picture"><a href="#2-the-architecture-in-one-picture" class="anchor-heading" aria-labelledby="2-the-architecture-in-one-picture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The architecture in one picture
+  
+  
+</h2><p>The system is a stack of layers. Each may import from the layers below it and
+never from the layers above. The direction is checked
+(<code class="language-plaintext highlighter-rouge">bun run cat check:partition:edges</code>).</p><div class="table-wrapper"><table><thead><tr><th>layer</th><th>repository</th><th>what it owns</th></tr></thead><tbody><tr><td>bootstrap</td><td><a href="https://github.com/litlfred/bootstrap">litlfred/bootstrap</a></td><td>what an agent reads before anything is installed</td></tr><tr><td>harness</td><td><a href="https://github.com/litlfred/cat-harness">litlfred/cat-harness</a>, <a href="https://github.com/litlfred/cat-harness-tools">cat-harness-tools</a></td><td>skills, BPMN processes, the work plan (beans), the MCP server, QA sidecars</td></tr><tr><td>core</td><td><a href="https://github.com/litlfred/folio-assistant-core">litlfred/folio-assistant-core</a></td><td>the content-object model, block kinds, the <code class="language-plaintext highlighter-rouge">document</code> adapter, the library and its catalogue</td></tr><tr><td><strong>science (this layer)</strong></td><td><a href="https://github.com/litlfred/folio-assistant-sci">litlfred/folio-assistant-sci</a></td><td>the <code class="language-plaintext highlighter-rouge">paper</code> adapter: Lean-bearing block kinds, LaTeX rendering, witnesses</td></tr><tr><td>domain</td><td><a href="https://github.com/litlfred/smart-base">smart-base</a>, <a href="https://github.com/litlfred/fhir-harness">fhir-harness</a>, …</td><td>WHO SMART Guidelines, FHIR Implementation Guides</td></tr></tbody></table></div><p>The index repository <a href="https://github.com/litlfred/folio-assistant">litlfred/folio-assistant</a>
+pins one commit of each layer, so a folio always validates against a known
+platform.</p><p>Three ideas run through every layer.</p><ul><li><strong>Processes are executable, not illustrations.</strong> Each workflow is a BPMN 2.0
+diagram under <code class="language-plaintext highlighter-rouge">processes/</code>, and each task in it names the skill an agent
+follows to perform it.</li><li><strong>Skills are the instructions.</strong> A skill is a Markdown file with front matter.
+An agent asks the graph for the skill list (<code class="language-plaintext highlighter-rouge">skill_list</code>, <code class="language-plaintext highlighter-rouge">skill_fetch</code>)
+rather than reading a hard-coded list.</li><li><strong>Work is recorded.</strong> An active folio keeps its work plan as beans, so a
+later agent can pick up what an earlier one left.</li></ul><h2 id="3-starting-a-document-in-a-new-empty-repository"><a href="#3-starting-a-document-in-a-new-empty-repository" class="anchor-heading" aria-labelledby="3-starting-a-document-in-a-new-empty-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Starting a document in a new, empty repository
+  
+  
+</h2><p>The full guide is <a href="https://litlfred.github.io/folio-assistant/folio-assistant-core/guides/writing-a-document.html">Writing a document</a>. In
+short:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+git submodule add https://github.com/litlfred/folio-assistant.git folio-assistant
+<span class="o">(</span><span class="nb">cd </span>folio-assistant <span class="o">&amp;&amp;</span> bun <span class="nb">install</span><span class="o">)</span>
+
+bun run folio-assistant/scripts/init-folio.ts <span class="se">\</span>
+    <span class="nt">--type</span> document <span class="se">\</span>
+    <span class="nt">--title</span> <span class="s2">"My Document"</span> <span class="se">\</span>
+    <span class="nt">--author</span> <span class="s2">"A. Author"</span>
+</code></pre></div></div><p>Use <code class="language-plaintext highlighter-rouge">--type paper</code> for a mathematics paper (this needs the science layer). If
+your agent already has a folio-assistant MCP server connected, you can instead
+ask it in plain words to initialise a document folio in the repository.</p><p>After scaffolding, the usual loop is:</p><ol><li><strong>Plan.</strong> Ask the agent for the chapter and section skeleton
+(skill <code class="language-plaintext highlighter-rouge">document-structure</code>). It writes the chapter manifests.</li><li><strong>Ingest sources.</strong> Drop PDFs into <code class="language-plaintext highlighter-rouge">uploads/</code>. The agent turns each into a
+library entry (section 7).</li><li><strong>Author.</strong> The agent writes blocks one at a time: a manifest, a narrative
+file and, for formal kinds, a Lean file.</li><li><strong>Validate.</strong> Mechanical checks run on every change; agentic checks run on
+the changed blocks and their dependents (section 5).</li><li><strong>Review and publish.</strong> Each change set becomes one pull request with a
+staging preview. A person merges.</li></ol><h2 id="4-the-data-models"><a href="#4-the-data-models" class="anchor-heading" aria-labelledby="4-the-data-models"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. The data models
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>model</th><th>what it describes</th><th>where</th></tr></thead><tbody><tr><td><strong>block</strong></td><td>one atomic unit: a definition, a theorem, a recommendation, a figure, a paragraph of prose</td><td><code class="language-plaintext highlighter-rouge">block-kinds/*.json</code> in core, plus the formal kinds (definition, theorem, lemma, …) in this layer</td></tr><tr><td><strong>chapter / paper manifest</strong></td><td>the ordered tree of sections over block references</td><td><code class="language-plaintext highlighter-rouge">&lt;chapter&gt;/&lt;chapter&gt;.ts</code> in each folio</td></tr><tr><td><strong><code class="language-plaintext highlighter-rouge">uses[]</code> graph</strong></td><td>each block’s immediate dependencies; the transitive graph is walked, never written</td><td>the block manifest</td></tr><tr><td><strong>QA sidecar</strong></td><td>per-block verdicts of every check, keyed to hashes of the files they read, so a stale verdict is detectable</td><td><code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> (schema <code class="language-plaintext highlighter-rouge">block-qa/v1</code>)</td></tr><tr><td><strong>library entry</strong></td><td>an ingested source: PDF, structure, section text, extracted claims</td><td><code class="language-plaintext highlighter-rouge">library/&lt;doc-id&gt;/</code></td></tr><tr><td><strong>Dublin Core record, catalogue, materialization</strong></td><td>what the source says about itself, which collection it is in, and whether the bytes are held here</td><td><a href="https://github.com/litlfred/folio-assistant-core/blob/main/schemas/dublin-core.ts"><code class="language-plaintext highlighter-rouge">schemas/dublin-core.ts</code></a>, <a href="https://github.com/litlfred/folio-assistant-core/blob/main/schemas/catalogue.ts"><code class="language-plaintext highlighter-rouge">catalogue.ts</code></a>, <a href="https://github.com/litlfred/folio-assistant-core/blob/main/schemas/materialization.ts"><code class="language-plaintext highlighter-rouge">materialization.ts</code></a></td></tr><tr><td><strong>change set</strong></td><td>what changed between two refs, block by block</td><td><a href="https://github.com/litlfred/folio-assistant-core/blob/main/schemas/changeset.ts"><code class="language-plaintext highlighter-rouge">schemas/changeset.ts</code></a></td></tr><tr><td><strong>review comment</strong></td><td>a reviewer’s comment on one block, as a todo with a closed lifecycle</td><td><a href="https://github.com/litlfred/folio-assistant-core/blob/main/schemas/review-comment.ts"><code class="language-plaintext highlighter-rouge">schemas/review-comment.ts</code></a></td></tr><tr><td><strong>witness</strong></td><td>the recorded output of a computation, with the hash of the script that produced it</td><td><code class="language-plaintext highlighter-rouge">*.witness.json</code> (section 8)</td></tr><tr><td><strong>bibliography</strong></td><td>one CSL-JSON file per reference; BibTeX is generated from it</td><td><code class="language-plaintext highlighter-rouge">references/&lt;id&gt;.json</code> in each folio</td></tr></tbody></table></div><p>A block’s file triple shares one root name:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>definition-of-x.ts     typed manifest: kind, label, uses[], lean reference
+definition-of-x.md     narrative statement and proof, in Markdown with TeX
+definition-of-x.lean   formal statement and proof (formal kinds only)
+</code></pre></div></div><h2 id="5-two-kinds-of-validation-mechanical-and-agentic"><a href="#5-two-kinds-of-validation-mechanical-and-agentic" class="anchor-heading" aria-labelledby="5-two-kinds-of-validation-mechanical-and-agentic"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Two kinds of validation: mechanical and agentic
+  
+  
+</h2><p><strong>Mechanical checks</strong> are programs. They are cheap, deterministic and run on
+every change. Examples:</p><ul><li>schema validation of every manifest (Zod);</li><li>every <code class="language-plaintext highlighter-rouge">uses[]</code> reference and cross-reference resolves;</li><li>every defined term is declared once and marked at every use;</li><li>the rendered LaTeX parses, and the math in Markdown renders;</li><li>Lean compiles, and no <code class="language-plaintext highlighter-rouge">sorry</code> lacks a bibliographic citation;</li><li>a vacuity audit flags theorems that conclude <code class="language-plaintext highlighter-rouge">True</code>, empty conjecture
+classes and similar ways of passing a check without asserting anything;</li><li>every citation key exists and every DOI resolves;</li><li>witness staleness: a recorded number is flagged when the script that
+produced it changes.</li></ul><p><strong>Agentic checks</strong> are performed by agents following a skill, because the
+question needs judgement. Examples:</p><ul><li>semantic equivalence between a Lean statement and its narrative statement
+(section 6);</li><li>a devil’s-advocate review that builds the strongest case that a block is
+wrong;</li><li>scholarly voice, definition clarity and expository order;</li><li>whether a cited source actually supports the sentence citing it.</li></ul><p>The two kinds meet in the same QA sidecar. An agentic verdict is recorded with
+the hashes of the files it read, so it goes stale the moment one of them
+changes, exactly like a mechanical verdict. An agent cannot clear its own
+finding: findings are cleared by a fresh verdict, by a different reviewer, or
+by a person.</p><h2 id="6-mathematical-results-as-a-triple"><a href="#6-mathematical-results-as-a-triple" class="anchor-heading" aria-labelledby="6-mathematical-results-as-a-triple"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Mathematical results as a triple
+  
+  
+</h2><p>In this layer, a mathematical result is not one object but three:</p><div class="table-wrapper"><table><thead><tr><th>part</th><th>file</th><th>checked by</th></tr></thead><tbody><tr><td><strong>narrative statement</strong></td><td>the statement paragraph of <code class="language-plaintext highlighter-rouge">&lt;block&gt;.md</code></td><td>agent reading, render check</td></tr><tr><td><strong>narrative proof</strong></td><td>the proof section of <code class="language-plaintext highlighter-rouge">&lt;block&gt;.md</code></td><td>agent reading, proof-gap audit</td></tr><tr><td><strong>formal statement and proof</strong></td><td><code class="language-plaintext highlighter-rouge">&lt;block&gt;.lean</code></td><td>the Lean kernel</td></tr></tbody></table></div><p>The Lean kernel guarantees only that the formal proof proves the formal
+statement. It says nothing about whether that formal statement is the theorem
+the narrative claims. A formal statement can be weaker, can quietly assume its
+conclusion, or can be about a different object with the same name.</p><p>The triple is therefore validated by <strong>blind, two-way agentic translation</strong>:</p><ol><li>One agent reads only the Lean statement and writes what it says in
+mathematical prose, without seeing the narrative.</li><li>A second agent reads only the narrative statement and writes what a formal
+statement of it must assert, without seeing the Lean.</li><li>A third agent judges <strong>semantic equivalence</strong> of each translation against
+the other side’s original: same hypotheses, same quantifier order, same
+conclusion, same objects.</li></ol><p>Disagreement in either direction is a finding. The narrative proof is checked
+against the Lean proof in the same blind way for its logical skeleton, so that
+the human-readable argument and the formal one are the same argument, not
+merely two routes to the same label.</p><p>Three further rules keep the triple honest:</p><ul><li>an unproved step is stated with <code class="language-plaintext highlighter-rouge">sorry</code> and a citation, never hidden;</li><li>a result that depends on a conjecture either becomes a conjecture or takes
+the conjecture as an explicit hypothesis, visible in the Lean signature;</li><li>a sorry-free proof is not evidence that the statement is the right one, so
+equivalence is checked even when Lean is green.</li></ul><p>When a paper is published, every formal block links to its declaration in the
+<strong>rendered Lean library</strong> (the doc-gen4 HTML that the skill <code class="language-plaintext highlighter-rouge">lean-html-docs</code>
+builds and stages beside the paper’s own site), so a reader can move from the
+sentence to the checked code in one click.</p><h2 id="7-the-library-open-access-sources-inside-the-knowledge-graph"><a href="#7-the-library-open-access-sources-inside-the-knowledge-graph" class="anchor-heading" aria-labelledby="7-the-library-open-access-sources-inside-the-knowledge-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. The library: open-access sources inside the knowledge graph
+  
+  
+</h2><p>Sources are not a bibliography at the end. They are nodes of the graph.</p><p>An open-access paper, book or guideline dropped into <code class="language-plaintext highlighter-rouge">uploads/</code> is ingested
+(processes under <a href="https://github.com/litlfred/folio-assistant-core/tree/main/processes/library"><code class="language-plaintext highlighter-rouge">processes/library/</code></a>) into
+<code class="language-plaintext highlighter-rouge">library/&lt;doc-id&gt;/</code>:</p><div class="table-wrapper"><table><thead><tr><th>file</th><th>holds</th></tr></thead><tbody><tr><td>the PDF</td><td>the bytes, with their checksum</td></tr><tr><td><code class="language-plaintext highlighter-rouge">structure.json</code></td><td>metadata, table of contents, section index</td></tr><tr><td><code class="language-plaintext highlighter-rouge">sections/*.md</code></td><td>the text of each section, searchable by grep</td></tr><tr><td><code class="language-plaintext highlighter-rouge">candidates.json</code></td><td>extracted definitions, theorems and claims, as proposals only</td></tr><tr><td>a Dublin Core record</td><td>what the source says about itself</td></tr></tbody></table></div><p>The library serves three purposes.</p><ol><li><strong>Reference validation.</strong> A citation is checked against the held text, not
+only against its metadata. An agent can confirm that the cited section says
+what the citing sentence claims.</li><li><strong>Prior-work search.</strong> Before an agent declares a question open, it searches
+the library as well as the folio. Many “open” results are already settled in
+a paper the project holds.</li><li><strong>Formalizing existing papers.</strong> Extracted statements from a held paper can
+be turned into Lean statements, with the paper’s narrative as the reference
+side of the triple in section 6. This lets a folio cross-reference results
+from the literature at the formal level, not only by citation.</li></ol><p>A source that cannot be held (licence, size) is recorded as <code class="language-plaintext highlighter-rouge">referenced</code>, with
+no bytes. Its state is declared, never assumed (see the three materialization
+states in <a href="https://github.com/litlfred/folio-assistant-core/blob/main/README.md"><code class="language-plaintext highlighter-rouge">README.md</code></a>).</p><h2 id="8-witnesses-binding-computation-to-mathematics"><a href="#8-witnesses-binding-computation-to-mathematics" class="anchor-heading" aria-labelledby="8-witnesses-binding-computation-to-mathematics"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Witnesses: binding computation to mathematics
+  
+  
+</h2><p>Some results need computation: a numerical value, an enumeration, a
+counterexample search. A computation in a paper folio writes a <strong>witness</strong>
+file, which records:</p><ul><li>the values computed, serialized at a declared precision;</li><li>the hash of the producing script, so the witness goes stale when the script
+changes;</li><li>the environment and inputs it ran with.</li></ul><p>A block that quotes a number names its witness, and the number in the prose is
+read from it rather than typed by hand. This gives a chain from the narrative,
+through the witness, to the script that produced it, and where possible to a
+Lean statement that pins the same identity exactly. A computation suggests; a
+Lean proof establishes. A witness is never cited as the proof of a theorem.</p><h2 id="9-keeping-mathematics-and-measurement-apart"><a href="#9-keeping-mathematics-and-measurement-apart" class="anchor-heading" aria-labelledby="9-keeping-mathematics-and-measurement-apart"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Keeping mathematics and measurement apart
+  
+  
+</h2><p>A scientific paper often contains both theorems and comparisons with
+experiment. The two must not mix.</p><ul><li><strong>Formal blocks contain no empirical inputs.</strong> No measured constant may enter
+a Lean statement or a narrative proof as a hypothesis.</li><li><strong>Comparison is a separate place.</strong> The point where a model quantity is set
+against a measured one (for example a CODATA value) is a marked comparison
+block, and that is where the empirical claim lives.</li><li><strong>Fitting is visible.</strong> A quantity chosen to match data, including choosing
+one object from a list because it matches, is labelled as a fit and is never
+presented as a derivation.</li><li><strong>Approximate equalities say so.</strong> A computed value compared with
+measurement uses ≈, not =.</li></ul><h2 id="10-the-process-formalized-scientific-publication-authoring"><a href="#10-the-process-formalized-scientific-publication-authoring" class="anchor-heading" aria-labelledby="10-the-process-formalized-scientific-publication-authoring"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. The process: Formalized Scientific Publication Authoring
+  
+  
+</h2><p>The diagram <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/formalized-publication-authoring.bpmn"><code class="language-plaintext highlighter-rouge">processes/content/formalized-publication-authoring.bpmn</code></a>
+is this layer’s process for one mathematical result, in five lanes: the
+author, the authoring agent, the Lean toolchain, the build pipeline (mechanical
+checks) and the independent reviewers. Each task names the skill an agent
+follows to perform it.</p><ol><li>The author states the intended result and its sources.</li><li>The agent searches the folio and the library for prior work. A result
+already proved there is cited, and the process ends.</li><li>The agent drafts the triple: narrative statement, narrative proof, Lean.</li><li>The Lean toolchain compiles the block and reports sorry and axioms; the
+build pipeline runs the mechanical checks: schema, references, render,
+vacuity, witnesses.</li><li>In parallel, one independent agent translates the Lean to prose without
+the narrative, and another translates the narrative to a formal claim
+without the Lean. A judge compares both ways, and an adversarial reviewer
+makes the strongest case that the block is wrong.</li><li>Any finding returns the block to the agent. If the result cannot be
+closed, it is kept as a conjecture or as a stated, cited gap.</li><li>When every check is green, the change set goes to a pull request, and the
+author merges.</li></ol><p>It complements <strong>Authoring a paper</strong>, which covers the paper as a whole
+(planning, the work plan, scaffolding, rendering); this process is the loop
+each formal block goes through inside it.</p><h2 id="11-from-guideline-authoring-to-scientific-authoring"><a href="#11-from-guideline-authoring-to-scientific-authoring" class="anchor-heading" aria-labelledby="11-from-guideline-authoring-to-scientific-authoring"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 11. From guideline authoring to scientific authoring
+  
+  
+</h2><p>The same machinery was first built for WHO SMART Guidelines, where a
+recommendation in a health-policy document must trace to its evidence, and an
+implementation guide must stay consistent with the guideline it implements.
+The generalisation is direct:</p><div class="table-wrapper"><table><thead><tr><th>SMART Guidelines</th><th>scientific publication</th></tr></thead><tbody><tr><td>recommendation</td><td>theorem, proposition, definition</td></tr><tr><td>evidence profile</td><td>narrative proof and cited sources</td></tr><tr><td>computable artefact (FHIR, CQL, DMN)</td><td>Lean formalization</td></tr><tr><td>consistency of guideline and implementation</td><td>semantic equivalence of narrative and Lean</td></tr><tr><td>test data and conformance checks</td><td>witnesses and their producing scripts</td></tr><tr><td>public comment on a draft</td><td>contributor feedback and pull-request review</td></tr></tbody></table></div><p>In both cases the method is the same: break the publication into typed units,
+give each unit a machine form and a human form, check that the two say the same
+thing, and keep a record that shows which checks ran on which version.</p><h2 id="12-worked-example-and-licence"><a href="#12-worked-example-and-licence" class="anchor-heading" aria-labelledby="12-worked-example-and-licence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12. Worked example and licence
+  
+  
+</h2><p><strong>Worked example.</strong> <a href="https://github.com/litlfred/qou">litlfred/qou</a>, a
+mathematics paper, was written with folio-assistant-sci on top of this layer.
+It uses every mechanism above: block triples, a Lean library, witnesses, an
+ingested library of several hundred papers, and blind equivalence review.</p><p><strong>Licence.</strong> This layer’s source code is licensed under the Apache License 2.0
+(<a href="https://github.com/litlfred/folio-assistant-sci/blob/main/LICENSE"><code class="language-plaintext highlighter-rouge">LICENSE</code></a>) and its prose under Creative Commons Attribution 3.0
+(<a href="https://github.com/litlfred/folio-assistant-sci/blob/main/LICENSE-CONTENT.md"><code class="language-plaintext highlighter-rouge">LICENSE-CONTENT.md</code></a>).</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

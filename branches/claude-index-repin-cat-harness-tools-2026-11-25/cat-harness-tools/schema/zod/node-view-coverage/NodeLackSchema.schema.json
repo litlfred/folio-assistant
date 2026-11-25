@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/NodeLack",
+  "definitions": {
+    "NodeLack": {
+      "type": "string",
+      "enum": [
+        "iri",
+        "iri-extension",
+        "jsonld",
+        "json",
+        "page",
+        "canonical-page",
+        "listed"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-view-coverage/NodeLackSchema.schema.json",
+  "title": "NodeLackSchema",
+  "description": "Generated from `NodeLackSchema` in schemas/sdlc/node-view-coverage.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

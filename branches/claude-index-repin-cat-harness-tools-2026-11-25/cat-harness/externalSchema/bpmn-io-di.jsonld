@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/externalSchema/bpmn-io-di.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/externalSchema/bpmn-io-di",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "bpmn-io-di",
+      "title": "bpmn.io Diagram Interchange Extensions (bioc 1.0, biodi 2.0)",
+      "authority": "other",
+      "specVersion": "1.0 / 2.0",
+      "specUse": "reads",
+      "specUrl": "https://github.com/bpmn-io/bpmn-moddle",
+      "namespace": [
+        "http://bpmn.io/schema/bpmn/biocolor/1.0",
+        "http://bpmn.io/schema/dmn/biodi/2.0"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/bpmn-io-di"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/skill/translation-adjudication.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/skill/translation-adjudication",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "translation-adjudication",
+      "title": "Translation adjudication — the review loop",
+      "description": "A person's word on a translation, carried from the translation review page or a block's 🌐 pane to the record: anyone proposes text, which joins the ranked candidates; an owner, member or collaborator adjudicates, by accepting a catalogue or choosing one string's translation with a reason; it is filed as a `translation-adjudication/v1` issue; a workflow checks the author and the catalogue's hash, writes the records, re-runs the auto-pick and opens a PR; a maintainer merges it. Use for \"review the translations\", \"this string is mistranslated\", \"why was my review not recorded\", and when wiring a layer for review. Locale sign-off is a separate act, not this one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "library/skills/library-core/translation-adjudication.md",
+      "instructionLines": 201,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication"
+    }
+  ]
+}

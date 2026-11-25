@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/PredicateName",
+  "definitions": {
+    "PredicateName": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$",
+      "description": "A predicate name. Membership is checked at tier 2 against ontology/l1.json; this only rules out strings that could never be one. Deliberately not an enum: the predicate set belongs to the ontology and changes with it, so a list here would be a second copy that drifts."
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/graph/PredicateNameSchema.schema.json",
+  "title": "PredicateNameSchema",
+  "description": "Generated from `PredicateNameSchema` in L1/schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

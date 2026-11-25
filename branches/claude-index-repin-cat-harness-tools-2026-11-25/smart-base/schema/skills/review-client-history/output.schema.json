@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Review Client History Output",
+  "type": "object",
+  "required": [
+    "reliedOn"
+  ],
+  "properties": {
+    "reliedOn": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item",
+          "provenance"
+        ],
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "provenance": {
+            "enum": [
+              "verified",
+              "unverified",
+              "reported"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

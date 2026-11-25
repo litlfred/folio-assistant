@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/voice/secure-code-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/voice/secure-code-authoring",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Voice",
+      "title": "Secure code authoring: the voice for agents that write tools, workflows and pipeline code",
+      "description": "For writing and reviewing code that an agent pipeline runs: tools, MCP handlers, workflows, generators, installers. The premise is the owner's, 2026-10-07: 'ALL DATA IN PIPELINE MUST BE TREATED AS SUSPECT. ALL TOOLS ARE RESPONSIBLE TO GUARD AGAINST CODE INJECTION, PROMPT ENGINEERING, VARIABLE TAMPERING.' It is a HOUSE standard: the first three rules restate this layer's security sub-KG, the workflow rules are read from GitHub's Secure use reference (an ASSERTION source, a publisher describing its own product), and the handover and outbound-request rules come from the zero-trust-handover skill (this platform's application of the adopted zero-trust-architecture methodology, NIST SP 800-207), which cites the reference-only reporting on MCP protocol pivoting and BadHost. Rules are judged by an agent rather than pattern-matched, because security best practice drifts (owner, 2026-09-20).",
+      "sourceKind": "voices",
+      "sourcePath": "skills/voices/secure-code-authoring/voice.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/voice/secure-code-authoring"
+    }
+  ]
+}

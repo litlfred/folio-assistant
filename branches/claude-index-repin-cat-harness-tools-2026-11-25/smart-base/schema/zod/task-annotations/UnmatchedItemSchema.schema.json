@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/UnmatchedItem",
+  "definitions": {
+    "UnmatchedItem": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "item",
+        "name",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/task-annotations/UnmatchedItemSchema.schema.json",
+  "title": "UnmatchedItemSchema",
+  "description": "Generated from `UnmatchedItemSchema` in L2-bpmn/schemas/task-annotations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

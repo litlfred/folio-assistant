@@ -1,0 +1,335 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://smart.who.int/base/schema/smart-base.schema.json",
+  "title": "smart-base schemas",
+  "description": "The schemas instance `smart-base` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/cat-harness/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {
+    "skills/classify-and-code-content/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json"
+    },
+    "skills/classify-and-code-content/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json"
+    },
+    "skills/dak-l1-library/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/dak-l1-library/input.schema.json"
+    },
+    "skills/dak-l1-library/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/dak-l1-library/output.schema.json"
+    },
+    "skills/indicator-extraction/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/indicator-extraction/input.schema.json"
+    },
+    "skills/indicator-extraction/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json"
+    },
+    "skills/recommendation-candidates/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/recommendation-candidates/input.schema.json"
+    },
+    "skills/recommendation-candidates/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/recommendation-candidates/output.schema.json"
+    },
+    "skills/recommendation-extraction/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json"
+    },
+    "skills/recommendation-extraction/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json"
+    },
+    "skills/recommendation-scenarios/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/recommendation-scenarios/input.schema.json"
+    },
+    "skills/recommendation-scenarios/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json"
+    },
+    "skills/transcription-verbatim/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/transcription-verbatim/input.schema.json"
+    },
+    "skills/transcription-verbatim/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json"
+    },
+    "skills/l2-dak-authoring/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json"
+    },
+    "skills/l2-dak-authoring/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json"
+    },
+    "skills/l2-dependency-choice/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l2-dependency-choice/input.schema.json"
+    },
+    "skills/l2-dependency-choice/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l2-dependency-choice/output.schema.json"
+    },
+    "skills/l3-dependency-choice/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l3-dependency-choice/input.schema.json"
+    },
+    "skills/l3-dependency-choice/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l3-dependency-choice/output.schema.json"
+    },
+    "skills/l3-readiness/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l3-readiness/input.schema.json"
+    },
+    "skills/l3-readiness/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l3-readiness/output.schema.json"
+    },
+    "skills/activate-accepted-guidance/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/input.schema.json"
+    },
+    "skills/activate-accepted-guidance/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/output.schema.json"
+    },
+    "skills/apply-decision-support/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/apply-decision-support/input.schema.json"
+    },
+    "skills/apply-decision-support/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/apply-decision-support/output.schema.json"
+    },
+    "skills/complete-sdc-questionnaire/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/input.schema.json"
+    },
+    "skills/complete-sdc-questionnaire/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/output.schema.json"
+    },
+    "skills/extract-questionnaire-response/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/input.schema.json"
+    },
+    "skills/extract-questionnaire-response/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/output.schema.json"
+    },
+    "skills/inform-client/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/inform-client/input.schema.json"
+    },
+    "skills/inform-client/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/inform-client/output.schema.json"
+    },
+    "skills/l4-application-brief/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l4-application-brief/input.schema.json"
+    },
+    "skills/l4-application-brief/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l4-application-brief/output.schema.json"
+    },
+    "skills/l4-application-build/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l4-application-build/input.schema.json"
+    },
+    "skills/l4-application-build/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l4-application-build/output.schema.json"
+    },
+    "skills/record-decision-rationale/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/record-decision-rationale/input.schema.json"
+    },
+    "skills/record-decision-rationale/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json"
+    },
+    "skills/review-client-history/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-client-history/input.schema.json"
+    },
+    "skills/review-client-history/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json"
+    },
+    "skills/review-decision-support-guidance/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/input.schema.json"
+    },
+    "skills/review-decision-support-guidance/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json"
+    },
+    "skills/guideline-gap-report/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/guideline-gap-report/input.schema.json"
+    },
+    "skills/guideline-gap-report/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/guideline-gap-report/output.schema.json"
+    },
+    "skills/guideline-use-case/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json"
+    },
+    "skills/guideline-use-case/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/guideline-use-case/output.schema.json"
+    },
+    "skills/smart-guideline-end-to-end/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json"
+    },
+    "skills/smart-guideline-end-to-end/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/output.schema.json"
+    },
+    "zod/dak-annexes/DakAnnexSheetSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dak-annexes/DakAnnexSheetSchema.schema.json"
+    },
+    "zod/dak-annexes/DakDataDictionaryAnnexSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dak-annexes/DakDataDictionaryAnnexSchema.schema.json"
+    },
+    "zod/dak-annexes/DakSwimlaneMapSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dak-annexes/DakSwimlaneMapSchema.schema.json"
+    },
+    "zod/dak/DakComponentSourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dak/DakComponentSourceSchema.schema.json"
+    },
+    "zod/dak/DakDeclarationSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dak/DakDeclarationSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/BarrierSolutionEntrySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/BarrierSolutionEntrySchema.schema.json"
+    },
+    "zod/dth-planning-schemas/BarrierSolutionMapSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/BarrierSolutionMapSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/DthPlanningArtefactSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/DthPlanningArtefactSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/DthSourceRefSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/DthSourceRefSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/DthStructuredSourceRefSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/DthStructuredSourceRefSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/GovernanceRoleSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/GovernanceRoleSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/GovernanceRoleTypeSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/GovernanceRoleTypeSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RaciActivitySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciActivitySchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RaciCodeSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciCodeSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RaciMatrixSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciMatrixSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RaciRoleColumnSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciRoleColumnSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RaciRoleRefSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciRoleRefSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RiskEntrySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskEntrySchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RiskLevelSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskLevelSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RiskPrioritySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskPrioritySchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RiskRegisterSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskRegisterSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/RoleOrElementIriSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/RoleOrElementIriSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/StakeholderAnalysisSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/StakeholderAnalysisSchema.schema.json"
+    },
+    "zod/dth-planning-schemas/StakeholderEntrySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-planning-schemas/StakeholderEntrySchema.schema.json"
+    },
+    "zod/dth-step-table/DthDakOutputKindSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthDakOutputKindSchema.schema.json"
+    },
+    "zod/dth-step-table/DthRiskMitigationRowSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthRiskMitigationRowSchema.schema.json"
+    },
+    "zod/dth-step-table/DthRoleIdSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthRoleIdSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepEntrySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepEntrySchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepGroupSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepGroupSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepInputSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepInputSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepOutputSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepOutputSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepResourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepResourceSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepTableSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepTableSourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSourceSchema.schema.json"
+    },
+    "zod/guideline-portfolio/GuidelinePortfolioSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/guideline-portfolio/GuidelinePortfolioSchema.schema.json"
+    },
+    "zod/graph/ClassIdSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/ClassIdSchema.schema.json"
+    },
+    "zod/graph/DerivationSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/DerivationSchema.schema.json"
+    },
+    "zod/graph/EdgeSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/EdgeSchema.schema.json"
+    },
+    "zod/graph/EvidenceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/EvidenceSchema.schema.json"
+    },
+    "zod/graph/GraphDocumentSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/GraphDocumentSchema.schema.json"
+    },
+    "zod/graph/NodePropertiesSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/NodePropertiesSchema.schema.json"
+    },
+    "zod/graph/NodeSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/NodeSchema.schema.json"
+    },
+    "zod/graph/PredicateNameSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/PredicateNameSchema.schema.json"
+    },
+    "zod/graph/ProvenanceSourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/graph/ProvenanceSourceSchema.schema.json"
+    },
+    "zod/ontology/BindingSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/BindingSchema.schema.json"
+    },
+    "zod/ontology/ClassKindSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/ClassKindSchema.schema.json"
+    },
+    "zod/ontology/EdgeRuleSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/EdgeRuleSchema.schema.json"
+    },
+    "zod/ontology/GroundingSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/GroundingSchema.schema.json"
+    },
+    "zod/ontology/OmissionSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/OmissionSchema.schema.json"
+    },
+    "zod/ontology/OntologyClassSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/OntologyClassSchema.schema.json"
+    },
+    "zod/ontology/OntologyLayerSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/OntologyLayerSchema.schema.json"
+    },
+    "zod/ontology/PredicateSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/PredicateSchema.schema.json"
+    },
+    "zod/ontology/ValueSetSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/ontology/ValueSetSchema.schema.json"
+    },
+    "zod/task-annotations/AnnotationSourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/AnnotationSourceSchema.schema.json"
+    },
+    "zod/task-annotations/DakTaskAnnotationsSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/DakTaskAnnotationsSchema.schema.json"
+    },
+    "zod/task-annotations/TaskAnnotationSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/TaskAnnotationSchema.schema.json"
+    },
+    "zod/task-annotations/UnmatchedItemSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/task-annotations/UnmatchedItemSchema.schema.json"
+    }
+  },
+  "$comment": "Instance graph: http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  }
+}

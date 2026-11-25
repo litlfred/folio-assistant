@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/glossary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/index-repin-cat-harness-tools-2026-11-25",
+    "sha": "873682a93ce1c5486ed65ef82ec420fe4dafa91d",
+    "pr": "3199/merge",
+    "run": "45592723217"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/glossary",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "glossary",
+      "title": "glossary",
+      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph typology",
+      "module": "schemas/glossary.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/glossary",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/ArchimateFocusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/ArchimateRelationshipSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/FocusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/GlossarySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/LangTextSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/OrgFocusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/SubjectSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/TermSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-index-repin-cat-harness-tools-2026-11-25/folio-assistant-core/schema/zod/glossary/TranslationSourceSchema.schema.json"
+      ]
+    }
+  ]
+}
