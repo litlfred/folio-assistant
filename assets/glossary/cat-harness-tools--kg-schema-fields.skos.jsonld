@@ -5016,6 +5016,27 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.libraryorigin",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.libraryOrigin",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a LIBRARY block of this kind came to be: `extracted` when its text is the source document's own, lifted verbatim (an ingested paper's theorem, lemma or remark), `authored` when it is somebody's account of the source and must name who wrote it. Read by `check:l1-complete`'s `narrative-provenance` requirement for a kind the platform's own `LIBRARY_BLOCK_ORIGIN` table does not classify, so the layer that OWNS a kind classifies it, and this layer never names a higher layer's kind. Absent: the kind is unclassified, and a library block carrying it is reported as such.",
+          "@language": "en"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/block-kind-node.ts#BlockKindNodeSchema.libraryOrigin",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.prefixenforced",
       "@type": "skos:Concept",
       "skos:inScheme": {

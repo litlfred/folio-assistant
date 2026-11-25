@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-wireframes.ts",
-    "script_hash": "8c12bfa0ce5b"
+    "script_hash": "4ecb7a44e9bd"
   },
   "subject": {
     "kind": "corpus",
@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 52,
+      "count": 53,
       "entries": [
         {
           "ref": "cat-harness/apps",
@@ -138,6 +138,10 @@
           "wireframe": "skills-hub"
         },
         {
+          "ref": "cat-harness/software-libraries",
+          "wireframe": "state-registry"
+        },
+        {
           "ref": "cat-harness/substrate-snapshots",
           "wireframe": "state-registry"
         },
@@ -239,7 +243,7 @@
       "entries": []
     },
     "uncovered": {
-      "summary": "A declared visualiser that no wireframe covers.",
+      "summary": "ADVISORY, not a gap: a declared visualiser that no wireframe covers. Not every visualiser needs a wireframe (owner, 2026-11-24).",
       "count": 0,
       "entries": []
     },
@@ -249,5 +253,5 @@
       "entries": []
     }
   },
-  "total": 52
+  "total": 53
 }

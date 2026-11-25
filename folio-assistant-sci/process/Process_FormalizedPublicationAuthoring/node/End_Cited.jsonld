@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/End_Cited.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/End_Cited",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Cited, not re-derived",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_4"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    }
+  ]
+}

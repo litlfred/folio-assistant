@@ -40,6 +40,248 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_adversarial",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Challenge the block",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An independent adversarial reviewer builds the strongest mathematical and formal case that the statement, proof or model framing is false, vacuous, over-claimed or missing a hypothesis.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_Adversarial",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_Adversarial",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_blindleantoprose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translate Lean to prose blind",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An independent reviewer reads only the `.lean` declaration and proof and states in mathematical prose what hypotheses, quantifiers, objects and conclusion it proves, without seeing the block's `.md` narrative.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_BlindLeanToProse",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_BlindLeanToProse",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_blindprosetolean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translate prose to claim blind",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A second independent reviewer reads only the `.md` narrative statement and proof and writes the formal hypotheses, quantifiers, objects and conclusion it claims, without seeing the `.lean` file.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_BlindProseToLean",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_BlindProseToLean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_drafttriple",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Draft triple: prose and Lean",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the narrative statement and narrative proof in the block's `.md` and the formal statement and proof in its `.lean`. Write the Lean statement first and ask whether it could be false. An unproved step is `sorry` with a citation; a dependence on a conjecture is an explicit class hypothesis. A number in prose is read from its witness.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_DraftTriple",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_DraftTriple",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_judgeequivalence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Judge two-way equivalence",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Same hypotheses, same quantifier order, same conclusion, same objects, in both directions. The narrative proof's logical skeleton is compared with the Lean proof's in the same way. A difference either way is a finding.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_JudgeEquivalence",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_JudgeEquivalence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_leancheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Compile Lean; report axioms",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compile against the real import cone; record `#print axioms` and `sorry` status for the new declarations.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_LeanCheck",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_LeanCheck",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_mechanical",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run mechanical checks",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Schema validation, reference and citation resolution, math render, vacuity audit (no `True` conclusions, no empty conjecture classes, no uncited `sorry`), and witness staleness for every quoted number.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_Mechanical",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_Mechanical",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge PR",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The author inspects the block triple, its mechanical verdicts and the independent equivalence and adversarial review records on the pull request, and merges the change set.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_Merge",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_priorwork",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Search folio and library",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Search the folio's blocks, its compute and its ingested library (section text and extracted candidates of every held source) before drafting. A result settled in a held paper is cited, not re-derived.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_PriorWork",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_PriorWork",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_recordgap",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record gap or conjecture",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Demote the block to a conjecture, or state the open step with `sorry` and a citation, and record the gap in the work plan. Never weaken the statement until it passes.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_RecordGap",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_RecordGap",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_formalizedpublicationauthoring.task_stateintent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Set claim",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The author names the claim, the objects it is about, and the sources it rests on, before any text is drafted.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_StateIntent",
+      "dcterms:source": "folio-assistant-sci/processes/content/formalized-publication-authoring.bpmn#Task_StateIntent",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_leandocspublish.task_build",
       "@type": "skos:Concept",
       "skos:inScheme": {

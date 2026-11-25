@@ -17795,6 +17795,21 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/content/attribution.ts#DeclaredLibraryOrigin",
+      "name": "DeclaredLibraryOrigin",
+      "module": "cat-harness-tools/schemas/content/attribution.ts",
+      "kind": "type-alias",
+      "doc": "What a layer's block-kind node says about the kind's library origin, if anything.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "source": "typescript",
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/content/attribution.ts#Provenance",
       "name": "Provenance",
       "module": "cat-harness-tools/schemas/content/attribution.ts",
@@ -33503,6 +33518,18 @@
             "number": "https://zod.dev/api#numbers"
           },
           "doc": "Where the definition index lists this kind's section, lowest first;"
+        },
+        {
+          "name": "libraryOrigin",
+          "type": "z.enum([\"extracted\", \"authored\"]).optional()",
+          "optional": true,
+          "array": false,
+          "card": "0..1",
+          "utype": "enum",
+          "links": {
+            "enum": "https://zod.dev/api#enums"
+          },
+          "doc": "How a LIBRARY block of this kind came to be: `extracted` when its text"
         },
         {
           "name": "rationale",

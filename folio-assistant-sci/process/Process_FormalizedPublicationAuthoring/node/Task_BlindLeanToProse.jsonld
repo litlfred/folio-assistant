@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_BlindLeanToProse.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_BlindLeanToProse",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Translate Lean to prose blind",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/lane/Lane_Reviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-narrative-lean-equivalence"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    }
+  ]
+}
