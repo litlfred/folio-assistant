@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2601.04544v1/blocks/figure-vfig-p008",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p008.png",
+  "pageStart": 8,
+  "pageEnd": 8,
+  "narrative": [
+    {
+      "text": "Figure 3: Horizontal bar chart showing Refining Agent human preference win rate in candidate agent conflict scenarios: 27.0% for consultation queries and 63.0% for troubleshooting queries, demonstrating superior multi-agent aggregation for complex troubleshooting tasks.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2601.04544v1/sections/sec-010",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2601.04544v1",
+  "provenance": "ingested"
+}

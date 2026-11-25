@@ -1,0 +1,5632 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "w3c-2013-prov-o",
+  "pages": [
+    {
+      "page": 4,
+      "rotation": 0,
+      "drawings": 68,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 1. The three Starting Point classes and the properties that relate them."
+      ],
+      "labels": [
+        {
+          "text": "Starting Point Terms",
+          "bbox": [
+            82.75,
+            27.51,
+            154.63,
+            36.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Expanded Terms",
+          "bbox": [
+            82.75,
+            36.51,
+            142.64,
+            45.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Qualified Terms",
+          "bbox": [
+            82.75,
+            45.51,
+            138.18,
+            54.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "3.1 Starting Point Terms",
+          "bbox": [
+            62.75,
+            62.56,
+            164.96,
+            73.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            9.6
+          ]
+        },
+        {
+          "text": "The Starting Point category is a small set of classes and properties that can be used to create simple, initial provenance descriptions. Three",
+          "bbox": [
+            62.75,
+            86.01,
+            575.75,
+            94.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "classes provide a basis for the rest of PROV-O:",
+          "bbox": [
+            62.75,
+            95.01,
+            230.38,
+            103.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "An prov:Entity is a physical, digital, conceptual, or other kind of thing with some fixed aspects; entities may be real or imaginary.",
+          "bbox": [
+            82.75,
+            112.01,
+            538.3,
+            120.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "An prov:Activity is something that occurs over a period of time and acts upon or with entities; it may include consuming, processing,",
+          "bbox": [
+            82.75,
+            121.01,
+            575.75,
+            129.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "transforming, modifying, relocating, using, or generating entities.",
+          "bbox": [
+            82.75,
+            130.01,
+            309.96,
+            138.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "An prov:Agent is something that bears some form of responsibility for an activity taking place, for the existence of an entity, or for another",
+          "bbox": [
+            82.75,
+            139.01,
+            575.75,
+            147.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "agent's activity.",
+          "bbox": [
+            82.75,
+            148.01,
+            136.6,
+            156.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The three primary classes relate to one another and to themselves using the properties shown in the following figure.",
+          "bbox": [
+            62.75,
+            165.01,
+            475.38,
+            173.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Activities start and end at particular points in time (described using properties prov:startedAtTime and prov:endedAtTime, respectively) and",
+          "bbox": [
+            62.75,
+            182.01,
+            575.74,
+            190.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans",
+            "LiberationSans-Bold"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "during their lifespan can use and generate a variety of Entities (described with prov:used and prov:wasGeneratedBy, respectively). For example,",
+          "bbox": [
+            62.75,
+            191.01,
+            575.76,
+            199.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans",
+            "LiberationSans-Bold"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "a blog writing activity may use a particular dataset and generate a bar chart. By expressing usage and generation, one can construct provenance",
+          "bbox": [
+            62.75,
+            200.01,
+            575.74,
+            208.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "chains comprising both Activities and Entities.",
+          "bbox": [
+            62.75,
+            209.01,
+            224.16,
+            217.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "In addition, we can say that an Activity prov:wasInformedBy another Activity to provide some dependency information without explicitly providing",
+          "bbox": [
+            62.75,
+            226.01,
+            575.74,
+            234.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "the activities' start and end times. A prov:wasInformedBy relation between Activities suggests that the informed Activity used an Entity that was",
+          "bbox": [
+            62.75,
+            235.01,
+            575.74,
+            243.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "generated by the informing Activity, but the Entity itself is unknown or is not of interest. So, the prov:wasInformedBy property allows the",
+          "bbox": [
+            62.75,
+            244.01,
+            575.75,
+            252.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "construction of provenance chains comprising only Activities.",
+          "bbox": [
+            62.75,
+            253.01,
+            277.52,
+            261.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Provenance chains comprising only Entities can be formed using the prov:wasDerivedFrom property. A derivation is a transformation of one entity",
+          "bbox": [
+            62.75,
+            270.01,
+            575.75,
+            278.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "into another. For example, if the Activity that created the bar chart is not known or is not of interest, then we can say that the bar chart",
+          "bbox": [
+            62.75,
+            279.01,
+            575.74,
+            287.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "prov:wasDerivedFrom the dataset. Arbitrary RDF properties can be used to describe the fixed aspects of an Entity that are interesting within a",
+          "bbox": [
+            62.75,
+            288.01,
+            575.74,
+            296.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "particular application (for example, the file size and format of the dataset, or the aspect ratio of the bar chart).",
+          "bbox": [
+            62.75,
+            297.01,
+            447.82,
+            305.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "While the properties prov:used, prov:wasGeneratedBy, prov:wasInformedBy, and prov:wasDerivedFrom can be used to construct provenance",
+          "bbox": [
+            62.75,
+            314.01,
+            575.75,
+            322.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "chains among Activities and Entities, Agents may also be ascribed responsibility for any Activity or Entity within a provenance chain. An Agent's",
+          "bbox": [
+            62.75,
+            323.01,
+            575.74,
+            331.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "responsibility for an Activity or Entity is described using the properties prov:wasAssociatedWith and prov:wasAttributedTo, respectively. Agents",
+          "bbox": [
+            62.75,
+            332.01,
+            575.76,
+            340.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "can also be responsible for other Agents' actions. In this case of delegation, the influencing Agent prov:actedOnBehalfOf another Agent that also",
+          "bbox": [
+            62.75,
+            341.01,
+            575.75,
+            349.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "bears responsibility for the influenced Activity or Entity.",
+          "bbox": [
+            62.75,
+            350.01,
+            255.14,
+            358.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The properties rdf:type and rdfs:label are used to express prov:type and prov:label, respectively.",
+          "bbox": [
+            62.75,
+            367.01,
+            401.9,
+            375.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "wasDerivedFrom",
+          "bbox": [
+            335.53,
+            384.65,
+            394.91,
+            393.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            354.57,
+            427.66,
+            378.98,
+            436.32
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "wasAttributedTo",
+          "bbox": [
+            267.19,
+            436.76,
+            325.33,
+            445.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "wasGeneratedBy",
+          "bbox": [
+            385.66,
+            455.55,
+            443.69,
+            464.2
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "Agent",
+          "bbox": [
+            246.04,
+            469.63,
+            269.45,
+            478.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "used",
+          "bbox": [
+            331.14,
+            470.35,
+            347.3,
+            479.01
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "actedOnBehalfOf",
+          "bbox": [
+            167.97,
+            482.62,
+            227.41,
+            491.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "wasAssociatedWith",
+          "bbox": [
+            257.98,
+            491.2,
+            325.23,
+            499.86
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            351.45,
+            500.31,
+            382.12,
+            508.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "startedAtTime",
+          "bbox": [
+            281.79,
+            524.59,
+            331.75,
+            533.24
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "endedAtTime",
+          "bbox": [
+            404.39,
+            524.59,
+            451.31,
+            533.24
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "wasInformedBy",
+          "bbox": [
+            337.86,
+            541.41,
+            392.71,
+            550.07
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            269.4,
+            545.12,
+            316.39,
+            553.77
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            420.42,
+            545.12,
+            467.41,
+            553.77
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.82
+          ]
+        },
+        {
+          "text": "Figure 1. The three Starting Point classes and the properties that relate them.",
+          "bbox": [
+            182.35,
+            557.51,
+            456.12,
+            566.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The diagrams in this document depict Entities as yellow ovals,",
+          "bbox": [
+            209.41,
+            566.51,
+            429.05,
+            575.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Activities as blue rectangles, and Agents as orange pentagons.",
+          "bbox": [
+            207.84,
+            575.51,
+            430.64,
+            584.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The responsibility properties are shown in pink.",
+          "bbox": [
+            235.88,
+            584.51,
+            402.6,
+            593.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Example 1: The following PROV-O describes the resources involved when creating a chart about crime statistics. The example uses only",
+          "bbox": [
+            62.75,
+            601.51,
+            575.75,
+            610.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Starting Point terms and serves as a basis for elaboration that will be described in subsequent sections. In the example, Derek performs an",
+          "bbox": [
+            62.75,
+            610.51,
+            575.75,
+            619.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "aggregation of some government crime data, grouping by national regions that are described in a separate dataset by a civil action group.",
+          "bbox": [
+            62.75,
+            619.51,
+            549.21,
+            628.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Example",
+          "bbox": [
+            76.25,
+            636.12,
+            106.47,
+            644.98
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .",
+          "bbox": [
+            82.75,
+            653.22,
+            282.31,
+            660.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "@prefix foaf: <http://xmlns.com/foaf/0.1/> .",
+          "bbox": [
+            82.75,
+            660.72,
+            254.92,
+            668.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "@prefix prov: <http://www.w3.org/ns/prov#> .",
+          "bbox": [
+            82.75,
+            667.72,
+            254.92,
+            675.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "@prefix :     <http://example.org#> .",
+          "bbox": [
+            82.75,
+            674.72,
+            227.53,
+            682.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ":bar_chart",
+          "bbox": [
+            82.75,
+            689.22,
+            121.88,
+            696.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "a prov:Entity;",
+          "bbox": [
+            82.75,
+            696.22,
+            149.27,
+            703.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:wasGeneratedBy  :illustrationActivity;",
+          "bbox": [
+            82.75,
+            703.22,
+            262.75,
+            710.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:wasDerivedFrom  :aggregatedByRegions;",
+          "bbox": [
+            82.75,
+            710.72,
+            258.83,
+            718.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo :derek;",
+          "bbox": [
+            82.75,
+            717.72,
+            204.05,
+            725.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ".",
+          "bbox": [
+            82.75,
+            724.72,
+            86.66,
+            732.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ":derek",
+          "bbox": [
+            82.75,
+            739.22,
+            106.23,
+            746.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "a foaf:Person, prov:Agent;",
+          "bbox": [
+            82.75,
+            746.22,
+            196.23,
+            753.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "foaf:givenName       \"Derek\";",
+          "bbox": [
+            82.75,
+            753.72,
+            207.97,
+            761.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        }
+      ]
+    },
+    {
+      "page": 6,
+      "rotation": 0,
+      "drawings": 129,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 2. A graphical illustration of the PROV-O in Example 1, showing how the three Starting Point classes relate.",
+        "Figure 3. The expanded terms build upon those in the Starting Points section. The diagrams in this document depict Entities as yellow ovals, Activities as blue rectangles, and Agents as orange pentagons."
+      ],
+      "labels": [
+        {
+          "text": "type=foaf:Organization,",
+          "bbox": [
+            94.51,
+            36.67,
+            170.76,
+            44.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "type=foaf:Organization,",
+          "bbox": [
+            195.59,
+            36.67,
+            271.84,
+            44.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "type=foaf:Organization, prov:Agent",
+          "bbox": [
+            411.56,
+            39.28,
+            522.45,
+            47.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:Agent",
+          "bbox": [
+            114.32,
+            45.02,
+            148.96,
+            53.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:Agent",
+          "bbox": [
+            215.4,
+            45.02,
+            250.04,
+            53.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "foaf:name=\"National Newspaper Inc.\"",
+          "bbox": [
+            411.56,
+            55.99,
+            530.71,
+            63.98
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":national_",
+          "bbox": [
+            330.26,
+            79.87,
+            361.32,
+            87.86
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "newspaper_inc",
+          "bbox": [
+            330.26,
+            88.22,
+            380.43,
+            96.22
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":government",
+          "bbox": [
+            111.74,
+            91.83,
+            151.55,
+            99.82
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":civil_action_group",
+          "bbox": [
+            203.06,
+            91.83,
+            262.39,
+            99.82
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "type=foaf:Person, prov:Agent",
+          "bbox": [
+            411.56,
+            91.87,
+            504.53,
+            99.86
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "foaf:givenName=\"Derek\"",
+          "bbox": [
+            411.56,
+            108.58,
+            490.1,
+            116.57
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:actedOnBehalfOf",
+          "bbox": [
+            319.93,
+            116.62,
+            390.8,
+            124.61
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            199.28,
+            119.56,
+            266.16,
+            127.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            98.2,
+            120.16,
+            165.09,
+            128.16
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "foaf:mbox=<mailto:dererk@example.org>",
+          "bbox": [
+            411.56,
+            125.28,
+            543.64,
+            133.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":crimeData",
+          "bbox": [
+            114.33,
+            147.09,
+            148.96,
+            155.08
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":nationalRegionsList",
+          "bbox": [
+            200.46,
+            147.09,
+            264.97,
+            155.08
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":derek",
+          "bbox": [
+            345.41,
+            152.04,
+            365.32,
+            160.04
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:used",
+          "bbox": [
+            145.64,
+            180.11,
+            177.1,
+            188.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:used",
+          "bbox": [
+            192.63,
+            181.04,
+            224.09,
+            189.03
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasAssociatedWith",
+          "bbox": [
+            238.84,
+            184.99,
+            316.87,
+            192.98
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            432.65,
+            186.53,
+            499.53,
+            194.53
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            323.78,
+            189.13,
+            390.66,
+            197.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasAssociatedWith",
+          "bbox": [
+            371.93,
+            200.75,
+            449.96,
+            208.74
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":aggregatedBy",
+          "bbox": [
+            332.07,
+            220.31,
+            378.66,
+            228.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":aggregationActivity",
+          "bbox": [
+            156.62,
+            224.49,
+            219.13,
+            232.49
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasGeneratedBy",
+          "bbox": [
+            241.37,
+            224.49,
+            312.24,
+            232.49
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "Regions",
+          "bbox": [
+            342.23,
+            228.67,
+            368.51,
+            236.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasInformedBy",
+          "bbox": [
+            248.85,
+            267.37,
+            314.14,
+            275.37
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:used",
+          "bbox": [
+            340.7,
+            268.75,
+            372.16,
+            276.74
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasDerivedFrom",
+          "bbox": [
+            423.4,
+            277.9,
+            493.45,
+            285.89
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:endedAtTime",
+          "bbox": [
+            179.53,
+            280.99,
+            237.79,
+            288.99
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:startedAtTime",
+          "bbox": [
+            115.9,
+            281.51,
+            176.14,
+            289.51
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "\"2011-07-14T01:01:01Z\"",
+          "bbox": [
+            92.73,
+            305.71,
+            170.56,
+            313.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "2011-07-14T02:02:02Z\"",
+          "bbox": [
+            185.46,
+            305.71,
+            260.75,
+            313.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":illustrationActivity",
+          "bbox": [
+            326.9,
+            309.89,
+            383.82,
+            317.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "prov:wasGeneratedBy",
+          "bbox": [
+            410.14,
+            309.89,
+            481.01,
+            317.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": ":bar_chart",
+          "bbox": [
+            504.03,
+            309.89,
+            536.27,
+            317.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "^^xsd:dateTime",
+          "bbox": [
+            106.92,
+            314.06,
+            156.37,
+            322.06
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "^^xsd:dateTime",
+          "bbox": [
+            198.38,
+            314.06,
+            247.83,
+            322.06
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            7.16
+          ]
+        },
+        {
+          "text": "Figure 2. A graphical illustration of the PROV-O in Example 1, showing how the three Starting Point classes relate.",
+          "bbox": [
+            117.59,
+            330.01,
+            520.9,
+            338.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The diagrams in this document depict Entities as yellow ovals, Activities as blue rectangles,",
+          "bbox": [
+            158.05,
+            339.01,
+            480.42,
+            347.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "and Agents as orange pentagons. The responsibility properties are shown in pink.",
+          "bbox": [
+            175.01,
+            348.01,
+            463.47,
+            356.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "3.2 Expanded Terms",
+          "bbox": [
+            62.75,
+            358.56,
+            150.58,
+            369.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            9.6
+          ]
+        },
+        {
+          "text": "The terms introduced in this section provide additional ways to describe the provenance among Entities, Activities, and Agents. The additional",
+          "bbox": [
+            62.75,
+            382.01,
+            575.74,
+            390.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "terms are illustrated in the following figure and can be separated into five different categories.",
+          "bbox": [
+            62.75,
+            391.01,
+            392.12,
+            399.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "wasInfluencedBy /",
+          "bbox": [
+            320.47,
+            408.85,
+            381.39,
+            416.99
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            187.11,
+            416.86,
+            231.28,
+            425.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            412.33,
+            416.86,
+            456.51,
+            425.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "wasQuotedFrom /",
+          "bbox": [
+            321.24,
+            417.57,
+            380.62,
+            425.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "wasRevisionOf /",
+          "bbox": [
+            324.15,
+            426.29,
+            377.7,
+            434.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "hadPrimarySource",
+          "bbox": [
+            320.47,
+            435.01,
+            381.39,
+            443.15
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "generatedAtTime",
+          "bbox": [
+            182.17,
+            437.8,
+            238.62,
+            445.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "invalidatedAtTime",
+          "bbox": [
+            405.67,
+            437.8,
+            466.25,
+            445.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "value",
+          "bbox": [
+            296.68,
+            454.78,
+            313.92,
+            462.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Agent",
+          "bbox": [
+            188.52,
+            467.71,
+            210.54,
+            475.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            310.85,
+            469.35,
+            333.82,
+            477.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "alternateOf /",
+          "bbox": [
+            423.62,
+            472.6,
+            467.55,
+            480.73
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "specializationOf",
+          "bbox": [
+            418.58,
+            481.32,
+            470.81,
+            489.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Person",
+          "bbox": [
+            188.26,
+            487.59,
+            210.81,
+            495.72
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Collection",
+          "bbox": [
+            256.52,
+            490.17,
+            289.32,
+            498.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Bundle",
+          "bbox": [
+            310.14,
+            490.17,
+            333.41,
+            498.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Plan",
+          "bbox": [
+            363.31,
+            490.17,
+            377.96,
+            498.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Organization",
+          "bbox": [
+            178.32,
+            515.35,
+            220.74,
+            523.49
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "wasInvalidatedBy",
+          "bbox": [
+            349.38,
+            523.0,
+            407.2,
+            531.13
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "hadMember",
+          "bbox": [
+            246.93,
+            525.29,
+            286.68,
+            533.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "SoftwareAgent",
+          "bbox": [
+            175.61,
+            543.12,
+            223.44,
+            551.25
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "wasStartedBy /",
+          "bbox": [
+            250.82,
+            547.9,
+            300.48,
+            556.03
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Location",
+          "bbox": [
+            388.6,
+            555.82,
+            417.05,
+            563.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "wasEndedBy",
+          "bbox": [
+            250.82,
+            556.62,
+            292.71,
+            564.75
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "atLocation",
+          "bbox": [
+            420.41,
+            574.31,
+            455.11,
+            582.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            307.36,
+            575.67,
+            336.2,
+            583.8
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif-Bold"
+          ],
+          "sizes": [
+            7.35
+          ]
+        },
+        {
+          "text": "Figure 3. The expanded terms build upon those in the Starting Points section.",
+          "bbox": [
+            182.34,
+            593.01,
+            456.15,
+            601.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The diagrams in this document depict Entities as yellow ovals, Activities as blue rectangles, and Agents as orange pentagons.",
+          "bbox": [
+            97.12,
+            602.01,
+            541.36,
+            610.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The domain of prov:atLocation (prov:Activity or prov:Entity or prov:Agent or prov:InstantaneousEvent) is not illustrated.",
+          "bbox": [
+            102.54,
+            611.01,
+            535.95,
+            619.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "The first category extends the Starting Point terms with subclasses, subproperties, and a superproperty.",
+          "bbox": [
+            62.75,
+            628.01,
+            431.68,
+            636.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans",
+            "LiberationSans-Bold"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Three subclasses of Agent (prov:Person, prov:Organization, and prov:SoftwareAgent) and three subclasses of Entity are provided",
+          "bbox": [
+            62.75,
+            645.01,
+            575.75,
+            653.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "(prov:Collection, prov:Bundle, and prov:Plan).",
+          "bbox": [
+            62.75,
+            654.01,
+            231.74,
+            662.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "A prov:Collection is an Entity that provides a structure (e.g. set, list, etc.) to some constituents (which are themselves Entities). The",
+          "bbox": [
+            62.75,
+            671.01,
+            575.75,
+            679.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "prov:Collection class can be used to express the provenance of the collection itself: e.g. who maintained the collection, which members it",
+          "bbox": [
+            62.75,
+            680.01,
+            575.75,
+            688.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "contained as it evolved, and how it was assembled. The prov:hadMember property is used to assert membership in a collection.",
+          "bbox": [
+            62.75,
+            689.01,
+            508.69,
+            697.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "A prov:Bundle is a named set of provenance descriptions, which may itself have provenance. The named set of provenance descriptions may be",
+          "bbox": [
+            62.75,
+            706.01,
+            575.74,
+            714.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "expressed as PROV-O or any other form. The subclass of Bundle that names a set of PROV-O assertions is not provided by PROV-O, since it is",
+          "bbox": [
+            62.75,
+            715.01,
+            575.75,
+            723.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "more appropriate to do so using other recommendations, standards, or technologies. In any case, a Bundle of PROV-O assertions is an abstract",
+          "bbox": [
+            62.75,
+            724.01,
+            575.75,
+            732.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "set of RDF triples, and adding or removing a triple creates a new distinct Bundle of PROV-O assertions.",
+          "bbox": [
+            62.75,
+            733.01,
+            428.7,
+            741.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "A prov:Plan is an entity that represents a set of actions or steps intended by one or more agents to achieve some goals.",
+          "bbox": [
+            62.75,
+            750.01,
+            487.07,
+            758.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        }
+      ]
+    },
+    {
+      "page": 8,
+      "rotation": 0,
+      "drawings": 106,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 4. An illustration of the PROV-O assertions in Example 2, where Derek"
+      ],
+      "labels": [
+        {
+          "text": "prov:wasAssociatedWith :postEditor;",
+          "bbox": [
+            82.75,
+            27.22,
+            231.44,
+            34.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:generated         :post9821v1;",
+          "bbox": [
+            82.75,
+            34.22,
+            231.44,
+            41.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:endedAtTime       \"2011-07-16T01:52:02Z\"^^xsd:dateTime;",
+          "bbox": [
+            82.75,
+            41.72,
+            329.27,
+            49.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:wasEndedBy        :derek;",
+          "bbox": [
+            82.75,
+            48.72,
+            211.88,
+            56.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ".",
+          "bbox": [
+            82.75,
+            55.72,
+            86.66,
+            63.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ":aggregatedByRegions",
+          "bbox": [
+            82.75,
+            70.22,
+            161.01,
+            77.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "a prov:Entity;",
+          "bbox": [
+            82.75,
+            77.22,
+            149.27,
+            84.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:atLocation <file://Users/aggr.txt>;",
+          "bbox": [
+            82.75,
+            84.22,
+            251.01,
+            91.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ".",
+          "bbox": [
+            82.75,
+            91.72,
+            86.66,
+            99.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "<file://Users/aggr.txt> a prov:Location .",
+          "bbox": [
+            82.75,
+            98.72,
+            243.18,
+            106.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ":crimeData",
+          "bbox": [
+            82.75,
+            113.22,
+            121.88,
+            120.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "a prov:Entity;",
+          "bbox": [
+            82.75,
+            120.22,
+            149.27,
+            127.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo :government;",
+          "bbox": [
+            82.75,
+            127.22,
+            223.62,
+            134.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ".",
+          "bbox": [
+            82.75,
+            134.22,
+            86.66,
+            141.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ":government",
+          "bbox": [
+            82.75,
+            141.72,
+            129.71,
+            149.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "a prov:Organization, prov:Agent;",
+          "bbox": [
+            82.75,
+            148.72,
+            219.7,
+            156.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ".",
+          "bbox": [
+            82.75,
+            155.72,
+            86.66,
+            163.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "## Version 2 of the post",
+          "bbox": [
+            82.75,
+            170.22,
+            176.66,
+            177.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ":post9821v2",
+          "bbox": [
+            82.75,
+            184.72,
+            125.79,
+            192.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "a sioc:Post, prov:Entity;",
+          "bbox": [
+            82.75,
+            191.72,
+            192.31,
+            199.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:specializationOf :more-crime-happens-in-cities; ## PERMALINK to the latest revision.",
+          "bbox": [
+            82.75,
+            198.72,
+            442.75,
+            206.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:value            \"I was curious...\";            ## The text of this version (with fixed typo).",
+          "bbox": [
+            82.75,
+            205.72,
+            481.88,
+            213.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:generatedAtTime  \"2011-07-16T02:02:02Z\"^^xsd:dateTime;",
+          "bbox": [
+            82.75,
+            213.22,
+            325.36,
+            220.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:wasRevisionOf    :post9821v1;",
+          "bbox": [
+            82.75,
+            220.22,
+            227.53,
+            227.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "prov:alternateOf      :post9821v1;",
+          "bbox": [
+            82.75,
+            227.22,
+            227.53,
+            234.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": ".",
+          "bbox": [
+            82.75,
+            234.72,
+            86.66,
+            242.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono"
+          ],
+          "sizes": [
+            6.5
+          ]
+        },
+        {
+          "text": "Agent :derek, acting again on behalf of the :national_newspaper_inc organization, used the :postEditor tool to publish a post about his recent",
+          "bbox": [
+            62.75,
+            257.01,
+            575.74,
+            265.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "data analysis :aggregatedByRegions. The blog editing tool tracked Derek's actions as PROV-O assertions and published them as a Bundle (the",
+          "bbox": [
+            62.75,
+            266.01,
+            575.75,
+            274.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "current file <>). The tool recorded that :derek started and ended the publishing activity (:publicationActivity1123) that generated the post",
+          "bbox": [
+            62.75,
+            275.01,
+            575.75,
+            283.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": ":post9821v1. The post included a permanent link where the content of the latest version is available (:more-crime-happens-in-cities) in addition",
+          "bbox": [
+            62.75,
+            284.01,
+            575.74,
+            292.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "to a textual snapshot of the current version (using prov:value). Derek also included additional domain-specific descriptions of the post, such as its",
+          "bbox": [
+            62.75,
+            293.01,
+            575.75,
+            301.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "title.",
+          "bbox": [
+            62.75,
+            302.01,
+            77.42,
+            310.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Shortly after publishing the post, Derek noticed a typographical error in his narrative. Because the fix would be minimal, he did not record the",
+          "bbox": [
+            62.75,
+            319.01,
+            575.75,
+            327.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "activity that led to the new version. Instead, he related the new version (:post9821v2) as a revision of the previous (:post9821v1). Since both",
+          "bbox": [
+            62.75,
+            328.01,
+            575.75,
+            336.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "versions of the blog are forms of the long-standing blog permalink :more-crime-happens-in-cities, the revisions are alternates of one another",
+          "bbox": [
+            62.75,
+            337.01,
+            575.74,
+            345.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "and each is a prov:specializationOf of :more-crime-happens-in-cities.",
+          "bbox": [
+            62.75,
+            346.01,
+            321.58,
+            354.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSansMono",
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.5,
+            8.0
+          ]
+        },
+        {
+          "text": "<>",
+          "bbox": [
+            536.93,
+            369.53,
+            549.25,
+            381.14
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationMono"
+          ],
+          "sizes": [
+            10.26
+          ]
+        },
+        {
+          "text": "<file://Users/aggr.txt>",
+          "bbox": [
+            293.61,
+            376.06,
+            358.25,
+            383.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":government",
+          "bbox": [
+            380.29,
+            380.38,
+            418.31,
+            388.01
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=prov:Organization, prov:Agent",
+          "bbox": [
+            91.64,
+            381.76,
+            199.44,
+            389.4
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":national_",
+          "bbox": [
+            237.64,
+            384.57,
+            267.3,
+            392.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=prov:SoftwareAgent,",
+          "bbox": [
+            434.09,
+            385.29,
+            512.98,
+            392.93
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "newspaper_inc",
+          "bbox": [
+            229.46,
+            392.55,
+            275.48,
+            400.19
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:Agent",
+          "bbox": [
+            434.09,
+            393.27,
+            467.16,
+            400.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "foaf:name=\"National Newspaper, Inc.\"",
+          "bbox": [
+            91.64,
+            397.72,
+            206.96,
+            405.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            362.39,
+            404.31,
+            426.26,
+            411.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "foaf:name=\"Post Editor 3000\"",
+          "bbox": [
+            434.09,
+            409.22,
+            523.93,
+            416.86
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:atLocation",
+          "bbox": [
+            302.37,
+            412.95,
+            349.14,
+            420.59
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:actedOnBehalfOf",
+          "bbox": [
+            218.61,
+            418.92,
+            286.3,
+            426.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":crimeData",
+          "bbox": [
+            381.15,
+            425.56,
+            414.22,
+            433.2
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=prov:Person, prov:Agent",
+          "bbox": [
+            91.64,
+            432.41,
+            182.32,
+            440.05
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "foaf:givenName=\"Derek\"",
+          "bbox": [
+            91.64,
+            448.37,
+            166.65,
+            456.01
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":aggregatedByRegions",
+          "bbox": [
+            306.58,
+            451.2,
+            376.17,
+            458.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":derek",
+          "bbox": [
+            242.94,
+            453.63,
+            261.95,
+            461.27
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":postEditor",
+          "bbox": [
+            413.99,
+            456.31,
+            446.68,
+            463.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "<>",
+          "bbox": [
+            486.25,
+            459.44,
+            494.45,
+            467.19
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationMono"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "foaf:mbox=<mailto:derek@example.org>",
+          "bbox": [
+            91.64,
+            464.33,
+            215.51,
+            471.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            436.93,
+            483.25,
+            500.8,
+            490.89
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasEndedBy",
+          "bbox": [
+            265.48,
+            485.2,
+            320.61,
+            492.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasStartedBy",
+          "bbox": [
+            196.07,
+            485.31,
+            253.49,
+            492.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasAssociatedWith",
+          "bbox": [
+            398.85,
+            495.94,
+            473.36,
+            503.58
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:startedAtTime=\"2011-07-1",
+          "bbox": [
+            91.64,
+            508.04,
+            186.28,
+            515.68
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=prov:Bundle,",
+          "bbox": [
+            445.64,
+            509.81,
+            500.97,
+            517.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "6T01:01:01Z\"^^xsd:dateTime",
+          "bbox": [
+            91.64,
+            516.02,
+            180.08,
+            523.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:Entity",
+          "bbox": [
+            445.64,
+            517.79,
+            477.95,
+            525.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":publicationActivity1123",
+          "bbox": [
+            234.15,
+            517.84,
+            305.14,
+            525.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:endedAtTime=\"2011-07-16",
+          "bbox": [
+            91.64,
+            531.98,
+            188.19,
+            539.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:generatedAtTime",
+          "bbox": [
+            445.64,
+            533.74,
+            514.97,
+            541.38
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "T01:52:02Z\"^^xsd:dateTime",
+          "bbox": [
+            91.64,
+            539.95,
+            176.28,
+            547.59
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "\"2011-07-16T02:52:02Z\"^^xsd:",
+          "bbox": [
+            445.64,
+            541.72,
+            538.93,
+            549.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "dateTime;",
+          "bbox": [
+            445.64,
+            549.7,
+            475.8,
+            557.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:generated",
+          "bbox": [
+            274.26,
+            563.35,
+            320.28,
+            570.99
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:hadPrimarySource",
+          "bbox": [
+            356.92,
+            565.44,
+            422.97,
+            607.98
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasInfluencedBy",
+          "bbox": [
+            310.81,
+            569.51,
+            372.6,
+            609.58
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=sioc:Post, prov:Entity",
+          "bbox": [
+            445.64,
+            573.74,
+            526.43,
+            581.38
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":more-crime-happens-in-cities",
+          "bbox": [
+            425.47,
+            594.82,
+            515.95,
+            602.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasGeneratedBy",
+          "bbox": [
+            221.45,
+            606.83,
+            289.13,
+            614.47
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:specializationOf",
+          "bbox": [
+            476.56,
+            629.68,
+            540.05,
+            637.32
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:specializationOf",
+          "bbox": [
+            352.33,
+            630.65,
+            415.82,
+            638.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "sioc:latest_version",
+          "bbox": [
+            442.57,
+            641.72,
+            498.84,
+            649.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "sioc:previous_version",
+          "bbox": [
+            351.59,
+            643.48,
+            417.37,
+            651.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=sioc:Post",
+          "bbox": [
+            96.08,
+            645.06,
+            140.75,
+            652.69
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "sioc:title=\"More crime happens in cities\"",
+          "bbox": [
+            96.08,
+            661.01,
+            216.7,
+            668.65
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:wasRevisionOf",
+          "bbox": [
+            346.25,
+            670.94,
+            407.07,
+            678.58
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":post9821v1",
+          "bbox": [
+            263.12,
+            670.97,
+            300.4,
+            678.61
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": ":post9821v2",
+          "bbox": [
+            452.06,
+            670.97,
+            489.33,
+            678.61
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:generatedAtTime",
+          "bbox": [
+            96.08,
+            676.97,
+            165.4,
+            684.61
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:alternateOf",
+          "bbox": [
+            353.01,
+            683.46,
+            402.06,
+            691.1
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "\"2011-07-16T01:52:02Z\"^^xsd:dateTime",
+          "bbox": [
+            96.08,
+            684.95,
+            217.63,
+            692.59
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:value",
+          "bbox": [
+            265.98,
+            693.78,
+            297.54,
+            701.41
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:value",
+          "bbox": [
+            454.92,
+            694.59,
+            486.48,
+            702.23
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "type=sioc:Post",
+          "bbox": [
+            498.28,
+            695.5,
+            542.94,
+            703.14
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "prov:invalidatedAtTime",
+          "bbox": [
+            96.08,
+            700.91,
+            167.3,
+            708.55
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "\"2011-07-16T02:02:02Z\"^^xsd:dateTime;",
+          "bbox": [
+            96.08,
+            708.89,
+            219.53,
+            716.53
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "\"I was currius...\"",
+          "bbox": [
+            257.28,
+            718.78,
+            306.23,
+            726.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "\"I was curious...\"",
+          "bbox": [
+            445.46,
+            718.78,
+            495.93,
+            726.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            6.84
+          ]
+        },
+        {
+          "text": "Figure 4. An illustration of the PROV-O assertions in Example 2, where Derek",
+          "bbox": [
+            182.3,
+            734.01,
+            456.2,
+            742.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "published two versions of a blog for the National Newspaper, Inc.",
+          "bbox": [
+            204.29,
+            743.01,
+            434.2,
+            751.95
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        }
+      ]
+    },
+    {
+      "page": 12,
+      "rotation": 0,
+      "drawings": 196,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 4: Illustration of the properties and classes to use (in blue) to qualify the starting point and expanded influence relations (dotted black)."
+      ],
+      "labels": [
+        {
+          "text": "b)",
+          "bbox": [
+            298.07,
+            30.84,
+            304.03,
+            37.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "a)",
+          "bbox": [
+            142.59,
+            30.85,
+            148.19,
+            37.93
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:used",
+          "bbox": [
+            197.72,
+            40.94,
+            225.8,
+            48.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasGeneratedBy",
+          "bbox": [
+            354.32,
+            41.12,
+            416.6,
+            48.19
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            239.96,
+            46.77,
+            261.62,
+            53.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            159.74,
+            47.09,
+            177.11,
+            54.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            314.84,
+            47.09,
+            336.49,
+            54.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            433.23,
+            47.09,
+            450.6,
+            54.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:entity",
+          "bbox": [
+            192.44,
+            62.46,
+            223.62,
+            69.54
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:activity",
+          "bbox": [
+            356.85,
+            62.46,
+            392.32,
+            69.54
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedUsage",
+          "bbox": [
+            233.68,
+            67.75,
+            290.59,
+            74.83
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedGeneration",
+          "bbox": [
+            416.89,
+            67.75,
+            488.37,
+            74.83
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Usage",
+          "bbox": [
+            201.04,
+            83.05,
+            218.19,
+            90.13
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Generation",
+          "bbox": [
+            368.23,
+            83.05,
+            399.95,
+            90.13
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:atTime",
+          "bbox": [
+            214.69,
+            99.43,
+            249.54,
+            106.51
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:atTime",
+          "bbox": [
+            389.2,
+            99.43,
+            424.05,
+            106.51
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            190.42,
+            114.13,
+            228.8,
+            121.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            364.6,
+            114.13,
+            402.98,
+            121.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "c)",
+          "bbox": [
+            298.07,
+            133.91,
+            303.36,
+            140.99
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasInvalidatedBy",
+          "bbox": [
+            352.91,
+            145.24,
+            418.02,
+            152.32
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            314.84,
+            151.22,
+            336.5,
+            158.3
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            433.23,
+            151.22,
+            450.6,
+            158.3
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:activity",
+          "bbox": [
+            356.85,
+            165.8,
+            392.32,
+            172.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedInvalidation",
+          "bbox": [
+            414.61,
+            172.82,
+            488.91,
+            179.89
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Invalidation",
+          "bbox": [
+            366.56,
+            186.59,
+            401.1,
+            193.67
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:atTime",
+          "bbox": [
+            389.2,
+            203.56,
+            424.05,
+            210.64
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            364.6,
+            218.26,
+            402.98,
+            225.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "d)",
+          "bbox": [
+            142.59,
+            236.98,
+            148.65,
+            244.06
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasInformedBy",
+          "bbox": [
+            263.54,
+            242.78,
+            323.23,
+            249.86
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            224.49,
+            249.91,
+            246.15,
+            256.98
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            337.2,
+            249.93,
+            358.86,
+            257.01
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:activity",
+          "bbox": [
+            264.2,
+            262.76,
+            299.67,
+            269.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedCommunication",
+          "bbox": [
+            321.04,
+            269.7,
+            406.34,
+            276.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Communication",
+          "bbox": [
+            268.32,
+            285.98,
+            313.86,
+            293.06
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "e)",
+          "bbox": [
+            142.59,
+            306.88,
+            148.07,
+            313.96
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "f)",
+          "bbox": [
+            302.23,
+            306.88,
+            306.7,
+            313.96
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasStartedBy",
+          "bbox": [
+            186.37,
+            317.04,
+            239.85,
+            324.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasEndedBy",
+          "bbox": [
+            371.59,
+            317.04,
+            422.85,
+            324.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            152.81,
+            324.18,
+            170.19,
+            331.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            251.73,
+            324.18,
+            273.39,
+            331.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            336.92,
+            324.18,
+            354.3,
+            331.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            435.84,
+            324.18,
+            457.5,
+            331.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:entity",
+          "bbox": [
+            186.07,
+            337.01,
+            217.25,
+            344.09
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:entity",
+          "bbox": [
+            370.18,
+            337.01,
+            401.36,
+            344.09
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedStart",
+          "bbox": [
+            238.21,
+            343.44,
+            291.81,
+            350.52
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedEnd",
+          "bbox": [
+            423.43,
+            343.44,
+            474.81,
+            350.52
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Start",
+          "bbox": [
+            207.64,
+            360.24,
+            221.47,
+            367.32
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "End",
+          "bbox": [
+            393.96,
+            360.24,
+            405.58,
+            367.32
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:atTime",
+          "bbox": [
+            216.61,
+            377.01,
+            251.46,
+            384.09
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:atTime",
+          "bbox": [
+            400.72,
+            377.01,
+            435.57,
+            384.09
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            192.02,
+            391.71,
+            230.4,
+            398.79
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "xsd:dateTime",
+          "bbox": [
+            376.13,
+            391.71,
+            414.51,
+            398.79
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "g)",
+          "bbox": [
+            142.59,
+            409.59,
+            148.23,
+            416.67
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasDerivedFrom",
+          "bbox": [
+            274.14,
+            418.67,
+            337.54,
+            425.74
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            159.34,
+            424.64,
+            176.71,
+            431.72
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            433.23,
+            424.64,
+            450.6,
+            431.72
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:entity",
+          "bbox": [
+            239.88,
+            449.43,
+            271.06,
+            456.5
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedDerivation",
+          "bbox": [
+            334.45,
+            449.43,
+            404.26,
+            456.5
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Derivation",
+          "bbox": [
+            285.62,
+            450.82,
+            315.68,
+            457.9
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:hadUsage",
+          "bbox": [
+            229.5,
+            469.89,
+            272.14,
+            476.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:hadGeneration",
+          "bbox": [
+            334.3,
+            469.89,
+            391.51,
+            476.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Usage",
+          "bbox": [
+            243.86,
+            492.86,
+            261.01,
+            499.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            289.82,
+            492.86,
+            311.48,
+            499.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Generation",
+          "bbox": [
+            332.21,
+            492.86,
+            363.92,
+            499.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:hadActivity",
+          "bbox": [
+            279.59,
+            510.67,
+            326.74,
+            517.75
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "h)",
+          "bbox": [
+            142.59,
+            529.49,
+            148.69,
+            536.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "i)",
+          "bbox": [
+            294.11,
+            529.49,
+            298.37,
+            536.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Attribution",
+          "bbox": [
+            375.87,
+            540.53,
+            407.6,
+            547.61
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedAttribution",
+          "bbox": [
+            420.4,
+            551.62,
+            491.89,
+            558.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:agent",
+          "bbox": [
+            329.66,
+            555.08,
+            360.09,
+            562.16
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasAttributedTo",
+          "bbox": [
+            361.2,
+            573.11,
+            423.59,
+            580.35
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Agent",
+          "bbox": [
+            168.62,
+            575.64,
+            185.23,
+            582.72
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:agent",
+          "bbox": [
+            223.26,
+            577.54,
+            253.7,
+            584.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Entity",
+          "bbox": [
+            452.24,
+            579.34,
+            469.61,
+            586.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Agent",
+          "bbox": [
+            317.88,
+            583.76,
+            334.49,
+            590.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Delegation",
+          "bbox": [
+            239.89,
+            601.7,
+            270.45,
+            608.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "j)",
+          "bbox": [
+            294.11,
+            603.38,
+            298.37,
+            610.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:wasAssociatedWith",
+          "bbox": [
+            356.99,
+            613.36,
+            426.8,
+            620.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:actedOnBehalfOf",
+          "bbox": [
+            145.25,
+            618.15,
+            208.68,
+            625.23
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Activity",
+          "bbox": [
+            450.09,
+            619.33,
+            471.75,
+            626.41
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Agent",
+          "bbox": [
+            318.24,
+            624.23,
+            334.85,
+            631.3
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedDelegation",
+          "bbox": [
+            216.52,
+            634.46,
+            286.84,
+            641.54
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:qualifiedAssociation",
+          "bbox": [
+            420.39,
+            640.56,
+            492.69,
+            647.64
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:agent",
+          "bbox": [
+            329.66,
+            640.82,
+            360.09,
+            647.9
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Association",
+          "bbox": [
+            376.25,
+            651.04,
+            408.8,
+            658.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Agent",
+          "bbox": [
+            168.62,
+            666.92,
+            185.23,
+            674.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:hadRole",
+          "bbox": [
+            342.21,
+            670.1,
+            380.55,
+            677.18
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "prov:hadPlan",
+          "bbox": [
+            409.19,
+            670.1,
+            447.4,
+            677.18
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Plan",
+          "bbox": [
+            404.78,
+            685.0,
+            417.5,
+            692.08
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Role",
+          "bbox": [
+            365.54,
+            685.4,
+            378.39,
+            692.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSerif"
+          ],
+          "sizes": [
+            6.39
+          ]
+        },
+        {
+          "text": "Figure 4: Illustration of the properties and classes to use (in blue) to qualify the starting point and expanded influence relations (dotted black).",
+          "bbox": [
+            68.21,
+            701.51,
+            570.28,
+            710.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans",
+            "LiberationSans-Bold"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The diagrams in this document depict Entities as ovals, Activities as rectangles, and Agents as pentagons. Quotation, Revision, and",
+          "bbox": [
+            86.66,
+            710.51,
+            551.82,
+            719.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "PrimarySource are omitted because they are special forms of Derivation and follow the same pattern as subfigure g.",
+          "bbox": [
+            113.81,
+            719.51,
+            524.68,
+            728.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans",
+            "LiberationSans-Bold"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "The following two examples show the result of applying the Usage and Association patterns to the chart-making example from Section 3.1.",
+          "bbox": [
+            62.75,
+            736.51,
+            551.91,
+            745.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        },
+        {
+          "text": "Example 8:",
+          "bbox": [
+            62.75,
+            753.51,
+            102.77,
+            762.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LiberationSans"
+          ],
+          "sizes": [
+            8.0
+          ]
+        }
+      ]
+    }
+  ]
+}
