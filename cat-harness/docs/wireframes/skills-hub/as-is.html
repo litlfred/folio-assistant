@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: Skills hub</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+  .side { border-right: 1px solid var(--line); background: var(--fill); padding: 12px; }
+  .side ul { list-style: none; padding: 0; margin: 0; }
+  .side li { padding: 4px 0; }
+  .side .here { font-weight: bold; }
+  .main { min-width: 0; padding: 16px 24px; }
+  .hop { border: 1px dashed var(--line); padding: 6px 10px; margin: 0 0 12px; font-size: 0.9em; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+  th:nth-child(1) { width: 28%; } th:nth-child(2) { width: 24%; } th:nth-child(3) { width: 10%; }
+  code { overflow-wrap: anywhere; }
+  @media (max-width: 799px) {
+    .page { grid-template-columns: 1fr; }
+    .side { border-right: 0; border-bottom: 1px solid var(--line); }
+    .side ul { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+    .main { padding: 12px 16px; }
+    th:nth-child(3), td:nth-child(3) { display: none; }
+    th:nth-child(1) { width: 40%; } th:nth-child(2) { width: 30%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="side" aria-label="C@T Harness sidebar">
+    <ul>
+      <li>C@T Harness</li>
+      <li>Processes</li>
+      <li>Tools</li>
+      <li class="here">Skills</li>
+      <li>Library</li>
+      <li>Schemas</li>
+    </ul>
+  </nav>
+  <main class="main">
+    <p class="hop">Opened from <b>Skills</b> in the sidebar: <code>en/cat-harness/skills/</code> forwards here, keeping any query and fragment.</p>
+    <h1>Skill instructions</h1>
+    <p>The prose instruction bodies the LLM loads (via <code>skill_fetch</code>) when it runs a skill. These are generated from the skill source markdowns, so the published reference always matches what the agent actually reads.</p>
+    <p>For each skill's typed input/output contract, see the <a href="#">Skill schema reference</a>; for the conceptual overview, see <a href="#">Skills &amp; roles</a>.</p>
+    <h2>Content authoring and editorial review (authoring-core)</h2>
+    <table>
+      <thead><tr><th>Skill</th><th>Id</th><th>Schema</th><th>Summary</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#">Content types</a></td><td><code>content-profiles</code></td><td>—</td><td>A document folio is structured prose: policy guidance, a standard, a report.</td></tr>
+        <tr><td><a href="#">Evidence review</a></td><td><code>evidence-review</code></td><td>—</td><td>Skill id: evidence-review · Package: folio-core</td></tr>
+        <tr><td><a href="#">Review heat map</a></td><td><code>review-heatmap</code></td><td>—</td><td>Skill id: review-heatmap · Package: folio-core</td></tr>
+      </tbody>
+    </table>
+    <h2>Agent conduct (conduct-core)</h2>
+    <table>
+      <thead><tr><th>Skill</th><th>Id</th><th>Schema</th><th>Summary</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#">Interaction modality</a></td><td><code>interaction-modality</code></td><td>—</td><td>Establish how to talk to the person in front of you before deciding what to say.</td></tr>
+        <tr><td><a href="#">Where does this go</a></td><td><code>where-does-this-go</code></td><td>—</td><td>Which repository, layer and directory a new thing belongs in.</td></tr>
+      </tbody>
+    </table>
+    <p>… 21 more sections, 260 skills in all, from Graph management to Platform UI and Local skills.</p>
+    <p>Inline code on these pages links to what it names; the spans that could not be placed are listed in <a href="#">Unresolved code references</a>.</p>
+  </main>
+</div>
+</body>
+</html>

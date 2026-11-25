@@ -1,0 +1,18 @@
+{
+  "name": "board",
+  "version": "0.1.0",
+  "description": "The content-folio halves of the harness's board skills: board windows and board diagram interchange. Moved out of `folio-document-adapter` into the opt-in `board` sub-graph (owner, 2026-11-10, card Q-SG-1 C, wave 3).",
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": []
+  },
+  "providesCapabilities": [],
+  "requiresCapabilities": [],
+  "lifecycleStages": [
+    "author"
+  ],
+  "skills": [
+    "folio-board-diagram-interchange",
+    "folio-board-windows"
+  ]
+}
