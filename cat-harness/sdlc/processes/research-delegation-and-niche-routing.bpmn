@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
+                  id="Definitions_Process_ResearchDelegationAndNicheRouting"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="session-coordinator" name="Session coordinator"/>
+  <bpmn:resource id="authoring-agent" name="Authoring agent"/>
+  <bpmn:collaboration id="Collaboration_Process_ResearchDelegationAndNicheRouting">
+    <bpmn:participant id="Participant_Process_ResearchDelegationAndNicheRouting" name="Foreground non-blocking delegation and niche research routing" processRef="Process_ResearchDelegationAndNicheRouting"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_ResearchDelegationAndNicheRouting" name="Research delegation and niche routing" isExecutable="false">
+    <bpmn:documentation>Keeps foreground discussion turns unblocked whenever answering or analysing exceeds a brief ~15-20 s lookup, immediately reporting scope, ETA, potential outcomes with implications, and any upfront clarification card while routing the background work either to an active deep-niche specialist, across multiple niche specialists for cross-fertilization on domain bridges, or to a newly spawned niche specialist, write-ahead checkpointing the parent epic bean and Worktree/Branch/Scratch Lease Table at dispatch time (and reconciling via Process_StalledAgentTriage whenever resuming after another agent advanced the repo), and executing Process_EvidenceGatheringAndProvenance.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_ResearchDelegationAndNicheRouting">
+      <bpmn:lane id="Lane_Coordinator" name="Foreground coordinator" partitionElementRef="session-coordinator">
+        <bpmn:documentation>Reconciles remote deltas on returning turns, answers sub-15-20 s single-step lookups inline; otherwise immediately delegates to the background without blocking the foreground turn, reports investigation scope, ETA, potential outcomes, and any upfront clarification card, routes follow-ups by deep niche continuity or cross-fertilization fan-out, write-ahead checkpoints the parent epic bean and Worktree/Branch/Scratch Lease Table at dispatch time, and synthesizes returned findings for the user.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_QuestionArrives</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ExceedsBriefLookup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AnswerInline</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_AnsweredInline</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ReportNonBlockingDispatch</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_NicheRoute</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RouteSameSpecialist</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_FanOutBridge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SpawnNicheSpecialist</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_DispatchJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WriteAheadEpicCheckpoint</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SynthesizeAndUpdateUser</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_UserUpdated</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Specialists" name="Niche research specialists" partitionElementRef="authoring-agent">
+        <bpmn:documentation>Persistent domain-specialized background research agents that accumulate niche vocabulary, theorem inventory, ingested corpus locators, and negative-result memory while executing Process_EvidenceGatheringAndProvenance.</bpmn:documentation>
+        <bpmn:flowNodeRef>Call_EvidenceAndResearch</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_QuestionArrives" name="Topic&#10;arrives">
+      <bpmn:documentation>A user question, design option, or research sub-problem arrives in foreground discussion or research coordination.</bpmn:documentation>
+      <bpmn:outgoing>Flow_RD_1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:exclusiveGateway id="GW_ExceedsBriefLookup" name="Exceeds ~15-20 s&#10;lookup?">
+      <bpmn:documentation>`No` when a single-step local lookup answers within ~15-20 s; `Yes` whenever multi-step search, proof checking, computation, or literature synthesis would block the foreground turn past ~15-20 s.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="turn-reporting"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_2a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_RD_2b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_AnswerInline" name="Answer inline&#10;in foreground">
+      <bpmn:documentation>Perform the single-step lookup and reply directly in the foreground turn with exact file links and evidence.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="turn-reporting"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_2a</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_3a</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_AnsweredInline" name="Answered&#10;inline">
+      <bpmn:documentation>Brief single-step lookup answered directly without background delegation.</bpmn:documentation>
+      <bpmn:incoming>Flow_RD_3a</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:task id="Task_ReportNonBlockingDispatch" name="Post scope, ETA,&#10;outcomes and card">
+      <bpmn:documentation>Keep the foreground turn open for user input: report (a) what is being investigated in the background, (b) expected duration (ETA), (c) potential outcomes and their implications, and (d) any upfront structured clarification card (with full chat context written first).</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="turn-reporting"/>
+        <bootstrap.processes:skill ref="interaction-modality"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_2b</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_4</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_NicheRoute" name="Niche routing&#10;mode?">
+      <bpmn:documentation>Selects `same niche` when a standing specialist already owns this domain, `cross-niche bridge` when the question spans an interface between two or more active niches, or `new niche` when no active specialist covers the topic.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="research-manager"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_5a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_RD_5b</bpmn:outgoing>
+      <bpmn:outgoing>Flow_RD_5c</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_RouteSameSpecialist" name="Route to standing&#10;niche specialist">
+      <bpmn:documentation>Send the follow-up question to the active specialist for that niche so accumulated domain vocabulary, theorem inventory, and negative-result memory are preserved.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="research-manager"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_5a</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_6a</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_FanOutBridge" name="Fan bridging query&#10;across niches">
+      <bpmn:documentation>Dispatch the interface question in parallel to multiple standing niche specialists so independent domain lenses test whether a concrete structural connection or theorem emerges.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="research-manager"/>
+        <bootstrap.processes:skill ref="dispatch-agent"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_5b</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_6b</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_SpawnNicheSpecialist" name="Spawn specialist&#10;for new niche">
+      <bpmn:documentation>Claim a child work item and launch a fresh background specialist dedicated to the new niche with the mandatory skill launch briefing and progress contract.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="dispatch-agent"/>
+        <bootstrap.processes:skill ref="research-manager"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_5c</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_6c</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_DispatchJoin">
+      <bpmn:documentation>Merge niche routing branches into write-ahead epic checkpointing before specialist execution.</bpmn:documentation>
+      <bpmn:incoming>Flow_RD_6a</bpmn:incoming>
+      <bpmn:incoming>Flow_RD_6b</bpmn:incoming>
+      <bpmn:incoming>Flow_RD_6c</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_WriteAheadEpicCheckpoint" name="Write-ahead checkpoint&#10;epic &amp; lease table">
+      <bpmn:documentation>At dispatch time (never waiting for post-merge, and never mutating a claimed child executor bean's .md file), write-ahead checkpoint the parent epic body and/or a branch-keyed `checkpoint: &lt;epic/wave&gt; &lt;UTC&gt;` note on cat/cat-harness/beans with newly opened child bean IDs, canonical 3-slot dispatch lines (`Do bean &lt;bean-id&gt; on branch &lt;branch-to-create&gt; of repo &lt;owner&gt;/&lt;repo&gt;.`), active research/compute hypotheses, negative/excluded routes, and the Worktree/Branch/Scratch Lease Table.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="research-manager"/>
+        <bootstrap.processes:skill ref="agent-handoff"/>
+        <bootstrap.processes:skill ref="handover-report"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_7b</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:callActivity id="Call_EvidenceAndResearch" name="Investigate niche and&#10;ingest KG evidence" calledElement="Process_EvidenceGatheringAndProvenance">
+      <bpmn:documentation>Specialists investigate the question within their deep niche and execute Process_EvidenceGatheringAndProvenance (including online sequence, knot-census, number-theory, and &gt;= 80 dps constant-recognition lookups across OEIS, KnotInfo/LinkInfo/SnapPy/Regina, and LMFDB whenever sequences, series coefficients, constants, or topological/arithmetic invariants arise) to shortlist, retrieve across APIs, ingest into the Knowledge Graph, assess relevancy, and record provenance.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="evidence-gathering-and-provenance"/>
+        <bootstrap.processes:skill ref="online-sequence-and-knot-databases"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_7b</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_8</bpmn:outgoing>
+    </bpmn:callActivity>
+
+    <bpmn:task id="Task_SynthesizeAndUpdateUser" name="Synthesize agreements,&#10;tensions and report">
+      <bpmn:documentation>Promptly on background completion, synthesize single-specialist results or cross-niche agreements and tensions, state concrete implications, and offer any follow-up research paths on a decision card.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="research-manager"/>
+        <bootstrap.processes:skill ref="turn-reporting"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_RD_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_RD_9</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_UserUpdated" name="Foreground updated&#10;with findings">
+      <bpmn:documentation>User receives synthesized findings, provenance links, and any follow-up path cards without foreground blocking.</bpmn:documentation>
+      <bpmn:incoming>Flow_RD_9</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_RD_1" sourceRef="Start_QuestionArrives" targetRef="GW_ExceedsBriefLookup"/>
+    <bpmn:sequenceFlow id="Flow_RD_2a" name="No" sourceRef="GW_ExceedsBriefLookup" targetRef="Task_AnswerInline"/>
+    <bpmn:sequenceFlow id="Flow_RD_2b" name="Yes" sourceRef="GW_ExceedsBriefLookup" targetRef="Task_ReportNonBlockingDispatch"/>
+    <bpmn:sequenceFlow id="Flow_RD_3a" sourceRef="Task_AnswerInline" targetRef="End_AnsweredInline"/>
+    <bpmn:sequenceFlow id="Flow_RD_4" sourceRef="Task_ReportNonBlockingDispatch" targetRef="GW_NicheRoute"/>
+    <bpmn:sequenceFlow id="Flow_RD_5a" name="same niche" sourceRef="GW_NicheRoute" targetRef="Task_RouteSameSpecialist"/>
+    <bpmn:sequenceFlow id="Flow_RD_5b" name="cross-niche bridge" sourceRef="GW_NicheRoute" targetRef="Task_FanOutBridge"/>
+    <bpmn:sequenceFlow id="Flow_RD_5c" name="new niche" sourceRef="GW_NicheRoute" targetRef="Task_SpawnNicheSpecialist"/>
+    <bpmn:sequenceFlow id="Flow_RD_6a" sourceRef="Task_RouteSameSpecialist" targetRef="GW_DispatchJoin"/>
+    <bpmn:sequenceFlow id="Flow_RD_6b" sourceRef="Task_FanOutBridge" targetRef="GW_DispatchJoin"/>
+    <bpmn:sequenceFlow id="Flow_RD_6c" sourceRef="Task_SpawnNicheSpecialist" targetRef="GW_DispatchJoin"/>
+    <bpmn:sequenceFlow id="Flow_RD_7" sourceRef="GW_DispatchJoin" targetRef="Task_WriteAheadEpicCheckpoint"/>
+    <bpmn:sequenceFlow id="Flow_RD_7b" sourceRef="Task_WriteAheadEpicCheckpoint" targetRef="Call_EvidenceAndResearch"/>
+    <bpmn:sequenceFlow id="Flow_RD_8" sourceRef="Call_EvidenceAndResearch" targetRef="Task_SynthesizeAndUpdateUser"/>
+    <bpmn:sequenceFlow id="Flow_RD_9" sourceRef="Task_SynthesizeAndUpdateUser" targetRef="End_UserUpdated"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_Process_ResearchDelegationAndNicheRouting">
+    <bpmndi:BPMNPlane id="Plane_Process_ResearchDelegationAndNicheRouting" bpmnElement="Collaboration_Process_ResearchDelegationAndNicheRouting">
+      <bpmndi:BPMNShape id="Shape_Participant_RD" bpmnElement="Participant_Process_ResearchDelegationAndNicheRouting" isHorizontal="true">
+        <dc:Bounds x="30" y="30" width="1320" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Coordinator" bpmnElement="Lane_Coordinator" isHorizontal="true">
+        <dc:Bounds x="60" y="30" width="1290" height="360" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Specialists" bpmnElement="Lane_Specialists" isHorizontal="true">
+        <dc:Bounds x="60" y="390" width="1290" height="180" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_QuestionArrives" bpmnElement="Start_QuestionArrives">
+        <dc:Bounds x="84" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="60" y="148" width="84" height="34" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_ExceedsBriefLookup" bpmnElement="GW_ExceedsBriefLookup" isMarkerVisible="true">
+        <dc:Bounds x="180" y="185" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="152" y="242" width="106" height="36"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_AnswerInline" bpmnElement="Task_AnswerInline">
+        <dc:Bounds x="280" y="42" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_AnsweredInline" bpmnElement="End_AnsweredInline">
+        <dc:Bounds x="440" y="77" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_ReportNonBlockingDispatch" bpmnElement="Task_ReportNonBlockingDispatch">
+        <dc:Bounds x="290" y="160" width="120" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_NicheRoute" bpmnElement="GW_NicheRoute" isMarkerVisible="true">
+        <dc:Bounds x="465" y="185" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="395" y="145" width="90" height="36"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_RouteSameSpecialist" bpmnElement="Task_RouteSameSpecialist">
+        <dc:Bounds x="625" y="42" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_FanOutBridge" bpmnElement="Task_FanOutBridge">
+        <dc:Bounds x="625" y="170" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_SpawnNicheSpecialist" bpmnElement="Task_SpawnNicheSpecialist">
+        <dc:Bounds x="625" y="285" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_DispatchJoin" bpmnElement="GW_DispatchJoin" isMarkerVisible="true">
+        <dc:Bounds x="805" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_WriteAheadEpicCheckpoint" bpmnElement="Task_WriteAheadEpicCheckpoint">
+        <dc:Bounds x="900" y="160" width="120" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_EvidenceAndResearch" bpmnElement="Call_EvidenceAndResearch">
+        <dc:Bounds x="920" y="420" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_SynthesizeAndUpdateUser" bpmnElement="Task_SynthesizeAndUpdateUser">
+        <dc:Bounds x="1105" y="150" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_UserUpdated" bpmnElement="End_UserUpdated">
+        <dc:Bounds x="1285" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_1" bpmnElement="Flow_RD_1">
+        <di:waypoint x="120" y="210"/>
+        <di:waypoint x="180" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_2a" bpmnElement="Flow_RD_2a">
+        <di:waypoint x="205" y="185" />
+        <di:waypoint x="205" y="95" />
+        <di:waypoint x="280" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_2b" bpmnElement="Flow_RD_2b">
+        <di:waypoint x="230" y="210"/>
+        <di:waypoint x="290" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_3a" bpmnElement="Flow_RD_3a">
+        <di:waypoint x="400" y="95" />
+        <di:waypoint x="440" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_4" bpmnElement="Flow_RD_4">
+        <di:waypoint x="410" y="210"/>
+        <di:waypoint x="465" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_5a" bpmnElement="Flow_RD_5a">
+        <di:waypoint x="490" y="185" />
+        <di:waypoint x="490" y="95" />
+        <di:waypoint x="625" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_5b" bpmnElement="Flow_RD_5b">
+        <di:waypoint x="515" y="210"/>
+        <di:waypoint x="625" y="210"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="520" y="186" width="96" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_5c" bpmnElement="Flow_RD_5c">
+        <di:waypoint x="490" y="235"/>
+        <di:waypoint x="490" y="325"/>
+        <di:waypoint x="625" y="325"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="510" y="303" width="70" height="18"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_6a" bpmnElement="Flow_RD_6a">
+        <di:waypoint x="745" y="95" />
+        <di:waypoint x="830" y="95" />
+        <di:waypoint x="830" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_6b" bpmnElement="Flow_RD_6b">
+        <di:waypoint x="745" y="210"/>
+        <di:waypoint x="805" y="210"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_6c" bpmnElement="Flow_RD_6c">
+        <di:waypoint x="745" y="325"/>
+        <di:waypoint x="830" y="325"/>
+        <di:waypoint x="830" y="235"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_7" bpmnElement="Flow_RD_7">
+        <di:waypoint x="855" y="210" />
+        <di:waypoint x="900" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_7b" bpmnElement="Flow_RD_7b">
+        <di:waypoint x="960" y="260" />
+        <di:waypoint x="960" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_8" bpmnElement="Flow_RD_8">
+        <di:waypoint x="1040" y="480" />
+        <di:waypoint x="1072" y="480" />
+        <di:waypoint x="1072" y="210" />
+        <di:waypoint x="1105" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_RD_9" bpmnElement="Flow_RD_9">
+        <di:waypoint x="1225" y="210" />
+        <di:waypoint x="1285" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

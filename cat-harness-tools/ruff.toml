@@ -1,0 +1,22 @@
+# The shared ruff configuration of the platform layers (lint baseline,
+# 2026-11-28; the per-language rules are cat-harness `language-expectations`).
+#
+# `select` is the MUST-PASS set: syntax errors (E9), invalid comparisons and
+# literals (F63), statements in the wrong place (F7), undefined names (F82),
+# and unused and wildcard imports (F401, F403). Every platform layer is at
+# zero on these, or within one finding of it. The rest of ruff's classic
+# set (E4, E7, the rest of F) is REPORTED by `bun run cat lint:report` and
+# ratcheted down from the counts in `.github/lint-baseline.json`; a rule
+# joins `select` once its count is zero everywhere this file is used.
+#
+# Used by the pre-push precheck (`scripts/precheck.ts`, on the changed `.py`
+# files) and by the lint report. The index's `hygiene` job passes its own
+# `--select F401,F403` on the command line, which overrides `select` here,
+# so this file does not change what that gate judges.
+#
+# Formatting (`ruff format`) is enforced on new files only, and not here.
+
+extend-exclude = ["**/_deprecated/**"]
+
+[lint]
+select = ["E9", "F63", "F7", "F82", "F401", "F403"]
