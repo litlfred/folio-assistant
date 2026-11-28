@@ -1,0 +1,58 @@
+{
+  "$schema": "tool-definition/v1",
+  "tool": {
+    "id": "mcp-capture",
+    "title": "What this layer's MCP server serves",
+    "description": "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
+    "install": {
+      "none": true
+    },
+    "invoke": {
+      "shell": "bun run cat mcp:capture"
+    },
+    "io": {
+      "inputs": [
+        {
+          "name": "json",
+          "schema": {
+            "$type": "Flag"
+          },
+          "description": "Emit `{tools, problems}` as JSON for a consumer, instead of the table for a reader.",
+          "required": false,
+          "arg": {
+            "flag": "--json"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "surface",
+          "schema": {
+            "$type": "Text"
+          },
+          "description": "One row per served tool with its module and its required/optional keys. Three exit codes: 0 the surface was captured whole, 2 one or more modules COULD NOT BE READ so the capture is incomplete, and no equivalence verdict may be drawn from it. There is no exit 1 — this tool reports what is served and never judges it."
+        }
+      ]
+    },
+    "satisfies": [
+      "mcp-contract"
+    ],
+    "selection": {
+      "when": "Before trusting any claim that a Tool node's `io` matches what the server serves — and as the input to that comparison. Also the source data for authoring Tool nodes from `src/tools/`.",
+      "limits": "INTROSPECTION, not source parsing: a regex over `server.tool(...)` reads words followed by a colon inside a description as parameter names, and an `io` authored from that would be a contract agreeing with nothing that the next check still trusts.",
+      "cost": "Mounts every registrar in-process. No network, no server needs to be running."
+    },
+    "requires": {
+      "runtime": [
+        "bun"
+      ],
+      "network": false
+    }
+  },
+  "$comment": [
+    {
+      "at": "",
+      "comment": "── What the MCP server actually serves ───────────────────────────────\n\nBean `shzs`. The script NAMES its own skill, so this needed no judgement\nabout capability vocabulary: \"it is the comparison side `mcp-contract`\nneeds: that skill's schema-equivalence check compares a Tool node's `io`\nagainst what is served, and this is what 'what is served' means before a\nprojector exists.\"\n\nOne Tool among several for that skill rather than the whole of it —\n`mcp-contract` is an equivalence in both directions and this supplies one\nside. `skills-and-tools` is explicit that several Tools may satisfy one\nskill and be complementary rather than alternative; their I/O differs,\nso none is derived."
+    }
+  ]
+}
