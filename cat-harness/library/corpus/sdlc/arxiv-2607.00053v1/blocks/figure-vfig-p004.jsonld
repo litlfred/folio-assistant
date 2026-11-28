@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.00053v1/blocks/figure-vfig-p004",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p004.png",
+  "pageStart": 4,
+  "pageEnd": 4,
+  "narrative": [
+    {
+      "text": "Figure 2: Cost-vs.-resolved routing curves on held-out SWE-Bench Verified across two (weak, strong) model pairs. SWE-Router (K=3, green) sits above the random-assignment gray band and prompt-only embedding baselines across the cost spectrum, achieving a Pareto frontier that retains the majority of frontier model performance at a fraction of inference cost.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.00053v1/sections/sec-011",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2607.00053v1",
+  "provenance": "ingested"
+}
