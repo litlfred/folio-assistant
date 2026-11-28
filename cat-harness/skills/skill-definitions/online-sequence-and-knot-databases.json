@@ -1,0 +1,46 @@
+{
+  "id": "online-sequence-and-knot-databases",
+  "name": "Online Sequence, Knot & Number-Theory Databases",
+  "description": "Mandatory lookup and unit-rescaling protocol across OEIS (JSON API across logged cumulants, unlogged exponentials, factorial-cleared and torsion-rescaled forms), KnotInfo / LinkInfo / SnapPy / Regina censuses, LMFDB, and >= 80 dps PSLQ constant recognition whenever computational or mathematical research encounters integer sequences, rational series coefficients, composite denominators, transcendental constants, or knot/link invariants.",
+  "requiredCapabilities": [
+    {
+      "capabilityId": "git-read",
+      "degradation": "fail"
+    }
+  ],
+  "dependsOn": [
+    {
+      "ref": "req:content-lifecycle",
+      "kind": "requirement",
+      "conformance": "SHALL"
+    }
+  ],
+  "routingPatterns": [
+    "\\boeis\\b",
+    "integer\\s+sequence",
+    "series\\s+coefficient",
+    "knotinfo",
+    "linkinfo",
+    "snappy",
+    "\\blmfdb\\b",
+    "\\bpslq\\b",
+    "constant\\s+recognition",
+    "nicer\\s+form.*integer",
+    "bernoulli.*denominator"
+  ],
+  "tags": [
+    "research",
+    "mathematics",
+    "sequences",
+    "knots",
+    "number-theory",
+    "provenance",
+    "authoring"
+  ],
+  "package": "authoring-core",
+  "lifecycleStages": [
+    "plan",
+    "author",
+    "review"
+  ]
+}

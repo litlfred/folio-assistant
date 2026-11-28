@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p206-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p206-1.png",
+  "pageStart": 206,
+  "pageEnd": 206,
+  "narrative": [
+    {
+      "text": "Historical UML class diagram of the SPDX community's draft 3.0 core model (circa September 2020). SpdxElement (SPDXID, Name) is the root; Identity, specialised by Person (Email), Organization (Email) and Tool (Version), specialises it. Artifact (Summary, Description) has 0..1 Originator and 0..1 Supplier Identity, Checksums (Hash: Algorithm, Value) and ExternalReferences (Category, Type, Locator, Comment). Package (Version) contains Files by PackageFile, File (Type) has Snippets (ByteRange, LineRange) by FromFile, and all three specialise Artifact. Annotation (Date, Type, Comment) has an Annotator Identity and an SPDXREF to an element; Relationship (Type, Comment) has To and From elements; SpdxDocument (SPDXVersion, DataLicence, a base-namespace URI — printed 'Banesoace', as drawn — Created, Profiles) has a Creator Identity and ExternalDocumentReferences (DocumentRef, Locator) with a Checksum.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML historique du modèle Core provisoire 3.0 de la communauté SPDX (vers septembre 2020). SpdxElement (SPDXID, Name) en est la racine ; Identity, spécialisée par Person (Email), Organization (Email) et Tool (Version), la spécialise. Artifact (Summary, Description) a 0..1 Originator et 0..1 Supplier de type Identity, des Checksums (Hash : Algorithm, Value) et des ExternalReferences (Category, Type, Locator, Comment). Package (Version) contient des Files par PackageFile, File (Type) a des Snippets (ByteRange, LineRange) par FromFile, et tous trois spécialisent Artifact. Annotation (Date, Type, Comment) a un Annotator de type Identity et un SPDXREF vers un élément ; Relationship (Type, Comment) a des éléments To et From ; SpdxDocument (SPDXVersion, DataLicence, une URI d'espace de noms de base — imprimée « Banesoace », tel quel dans le dessin —, Created, Profiles) a un Creator de type Identity et des ExternalDocumentReferences (DocumentRef, Locator) avec un Checksum.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML histórico del modelo Core provisional 3.0 de la comunidad SPDX (hacia septiembre de 2020). SpdxElement (SPDXID, Name) es la raíz; Identity, especializada por Person (Email), Organization (Email) y Tool (Version), la especializa. Artifact (Summary, Description) tiene 0..1 Originator y 0..1 Supplier de tipo Identity, Checksums (Hash: Algorithm, Value) y ExternalReferences (Category, Type, Locator, Comment). Package (Version) contiene Files mediante PackageFile, File (Type) tiene Snippets (ByteRange, LineRange) mediante FromFile, y los tres especializan Artifact. Annotation (Date, Type, Comment) tiene un Annotator de tipo Identity y un SPDXREF a un elemento; Relationship (Type, Comment) tiene elementos To y From; SpdxDocument (SPDXVersion, DataLicence, una URI de espacio de nombres base, impresa «Banesoace» tal como está dibujada, Created, Profiles) tiene un Creator de tipo Identity y ExternalDocumentReferences (DocumentRef, Locator) con un Checksum.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط أصناف UML تاريخي للنموذج الأساسي المبدئي 3.0 لمجتمع SPDX (نحو سبتمبر 2020). SpdxElement (SPDXID، Name) هو الجذر؛ ويخصّصه Identity الذي تخصّصه Person (Email) وOrganization (Email) وTool (Version). ولـ Artifact (Summary، Description) قيمة 0..1 Originator و0..1 Supplier من نوع Identity، وChecksums (Hash: Algorithm، Value) وExternalReferences (Category، Type، Locator، Comment). يحتوي Package (Version) على Files عبر PackageFile، ولـ File (Type) قيم Snippets (ByteRange، LineRange) عبر FromFile، والثلاثة تخصّص Artifact. ولـ Annotation (Date، Type، Comment) قيمة Annotator من نوع Identity وSPDXREF إلى عنصر؛ ولـ Relationship (Type، Comment) عنصرا To وFrom؛ ولـ SpdxDocument (SPDXVersion، DataLicence، ومعرّف URI لنطاق الأسماء الأساسي، مطبوع «Banesoace» كما هو مرسوم، وCreated، وProfiles) قيمة Creator من نوع Identity وExternalDocumentReferences (DocumentRef، Locator) مع Checksum.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Историческая диаграмма классов UML черновой базовой модели 3.0 сообщества SPDX (около сентября 2020 г.). Корнем служит SpdxElement (SPDXID, Name); его специализирует Identity, который, в свою очередь, специализируют Person (Email), Organization (Email) и Tool (Version). У Artifact (Summary, Description) есть 0..1 Originator и 0..1 Supplier типа Identity, Checksums (Hash: Algorithm, Value) и ExternalReferences (Category, Type, Locator, Comment). Package (Version) содержит Files через PackageFile, у File (Type) есть Snippets (ByteRange, LineRange) через FromFile, и все три специализируют Artifact. У Annotation (Date, Type, Comment) есть Annotator типа Identity и SPDXREF на элемент; у Relationship (Type, Comment) есть элементы To и From; у SpdxDocument (SPDXVersion, DataLicence, URI базового пространства имён — напечатано «Banesoace», как на рисунке, — Created, Profiles) есть Creator типа Identity и ExternalDocumentReferences (DocumentRef, Locator) с Checksum.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "SPDX 社区 3.0 核心模型草案的历史 UML 类图（约 2020 年 9 月）。SpdxElement（SPDXID、Name）是根；Identity 特化它，而 Identity 又由 Person（Email）、Organization（Email）和 Tool（Version）特化。Artifact（Summary、Description）有 0..1 个 Originator 和 0..1 个 Supplier（类型为 Identity）、Checksums（Hash：Algorithm、Value）和 ExternalReferences（Category、Type、Locator、Comment）。Package（Version）通过 PackageFile 包含 Files，File（Type）通过 FromFile 拥有 Snippets（ByteRange、LineRange），三者都特化 Artifact。Annotation（Date、Type、Comment）有一个 Identity 类型的 Annotator 和指向某元素的 SPDXREF；Relationship（Type、Comment）有 To 和 From 元素；SpdxDocument（SPDXVersion、DataLicence、基础命名空间 URI——图中印作“Banesoace”——、Created、Profiles）有一个 Identity 类型的 Creator，以及带 Checksum 的 ExternalDocumentReferences（DocumentRef、Locator）。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-397",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/omg-2024-spdx-3-0",
+  "provenance": "ingested"
+}

@@ -1,0 +1,13 @@
+---
+doc_id: dspace-7-rest-contract
+doc_title: "DSpace 7 REST Contract (dspace-7_x)"
+section_id: s499-who-can-use-it
+section_title: "Who can use it?"
+file: "scripts/metadata-deletion.md"
+lines: 16-19
+source_sha256: 2727446e9f3af751
+granularity: heading
+---
+## Who can use it?
+
+This script can be used only by repository administrators.

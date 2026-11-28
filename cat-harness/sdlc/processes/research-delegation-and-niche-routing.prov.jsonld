@@ -1,0 +1,51 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of research-delegation-and-niche-routing.bpmn: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "sdlc/processes/research-delegation-and-niche-routing.bpmn",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "sdlc/processes/research-delegation-and-niche-routing.bpmn#provenance-1"
+        },
+        {
+          "@id": "sdlc/processes/research-delegation-and-niche-routing.bpmn#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "sdlc/processes/research-delegation-and-niche-routing.bpmn#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Task_ReportNonBlockingDispatch",
+      "prov:value": "Owner directive, 2026-11-28: even in foreground discussion mode, any investigation or thinking exceeding ~15-20 s must not block the foreground turn; dispatch a background research or analysis agent immediately so the foreground stays open for user input, and report (a) what is being investigated, (b) expected duration (ETA), (c) potential outcomes and their implications, and (d) any structured clarification card up front, updating the user promptly on completion.",
+      "cat-harness:refs": [
+        "2026-11-28",
+        "owner"
+      ],
+      "dcterms:date": [
+        "2026-11-28"
+      ]
+    },
+    {
+      "@id": "sdlc/processes/research-delegation-and-niche-routing.bpmn#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "GW_NicheRoute",
+      "prov:value": "Owner directive, 2026-11-28: *\"updates skills: if you have queue of research agents, generally keep them researching deep into niche topic areas. so related questions go to same agent. occasionally, if hints of cross-fertilization, ask questions of multiple agents to see if connections can be made\"*.",
+      "cat-harness:refs": [
+        "2026-11-28",
+        "owner"
+      ],
+      "dcterms:date": [
+        "2026-11-28"
+      ]
+    }
+  ]
+}

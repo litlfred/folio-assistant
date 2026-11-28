@@ -1,0 +1,27 @@
+# actionlint configuration for this repository's own workflows (actionlint
+# >= 1.7.12; the lint baseline of 2026-11-28 triaged its 74 findings).
+#
+# Each ignore below is a finding that has been read and judged NOT a defect.
+# Each is scoped to the one workflow it was found in and to a pattern narrow
+# enough that a NEW finding of another kind still reports. Fix a real one
+# instead of adding a line here.
+paths:
+  .github/workflows/layer-pr-checks.yml:
+    ignore:
+      # 70 findings: the steps are YAML anchors (`- &lock-checkout`, ...)
+      # aliased into several jobs, and actionlint types `steps.*` from the
+      # steps BEFORE the anchor's definition. That is the first job, where
+      # the `tier` and `quick` steps come later or not at all. At run time a
+      # missing step's output is the empty string, so
+      # `steps.tier.outputs.full == 'false'` is false: `continue-on-error`
+      # stays off. That is the intended behaviour wherever the alias lands.
+      - 'property "(tier|quick)" is not defined in object type'
+  .github/workflows/pr-tests.yml:
+    ignore:
+      # 3 findings: `- id: base-cache` + `if: false` + `run: ":"` is a
+      # placeholder, not dead code. The shared step lists (`&tests-steps`,
+      # `&standalone-steps`) read `steps.base-cache.outputs.cache-hit`, and
+      # the head-side jobs, which have no base cache, declare a step of that
+      # id that never runs so the reference reads as "no hit". Deleting it
+      # would turn each of these into an undefined-property finding.
+      - 'constant expression "false" in condition'

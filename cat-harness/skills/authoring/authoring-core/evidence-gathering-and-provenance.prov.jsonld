@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of evidence-gathering-and-provenance.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/authoring/authoring-core/evidence-gathering-and-provenance.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/authoring/authoring-core/evidence-gathering-and-provenance.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/evidence-gathering-and-provenance.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "The five-step workflow (STRICT)",
+      "prov:value": "Owner directive, 2026-11-28: *\"research agents need to also use evidence gathering skills and process (may need to add this / update this in KG) when researching a topic... write up topic areas of research, for each, develop a short list of papers, data etc needed, retrieve and ingest into KG, assess for relevancy. also make use of other databases that agent or user may have access to google scholar, DOI, arxiv, pubmed, etc... this should be a part of document authoring. provenance of paper recorded as part of notes in authoring process and linked in paper as relevant\"*. Encoded as req:content-lifecycle#evidence-gathering-and-authoring-provenance, this skill, and Process_EvidenceGatheringAndProvenance.",
+      "cat-harness:refs": [
+        "2026-11-28",
+        "owner"
+      ],
+      "dcterms:date": [
+        "2026-11-28"
+      ]
+    }
+  ]
+}
