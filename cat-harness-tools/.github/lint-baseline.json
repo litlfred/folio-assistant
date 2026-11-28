@@ -1,0 +1,47 @@
+{
+  "$schema": "cat-lint-baseline/v1",
+  "_comment": "Per-layer lint counts for the ratchet (lint baseline, 2026-11-28; cat-harness `language-expectations`). Only THIS layer and the layers below it are recorded here: a list here of a layer above would name it, which `check:reference-direction` refuses. Each layer above keeps its own `.github/lint-baseline.json`, as `.github/workflow-tools-baseline.json` is kept. Written by `bun run cat lint:report -- --write-baseline <this file>` over the folio-assistant index (pins of d2b0503), with this layer's own row measured on its own tree after the actionlint triage. DATA, not yet a gate: `lint:report` prints each count's change against it and always exits 0. The ratchet step fails a PR only when a count rises, and moves a rule into ruff.toml's `select` once its count is 0 in every layer. A count is lowered here in the PR that lowers it; it is never raised to admit a finding. `null` is not measured.",
+  "measuredAt": "2026-11-28T18:26:32.249Z",
+  "tools": {
+    "ruff": "0.16.9",
+    "shellcheck": "0.11.0",
+    "actionlint": "1.7.12"
+  },
+  "layers": {
+    ".": {
+      "ruff:must-pass": 0,
+      "ruff:classic": 37,
+      "shellcheck:error": 0,
+      "shellcheck:all": 12,
+      "actionlint": 0
+    },
+    "bootstrap": {
+      "ruff:must-pass": 0,
+      "ruff:classic": 0,
+      "shellcheck:error": 0,
+      "shellcheck:all": 0,
+      "actionlint": 0
+    },
+    "bootstrap-tools": {
+      "ruff:must-pass": 0,
+      "ruff:classic": 0,
+      "shellcheck:error": 0,
+      "shellcheck:all": 0,
+      "actionlint": 0
+    },
+    "cat-harness": {
+      "ruff:must-pass": 0,
+      "ruff:classic": 0,
+      "shellcheck:error": 0,
+      "shellcheck:all": 0,
+      "actionlint": 0
+    },
+    "cat-harness-tools": {
+      "ruff:must-pass": 0,
+      "ruff:classic": 138,
+      "shellcheck:error": 0,
+      "shellcheck:all": 32,
+      "actionlint": 0
+    }
+  }
+}
