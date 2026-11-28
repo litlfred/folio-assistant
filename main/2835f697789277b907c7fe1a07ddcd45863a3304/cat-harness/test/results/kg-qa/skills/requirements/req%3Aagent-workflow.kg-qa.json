@@ -1,0 +1,66 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:agent-workflow",
+    "path": "skills/requirements/agent-workflow.json"
+  },
+  "source_hash": "sha256:97ac7a3b629d98c08aad8002f531598cfb199db722a06866f30dc67bb5fd60c0",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:agent-workflow/judgement-stays-human",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#judgement-stays-human` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/beans-primary-tracker",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#beans-primary-tracker` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/context-stays-small",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#context-stays-small` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/merge-grants-time-boxed",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#merge-grants-time-boxed` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/alternatives-prioritised",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#alternatives-prioritised` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/stalled-children-prodded",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#stalled-children-prodded` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/caches-kept-by-merge-manager",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#caches-kept-by-merge-manager` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:agent-workflow/unverified-reports-not-sources",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#unverified-reports-not-sources` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}
