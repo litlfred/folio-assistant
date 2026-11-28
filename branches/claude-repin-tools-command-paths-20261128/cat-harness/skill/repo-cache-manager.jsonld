@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/repo-cache-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "386afa60c0d1081bdd20b1c6d2b8f54fa56fdaf8",
+    "pr": "3203/merge",
+    "run": "46185184274"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/repo-cache-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "repo-cache-manager",
+      "title": "Repository cache manager — the other caches, one lane",
+      "description": "The merge manager's sub-lane for every repository cache other than Lean: LaTeX/PDF build caches, FHIR AST branches, generated-artefact and render caches, CI step caches. Says what it owns, how it finds each cache, when it refreshes one after a merge, how it reads drift in a cache's inputs, and what it watches for the merge manager. Use for \"the PDF cache is stale\", \"the build restored nothing\", \"who refreshes this cache\", and when adding a new cache to a folio.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/repo-cache-manager.md",
+      "instructionLines": 75,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-cache-manager"
+    }
+  ]
+}

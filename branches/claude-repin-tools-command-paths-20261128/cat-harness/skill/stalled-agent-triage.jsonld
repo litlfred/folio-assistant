@@ -4,22 +4,22 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-tools-command-paths-20261128",
-    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "sha": "386afa60c0d1081bdd20b1c6d2b8f54fa56fdaf8",
     "pr": "3203/merge",
-    "run": "46181296471"
+    "run": "46185184274"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/stalled-agent-triage",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "stalled-agent-triage",
-      "title": "Stalled-agent triage",
-      "description": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, work items, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "title": "Stalled-agent triage and bidirectional relay re-entry",
+      "description": "Triage incoming work from stalled agents AND govern returning-agent re-entry after another session advanced the repository. Enforces Bidirectional Relay Continuity: write-ahead epic checkpointing at dispatch time paired with the five-step non-destructive takeover and re-entry reconciliation (remote commit and beans delta, epic Live Relay Snapshot, four-way open/draft PR classification, non-destructive worktree/overlay/donor-cache inspection with `claude/salvage-*` rescue instead of `git reset --hard`, and lease-table plus Merge Steward queue resumption). Use when a session or swarm has stalled, timed out, hit a quota cap, or lost its container, when the owner says \"pick up what X was doing\", or whenever an agent returns on its next turn after another agent advanced `main`, PRs, or `beans`.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/stalled-agent-triage.md",
-      "instructionLines": 116,
+      "instructionLines": 193,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

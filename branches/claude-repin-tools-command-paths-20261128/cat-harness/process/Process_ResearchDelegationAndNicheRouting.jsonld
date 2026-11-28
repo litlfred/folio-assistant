@@ -1,0 +1,175 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "386afa60c0d1081bdd20b1c6d2b8f54fa56fdaf8",
+    "pr": "3203/merge",
+    "run": "46185184274"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Research delegation and niche routing",
+      "summary": "Keeps foreground discussion turns unblocked whenever answering or analysing exceeds a brief ~15-20 s lookup, immediately reporting scope, ETA, potential outcomes with implications, and any upfront clarification card while routing the background work either to…",
+      "description": "Keeps foreground discussion turns unblocked whenever answering or analysing exceeds a brief ~15-20 s lookup, immediately reporting scope, ETA, potential outcomes with implications, and any upfront clarification card while routing the background work either to an active deep-niche specialist, across multiple niche specialists for cross-fertilization on domain bridges, or to a newly spawned niche specialist, write-ahead checkpointing the parent epic bean and Worktree/Branch/Scratch Lease Table at dispatch time (and reconciling via Process_StalledAgentTriage whenever resuming after another agent advanced the repo), and executing Process_EvidenceGatheringAndProvenance.",
+      "enforcement": "strict",
+      "sourcePath": "sdlc/processes/research-delegation-and-niche-routing.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/research-delegation-and-niche-routing.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/assets/img/workflows/research-delegation-and-niche-routing.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Start_QuestionArrives"
+      ],
+      "nodeCount": 14,
+      "flowCount": 15,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Start_QuestionArrives",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_ExceedsBriefLookup",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_2a",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_ExceedsBriefLookup",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_AnswerInline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_2a"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_2b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_ExceedsBriefLookup",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_ReportNonBlockingDispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_2b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_3a",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_AnswerInline",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/End_AnsweredInline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_3a"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_ReportNonBlockingDispatch",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_NicheRoute",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5a",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "same niche",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_NicheRoute",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_RouteSameSpecialist",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5a"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "cross-niche bridge",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_NicheRoute",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_FanOutBridge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5c",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "new niche",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_NicheRoute",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_SpawnNicheSpecialist",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5c"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6a",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_RouteSameSpecialist",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_DispatchJoin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6a"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_FanOutBridge",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_DispatchJoin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6c",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_SpawnNicheSpecialist",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_DispatchJoin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6c"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_DispatchJoin",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_WriteAheadEpicCheckpoint",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_WriteAheadEpicCheckpoint",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Call_EvidenceAndResearch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Call_EvidenceAndResearch",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_SynthesizeAndUpdateUser",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_SynthesizeAndUpdateUser",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/End_UserUpdated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_9"
+    }
+  ]
+}

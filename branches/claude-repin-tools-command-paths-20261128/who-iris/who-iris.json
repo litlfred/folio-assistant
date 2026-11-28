@@ -371,10 +371,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
-  "sourceCommitSha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
-  "sourceTree": "cd37f70a2b9ff622c457d2305358d427160472fe",
-  "sourceCommitAt": "2026-11-28T20:27:47+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/386afa60c0d1081bdd20b1c6d2b8f54fa56fdaf8",
+  "sourceCommitSha": "386afa60c0d1081bdd20b1c6d2b8f54fa56fdaf8",
+  "sourceTree": "2717b7bdc782804a79916d7d5a873bd455489946",
+  "sourceCommitAt": "2026-11-28T20:12:25Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -395,6 +395,20 @@
     "SoftwareLibrary": 5
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-oxigraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "iris-oxigraph",
+      "title": "Oxigraph multi-graph search for WHO IRIS",
+      "description": "How to build WHO IRIS catalogue and Qualified Dublin Core metadata into partitioned N-Quads, and query it with Oxigraph — in Bun on the build side, in WebAssembly in the browser — including cross-graph joins and facet counts.",
+      "instructionsPath": "skills/iris-oxigraph.md",
+      "instructionLines": 218,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
@@ -438,20 +452,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-oxigraph",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "iris-oxigraph",
-      "title": "Oxigraph multi-graph search for WHO IRIS",
-      "description": "How to build WHO IRIS catalogue and Qualified Dublin Core metadata into partitioned N-Quads, and query it with Oxigraph — in Bun on the build side, in WebAssembly in the browser — including cross-graph joins and facet counts.",
-      "instructionsPath": "skills/iris-oxigraph.md",
-      "instructionLines": 218,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-signing",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "iris-cdn-signing",
@@ -464,6 +464,908 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "IRIS CDN initial load",
+      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs.",
+      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
+      "enforcement": "strict",
+      "sourcePath": "processes/iris-cdn-initial-load.bpmn",
+      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-initial-load.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/assets/img/workflows/iris-cdn-initial-load.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved"
+      ],
+      "nodeCount": 15,
+      "flowCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Owner",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "IRIS CDN Exporter (agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Owner approves an initial load",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-owner",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "State scope and budget, with denominators",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-owner",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Plan batches by community and collection",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-dspace"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Harvest a batch of item records (REST)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-dspace"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F3",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Fetch bitstreams not already held",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Bytes match the IRIS checksum?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Store bytes under SHA-256 (skip if held)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Commit the batch checkpoint",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Quarantine and report the mismatch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "GW_More_Join",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "More batches?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F10",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Build the graph partitions",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-oxigraph",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Sign and publish the release",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnSignPublish",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Review the load report; open beans for gaps",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Initial release published and verified",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "IRIS CDN weekly reconciliation",
+      "summary": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds.",
+      "description": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds. An item no longer listed is re-checked by id; only one IRIS confirms withdrawn is marked so.",
+      "enforcement": "strict",
+      "sourcePath": "processes/iris-cdn-reconcile.bpmn",
+      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-reconcile.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/assets/img/workflows/iris-cdn-reconcile.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
+      ],
+      "nodeCount": 11,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "IRIS CDN Exporter (agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Weekly, Sunday 04:00 UTC",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "List every item id IRIS reports",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Compare with the ids the library holds",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Missing share under 1%?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Treat the listing as faulty; escalate",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Nothing marked",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Re-check each missing item by id",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Mark confirmed items withdrawn (keep bytes)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Rebuild the whole graph (sorted output)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-oxigraph",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Sign and publish the release",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnSignPublish",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Reconciled",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnSignPublish",
@@ -1369,908 +2271,6 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
-      "name": "IRIS CDN weekly reconciliation",
-      "summary": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds.",
-      "description": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds. An item no longer listed is re-checked by id; only one IRIS confirms withdrawn is marked so.",
-      "enforcement": "strict",
-      "sourcePath": "processes/iris-cdn-reconcile.bpmn",
-      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-reconcile.bpmn",
-      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/assets/img/workflows/iris-cdn-reconcile.svg",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
-      ],
-      "nodeCount": 11,
-      "flowCount": 10,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "Build pipeline",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "IRIS CDN Exporter (agent)",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Weekly, Sunday 04:00 UTC",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R1"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "List every item id IRIS reports",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R1"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R2"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Compare with the ids the library holds",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R3"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Missing share under 1%?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R4",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Treat the listing as faulty; escalate",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R4"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Nothing marked",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R5"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Re-check each missing item by id",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Mark confirmed items withdrawn (keep bytes)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Rebuild the whole graph (sorted output)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R8"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R9"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Sign and publish the release",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnSignPublish",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R9"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R10"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Reconciled",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnReconcile#flow/R10"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
-      "name": "IRIS CDN initial load",
-      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs.",
-      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
-      "enforcement": "strict",
-      "sourcePath": "processes/iris-cdn-initial-load.bpmn",
-      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-initial-load.bpmn",
-      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/assets/img/workflows/iris-cdn-initial-load.svg",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved"
-      ],
-      "nodeCount": 15,
-      "flowCount": 16,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F10"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "Owner",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-owner",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "IRIS CDN Exporter (agent)",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "Build pipeline",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Owner approves an initial load",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-owner",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "State scope and budget, with denominators",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-owner",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F1"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Plan batches by community and collection",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-dspace"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F3"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Harvest a batch of item records (REST)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-rest-feed",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-dspace"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F3",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F10"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Fetch bitstreams not already held",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F4"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Bytes match the IRIS checksum?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_Fixity"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Store bytes under SHA-256 (skip if held)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Commit the batch checkpoint",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Quarantine and report the mismatch",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "GW_More_Join",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "More batches?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F10",
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Build the graph partitions",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Sign and publish the release",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnSignPublish",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F12"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Review the load report; open beans for gaps",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F13"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Initial release published and verified",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/who-iris/translationSource/ar/glossary/who-iris--who-terms.po",
@@ -3712,8 +3712,8 @@
   ],
   "staging": {
     "branch": "claude/repin-tools-command-paths-20261128",
-    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "sha": "386afa60c0d1081bdd20b1c6d2b8f54fa56fdaf8",
     "pr": "3203/merge",
-    "run": "46181296471"
+    "run": "46185184274"
   }
 }

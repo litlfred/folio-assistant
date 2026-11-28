@@ -263,7 +263,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_StalledAgentTriage",
       "label": "User",
-      "scopeNote": "Decides one theme at a time: continue, fold into the plan, new epic, park, or scrap.",
+      "scopeNote": "Decides one theme at a time (continue, fold into the plan, new epic, park, or scrap), or supplies standing grant/plan continuity when returning on a turn without scope ambiguity.",
       "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {
@@ -1246,8 +1246,10 @@
         "Designer",
         "Dispatched agent",
         "Drainer",
+        "Niche research specialists",
         "Query Caller (CLI / MCP / Web)",
-        "Triage agent",
+        "Research and authoring agent",
+        "Triage / re-entering agent",
         "Worker agents"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld",
@@ -1255,6 +1257,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Platform",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_EvidenceGatheringAndProvenance/Lane_AuthoringResearch",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparationAuthorise/Lane_Agent",
@@ -1283,6 +1286,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ResearchDelegationAndNicheRouting/Lane_Specialists",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Workers",
@@ -1317,6 +1321,15 @@
       "label": "Agent / platform (automated)",
       "scopeNote": "Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file's presence.\n\nIt is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer's lane instead.",
       "source": "cat-harness/library/processes/translation-workflow.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_EvidenceGatheringAndProvenance/Lane_AuthoringResearch",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+      "label": "Research and authoring agent",
+      "scopeNote": "Decomposes topic areas, compiles source and dataset shortlists, queries external scholarly and data databases, records blocked fetches or gaps honestly, assesses opened sources for exact locators and claim boundaries, and wires authoring provenance notes and formal citations into authored blocks.",
+      "source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
@@ -1571,6 +1584,15 @@
       "source": "cat-harness/sdlc/processes/requirements-filing.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ResearchDelegationAndNicheRouting/Lane_Specialists",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "label": "Niche research specialists",
+      "scopeNote": "Persistent domain-specialized background research agents that accumulate niche vocabulary, theorem inventory, ingested corpus locators, and negative-result memory while executing Process_EvidenceGatheringAndProvenance.",
+      "source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/authoring-agent",
@@ -1584,8 +1606,8 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_StalledAgentTriage",
-      "label": "Triage agent",
-      "scopeNote": "Reads the footprint the stalled agents left, collects or reconstructs a handover report per agent, groups the work into 2-4 themes, and recommends. It never finishes, closes or deletes another agent's work.",
+      "label": "Triage / re-entering agent",
+      "scopeNote": "Audits remote default-branch and beans deltas, reads the epic write-ahead Live Relay Snapshot, classifies open and draft PRs, inspects worktrees, /tmp overlays, and Cargo/Lean donor caches non-destructively (rescuing dirty stalled work onto claude/salvage-* rather than resetting), consolidates themes, and reconciles the epic lease table.",
       "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {
@@ -1644,6 +1666,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_1",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_1",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_EvidenceGatheringAndProvenance/Lane_Ingestion",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent"
       ]
@@ -1701,6 +1724,15 @@
       "label": "Ingestion Engine (agent, runs unattended)",
       "scopeNote": "Validates the substrate at the pin, then walks the chosen parts one at a time: each subgraph or asset through the shared materialisation subprocess, each held copy through the shared refresh, each harness by writing its config. Every loop here re-enters its decision after each part, so a refusal on one part is recorded and the walk continues to the next rather than aborting the subscription.",
       "source": "cat-harness/library/processes/subscribe-kg.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_EvidenceGatheringAndProvenance/Lane_Ingestion",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/ingestion-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+      "label": "Ingestion engine",
+      "scopeNote": "Ingests retrieved CSL-JSON reference records, open-access documents, and tabular datasets into declared Knowledge Graph directories (references/, library/, sources/, extracted-references/, attestations/) through Process_Ingestion rather than leaving raw URLs in scratch notes.",
+      "source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
@@ -2590,6 +2622,7 @@
       "altLabel": [
         "Coordinator",
         "Discussion agent",
+        "Foreground coordinator",
         "Merge steward",
         "Queue keeper"
       ],
@@ -2598,6 +2631,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Discussion",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ResearchDelegationAndNicheRouting/Lane_Coordinator",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwarmDispatchAndMonitor/Lane_Coordinator"
       ]
@@ -2630,12 +2664,21 @@
       "source": "cat-harness/sdlc/processes/merge-refusal.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ResearchDelegationAndNicheRouting/Lane_Coordinator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/session-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "label": "Foreground coordinator",
+      "scopeNote": "Reconciles remote deltas on returning turns, answers sub-15-20 s single-step lookups inline; otherwise immediately delegates to the background without blocking the foreground turn, reports investigation scope, ETA, potential outcomes, and any upfront clarification card, routes follow-ups by deep niche continuity or cross-fertilization fan-out, write-ahead checkpoints the parent epic bean and Worktree/Branch/Scratch Lease Table at dispatch time, and synthesizes returned findings for the user.",
+      "source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_StalledAgentTriage",
       "label": "Merge steward",
-      "scopeNote": "Receives the open PRs that lost their driver: which are green and ready, which are mid-merge, which must be re-driven from their PR head.",
+      "scopeNote": "Receives classified open PRs: queues verified green ready-to-merge PRs, leaves active external sibling drafts untouched, re-drives mid-merge or stalled branches from their PR head or salvage branch, and holds owner-fenced PRs.",
       "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {

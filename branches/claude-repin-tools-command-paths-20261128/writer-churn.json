@@ -5,14 +5,6 @@
   "reused": 0,
   "groups": [
     {
-      "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/folio-assistant-core/glossary/index.md)",
-      "writtenBy": "-",
-      "reran": [
-        "uml:overview"
-      ],
-      "seconds": 348.68601779799997
-    },
-    {
       "cause": "its script, imports or tools",
       "writtenBy": "the commit",
       "reran": [
@@ -20,7 +12,15 @@
         "theme:viz",
         "external-schemas:viz"
       ],
-      "seconds": 205.72780006000013
+      "seconds": 435.3647282479999
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/folio-assistant-core/glossary/index.md)",
+      "writtenBy": "-",
+      "reran": [
+        "uml:overview"
+      ],
+      "seconds": 326.94347796399995
     },
     {
       "cause": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
@@ -30,7 +30,7 @@
         "tools:viz",
         "docs:pages"
       ],
-      "seconds": 59.84703866099986
+      "seconds": 48.41069030599994
     },
     {
       "cause": "not recorded: the trace is 840587644 bytes, more than 536870912",
@@ -38,7 +38,7 @@
       "reran": [
         "subgraph:jsonld"
       ],
-      "seconds": 29.21614423700003
+      "seconds": 30.670484425999923
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html)",
@@ -48,7 +48,7 @@
         "schema:viz",
         "processes:viz"
       ],
-      "seconds": 24.299517133999732
+      "seconds": 25.348532013000224
     },
     {
       "cause": "",
@@ -57,7 +57,15 @@
         "node-kind:pages",
         "slice:sqlite"
       ],
-      "seconds": 22.708385144000175
+      "seconds": 19.92299610999995
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/validators/cat-harness/index.html)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer"
+      ],
+      "seconds": 17.55615387299983
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
@@ -67,15 +75,7 @@
         "smart:pages",
         "smart-base:pages"
       ],
-      "seconds": 14.534058029999782
-    },
-    {
-      "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/validators/cat-harness/index.html)",
-      "writtenBy": "-",
-      "reran": [
-        "state:visualizer"
-      ],
-      "seconds": 12.451376477000071
+      "seconds": 14.248789818000166
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/img/workflows/render-kg-to-github-pages.svg)",
@@ -83,7 +83,7 @@
       "reran": [
         "render:bpmn"
       ],
-      "seconds": 9.530043185000075
+      "seconds": 9.683983166999882
     },
     {
       "cause": "cat-harness-tools",
@@ -103,7 +103,7 @@
         "kg:viewer",
         "kind:json-schemas"
       ],
-      "seconds": 9.520168306999839
+      "seconds": 9.419884353999747
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html)",
@@ -112,7 +112,7 @@
         "auto:docs",
         "fsh-guts:viz"
       ],
-      "seconds": 8.19345889300038
+      "seconds": 7.850977343000239
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json)",
@@ -121,15 +121,7 @@
         "docs:harness",
         "navbar:include"
       ],
-      "seconds": 2.8016921510000246
-    },
-    {
-      "cause": "bootstrap",
-      "writtenBy": "the commit",
-      "reran": [
-        "jsonld:contexts"
-      ],
-      "seconds": 2.5020320979999378
+      "seconds": 2.9604936279999094
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json)",
@@ -138,7 +130,15 @@
         "voices:viz",
         "methodologies:viz"
       ],
-      "seconds": 2.381820157000213
+      "seconds": 2.497788774000015
+    },
+    {
+      "cause": ".claude/commands",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts"
+      ],
+      "seconds": 2.395785525999963
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -146,7 +146,7 @@
       "reran": [
         "site:viz"
       ],
-      "seconds": 1.536364362000022
+      "seconds": 1.669423896000022
     },
     {
       "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
@@ -154,7 +154,7 @@
       "reran": [
         "ig-ast:pages"
       ],
-      "seconds": 0.8609191479999572
+      "seconds": 1.0395873879999853
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/smart-base/fhir-artifact-index/index.json)",
@@ -162,7 +162,7 @@
       "reran": [
         "smart-base:document-kinds"
       ],
-      "seconds": 0.8151955839999718
+      "seconds": 0.893615828000009
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: smart-trust/fhir-artifact-index/index.json)",
@@ -170,7 +170,7 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 0.708330169999972
+      "seconds": 0.5694042110000737
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: smart-trust-phw/fhir-artifact-index/index.json)",
@@ -178,7 +178,7 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.5029673959999346
+      "seconds": 0.45264644600008613
     },
     {
       "cause": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/site-chrome/assets/css/themes.css)",
@@ -186,7 +186,7 @@
       "reran": [
         "themes:css"
       ],
-      "seconds": 0.44174271799996495
+      "seconds": 0.4507070820000954
     }
   ],
   "writers": [
@@ -194,7 +194,7 @@
       "writer": "auto:docs",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html)",
-      "seconds": 6.72791116600018
+      "seconds": 6.375807930000127
     },
     {
       "writer": "avatars:css",
@@ -204,7 +204,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.1137479169999715
+      "seconds": 0.11105480299983174
     },
     {
       "writer": "bibliography:page",
@@ -214,19 +214,19 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 1.4505905949999578
+      "seconds": 1.4617175320000388
     },
     {
       "writer": "docs:harness",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json)",
-      "seconds": 2.6809451200000476
+      "seconds": 2.8357920150000138
     },
     {
       "writer": "docs:pages",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 1.9232831119999756
+      "seconds": 1.7899245720000472
     },
     {
       "writer": "document-kinds:viz",
@@ -236,7 +236,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.536131715000025
+      "seconds": 0.5805434579998254
     },
     {
       "writer": "external-schemas:viz",
@@ -245,7 +245,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 6.61612526300014
+      "seconds": 7.438647537000012
     },
     {
       "writer": "folio:viz",
@@ -255,35 +255,35 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.6069774859999306
+      "seconds": 0.6193783750000875
     },
     {
       "writer": "fsh-guts:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/skills/bootstrap-skills/index.html)",
-      "seconds": 1.465547727000201
+      "seconds": 1.4751694130001125
     },
     {
       "writer": "ig-ast:pages",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 0.8609191479999572
+      "seconds": 1.0395873879999853
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
-      "seconds": 13.25512880799995
+      "seconds": 13.123268726999989
     },
     {
       "writer": "jsonld:contexts",
       "did": "ran",
-      "why": "bootstrap changed (+18 more: cat-harness-tools, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/tests, cat-harness-tools/scripts/tests/sdlc, and 11 others)",
+      "why": ".claude/commands changed (+37 more: bootstrap, cat-harness-tools, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/tests, and 30 others)",
       "cause": {
         "kind": "path",
-        "path": "bootstrap"
+        "path": ".claude/commands"
       },
-      "seconds": 2.5020320979999378
+      "seconds": 2.395785525999963
     },
     {
       "writer": "kg:viewer",
@@ -293,7 +293,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.387748920999933
+      "seconds": 0.4147827049999032
     },
     {
       "writer": "kind:json-schemas",
@@ -303,7 +303,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.7912371390000917
+      "seconds": 0.8779717040001415
     },
     {
       "writer": "kind:table",
@@ -313,7 +313,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.13904012000001967
+      "seconds": 0.13786186999990604
     },
     {
       "writer": "library:keywords",
@@ -322,41 +322,41 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 198.56818688399997
+      "seconds": 427.41461202599993
     },
     {
       "writer": "library:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html)",
-      "seconds": 14.760979369999957
+      "seconds": 15.810606932000024
     },
     {
       "writer": "methodologies:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json)",
-      "seconds": 1.6261040440001524
+      "seconds": 1.7536962959999218
     },
     {
       "writer": "navbar:include",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/_data/harness.json)",
-      "seconds": 0.12074703099997715
+      "seconds": 0.12470161299989559
     },
     {
       "writer": "node-kind:pages",
       "did": "ran",
       "why": "",
-      "seconds": 12.293391306000062
+      "seconds": 11.00932308900007
     },
     {
       "writer": "node-kinds",
       "did": "ran",
-      "why": "cat-harness-tools changed (+9 more: cat-harness-tools/AGENTS.md, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/navbar.ts, cat-harness-tools/scripts/viewer-declarations.ts, and 2 others)",
+      "why": "cat-harness-tools changed (+10 more: cat-harness-tools/AGENTS.md, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness-tools/scripts/lib, cat-harness-tools/scripts/lib/navbar.ts, cat-harness-tools/scripts/viewer-declarations.ts, and 3 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.8562714840000263
+      "seconds": 0.9070688239999581
     },
     {
       "writer": "openapi:viz",
@@ -366,49 +366,49 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.16708573399996385
+      "seconds": 0.17241303599998356
     },
     {
       "writer": "processes:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html)",
-      "seconds": 7.222006874999963
+      "seconds": 7.02985787500022
     },
     {
       "writer": "render:bpmn",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/img/workflows/render-kg-to-github-pages.svg)",
-      "seconds": 9.530043185000075
+      "seconds": 9.683983166999882
     },
     {
       "writer": "schema:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/auto-docs/index/docs/folio-assistant-core-folio-assistant-core-docs/index.html)",
-      "seconds": 2.316530888999812
+      "seconds": 2.508067205999978
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.536364362000022
+      "seconds": 1.669423896000022
     },
     {
       "writer": "skills:docs",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 17.179745724000036
+      "seconds": 13.785556973999832
     },
     {
       "writer": "slice:sqlite",
       "did": "ran",
       "why": "",
-      "seconds": 10.414993838000111
+      "seconds": 8.913673020999878
     },
     {
       "writer": "smart-base:document-kinds",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/smart-base/fhir-artifact-index/index.json)",
-      "seconds": 0.8151955839999718
+      "seconds": 0.893615828000009
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -418,43 +418,43 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.5347948170001618
+      "seconds": 0.5511973729999736
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
-      "seconds": 0.6450693399999291
+      "seconds": 0.638982222000137
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: smart-trust-phw/fhir-artifact-index/index.json)",
-      "seconds": 0.5029673959999346
+      "seconds": 0.45264644600008613
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: smart-trust/fhir-artifact-index/index.json)",
-      "seconds": 0.708330169999972
+      "seconds": 0.5694042110000737
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: smart-base/fhir-artifact-index/index.json)",
-      "seconds": 0.6338598819999024
+      "seconds": 0.48653886900004
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/cat-harness/validators/cat-harness/index.html)",
-      "seconds": 12.451376477000071
+      "seconds": 17.55615387299983
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
       "why": "not recorded: the trace is 840587644 bytes, more than 536870912",
-      "seconds": 29.21614423700003
+      "seconds": 30.670484425999923
     },
     {
       "writer": "subscriptions:viz",
@@ -464,7 +464,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.1650620339999441
+      "seconds": 0.18161812600004487
     },
     {
       "writer": "theme:viz",
@@ -473,25 +473,25 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.5434879130000482
+      "seconds": 0.5114686849999707
     },
     {
       "writer": "themes:css",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/site-chrome/assets/css/themes.css)",
-      "seconds": 0.44174271799996495
+      "seconds": 0.4507070820000954
     },
     {
       "writer": "tools:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 40.74400982499984
+      "seconds": 32.835208760000064
     },
     {
       "writer": "uml:overview",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/en/folio-assistant-core/glossary/index.md)",
-      "seconds": 348.68601779799997
+      "seconds": 326.94347796399995
     },
     {
       "writer": "uploads:viz",
@@ -501,13 +501,13 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 3.4464696090000215
+      "seconds": 3.060041552999988
     },
     {
       "writer": "voices:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (layer-output: build/layers/cat-harness/docs/assets/library/index.json)",
-      "seconds": 0.7557161130000605
+      "seconds": 0.7440924780000933
     },
     {
       "writer": "web-apps:build",
@@ -517,7 +517,7 @@
         "kind": "path",
         "path": "cat-harness-tools"
       },
-      "seconds": 0.3250107359997928
+      "seconds": 0.3442349950000644
     }
   ]
 }
