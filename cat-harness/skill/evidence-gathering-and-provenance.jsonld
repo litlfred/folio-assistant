@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "evidence-gathering-and-provenance",
+      "title": "Evidence gathering, Knowledge Graph ingestion, and authoring provenance",
+      "description": "Five-step research, scholarly retrieval, Knowledge Graph ingestion, relevancy assessment, and authoring-provenance workflow required of research and authoring agents: decompose topic areas and shortlist needed papers and datasets, query scholarly and data databases (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, and reference data registries), ingest into declared KG subgraphs, record relevancy and claim boundaries, and wire authoring provenance notes and formal citations into authored blocks.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/evidence-gathering-and-provenance.md",
+      "instructionLines": 181,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
+    }
+  ]
+}

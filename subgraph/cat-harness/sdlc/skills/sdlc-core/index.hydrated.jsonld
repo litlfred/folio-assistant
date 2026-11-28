@@ -53,18 +53,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-handoff",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which work item, where the receiver reports, what the person pastes (one sentence: work item, branch, repository) and the brief the work item opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a work item for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+      "description": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which work item, where the receiver reports, what the person pastes (one sentence: work item, branch, repository) and the brief the work item opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a work item for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent, stall takeover, returning turn, pick up where they left off.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 277,
+      "instructionLines": 310,
       "instructionsPath": "sdlc/skills/sdlc-core/agent-handoff.md",
       "name": "agent-handoff",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4b3cfe4493f9eafd7bec6f87d318b5e60bb9f9e34efe966a2e163a461ecc0193",
-        "bytes": 14550,
-        "sha256": "4b3cfe4493f9eafd7bec6f87d318b5e60bb9f9e34efe966a2e163a461ecc0193"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d74515287dd5d472e24a329211c07991b260c1600338a65dfa051d7fcceb5875",
+        "bytes": 17851,
+        "sha256": "d74515287dd5d472e24a329211c07991b260c1600338a65dfa051d7fcceb5875"
       },
       "title": "One task, two agents, one human between them"
     },
@@ -267,13 +267,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 204,
+      "instructionLines": 210,
       "instructionsPath": "sdlc/skills/sdlc-core/dispatch-agent.md",
       "name": "dispatch-agent",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b8249bb92409bc74703430785a62f7e41d9edcf57bc553ea9b7b17e1200c6ad1",
-        "bytes": 21917,
-        "sha256": "b8249bb92409bc74703430785a62f7e41d9edcf57bc553ea9b7b17e1200c6ad1"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8fc7a14ece44d2295a048f24b8bcae9b7b0522d01a04cd59d8750a5f029dafa9",
+        "bytes": 24397,
+        "sha256": "8fc7a14ece44d2295a048f24b8bcae9b7b0522d01a04cd59d8750a5f029dafa9"
       },
       "title": "Parallel worker dispatch with live progress telemetry and human-consumable monitoring"
     },
@@ -381,13 +381,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 149,
+      "instructionLines": 150,
       "instructionsPath": "sdlc/skills/sdlc-core/handover-report.md",
       "name": "handover-report",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa9694429ab8164fcfcf5f029db179a2b511076761ee425627a4cd5e63d97877",
-        "bytes": 6901,
-        "sha256": "fa9694429ab8164fcfcf5f029db179a2b511076761ee425627a4cd5e63d97877"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4935f842f087c867b3a1a4fcf2f932cc144f748ec873043f5d96f86fab212a08",
+        "bytes": 7347,
+        "sha256": "4935f842f087c867b3a1a4fcf2f932cc144f748ec873043f5d96f86fab212a08"
       },
       "title": "Handover report"
     },
@@ -468,6 +468,25 @@
       "title": "Working an issue — announce, then re-check"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lean-cache-manager",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The merge manager's Lean sub-lane: own the Lake cache branch and its addon overlays, run direct Lean verification (`lean` against the restored cache, plus `#print axioms`) for threads that have no Lean toolchain, watch the toolchain and Mathlib pins for drift, and keep the cache warm after every merge that touches Lean. Use for \"is the cache current\", \"run lean-direct on this\", \"the restore missed\", \"bump Lean / Mathlib\", \"contribute the oleans\", and whenever a merge request names a `.lean` file.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 133,
+      "instructionsPath": "sdlc/skills/sdlc-core/lean-cache-manager.md",
+      "name": "lean-cache-manager",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/16b7a76f2d109364f534a919621205c507d68e792681ae6230b420619b28ec3b",
+        "bytes": 7153,
+        "sha256": "16b7a76f2d109364f534a919621205c507d68e792681ae6230b420619b28ec3b"
+      },
+      "title": "Lean cache manager — a sub-lane of the merge manager"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -495,13 +514,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 690,
+      "instructionLines": 737,
       "instructionsPath": "sdlc/skills/sdlc-core/merge-manager-watcher.md",
       "name": "merge-manager-watcher",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cbcc7a87ffdbfad16e8c6e2a27ca4609c72990127be14b199d3d5a7006ed4e58",
-        "bytes": 45078,
-        "sha256": "cbcc7a87ffdbfad16e8c6e2a27ca4609c72990127be14b199d3d5a7006ed4e58"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a59f43998d27350cd2c0d9235667f362a9c3a194beddbc7799c10781379060b",
+        "bytes": 48177,
+        "sha256": "7a59f43998d27350cd2c0d9235667f362a9c3a194beddbc7799c10781379060b"
       },
       "title": "Merge manager watcher — the loop that runs the merge-steward role"
     },
@@ -514,13 +533,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 1118,
+      "instructionLines": 1120,
       "instructionsPath": "sdlc/skills/sdlc-core/merge-queue.md",
       "name": "merge-queue",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c6d9250d449bc0038eeca29f97164445bb8e882faf833147c45d5b39605d48c",
-        "bytes": 67774,
-        "sha256": "4c6d9250d449bc0038eeca29f97164445bb8e882faf833147c45d5b39605d48c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/775ab59ba3b07cf38f0ac21f3dad0f5f2b321ad527c3ad061e93ccdeb8b76bc3",
+        "bytes": 68079,
+        "sha256": "775ab59ba3b07cf38f0ac21f3dad0f5f2b321ad527c3ad061e93ccdeb8b76bc3"
       },
       "title": "Merge queue — what lands next, and as what"
     },
@@ -704,13 +723,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 184,
+      "instructionLines": 195,
       "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge-auto.md",
       "name": "prepare-merge-auto",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/345017d50a19738b1e0f612289ba4f77294c31dd82ab11db21175fb395c5e061",
-        "bytes": 8311,
-        "sha256": "345017d50a19738b1e0f612289ba4f77294c31dd82ab11db21175fb395c5e061"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4153e6b8957d991748ea2c1ea149590026346d6cd6f22c3696be422ebcc2fec1",
+        "bytes": 8988,
+        "sha256": "4153e6b8957d991748ea2c1ea149590026346d6cd6f22c3696be422ebcc2fec1"
       },
       "title": "/prepare-merge-auto — Autonomous merge pipeline"
     },
@@ -885,6 +904,44 @@
       "title": "Rendered impact — which rendered files a Change Set changes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-cache-manager",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The merge manager's sub-lane for every repository cache other than Lean: LaTeX/PDF build caches, FHIR AST branches, generated-artefact and render caches, CI step caches. Says what it owns, how it finds each cache, when it refreshes one after a merge, how it reads drift in a cache's inputs, and what it watches for the merge manager. Use for \"the PDF cache is stale\", \"the build restored nothing\", \"who refreshes this cache\", and when adding a new cache to a folio.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 75,
+      "instructionsPath": "sdlc/skills/sdlc-core/repo-cache-manager.md",
+      "name": "repo-cache-manager",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/47b01f87075d646c960f2e1d53ef6ecaa9cee2eb6d3839f12639bb12984bec2f",
+        "bytes": 3936,
+        "sha256": "47b01f87075d646c960f2e1d53ef6ecaa9cee2eb6d3839f12639bb12984bec2f"
+      },
+      "title": "Repository cache manager — the other caches, one lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/research-manager",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Run research as a managed portfolio of alternatives: when a goal has more than one way forward, put every alternative on a research-path card with its cost, risk and commitment and one recommended, prioritise which to pursue, dispatch a sibling research thread (or agent) per chosen path with a bean of its own, record the rejected paths, prod stalled children, and report usage-limit pauses instead of prodding them. Use for \"pursue the alternatives\", \"which route should we try\", \"dispatch research agents\", \"research manager\", and whenever a thread ends with more than one possible next direction.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 207,
+      "instructionsPath": "sdlc/skills/sdlc-core/research-manager.md",
+      "name": "research-manager",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fcb4ed394e7b08e2d30e5b8ebe60e58e874f7288fbf97364248e9a77cbd8f44e",
+        "bytes": 11728,
+        "sha256": "fcb4ed394e7b08e2d30e5b8ebe60e58e874f7288fbf97364248e9a77cbd8f44e"
+      },
+      "title": "Research manager — alternatives on cards, chosen by priority, pursued by siblings"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -983,20 +1040,20 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, work items, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "description": "Triage incoming work from stalled agents AND govern returning-agent re-entry after another session advanced the repository. Enforces Bidirectional Relay Continuity: write-ahead epic checkpointing at dispatch time paired with the five-step non-destructive takeover and re-entry reconciliation (remote commit and beans delta, epic Live Relay Snapshot, four-way open/draft PR classification, non-destructive worktree/overlay/donor-cache inspection with `claude/salvage-*` rescue instead of `git reset --hard`, and lease-table plus Merge Steward queue resumption). Use when a session or swarm has stalled, timed out, hit a quota cap, or lost its container, when the owner says \"pick up what X was doing\", or whenever an agent returns on its next turn after another agent advanced `main`, PRs, or `beans`.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 116,
+      "instructionLines": 193,
       "instructionsPath": "sdlc/skills/sdlc-core/stalled-agent-triage.md",
       "name": "stalled-agent-triage",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b0350d9c70fc6255c029f52ef88993ad8cc7dc829af8a421028e19ca101bfd67",
-        "bytes": 5495,
-        "sha256": "b0350d9c70fc6255c029f52ef88993ad8cc7dc829af8a421028e19ca101bfd67"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4db820eb312dfb2655c7f6597e8ab94ff88b357dc38c3eca90a7ee31b3959a8c",
+        "bytes": 10476,
+        "sha256": "4db820eb312dfb2655c7f6597e8ab94ff88b357dc38c3eca90a7ee31b3959a8c"
       },
-      "title": "Stalled-agent triage"
+      "title": "Stalled-agent triage and bidirectional relay re-entry"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-management",
@@ -1007,13 +1064,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 215,
+      "instructionLines": 296,
       "instructionsPath": "sdlc/skills/sdlc-core/swarm-management.md",
       "name": "swarm-management",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a41ffbe38007379cd50f65f9f19205b7c4cc8cc94848deb30695d1b2c3e7b59e",
-        "bytes": 18258,
-        "sha256": "a41ffbe38007379cd50f65f9f19205b7c4cc8cc94848deb30695d1b2c3e7b59e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/80c987d1da3460664025976e1356cd7dbe9cb06fab9e3318afba75fd02d035a6",
+        "bytes": 23277,
+        "sha256": "80c987d1da3460664025976e1356cd7dbe9cb06fab9e3318afba75fd02d035a6"
       },
       "title": "Swarm management"
     },
@@ -1026,13 +1083,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 462,
+      "instructionLines": 465,
       "instructionsPath": "sdlc/skills/sdlc-core/swarm-monitor.md",
       "name": "swarm-monitor",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52af6d25ba2f1a24f6099cd27700ca0c37c426c0dacaf4454c89279f73a18f41",
-        "bytes": 40322,
-        "sha256": "52af6d25ba2f1a24f6099cd27700ca0c37c426c0dacaf4454c89279f73a18f41"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53113ea4ddf099bc3074350f83cec6f34923432563b3107cb4841b8430db2e04",
+        "bytes": 41019,
+        "sha256": "53113ea4ddf099bc3074350f83cec6f34923432563b3107cb4841b8430db2e04"
       },
       "title": "Supervising active swarms, maintaining cold-start handover continuity, and translating worker state for humans"
     },
@@ -1101,13 +1158,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "instructionLines": 226,
+      "instructionLines": 259,
       "instructionsPath": "sdlc/skills/sdlc-core/turn-reporting.md",
       "name": "turn-reporting",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a94077d14904d48af102d218a527b7e80403a2715d50b036aef592fd690b9862",
-        "bytes": 12731,
-        "sha256": "a94077d14904d48af102d218a527b7e80403a2715d50b036aef592fd690b9862"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/39a8511e3e4d6b37cf7535d78d70412000f7b2d945f22dab01539b30bec16d2a",
+        "bytes": 14750,
+        "sha256": "39a8511e3e4d6b37cf7535d78d70412000f7b2d945f22dab01539b30bec16d2a"
       },
       "title": "Turn reporting — say which bean you are on, every turn"
     },

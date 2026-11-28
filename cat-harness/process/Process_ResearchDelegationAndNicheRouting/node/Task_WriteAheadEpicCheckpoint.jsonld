@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_WriteAheadEpicCheckpoint.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_WriteAheadEpicCheckpoint",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write-ahead checkpoint epic & lease table",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/lane/Lane_Coordinator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/research-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-handoff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/handover-report"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
+    }
+  ]
+}

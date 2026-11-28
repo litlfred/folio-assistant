@@ -329,7 +329,10 @@ the debt, not the pattern — do not propagate it.</p><p>Authoring a Tool node: 
 the loader lives in the tools layer. <code class="language-plaintext highlighter-rouge">io</code> ports reference the shared vocabulary
 in <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/schemas/tools/tool-types.ts"><code class="language-plaintext highlighter-rouge">schemas/tools/tool-types.ts</code></a> by its type name (<code class="language-plaintext highlighter-rouge">"$type"</code>) — never a
 free-form string, because a reference nothing checks is eventually wrong.</p><p>For the end-to-end guide on authoring, implementing, packaging, and registering
-concrete tools across separated repositories, see <a href="../../reference/skill-instructions/tool-authoring.html"><code class="language-plaintext highlighter-rouge">tool-authoring</code></a>.
+concrete tools across separated repositories — including native Rust <code class="language-plaintext highlighter-rouge">crates/</code>
+workspaces (zero-C-FFI core computer-algebra crates, MPFR evaluation/solver
+layers, and fast <code class="language-plaintext highlighter-rouge">&lt;folio&gt;-values</code> witnessed-value CLI evaluators registered as
+<code class="language-plaintext highlighter-rouge">tool-definition/v1</code> nodes) — see <a href="../../reference/skill-instructions/tool-authoring.html"><code class="language-plaintext highlighter-rouge">tool-authoring</code></a> §4.
 For runtime conventions, test preloading, and TypeScript configuration, see
 <a href="bun-use.html"><code class="language-plaintext highlighter-rouge">bun-use</code></a> (opt-in <code class="language-plaintext highlighter-rouge">cat-harness.sdlc</code>).</p><h2 id="covered-is-not-reachable--see-its-own-skill"><a href="#covered-is-not-reachable--see-its-own-skill" class="anchor-heading" aria-labelledby="covered-is-not-reachable--see-its-own-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Covered is not reachable — see its own skill
   

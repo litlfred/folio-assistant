@@ -172,6 +172,292 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/evidence-gathering-and-provenance.svg",
+          "description": "Five-step research and authoring-provenance workflow executed whenever a research or authoring agent investigates a topic: decompose topic areas and shortlist needed papers and datasets, query accessible scholarly and data APIs (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, and reference data registries), ingest retrieved references, texts, and datasets into the declared Knowledge Graph subgraphs via Process_Ingestion, assess relevancy and claim boundaries against the opened sources, and record retrieval/verification provenance in authoring notes alongside formal citations in authored blocks.",
+          "enforcement": "advisory",
+          "flowCount": 10,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "Evidence gathering and provenance",
+          "nodeCount": 10,
+          "sourcePath": "processes/content/evidence-gathering-and-provenance.bpmn",
+          "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/content/evidence-gathering-and-provenance.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Start_ResearchNeeded",
+          "summary": "Five-step research and authoring-provenance workflow executed whenever a research or authoring agent investigates a topic: decompose topic areas and shortlist needed papers and datasets, query accessible scholarly and data APIs (Crossref/DOI, arXiv, PubMed, I…"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Start_ResearchNeeded",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_DecomposeShortlist"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_DecomposeShortlist",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_MultiDbSearch"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_MultiDbSearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_FetchOutcome"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4a",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_FetchOutcome",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "blocked or missing",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordBlockedOrGap"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4b",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_FetchOutcome",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "fetched",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Call_IngestIntoKg"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5a",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordBlockedOrGap",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_AfterIngest"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5b",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Call_IngestIntoKg",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_AfterIngest"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_6",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_AfterIngest",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_AssessRelevancy"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_7",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_AssessRelevancy",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordProvenanceAndCite"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_8",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordProvenanceAndCite",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/End_ProvenanceLinked"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "Research and authoring agent",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_Ingestion",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "Ingestion engine",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Call_IngestIntoKg",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_Ingestion",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4b",
+          "name": "Ingest into declared KG",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5b",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/End_ProvenanceLinked",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_8",
+          "name": "Evidence ingested and linked",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_AfterIngest",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5a",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5b"
+          ],
+          "name": "GW_AfterIngest",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_6",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_FetchOutcome",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_3",
+          "name": "Source fetched?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4a",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4b"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/literature-search",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Start_ResearchNeeded",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "name": "Topic research needed",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_AssessRelevancy",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_6",
+          "name": "Assess relevancy and claim boundaries",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_7",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_DecomposeShortlist",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_1",
+          "name": "Decompose topics and shortlist sources",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_MultiDbSearch",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_2",
+          "name": "Query scholarly and data APIs",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_3",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/literature-search",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/online-sequence-and-knot-databases"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordBlockedOrGap",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4a",
+          "name": "Record blocked fetch or search gap",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5a",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/literature-search",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordProvenanceAndCite",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_7",
+          "name": "Record authoring provenance and cite",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_8",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+          "touchesWorkPlan": false
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview",
           "@type": "bootstrap:Process",
           "conformsTo": [

@@ -6,14 +6,15 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Footprint",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Find the footprint",
+      "name": "Audit remote delta, epic relay snapshot & PR classes",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-handoff"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

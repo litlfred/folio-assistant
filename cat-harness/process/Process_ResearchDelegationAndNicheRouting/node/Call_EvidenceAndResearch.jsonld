@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Call_EvidenceAndResearch.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Call_EvidenceAndResearch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Investigate niche and ingest KG evidence",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/lane/Lane_Specialists",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/online-sequence-and-knot-databases"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7b"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
+    }
+  ]
+}

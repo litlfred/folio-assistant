@@ -39,9 +39,11 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-graph",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-profiles",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/editor",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-review",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/md-authoring",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/online-sequence-and-knot-databases",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/review-heatmap",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/scientific-accuracy",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/technical-documentation",
@@ -133,6 +135,25 @@
               "title": "Editor Skill"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Five-step research, scholarly retrieval, Knowledge Graph ingestion, relevancy assessment, and authoring-provenance workflow required of research and authoring agents: decompose topic areas and shortlist needed papers and datasets, query scholarly and data databases (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, and reference data registries), ingest into declared KG subgraphs, record relevancy and claim boundaries, and wire authoring provenance notes and formal citations into authored blocks.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+              "instructionLines": 181,
+              "instructionsPath": "skills/authoring/authoring-core/evidence-gathering-and-provenance.md",
+              "name": "evidence-gathering-and-provenance",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d24295473ce261f9d7a2eaf7f1a490acaa96a2cfa823ae47716cbae751457d66",
+                "bytes": 12328,
+                "sha256": "d24295473ce261f9d7a2eaf7f1a490acaa96a2cfa823ae47716cbae751457d66"
+              },
+              "title": "Evidence gathering, Knowledge Graph ingestion, and authoring provenance"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-review",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -187,6 +208,25 @@
                 "sha256": "a1fd854bc3d97da82be5cec8572c9aadd96276a1fca593501e0270193c570f43"
               },
               "title": "One-Voice Style Guide — Author Voice Profile"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/online-sequence-and-knot-databases",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Mandatory online integer-sequence, knot/link-census, number-theory, and high-precision constant-recognition lookup protocol (OEIS JSON API, KnotInfo / LinkInfo / SnapPy / Regina, LMFDB, and >= 80 dps PSLQ) whenever computational or mathematical research encounters integer sequences, rational series coefficients, composite denominators, transcendental constants, or low-dimensional topological invariants.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+              "instructionLines": 244,
+              "instructionsPath": "skills/authoring/authoring-core/online-sequence-and-knot-databases.md",
+              "name": "online-sequence-and-knot-databases",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/51da1dcdfca030f44a557f7917c8b5481300b5ff004c2a5e55f6a1b4af85b88c",
+                "bytes": 15359,
+                "sha256": "51da1dcdfca030f44a557f7917c8b5481300b5ff004c2a5e55f6a1b4af85b88c"
+              },
+              "title": "Online sequence, knot-census, and number-theory database lookup"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/review-heatmap",
@@ -573,14 +613,14 @@
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/input.schema.json",
-              "instructionLines": 59,
+              "instructionLines": 74,
               "instructionsPath": "skills/conduct/conduct-core/ask-the-person.md",
               "name": "ask-the-person",
               "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae",
-                "bytes": 3233,
-                "sha256": "6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3846004044b2ae954ed234a794e6560e8fc9c586548b6ef881f017b64806b18e",
+                "bytes": 4185,
+                "sha256": "3846004044b2ae954ed234a794e6560e8fc9c586548b6ef881f017b64806b18e"
               },
               "title": "Ask the person"
             },
@@ -631,13 +671,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 352,
+              "instructionLines": 354,
               "instructionsPath": "skills/conduct/conduct-core/continual-progress.md",
               "name": "continual-progress",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eefcf382af2a20039da7c0f144b9c9b8d82fc087190071b45737596a9011b3f2",
-                "bytes": 18792,
-                "sha256": "eefcf382af2a20039da7c0f144b9c9b8d82fc087190071b45737596a9011b3f2"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5f8ebdc26ea41a4d08c51b7f3f5658bf3e2b9c5d8d6162f0ce4482bc687b996f",
+                "bytes": 18845,
+                "sha256": "5f8ebdc26ea41a4d08c51b7f3f5658bf3e2b9c5d8d6162f0ce4482bc687b996f"
               },
               "title": "/continual-progress — trackable, always-PR'd, continually-committed work"
             },
@@ -747,13 +787,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 563,
+              "instructionLines": 603,
               "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
               "name": "interaction-modality",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8814f3e6b2565eadcf87f9b240f80082076697c8f806e57505dacfb0e7c6ce3f",
-                "bytes": 30605,
-                "sha256": "8814f3e6b2565eadcf87f9b240f80082076697c8f806e57505dacfb0e7c6ce3f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e226443b0c86b2c6b42ddaac9db84f0c38b7a5719af4cd70e2833c742967c502",
+                "bytes": 33000,
+                "sha256": "e226443b0c86b2c6b42ddaac9db84f0c38b7a5719af4cd70e2833c742967c502"
               },
               "title": "/interaction-modality — ask in a form the person can answer"
             },
@@ -1071,13 +1111,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/graph-management",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 281,
+              "instructionLines": 295,
               "instructionsPath": "skills/kg/graph-management/graph-detanglement.md",
               "name": "graph-detanglement",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f05a5ae9825bef6ce69055b775733a34d36972a350c5628f2a58289b5dca11ca",
-                "bytes": 13210,
-                "sha256": "f05a5ae9825bef6ce69055b775733a34d36972a350c5628f2a58289b5dca11ca"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c7bb415b009663d36f69fd1dd789a8daae8626651afa4f5aeaa3748c6bd5020a",
+                "bytes": 14006,
+                "sha256": "c7bb415b009663d36f69fd1dd789a8daae8626651afa4f5aeaa3748c6bd5020a"
               },
               "title": "Graph detanglement — the practice, not the migration"
             },
@@ -2757,13 +2797,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/folio-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 387,
+              "instructionLines": 390,
               "instructionsPath": "skills/tools/folio-core/skills-and-tools.md",
               "name": "skills-and-tools",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a3bdceba4cd9334c4b15401859adc776aedfa2e67794125911f81f7b8a5464c",
-                "bytes": 20486,
-                "sha256": "1a3bdceba4cd9334c4b15401859adc776aedfa2e67794125911f81f7b8a5464c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/13d2f9b4f62ab601e285fcfbc27aa4602bcd61e2925c53507e9d31d93e188b72",
+                "bytes": 20712,
+                "sha256": "13d2f9b4f62ab601e285fcfbc27aa4602bcd61e2925c53507e9d31d93e188b72"
               },
               "title": "Skills and Tools — the skill says what, the Tool says how"
             },
@@ -2776,13 +2816,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/folio-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 221,
+              "instructionLines": 274,
               "instructionsPath": "skills/tools/folio-core/tool-authoring.md",
               "name": "tool-authoring",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/618f4499d9ef5a17d487b256437af676456e1a01938a18ea6907fcdc77f90a86",
-                "bytes": 10102,
-                "sha256": "618f4499d9ef5a17d487b256437af676456e1a01938a18ea6907fcdc77f90a86"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/96463a3315e8adf703978eb649dcfcc8343e4dd1e818b0525f5b78b4dda13565",
+                "bytes": 13644,
+                "sha256": "96463a3315e8adf703978eb649dcfcc8343e4dd1e818b0525f5b78b4dda13565"
               },
               "title": "Tool Authoring — from capability to concrete mechanism"
             }

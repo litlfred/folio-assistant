@@ -3824,6 +3824,138 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_evidencegatheringandprovenance.call_ingestintokg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ingest into declared KG",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ingest retrieved CSL-JSON reference nodes (references/), open-access PDFs and sections (uploads/ to library/ via Process_Ingestion), reference datasets, and verification attestations into the instance's declared Knowledge Graph subgraphs.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Call_IngestIntoKg",
+      "dcterms:source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn#Call_IngestIntoKg",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_evidencegatheringandprovenance.task_assessrelevancy",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Assess relevancy and claim boundaries",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open the ingested library sections or dataset rows and record the exact locator (theorem, section, equation, or table slug), hypotheses and conventions, and claim boundaries (what the source does not establish).",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_AssessRelevancy",
+      "dcterms:source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn#Task_AssessRelevancy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_evidencegatheringandprovenance.task_decomposeshortlist",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decompose topics and shortlist sources",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write up explicit research topic areas, check declared memory, library, references, and uploads graphs first, and compile a targeted shortlist of needed primary papers, standards, and reference datasets per topic area.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_DecomposeShortlist",
+      "dcterms:source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn#Task_DecomposeShortlist",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_evidencegatheringandprovenance.task_multidbsearch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Query scholarly and data APIs",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Query accessible bibliographic, preprint, biomedical, mathematical-catalogue, and data databases (Crossref/DOI doi.org and api.crossref.org, arXiv export.arxiv.org, PubMed / EuropePMC, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, OEIS across unit-rescaled / logged / unlogged / factorial-cleared forms, KnotInfo / LinkInfo / SnapPy / Regina censuses, LMFDB, >= 80 dps PSLQ constant recognition, and domain data registries) to retrieve authoritative CSL-JSON metadata, exact catalogue identifiers, and open-access full texts or datasets.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_MultiDbSearch",
+      "dcterms:source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn#Task_MultiDbSearch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_evidencegatheringandprovenance.task_recordblockedorgap",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record blocked fetch or search gap",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record the full citation, direct download URL, and fetch blocker (so a person can drop the file into uploads/) or log the databases searched and rejected candidates so later sessions never repeat a dead end.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_RecordBlockedOrGap",
+      "dcterms:source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn#Task_RecordBlockedOrGap",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_evidencegatheringandprovenance.task_recordprovenanceandcite",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record authoring provenance and cite",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record retrieval and verification provenance (database/API, DOI/arXiv/PMID, date, locator, and relevancy summary) in authoring notes and attestations, and wire formal citation edges and Liquid dataset values in authored blocks.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_RecordProvenanceAndCite",
+      "dcterms:source": "cat-harness/processes/content/evidence-gathering-and-provenance.bpmn#Task_RecordProvenanceAndCite",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_featurestaging.h_confirm",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10144,6 +10276,182 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.call_evidenceandresearch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Investigate niche and ingest KG evidence",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Specialists investigate the question within their deep niche and execute Process_EvidenceGatheringAndProvenance (including online sequence, knot-census, number-theory, and >= 80 dps constant-recognition lookups across OEIS, KnotInfo/LinkInfo/SnapPy/Regina, and LMFDB whenever sequences, series coefficients, constants, or topological/arithmetic invariants arise) to shortlist, retrieve across APIs, ingest into the Knowledge Graph, assess relevancy, and record provenance.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Call_EvidenceAndResearch",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Call_EvidenceAndResearch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_answerinline",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Answer inline in foreground",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Perform the single-step lookup and reply directly in the foreground turn with exact file links and evidence.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_AnswerInline",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_AnswerInline",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_fanoutbridge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fan bridging query across niches",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Dispatch the interface question in parallel to multiple standing niche specialists so independent domain lenses test whether a concrete structural connection or theorem emerges.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_FanOutBridge",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_FanOutBridge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_reportnonblockingdispatch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Post scope, ETA, outcomes and card",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keep the foreground turn open for user input: report (a) what is being investigated in the background, (b) expected duration (ETA), (c) potential outcomes and their implications, and (d) any upfront structured clarification card (with full chat context written first).",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_ReportNonBlockingDispatch",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_ReportNonBlockingDispatch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_routesamespecialist",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Route to standing niche specialist",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Send the follow-up question to the active specialist for that niche so accumulated domain vocabulary, theorem inventory, and negative-result memory are preserved.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_RouteSameSpecialist",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_RouteSameSpecialist",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_spawnnichespecialist",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Spawn specialist for new niche",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Claim a child work item and launch a fresh background specialist dedicated to the new niche with the mandatory skill launch briefing and progress contract.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_SpawnNicheSpecialist",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_SpawnNicheSpecialist",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_synthesizeandupdateuser",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Synthesize agreements, tensions and report",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Promptly on background completion, synthesize single-specialist results or cross-niche agreements and tensions, state concrete implications, and offer any follow-up research paths on a decision card.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_SynthesizeAndUpdateUser",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_SynthesizeAndUpdateUser",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_researchdelegationandnicherouting.task_writeaheadepiccheckpoint",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write-ahead checkpoint epic & lease table",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "At dispatch time (never waiting for post-merge, and never mutating a claimed child executor bean's .md file), write-ahead checkpoint the parent epic body and/or a branch-keyed `checkpoint: <epic/wave> <UTC>` note on cat/cat-harness/beans with newly opened child bean IDs, canonical 3-slot dispatch lines (`Do bean <bean-id> on branch <branch-to-create> of repo <owner>/<repo>.`), active research/compute hypotheses, negative/excluded routes, and the Worktree/Branch/Scratch Lease Table.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "Task_WriteAheadEpicCheckpoint",
+      "dcterms:source": "cat-harness/sdlc/processes/research-delegation-and-niche-routing.bpmn#Task_WriteAheadEpicCheckpoint",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_review.call_codereview",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -11163,13 +11471,13 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Collect or reconstruct a handover report per agent",
+          "@value": "Inspect worktrees non-destructively, salvage & collect handovers",
           "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Use the agent's own report and check it against live state; if none, ask the agent if it is still reachable, else reconstruct with the handover-report template and mark it reconstructed. Unpushed state is unknown, never empty.",
+          "@value": "Step 4 of re-entry reconciliation: inspect every local worktree (git status --short --branch, ahead/behind origin), /tmp overlays, and Cargo/Lean donor caches without ever running git reset --hard; rescue dirty or unpushed stalled work onto a claude/salvage-* branch (and push it) or resume in place, and verify or reconstruct handover reports. Unpushed remote state is unknown, never empty.",
           "@language": "en"
         }
       ],
@@ -11207,13 +11515,13 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Find the footprint",
+          "@value": "Audit remote delta, epic relay snapshot & PR classes",
           "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "handover notes (beans/notes, title 'handover:'), open PRs and branches by session or time window, in-progress beans, workflow instances, last PR and issue comments. REST, one batched pass.",
+          "@value": "Steps 1-3 of re-entry reconciliation: fetch origin/<default-branch> and origin/cat/cat-harness/beans, audit git log <last-known-sha>..origin/<default-branch>, read the epic bean's write-ahead Live Relay Snapshot (child beans, active research/compute hypotheses, negative/excluded routes, lease table), and classify open and draft PRs into ready-to-merge, active external sibling draft, stalled with uncommitted/unpushed work, and owner-fenced.",
           "@language": "en"
         }
       ],
@@ -11229,13 +11537,13 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record the triage and claim the picked-up work",
+          "@value": "Reconcile epic lease table, write-ahead checkpoint & sibling notes",
           "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A 'triage: <date>' bean note on each theme's epic; new or re-parented beans; claims via beans:claim. Owning sessions still alive are notified before their branches are touched.",
+          "@value": "Step 5 of re-entry reconciliation: update and push the epic bean's write-ahead Worktree/Branch/Scratch Lease Table, child beans, and active/excluded hypotheses on cat/cat-harness/beans; record a 'triage: <date>' note, claim picked-up work via beans:claim, and post sibling coordination notes if landed commits shifted scope.",
           "@language": "en"
         }
       ],
@@ -11251,13 +11559,13 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Re-route open PRs that lost their driver",
+          "@value": "Re-route ready PRs & resume Merge Steward + worker queues",
           "@language": "en"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Green, up-to-date PRs join the queue; mid-merge branches are re-driven from the PR head, never guessed at; red PRs go back to the new driver.",
+          "@value": "Green ready-to-merge PRs join the Merge Steward queue; active external sibling drafts stay untouched; mid-merge or salvaged stalled branches are re-driven cleanly from their PR or salvage head; owner-fenced PRs hold.",
           "@language": "en"
         }
       ],
@@ -11889,7 +12197,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Verify that a swarm is justified over serial execution (swarm-management), partition the goal into child work items with disjoint writable paths, explicit Done-when criteria, and non-compute-heavy idle-backlog items, and size worker count, model tiers (cost-aware routing), and host concurrency bounds.",
+          "@value": "Verify that a swarm is justified over serial execution (swarm-management), partition the goal into child work items with disjoint writable paths (or persistent deep-niche domains for research agents, with cross-fertilization fan-out reserved for interface questions), explicit Done-when criteria, and non-compute-heavy idle-backlog items, and size worker count, model tiers (cost-aware routing), and host concurrency bounds.",
           "@language": "en"
         }
       ],

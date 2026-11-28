@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_RouteSameSpecialist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_RouteSameSpecialist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Route to standing niche specialist",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/lane/Lane_Coordinator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/research-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5a"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6a"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
+    }
+  ]
+}

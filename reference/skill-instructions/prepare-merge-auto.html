@@ -153,8 +153,11 @@ action (accept / modify / reject / escalate) BEFORE making
 changes — so the user can redirect:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Plan: accept 1,2,3; accept-with-modification 4; reject 5
 (reason: standard term per §7a)
-</code></pre></div></div></li><li><strong>CI status</strong>: green / failing / pending</li></ol><p>The user can reply with overrides (e.g. “reject 4”, “skip 2,3”).
-If no override within ~30 seconds, proceed with the stated plan.</p><h3 id="phase-2-resolve-review-comments"><a href="#phase-2-resolve-review-comments" class="anchor-heading" aria-labelledby="phase-2-resolve-review-comments"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2: Resolve review comments
+</code></pre></div></div></li><li><strong>CI status</strong>: green / failing / pending</li></ol><p>Offer the plan on a card (<a href="ask-the-person.html"><code class="language-plaintext highlighter-rouge">ask-the-person</code></a>): “Proceed with this plan”
+(recommended), “Reject the rejects too”, “Stop and let me review”. Never ask
+the person to type overrides such as “reject 4”. Where the owner’s standing
+pick is “take the recommended option”, proceed with the plan and leave the
+card open for a redirect.</p><h3 id="phase-2-resolve-review-comments"><a href="#phase-2-resolve-review-comments" class="anchor-heading" aria-labelledby="phase-2-resolve-review-comments"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2: Resolve review comments
   
   
 </h3><p>After the briefing (and any user overrides), triage each thread:</p><div class="table-wrapper"><table><thead><tr><th>Classification</th><th>Action</th></tr></thead><tbody><tr><td><strong>accept</strong></td><td>Apply the suggested fix, commit, push.</td></tr><tr><td><strong>accept-with-modification</strong></td><td>Apply a modified version, commit with explanation.</td></tr><tr><td><strong>reject-with-reason</strong></td><td>Reply on the thread with the reason (e.g. “intentional — see §X”).</td></tr><tr><td><strong>escalate</strong></td><td>Cannot resolve autonomously — proceed to Phase 3.</td></tr></tbody></table></div><p>For each resolved thread, commit the fix with message:
@@ -171,7 +174,12 @@ one at a time.</li></ul><h3 id="phase-4-merge"><a href="#phase-4-merge" class="a
   
   
 </h3><p>After all review comments are resolved (or the user has answered
-all escalated questions):</p><ol><li>Run <code class="language-plaintext highlighter-rouge">bun run scripts/run-validate.ts content/&lt;paper&gt;</code> one final time.</li><li><strong>Run the <a href="../../reference/skill-instructions/merge-to-main.html"><code class="language-plaintext highlighter-rouge">merge-to-main</code></a> sub-process</strong>
+all escalated questions):</p><p><strong>Only the merge manager runs this phase</strong> (<code class="language-plaintext highlighter-rouge">req:agent-workflow</code> <code class="language-plaintext highlighter-rouge">never-self-merge</code>; <a href="../../reference/skill-instructions/merge-manager-watcher.html"><code class="language-plaintext highlighter-rouge">merge-manager-watcher</code></a>
+§”Operating rules (owner, 2026-11-27)”). Any other session stops after
+Phase 3 and sends the PR number and full head SHA to the merge manager. For
+the merge manager, the owner’s authorisation in step 2 is a live time-boxed
+merge grant for the repository or the owner’s card, and the only red
+pre-merge gate is the KG JSON-LD publication check.</p><ol><li>Run <code class="language-plaintext highlighter-rouge">bun run scripts/run-validate.ts content/&lt;paper&gt;</code> one final time.</li><li><strong>Run the <a href="../../reference/skill-instructions/merge-to-main.html"><code class="language-plaintext highlighter-rouge">merge-to-main</code></a> sub-process</strong>
 (<a href="../../en/cat-harness/processes/merge-to-main.html"><code class="language-plaintext highlighter-rouge">sdlc/processes/merge-to-main.bpmn</code></a>). In order: read the head’s evidence
 live (CI per owed job on the head SHA, mergeability, review state and
 Claude Approvals where the repository runs it); a repository with no CI is

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Call_IngestIntoKg.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Call_IngestIntoKg",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Ingest into declared KG",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_Ingestion",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-gathering-and-provenance"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4b"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

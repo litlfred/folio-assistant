@@ -139,7 +139,16 @@ thread, a subagent or a session spawned while someone else holds the
 discussion), steps 2 and 3 in your own channel are not enough: hand the
 composed input back with <a href="../../reference/skill-instructions/hand-back-to-discussion.html"><code class="language-plaintext highlighter-rouge">hand-back-to-discussion</code></a>,
 so the discussion agent asks it where the person is, and the answer comes
-back to you. Your own thread is never the only copy.</li><li><strong>Return the output.</strong> A dismissal is not an answer. A rule-level answer is
+back to you. Your own thread is never the only copy.</li><li><strong>Do not close over it.</strong> While the card is unanswered, the thread, session
+or task stays open: never resolve it, end it, or post a closing summary
+that carries the question in prose
+(<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/requirements/agent-workflow.json"><code class="language-plaintext highlighter-rouge">req:agent-workflow#no-close-with-open-question</code></a>).
+A closing report is checked for questions before it is sent; any question
+in it goes on a card first.</li><li><strong>Follow-up research paths are options, not prose.</strong> When work ends with
+possible next directions, each one is an option on a card labelled
+<code class="language-plaintext highlighter-rouge">New research path: &lt;name&gt;</code>, one recommended, so the person starts it with
+one tap (<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/requirements/agent-workflow.json"><code class="language-plaintext highlighter-rouge">req:agent-workflow#research-paths-on-a-card</code></a>).
+In a project with many threads, a path named only in prose is lost.</li><li><strong>Return the output.</strong> A dismissal is not an answer. A rule-level answer is
 written into the governing skill in the same turn
 (<a href="../../reference/skill-instructions/symbiotic-interaction.html"><code class="language-plaintext highlighter-rouge">symbiotic-interaction</code></a> §2).</li></ol><h2 id="input-and-output-contracts"><a href="#input-and-output-contracts" class="anchor-heading" aria-labelledby="input-and-output-contracts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output contracts
   

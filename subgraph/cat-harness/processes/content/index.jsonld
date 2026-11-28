@@ -5,6 +5,113 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance",
+      "@type": "bootstrap:Process",
+      "name": "Evidence gathering and provenance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4a",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "blocked or missing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_4b",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "fetched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5a",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_5b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance#flow/Flow_EG_8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_AuthoringResearch",
+      "@type": "cat-harness:Lane",
+      "name": "Research and authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/lane/Lane_Ingestion",
+      "@type": "cat-harness:Lane",
+      "name": "Ingestion engine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Call_IngestIntoKg",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Ingest into declared KG"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/End_ProvenanceLinked",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Evidence ingested and linked"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_AfterIngest",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_AfterIngest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/GW_FetchOutcome",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Source fetched?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Start_ResearchNeeded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Topic research needed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_AssessRelevancy",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Assess relevancy and claim boundaries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_DecomposeShortlist",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Decompose topics and shortlist sources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_MultiDbSearch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Query scholarly and data APIs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordBlockedOrGap",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record blocked fetch or search gap"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_EvidenceGatheringAndProvenance/node/Task_RecordProvenanceAndCite",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record authoring provenance and cite"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview",
       "@type": "bootstrap:Process",
       "name": "Narrative review"

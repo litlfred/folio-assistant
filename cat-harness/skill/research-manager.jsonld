@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/research-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/research-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "research-manager",
+      "title": "Research manager — alternatives on cards, chosen by priority, pursued by siblings",
+      "description": "Run research as a managed portfolio of alternatives: when a goal has more than one way forward, put every alternative on a research-path card with its cost, risk and commitment and one recommended, prioritise which to pursue, dispatch a sibling research thread (or agent) per chosen path with a bean of its own, record the rejected paths, prod stalled children, and report usage-limit pauses instead of prodding them. Use for \"pursue the alternatives\", \"which route should we try\", \"dispatch research agents\", \"research manager\", and whenever a thread ends with more than one possible next direction.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/research-manager.md",
+      "instructionLines": 207,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
+    }
+  ]
+}

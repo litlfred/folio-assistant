@@ -113,7 +113,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which work item, where the receiver reports, what the person pastes (one sentence: work item, branch, repository) and the brief the work item opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a work item for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+          "@value": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which work item, where the receiver reports, what the person pastes (one sentence: work item, branch, repository) and the brief the work item opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a work item for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent, stall takeover, returning turn, pick up where they left off.",
           "@language": "en"
         }
       ],
@@ -1684,6 +1684,28 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/evidence-gathering-and-provenance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "evidence-gathering-and-provenance",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Five-step research, scholarly retrieval, Knowledge Graph ingestion, relevancy assessment, and authoring-provenance workflow required of research and authoring agents: decompose topic areas and shortlist needed papers and datasets, query scholarly and data databases (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, and reference data registries), ingest into declared KG subgraphs, record relevancy and claim boundaries, and wire authoring provenance notes and formal citations into authored blocks.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "evidence-gathering-and-provenance",
+      "dcterms:source": "cat-harness/skills/authoring/authoring-core/evidence-gathering-and-provenance.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/evidence-review",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2652,6 +2674,28 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/lean-cache-manager",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "lean-cache-manager",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The merge manager's Lean sub-lane: own the Lake cache branch and its addon overlays, run direct Lean verification (`lean` against the restored cache, plus `#print axioms`) for threads that have no Lean toolchain, watch the toolchain and Mathlib pins for drift, and keep the cache warm after every merge that touches Lean. Use for \"is the cache current\", \"run lean-direct on this\", \"the restore missed\", \"bump Lean / Mathlib\", \"contribute the oleans\", and whenever a merge request names a `.lean` file.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "lean-cache-manager",
+      "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/lean-cache-manager.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/library-ingestion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3159,6 +3203,28 @@
       ],
       "skos:notation": "one-voice-style-guide",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/one-voice-style-guide.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/online-sequence-and-knot-databases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "online-sequence-and-knot-databases",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mandatory online integer-sequence, knot/link-census, number-theory, and high-precision constant-recognition lookup protocol (OEIS JSON API, KnotInfo / LinkInfo / SnapPy / Regina, LMFDB, and >= 80 dps PSLQ) whenever computational or mathematical research encounters integer sequences, rational series coefficients, composite denominators, transcendental constants, or low-dimensional topological invariants.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "online-sequence-and-knot-databases",
+      "dcterms:source": "cat-harness/skills/authoring/authoring-core/online-sequence-and-knot-databases.md",
       "skos:note": "candidate"
     },
     {
@@ -3826,6 +3892,28 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/repo-cache-manager",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "repo-cache-manager",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The merge manager's sub-lane for every repository cache other than Lean: LaTeX/PDF build caches, FHIR AST branches, generated-artefact and render caches, CI step caches. Says what it owns, how it finds each cache, when it refreshes one after a merge, how it reads drift in a cache's inputs, and what it watches for the merge manager. Use for \"the PDF cache is stale\", \"the build restored nothing\", \"who refreshes this cache\", and when adding a new cache to a folio.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "repo-cache-manager",
+      "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/repo-cache-manager.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/repo-conversion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3845,6 +3933,28 @@
       ],
       "skos:notation": "repo-conversion",
       "dcterms:source": "cat-harness/skills/conduct/conduct-core/repo-conversion.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/research-manager",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "research-manager",
+          "@language": "en"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run research as a managed portfolio of alternatives: when a goal has more than one way forward, put every alternative on a research-path card with its cost, risk and commitment and one recommended, prioritise which to pursue, dispatch a sibling research thread (or agent) per chosen path with a bean of its own, record the rejected paths, prod stalled children, and report usage-limit pauses instead of prodding them. Use for \"pursue the alternatives\", \"which route should we try\", \"dispatch research agents\", \"research manager\", and whenever a thread ends with more than one possible next direction.",
+          "@language": "en"
+        }
+      ],
+      "skos:notation": "research-manager",
+      "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/research-manager.md",
       "skos:note": "candidate"
     },
     {
@@ -4355,7 +4465,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, work items, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+          "@value": "Triage incoming work from stalled agents AND govern returning-agent re-entry after another session advanced the repository. Enforces Bidirectional Relay Continuity: write-ahead epic checkpointing at dispatch time paired with the five-step non-destructive takeover and re-entry reconciliation (remote commit and beans delta, epic Live Relay Snapshot, four-way open/draft PR classification, non-destructive worktree/overlay/donor-cache inspection with `claude/salvage-*` rescue instead of `git reset --hard`, and lease-table plus Merge Steward queue resumption). Use when a session or swarm has stalled, timed out, hit a quota cap, or lost its container, when the owner says \"pick up what X was doing\", or whenever an agent returns on its next turn after another agent advanced `main`, PRs, or `beans`.",
           "@language": "en"
         }
       ],

@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Online sequence, knot-census, and number-theory database lookup | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Online sequence, knot-census, and number-theory database lookup" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/online-sequence-and-knot-databases.html" /><meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/online-sequence-and-knot-databases.html" /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Online sequence, knot-census, and number-theory database lookup" /><script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Online sequence, knot-census, and number-theory database lookup","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/online-sequence-and-knot-databases.html"}</script><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-online-sequence-and-knot-databases",
+    "src": "../../assets/qa/reference-skill-instructions-online-sequence-and-knot-databases/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-online-sequence-and-knot-databases/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json",
+  "reviewSrc":"../../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=263225e79ed9"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=4c7265cca407"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=fb3cd5c0d28c" defer></script><script src="../../assets/js/docs-ui.js?v=cae1ad7ba8e7" defer></script><script src="../../assets/js/edit-links.js?v=56a2d25f0900" defer></script><script src="../../assets/js/translation-review.js?v=3ab638979d22" defer></script><script src="../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script><script src="../../assets/draft-banner.js" defer data-fa-page-layout></script><noscript data-fa-draft-noscript><link rel="stylesheet" href="../../assets/draft-banner-noscript.css"></noscript></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/online-sequence-and-knot-databases.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#why-raw-form-lookups-miss-published-structure","label":"Why raw-form lookups miss published structure"},{"href":"#1-oeis-protocol-httpsoeisorgsearchfmtjsonq--strict","label":"§1. OEIS protocol (https://oeis.org/search?fmt=json&q=...) — STRICT","children":[{"href":"#mandatory-five-transform-canonicalization-before-concluding-not-in-oeis","label":"Mandatory five-transform canonicalization before concluding “not in OEIS”","depth":1},{"href":"#worked-case-study--figure-eight-knot-4_1-asymptotic-loop-coefficients","label":"Worked case study — Figure-eight knot $4_1$ asymptotic loop coefficients","depth":1}],"fold":"2 sub-sections"},{"href":"#2-knot-link-and-3-manifold-censuses-knotinfo-linkinfo-snappy-regina","label":"§2. Knot, link, and 3-manifold censuses (KnotInfo, LinkInfo, SnapPy, Regina)"},{"href":"#3-lmfdb-httpswwwlmfdborgapi--number-fields-l-values--modular-forms","label":"§3. LMFDB (https://www.lmfdb.org/api/) — number fields, $L$-values & modular forms"},{"href":"#4-high-precision-constant-recognition-mpmathpslq--identify-at--80-dps","label":"§4. High-precision constant recognition (mpmath.pslq / identify at >= 80 dps)"},{"href":"#5-provenance--knowledge-graph-recording-strict","label":"§5. Provenance & Knowledge Graph recording (STRICT)"},{"href":"#checklist-before-closing-a-sequence-constant-or-invariant-investigation","label":"Checklist before closing a sequence, constant, or invariant investigation"},{"href":"#related-skills","label":"Related skills"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Online sequence, knot-census, and number-theory database lookup</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/online-sequence-and-knot-databases.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/authoring/authoring-core/online-sequence-and-knot-databases.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/online-sequence-and-knot-databases.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/authoring/authoring-core/online-sequence-and-knot-databases.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="online-sequence-knot-census-and-number-theory-database-lookup"><a href="#online-sequence-knot-census-and-number-theory-database-lookup" class="anchor-heading" aria-labelledby="online-sequence-knot-census-and-number-theory-database-lookup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Online sequence, knot-census, and number-theory database lookup
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">online-sequence-and-knot-databases</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-core</code>
+Processes: <a href="../../en/cat-harness/processes/evidence-gathering-and-provenance.html"><code class="language-plaintext highlighter-rouge">processes/content/evidence-gathering-and-provenance.bpmn</code></a> (<code class="language-plaintext highlighter-rouge">Process_EvidenceGatheringAndProvenance</code>), <a href="../../en/cat-harness/processes/research-delegation-and-niche-routing.html"><code class="language-plaintext highlighter-rouge">sdlc/processes/research-delegation-and-niche-routing.bpmn</code></a> (<code class="language-plaintext highlighter-rouge">Process_ResearchDelegationAndNicheRouting</code>, in the opt-in <code class="language-plaintext highlighter-rouge">sdlc</code> group, so not linked)</p></blockquote><p>Whenever computational or mathematical research produces an integer sequence, a
+tower of rational series coefficients, a recurring prime-factor denominator
+pattern, an unrecognised high-precision constant, or a knot/link/manifold
+invariant, <strong>querying the canonical mathematical databases after rescaling to
+natural geometric or algebraic units is mandatory before asserting novelty or
+leaving opaque composite denominators in prose or formal declarations.</strong></p><h2 id="why-raw-form-lookups-miss-published-structure"><a href="#why-raw-form-lookups-miss-published-structure" class="anchor-heading" aria-labelledby="why-raw-form-lookups-miss-published-structure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why raw-form lookups miss published structure
+  
+  
+</h2><p>Series coefficients extracted from perturbation expansions, saddle-point
+asymptotics, or transfer matrices rarely appear in published catalogues in their
+raw coordinate gauge:</p><ol><li><strong>Unit-gauge obfuscation:</strong> an expansion written in bare powers of $\pi$ or a
+coordinate step $h$ mixes transcendental curvature factors (such as powers of
+$\sqrt{3}$ or $2\pi$) into the rational prefactors, inflating denominators by
+extraneous prime powers that hide the intrinsic arithmetic.</li><li><strong>Cumulant vs partition-function duality:</strong> literature catalogues frequently
+index the <em>exponential</em> generating series $\exp!\bigl(\sum_{k \ge 1} c_k x^k\bigr) = \sum_{k \ge 0} A_k \frac{x^k}{k!}$
+while a saddle or free-energy calculation emits the <em>logged cumulants</em> $c_k$
+(or vice versa). Searching only one side misses the published entry completely.</li><li><strong>Machine-float PSLQ mirages:</strong> running <code class="language-plaintext highlighter-rouge">pslq</code> or constant recognition at
+53-bit <code class="language-plaintext highlighter-rouge">float64</code> (~15 digits) produces spurious integer relations with
+three-digit coefficients on almost any four-element basis. Only <code class="language-plaintext highlighter-rouge">&gt;= 80 dps</code>
+lattice reduction with held-out <code class="language-plaintext highlighter-rouge">&gt;= 160 dps</code> verification separates genuine
+identities from coincidence.</li></ol><hr /><h2 id="1-oeis-protocol-httpsoeisorgsearchfmtjsonq--strict"><a href="#1-oeis-protocol-httpsoeisorgsearchfmtjsonq--strict" class="anchor-heading" aria-labelledby="1-oeis-protocol-httpsoeisorgsearchfmtjsonq--strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1. OEIS protocol (<code class="language-plaintext highlighter-rouge">https://oeis.org/search?fmt=json&amp;q=...</code>) — STRICT
+  
+  
+</h2><p>Query the On-Line Encyclopedia of Integer Sequences via its JSON endpoint,
+always following redirects (<code class="language-plaintext highlighter-rouge">curl -sL</code>):</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sL</span> <span class="s2">"https://oeis.org/search?fmt=json&amp;q=1,11,697,724351,278392949"</span>
+</code></pre></div></div><h3 id="mandatory-five-transform-canonicalization-before-concluding-not-in-oeis"><a href="#mandatory-five-transform-canonicalization-before-concluding-not-in-oeis" class="anchor-heading" aria-labelledby="mandatory-five-transform-canonicalization-before-concluding-not-in-oeis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mandatory five-transform canonicalization before concluding “not in OEIS”
+  
+  
+</h3><p>Never query only the raw numerator or denominator list and stop. For any sequence
+of rational coefficients $(r_k)_{k \ge 1}$, generate and query all five canonical
+transforms (dropping leading $0$s/$1$s and signs where OEIS conventions vary):</p><ol><li><strong>Natural geometric / 1-loop torsion unit rescaling ($r_k \mapsto z_k$):</strong>
+divide out the intrinsic 1-loop Hessian, Reidemeister torsion, discriminant,
+or period unit $u$ so that $r_k u^{-k} = z_k \in \mathbb{Q}$ lies in the base
+rationals rather than a quadratic or cyclotomic extension.</li><li><strong>Factorial clearing ($k!\,z_k$ and $(2m)!\,z_{2m}$):</strong> test exponential
+generating-function normalisation $k!\,z_k$, separate even and odd sub-towers
+$z_{2m}, z_{2m+1}$, and check whether $(2m)!\,z_{2m} \in \mathbb{Z}$.</li><li><strong>2-3 torsion / Dedekind $\eta$ denominator stripping ($24^k z_k$ or $D^k z_k$):</strong>
+clear the universal 1-loop divisor ($24 = 2^3 \cdot 3$ from $\eta$-function /
+$B_2 = 1/6$ / Gaussian Wick contractions, or the minimal geometric integer
+$D$) and inspect both $\mathrm{num}(D^k z_k)$ and $\mathrm{den}(D^k z_k)$.
+Check residual prime factors against the <strong>von Staudt–Clausen theorem</strong>
+($p \mid \mathrm{den}(B_{2k}) \iff (p - 1) \mid 2k$, introducing $5, 7, 11, 13, \dots$).</li><li><strong>Logged cumulants $\leftrightarrow$ unlogged exponential generating series:</strong>
+always pass both directions through <code class="language-plaintext highlighter-rouge">sympy</code> before querying OEIS:
+    <ul><li><em>Cumulants to moments:</em> $\sum_{k \ge 0} \frac{A_k}{B_k} \frac{v^k}{k!} = \exp!\Bigl(\sum_{k \ge 1} z_k (D v)^k\Bigr)$;</li><li><em>Moments to cumulants:</em> $\sum_{k \ge 1} c_k v^k = \ln!\Bigl(1 + \sum_{k \ge 1} M_k \frac{v^k}{k!}\Bigr)$.</li></ul></li><li><strong>Sub-sequences &amp; first differences:</strong> query even/odd slices separately and,
+for integer sequences, check consecutive ratios, prime factorizations, and
+binomial/Hankel transforms.</li></ol><h3 id="worked-case-study--figure-eight-knot-4_1-asymptotic-loop-coefficients"><a href="#worked-case-study--figure-eight-knot-4_1-asymptotic-loop-coefficients" class="anchor-heading" aria-labelledby="worked-case-study--figure-eight-knot-4_1-asymptotic-loop-coefficients"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked case study — Figure-eight knot $4_1$ asymptotic loop coefficients
+  
+  
+</h3><p>In the all-orders Kashaev / state-integral saddle expansion of the figure-eight
+knot $4_1$, the raw loop coefficients in powers of $\pi$ read</p>
+
+\[\omega_1 = \frac{11\sqrt{3}\,\pi}{108},\quad
+\omega_2 = \frac{2\,\pi^2}{27},\quad
+\omega_3 = \frac{1081\sqrt{3}\,\pi^3}{21870},\quad
+\omega_4 = \frac{98\,\pi^4}{729},\quad \dots\]
+
+<p>with opaque composite denominators $108, 27, 21870, 729, 688905, 295245, 26572050, 18600435, 49718962755$.
+Applying Transforms 1–4 exposes the complete arithmetic origin:</p><ul><li><strong>Transform 1 (1-loop Reidemeister-torsion unit $u = \frac{2\pi}{3\sqrt{3}}$):</strong>
+writing $\omega_k = z_k u^k$ strips $(3\sqrt{3})^{-k}$ completely, collapsing
+the sequence into pure rationals
+\(z_1 = \frac{11}{24},\quad
+z_2 = \frac{1}{2},\quad
+z_3 = \frac{1081}{720},\quad
+z_4 = \frac{49}{8},\quad
+z_5 = \frac{110011}{3360},\quad
+z_6 = \frac{51973}{240},\quad
+z_7 = \frac{32729683}{19200},\quad
+z_8 = \frac{69709147}{4480},\quad
+z_9 = \frac{860118209659}{5322240}.\)
+Here $z_1 = \frac{11}{24}$ splits cleanly into the 1-loop Gaussian Feynman
+diagram sum $(-\frac{3}{4} + \frac{5}{6}) = \frac{2}{24}$ plus the discrete
+Euler–Maclaurin boundary/$B_2$ sum $(\frac{3}{2} - \frac{3}{8} - \frac{3}{4}) = \frac{9}{24}$.</li><li><strong>Transform 2 (even-rung factorial integrality):</strong> $(2m)!\,z_{2m} \in \mathbb{Z}$
+for every even rung ($1, 147, 155919, 627382323$ at $2m = 2, 4, 6, 8$), while
+$\mathrm{den}(k!\,z_k)$ is $3$-free for every $k \ge 2, k \neq 3$ (<code class="language-plaintext highlighter-rouge">1, 120, 1, 28, 1, 80, 1, 44</code>).</li><li><strong>Transform 3 ($24^k$ denominator law &amp; Bernoulli primes):</strong> for all $k = 1\ldots 9$,
+$\mathrm{den}(24^k z_k) = (1, 1, 5, 1, 35, 5, 25, 35, 385)$ is <strong>coprime to $6$</strong>,
+carrying only von Staudt–Clausen Bernoulli primes $p \ge 5$ ($5, 7, 11$).</li><li><strong>Transform 4 (unlogged exponential $\to$ exact OEIS hit):</strong> expanding
+$\exp!\bigl(\sum_{k=1}^{9} z_k (24 v)^k\bigr) = \sum_{k=0}^{9} \frac{A_k}{B_k} \frac{v^k}{k!}$
+yields
+    <ul><li>Numerators $A_k$: <code class="language-plaintext highlighter-rouge">1, 11, 697, 724351, 278392949, 244284791741, 1140363907117019, 212114205337147471, 367362844229968131557, 44921192873529779078383921</code> — <strong>OEIS <code class="language-plaintext highlighter-rouge">A301732</code></strong>;</li><li>Denominators $B_k$: <code class="language-plaintext highlighter-rouge">1, 1, 1, 5, 5, 7, 35, 5, 5, 275</code> — <strong>OEIS <code class="language-plaintext highlighter-rouge">A301733</code></strong>
+(Garoufalidis, <em>Quantum Topol.</em> / <code class="language-plaintext highlighter-rouge">arXiv:1201.3314</code>; Garoufalidis &amp; Zagier 2023),
+with $697 - 11^2 = 576 = 24^2 \iff z_2 = \frac{1}{2}$.</li></ul></li></ul><hr /><h2 id="2-knot-link-and-3-manifold-censuses-knotinfo-linkinfo-snappy-regina"><a href="#2-knot-link-and-3-manifold-censuses-knotinfo-linkinfo-snappy-regina" class="anchor-heading" aria-labelledby="2-knot-link-and-3-manifold-censuses-knotinfo-linkinfo-snappy-regina"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §2. Knot, link, and 3-manifold censuses (KnotInfo, LinkInfo, SnapPy, Regina)
+  
+  
+</h2><p>Whenever research touches a knot, link, braid closure, or hyperbolic 3-manifold,
+cross-check all topological, algebraic, and geometric invariants against
+published censuses rather than hand-transcribing or guessing conventions:</p><div class="table-wrapper"><table><thead><tr><th>resource</th><th>canonical interface</th><th>invariants to cross-check</th></tr></thead><tbody><tr><td><strong>KnotInfo &amp; LinkInfo</strong></td><td><code class="language-plaintext highlighter-rouge">https://knotinfo.math.indiana.edu/</code>, <code class="language-plaintext highlighter-rouge">https://linkinfo.sitehost.iu.edu/</code> (CSV/JSON tables &amp; <code class="language-plaintext highlighter-rouge">database_knotinfo</code> Python package)</td><td>Crossing number, braid index &amp; minimum braid word, Alexander / Jones / HOMFLY-PT / Kauffman polynomials (noting variable conventions!), signature, determinant, unknotting number, symmetry type (chiral, reversible, full/negative amphichiral)</td></tr><tr><td><strong>SnapPy censuses</strong></td><td><code class="language-plaintext highlighter-rouge">snappy.Manifold("&lt;name&gt;")</code>, <code class="language-plaintext highlighter-rouge">OrientableCuspedCensus</code>, <code class="language-plaintext highlighter-rouge">LinkExteriors</code>, <code class="language-plaintext highlighter-rouge">HTLinkExteriors</code> (<code class="language-plaintext highlighter-rouge">&gt;= 50-80 dps</code> <code class="language-plaintext highlighter-rouge">high_precision()</code> / <code class="language-plaintext highlighter-rouge">.tetrahedra_shapes('rect')</code>)</td><td>Complete hyperbolic volume, Chern–Simons invariant ($\bmod\,\pi^2$ / $\bmod\,\frac{1}{2}$), cusp shapes, Neumann–Zagier gluing matrices, Dehn surgery slopes, symmetry group, and canonical ideal triangulation</td></tr><tr><td><strong>Snap / SnapPy arithmetic invariants &amp; Regina</strong></td><td>Snap trace-field tables, <code class="language-plaintext highlighter-rouge">regina</code> 3-manifold triangulation census</td><td>Invariant trace field $K = \mathbb{Q}(\mathrm{tr}\,\Gamma)$ (for example $\mathbb{Q}(\sqrt{-3})$ for $4_1$, cubic field of discriminant $-23$ for $5_2$), invariant quaternion algebra, Bloch–Wigner dilogarithm class in $\mathcal{B}(K)$, and cusp field</td></tr></tbody></table></div><p><strong>Convention check (<code class="language-plaintext highlighter-rouge">STRICT</code>):</strong> always verify orientation, mirror convention
+($K$ vs $\overline{K}$ flips $\mathrm{CS}(K)$ and $q \leftrightarrow q^{-1}$ in
+Jones/HOMFLY-PT), and normalisation (unreduced vs unknot-normalised coloured
+Jones) on $3_1$ and $4_1$ before ingesting or asserting an identity across a
+table of knots.</p><hr /><h2 id="3-lmfdb-httpswwwlmfdborgapi--number-fields-l-values--modular-forms"><a href="#3-lmfdb-httpswwwlmfdborgapi--number-fields-l-values--modular-forms" class="anchor-heading" aria-labelledby="3-lmfdb-httpswwwlmfdborgapi--number-fields-l-values--modular-forms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §3. LMFDB (<code class="language-plaintext highlighter-rouge">https://www.lmfdb.org/api/</code>) — number fields, $L$-values &amp; modular forms
+  
+  
+</h2><p>When exact arithmetic, trace fields, Galois parities, special $L$-values, or
+$q$-series arise, query the L-functions and Modular Forms Database REST API:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Example: query number fields of degree 2 and |disc| &lt;= 12 in JSON format</span>
+curl <span class="nt">-sL</span> <span class="s2">"https://www.lmfdb.org/api/nf_fields/?degree=2&amp;_format=json&amp;_limit=10"</span>
+</code></pre></div></div><p>Use LMFDB to verify and cite:</p><ol><li><strong>Number fields (<code class="language-plaintext highlighter-rouge">nf_fields</code>):</strong> discriminant, signature $(r_1, r_2)$, ring of
+integers, class number, fundamental units, regulator, and Galois group —
+keeping imaginary quadratic trace fields such as $\mathbb{Q}(\sqrt{-3})$
+(discriminant $-3$, Eisenstein units) cleanly separated from real quadratic
+sub-expressions $\mathbb{Q}(\sqrt{3})$ arising after factoring out $i = \sqrt{-1}$.</li><li><strong>Dirichlet characters &amp; special $L$-values (<code class="language-plaintext highlighter-rouge">artin_representations</code>,
+<code class="language-plaintext highlighter-rouge">lfunc_lfunctions</code>):</strong> conductor, parity, Gauss sums, and exact algebraic
+parts of $L(k, \chi)$ (for example $L(2, \chi_{-3}) = \frac{2}{3\sqrt{3}}\,\mathrm{Cl}<em>2(\pi/3)$
+and $L(2, \chi</em>{-4}) = G_{\mathrm{Catalan}}$).</li><li><strong>Modular, Jacobi &amp; quantum modular forms (<code class="language-plaintext highlighter-rouge">mf_newforms</code>, ` mf_hecke_nf`):</strong>
+$q$-expansion coefficients, weight, level, Nebentypus character, CM status,
+and Eichler–Shimura / Habiro completion data.</li><li><strong>Elliptic curves &amp; higher-genus curves (<code class="language-plaintext highlighter-rouge">ec_curvedata</code>, <code class="language-plaintext highlighter-rouge">hgcwa_passports</code>):</strong>
+conductor, isogeny class, $L$-series, automorphism group passports, and Prym /
+Jacobian isogeny decompositions.</li></ol><hr /><h2 id="4-high-precision-constant-recognition-mpmathpslq--identify-at--80-dps"><a href="#4-high-precision-constant-recognition-mpmathpslq--identify-at--80-dps" class="anchor-heading" aria-labelledby="4-high-precision-constant-recognition-mpmathpslq--identify-at--80-dps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §4. High-precision constant recognition (<code class="language-plaintext highlighter-rouge">mpmath.pslq</code> / <code class="language-plaintext highlighter-rouge">identify</code> at <code class="language-plaintext highlighter-rouge">&gt;= 80 dps</code>)
+  
+  
+</h2><p>Whenever a numerical computation produces an unexplained real or complex
+constant, asymptotic slope, Stokes multiplier, or subleading intercept:</p><ol><li><strong>Precision floor (<code class="language-plaintext highlighter-rouge">&gt;= 80 dps</code>, zero <code class="language-plaintext highlighter-rouge">float64</code>):</strong> compute the target number
+at <strong><code class="language-plaintext highlighter-rouge">&gt;= 80</code> decimal places</strong> (never <code class="language-plaintext highlighter-rouge">float64</code>!). Set <code class="language-plaintext highlighter-rouge">mp.dps</code> explicitly
+before constructing any operand.</li><li><strong>Structured basis PSLQ (<code class="language-plaintext highlighter-rouge">mpmath.pslq</code>):</strong> test integer linear relations
+against a domain-motivated transcendental basis — for example
+${1, \pi, \pi^2, \sqrt{3}\,\pi, \mathrm{Cl}<em>2(\pi/3), G</em>{\mathrm{Catalan}}, \zeta(3), \ln 2, \ln 3}$
+or logarithmic/polylogarithmic periods of the relevant number field — requiring
+small integer coefficients ($\max |c_i| \ll 10^{\mathrm{dps}/4}$).</li><li><strong>Held-out doubling confirmation (<code class="language-plaintext highlighter-rouge">&gt;= 160 dps</code>):</strong> re-evaluate both sides of
+any candidate PSLQ relation at <strong>double the working precision (<code class="language-plaintext highlighter-rouge">&gt;= 160 dps</code>)</strong>
+and require the residual to drop to <code class="language-plaintext highlighter-rouge">&lt; 10^{-150}</code>. Any relation whose
+residual stalls near <code class="language-plaintext highlighter-rouge">10^{-75}</code> is a lattice-reduction artefact and MUST be
+discarded.</li><li><strong>Database cross-verification:</strong> pass every recovered rational ratio $p/q$
+through §1 (OEIS + Bernoulli prime factorisation) and §3 (LMFDB $L$-value
+normalisation), then ingest the primary literature source via
+<a href="../../reference/skill-instructions/evidence-gathering-and-provenance.html"><code class="language-plaintext highlighter-rouge">evidence-gathering-and-provenance</code></a>
+and prove the algebraic skeleton formally where applicable.</li></ol><hr /><h2 id="5-provenance--knowledge-graph-recording-strict"><a href="#5-provenance--knowledge-graph-recording-strict" class="anchor-heading" aria-labelledby="5-provenance--knowledge-graph-recording-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §5. Provenance &amp; Knowledge Graph recording (<code class="language-plaintext highlighter-rouge">STRICT</code>)
+  
+  
+</h2><p>Every hit or structured negative result from §§1–4 MUST leave a durable,
+checkable record rather than staying in chat prose:</p><ul><li><strong>OEIS / LMFDB / KnotInfo / SnapPy identifiers:</strong> record exact sequence IDs
+(<code class="language-plaintext highlighter-rouge">OEIS A301732</code>, <code class="language-plaintext highlighter-rouge">OEIS A301733</code>), LMFDB labels (<code class="language-plaintext highlighter-rouge">2.0.3.1</code>), and census names
+(<code class="language-plaintext highlighter-rouge">m004</code> / <code class="language-plaintext highlighter-rouge">4_1</code>, <code class="language-plaintext highlighter-rouge">L6a4</code>) in compute docstrings, <code class="language-plaintext highlighter-rouge">*.witness.json</code> metadata,
+block <code class="language-plaintext highlighter-rouge">authorNotes</code>, and formal Lean module docstrings (<code class="language-plaintext highlighter-rouge">-- Ref: [...]</code>).</li><li><strong>Primary paper ingestion:</strong> an OEIS or LMFDB entry almost always cites the
+paper that proved the formula; retrieve and ingest that primary paper into
+<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/references"><code class="language-plaintext highlighter-rouge">references/</code></a> and <code class="language-plaintext highlighter-rouge">library/</code> via
+<a href="../../reference/skill-instructions/evidence-gathering-and-provenance.html"><code class="language-plaintext highlighter-rouge">evidence-gathering-and-provenance</code></a>
+so the theorem is cited to its proof as well as its catalogue ID.</li><li><strong>Negative search log:</strong> if all five OEIS transforms, KnotInfo/SnapPy tables,
+LMFDB queries, and <code class="language-plaintext highlighter-rouge">&gt;= 80 dps</code> PSLQ bases return no match, record the exact
+transformed query strings and basis vectors tested in the work item or audit
+note so future sessions do not repeat the search.</li></ul><h2 id="checklist-before-closing-a-sequence-constant-or-invariant-investigation"><a href="#checklist-before-closing-a-sequence-constant-or-invariant-investigation" class="anchor-heading" aria-labelledby="checklist-before-closing-a-sequence-constant-or-invariant-investigation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist before closing a sequence, constant, or invariant investigation
+  
+  
+</h2><ul class="task-list"><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rescaled raw coefficients into natural 1-loop torsion / geometric units before querying.</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Tested all five OEIS transforms (<code class="language-plaintext highlighter-rouge">curl -sL "https://oeis.org/search?fmt=json&amp;q=..."</code>): raw, unit-rescaled, factorial-cleared $k!\,z_k$, $24^k$ / torsion-cleared, and both logged cumulants and unlogged $\exp(\sum c_k x^k)$.</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Checked denominator prime factorisations against von Staudt–Clausen Bernoulli primes and stripped extraneous $2, 3, \sqrt{d}$ gauge factors.</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Cross-checked knot/link/3-manifold invariants (volume, CS, polynomials, symmetry, trace field) against KnotInfo / LinkInfo / SnapPy / Regina with explicit orientation/mirror verification.</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Queried LMFDB (<code class="language-plaintext highlighter-rouge">https://www.lmfdb.org/api/</code>) for number fields, Dirichlet $L$-values, and modular/quantum-modular $q$-series where applicable.</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ran <code class="language-plaintext highlighter-rouge">mpmath.pslq</code> / <code class="language-plaintext highlighter-rouge">identify</code> at <code class="language-plaintext highlighter-rouge">&gt;= 80 dps</code> (<code class="language-plaintext highlighter-rouge">0</code> <code class="language-plaintext highlighter-rouge">float64</code>) and confirmed any candidate relation at held-out <code class="language-plaintext highlighter-rouge">&gt;= 160 dps</code>.</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Recorded catalogue IDs (<code class="language-plaintext highlighter-rouge">OEIS Axxxxxx</code>, LMFDB labels, census IDs) and ingested the primary literature source via <a href="evidence-gathering-and-provenance.html"><code class="language-plaintext highlighter-rouge">evidence-gathering-and-provenance</code></a>.</li></ul><h2 id="related-skills"><a href="#related-skills" class="anchor-heading" aria-labelledby="related-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related skills
+  
+  
+</h2><ul><li><a href="../../reference/skill-instructions/evidence-gathering-and-provenance.html"><code class="language-plaintext highlighter-rouge">evidence-gathering-and-provenance</code></a> — five-step topic shortlist, scholarly retrieval, KG ingestion, relevancy assessment, and authoring provenance.</li><li><a href="../../reference/skill-instructions/literature-search.html"><code class="language-plaintext highlighter-rouge">literature-search</code></a> — three-state open-access lookup and bibliographic retrieval.</li><li><a href="../../reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a> — ingesting primary papers surfaced by OEIS, KnotInfo, or LMFDB into <code class="language-plaintext highlighter-rouge">library/</code>.</li><li><a href="../../reference/skill-instructions/scientific-accuracy.html"><code class="language-plaintext highlighter-rouge">scientific-accuracy</code></a> — precision, normalisation, and convention verification in authored prose.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/evidence-gathering-and-provenance.html">Evidence gathering and provenance</a></td><td>Query scholarly and data APIs</td></tr><tr><td><a href="../../en/cat-harness/processes/research-delegation-and-niche-routing.html">Research delegation and niche routing</a></td><td>Investigate niche and ingest KG evidence (calls a sub-process)</td></tr></tbody></table></div></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="1"><summary class="fa-provenance-summary">Provenance (1)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">About this page</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-11-28</code> <code>owner</code></span><div class="fa-provenance-text">Owner directive, 2026-11-28: <em>&quot;do integers have nicer form that explains wher they cpme form? ... (Add as skill/processes as part of compputational reseach to use online integer seuqecne, and other online datbasess like for knots)&quot;</em>.</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

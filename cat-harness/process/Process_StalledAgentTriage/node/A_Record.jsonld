@@ -6,14 +6,16 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Record",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Record the triage and claim the picked-up work",
+      "name": "Reconcile epic lease table, write-ahead checkpoint & sibling notes",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-handoff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

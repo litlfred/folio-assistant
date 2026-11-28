@@ -4,11 +4,11 @@
  "markers": [
   {
    "id": "A_Footprint",
-   "name": "Find the footprint",
-   "left": 25.19,
+   "name": "Audit remote delta, epic relay snapshot & PR classes",
+   "left": 25.21,
    "top": 38.46,
    "box": {
-    "left": 19.74,
+    "left": 19.76,
     "top": 56.73,
     "width": 1.8,
     "height": 4.62
@@ -16,11 +16,11 @@
   },
   {
    "id": "A_Collect",
-   "name": "Collect or reconstruct a handover report per agent",
-   "left": 37.22,
+   "name": "Inspect worktrees non-destructively, salvage & collect handovers",
+   "left": 37.24,
    "top": 38.46,
    "box": {
-    "left": 31.77,
+    "left": 31.79,
     "top": 56.73,
     "width": 1.8,
     "height": 4.62
@@ -29,10 +29,10 @@
   {
    "id": "A_Consolidate",
    "name": "Consolidate into 2-4 themes, with a recommendation each",
-   "left": 49.25,
+   "left": 49.26,
    "top": 38.46,
    "box": {
-    "left": 43.8,
+    "left": 43.81,
     "top": 56.73,
     "width": 1.8,
     "height": 4.62
@@ -41,10 +41,10 @@
   {
    "id": "U_Decide",
    "name": "Decide each theme",
-   "left": 61.28,
+   "left": 61.29,
    "top": 71.15,
    "box": {
-    "left": 55.83,
+    "left": 55.84,
     "top": 89.42,
     "width": 1.8,
     "height": 4.62
@@ -52,11 +52,11 @@
   },
   {
    "id": "A_Record",
-   "name": "Record the triage and claim the picked-up work",
-   "left": 73.31,
+   "name": "Reconcile epic lease table, write-ahead checkpoint & sibling notes",
+   "left": 73.32,
    "top": 38.46,
    "box": {
-    "left": 67.86,
+    "left": 67.87,
     "top": 56.73,
     "width": 1.8,
     "height": 4.62
@@ -64,7 +64,7 @@
   },
   {
    "id": "S_Reroute",
-   "name": "Re-route open PRs that lost their driver",
+   "name": "Re-route ready PRs & resume Merge Steward + worker queues",
    "left": 85.34,
    "top": 5.77,
    "box": {
@@ -79,16 +79,20 @@
  "tasks": {
   "A_Footprint": {
    "id": "A_Footprint",
-   "name": "Find the footprint",
+   "name": "Audit remote delta, epic relay snapshot & PR classes",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Footprint",
    "stepHref": "stalled-agent-triage.html#step-A_Footprint",
-   "lane": "Triage agent",
+   "lane": "Triage / re-entering agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
     {
      "name": "stalled-agent-triage",
      "href": "../../../reference/skill-instructions/stalled-agent-triage.html"
+    },
+    {
+     "name": "agent-handoff",
+     "href": "../../../reference/skill-instructions/agent-handoff.html"
     }
    ],
    "role": {
@@ -177,6 +181,10 @@
       "href": "../../../reference/skill-instructions/directory-conventions.html"
      },
      {
+      "name": "evidence-gathering-and-provenance",
+      "href": "../../../reference/skill-instructions/evidence-gathering-and-provenance.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
      },
@@ -217,12 +225,20 @@
       "href": "../../../reference/skill-instructions/library-ingestion.html"
      },
      {
+      "name": "literature-search",
+      "href": "../../../reference/skill-instructions/literature-search.html"
+     },
+     {
       "name": "merge-to-main",
       "href": "../../../reference/skill-instructions/merge-to-main.html"
      },
      {
       "name": "methodology-adoption",
       "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "online-sequence-and-knot-databases",
+      "href": "../../../reference/skill-instructions/online-sequence-and-knot-databases.html"
      },
      {
       "name": "opening-brief",
@@ -309,16 +325,24 @@
   },
   "A_Collect": {
    "id": "A_Collect",
-   "name": "Collect or reconstruct a handover report per agent",
+   "name": "Inspect worktrees non-destructively, salvage & collect handovers",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Collect",
    "stepHref": "stalled-agent-triage.html#step-A_Collect",
-   "lane": "Triage agent",
+   "lane": "Triage / re-entering agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
     {
+     "name": "stalled-agent-triage",
+     "href": "../../../reference/skill-instructions/stalled-agent-triage.html"
+    },
+    {
      "name": "handover-report",
      "href": "../../../reference/skill-instructions/handover-report.html"
+    },
+    {
+     "name": "prepare-for-handover",
+     "href": "../../../reference/skill-instructions/prepare-for-handover.html"
     }
    ],
    "role": {
@@ -407,6 +431,10 @@
       "href": "../../../reference/skill-instructions/directory-conventions.html"
      },
      {
+      "name": "evidence-gathering-and-provenance",
+      "href": "../../../reference/skill-instructions/evidence-gathering-and-provenance.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
      },
@@ -447,12 +475,20 @@
       "href": "../../../reference/skill-instructions/library-ingestion.html"
      },
      {
+      "name": "literature-search",
+      "href": "../../../reference/skill-instructions/literature-search.html"
+     },
+     {
       "name": "merge-to-main",
       "href": "../../../reference/skill-instructions/merge-to-main.html"
      },
      {
       "name": "methodology-adoption",
       "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "online-sequence-and-knot-databases",
+      "href": "../../../reference/skill-instructions/online-sequence-and-knot-databases.html"
      },
      {
       "name": "opening-brief",
@@ -543,7 +579,7 @@
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Consolidate",
    "stepHref": "stalled-agent-triage.html#step-A_Consolidate",
-   "lane": "Triage agent",
+   "lane": "Triage / re-entering agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
     {
@@ -637,6 +673,10 @@
       "href": "../../../reference/skill-instructions/directory-conventions.html"
      },
      {
+      "name": "evidence-gathering-and-provenance",
+      "href": "../../../reference/skill-instructions/evidence-gathering-and-provenance.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
      },
@@ -677,12 +717,20 @@
       "href": "../../../reference/skill-instructions/library-ingestion.html"
      },
      {
+      "name": "literature-search",
+      "href": "../../../reference/skill-instructions/literature-search.html"
+     },
+     {
       "name": "merge-to-main",
       "href": "../../../reference/skill-instructions/merge-to-main.html"
      },
      {
       "name": "methodology-adoption",
       "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "online-sequence-and-knot-databases",
+      "href": "../../../reference/skill-instructions/online-sequence-and-knot-databases.html"
      },
      {
       "name": "opening-brief",
@@ -835,16 +883,30 @@
   },
   "A_Record": {
    "id": "A_Record",
-   "name": "Record the triage and claim the picked-up work",
+   "name": "Reconcile epic lease table, write-ahead checkpoint & sibling notes",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Record",
    "stepHref": "stalled-agent-triage.html#step-A_Record",
-   "lane": "Triage agent",
+   "lane": "Triage / re-entering agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
     {
      "name": "bean-coordination",
      "href": "../../../reference/skill-instructions/bean-coordination.html"
+    },
+    {
+     "name": "agent-handoff",
+     "href": "../../../reference/skill-instructions/agent-handoff.html"
+    },
+    {
+     "name": "coordinate",
+     "href": "../../../reference/skill-instructions/coordinate.html",
+     "methodologies": [
+      {
+       "name": "sdlc-agentic-landscape",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/sdlc-agentic-landscape/"
+      }
+     ]
     }
    ],
    "role": {
@@ -933,6 +995,10 @@
       "href": "../../../reference/skill-instructions/directory-conventions.html"
      },
      {
+      "name": "evidence-gathering-and-provenance",
+      "href": "../../../reference/skill-instructions/evidence-gathering-and-provenance.html"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html"
      },
@@ -973,12 +1039,20 @@
       "href": "../../../reference/skill-instructions/library-ingestion.html"
      },
      {
+      "name": "literature-search",
+      "href": "../../../reference/skill-instructions/literature-search.html"
+     },
+     {
       "name": "merge-to-main",
       "href": "../../../reference/skill-instructions/merge-to-main.html"
      },
      {
       "name": "methodology-adoption",
       "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "online-sequence-and-knot-databases",
+      "href": "../../../reference/skill-instructions/online-sequence-and-knot-databases.html"
      },
      {
       "name": "opening-brief",
@@ -1065,7 +1139,7 @@
   },
   "S_Reroute": {
    "id": "S_Reroute",
-   "name": "Re-route open PRs that lost their driver",
+   "name": "Re-route ready PRs & resume Merge Steward + worker queues",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/S_Reroute",
    "stepHref": "stalled-agent-triage.html#step-S_Reroute",
@@ -1081,6 +1155,10 @@
        "href": "../../../en/cat-harness/methodologies/cat-harness/sdlc-agentic-landscape/"
       }
      ]
+    },
+    {
+     "name": "merge-manager-watcher",
+     "href": "../../../reference/skill-instructions/merge-manager-watcher.html"
     }
    ],
    "role": {
@@ -1208,6 +1286,11 @@
       "href": "../../../reference/skill-instructions/dispatch-agent.html"
      },
      {
+      "name": "evidence-gathering-and-provenance",
+      "href": "../../../reference/skill-instructions/evidence-gathering-and-provenance.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "feature-staging",
       "href": "../../../reference/skill-instructions/feature-staging.html",
       "via": "authoring-agent"
@@ -1250,6 +1333,10 @@
       "href": "../../../reference/skill-instructions/idle-backlog.html"
      },
      {
+      "name": "interaction-modality",
+      "href": "../../../reference/skill-instructions/interaction-modality.html"
+     },
+     {
       "name": "issue-working",
       "href": "../../../reference/skill-instructions/issue-working.html",
       "via": "authoring-agent"
@@ -1270,6 +1357,11 @@
       "via": "authoring-agent"
      },
      {
+      "name": "literature-search",
+      "href": "../../../reference/skill-instructions/literature-search.html",
+      "via": "authoring-agent"
+     },
+     {
       "name": "merge-to-main",
       "href": "../../../reference/skill-instructions/merge-to-main.html",
       "via": "authoring-agent"
@@ -1277,6 +1369,11 @@
      {
       "name": "methodology-adoption",
       "href": "../../../reference/skill-instructions/methodology-adoption.html",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "online-sequence-and-knot-databases",
+      "href": "../../../reference/skill-instructions/online-sequence-and-knot-databases.html",
       "via": "authoring-agent"
      },
      {
@@ -1331,6 +1428,10 @@
       "via": "authoring-agent"
      },
      {
+      "name": "research-manager",
+      "href": "../../../reference/skill-instructions/research-manager.html"
+     },
+     {
       "name": "session-context",
       "href": "../../../reference/skill-instructions/session-context.html",
       "via": "authoring-agent"
@@ -1381,6 +1482,10 @@
       "name": "translation-manager",
       "href": "../../../reference/skill-instructions/translation-manager.html",
       "via": "authoring-agent"
+     },
+     {
+      "name": "turn-reporting",
+      "href": "../../../reference/skill-instructions/turn-reporting.html"
      },
      {
       "name": "upstream-version-adoption",

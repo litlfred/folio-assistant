@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d2b0503723fee388be78189c3feb5e33d9111f06",
-  "sourceCommitSha": "d2b0503723fee388be78189c3feb5e33d9111f06",
-  "sourceTree": "3b90e84240bcc0dccc4ccf7f30bd39753ea076f1",
-  "sourceCommitAt": "2026-11-25T11:15:59-05:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2835f697789277b907c7fe1a07ddcd45863a3304",
+  "sourceCommitSha": "2835f697789277b907c7fe1a07ddcd45863a3304",
+  "sourceTree": "2717b7bdc782804a79916d7d5a873bd455489946",
+  "sourceCommitAt": "2026-11-28T22:08:04+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -386,6 +386,19 @@
     "Schema": 6
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/github-pages",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "github-pages",
+      "title": "GitHub Pages' contract",
+      "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
+      "instructionsPath": "skills/github-pages.md",
+      "instructionLines": 39,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-skills"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
@@ -407,19 +420,6 @@
       "description": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
       "instructionsPath": "skills/render-kg-to-github-pages.md",
       "instructionLines": 93,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/github-pages",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "github-pages",
-      "title": "GitHub Pages' contract",
-      "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
-      "instructionsPath": "skills/github-pages.md",
-      "instructionLines": 39,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

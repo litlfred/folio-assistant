@@ -3966,6 +3966,156 @@
       "name": "Feature ready to file or requirement lifecycle change requested"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting",
+      "@type": "bootstrap:Process",
+      "name": "Research delegation and niche routing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_2a",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_2b",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_3a",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5a",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "same niche"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5b",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "cross-niche bridge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_5c",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "new niche"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6a",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_6c",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_7b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting#flow/Flow_RD_9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/lane/Lane_Coordinator",
+      "@type": "cat-harness:Lane",
+      "name": "Foreground coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/lane/Lane_Specialists",
+      "@type": "cat-harness:Lane",
+      "name": "Niche research specialists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Call_EvidenceAndResearch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Investigate niche and ingest KG evidence"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/End_AnsweredInline",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Answered inline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/End_UserUpdated",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Foreground updated with findings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_DispatchJoin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_DispatchJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_ExceedsBriefLookup",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Exceeds ~15-20 s lookup?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/GW_NicheRoute",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Niche routing mode?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Start_QuestionArrives",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Topic arrives"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_AnswerInline",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Answer inline in foreground"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_FanOutBridge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fan bridging query across niches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_ReportNonBlockingDispatch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Post scope, ETA, outcomes and card"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_RouteSameSpecialist",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Route to standing niche specialist"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_SpawnNicheSpecialist",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Spawn specialist for new niche"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_SynthesizeAndUpdateUser",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Synthesize agreements, tensions and report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ResearchDelegationAndNicheRouting/node/Task_WriteAheadEpicCheckpoint",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write-ahead checkpoint epic & lease table"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "@type": "bootstrap:Process",
       "name": "Saturation meta-merge: land the ready PRs when the runners are full"
@@ -4228,7 +4378,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "@type": "bootstrap:Process",
-      "name": "Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route"
+      "name": "Stalled-agent triage & bidirectional relay re-entry"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage#flow/SF_Process_StalledAgentTriage_1",
@@ -4266,7 +4416,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
       "@type": "cat-harness:Lane",
-      "name": "Triage agent"
+      "name": "Triage / re-entering agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_User",
@@ -4276,7 +4426,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Collect",
       "@type": "bootstrap:ProcessNode",
-      "name": "Collect or reconstruct a handover report per agent"
+      "name": "Inspect worktrees non-destructively, salvage & collect handovers"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Consolidate",
@@ -4286,27 +4436,27 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Footprint",
       "@type": "bootstrap:ProcessNode",
-      "name": "Find the footprint"
+      "name": "Audit remote delta, epic relay snapshot & PR classes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Record",
       "@type": "bootstrap:ProcessNode",
-      "name": "Record the triage and claim the picked-up work"
+      "name": "Reconcile epic lease table, write-ahead checkpoint & sibling notes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/End_SAT",
       "@type": "bootstrap:ProcessNode",
-      "name": "Stalled work has an owner and a place in the plan"
+      "name": "Relay reconciled; queues and epic lease table live"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/S_Reroute",
       "@type": "bootstrap:ProcessNode",
-      "name": "Re-route open PRs that lost their driver"
+      "name": "Re-route ready PRs & resume Merge Steward + worker queues"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/Start_SAT",
       "@type": "bootstrap:ProcessNode",
-      "name": "Agents stalled, or owner asks to pick up their work"
+      "name": "Agents stalled, owner asks to pick up work, or agent re-enters"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/U_Decide",
