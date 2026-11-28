@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
+    }
+  ]
+}

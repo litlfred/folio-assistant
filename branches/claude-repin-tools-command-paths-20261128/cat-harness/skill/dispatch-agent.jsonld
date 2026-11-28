@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/dispatch-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/dispatch-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dispatch-agent",
+      "title": "Parallel worker dispatch with live progress telemetry and human-consumable monitoring",
+      "description": "Dispatches one or more background subagents against disjoint workstreams with a standardized live progress contract, reactive wakeup plus fallback timer heartbeat, and human-consumable status synthesis through swarm-monitor. Every dispatched worker emits machine-greppable DID/DOING/NEXT/BLOCKERS blocks with live command evidence; the coordinator extracts the latest block on event wakeup or a 2-to-4-minute fallback timer and translates multi-worker state into anti-shorthand queue scoreboards and milestone rollups. Use when asked to dispatch agents, fan out parallel work with monitoring, or launch two or more background workers.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/dispatch-agent.md",
+      "instructionLines": 204,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent"
+    }
+  ]
+}

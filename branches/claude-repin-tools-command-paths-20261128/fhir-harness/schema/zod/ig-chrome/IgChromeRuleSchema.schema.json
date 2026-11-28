@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/IgChromeRule",
+  "definitions": {
+    "IgChromeRule": {
+      "type": "object",
+      "properties": {
+        "selector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declarations": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "property": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "property",
+              "value"
+            ]
+          }
+        }
+      },
+      "required": [
+        "selector",
+        "from",
+        "declarations"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeRuleSchema.schema.json",
+  "title": "IgChromeRuleSchema",
+  "description": "Generated from `IgChromeRuleSchema` in schemas/ig-chrome.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ContentAcquisition/node/A_Ask.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ContentAcquisition/node/A_Ask",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Ask for a link or a description",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ContentAcquisition",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ContentAcquisition/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/content-acquisition"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_AskThePerson",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ContentAcquisition#flow/SF_CA_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/process/Process_ContentAcquisition#flow/SF_CA_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition/node/A_Ask"
+    }
+  ]
+}

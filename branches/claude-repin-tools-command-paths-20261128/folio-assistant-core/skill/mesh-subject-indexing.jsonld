@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/skill/mesh-subject-indexing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/skill/mesh-subject-indexing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "mesh-subject-indexing",
+      "title": "MeSH subject indexing",
+      "description": "Assign Medical Subject Headings (MeSH) to a work as a DRAFT for a person to review, in the four stages of skill-pipeline-subject-indexing: over-generate concepts, filter them by NLM's own rules, validate every heading against NLM's MeSH authority with Tool `mesh-authority`, and write the reviewed list. Never emits a heading the authority does not hold.",
+      "instructionsPath": "skills/library/cataloguing/mesh-subject-indexing.md",
+      "instructionLines": 111,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/mesh-subject-indexing"
+    }
+  ]
+}

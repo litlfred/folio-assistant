@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/swarm-monitor.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/swarm-monitor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Swarm monitor",
+      "title": "Swarm monitor",
+      "notation": "swarm-monitor",
+      "description": "Supervises any active swarm bound to a parent Swarm Work Item (`epic` or `milestone` in `beans`) on reactive completion wakeups and a 2-to-4-minute fallback timer: extracts live worker progress, checks CPU load, root disk headroom, and compressed or swapped memory footprint, halts runaway leaks or pulls the Andon cord on structural defects, assigns right-scoped non-heavy `idle-backlog` items to workers waiting on single-core compute without mid-build `git checkout`, refreshes and pushes the parent Swarm Work Item's Cold-Start Handover Runbook on every check-in (`swarm-epic-sync`), independently verifies completed branches before handing six-line merge requests to the merge steward, refills freed worker slots, and publishes standardized two-table human status reports (`on-demand` or `periodic`) free of session shorthands.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/swarm-monitor",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/dispatch-agent",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/idle-backlog",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/handover-report",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/prepare-for-handover",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/stalled-agent-triage"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/swarm-monitor"
+    }
+  ]
+}

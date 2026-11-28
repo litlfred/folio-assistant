@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/skill/guideline-gap-report.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/guideline-gap-report.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/guideline-gap-report",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "guideline-gap-report",
+      "title": "guideline-gap-report",
+      "description": "The QA report smart-guideline-end-to-end writes after every stage: where a guideline's chain from L1 recommendation to L2 asset to L3 resource is broken, which source figures and tables are not yet computable, and which assets have no review requested, a review pending, or a review sent back. Each gap names the asset, the stage that closes it and the role that reviews it. It is staged with the stage's output and linked from every review request, so each reviewer sees where their asset sits and what is still missing. A report, never a gate. Read after any stage of smart-guideline-end-to-end or dth-authoring, and when asked \"what is left to do on this guideline?\".",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-gap-report.md",
+      "instructionLines": 91,
+      "inputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/guideline-gap-report/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

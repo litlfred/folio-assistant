@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/certifier.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/role/certifier",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Certifier",
+      "title": "Certifier",
+      "notation": "certifier",
+      "description": "Takes the certification decision on ONE test report: applies the DMN the plan's `exitCriteria` names (computed from facts, never asserted) and records the decision as a judgement under the declared `attestations` graph, from which it is signed through `qa-report-signing.bpmn`. A specialisation of `stakeholder` — accountable sign-off — but NOT `judgementOnly`: the exit criteria are a table it applies, and only the decision on top of them is the judgement (owner ruling, 2026-10-01). Never the tester and never the system under test. Bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/test-plan-execution",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/cat-harness/skill/decision-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/certifier"
+    }
+  ]
+}

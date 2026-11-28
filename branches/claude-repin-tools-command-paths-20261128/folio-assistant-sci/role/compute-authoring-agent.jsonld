@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/role/compute-authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/role/compute-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Compute authoring agent",
+      "title": "Compute authoring agent",
+      "notation": "compute-authoring-agent",
+      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/compute-audit",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/compute-author",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/ffi-roundtrip-audit",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/lean-witness-audit",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/witnessed-values",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/verify-local-substrate",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/simulator",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/simulator-math-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/compute-authoring-agent"
+    }
+  ]
+}

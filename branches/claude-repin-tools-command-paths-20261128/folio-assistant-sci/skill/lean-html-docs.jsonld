@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/lean-html-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/skill/lean-html-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "lean-html-docs",
+      "title": "Lean HTML docs — a folio's Lean render, from its branch store to its site",
+      "description": "Build a folio's Lean render (the Lean knowledge-graph viewer made from doc-gen4's declaration data for its Lake packages), keep it on the folio's branch-mounted Lean store, and publish it under the folio's site wrapped in the harness navbar and rail. Use when a folio's Lean docs are missing, stale, or published without the harness chrome, or when declaring the Lean store a folio mounts.",
+      "instructionsPath": "skills/lean/lean-html-docs.md",
+      "instructionLines": 233,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs"
+    }
+  ]
+}

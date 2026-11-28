@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/skill/record-decision-rationale.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/record-decision-rationale.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/record-decision-rationale",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "record-decision-rationale",
+      "title": "Record a decision rationale (optional)",
+      "description": "OPTIONAL and never blocking: a health worker who chooses to may note why they accepted or declined decision-support guidance, in one tap plus an optional coded or free-text reason. Input is the decision; output is one FHIR Provenance (or nothing, when skipped, which is the default). The care plan is updated whether or not this is ever done.",
+      "instructionsPath": "L4/skills/smart-l4/record-decision-rationale.md",
+      "instructionLines": 71,
+      "inputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/schema/model-registry.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/schema/model-registry",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "model-registry",
+      "title": "model-registry",
+      "summary": "Which languages a MODEL is good at, and whether anybody checked.",
+      "module": "schemas/model-registry.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/model-registry",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/schema/zod/model-registry/ModelEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/schema/zod/model-registry/ModelIdSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/bootstrap-tools/schema/zod/model-registry/ModelRegistrySchema.schema.json"
+      ]
+    }
+  ]
+}

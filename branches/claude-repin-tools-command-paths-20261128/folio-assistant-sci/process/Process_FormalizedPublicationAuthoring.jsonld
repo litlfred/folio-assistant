@@ -1,0 +1,246 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Formalized Scientific Publication Authoring",
+      "summary": "One mathematical result, from the author's intent to a merged change set.",
+      "description": "One mathematical result, from the author's intent to a merged change set. The result is a triple: a narrative statement, a narrative proof (both in the block's `.md`) and a Lean statement and proof (the block's `.lean`).\n\nThe Lean kernel shows only that the Lean proof proves the Lean statement. Whether that statement is the theorem the narrative claims is decided separately, by independent reviewers who translate each side without seeing the other and then judge semantic equivalence. Mechanical checks (schema, references, render, Lean, vacuity, witnesses) run before them, so reviewers never spend a reading on a block that does not build.\n\nEmpirical inputs never enter the triple: a measured value appears only in a marked comparison block, and a number quoted in prose is read from its witness. A result that cannot be closed is kept as a conjecture or as a stated, cited gap; it is never weakened until it passes. Only the author merges.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/formalized-publication-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/formalized-publication-authoring.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/assets/img/workflows/formalized-publication-authoring.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Start_Intent"
+      ],
+      "nodeCount": 20,
+      "flowCount": 23,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Start_Intent",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_StateIntent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_StateIntent",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_PriorWork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_PriorWork",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_AlreadyHeld",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_AlreadyHeld",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/End_Cited",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_AlreadyHeld",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_DraftTriple",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_DraftTriple",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_LeanCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_LeanCheck",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_Mechanical",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_Mechanical",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_MechanicalGreen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_MechanicalGreen",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Fork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no — fix",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_MechanicalGreen",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_DraftTriple",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Closable",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_DraftTriple",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Closable",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_RecordGap",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_RecordGap",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_LeanCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_15",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_BlindLeanToProse",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_16",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_BlindProseToLean",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_17",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_BlindLeanToProse",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_18",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_BlindProseToLean",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_18"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_19",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Join",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_JudgeEquivalence",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_19"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_20",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_JudgeEquivalence",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_Adversarial",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_21",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_Adversarial",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Equivalent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_22",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Equivalent",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_22"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_23",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Equivalent",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/GW_Closable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_23"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_24",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/Task_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring/node/End_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_FormalizedPublicationAuthoring#flow/Flow_24"
+    }
+  ]
+}

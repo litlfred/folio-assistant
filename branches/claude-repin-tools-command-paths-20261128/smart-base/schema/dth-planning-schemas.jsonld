@@ -1,0 +1,44 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/schema/dth-planning-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/dth-planning-schemas.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/dth-planning-schemas",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dth-planning-schemas",
+      "title": "dth-planning-schemas",
+      "summary": "Proposed WHO Digital Transformation Handbook (DTH) governance and planning",
+      "module": "schemas/dth-planning-schemas.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/BarrierSolutionEntrySchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/BarrierSolutionMapSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/DthPlanningArtefactSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/DthSourceRefSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/DthStructuredSourceRefSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/GovernanceRoleSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/GovernanceRoleTypeSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciActivitySchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciCodeSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciMatrixSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciRoleColumnSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RaciRoleRefSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskEntrySchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskLevelSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskPrioritySchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RiskRegisterSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/RoleOrElementIriSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/StakeholderAnalysisSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-planning-schemas/StakeholderEntrySchema.schema.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/skill/dsa-odrl-source.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/skill/dsa-odrl-source",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dsa-odrl-source",
+      "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)",
+      "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",
+      "instructionsPath": "dsa/skills/dsa/dsa-odrl-source.md",
+      "instructionLines": 91,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-command-paths-20261128/folio-assistant-core/directory/dsa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source"
+    }
+  ]
+}

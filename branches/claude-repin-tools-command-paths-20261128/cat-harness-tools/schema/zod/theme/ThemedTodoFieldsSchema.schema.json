@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/ThemedTodoFields",
+  "definitions": {
+    "ThemedTodoFields": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "layout": {
+          "type": "string",
+          "enum": [
+            "laptop",
+            "mobile",
+            "card"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemedTodoFieldsSchema.schema.json",
+  "title": "ThemedTodoFieldsSchema",
+  "description": "Generated from `ThemedTodoFieldsSchema` in schemas/ui/theme.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  }
+}

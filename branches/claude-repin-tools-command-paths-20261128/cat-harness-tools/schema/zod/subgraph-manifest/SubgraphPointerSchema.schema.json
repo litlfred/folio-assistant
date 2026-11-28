@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/SubgraphPointer",
+  "definitions": {
+    "SubgraphPointer": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "format": "uri"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "@id",
+            "sha256",
+            "bytes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphPointerSchema.schema.json",
+  "title": "SubgraphPointerSchema",
+  "description": "Generated from `SubgraphPointerSchema` in schemas/kg/subgraph-manifest.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  }
+}

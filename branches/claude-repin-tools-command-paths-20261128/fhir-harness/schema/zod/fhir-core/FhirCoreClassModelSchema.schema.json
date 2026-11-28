@@ -1,0 +1,224 @@
+{
+  "$ref": "#/definitions/FhirCoreClassModel",
+  "definitions": {
+    "FhirCoreClassModel": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-fhir-core-class-model/v1"
+        },
+        "release": {
+          "type": "string",
+          "enum": [
+            "R4",
+            "R4B",
+            "R5"
+          ]
+        },
+        "fhirVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "spec": {
+          "type": "string",
+          "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/$"
+        },
+        "derivedFrom": {
+          "type": "object",
+          "properties": {
+            "tarball": {
+              "type": "string",
+              "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/R[0-9]+B?\\/hl7\\.fhir\\.r[0-9]+b?\\.core\\.tgz$"
+            },
+            "shasum": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          },
+          "required": [
+            "tarball",
+            "shasum"
+          ],
+          "additionalProperties": false
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "classes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "backbones": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "attributes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "classes",
+            "backbones",
+            "attributes"
+          ],
+          "additionalProperties": false
+        },
+        "classes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "stereotype": {
+                "type": "string",
+                "enum": [
+                  "primitive-type",
+                  "complex-type",
+                  "resource",
+                  "backbone"
+                ]
+              },
+              "abstract": {
+                "type": "boolean"
+              },
+              "generalization": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner": {
+                "type": "string",
+                "minLength": 1
+              },
+              "definition": {
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^http:\\/\\/hl7\\.org\\/fhir\\/StructureDefinition\\/.*"
+              },
+              "published": {
+                "type": "string",
+                "format": "starts_with",
+                "pattern": "^https:\\/\\/hl7\\.org\\/fhir\\/.*"
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "attributes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "min": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "max": {
+                      "type": "string",
+                      "pattern": "^(\\*|\\d+)$"
+                    },
+                    "types": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "targets": {
+                            "minItems": 1,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "required": [
+                          "code"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "contentReference": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "isModifier": {
+                      "type": "boolean",
+                      "const": true
+                    },
+                    "isSummary": {
+                      "type": "boolean",
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "element",
+                    "min",
+                    "max"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "name",
+              "stereotype",
+              "abstract",
+              "definition",
+              "published",
+              "element",
+              "attributes"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "release",
+        "fhirVersion",
+        "spec",
+        "derivedFrom",
+        "derivation",
+        "counts",
+        "classes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/FhirCoreClassModelSchema.schema.json",
+  "title": "FhirCoreClassModelSchema",
+  "description": "Generated from `FhirCoreClassModelSchema` in schemas/fhir-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-command-paths-20261128",
+    "sha": "9f55de90eb6b2b3638edd5d5cdc89fa996c8cf39",
+    "pr": "3203/merge",
+    "run": "46181296471"
+  }
+}
