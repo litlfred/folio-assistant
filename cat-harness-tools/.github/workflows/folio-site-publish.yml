@@ -1,0 +1,447 @@
+name: Folio site publish
+
+# The agent-run site publish (owner, 2026-10-10; bean n3h9), as ONE reusable
+# workflow. A harnessed repository's site is built and published by
+# `stage-local.ts`, from the steps its instance declares under `site.build`;
+# this runs that same command on a GitHub runner, for a session whose
+# container cannot reach rubygems.org (owner, 2026-10-13: "github egress?").
+#
+# smart-ra and dth-hrh each carried a copy, and dth-hrh's kept the job token
+# in an insteadOf URL rewrite after smart-ra learnt (2026-10-14) that it ends
+# up in `git remote get-url origin` and from there in every page. One copy
+# fixes that once. A caller:
+#
+#   on:
+#     push:
+#       branches: [main]
+#     workflow_dispatch:
+#       inputs:
+#         plan: { type: boolean, default: false }
+#   permissions:
+#     contents: write
+#   jobs:
+#     publish:
+#       uses: litlfred/cat-harness-tools/.github/workflows/folio-site-publish.yml@main
+#       with:
+#         plan: ${{ inputs.plan == true }}
+#
+# A push to main (a merged PR) publishes on its own (owner, 2026-11-10), and
+# refreshes the layer's QA reports in the same run (owner, 2026-11-11: "i want
+# that it publishes once merge to main, update QA reports etc.";
+# cat-harness-tools#1879). That caller is the CANONICAL one: every harnessed
+# repository carries it as `.github/workflows/site-publish.yml`, written from
+# templates/document/github/workflows/site-publish.yml and pinned by
+# `bun run cat workflow-pins`, and `check:site-publish-caller` reports a
+# repository whose caller is missing or differs from it.
+#
+# One workflow for every kind of site:
+#   - WHICH publisher: `stage-local.ts` reads it from the repository itself.
+#     That is `index.config.json` `site.publisher` (folio, or ig) when it is
+#     declared, else the declared `site.build` recipe, else the reusable
+#     workflow the repository's own workflows call (`site-publisher.ts`).
+#   - an IG's AST: the publish waits for the run, on the same commit, of
+#     every workflow that seeds what the site is built from. They are derived
+#     from the publishers the mounted layers declare (`after`;
+#     scripts/site-publish-after.ts), and `site.publishAfter` in
+#     index.config.json adds to them. Otherwise a publish that starts first
+#     finds the cache absent or stale and is refused.
+#   - QA: on a push to main, `layer-qa-publish.yml` (this repository's, at
+#     this commit) publishes the layer's QA results to its qa-reports branch,
+#     unless the repository has no instance declaration (`<repo>.json`) or
+#     another of its workflows already calls layer-qa-publish.yml AND runs:
+#     on a push to the default branch, or with a successful default-branch
+#     run in the last 7 days. A dispatch-only caller that does not run is not
+#     counted, so QA is not left frozen. Each skip is said in the run.
+#
+# On the default branch it publishes the gh-pages root (keeping branches/ and
+# _render-log/); on any other branch, the preview at branches/<branch>/.
+
+on:
+  workflow_call:
+    inputs:
+      plan:
+        description: "Only print what would run (--plan)"
+        type: boolean
+        default: false
+      qa:
+        description: "Refresh the layer's QA reports on a push to main (layer-qa-publish.yml)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  # The preview's cone run (`preview-qa-<sha>`, an artifact of the PR's
+  # `preview` checks run; scripts/preview-qa.ts) is downloaded with the job
+  # token. A reusable workflow gets only what its caller grants, so this lands
+  # only after every caller does (the canonical caller grants it since #2151);
+  # a caller that does not would fail to start.
+  actions: read
+
+concurrency:
+  group: site-publish-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  # What this run does besides the publish, read from the repository at the
+  # pushed commit: whether it also publishes QA, and what it waits for.
+  decide:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      # To ask whether a QA caller that does not run on push has run lately.
+      actions: read
+    outputs:
+      qa: ${{ steps.d.outputs.qa }}
+      after: ${{ steps.d.outputs.after }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          # The root's own files only: index.config.json, the instance
+          # declaration (<repo>.json) and the workflows.
+          sparse-checkout: |
+            /*.json
+            /.github/workflows/
+          sparse-checkout-cone-mode: false
+      - name: Decide the QA publish and the workflows to wait for
+        id: d
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GH_TOKEN: ${{ github.token }}
+          API_URL: ${{ github.api_url }}
+          IS_MAIN_PUSH: ${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+          PLAN: ${{ inputs.plan }}
+          QA: ${{ inputs.qa }}
+        run: |
+          set -euo pipefail
+          python3 -I - <<'PY'
+          import datetime, json, os, pathlib, re, urllib.request
+          out = open(os.environ["GITHUB_OUTPUT"], "a")
+          name = os.environ["REPO_NAME"]
+          after = []
+          try:
+              after = json.load(open("index.config.json")).get("site", {}).get("publishAfter", []) or []
+          except (OSError, ValueError):
+              pass
+          after = [a for a in after if re.fullmatch(r"[\w.-]+\.ya?ml", a)]
+          print(f"after={' '.join(after)}", file=out)
+          why = ""
+          if os.environ["QA"] != "true": why = "the caller passed qa: false"
+          elif os.environ["PLAN"] == "true": why = "a plan publishes nothing"
+          elif os.environ["IS_MAIN_PUSH"] != "true": why = "QA reports are refreshed on a push to the default branch only"
+          elif not pathlib.Path(f"{name}.json").is_file(): why = f"{name}.json is not here: the repository declares no instance, so it has no QA home of its own"
+          else:
+              # Another workflow that calls layer-qa-publish.yml counts as
+              # already publishing QA only when it actually runs: on a push to
+              # the default branch, or (when it is dispatch-only) with a
+              # successful default-branch run in the last RECENT_DAYS. A caller
+              # that is declared but never runs (qou's compute-qa.yml, which
+              # is workflow_dispatch-only and had no run at all) left the
+              # layer's qa-reports frozen while every publish skipped its own
+              # QA (litlfred/cat-harness-tools#2525).
+              RECENT_DAYS = 7
+              branch = os.environ.get("DEFAULT_BRANCH") or "main"
+
+              def on_of(t):
+                  try:
+                      import yaml
+                      doc = yaml.safe_load(t) or {}
+                      # YAML 1.1 reads a bare `on:` key as true.
+                      return doc.get("on", doc.get(True)) if isinstance(doc, dict) else None
+                  except Exception:
+                      return None
+
+              def gh_glob(pat, b):
+                  # GitHub's filter: `*` stops at `/`, `**` does not.
+                  rx = re.escape(pat).replace(r"\*\*", "\0").replace(r"\*", "[^/]*").replace("\0", ".*").replace(r"\?", ".")
+                  return re.fullmatch(rx, b) is not None
+
+              def pushes_default(t):
+                  on = on_of(t)
+                  if on is None:
+                      # No YAML parser, or the file does not parse: a line
+                      # `push:` (or `on: push` / `on: [push, ...]`) at all.
+                      return bool(re.search(r"^\s*push\s*:|^on:\s*(\[[^\]]*\bpush\b|push\b)", t, re.M))
+                  if isinstance(on, str): return on == "push"
+                  if isinstance(on, list): return "push" in on
+                  if not isinstance(on, dict) or "push" not in on: return False
+                  push = on["push"] or {}
+                  if not isinstance(push, dict): return True
+                  inc, exc = push.get("branches"), push.get("branches-ignore")
+                  if inc is None and exc is None:
+                      # Tags only: a branch push does not run it.
+                      return "tags" not in push and "tags-ignore" not in push
+                  if inc is not None:
+                      inc = [inc] if isinstance(inc, str) else inc
+                      hit = False
+                      for pat in inc:
+                          pat = str(pat)
+                          if pat.startswith("!"):
+                              if gh_glob(pat[1:], branch): hit = False
+                          elif gh_glob(pat, branch): hit = True
+                      return hit
+                  exc = [exc] if isinstance(exc, str) else exc
+                  return not any(gh_glob(str(p), branch) for p in exc)
+
+              def ran_lately(f):
+                  url = f"{os.environ.get('API_URL', 'https://api.github.com')}/repos/{os.environ['REPO']}/actions/workflows/{f.name}/runs?branch={branch}&status=success&per_page=1"
+                  try:
+                      req = urllib.request.Request(url, headers={"Authorization": f"Bearer {os.environ['GH_TOKEN']}", "Accept": "application/vnd.github+json"})
+                      runs = json.load(urllib.request.urlopen(req, timeout=20)).get("workflow_runs") or []
+                  except Exception as e:
+                      print(f"::notice::could not read {f.name}'s runs ({e}); counted as not running")
+                      return None
+                  if not runs: return None
+                  at = datetime.datetime.fromisoformat(runs[0]["updated_at"].replace("Z", "+00:00"))
+                  age = datetime.datetime.now(datetime.timezone.utc) - at
+                  return at if age <= datetime.timedelta(days=RECENT_DAYS) else None
+
+              for f in sorted(pathlib.Path(".github/workflows").glob("*.y*ml")):
+                  t = f.read_text(encoding="utf-8", errors="replace")
+                  if not (re.search(r"^\s*uses:\s*\S*layer-qa-publish\.yml@", t, re.M) and "folio-site-publish.yml@" not in t):
+                      continue
+                  if pushes_default(t):
+                      why = f"{f.name} already publishes this layer's QA results (it runs on a push to {branch})"
+                      break
+                  at = ran_lately(f)
+                  if at is not None:
+                      why = f"{f.name} already publishes this layer's QA results (it does not run on push, but succeeded on {branch} at {at.isoformat()})"
+                      break
+                  print(f"{f.name} calls layer-qa-publish.yml but neither runs on a push to {branch} nor succeeded there in the last {RECENT_DAYS} days: not counted, so this run publishes QA")
+          print(f"qa={'false' if why else 'true'}", file=out)
+          print(f"::notice::QA refresh skipped: {why}" if why else "QA refresh: layer-qa-publish.yml runs after this decision")
+          if after: print(f"waits for: {', '.join(after)}")
+          PY
+
+  publish:
+    needs: decide
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          # The job token is set once, globally, in the step below. Two
+          # Authorization headers for github.com make every request fail.
+          persist-credentials: false
+
+      - uses: litlfred/cat-harness-tools/.github/actions/mount-layers@1257da8bbbb8e661391d08b014b16464de19613f # last change to .github/actions/mount-layers
+
+      - name: Wait for this commit's runs the site is built from
+        # An IG's site is built from the AST cache its ig-ast-refresh.yml seeds
+        # on the same push; started together, the publish read the cache
+        # before it existed (smart-pcmt, 2026-11-19). What is waited for is
+        # DERIVED, after the mount, from the publishers the mounted layers
+        # declare (`after`, scripts/site-publish-after.ts), plus
+        # `site.publishAfter` (index.config.json): a repository no longer has
+        # to remember to declare it. On a push and on a manual run alike: a
+        # dispatch on a commit whose refresh is still running waits for it.
+        # Read through the API, with the job token and then without it (the
+        # repositories are public), so a caller need grant no `actions: read`.
+        # A run that cannot be read is said and not waited for: the publish
+        # then judges the cache itself.
+        if: ${{ !inputs.plan }}
+        timeout-minutes: 120
+        env:
+          DECLARED: ${{ needs.decide.outputs.after }}
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -uo pipefail
+          if ! derived="$(bun run cat-harness-tools/scripts/site-publish-after.ts --repo .)"; then
+            echo "::warning::the workflows the site is built from could not be derived: waiting only for site.publishAfter (${DECLARED:-none})"
+            derived=""
+          fi
+          after="$(printf '%s\n' $DECLARED $derived | sort -u | tr '\n' ' ')"
+          runs() {
+            local u="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/$1/runs?head_sha=$SHA&per_page=20"
+            curl -fsS -H "Authorization: Bearer $GH_TOKEN" "$u" 2>/dev/null || curl -fsS "$u" 2>/dev/null
+          }
+          for wf in $after; do
+            while :; do
+              if ! body="$(runs "$wf")"; then
+                echo "::notice::the runs of $wf on $SHA could not be read: not waiting for it"
+                break
+              fi
+              state="$(printf '%s' "$body" | python3 -Ic 'import json,sys
+          r=json.load(sys.stdin).get("workflow_runs", [])
+          o=sum(1 for x in r if x.get("status") != "completed")
+          print(o, (r[0].get("conclusion") or "-") if r else "none")')"
+              open="${state%% *}" last="${state#* }"
+              if [ "$open" = "0" ]; then
+                case "$last" in
+                  none) echo "$wf: no run on $SHA; the site is built from what it last seeded" ;;
+                  success|skipped) echo "$wf: finished on $SHA ($last)" ;;
+                  *) echo "::warning::$wf finished on $SHA as $last: the site is built from what it last seeded, and refused if that is not good enough" ;;
+                esac
+                break
+              fi
+              echo "$wf: $open run(s) on $SHA not finished; waiting"
+              sleep 30
+            done
+          done
+
+      - uses: ruby/setup-ruby@341b6d4d1c7bdbe628940ab4e27cbdc9c97950cc # v1.340.0
+        with:
+          ruby-version: "3.3"
+
+      - name: Install the document export tools, when a site step exports
+        # A document folio's site:export step (folio-assistant-core's
+        # document-export.ts) writes the public-comment PDF and .docx with
+        # pandoc, lays the PDF out with LibreOffice and counts its pages and
+        # lines with poppler. The runner has none of them, and document-export
+        # has no fallback, so without this every publish of such a folio fails
+        # at its last step (dth-hrh run 42076453040; bean v29t). Installed only
+        # when the repository's scripts call document-export: LibreOffice is
+        # large, and no other publish needs it. "Call" means a package script
+        # names it OR a file a `site:*` package script runs does: qou's
+        # site:export is `bash scripts/site-step.sh export`, which runs
+        # document-export, and a package.json-only grep missed it, so every
+        # publish since wrote no .docx at all ("pandoc is not installed", qou
+        # run 46162975743; the 18 unresolved .docx links of the qou audit,
+        # 2026-11-28). The fonts are the metric-
+        # compatible stand-ins for the .docx's Calibri, Cambria, Aptos, Times New
+        # Roman and Courier New: without them the runner's PDF breaks onto
+        # different pages and lines (169 pages against 143), and a comment's
+        # page-and-line citation would not match an agent-run build.
+        # Bounded: an apt that waits on a prompt or a mirror fails the publish in
+        # minutes instead of holding the gh-pages queue for the job's 6 hours.
+        timeout-minutes: 15
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          exports() {
+            [ -f package.json ] || return 1
+            grep -q 'document-export' package.json && return 0
+            # The files the site:* package scripts run, read from the scripts' own words.
+            python3 -I - <<'PY'
+          import json, pathlib, shlex, sys
+          try:
+              scripts = json.load(open("package.json")).get("scripts", {}) or {}
+          except (OSError, ValueError):
+              sys.exit(1)
+          for name, cmd in scripts.items():
+              if not name.startswith("site:") or not isinstance(cmd, str):
+                  continue
+              try:
+                  words = shlex.split(cmd)
+              except ValueError:
+                  words = cmd.split()
+              for w in words:
+                  f = pathlib.Path(w)
+                  if not f.is_absolute() and ".." not in f.parts and f.is_file() and "document-export" in f.read_text(errors="replace"):
+                      print(f"{name} runs {w}, which calls document-export")
+                      sys.exit(0)
+          sys.exit(1)
+          PY
+          }
+          if exports; then
+            # Only what the image lacks (ubuntu-24.04 ships LibreOffice, not
+            # pandoc: each package is checked). `sudo env`: the runner's sudo
+            # ignores -E, so a bare DEBIAN_FRONTEND never reached apt. The lock timeout waits out
+            # the image's own background apt instead of stalling on it.
+            missing=""
+            for p in pandoc libreoffice-writer libreoffice-draw poppler-utils fonts-dejavu-core fonts-crosextra-carlito fonts-crosextra-caladea fonts-liberation2 fonts-inter; do
+              dpkg -s "$p" >/dev/null 2>&1 || missing="$missing $p"
+            done
+            echo "missing:${missing:- none}"
+            if [ -n "$missing" ]; then
+              apt_get() { sudo env DEBIAN_FRONTEND=noninteractive timeout 600 apt-get -o Dpkg::Use-Pty=0 -o DPkg::Lock::Timeout=300 "$@"; }
+              if ! { apt_get update -q && apt_get install -y -q --no-install-recommends $missing; }; then
+                echo "::error::the export tools did not install; apt and dpkg processes still running:"
+                ps -eo pid,etime,args | grep -E 'apt|dpkg|debconf' | grep -v grep || true
+                exit 1
+              fi
+            fi
+            pandoc --version | head -1; soffice --version; pdfinfo -v 2>&1 | head -1; fc-match Cambria; fc-match Calibri
+          else
+            echo "no document-export step: nothing to install"
+          fi
+
+      - name: Install the browser render:bpmn draws with
+        # stage-local's render:bpmn step draws BPMN with bpmn-js in Chromium,
+        # and this job installed none (smart-trust run 43028650284: the
+        # chromium headless shell is missing). The index's own Playwright
+        # installs it, so the build matches the one it expects.
+        timeout-minutes: 10
+        run: |
+          if [ -x node_modules/.bin/playwright ]; then
+            node_modules/.bin/playwright install --with-deps chromium
+          else
+            echo "no playwright in the index: no browser installed"
+          fi
+
+      - name: Identify the publishing commit's author, and let it push
+        # The publisher clones gh-pages into a temporary directory, which does
+        # not inherit the checkout's credentials: the job token goes in the
+        # global config instead -- as a request HEADER, never in a URL.
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.name "Claude"
+          git config --global user.email "noreply@anthropic.com"
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+
+      - name: The change's cone run, for the preview's QA pages
+        # A preview only (owner, 2026-11-14: "the QA report page(s) should show
+        # that on top as well as the main QA below that"; `scripts/preview-qa.ts`).
+        # The preview tier of layer-pr-checks.yml (a PR labelled `preview`)
+        # uploads `preview-qa-<head sha>`; stage-local puts it on top of every
+        # QA page of the preview, from build/preview-qa/. None found (no
+        # `preview` label, the run not finished, or the artifact unreadable
+        # without `actions: read`): the pages say no cone run is recorded for
+        # this commit and how to start one. Read with the job token, then
+        # without it (the repositories are public), as the wait above does.
+        if: ${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) && !inputs.plan }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -uo pipefail
+          api="${GITHUB_API_URL:-https://api.github.com}/repos/$REPO/actions"
+          get() { curl -fsSL -H "Authorization: Bearer $GH_TOKEN" "$@" 2>/dev/null || curl -fsSL "$@" 2>/dev/null; }
+          id="$(get "$api/artifacts?name=preview-qa-$SHA&per_page=5" | python3 -Ic 'import json,sys
+          try: a=[x for x in json.load(sys.stdin).get("artifacts",[]) if not x.get("expired")]
+          except ValueError: a=[]
+          print(a[0]["id"] if a else "")')"
+          if [ -z "$id" ]; then echo "no cone run recorded for $SHA: the preview's QA pages say so"; exit 0; fi
+          mkdir -p build/preview-qa
+          if get -o "$RUNNER_TEMP/preview-qa.zip" "$api/artifacts/$id/zip" && unzip -o -q "$RUNNER_TEMP/preview-qa.zip" -d build/preview-qa; then
+            echo "the cone run of $SHA (artifact $id) goes on top of the preview's QA pages"
+          else
+            echo "::warning::the cone run of $SHA (artifact $id) could not be downloaded: the preview's QA pages say no run is recorded"
+          fi
+      - name: Build and publish with stage-local
+        # The job log is not readable from an agent's container, so a
+        # failure's last lines are also raised as annotations, which the
+        # checks API serves.
+        # GH_TOKEN: a site.build step may read its own repository through
+        # `gh api` (aai-programme's site:qa-validation reads the issues; run
+        # 43738298891 failed for want of it). It adds no reach: the same job
+        # token is already in the global git config above.
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PLAN: ${{ inputs.plan && '--plan' || '' }}
+        run: |
+          set -o pipefail
+          if ! bun run cat-harness-tools/scripts/stage-local.ts --repo . $PLAN 2>&1 | tee "$RUNNER_TEMP/stage-local.log"; then
+            grep -v '^|' "$RUNNER_TEMP/stage-local.log" | grep -E '✗|[Ee]rror|unresolved|failed|Cannot|not found|refus' | grep -v DEPRECATION | tail -n 9 | cut -c1-900 | sed 's/^/::error::/'
+            exit 1
+          fi
+
+  # The layer's QA reports, refreshed on the same push (cat-harness-tools#1879).
+  # Not after `publish`: a site that fails to build still has QA results to
+  # publish, and they are what says why. This repository's own copy of the
+  # workflow, at this commit: a nested `./` call resolves in the repository
+  # whose workflow makes it, here cat-harness-tools.
+  qa:
+    needs: decide
+    if: ${{ needs.decide.outputs.qa == 'true' }}
+    permissions:
+      contents: write
+    uses: ./.github/workflows/layer-qa-publish.yml

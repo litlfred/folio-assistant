@@ -1,0 +1,158 @@
+{
+  "$schema": "folio-voice-skill/v1",
+  "id": "lean-textbook",
+  "title": "Lean library as a mathematics textbook",
+  "description": "The voice in which a formal Lean 4 library (a mathlib top-level library such as `InformationTheory`) is narrated as a mathematics textbook: chapters and sections linearised from the import graph, each section naming the module it narrates, statements in mathematics rather than identifiers, implementation in formalisation asides, and proofs taken from the source's own outlines. It EXTENDS the Milnor exposition standard: every Milnor hallmark applies, and these rules add what narrating a formal library needs. Rules cite mathlib's own docstrings and curriculum maps (Apache-2.0), revision c3e54ab of litlfred/mathlib4.",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Narrate a Lean library as a textbook — 9 rules, each citing the mathlib source it was read from; use with the milnor voice."
+  },
+  "sources": [
+    {
+      "title": "mathlib4 (fork litlfred/mathlib4, revision c3e54ab): module docstrings and docs/undergrad.yaml",
+      "instance": "litlfred/mathlib4",
+      "url": "https://github.com/litlfred/mathlib4/tree/c3e54ab",
+      "year": 2026
+    },
+    {
+      "title": "Link Groups (John Milnor, Annals of Mathematics 59(2), 1954)",
+      "libraryId": "milnorlink",
+      "instance": "litlfred/folio-assistant-sci",
+      "url": "http://www.jstor.org/stable/1969685",
+      "year": 1954
+    }
+  ],
+  "provenance": "house",
+  "overlaySeverity": "minor",
+  "appliesTo": [
+    "prose",
+    "remark",
+    "example",
+    "proof"
+  ],
+  "rules": [
+    {
+      "id": "lean-tb-provenance",
+      "title": "Every section names the Lean module it narrates",
+      "description": "The paper is a narration of a formal library, so each section carries a source line naming the module (and revision) whose declarations it states. A module docstring's 'Main definitions' and 'Main results' lists are the seed of the section, not its text: they pair a Lean name with a one-line meaning, and the section turns that pairing into prose. 0 if a section states results with no module named; 1 if the module is named but a stated result has no declaration behind it; 2 when every stated definition and result resolves to a declaration of the named module.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/Hamming.lean",
+        "quote": "## Main definitions\n\n* `hammingDist x y`: the Hamming distance between `x` and `y`, the number of entries which differ.\n* `hammingNorm x`: the Hamming norm of `x`, the number of non-zero entries."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-mathematics-not-identifiers",
+      "title": "State the mathematics in words and symbols; the Lean name goes in the source line",
+      "description": "A Lean identifier such as `IsPrefixFree.finsetSum_one_div_card_pow_length_le_one` is an address, not a statement. The narrative statement is the one a mathematician would write, here 'the Kraft sum of a finite prefix-free code is at most one', in displayed mathematics, and the identifier appears only as provenance beside it. 0 if a theorem is stated by its identifier; 1 if identifiers appear in running prose where a word would do; 2 when identifiers appear only in source lines and formal-statement asides.",
+      "category": "register",
+      "severity": "major",
+      "counterintuitive": true,
+      "commonError": "Copying the docstring bullet, identifier first, into the narrative.",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/Coding/Kraft.lean",
+        "quote": "* `IsPrefixFree.finsetSum_one_div_card_pow_length_le_one`: the Kraft sum of a finite prefix-free\n  code is at most one."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-purpose-first",
+      "title": "Say what an object is for before defining it",
+      "description": "The Milnor hallmark H3 applied to a library: the Hamming docstring tells the reader the distance matters because it defines the minimum distance of a code before any Lean is shown. A section opens with that purpose. 0 if a definition opens a section with no indication of use; 1 if the purpose follows the definition; 2 when it precedes it.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/Hamming.lean",
+        "quote": "This is a useful notion in various applications, but in particular it is relevant\nin coding theory, in which it is fundamental for defining the minimum distance of a\ncode."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-linear-order",
+      "title": "A section presupposes only what precedes it; a forward use is named as one",
+      "description": "The outline is a linearisation of the import graph: chapters in a topological order of the chapter-level DAG, sections in a topological order of modules, ties broken elementary first. Where a library imports from a library placed later in the treatise (mathlib's top-level libraries are not a DAG), the narrative says so in one sentence at the point of use rather than silently assuming it. 0 if a section uses a notion defined only later with no notice; 1 if the notice is present but the order could have avoided it; 2 when every use is backward or announced.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "docs/undergrad.yaml",
+        "quote": "# The list of topics was originally gathered from\n# http://media.devenirenseignant.gouv.fr/file/agreg_externe/59/7/p2020_agreg_ext_maths_1107597.pdf"
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-formalisation-aside",
+      "title": "Implementation choices go in a formalisation aside, not the narrative",
+      "description": "Type synonyms, coercions, instance plumbing, `Decidable` hypotheses and measurability side conditions are how the library is built, not what it says. The narrative speaks of 'the space of words with the Hamming metric'; a marked aside (a remark of kind `formalisation-note`) records that Lean realises it as a type synonym for the Pi type, and why. When the choice changes the statement, as with the chain rule proved first in a form that avoids a measurability hypothesis, the aside says what changed and the narrative states the version proved.",
+      "category": "register",
+      "severity": "major",
+      "counterintuitive": true,
+      "commonError": "Either dropping the implementation detail (losing why a statement has its exact form) or putting it in the main text.",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean",
+        "quote": "This version avoids the issue of measurability of the function `x ↦ klDiv (κ x) (η x)`, which is not\nalways guaranteed, and thus holds for all measurable spaces `𝓧` and `𝓨`, without any assumptions."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-api-collapse",
+      "title": "An API family becomes one statement",
+      "description": "A library proves `hammingDist_self`, `hammingDist_comm`, `hammingDist_triangle` and their left and right variants because a rewriting system needs each orientation; a reader needs one proposition, 'Hamming distance is a metric', with the variants listed in the source line. Lemmas whose docstring says 'Corresponds to' a general lemma are instances of that lemma and are cited, not restated. 0 if variants are stated one by one; 1 if grouped but each still proved; 2 when one statement carries the family.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/Hamming.lean",
+        "quote": "/-- Corresponds to `dist_comm`. -/\ntheorem hammingDist_comm (x y : ∀ i, β i) : hammingDist x y = hammingDist y x := by"
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-proof-from-source",
+      "title": "The narrative proof is the human proof the source outlines, never a tactic transcript",
+      "description": "Where the module docstring carries a '## Proof' outline, that outline is the skeleton of the narrative proof and is cited as its provenance. Where it does not, the proof is reconstructed from the formal proof's structure (its `have` steps and the lemmas it invokes), stated as mathematics. Tactic names (`simp`, `omega`, `positivity`) never appear in a proof body. Round-trip QA checks each step against a lemma the formal proof actually uses.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean",
+        "quote": "The main ingredient is the chain rule for Radon-Nikodym derivatives:\n`∂(μ ⊗ₘ κ)/∂(ν ⊗ₘ η) = ∂μ/∂ν * ∂(μ ⊗ₘ κ)/∂(μ ⊗ₘ η)`."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-attribution",
+      "title": "Results are attributed to the literature the source cites",
+      "description": "A module's '## References' list and its `[Key2020]` citations into `docs/references.bib` are the bibliography of its section. A named theorem (Kraft, McMillan, the data processing inequality) is attributed to its classical source and to the text the library followed; the module authors are credited as the formalisers. Nothing is attributed that the source does not cite; a missing reference is a finding, not an invention.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "instance": "litlfred/mathlib4",
+        "path": "Mathlib/InformationTheory/Coding/Kraft.lean",
+        "quote": "## References\n\n* Cover and Thomas, *Elements of Information Theory*, Chapter 5."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "lean-tb-textbook-not-docs",
+      "title": "Write a textbook chapter, not API documentation",
+      "description": "The reader is a mathematician learning the subject in the order the library builds it. Each chapter opens with a Milnor-style summary of what it proves and why, and each section reads as connected prose: definitions motivated, results stated in display, proofs given or sketched, and examples where the source has them. A section that reads as a list of declarations has failed this rule however accurate it is.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "instance": "litlfred/folio-assistant-sci",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "The purpose of this paper is to study links under the relation of homotopy. The fundamental tool in this study will be the link group."
+      },
+      "judgementOnly": true
+    }
+  ]
+}

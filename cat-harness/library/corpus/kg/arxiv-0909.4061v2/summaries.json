@@ -1,0 +1,1412 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-0909.4061v2",
+  "summaries": [
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-001",
+      "source": "sections/page-001.md",
+      "source_hash": "709d18012e61e223d46d8c738009ff951256ab6d3c9e5bf3cb0d3510145c1406",
+      "narrative": [
+        {
+          "text": "Title page and opening of Halko, Martinsson and Tropp's survey \"Finding structure with randomness\". The abstract says randomized algorithms compute partial matrix decompositions by using random sampling to find a subspace that captures most of a matrix's action, compressing the matrix to that subspace, and factorizing the reduced matrix deterministically. It gives the costs for the k dominant SVD components of an m × n matrix: O(mn log(k)) flops for a dense matrix against O(mnk) classically; a flop count matching Krylov methods for a sparse matrix, with more robustness; and a constant number of passes, against O(k), for a matrix that does not fit in fast memory. Section 1 opens with Stewart's view that matrix factorizations are computational platforms.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-002",
+      "source": "sections/page-002.md",
+      "source_hash": "ea46670305fa9c50e18bbccf6a47caa3b314980ae93658672686cfebc82a4da8",
+      "narrative": [
+        {
+          "text": "Explains why classical factorization algorithms are often inadequate today: matrices are enormous, data are missing or inaccurate, data transfer dominates cost, and processor architectures keep changing. The paper argues that randomized algorithms are a simple, effective and often more robust tool for approximate matrix factorization, accurate to any tolerance above machine precision. Remark 1.1 separates these methods from classical Monte Carlo: they are relatively insensitive to the quality of the randomness, and their failure probability is a user-set parameter that can be made negligible (say, below 10^-15). Section 1.1 begins on truncated factorizations as low-rank approximations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-003",
+      "source": "sections/page-003.md",
+      "source_hash": "704fbb741029307a14a412c8d30bc71a9ab2d0a1f17ab79587fc77f238a07ae8",
+      "narrative": [
+        {
+          "text": "Introduces the low-rank factorization A ≈ BC, with the inner dimension k as the numerical rank. It lists where numerically low-rank matrices arise: PCA, low-dimensional embedding, least-squares fitting, fast PDE solvers and potential evaluation (the fast multipole method, H-matrices), and model reduction for multiscale PDEs. Section 1.2 splits the computation into two stages. Stage A finds a matrix Q with orthonormal columns such that A ≈ QQ*A (1.2), with as few columns as possible but accuracy first. Stage B uses Q to compute a standard factorization (QR, SVD, etc.) of A.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-004",
+      "source": "sections/page-004.md",
+      "source_hash": "ab9d33cf0f5639c686bb0c9575d71c656d12e0728e3e886473fc4a49e03c7a80",
+      "narrative": [
+        {
+          "text": "Stage A is done by random sampling, the paper's main subject, and Stage B by established deterministic methods. Given Q, an approximate SVD follows in three steps: form B = Q*A, compute the SVD of the small matrix B = ŨΣV*, and set U = QŨ. Sometimes A need not be revisited, which allows single-pass algorithms. Section 1.3.1 states the fixed-precision problem: find Q with k(ε) orthonormal columns such that ‖A − QQ*A‖ ≤ ε in the spectral norm. The SVD solves it optimally, since min over rank(X) ≤ j of ‖A − X‖ equals σ_{j+1} (1.4), so the minimal k is the number of singular values above ε. It then turns to the fixed-rank problem, with a target rank and an oversampling parameter.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-005",
+      "source": "sections/page-005.md",
+      "source_hash": "0eb7b94881e460ab852fb5c68fcbe80b68eda498b86b6b0d705ceae3fca2255a",
+      "narrative": [
+        {
+          "text": "States the fixed-rank problem: given k and an oversampling parameter p, find Q with k + p orthonormal columns whose error ‖A − QQ*A‖ is close to the best rank-k error (1.5). The extra columns are what make the methods effective, and the fixed-precision problem reduces to this one by building Q incrementally while estimating the residual (§4.4). Section 1.3.2 gives the intuition. For A of exact rank k, k random samples y = Aω are almost surely linearly independent and span the range of A. For A = B + E with a small perturbation E, k + p samples are much more likely to cover the range of B. The failure probability falls superexponentially in p, and p = 5 or 10 often gives superb results.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-006",
+      "source": "sections/page-006.md",
+      "source_hash": "2ae3176c11dcecf63bdcf0a6ba56258eea3c0f54f73143cc4c8d9470fd5197a7",
+      "narrative": [
+        {
+          "text": "Presents the Proto-Algorithm for the fixed-rank problem: draw a random n × (k + p) test matrix Ω, form Y = AΩ, and take Q as an orthonormal basis for the range of Y. It is essentially the first step of subspace iteration from a random start. The novelty is to oversample the subspace dimension, which often makes further iteration unnecessary. The text lists the questions the rest of the paper answers: which random matrix and how much oversampling, how to orthonormalize an ill-conditioned Y, the costs, the fixed-precision case, other factorizations, practical performance, and error bounds with their probabilities. Section 1.4 begins comparing randomized and traditional methods. In Stage A the bottleneck is usually the product AΩ.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-007",
+      "source": "sections/page-007.md",
+      "source_hash": "63e8c985c422e96b64dc69ef724e812585b66ebc41a1976d195336754cbccaa9",
+      "narrative": [
+        {
+          "text": "Compares costs in three settings. For a dense matrix in fast memory, rank-revealing QR costs O(kmn) flops, while randomized schemes with a structured Ω (for example, a randomized subsampled Fourier transform) need O(mn log(k) + (m + n)k²). For a matrix with fast matrix–vector products, Krylov methods (Lanczos, Arnoldi) cost about k·T_mult + (m + n)k², the same as randomized methods with a Gaussian Ω. Krylov methods are sometimes more accurate for the same budget, but the randomized schemes are inherently stable, have guarantees that do not depend on subtle spectral properties, and parallelize their products. For a matrix in slow memory or streamed, classical methods need O(k) passes, while the proto-algorithm needs one pass for Stage A.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-008",
+      "source": "sections/page-008.md",
+      "source_hash": "a012981d23e75c0a0a68a3b7541032c3f4c08b383ab22ba5c62369279d9115bb",
+      "narrative": [
+        {
+          "text": "For slowly decaying spectra, 2 to 4 extra passes suffice, and the two-stage scheme can be revised to make a single pass (§5.5). Section 1.5 previews the analysis with Theorem 1.1, a simplified Theorem 10.6. For a real m × n matrix, with k ≥ 2, p ≥ 2 and k + p ≤ min{m, n}, the proto-algorithm with a standard Gaussian test matrix satisfies E‖A − QQ*A‖ ≤ (1 + 4√(k+p)/(p−1) · √min{m,n}) σ_{k+1} (1.8). That is within a small polynomial factor of the optimal σ_{k+1}. By measure concentration, the bound (1 + 11√(k+p) · √min{m,n}) σ_{k+1} (1.9) holds with probability at least 1 − 6·p^{−p}, which justifies p = 5. When the singular values decay, the error stops depending on the dimensions, and a power iteration shrinks the bracket.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-009",
+      "source": "sections/page-009.md",
+      "source_hash": "8264c94ec42a990992d71eaddf19d0baea64dede569bfeafb75ac005d335dc0c",
+      "narrative": [
+        {
+          "text": "Boxes the Prototype for Randomized SVD. Stage A draws an n × 2k Gaussian Ω, forms Y = (AA*)^q AΩ by alternating applications of A and A*, and orthonormalizes Y. Stage B forms B = Q*A, takes its SVD and sets U = QŨ. A note warns that Y is vulnerable to round-off, so high accuracy needs orthonormalization between applications (Algorithm 4.4). The page adds that related bounds hold for structured random matrices and that cheap a posteriori error estimates exist. Section 1.6 motivates the q power-iteration steps (q = 1 or 2 usually suffices) for slowly decaying spectra. The method takes 2(q + 1) passes and (2q + 2)k·T_mult + O(k²(m + n)) flops. Theorem 1.2 begins, a consequence of Corollary 10.10.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-010",
+      "source": "sections/page-010.md",
+      "source_hash": "fc1a2d1fd40a37777b2361264a7403fafd1358f136e1e406704e22374805bc2f",
+      "narrative": [
+        {
+          "text": "Completes Theorem 1.2. The randomized SVD gives a rank-2k factorization with E‖A − UΣV*‖ ≤ [1 + 4√(2 min{m,n}/(k−1))]^{1/(2q+1)} σ_{k+1} (1.10). The power iteration drives the leading constant to one exponentially fast in q, so 2k approximate singular vectors capture as much as the first k exact ones. Truncating to rank k adds at most σ_{k+1} (1.11), a bound the authors' numerical experience suggests is pessimistic. Section 1.7 outlines the paper in three parts: introduction (§§1–3), algorithms (§§4–7) and theory (§§8–11). Section 2 opens the history: random matrix theory reached classical factorization only recently, by way of computer science and geometric analysis. Section 2.1 begins with randomized matrix approximation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-011",
+      "source": "sections/page-011.md",
+      "source_hash": "e4ddfea9ee5b777c66c83c0fdabf2e5825894d83e3416ed746e5460165513c58",
+      "narrative": [
+        {
+          "text": "Gives the common pattern of randomized approximation methods: preprocess to get sampling probabilities, take random samples (linear functions of the matrix), and postprocess them with classical numerical linear algebra. Sparsification (§2.1.1) replaces the matrix by a sparser random surrogate whose expectation is the original. It goes back to Achlioptas and McSherry, building on Karger, with a different method by Arora, Hazan and Kale. Column selection (§2.1.2) rests on the existence of k columns C with ‖A − CC†A‖ ≤ √(1 + k(n−k)) ‖A − A_(k)‖ (2.1). Optimizing natural objectives for column selection is NP-hard, but rank-revealing QR nearly achieves the bound. Randomized variants sample columns by squared norms or leverage scores, starting with Frieze, Kannan and Vempala (1998).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-012",
+      "source": "sections/page-012.md",
+      "source_hash": "2903613386857505261a25a58312d6bf5501e81f24c6652c3bbe8f96f6aa1503",
+      "narrative": [
+        {
+          "text": "Continues column sampling. Sampling ℓ(k, ε) columns gives a rank-k B with ‖A − B‖_F ≤ ‖A − A_(k)‖_F + ε‖A‖_F (2.2), in a constant number of passes. Rudelson and Vershynin extended this to spectral-norm bounds. Deshpande et al. reached (1 + ε) relative Frobenius error (2.3) with adaptive volume sampling in k passes, as did Har-Peled independently. Drineas, Boutsidis and colleagues used leverage-score sampling and rank-revealing QR postprocessing for column subset selection, and the argument in [17] separates the linear algebra from the random matrix theory, much as this paper's analysis does. Dimension reduction (§2.1.3) embeds the rows by a random linear map. The proto-algorithm is its dual description, an idea traced to Papadimitriou et al. (1998) for latent semantic indexing.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-013",
+      "source": "sections/page-013.md",
+      "source_hash": "4ae75bde2598bce87ee122bed71b6ac6b7c79ac2506f21d37cb79f373bfbbb4d",
+      "narrative": [
+        {
+          "text": "Traces dimension reduction further. Sarlós used the Ailon–Chazelle structured maps for least squares, matrix multiplication and low-rank approximation. Woolfe et al. improved the asymptotic cost. Martinsson, Rokhlin and Tygert analysed Gaussian maps, stressed oversampling, and derived interpolative decompositions. Rokhlin, Szlam and Tygert added power iteration, which gives efficient large-scale PCA. Clarkson and Woodruff gave one-pass algorithms with near-optimal lower bounds. Approximation by submatrices (§2.1.4) covers interpolative, CUR (A ≈ CUR with a small linkage matrix U) and skeleton decompositions, with randomized CUR algorithms for absolute and relative error by Drineas et al. Section 2.1.5 begins a list of other randomized numerical problems.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-014",
+      "source": "sections/page-014.md",
+      "source_hash": "4f654e410feebc5c2add33261a956531a19b7a68d1394c02228bec3a4400a2f7",
+      "narrative": [
+        {
+          "text": "Lists other randomized methods: tensor skeletons, matrix multiplication, randomized Kaczmarz for overdetermined systems, fast dimension reduction for least squares and nonnegative least squares, randomized preconditioning, ℓ1 and ℓp regression, and Fermat–Weber facility location. Section 2.1.6 contrasts compressive sampling. That field rests on compressibility and reconstructs an object from few nonadaptive random samples, often by convex optimization, as in Candès–Romberg–Tao and Donoho (2004), Recht–Fazel–Parrilo for rank-deficient matrices, and matrix completion by Candès–Recht and Candès–Tao. It assumes limited access to the data. Matrix approximation instead has the whole matrix, may revisit it, and aims for a simpler representation computed as cheaply as possible.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-015",
+      "source": "sections/page-015.md",
+      "source_hash": "d88fe005fd1e1236155391ba8f9133698005206a166b0e9bdd378494dfa4d3f8",
+      "narrative": [
+        {
+          "text": "Concludes that randomized matrix approximation needs fewer samples and less computation than compressive-sampling reconstruction. Section 2.2 traces the origins. Under random embeddings, Johnson and Lindenstrauss (1984) showed that N points keep their pairwise distances under a random map to dimension O(log N), and Bourgain did the same for ℓ1. Theoretical computer science used this for nearest-neighbour search, and [57, 104] first applied it to linear algebra. Later work simplified the maps: Achlioptas's discrete matrices, and the Ailon–Chazelle fast Johnson–Lindenstrauss transform, which Sarlós brought to numerical linear algebra. Under data streams, massive data motivate pass-efficient methods and sketches (small summaries, often random projections, traced to Alon et al.). Section 2.2.3 begins on numerical linear algebra.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-016",
+      "source": "sections/page-016.md",
+      "source_hash": "ef9bc365c56450800fe7a671d122c63d4a784a2ede52d7a026ec0deb50bc84e3",
+      "narrative": [
+        {
+          "text": "Continues §2.2.3 on randomness in numerical linear algebra (von Neumann–Goldstine rounding-error models, Dixon's norm and condition estimator, random starting vectors in power and Lanczos iterations analyzed by Woźniakowski et al., Parker–Pierce randomized FFT elimination, and stability analyses by Demmel et al. and Le–Parker). Section 2.2.4 contrasts Monte Carlo integration—whose O(m^{-1/2}) error and lack of a success certificate gave randomized methods a poor reputation in scientific computing—and §2.2.5 opens geometric functional analysis with Dvoretzky's theorem and Milman's 1971 concentration-of-measure proof.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-017",
+      "source": "sections/page-017.md",
+      "source_hash": "08a691a868943f6606573388d95ee80a66b8627b84bae452ad9516c58768f5b1",
+      "narrative": [
+        {
+          "text": "Completes §2.2.5 with Kashin's Gel'fand widths of the ℓ1 ball, Johnson–Lindenstrauss and Bourgain embeddings, Maurey's empirical approximation for sparse approximation, and non-asymptotic random-matrix methods of Rudelson and Vershynin. Opens Section 3 (Linear algebraic preliminaries) and §3.1, defining the standard Hermitian inner product on C^n, vector 2-norm, spectral (operator) norm, Frobenius norm, and conjugate-transpose norm identities.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-018",
+      "source": "sections/page-018.md",
+      "source_hash": "b7a53b8ec3621065960f9e9d9f071da72ee0d67675cfd5320f6b468814ce426a",
+      "narrative": [
+        {
+          "text": "Finishes §3.1 with orthonormal, unitary, and orthogonal matrices, unitary invariance of the spectral and Frobenius norms, and Golub–Van Loan submatrix index notation A(I, J). Opens §3.2 (Standard matrix factorizations) by defining the column-pivoted QR decomposition (§3.2.1) and the singular value decomposition A = UΣV* (§3.2.2).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-019",
+      "source": "sections/page-019.md",
+      "source_hash": "597d0e015110035d519e00863942ad6d772b543a3ba4aaab8420a981eccdf545",
+      "narrative": [
+        {
+          "text": "Connects singular values to optimal rank-j spectral-norm approximation (σ_{j+1} = min_{rank(B)=j} ‖A − B‖), defines one-sided and two-sided interpolative decompositions (ID, §3.2.3) with coefficient magnitudes bounded by 2 while noting in Remark 3.1 that bounding entries by 1 requires NP-hard maximum-volume column selection, and begins §3.3 on deterministic algorithms for full (§3.3.1) and partial (§3.3.2) decompositions.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-020",
+      "source": "sections/page-020.md",
+      "source_hash": "eede8272abf5ae85140a6f5192932ab594034920a02f3cc9980d35f6584b030d",
+      "narrative": [
+        {
+          "text": "Reviews deterministic partial factorizations in §3.3.2—Businger–Golub pivoted QR in O(ℓmn) flops, the Gu–Eisenstat strong rank-revealing QR achieving ‖E‖ ≤ √(1 + 4k(n−k)) σ_{k+1}, and partial SVD via full SVD truncation, QR postprocessing, or Krylov methods—and in §3.3.3 gives three-step procedures to convert any rank-k approximation ‖A − CB‖ ≤ ε into a partial QR decomposition or partial SVD without increasing the error.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-021",
+      "source": "sections/page-021.md",
+      "source_hash": "3affdd8a1b990a85b8d47a3f818c5444ce4066758e06ff30da2ccce4fe43cb19",
+      "narrative": [
+        {
+          "text": "Completes §3.3.3 with one-step conversion of A ≈ CB into an interpolative decomposition and reviews Krylov-subspace methods (§3.3.4) with random starting vectors or matrices and stabilized cost T_Krylov ∼ k T_mult + k^2(m + n). Introduces Part II (Algorithms, §§4–7) and opens Section 4 on Stage A randomized schemes for approximating the range of A.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-022",
+      "source": "sections/page-022.md",
+      "source_hash": "f478b9d6d9bdf0a6388c8adefb994d5f5df5ea27713a36b515972beaf6f21f62",
+      "narrative": [
+        {
+          "text": "Presents Algorithm 4.1 (Randomized Range Finder: draw an n × ℓ standard Gaussian matrix Ω, form Y = AΩ, and orthonormalize Y = QR), analyzes its flop count T_basic ∼ ℓn T_rand + ℓ T_mult + ℓ^2 m in §4.1 with practical guidance on RNG quality and double Gram–Schmidt or Householder orthonormalization, and opens §4.2 on the sample size ℓ needed for ‖(I − QQ*)A‖ ≤ ε.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-023",
+      "source": "sections/page-023.md",
+      "source_hash": "0ec9a56f928f47fe49b56421dc28335dc45d990f99aed911d4e7a0f25c4e5de6",
+      "narrative": [
+        {
+          "text": "Discusses the oversampling parameter p = ℓ − k in §4.2—how it depends on matrix dimensions, singular spectrum decay, and test-matrix type, why p = 5 or 10 suffices for Gaussian test matrices, and how blocked sampling accelerates AΩ—and in §4.3 develops an a posteriori probabilistic error estimator using r Gaussian test vectors ω^{(i)} to bound ‖(I − QQ*)A‖ ≤ 10√(2/π) max_{i=1,...,r} ‖(I − QQ*)Aω^{(i)}‖ with probability at least 1 − 10^{−r}.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-024",
+      "source": "sections/page-024.md",
+      "source_hash": "9b9bcc0c2313a4d86bf90d669a75f2c982eadbd5aa01731d74a2dcda539b8dbe",
+      "narrative": [
+        {
+          "text": "States Lemma 4.1 bounding ‖B‖ via r independent standard Gaussian vectors with failure probability α^{−r} (with Remark 4.1 noting power-iteration refinements) and in §4.4 shows how incremental Gram–Schmidt basis construction yields error estimation almost for free by stopping once r consecutive projected sample vectors ˜q^{(i)} have norm at most ε/(10√(2/π)), using reprojection to maintain finite-precision orthogonality.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-025",
+      "source": "sections/page-025.md",
+      "source_hash": "da32f0673babd2148c1e5a59ed1243a11a5f6562badee4b17385fa861b0d7fd7",
+      "narrative": [
+        {
+          "text": "States Algorithm 4.2 (Adaptive Randomized Range Finder, achieving ‖(I − QQ*)A‖ ≤ ε with probability at least 1 − min{m, n}10^{−r}) and Remark 4.2 on blocked processing for BLAS3 and parallel efficiency, then opens §4.5 on matrices with slowly decaying singular values by proposing sampling from B = (AA*)^q A.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-026",
+      "source": "sections/page-026.md",
+      "source_hash": "f06ef86b193a83f9b04a31da07ed452704783ccbc7976c5fd0d08d3e3f0d135b",
+      "narrative": [
+        {
+          "text": "Presents Algorithm 4.3 (Randomized Power Iteration forming Y = (AA*)^q AΩ, whose singular values σ_j(B) = σ_j(A)^{2q+1} shrink the approximation gap factor C^{1/(2q+1)} exponentially with q), explains in Remark 4.3 why floating-point roundoff erases modes below μ^{1/(2q+1)}‖A‖ unless columns are re-orthonormalized between products, and opens §4.6 on O(mn log ℓ) accelerated schemes for dense matrices.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-027",
+      "source": "sections/page-027.md",
+      "source_hash": "ab80baaf34c44d29515e039a0b758a400318543cbf3fe5978f07f0dcf42b6629",
+      "narrative": [
+        {
+          "text": "Gives Algorithm 4.4 (Randomized Subspace Iteration with QR orthonormalization after each application of A and A*) and in §4.6 defines the subsampled random Fourier transform (SRFT) Ω = √(n/ℓ) DFR, which reduces Stage A cost to T_struct ∼ mn log(ℓ) + ℓ^2 n flops via a subsampled FFT.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-028",
+      "source": "sections/page-028.md",
+      "source_hash": "c45af104f8740c40421364798c7bd6846f94b749b773e17edae1d90fd2fc98c8",
+      "narrative": [
+        {
+          "text": "Presents Algorithm 4.5 (Fast Randomized Range Finder using an SRFT), contrasts theoretical oversampling ℓ ∼ (k + log n) log k with empirical ℓ = k + 10 or k + 20, and gives Remarks 4.4–4.6 on progressive sample doubling for fixed precision, full O(mn log n) FFT sampling when constants dominate, and chained random Givens rotations Ω = D''Θ'D'ΘDFR.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-029",
+      "source": "sections/page-029.md",
+      "source_hash": "e06e626dfdd1cf91a6fc68fed83c05c785415b6225b19b1b9457359d07a3d516",
+      "narrative": [
+        {
+          "text": "Presents Algorithm 5.1 (Direct SVD from B = Q*A), notes in Remark 4.7 the open problem of accelerating power iterations with fast structured transforms, and opens Section 5 (Stage B: Construction of standard factorizations) and §5.1 showing that forming B = Q*A directly in O(kmn) flops preserves the Stage A error bound ‖A − UΣV*‖ ≤ ε.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-030",
+      "source": "sections/page-030.md",
+      "source_hash": "80efafb96f7354dad3c9632d768a6be1bff90359a57373e3ed2cfcbe21d7bbbd",
+      "narrative": [
+        {
+          "text": "Completes §5.1 with Remark 5.1 on truncating Algorithm 5.1 to the top k singular components (increasing error by at most σ_{k+1}), and in §5.2 introduces postprocessing via row extraction using an interpolative decomposition Q = XQ(J, :) so A ≈ XA(J, :) in O(k^2(m + n)) flops without matrix–matrix products, stating Lemma 5.1's error bound ‖A − UΣV*‖ ≤ [1 + √(1 + 4k(n − k))]ε.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-031",
+      "source": "sections/page-031.md",
+      "source_hash": "91c8e71c326cf33ba889610f30347d1e226aad76d44d6b54364c15ac41a0aef5",
+      "narrative": [
+        {
+          "text": "States Algorithm 5.2 (SVD via Row Extraction), completes the proof of Lemma 5.1 via ‖A − UΣV*‖ ≤ (1 + ‖X‖)ε, and in Remark 5.2 recommends computing the row-extraction ID directly from the Stage A sample matrix Y = XY(J, :) rather than Q to improve accuracy in finite-precision arithmetic.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-032",
+      "source": "sections/page-032.md",
+      "source_hash": "c4f533f5dc2b99530c2d03829cd255d5928fc0eb9d3c9f8484f9f9e62e54eb28",
+      "narrative": [
+        {
+          "text": "Presents Algorithm 5.3 (Direct Eigenvalue Decomposition for Hermitian A via B = Q*AQ) and Remark 5.3 comparing Algorithms 5.1 and 5.2, then covers §5.3 on Hermitian postprocessing (‖A − QQ*AQQ*‖ ≤ 2ε in O(kn^2) flops, or O(k^2n) via row extraction) and opens §5.4 on the Nyström approximation A ≈ (AQ)(Q*AQ)^{−1}(AQ)* = FF* for positive semidefinite matrices.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-033",
+      "source": "sections/page-033.md",
+      "source_hash": "7ae8d0ed5bb3c1368595f793e542e3c57432e562fd1e75c7417a5433256027f7",
+      "narrative": [
+        {
+          "text": "Presents Algorithm 5.4 (Eigenvalue Decomposition via Row Extraction for Hermitian A) and Algorithm 5.5 (Eigenvalue Decomposition via Nyström Method for positive semidefinite A using the Cholesky factor C of Q*AQ and F = (AQ)C^{−1}), notes that Nyström achieves much smaller error than Algorithm 5.3 at essentially the same cost, and opens §5.5 on single-pass algorithms.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-034",
+      "source": "sections/page-034.md",
+      "source_hash": "989a4e21370b05357ecab5df3ddbe612f058273c19b9804b2973a9370e60b639",
+      "narrative": [
+        {
+          "text": "Develops single-pass factorization in §5.5: for Hermitian A, Algorithm 5.6 solves B_approx(Q*Ω) ≈ Q*Y by least squares in O(k^2n) flops without revisiting A; for general A, two test matrices Ω and ˜Ω form Y = AΩ and ˜Y = A*˜Ω in one pass to solve Q*Y ≈ B˜Q*Ω and ˜Q*˜Y ≈ B*Q*˜Ω, while Remark 5.4 notes that ill-conditioning of Q*Ω can amplify error by 1/τ_min(Q*Ω).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-035",
+      "source": "sections/page-035.md",
+      "source_hash": "ae44e2d7208b320337afea692d10c92db5cd465e52afdf5e652d89dfb8159eea",
+      "narrative": [
+        {
+          "text": "Finishes Remark 5.4 by showing how oversampling Ω to n × (k + p) while keeping the top k left singular vectors of Y in Q makes Q*Ω overdetermined and better conditioned, then opens Section 6 (Computational costs) and §6.1 on dense matrices in core memory, where SRFT + row extraction takes T_random ∼ mn log(k) + k^2(m + n) flops with worst-case error ≲ n σ_{k+1} versus T_RRQR ∼ kmn.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-036",
+      "source": "sections/page-036.md",
+      "source_hash": "489216d33ca19fc46f98bb0ef60d4c317f56c813e22a849f5a56b938cb3fc1d2",
+      "narrative": [
+        {
+          "text": "Analyzes §6.2 on matrices with fast matrix–vector products (sparse, Toeplitz, or FMM operators), showing that Algorithm 4.1/4.2 with Algorithm 5.1 takes T_sparse = 2(k + p)T_mult + O(k^2(m + n)) flops with error ≲ √(kn) σ_{k+1} (or (2q + 2)(k + p)T_mult and error ≲ (kn)^{1/(2(2q+1))} σ_{k+1} under q power steps) and explaining how blocking and robustness give randomized schemes practical advantages over Krylov methods.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-037",
+      "source": "sections/page-037.md",
+      "source_hash": "b0a18d3a2e7cdc5084700b16b7e8fa23bcad6016094b34cf65cd47b8cfda1324",
+      "narrative": [
+        {
+          "text": "Completes Remark 6.2 comparing randomized schemes with Lanczos/Arnoldi (quoting Numerical Recipes on eigensystem subtlety, noting that randomized sampling reduces a large partial decomposition to a small dense one, and pointing out links to block Lanczos), and covers §6.3 on pass-efficiency for slow-memory or streaming matrices (1 pass via Algorithm 5.6, or at most a few passes with power iteration).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-038",
+      "source": "sections/page-038.md",
+      "source_hash": "fd7590efb372d977d08750182e53f3c226058b3b6567b928311ed7f907adf7a3",
+      "narrative": [
+        {
+          "text": "Covers §6.4 on parallelization gains from evaluating AΩ in bulk, introduces Section 7 (Numerical examples) outlining the test cases in §§7.1–7.4, and begins §7.1 on two operators with rapidly decaying singular values, starting with a 200 × 200 trapezoidal-rule discretization of a 2D Laplace single-layer contour integral operator (7.1).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-039",
+      "source": "sections/page-039.md",
+      "source_hash": "0339f7231ffe6b934c91b473fce80baef5ad25df76ee585413d283100b74b3c3",
+      "narrative": [
+        {
+          "text": "Displays Figure 7.1 (contours Γ1, Γ2 for the Laplace integral operator and resistor-network lattice geometry for matrix B), analyzes Figures 7.2 and 7.3 across 2000 trials of Algorithm 4.2 on the 200 × 200 Laplace matrix (showing that actual error e_ℓ tracks σ_{ℓ+1} down to double precision and the r = 5 estimator f_ℓ is consistently conservative by a factor of ∼10), and introduces the implicit resistor-network transfer matrix B.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-040",
+      "source": "sections/page-040.md",
+      "source_hash": "119329de1ccd2ee212a5c9fc37607b5a0ffeb2a09587c69c961d13c7c81866e9",
+      "narrative": [
+        {
+          "text": "Shows Figure 7.2 (a single execution of Algorithm 4.2 on the 200 × 200 discretized Laplace operator plotting log10 of minimal error σ_{ℓ+1}, actual error e_ℓ, and estimated error f_ℓ against sample count ℓ) and Figure 7.3 (scatter plots of f_ℓ versus e_ℓ over 2000 trials at ℓ = 25, 50, 75, 100).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-041",
+      "source": "sections/page-041.md",
+      "source_hash": "36397ecadfd708b289eed41795d479f5c1c244474a19caa7250535a0553000ba",
+      "narrative": [
+        {
+          "text": "Reports Algorithm 4.2's performance on the 1596 × 532 implicit transfer matrix B (each application solving a ∼140,000 × 140,000 sparse 5-point discrete Laplacian system, plotted in Figure 7.4), and opens §7.2 by constructing a 9025 × 9025 sparse patch-similarity weight matrix W from 5 × 5 pixel neighborhoods of a 95 × 95 grayscale image.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-042",
+      "source": "sections/page-042.md",
+      "source_hash": "42cea0ada491b22398590b1c580d55f527fa977d45cfb1182554aa2ccad76b2d",
+      "narrative": [
+        {
+          "text": "Applies the power scheme (Algorithm 4.3 with ℓ ≤ 100 and exponents q = 0, 1, 2, 3, followed by Hermitian Stage B in §5.3) to the 9025 × 9025 normalized graph Laplacian matrix A = D^{−1/2}WD^{−1/2} in Figure 7.5—showing poor accuracy at q = 0 but accurate recovery of the top 100 eigenvalues for q ≥ 1—and opens §7.3 on Eigenfaces from the FERET face database.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-043",
+      "source": "sections/page-043.md",
+      "source_hash": "03074355631c12872752bbab006e75851d71211a03fcf296fcab42569fd96984",
+      "narrative": [
+        {
+          "text": "Describes the 98,304 × 7254 centered and normalized FERET face matrix A (5.4 GB in double precision) in §7.3, showing that pass-efficient power iteration (Algorithm 4.3) converges rapidly within 3–5 passes (q ≥ 1), and opens §7.4 comparing four partial-SVD algorithms (`direct`, `gauss`, `srft`, and full `svd`) in runtime and accuracy.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-044",
+      "source": "sections/page-044.md",
+      "source_hash": "4961ecb300e306fd1c1b1ce60799d3870bed5dd2e6cb99c2b78eead9437395a1",
+      "narrative": [
+        {
+          "text": "Displays Figure 7.6 (approximation errors and top 100 singular value estimates for the 98,304 × 7254 FERET eigenfaces matrix under Algorithm 4.3 for q = 0, 1, 2, 3), summarizes Figure 7.7's speedups of `srft` and `gauss` over classical pivoted QR (`direct`), and sets up a 100,000-trial accuracy comparison across four test-matrix distributions (`Gauss`, `Ortho`, `SRFT`, and `GSRFT`).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-045",
+      "source": "sections/page-045.md",
+      "source_hash": "d8ff7b4308d6e1705ac590bb4e048309ac2ae3d8b27e2acacbea9570016f2aa7",
+      "narrative": [
+        {
+          "text": "Presents Table 7.1 of partial-SVD runtimes for n ∈ {1024, 2048, 4096} and ℓ ∈ [10, 1280] across `direct`, `gauss`, `srft`, and `svd`, notes from Figure 7.8 that SRFT and GSRFT slightly beat Gaussian test matrices and match random orthonormal matrices except when ℓ is nearly n, gives Fortran 90/LAPACK/id_dist benchmark details in Remark 7.1, and introduces Part III (Theory, §§8–11).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-046",
+      "source": "sections/page-046.md",
+      "source_hash": "457c0986747631366864db330510b13253e1e188a0b3f6fa6c82c5dbce05c5c4",
+      "narrative": [
+        {
+          "text": "Displays Figure 7.7 (acceleration factors of `srft`, `gauss`, and `svd` relative to `direct` for n = 1024, 2048, 4096), outlines the four sections of Part III (§8 linear-algebraic preliminaries, §9 deterministic error bounds, §10 Gaussian analysis, §11 SRFT analysis), and opens Section 8 with §8.1 on positive semidefinite (psd) matrices and the Loewner partial order M ≼ N.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-047",
+      "source": "sections/page-047.md",
+      "source_hash": "6e86779786050e0091d5dd5e163af4db3bd7eb5aa32d864476dfb13edae5ccf8",
+      "narrative": [
+        {
+          "text": "Displays Figure 7.8 (empirical error PDFs over 100,000 trials of Algorithm 4.1 at ℓ = 25, 50, 75, 100 for `Gauss`, `Ortho`, `SRFT`, and `GSRFT`), and continues §8.1 with the Rayleigh–Ritz variational formula for ‖M‖, norm monotonicity M ≼ N ⇒ ‖M‖ ≤ ‖N‖, and Proposition 8.1 (the Conjugation Rule M ≼ N ⇒ A*MA ≼ A*NA).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-048",
+      "source": "sections/page-048.md",
+      "source_hash": "dd6e87090336c2722d8927509fdfbeb0f36e0627fe65c41de1a93c64964cb90b",
+      "narrative": [
+        {
+          "text": "Proves Proposition 8.2 (I − (I + M)^{−1} ≼ M for M ≽ 0) and Proposition 8.3 (‖M‖ ≤ ‖A‖ + ‖C‖ for a partitioned 2 × 2 psd matrix M), then opens §8.2 on orthogonal projectors P_M = M(M*M)^{−1}M* and states and begins proving Proposition 8.4 (U*P_M U = P_{U*M} for unitary U).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-049",
+      "source": "sections/page-049.md",
+      "source_hash": "6298e7bf871793612e95875aab828d8477b064f29df9a48b9635d299492098a9",
+      "narrative": [
+        {
+          "text": "Completes the proof of Proposition 8.4 and proves Proposition 8.5 (range(N) ⊂ range(M) ⇒ ‖P_N A‖ ≤ ‖P_M A‖ and ‖(I − P_M)A‖ ≤ ‖(I − P_N)A‖) and Proposition 8.6 (‖PM‖ ≤ ‖P(MM*)^q M‖^{1/(2q+1)} for an orthogonal projector P and q > 0, reduced to the claim ‖RDR‖^t ≤ ‖RD^t R‖).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-050",
+      "source": "sections/page-050.md",
+      "source_hash": "cb36cedb82253217bee400c02859b5bf5e8b50560d0d2fb20b5ebcbc705dd550",
+      "narrative": [
+        {
+          "text": "Finishes the proof of Proposition 8.6 via Jensen's inequality, and opens Section 9 (Error bounds via linear algebra) with §9.1 partitioning the SVD A = U diag(Σ1, Σ2)[V1, V2]* into top k and tail n − k singular modes and decomposing the test matrix into Ω1 = V1*Ω and Ω2 = V2*Ω, before introducing §9.2 on deterministic error bounds.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-051",
+      "source": "sections/page-051.md",
+      "source_hash": "1cb4f3b624c93611a69a8e3450cc02e255a6646ef54b19dbed334d1dd2f468f9",
+      "narrative": [
+        {
+          "text": "States Theorem 9.1 (Deterministic error bound: when Ω1 has full row rank, ‖(I − P_Y)A‖^2 ≤ ‖Σ2‖^2 + ‖Σ2 Ω2 Ω1†‖^2 in both the spectral and Frobenius norms, sharpening Boutsidis–Drineas–Mahoney) and begins its perturbation-theoretic proof by reducing to ˜A = U*A and comparing ˜Y = ˜AΩ with the unperturbed top-block matrix W.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-052",
+      "source": "sections/page-052.md",
+      "source_hash": "9317eefeb082539ed93f22383d48173026fcc9d9d742b706faf6c3ed67cde8cc",
+      "narrative": [
+        {
+          "text": "Continues the proof of Theorem 9.1 by forming the flattened matrix Z = ˜Y Ω1† Σ1^{−1} = [I; F] with F = Σ2 Ω2 Ω1† Σ1^{−1} and range(Z) ⊂ range(˜Y), bounding the error by ‖Σ*(I − P_Z)Σ‖, and deriving the 2 × 2 block representation (9.10) of the complementary projector I − P_Z.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-053",
+      "source": "sections/page-053.md",
+      "source_hash": "46c9831b5370e87aa28f98b3242bcdcb03e7ba4a582c3125d8d049b2e863e4a8",
+      "narrative": [
+        {
+          "text": "Completes the proof of Theorem 9.1 by applying Propositions 8.2 and 8.3 to Σ*(I − P_Z)Σ so that Σ1^{−1} cancels in ‖FΣ1‖^2 = ‖Σ2 Ω2 Ω1†‖^2, and opens §9.3 on the deterministic analysis of the power scheme B = (AA*)^q A = UΣ^{2q+1}V*.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-054",
+      "source": "sections/page-054.md",
+      "source_hash": "ec8879c387176d32e74e3fe1b1337ebabbce37c18889797b5f3964bbebc465e7",
+      "narrative": [
+        {
+          "text": "Proves Theorem 9.2 (‖(I − P_Z)A‖ ≤ ‖(I − P_Z)B‖^{1/(2q+1)} for Z = BΩ with B = (A*A)^q A), combines it with Theorem 9.1 to show ‖(I − P_Z)A‖ ≤ (1 + ‖Ω2 Ω1†‖^2)^{1/(4q+2)} σ_{k+1}, and in §9.4 states and begins proving Theorem 9.3 (Ming Gu's bound ‖A − Â_{(k)}‖ ≤ σ_{k+1} + ‖(I − P_Z)A‖ for best rank-k truncation of P_Z A).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-055",
+      "source": "sections/page-055.md",
+      "source_hash": "385429b8b863b41c5fa1d6c8d86d13633d7f7fa7179af54daf6087b00420e90f",
+      "narrative": [
+        {
+          "text": "Completes the proof of Theorem 9.3 via Mirsky's theorem and Remark 9.1, then opens Section 10 (Gaussian test matrices) and §10.1 (Technical background), stating Proposition 10.1 on expected Frobenius and spectral norms of a scaled Gaussian matrix SGT and Proposition 10.2 on expected Frobenius and spectral norms of the pseudoinverse G† of a k × (k + p) Gaussian matrix.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-056",
+      "source": "sections/page-056.md",
+      "source_hash": "4c4563dd6c5266204577ab8523a700979f8fa6dc66b70dd2b0b523611152a7a6",
+      "narrative": [
+        {
+          "text": "Completes §10.1 with Proposition 10.3 (Gaussian concentration for Lipschitz functions) and Proposition 10.4 (tail bounds for ‖G†‖_F and ‖G†‖ when p ≥ 4), and opens §10.2 (Average-case analysis of Algorithm 4.1) by stating Theorem 10.5: E‖(I − P_Y)A‖_F ≤ (1 + k/(p − 1))^{1/2} (∑_{j>k} σ_j^2)^{1/2}.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-057",
+      "source": "sections/page-057.md",
+      "source_hash": "03193dc0aa6c2a8c3ae89b7c084f998678307b4366b1b49ae63e6037da0f338a",
+      "narrative": [
+        {
+          "text": "Interprets Theorem 10.5 against the Eckart–Young baseline, states Theorem 10.6 on the expected spectral-norm error E‖(I − P_Y)A‖ ≤ (1 + √(k/(p − 1)))σ_{k+1} + (e√(k + p)/p)(∑_{j>k} σ_j^2)^{1/2} (and its worst-case polynomial bound in σ_{k+1}), and begins proving Theorem 10.5 using rotational invariance and the independence of Ω1 = V1*Ω and Ω2 = V2*Ω.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-058",
+      "source": "sections/page-058.md",
+      "source_hash": "9f831cbef779f8e81e5ad2c49bd939fcdef7e5eec12bdbc9bbc6048d1b1ac9f8",
+      "narrative": [
+        {
+          "text": "Completes the proofs of Theorems 10.5 and 10.6 by conditioning on Ω1 and applying Propositions 10.1 and 10.2, and opens §10.3 (Probabilistic error bounds for Algorithm 4.1) by stating Theorem 10.7 on Frobenius-norm tail bounds with failure probability at most 5t^{−p} + 2e^{−u^2/2}.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-059",
+      "source": "sections/page-059.md",
+      "source_hash": "3417914e7801180f15ab4430be02f5fb90a637f74ebaf5b74fe2f210bdbc3d71",
+      "narrative": [
+        {
+          "text": "States Theorem 10.8 (spectral-norm deviation bound for p ≥ 4 with failure probability at most 5t^{−p} + e^{−u^2/2}) and Corollary 10.9 (simplified spectral error bounds with failure probabilities 6e^{−p} and 6p^{−p}), and begins the proof of Theorem 10.8 by conditioning on the event E_t that bounds both ‖Ω1†‖ and ‖Ω1†‖_F.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-060",
+      "source": "sections/page-060.md",
+      "source_hash": "b457d8086352b5c260f47c07266ee97679647ce3cd0d9a426f40f4e6fbb2fe50",
+      "narrative": [
+        {
+          "text": "Completes the proof of Theorem 10.8 by applying Gaussian Lipschitz concentration (Proposition 10.3) to h(X) = ‖Σ2 X Ω1†‖ conditioned on E_t, and in §10.4 states and begins proving Corollary 10.10 on the expected spectral error of the power scheme Z = (AA*)^q AΩ.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-061",
+      "source": "sections/page-061.md",
+      "source_hash": "02354149b62ffab74cfcb6dc8b0111527e15fcf8d28402747729fc0d7418f18e",
+      "narrative": [
+        {
+          "text": "Completes the discussion of Corollary 10.10 (showing that q ∼ log(min{m, n}) drives the multiplicative error factor to 1 and that mild tail decay removes the dimensional factor, with Remark 10.1 noting why Proposition 8.6 does not extend to the Frobenius norm), then opens Section 11 (SRFT test matrices) and §11.1 reviewing the construction Ω = √(n/ℓ) DFR* and norm ‖Ω‖ = √(n/ℓ).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-062",
+      "source": "sections/page-062.md",
+      "source_hash": "9c2ce93047100caf5257c1992d9d19f0cbda436afb7e616ced1fa2b3ac1d6e9d",
+      "narrative": [
+        {
+          "text": "States Theorem 11.1 (an n × ℓ SRFT with ℓ ≥ 4[√k + √(8 log(kn))]^2 log k satisfies 0.40 ≤ σ_k(V*Ω) and σ_1(V*Ω) ≤ 1.48 for a fixed n × k orthonormal V with failure probability O(k^{−1})), gives Remark 11.1 on large-k constants and Remark 11.2 proving via a decimated identity matrix and the coupon collector's problem that Ω(k log k) samples are necessary in the worst case, and opens §11.2 with Theorem 11.2.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-063",
+      "source": "sections/page-063.md",
+      "source_hash": "4668737b8ae70f5ff68d04231d2808673a10f05318415e678b08047b79f265c2",
+      "narrative": [
+        {
+          "text": "Completes the statement and proof of Theorem 11.2—bounding spectral error by √(1 + 7n/ℓ) σ_{k+1} and Frobenius error by √(1 + 7n/ℓ)(∑_{j>k} σ_j^2)^{1/2} with failure probability O(k^{−1}) via Theorem 9.1, ‖Ω1†‖^2 < 7, and ‖Ω2‖ ≤ √(n/ℓ)—contrasts worst-case O(k^{−1}) failure and k log k sampling with empirical ℓ = k + 20 performance, and begins the Acknowledgments.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-064",
+      "source": "sections/page-064.md",
+      "source_hash": "7dd8f5f5a895bf2160bb21e13c57776b784fd55ef9a47d8cd0c1b9eec0c5c10f",
+      "narrative": [
+        {
+          "text": "Finishes the Acknowledgments and opens Appendix A (On Gaussian matrices), proving Proposition A.1 ((E‖SGT‖_F^2)^{1/2} = ‖S‖_F ‖T‖_F) and stating Gordon's inequality Proposition A.2 (E‖SGT‖ ≤ ‖S‖‖T‖_F + ‖S‖_F ‖T‖) in §A.1, and stating the Chen–Dongarra tail bound Proposition A.3 for ‖G†‖ in §A.2.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-065",
+      "source": "sections/page-065.md",
+      "source_hash": "bf66b14f8a9fadbddfadc441ac6edda6e9ad35ba6bebd6f3723497b0341d5253",
+      "narrative": [
+        {
+          "text": "Proves Proposition A.4 (E‖G†‖ < e√n/(n − m) for an m × n standard Gaussian matrix with n − m ≥ 1) by integrating Proposition A.3's tail bound, and in §A.3 proves Proposition A.5 (E‖G†‖_F^2 = m/(n − m − 1) via the inverted Wishart trace) and states the new tail bound Theorem A.6 (P{‖G†‖_F^2 > 12mt/(n − m)} ≤ 4t^{−(n−m)/2} for n − m ≥ 4).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-066",
+      "source": "sections/page-066.md",
+      "source_hash": "277e8356ab0c145d7cfb02ebb206800e790b09185c95e97df8008d239c31981b",
+      "narrative": [
+        {
+          "text": "Opens §A.3.1 (Technical background for Theorem A.6), defining the L_q norm E_q(Z) = (E|Z|^q)^{1/q}, stating Proposition A.7 on the orthogonal equivalence of an m × n standard Gaussian matrix to a random bidiagonal matrix L with independent χ^2 variates X_j^2 and Y_j^2, and proving Proposition A.8 on positive and negative moments of a χ^2_k variate via the gamma function.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-067",
+      "source": "sections/page-067.md",
+      "source_hash": "b99be75a6521220e280715b48615e2e1f1e5cb73d8cd37b5f68110d55e5011ab",
+      "narrative": [
+        {
+          "text": "Completes §A.3.1 by proving Lemma A.9 (E_q(Ξ) ≤ k + q for a χ^2_k variate Ξ and q ≥ 1, using logarithmic convexity of Γ and the AM–GM inequality) and Lemma A.10 (E_q(Ξ^{−1}) < 3/k for k ≥ 5 and 2 ≤ q ≤ (k − 1)/2, using Stirling's approximation).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-068",
+      "source": "sections/page-068.md",
+      "source_hash": "2345b7c788a4c4db0df299881c3577d5f79852179d45f3a47d78a87f91dfaf08",
+      "narrative": [
+        {
+          "text": "Begins §A.3.2 (Proof of Theorem A.6) by writing out the bidiagonal pseudoinverse L† to bound Z = ‖G†‖_F^2 ≤ ∑_{j=0}^{m−1} W_j with W_j = X_{n−j}^{−2}(1 + Y_{m−j}^2 X_{n−j+1}^{−2}), and applying Lemmas A.9 and A.10 at q = (n − m)/2 to show E_q(W_j) < 12/(n − j).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-069",
+      "source": "sections/page-069.md",
+      "source_hash": "9554ba07ac02b8b8b2a00b055314eeb049893ea9e65546560a9bd01fdaa98f75",
+      "narrative": [
+        {
+          "text": "Finishes the proof of Theorem A.6 by applying Markov's inequality to each W_j and bounding the union-bound sum via an integral estimate for n − m ≥ 4, adds Remark A.1 on seeking a more conceptual concentration argument for inverse spectral functions, and opens the References section with items [1]–[10] (Achlioptas through Bellabas–Wolfe).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-070",
+      "source": "sections/page-070.md",
+      "source_hash": "aaf403f3345090c17653f8337aff248c3d079caee8baa7cac42ba69a6afed6e8",
+      "narrative": [
+        {
+          "text": "Continues the References section with bibliography entries [11]–[39], from Bhatia (Matrix Analysis, 1997) and Björck (1994, 1996) through Candès, Clarkson, Demmel, Deshpande–Vempala, and Dixon (1983).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-071",
+      "source": "sections/page-071.md",
+      "source_hash": "07fc85f834beb8550104d394e53e77c969073bc203294245fa6acbfaf87d464b",
+      "narrative": [
+        {
+          "text": "Continues the References section with bibliography entries [40]–[70], covering Dongarra–Sullivan (2000), Donoho, Drineas–Kannan–Mahoney, Dvoretzky (1961), Eckart–Young (1936), Edelman (1989), Frieze–Kannan–Vempala, Golub–Van Loan, Gordon, Gu–Eisenstat (1996), and Har-Peled (2006).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-072",
+      "source": "sections/page-072.md",
+      "source_hash": "2045916887930580cd4c50d8e0f0445278eaca3b2df6a61a939359d0ce606b1c",
+      "narrative": [
+        {
+          "text": "Continues the References section with bibliography entries [71]–[100], covering Hastie–Tibshirani–Friedman, Horn–Johnson, Indyk–Motwani, Johnson–Lindenstrauss (1984), Kashin (1977), Kuczyński–Woźniakowski, Ledoux, Liberty–Woolfe–Martinsson–Rokhlin–Tygert (2007), Martinsson–Rokhlin–Tygert, Milman (1971), Mirsky (1960), Muirhead, and Muthukrishnan.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-073",
+      "source": "sections/page-073.md",
+      "source_hash": "eb4faac70e9adf7a48be643d7791a336aa8e3f28461b4bcfe7dd6809df5d5904",
+      "narrative": [
+        {
+          "text": "Continues the References section with bibliography entries [101]–[127], covering Needell (2010), Papadimitriou et al., Parker–Pierce, Phillips et al. (FERET), Press et al. (Numerical Recipes), Rokhlin–Szlam–Tygert (2009), Rokhlin–Tygert (2008), Rudelson–Vershynin (2007), Sarlós (2006), Sirovich–Kirby (1987), and G. W. Stewart (1969–2000).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-0909.4061v2/blocks/prose-page-074",
+      "source": "sections/page-074.md",
+      "source_hash": "935e1fd7d7cc70711204311f80b2919c54b84d4bc0762339e1447b4b0f92b013",
+      "narrative": [
+        {
+          "text": "Concludes the References section with bibliography entries [128]–[137], from Strohmer–Vershynin (2009), Szarek (1990), Szlam–Maggioni–Coifman (2008), Trefethen–Bau (1997), and Tropp (2008, 2011) to von Neumann–Goldstine (1947, 1952) and Woolfe–Liberty–Rokhlin–Tygert (2008).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://bff31c8b-00de-4342-bf75-fbff1f059feb"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    }
+  ]
+}

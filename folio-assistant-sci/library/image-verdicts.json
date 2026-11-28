@@ -1,0 +1,276 @@
+{
+  "$schema": "folio-image-verdicts/v1",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by looking at the image. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). SPLIT 2026-09-20 (bean frs5): this file judged documents that now live in TWO libraries, so it became two files, each beside the documents it judges. A single verdict file spanning libraries is how one library's judgement comes to rewrite another's `images.json` -- `apply-image-verdicts` resolves each document against the library its verdict file is IN, and could not do that from one shared file. Nothing was re-judged: every verdict below is byte-identical to the one it was split from, and `inspected_by`/`inspected_at` are carried over unchanged because the inspection they record actually happened, once, before the split. ADDED 2026-09-29: verdicts for arxiv-2601.22554v1, arxiv-2406.01940v2 and arxiv-2602.16554v1, each produced by opening the image. The file-level `inspected_at` still names the milnorlink inspection because the schema carries one date per file; the three arXiv documents were inspected on 2026-09-29, and this sentence is where that is recorded rather than restamping milnorlink's date. ADDED 2026-10-12 (owner ruling 2026-10-12, litlfred/qou#7735): verdicts for arxiv-2003.08005v1, arxiv-2512.09874v3 and arxiv-2604.00554v1, 34 images, all `figure`. Carried byte-for-byte from litlfred/qou library/image-verdicts.json at commit 2bd612e3ef (PR litlfred/qou#7608, bean qou-v9av), where each was produced by an agent (claude-opus-5-5) opening the image on 2026-10-11; nothing was re-judged here. As with the 2026-09-29 additions, the file-level `inspected_by`/`inspected_at` still name the milnorlink inspection, and this sentence is where the later inspection is recorded.",
+  "inspected_by": {
+    "kind": "agent",
+    "id": "claude",
+    "model": "claude-opus-5"
+  },
+  "inspected_at": "2026-09-20",
+  "verdicts": {
+    "milnorlink": {
+      "img-p001-1": {
+        "role": "logo",
+        "saw": "the JSTOR publisher mark",
+        "draft": "The JSTOR logo: an ornate decorated capital J in a black square, above the word STOR, with a registered-trademark symbol."
+      }
+    },
+    "arxiv-2406.01940v2": {
+      "img-p002-1": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-2": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-3": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-4": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-5": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-6": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-7": {
+        "role": "figure",
+        "saw": "a network glyph placed on the Figure 1 overview beside the verifier box",
+        "draft": "A dark navy line icon of a small layered network: two nodes on the left, three in the middle column and three on the right, joined by straight edges that cross between the columns, two of the left-hand edges drawn with a small gap as if passing under another. In the paper's Figure 1 it stands for the Process-Supervised Verifier, the trained model that scores autoformalization candidates."
+      }
+    },
+    "arxiv-2602.16554v1": {
+      "img-p003-1": {
+        "role": "logo",
+        "saw": "the Lean wordmark with a trademark sign",
+        "draft": "The Lean wordmark: the letters L, E, A and N drawn as a single continuous thin black line of straight strokes, sharing verticals between letters, with a small grey TM at the upper right. In Figure 1 it marks the Lean 4 stage of the pipeline."
+      }
+    },
+    "arxiv-2601.22554v1": {
+      "img-p008-1": {
+        "role": "figure",
+        "saw": "Figure 2(a), the blueprint dependency graph of the multivariate Taylor case study, the initial blueprint drafted by the language model",
+        "draft": "Figure 2(a): the first blueprint produced for multivariate Taylor's theorem in integral form, before any automated proving. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Most theorem nodes are light blue (unproved); only taylor_integral_one_shot, integrationByParts_smul and ftoc_bochner_wrapper are dark green."
+      },
+      "img-p008-2": {
+        "role": "figure",
+        "saw": "Figure 2(b), the same graph after the automated prover's first pass",
+        "draft": "Figure 2(b): the same initial blueprint after the automated prover's sorry-filling pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. The leaf lemmas taylorKernel_deriv_t, taylorKernel_at_right and taylorRemainder_eq_explicit have turned dark green; taylor_integral_kernel and lineCurve_iteratedDeriv remain light blue, and taylor_integral_explicit and frechet_taylor_integral are filled a lighter green; the caption distinguishes only blue (unproved) from green (proved), so what the two shades of green separate is not stated in the paper."
+      },
+      "img-p008-3": {
+        "role": "figure",
+        "saw": "Figure 2(c), the refined blueprint with extra intermediate lemmas, all unproved",
+        "draft": "Figure 2(c): the refined blueprint after the planner model decomposed the stuck nodes further. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. New intermediate nodes appear -- taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc and lineCurve_contDiffOn_onSeg -- and every theorem node is light blue, i.e. nothing is yet proved in this version."
+      },
+      "img-p008-4": {
+        "role": "figure",
+        "saw": "Figure 2(d), the refined graph after the second prover pass with three nodes left",
+        "draft": "Figure 2(d): the refined blueprint after the prover's second pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Nearly every lemma is dark green; three remain light blue -- taylor_remainder_by_parts, lineCurve_iteratedDeriv and frechet_taylor_integral -- which are the nodes the text says were left for a human. taylor_integral_kernel, taylor_integral_explicit and taylor_integral_one_shot are a lighter green."
+      },
+      "img-p008-5": {
+        "role": "figure",
+        "saw": "Figure 2(e), the completed graph with every node dark green",
+        "draft": "Figure 2(e): the completed formalization after a human proved the remaining nodes. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Every theorem node is dark green, meaning the whole graph, including the target frechet_taylor_integral, is proved without sorry."
+      },
+      "img-p012-1": {
+        "role": "figure",
+        "saw": "Figure 3(a), the rendered blueprint document of the MyNat example",
+        "draft": "Figure 3(a): the web blueprint generated from the appendix's MyNat example. It lists Definition 1 (Natural numbers) and Definition 2 (Natural number addition), each with a check mark; Theorem 3, for any natural number a, 0 + a = a, where + is definition 2, with a check mark and a collapsed proof; Theorem 4, (a + 1) + b = (a + b) + 1, with no check mark and the proof text 'Proof by induction on b'; and Theorem 5, a + b = b + a, with no check mark and a proof reading 'The base case follows from theorem 3. The inductive case follows from theorem 4.', both references rendered as links."
+      },
+      "img-p012-2": {
+        "role": "figure",
+        "saw": "Figure 3(b), the dependency graph of the MyNat example",
+        "draft": "Figure 3(b): the dependency graph of the MyNat example. Green rectangles MyNat and nat-add at the top, with dashed arrows from nat-add to a blue-bordered rectangle MyNat.mul and to the ellipses MyNat.succ_add (light blue) and MyNat.zero_add (dark green); solid arrows run from both of those into MyNat.add_comm (light blue), and a dashed arrow from MyNat.mul to a white ellipse MyNat.mul_comm, whose outgoing edge is cut off at the bottom of the image."
+      }
+    },
+    "arxiv-2003.08005v1": {
+      "img-p001-1": {
+        "role": "figure",
+        "saw": "Scanned excerpt of a math article (Theorem 1 on a BVP, conditions f0/f-infinity, equation (1.1)* u''+f(t,u)=0); it is the image used in Fig. 1 on page 1, where coloured formula boxes are overlaid in the rendered page.",
+        "draft": "Fig. 1 base image: scanned text containing 'Theorem 1. Assume (A.1)-(A.3) hold...' with cases (i) superlinear and (ii) sublinear, and the displayed equation (1.1)* u'' + f(t,u) = 0. In the paper the embedded formulas are marked blue and the displayed one red; those overlays are not part of this extracted image."
+      },
+      "img-p004-2": {
+        "role": "figure",
+        "saw": "Small square crop of a scanned page (header 'POSITIVE SOLUTIONS OF ORDINARY DIFFERENTIAL...', 'Green's function for the BVP', equations u''=0 and the boundary conditions), plain with no boxes; one of the stacked sliding-window sub-images in Fig. 2.",
+        "draft": "Fig. 2 sliding-window sub-image: an unannotated crop of the scanned page showing the BVP text and equations u'' = 0, alpha u(0) - beta u'(0) = 0, gamma u(1) + delta u'(1) = 0 (window offsets differ between the stacked crops)."
+      },
+      "img-p004-4": {
+        "role": "figure",
+        "saw": "Small square crop of a scanned page (header 'POSITIVE SOLUTIONS OF ORDINARY DIFFERENTIAL...', 'Green's function for the BVP', equations u''=0 and the boundary conditions), plain with no boxes; one of the stacked sliding-window sub-images in Fig. 2.",
+        "draft": "Fig. 2 sliding-window sub-image: an unannotated crop of the scanned page showing the BVP text and equations u'' = 0, alpha u(0) - beta u'(0) = 0, gamma u(1) + delta u'(1) = 0 (window offsets differ between the stacked crops)."
+      },
+      "img-p004-8": {
+        "role": "figure",
+        "saw": "Small square crop of a scanned page (header 'POSITIVE SOLUTIONS OF ORDINARY DIFFERENTIAL...', 'Green's function for the BVP', equations u''=0 and the boundary conditions), plain with no boxes; one of the stacked sliding-window sub-images in Fig. 2.",
+        "draft": "Fig. 2 sliding-window sub-image: an unannotated crop of the scanned page showing the BVP text and equations u'' = 0, alpha u(0) - beta u'(0) = 0, gamma u(1) + delta u'(1) = 0 (window offsets differ between the stacked crops)."
+      },
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "Same kind of window crop but tinted grey-mauve with formulas highlighted by red/yellow tint and green boxes; one of the SSD-output heatmap windows in Fig. 2.",
+        "draft": "Fig. 2 SSD output window: a page crop overlaid with a detection-confidence heatmap (greyish background, reddish/yellowish highlights) and green boxes around formulas such as u'' = 0 and the boundary conditions; in img-p004-5 the box encloses k(t, s)."
+      },
+      "img-p004-5": {
+        "role": "figure",
+        "saw": "Same kind of window crop but tinted grey-mauve with formulas highlighted by red/yellow tint and green boxes; one of the SSD-output heatmap windows in Fig. 2.",
+        "draft": "Fig. 2 SSD output window: a page crop overlaid with a detection-confidence heatmap (greyish background, reddish/yellowish highlights) and green boxes around formulas such as u'' = 0 and the boundary conditions; in img-p004-5 the box encloses k(t, s)."
+      },
+      "img-p004-9": {
+        "role": "figure",
+        "saw": "Same kind of window crop but tinted grey-mauve with formulas highlighted by red/yellow tint and green boxes; one of the SSD-output heatmap windows in Fig. 2.",
+        "draft": "Fig. 2 SSD output window: a page crop overlaid with a detection-confidence heatmap (greyish background, reddish/yellowish highlights) and green boxes around formulas such as u'' = 0 and the boundary conditions; in img-p004-5 the box encloses k(t, s)."
+      },
+      "img-p004-3": {
+        "role": "figure",
+        "saw": "Whole scanned page 745 of the ODE article (Green's function k(t,s), equations (2.1)-(2.8)) without overlays; the 'Input Page' at the left of Fig. 2.",
+        "draft": "Fig. 2 input page: unannotated scan of a journal page headed 'POSITIVE SOLUTIONS OF ORDINARY DIFFERENTIAL EQUATIONS 745', with numbered equations (2.1)-(2.8) defining k(t,s), the cone K and the operator A."
+      },
+      "img-p004-6": {
+        "role": "figure",
+        "saw": "Thumbnail of the same page with a grey background and pink/white/yellow heatmap patches over formulas; the stitched heatmap page in Fig. 2.",
+        "draft": "Fig. 2 stitched-heatmap page: page 745 thumbnail with greyed background and heatmap highlights (white, pink, yellow) over formula regions, after stitching window-level detections."
+      },
+      "img-p004-7": {
+        "role": "figure",
+        "saw": "Thumbnail of the same page with many overlapping magenta/purple boxes over formulas; the 'Stitch Patches' stage of Fig. 2.",
+        "draft": "Fig. 2 stitched-patches page: page 745 thumbnail covered with dense overlapping purple bounding boxes from window-level detections, before pooling."
+      },
+      "img-p004-10": {
+        "role": "figure",
+        "saw": "Page 745 scan with single green bounding boxes around each formula; the 'Detected Formulas' output at the right of Fig. 2.",
+        "draft": "Fig. 2 output: page 745 with one green bounding box per detected formula (inline items such as k(t,s), [0,1] and displayed equations (2.1)-(2.8)) after pooling."
+      },
+      "img-p004-11": {
+        "role": "figure",
+        "saw": "Page crop overlaid with a regular grid of blue star markers and red, green and yellow rectangles around a pink-highlighted u''=0; this is Fig. 3.",
+        "draft": "Fig. 3: default boxes for a 512x512 window. A grid of blue star box centres covers a page crop; six rectangles (red, green, yellow) of different sizes and aspect ratios surround the pink-highlighted formula u'' = 0."
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "Bar chart, x-axis 'Aspect ratio' 1-38, y-axis 'Count' 0-10000; Fig. 4.",
+        "draft": "Fig. 4: histogram of formula aspect ratios. Y-axis 'Count' with ticks 0, 2500, 5000, 7500, 10000; x-axis 'Aspect ratio' 1 to 38. Bars peak at ratio 2 (about 9000) and 1 (about 8400), then fall steadily (about 5000 at 3, 4500 at 4, 2900 at 5) to near zero beyond about 20."
+      },
+      "img-p005-2": {
+        "role": "figure",
+        "saw": "Scan crop with header, 'Here k(t, s) denotes the Green's function for the BVP' and equations (2.1),(2.2); used as panel (a) 'Initial detection' of Fig. 5, where the blue box is a vector overlay.",
+        "draft": "Fig. 5(a) base image: scanned excerpt with equations (2.1) u'' = 0 and (2.2) the two boundary conditions. In the rendered figure a blue detection box sits on the first boundary condition; that box is not in this extracted image."
+      },
+      "img-p005-3": {
+        "role": "figure",
+        "saw": "Visually identical scan crop to img-p005-2, checked separately; used as panel (b) 'After cropping' of Fig. 5.",
+        "draft": "Fig. 5(b) base image: the same scanned excerpt (equations (2.1), (2.2)) used for the 'After cropping' panel; the cropped blue box shown in the paper is not part of this extracted image."
+      },
+      "img-p006-1": {
+        "role": "figure",
+        "saw": "Scanned page 744 (L. H. Erbe and Haiyan Wang), Theorem 1, Corollary 1, Theorem 2, with blue boxes around formulas; fourth panel of Fig. 6 detection results.",
+        "draft": "Fig. 6 panel 4: detection results on page 744 of Erbe and Wang ('2. Existence results', Theorem 1, Corollary 1, Theorem 2 of Krasnoselskii), with blue bounding boxes around inline and displayed formulas."
+      },
+      "img-p006-2": {
+        "role": "figure",
+        "saw": "Typeset page with sums over partitions, equations (3.3)-(3.5) involving I^V_{0,n,beta}, enclosed in blue boxes; first panel of Fig. 6.",
+        "draft": "Fig. 6 panel 1: detection results on a page about quadratic relations among codimension-zero classes (equations (3.3)-(3.5)), each formula enclosed in a blue bounding box, wide multi-line sums boxed line by line."
+      },
+      "img-p006-3": {
+        "role": "figure",
+        "saw": "Typeset page (5.23), sections 5.2.6, 5.3, 5.4 with a matrix equation, formulas in blue boxes; second panel of Fig. 6.",
+        "draft": "Fig. 6 panel 2: detection results on a page containing (5.23), 'Nonsingular rational curves', 'Quantum multiplication in H*(P^n)', (5.24) and a matrix D-module equation, with blue bounding boxes around formulas."
+      },
+      "img-p006-4": {
+        "role": "figure",
+        "saw": "Scanned page 745 (Green's function, (2.1)-(2.8)) with blue boxes around formulas; third panel of Fig. 6.",
+        "draft": "Fig. 6 panel 3: detection results on page 745 of the ODE article (equations (2.1)-(2.8)), with blue bounding boxes; per the caption, split formulas are highlighted in pink in this panel, which is not clearly visible in the extracted image."
+      },
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "Grouped bar chart, y-axis 'f-score' 0.5-0.9, x-axis 'Filename' with 10 documents, legend IOU >= 0.5 (blue) and IOU >= 0.75 (red); Fig. 7.",
+        "draft": "Fig. 7: document-level f-scores for 10 test documents (Lorentz48, Jones83, Lusztig89, Kontsevich94, Erbe94, Gidas79, Kazhdan79, Li75, Emden76, Katz99). Blue bars IOU >= 0.5 range 0.6816 (Emden76) to 0.8787 (Erbe94); red bars IOU >= 0.75 range 0.5898 (Emden76) to 0.8518 (Erbe94); y-axis 0.5 to 0.9."
+      }
+    },
+    "arxiv-2512.09874v3": {
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "Flowchart panel headed '3. Evaluation Pipeline'; lower part of Figure 1 (continues from img-p005-2).",
+        "draft": "Figure 1, part 3 'Evaluation Pipeline': a PDF-Parser produces Parsed Text (TXT); together with Ground Truth (JSON list of text, inline-formula and display-formula items) it feeds 'LLM-Based Matching (+ Rule-Based Post-Verification)', which outputs Formula Pairs (JSON of gt_formula/parsed_formula, e.g. $a+1$ vs $a+I$) and then 'Evaluation for all formula pairs'."
+      },
+      "img-p005-2": {
+        "role": "figure",
+        "saw": "Flowchart panels '1. Formula Dataset' and '2. Benchmark Dataset'; upper part of Figure 1.",
+        "draft": "Figure 1, parts 1-2: Formula Dataset (Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k, with a Hugging Face emoji logo), then Benchmark Dataset: randomized building blocks (Display Formulas, Text Segments, Text + Inline Formulas Mixed) form a Ground Truth JSON, combined with a randomized Layout/Style LaTeX template into an assembled TEX file, compiled by pdflatex into the PDF to be parsed."
+      },
+      "img-p008-1": {
+        "role": "figure",
+        "saw": "Two CDM symbol-matching comparisons with score tables (illustrating rater disagreement).",
+        "draft": "Two formula comparisons rendered by the CDM tool (green boxes = matched symbols, red = errors), each with a score table. Left: 778320/2598960 vs 778120/2598960 (one digit red): LLM-Judge 3, CDM 0.929, human scores 1, 3, 9. Right: (1 + r/n)^n vs (1 + r/a)^n (denominator red): LLM-Judge 2, CDM 0.875, human scores 1, 4, 7."
+      },
+      "img-p010-1": {
+        "role": "figure",
+        "saw": "Four CDM comparison panels with all-green boxes; illustrates CDM false positives (text p.10).",
+        "draft": "Four ground-truth/parsed formula pairs separated by a blue line, all symbols boxed green: 7^2 vs 72, 10^{-1} vs 10 − 1, x_{(i−1)} vs x(i − 1), and blackboard ℕ ⊂ ℝ vs italic N ⊂ R. These are the examples of CDM giving matches despite positional or symbol differences."
+      },
+      "img-p010-2": {
+        "role": "figure",
+        "saw": "Four CDM comparison panels with red-boxed operator symbols; illustrates CDM false negatives.",
+        "draft": "Four formula pairs that look equivalent but where CDM boxes the middle symbol in red: A ∧ B, A \\ B = 0, x → y, and x ≠ y, each shown above and below a blue line with the operands boxed green."
+      }
+    },
+    "arxiv-2604.00554v1": {
+      "img-p002-1": {
+        "role": "figure",
+        "saw": "Scanned review page shown as an illustrative figure with coloured annotation boxes (not page furniture of this paper). Left half of Figure 1.",
+        "draft": "Figure 1 (left): scan of zbMATH review page 120 (German), with a blue box around the end of a preceding review and red boxes around complete reviews (Mordell, Oppenheim, Wenkow). Illustrates where documents start and end on a page."
+      },
+      "img-p002-2": {
+        "role": "figure",
+        "saw": "Scanned review page shown as an illustrative figure with coloured annotation boxes (not page furniture of this paper). Right half of Figure 1.",
+        "draft": "Figure 1 (right): scan of zbMATH review page 121, with a red box around the end of a review and the review of Jones (genus of ternary quadratic forms), and a green box around the start of the Uspensky review that continues past the page."
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "Scanned review page shown as an illustrative figure with coloured annotation boxes (not page furniture of this paper). Matches Figure 2 caption (red = titles/sources, blue = text to extract).",
+        "draft": "Figure 2: scan of review page 8 with red boxes around the title/source lines of the Artin and Herbrand entries and a blue box around the Artin review body, illustrating the regular-expression extraction approach."
+      },
+      "img-p005-2": {
+        "role": "figure",
+        "saw": "Screenshot of prompt and model-output text boxes; Figure 3.",
+        "draft": "Figure 3: two monospaced text boxes. The upper shows the prompt asking the model to extract the review between a given title and the following title from a LaTeX text chunk; the lower shows the model output, a German review text containing LaTeX-escaped mathematics."
+      },
+      "img-p006-1": {
+        "role": "figure",
+        "saw": "Log-scale line plot with legend; part of Figure 4 (validation losses).",
+        "draft": "Figure 4 panel 'CalmExperiment 7B slerp': validation loss (log scale, ~10^-2 to 10^1) against epoch (0-10) for lr = 0.00005 (blue), 0.005 (green), 0.0005 (red). Green stays near 10; blue decreases from about 0.45 to about 0.019; red decreases from about 0.09 to about 0.01."
+      },
+      "img-p006-2": {
+        "role": "figure",
+        "saw": "Log-scale line plot with legend; part of Figure 4.",
+        "draft": "Figure 4 panel 'Maxine 7B 0401 stock': validation loss (log scale) against epoch (0-10) for three learning rates. lr = 0.005 stays near 8-10; lr = 0.00005 decreases from about 0.45 to about 0.018; lr = 0.0005 decreases from about 0.09 to about 0.011."
+      },
+      "img-p006-3": {
+        "role": "figure",
+        "saw": "Log-scale line plot with legend; part of Figure 4.",
+        "draft": "Figure 4 panel 'Mistral Passthrough 8L 10B': validation loss (log scale) against epoch (0-10). lr = 0.005 stays near 8-10; lr = 0.00005 decreases from about 0.19 to about 0.014; lr = 0.0005 decreases from about 0.065 to about 0.0098."
+      },
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "Log-scale line plot of training losses with legend; Figure 5.",
+        "draft": "Figure 5, 'Logarithmic Plot of Training Losses over Time': training loss (log scale, ~5e-4 to 0.2) against epoch (0-5) for CalmExperiment-7B-slerp (red), Maxine-7B-0401-stock (blue), Mistral-Passthrough-8L-10B (green). All three are noisy and trend downward from about 0.17 (green near 0.04) to about 10^-3."
+      },
+      "img-p007-2": {
+        "role": "figure",
+        "saw": "Scanned review page with a red highlight box and a small 'title' tag; Figure 6 CV model output.",
+        "draft": "Figure 6: scan of review page 35 where the computer-vision model has drawn one red box (labelled 'title') around the Fröhlich and Shepherdson title line; the other two titles on the page (Yoshida, Auslander and Buchsbaum) are not boxed."
+      }
+    }
+  }
+}

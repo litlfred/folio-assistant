@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns/"
+                  id="Definitions_Process_FormalizedPublicationAuthoring" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns/" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="author" name="Author"/>
+  <bpmn:resource id="authoring-agent" name="Authoring agent"/>
+  <bpmn:resource id="build-pipeline" name="Build pipeline"/>
+  <bpmn:resource id="lean-toolchain" name="Lean toolchain"/>
+  <bpmn:resource id="qc-reviewer" name="QA reviewer (independent)"/>
+  <bpmn:collaboration id="Collaboration_Process_FormalizedPublicationAuthoring">
+    <bpmn:participant id="Participant_Process_FormalizedPublicationAuthoring" name="Formalized Scientific Publication Authoring — one mathematical result" processRef="Process_FormalizedPublicationAuthoring"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_FormalizedPublicationAuthoring" name="Formalized Scientific Publication Authoring" isExecutable="false">
+    <bpmn:documentation>One mathematical result, from the author's intent to a merged change set. The result is a triple: a narrative statement, a narrative proof (both in the block's `.md`) and a Lean statement and proof (the block's `.lean`).
+
+The Lean kernel shows only that the Lean proof proves the Lean statement. Whether that statement is the theorem the narrative claims is decided separately, by independent reviewers who translate each side without seeing the other and then judge semantic equivalence. Mechanical checks (schema, references, render, Lean, vacuity, witnesses) run before them, so reviewers never spend a reading on a block that does not build.
+
+Empirical inputs never enter the triple: a measured value appears only in a marked comparison block, and a number quoted in prose is read from its witness. A result that cannot be closed is kept as a conjecture or as a stated, cited gap; it is never weakened until it passes. Only the author merges.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- STRICT: a block reaches End_Merged only through GW_Equivalent's
+           "yes"; a mechanical pass alone never publishes a formal result. -->
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_FormalizedPublicationAuthoring">
+      <bpmn:lane id="Lane_Author" name="Author" partitionElementRef="author">
+        <bpmn:documentation>States what is to be proved and from which sources, and is the only lane that merges.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_Intent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_StateIntent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Merged</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Reviewer" name="Independent reviewers" partitionElementRef="qc-reviewer">
+        <bpmn:documentation>Agents that did not write the block. Each translation is done blind to the other side; the equivalence judge sees both translations and both originals.</bpmn:documentation>
+        <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BlindLeanToProse</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BlindProseToLean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_JudgeEquivalence</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Adversarial</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Equivalent</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Agent" name="Authoring agent" partitionElementRef="authoring-agent">
+        <bpmn:documentation>Searches for prior work, drafts the triple, revises it on findings, and records an honest gap when a finding cannot be closed.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_PriorWork</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_AlreadyHeld</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Cited</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DraftTriple</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Closable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecordGap</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Build" name="Build pipeline" partitionElementRef="build-pipeline">
+        <bpmn:documentation>Runs the programs: schema, references, render, vacuity, witness staleness. Deterministic and cheap.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_Mechanical</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_MechanicalGreen</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Lean" name="Lean toolchain" partitionElementRef="lean-toolchain">
+        <bpmn:documentation>Compiles the block's Lean against its real import cone and reports sorry and axiom status.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_LeanCheck</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Intent" name="Result&#10;intended">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_StateIntent" name="Set claim">
+      <bpmn:documentation>The author names the claim, the objects it is about, and the sources it rests on, before any text is drafted.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-plan"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="Task_PriorWork" name="Search folio&#10;and library">
+      <bpmn:documentation>Decompose topic areas, check the folio's blocks, compute, and ingested library, shortlist needed external papers and reference datasets (CODATA, PDG, AME), query accessible scholarly and mathematical databases (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, plus OEIS across unit-rescaled / logged / unlogged / factorial-cleared forms, KnotInfo / LinkInfo / SnapPy / Regina censuses, LMFDB, and &gt;= 80 dps PSLQ constant recognition whenever integer sequences, series coefficients, constants, or knot/number-theoretic invariants appear), ingest retrieved references, texts, and datasets into the Knowledge Graph, and assess relevancy and claim boundaries before drafting. A result settled in a held paper is cited, not re-derived.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deep-document-research"/>
+        <bootstrap.processes:skill ref="literature-search"/>
+        <bootstrap.processes:skill ref="library-ingestion"/>
+        <bootstrap.processes:skill ref="reference-dataset-ingestion"/>
+        <bootstrap.processes:skill ref="evidence-gathering-and-provenance"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_AlreadyHeld" name="Already&#10;proved?">
+      <bpmn:documentation>Decided by the authoring agent from the prior-work search across the folio and its ingested library. `yes` cites the existing block or held source and ends without drafting a duplicate; `no` proceeds to draft the block triple.</bpmn:documentation>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Cited" name="Cited, not&#10;re-derived">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_DraftTriple" name="Draft triple:&#10;prose and Lean">
+      <bpmn:documentation>Write the narrative statement and narrative proof in the block's `.md` and the formal statement and proof in its `.lean`. Write the Lean statement first and ask whether it could be false. Record source retrieval and verification provenance (database/API, DOI/arXiv/PMID, date, exact theorem/equation/dataset locator, and relevancy boundary) in authoring notes and attestations, and link formal citations (`\cite{...}` / `cites`) and Liquid dataset or witness values (`{{ ... }}`). An unproved step is `sorry` with a citation; a dependence on a conjecture is an explicit class hypothesis.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="lean-formalization"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_LeanCheck" name="Compile Lean;&#10;report axioms">
+      <bpmn:documentation>Compile against the real import cone; record `#print axioms` and `sorry` status for the new declarations.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="proof-verification"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Mechanical" name="Run mechanical&#10;checks">
+      <bpmn:documentation>Schema validation, reference and citation resolution, math render, vacuity audit (no `True` conclusions, no empty conjecture classes, no uncited `sorry`), and witness staleness for every quoted number.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="content-validate"/>
+        <bootstrap.processes:skill ref="lean-proof-vacuity-audit"/>
+        <bootstrap.processes:skill ref="witnessed-values"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_MechanicalGreen" name="Mechanical&#10;checks green?">
+      <bpmn:documentation>Answered deterministically by the build pipeline's exit status over Lean elaboration, schema, reference, math-render, vacuity and witness checks. `yes` opens independent blind review; `no — fix` returns the block to Task_DraftTriple.</bpmn:documentation>
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="GW_Fork" name="">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_15</bpmn:outgoing>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="Task_BlindLeanToProse" name="Translate Lean&#10;to prose blind">
+      <bpmn:documentation>An independent reviewer reads only the `.lean` declaration and proof and states in mathematical prose what hypotheses, quantifiers, objects and conclusion it proves, without seeing the block's `.md` narrative.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="proof-narrative-lean-equivalence"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_BlindProseToLean" name="Translate prose&#10;to claim blind">
+      <bpmn:documentation>A second independent reviewer reads only the `.md` narrative statement and proof and writes the formal hypotheses, quantifiers, objects and conclusion it claims, without seeing the `.lean` file.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="proof-narrative-lean-equivalence"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_18</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="GW_Join" name="">
+      <bpmn:incoming>Flow_17</bpmn:incoming>
+      <bpmn:incoming>Flow_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_19</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="Task_JudgeEquivalence" name="Judge two-way&#10;equivalence">
+      <bpmn:documentation>Same hypotheses, same quantifier order, same conclusion, same objects, in both directions. The narrative proof's logical skeleton is compared with the Lean proof's in the same way. A difference either way is a finding.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="proof-narrative-lean-equivalence"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_20</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Adversarial" name="Challenge the&#10;block">
+      <bpmn:documentation>An independent adversarial reviewer builds the strongest mathematical and formal case that the statement, proof or model framing is false, vacuous, over-claimed or missing a hypothesis.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="devils-advocate-paper"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_21</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Equivalent" name="Equivalent, no&#10;open finding?">
+      <bpmn:documentation>Decided from the two-way equivalence judgement and the adversarial review sidecars. `yes` hands the verified change set to the author for review and merge; `no` sends the open finding back to the authoring agent.</bpmn:documentation>
+      <bpmn:incoming>Flow_21</bpmn:incoming>
+      <bpmn:outgoing>Flow_22</bpmn:outgoing>
+      <bpmn:outgoing>Flow_23</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="GW_Closable" name="Finding&#10;closable?">
+      <bpmn:documentation>Decided by the authoring agent from the review finding. `yes` returns to Task_DraftTriple to repair the statement or proof; `no` records the unproved claim honestly as a conjecture or cited gap rather than weakening the theorem.</bpmn:documentation>
+      <bpmn:incoming>Flow_23</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_RecordGap" name="Record gap or&#10;conjecture">
+      <bpmn:documentation>Demote the block to a conjecture, or state the open step with `sorry` and a citation, and write-ahead checkpoint the parent epic (`checkpoint:` / `handover:` / `reentry:` notes on `cat/cat-harness/beans`, active vs excluded proof/compute routes, and the Worktree / `/tmp`-Overlay / `.lake`-Donor Lease Table — never mutating a claimed child executor bean's `.md` file). Whenever an authoring session stalls or returns on a subsequent turn after another session advanced the repository, reconcile non-destructively via `stalled-agent-triage` before resuming. Never weaken the statement until it passes.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="proof-gap-audit"/>
+        <bootstrap.processes:skill ref="handover-report"/>
+        <bootstrap.processes:skill ref="stalled-agent-triage"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="Task_Merge" name="Merge PR">
+      <bpmn:documentation>The author inspects the block triple, its mechanical verdicts and the independent equivalence and adversarial review records on the pull request, and merges the change set.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-review"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_22</bpmn:incoming>
+      <bpmn:outgoing>Flow_24</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Merged" name="Result&#10;published">
+      <bpmn:incoming>Flow_24</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Intent" targetRef="Task_StateIntent"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_StateIntent" targetRef="Task_PriorWork"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_PriorWork" targetRef="GW_AlreadyHeld"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_AlreadyHeld" targetRef="End_Cited" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="GW_AlreadyHeld" targetRef="Task_DraftTriple" name="no"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_DraftTriple" targetRef="Task_LeanCheck"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_LeanCheck" targetRef="Task_Mechanical"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_Mechanical" targetRef="GW_MechanicalGreen"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="GW_MechanicalGreen" targetRef="GW_Fork" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="GW_MechanicalGreen" targetRef="Task_DraftTriple" name="no — fix"/>
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="GW_Closable" targetRef="Task_DraftTriple" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="GW_Closable" targetRef="Task_RecordGap" name="no"/>
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_RecordGap" targetRef="Task_LeanCheck"/>
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="GW_Fork" targetRef="Task_BlindLeanToProse"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="GW_Fork" targetRef="Task_BlindProseToLean"/>
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_BlindLeanToProse" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_18" sourceRef="Task_BlindProseToLean" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_19" sourceRef="GW_Join" targetRef="Task_JudgeEquivalence"/>
+    <bpmn:sequenceFlow id="Flow_20" sourceRef="Task_JudgeEquivalence" targetRef="Task_Adversarial"/>
+    <bpmn:sequenceFlow id="Flow_21" sourceRef="Task_Adversarial" targetRef="GW_Equivalent"/>
+    <bpmn:sequenceFlow id="Flow_22" sourceRef="GW_Equivalent" targetRef="Task_Merge" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_23" sourceRef="GW_Equivalent" targetRef="GW_Closable" name="no"/>
+    <bpmn:sequenceFlow id="Flow_24" sourceRef="Task_Merge" targetRef="End_Merged"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_FormalizedPublicationAuthoring">
+    <bpmndi:BPMNPlane id="Plane_Process_FormalizedPublicationAuthoring" bpmnElement="Collaboration_Process_FormalizedPublicationAuthoring">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_FormalizedPublicationAuthoring" bpmnElement="Participant_Process_FormalizedPublicationAuthoring" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="1340" height="876"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Author" bpmnElement="Lane_Author" isHorizontal="true">
+        <dc:Bounds x="50" y="20" width="1310" height="140"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Reviewer" bpmnElement="Lane_Reviewer" isHorizontal="true">
+        <dc:Bounds x="50" y="160" width="1310" height="276"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true">
+        <dc:Bounds x="50" y="436" width="1310" height="164"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Build" bpmnElement="Lane_Build" isHorizontal="true">
+        <dc:Bounds x="50" y="600" width="1310" height="142"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Lean" bpmnElement="Lane_Lean" isHorizontal="true">
+        <dc:Bounds x="50" y="742" width="1310" height="154"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_Intent" bpmnElement="Start_Intent">
+        <dc:Bounds x="96" y="72" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="84" y="112" width="72" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_StateIntent" bpmnElement="Task_StateIntent">
+        <dc:Bounds x="166" y="30" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Merge" bpmnElement="Task_Merge">
+        <dc:Bounds x="605" y="30" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Merged" bpmnElement="End_Merged">
+        <dc:Bounds x="770" y="72" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="743" y="112" width="90" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_GW_Fork" bpmnElement="GW_Fork">
+        <dc:Bounds x="1230" y="273" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_BlindLeanToProse" bpmnElement="Task_BlindLeanToProse">
+        <dc:Bounds x="1085" y="168" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_BlindProseToLean" bpmnElement="Task_BlindProseToLean">
+        <dc:Bounds x="1085" y="306" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Join" bpmnElement="GW_Join">
+        <dc:Bounds x="1005" y="273" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_JudgeEquivalence" bpmnElement="Task_JudgeEquivalence">
+        <dc:Bounds x="860" y="238" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Adversarial" bpmnElement="Task_Adversarial">
+        <dc:Bounds x="715" y="238" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Equivalent" bpmnElement="GW_Equivalent" isMarkerVisible="true">
+        <dc:Bounds x="640" y="273" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="510" y="278" width="122" height="42"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Task_PriorWork" bpmnElement="Task_PriorWork">
+        <dc:Bounds x="166" y="458" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_AlreadyHeld" bpmnElement="GW_AlreadyHeld" isMarkerVisible="true">
+        <dc:Bounds x="315" y="484" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="298" y="440" width="84" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Cited" bpmnElement="End_Cited">
+        <dc:Bounds x="322" y="556" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="363" y="552" width="78" height="42"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DraftTriple" bpmnElement="Task_DraftTriple">
+        <dc:Bounds x="445" y="458" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Closable" bpmnElement="GW_Closable" isMarkerVisible="true">
+        <dc:Bounds x="640" y="493" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="620" y="547" width="90" height="42"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_RecordGap" bpmnElement="Task_RecordGap">
+        <dc:Bounds x="745" y="458" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Task_Mechanical" bpmnElement="Task_Mechanical">
+        <dc:Bounds x="940" y="611" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_MechanicalGreen" bpmnElement="GW_MechanicalGreen" isMarkerVisible="true">
+        <dc:Bounds x="1115" y="646" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="1085" y="604" width="110" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Task_LeanCheck" bpmnElement="Task_LeanCheck">
+        <dc:Bounds x="475" y="750" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="132" y="90"/>
+        <di:waypoint x="166" y="90"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="226" y="150"/>
+        <di:waypoint x="226" y="458"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="286" y="509"/>
+        <di:waypoint x="315" y="509"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="340" y="534"/>
+        <di:waypoint x="340" y="556"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="304" y="534" width="32" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="365" y="509"/>
+        <di:waypoint x="445" y="509"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="385" y="486" width="28" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="520" y="578"/>
+        <di:waypoint x="520" y="750"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="595" y="835"/>
+        <di:waypoint x="1000" y="835"/>
+        <di:waypoint x="1000" y="731"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="1060" y="671"/>
+        <di:waypoint x="1115" y="671"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
+        <di:waypoint x="1165" y="671"/>
+        <di:waypoint x="1315" y="671"/>
+        <di:waypoint x="1315" y="298"/>
+        <di:waypoint x="1280" y="298"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="1180" y="648" width="32" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_10" bpmnElement="Flow_10">
+        <di:waypoint x="1140" y="696"/>
+        <di:waypoint x="1140" y="884"/>
+        <di:waypoint x="455" y="884"/>
+        <di:waypoint x="455" y="578"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="1062" y="706" width="72" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_12" bpmnElement="Flow_12">
+        <di:waypoint x="640" y="518"/>
+        <di:waypoint x="565" y="518"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="588" y="494" width="32" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_13" bpmnElement="Flow_13">
+        <di:waypoint x="690" y="518"/>
+        <di:waypoint x="745" y="518"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="702" y="495" width="28" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_14" bpmnElement="Flow_14">
+        <di:waypoint x="805" y="578"/>
+        <di:waypoint x="805" y="790"/>
+        <di:waypoint x="595" y="790"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_15" bpmnElement="Flow_15">
+        <di:waypoint x="1255" y="273"/>
+        <di:waypoint x="1255" y="228"/>
+        <di:waypoint x="1205" y="228"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_16" bpmnElement="Flow_16">
+        <di:waypoint x="1255" y="323"/>
+        <di:waypoint x="1255" y="366"/>
+        <di:waypoint x="1205" y="366"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
+        <di:waypoint x="1085" y="228"/>
+        <di:waypoint x="1030" y="228"/>
+        <di:waypoint x="1030" y="273"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_18" bpmnElement="Flow_18">
+        <di:waypoint x="1085" y="366"/>
+        <di:waypoint x="1030" y="366"/>
+        <di:waypoint x="1030" y="323"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_19" bpmnElement="Flow_19">
+        <di:waypoint x="1005" y="298"/>
+        <di:waypoint x="980" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_20" bpmnElement="Flow_20">
+        <di:waypoint x="860" y="298"/>
+        <di:waypoint x="835" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_21" bpmnElement="Flow_21">
+        <di:waypoint x="715" y="298"/>
+        <di:waypoint x="690" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_22" bpmnElement="Flow_22">
+        <di:waypoint x="665" y="273"/>
+        <di:waypoint x="665" y="150"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="671" y="200" width="32" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_23" bpmnElement="Flow_23">
+        <di:waypoint x="665" y="323"/>
+        <di:waypoint x="665" y="493"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="671" y="395" width="28" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_24" bpmnElement="Flow_24">
+        <di:waypoint x="725" y="90"/>
+        <di:waypoint x="770" y="90"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

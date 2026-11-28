@@ -1,0 +1,42 @@
+{
+  "id": "evidence-gathering-and-provenance",
+  "name": "Evidence Gathering & Authoring Provenance",
+  "description": "Decompose research topic areas, shortlist required papers and datasets, retrieve authoritative metadata and open-access texts across scholarly databases (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar), ingest into declared KG subgraphs, assess relevancy and claim boundaries, and record authoring provenance notes and formal citations.",
+  "requiredCapabilities": [
+    {
+      "capabilityId": "git-read",
+      "degradation": "fail"
+    }
+  ],
+  "dependsOn": [
+    {
+      "ref": "req:content-lifecycle",
+      "kind": "requirement",
+      "conformance": "SHALL"
+    }
+  ],
+  "routingPatterns": [
+    "evidence.?gather",
+    "shortlist.*papers",
+    "ingest.*into.*kg",
+    "scholarly.*database",
+    "google\\s+scholar",
+    "pubmed",
+    "crossref",
+    "authoring.*provenance",
+    "assess.*relevancy"
+  ],
+  "tags": [
+    "research",
+    "evidence",
+    "provenance",
+    "bibliography",
+    "authoring"
+  ],
+  "package": "authoring-core",
+  "lifecycleStages": [
+    "plan",
+    "author",
+    "review"
+  ]
+}

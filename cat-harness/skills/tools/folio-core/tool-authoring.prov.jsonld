@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of tool-authoring.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/tools/folio-core/tool-authoring.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/tools/folio-core/tool-authoring.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "skills/tools/folio-core/tool-authoring.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "4. Native Rust Crate Workspaces (`crates/`) & Fast Witnessed-Value Evaluators",
+      "prov:value": "Owner directive, 2026-11-28: standardise top-level `crates/` Cargo workspaces across scientific folios (`folio-assistant-sci` and paper folios), separating domain-agnostic core computer-algebra crates (`0` C-FFI, reusable across `folio-assistant-sci` without domain/application clutter) from high-precision (`MPFR`) evaluation and solver layers (`Clarabel.rs` etc.) and fast witnessed-value evaluators (`qou-values`-style high-precision `.rs` observable/witness evaluators) and application probes built on top; declare `\"id\": \"crates\"` (`graphTypologies: [\"code\"]`) in `<instance>.json` and register every crate CLI and evaluator as a validated `tool-definition/v1` node in `tools/` (`check:tools`), following `two-phase-move` when migrating legacy paths.",
+      "cat-harness:refs": [
+        "2026-11-28",
+        "owner"
+      ],
+      "dcterms:date": [
+        "2026-11-28"
+      ]
+    }
+  ]
+}

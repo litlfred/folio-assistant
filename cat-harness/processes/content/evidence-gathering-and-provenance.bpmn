@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
+                  id="Definitions_Process_EvidenceGatheringAndProvenance"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="authoring-agent" name="Authoring agent"/>
+  <bpmn:resource id="ingestion-agent" name="Ingestion engine"/>
+  <bpmn:collaboration id="Collaboration_Process_EvidenceGatheringAndProvenance">
+    <bpmn:participant id="Participant_Process_EvidenceGatheringAndProvenance" name="Evidence gathering, KG ingestion and authoring provenance" processRef="Process_EvidenceGatheringAndProvenance"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_EvidenceGatheringAndProvenance" name="Evidence gathering and provenance" isExecutable="false">
+    <bpmn:documentation>Five-step research and authoring-provenance workflow executed whenever a research or authoring agent investigates a topic: decompose topic areas and shortlist needed papers and datasets, query accessible scholarly and data APIs (Crossref/DOI, arXiv, PubMed, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, and reference data registries), ingest retrieved references, texts, and datasets into the declared Knowledge Graph subgraphs via Process_Ingestion, assess relevancy and claim boundaries against the opened sources, and record retrieval/verification provenance in authoring notes alongside formal citations in authored blocks.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="advisory"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_EvidenceGatheringAndProvenance">
+      <bpmn:lane id="Lane_AuthoringResearch" name="Research and authoring agent" partitionElementRef="authoring-agent">
+        <bpmn:documentation>Decomposes topic areas, compiles source and dataset shortlists, queries external scholarly and data databases, records blocked fetches or gaps honestly, assesses opened sources for exact locators and claim boundaries, and wires authoring provenance notes and formal citations into authored blocks.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_ResearchNeeded</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DecomposeShortlist</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_MultiDbSearch</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_FetchOutcome</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecordBlockedOrGap</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_AfterIngest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AssessRelevancy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecordProvenanceAndCite</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_ProvenanceLinked</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Ingestion" name="Ingestion engine" partitionElementRef="ingestion-agent">
+        <bpmn:documentation>Ingests retrieved CSL-JSON reference records, open-access documents, and tabular datasets into declared Knowledge Graph directories (references/, library/, sources/, extracted-references/, attestations/) through Process_Ingestion rather than leaving raw URLs in scratch notes.</bpmn:documentation>
+        <bpmn:flowNodeRef>Call_IngestIntoKg</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_ResearchNeeded" name="Topic research&#10;needed">
+      <bpmn:documentation>A research or authoring agent begins investigating a topic area before drafting or revising claims.</bpmn:documentation>
+      <bpmn:outgoing>Flow_EG_1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:task id="Task_DecomposeShortlist" name="Decompose topics&#10;and shortlist sources">
+      <bpmn:documentation>Write up explicit research topic areas, check declared memory, library, references, and uploads graphs first, and compile a targeted shortlist of needed primary papers, standards, and reference datasets per topic area.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="evidence-gathering-and-provenance"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_2</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_MultiDbSearch" name="Query scholarly&#10;and data APIs">
+      <bpmn:documentation>Query accessible bibliographic, preprint, biomedical, mathematical-catalogue, and data databases (Crossref/DOI doi.org and api.crossref.org, arXiv export.arxiv.org, PubMed / EuropePMC, InspireHEP, OpenAlex, Semantic Scholar, Google Scholar, OEIS across unit-rescaled / logged / unlogged / factorial-cleared forms, KnotInfo / LinkInfo / SnapPy / Regina censuses, LMFDB, &gt;= 80 dps PSLQ constant recognition, and domain data registries) to retrieve authoritative CSL-JSON metadata, exact catalogue identifiers, and open-access full texts or datasets.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="literature-search"/>
+        <bootstrap.processes:skill ref="evidence-gathering-and-provenance"/>
+        <bootstrap.processes:skill ref="online-sequence-and-knot-databases"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_3</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_FetchOutcome" name="Source&#10;fetched?">
+      <bpmn:documentation>Three-state retrieval check: `fetched` when open-access full text, dataset, or CSL-JSON metadata is retrieved for ingestion; `blocked or missing` when a runtime proxy/paywall blocks transfer or no open-access copy resolves.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="literature-search"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_4a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_EG_4b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_RecordBlockedOrGap" name="Record blocked&#10;fetch or search gap">
+      <bpmn:documentation>Record the full citation, direct download URL, and fetch blocker (so a person can drop the file into uploads/) or log the databases searched and rejected candidates so later sessions never repeat a dead end.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="literature-search"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_4a</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_5a</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:callActivity id="Call_IngestIntoKg" name="Ingest into&#10;declared KG" calledElement="Process_Ingestion">
+      <bpmn:documentation>Ingest retrieved CSL-JSON reference nodes (references/), open-access PDFs and sections (uploads/ to library/ via Process_Ingestion), reference datasets, and verification attestations into the instance's declared Knowledge Graph subgraphs.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="library-ingestion"/>
+        <bootstrap.processes:skill ref="evidence-gathering-and-provenance"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_4b</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_5b</bpmn:outgoing>
+    </bpmn:callActivity>
+
+    <bpmn:exclusiveGateway id="GW_AfterIngest">
+      <bpmn:documentation>Merge after Knowledge Graph ingestion or blocked/missing source logging.</bpmn:documentation>
+      <bpmn:incoming>Flow_EG_5a</bpmn:incoming>
+      <bpmn:incoming>Flow_EG_5b</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_AssessRelevancy" name="Assess relevancy&#10;and claim boundaries">
+      <bpmn:documentation>Open the ingested library sections or dataset rows and record the exact locator (theorem, section, equation, or table slug), hypotheses and conventions, and claim boundaries (what the source does not establish).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="evidence-gathering-and-provenance"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_7</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_RecordProvenanceAndCite" name="Record authoring&#10;provenance and cite">
+      <bpmn:documentation>Record retrieval and verification provenance (database/API, DOI/arXiv/PMID, date, locator, and relevancy summary) in authoring notes and attestations, and wire formal citation edges and Liquid dataset values in authored blocks.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="evidence-gathering-and-provenance"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_EG_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_EG_8</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_ProvenanceLinked" name="Evidence ingested&#10;and linked">
+      <bpmn:documentation>Sources are ingested into the Knowledge Graph, assessed for relevancy, and linked with provenance in the authored content.</bpmn:documentation>
+      <bpmn:incoming>Flow_EG_8</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_EG_1" sourceRef="Start_ResearchNeeded" targetRef="Task_DecomposeShortlist"/>
+    <bpmn:sequenceFlow id="Flow_EG_2" sourceRef="Task_DecomposeShortlist" targetRef="Task_MultiDbSearch"/>
+    <bpmn:sequenceFlow id="Flow_EG_3" sourceRef="Task_MultiDbSearch" targetRef="GW_FetchOutcome"/>
+    <bpmn:sequenceFlow id="Flow_EG_4a" name="blocked or missing" sourceRef="GW_FetchOutcome" targetRef="Task_RecordBlockedOrGap"/>
+    <bpmn:sequenceFlow id="Flow_EG_4b" name="fetched" sourceRef="GW_FetchOutcome" targetRef="Call_IngestIntoKg"/>
+    <bpmn:sequenceFlow id="Flow_EG_5a" sourceRef="Task_RecordBlockedOrGap" targetRef="GW_AfterIngest"/>
+    <bpmn:sequenceFlow id="Flow_EG_5b" sourceRef="Call_IngestIntoKg" targetRef="GW_AfterIngest"/>
+    <bpmn:sequenceFlow id="Flow_EG_6" sourceRef="GW_AfterIngest" targetRef="Task_AssessRelevancy"/>
+    <bpmn:sequenceFlow id="Flow_EG_7" sourceRef="Task_AssessRelevancy" targetRef="Task_RecordProvenanceAndCite"/>
+    <bpmn:sequenceFlow id="Flow_EG_8" sourceRef="Task_RecordProvenanceAndCite" targetRef="End_ProvenanceLinked"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_Process_EvidenceGatheringAndProvenance">
+    <bpmndi:BPMNPlane id="Plane_Process_EvidenceGatheringAndProvenance" bpmnElement="Collaboration_Process_EvidenceGatheringAndProvenance">
+      <bpmndi:BPMNShape id="Shape_Participant_EG" bpmnElement="Participant_Process_EvidenceGatheringAndProvenance" isHorizontal="true">
+        <dc:Bounds x="30" y="30" width="1350" height="480"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AuthoringResearch" bpmnElement="Lane_AuthoringResearch" isHorizontal="true">
+        <dc:Bounds x="60" y="30" width="1320" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Ingestion" bpmnElement="Lane_Ingestion" isHorizontal="true">
+        <dc:Bounds x="60" y="330" width="1320" height="180"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_ResearchNeeded" bpmnElement="Start_ResearchNeeded">
+        <dc:Bounds x="84" y="202" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="68" y="244" width="76" height="36"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DecomposeShortlist" bpmnElement="Task_DecomposeShortlist">
+        <dc:Bounds x="200" y="170" width="120" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_MultiDbSearch" bpmnElement="Task_MultiDbSearch">
+        <dc:Bounds x="370" y="170" width="120" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_FetchOutcome" bpmnElement="GW_FetchOutcome" isMarkerVisible="true">
+        <dc:Bounds x="550" y="195" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_RecordBlockedOrGap" bpmnElement="Task_RecordBlockedOrGap">
+        <dc:Bounds x="660" y="55" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_IngestIntoKg" bpmnElement="Call_IngestIntoKg">
+        <dc:Bounds x="660" y="370" width="120" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_AfterIngest" bpmnElement="GW_AfterIngest" isMarkerVisible="true">
+        <dc:Bounds x="840" y="195" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_AssessRelevancy" bpmnElement="Task_AssessRelevancy">
+        <dc:Bounds x="950" y="170" width="120" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_RecordProvenanceAndCite" bpmnElement="Task_RecordProvenanceAndCite">
+        <dc:Bounds x="1130" y="170" width="120" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_ProvenanceLinked" bpmnElement="End_ProvenanceLinked">
+        <dc:Bounds x="1310" y="202" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_1" bpmnElement="Flow_EG_1">
+        <di:waypoint x="120" y="220"/>
+        <di:waypoint x="200" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_2" bpmnElement="Flow_EG_2">
+        <di:waypoint x="320" y="220"/>
+        <di:waypoint x="370" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_3" bpmnElement="Flow_EG_3">
+        <di:waypoint x="490" y="220"/>
+        <di:waypoint x="550" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_4a" bpmnElement="Flow_EG_4a">
+        <di:waypoint x="575" y="195"/>
+        <di:waypoint x="575" y="95"/>
+        <di:waypoint x="660" y="95"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_4b" bpmnElement="Flow_EG_4b">
+        <di:waypoint x="575" y="245"/>
+        <di:waypoint x="575" y="420"/>
+        <di:waypoint x="660" y="420"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_5a" bpmnElement="Flow_EG_5a">
+        <di:waypoint x="780" y="95"/>
+        <di:waypoint x="865" y="95"/>
+        <di:waypoint x="865" y="195"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_5b" bpmnElement="Flow_EG_5b">
+        <di:waypoint x="780" y="420"/>
+        <di:waypoint x="865" y="420"/>
+        <di:waypoint x="865" y="245"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_6" bpmnElement="Flow_EG_6">
+        <di:waypoint x="890" y="220"/>
+        <di:waypoint x="950" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_7" bpmnElement="Flow_EG_7">
+        <di:waypoint x="1070" y="220"/>
+        <di:waypoint x="1130" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_EG_8" bpmnElement="Flow_EG_8">
+        <di:waypoint x="1250" y="220"/>
+        <di:waypoint x="1310" y="220"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
