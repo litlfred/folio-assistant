@@ -17,8 +17,9 @@
 #      into a single content-block / lib file, which is what drives the
 #      >9-min full-library `lake build` timeout. Targeted imports keep the
 #      per-file dependency cone (and CI build) small. FOLIO tree: the Lean
-#      sources live in `content/<paper>/lean/`, so in the platform repo this
-#      job has nothing to scan and skips.
+#      sources live in `folio/<paper>/lean/` (formerly `content/<paper>/lean/`;
+#      both are scanned), so in the platform repo this job has nothing to
+#      scan and skips.
 #
 #   2. Python unused / wildcard imports — HARD GATE (promoted from
 #      warn-only). ruff F401 (unused import) + F403 (`from x import *`) over
@@ -41,7 +42,7 @@
 #      something runs it — which is exactly what went wrong, see `on:` below.
 #
 #   4. Rust wildcard imports — WARN-ONLY ratchet. Lightweight grep report
-#      of non-test `use ...::*;` in tools/ (full `clippy -D
+#      of non-test `use ...::*;` in tools/ and crates/ (full `clippy -D
 #      clippy::wildcard_imports` is the eventual upgrade, but a cargo build
 #      on every PR is too heavy for a static gate; the grep ratchet flags
 #      new wildcard imports cheaply). FOLIO tree: zero `.rs` files here, so
@@ -250,20 +251,29 @@ jobs:
           # reads as a mystery rather than as "directory not found".
           #
           # `content/` stays UNPREFIXED deliberately: this job is vendored by
-          # folios, where the Lean tree really is at `content/<paper>/lean/`.
+          # folios, where the Lean tree was at `content/<paper>/lean/`.
           # Prefixing it would fix this repo and break every folio.
-          if [ ! -d content ]; then
-            echo "SKIP — no content/ directory (this is the PLATFORM repo; the Lean tree lives in a folio). Nothing scanned."
+          #
+          # `folio/*/lean` too (lint baseline, 2026-11-28): no folio keeps its
+          # Lean at `content/<paper>/lean/` any more — qou keeps it at
+          # `folio/<paper>/lean/` (4570 files, zero bare imports on 0e4cafe1a)
+          # — so a folio vendoring this step scanned nothing and said SKIP.
+          # Both roots are scanned when present; neither present is SKIP.
+          roots=()
+          [ -d content ] && roots+=(content)
+          for d in folio/*/lean; do [ -d "$d" ] && roots+=("$d"); done
+          if [ "${#roots[@]}" -eq 0 ]; then
+            echo "SKIP — no content/ or folio/*/lean directory (this is the PLATFORM repo; the Lean tree lives in a folio). Nothing scanned."
             exit 0
           fi
-          count=$(find content -name '*.lean' | wc -l)
+          count=$(find "${roots[@]}" -name '*.lean' | wc -l)
           if [ "$count" -eq 0 ]; then
-            echo "SKIP — content/ exists but holds no .lean files. Nothing scanned."
+            echo "SKIP — ${roots[*]} hold no .lean files. Nothing scanned."
             exit 0
           fi
-          echo "Scanning $count Lean file(s)…"
+          echo "Scanning $count Lean file(s) under ${roots[*]}…"
           if matches=$(grep -rnE '^import Mathlib[[:space:]]*$' \
-                content --include='*.lean' 2>/dev/null); then
+                "${roots[@]}" --include='*.lean' 2>/dev/null); then
             echo "::error::Bare 'import Mathlib' found — use targeted imports (#min_imports). Offenders:"
             echo "$matches" | while IFS= read -r line; do
               echo "::error::$line"
@@ -393,7 +403,7 @@ jobs:
 
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
-      # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
+      # tools/ and crates/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
       # of the legitimate baseline, so they're reported but not failed.
       - name: Wildcard `use ...::*;` report
         if: ${{ !cancelled() }}
@@ -405,17 +415,25 @@ jobs:
           # result for a scan of nothing. `tools/` is a folio tree; this job is
           # here for folios that vendor this workflow.
           # No tools/ at all is the common case; `find` on it fails the pipeline under pipefail.
-          count=0; [ -d tools ] && count=$(find tools -name '*.rs' | wc -l)
+          #
+          # `crates/` too (lint baseline, 2026-11-28): a folio's Rust is a
+          # cargo workspace under `crates/` (qou: 142 of its 143 .rs files),
+          # with one more under `tools/**`. Both are scanned recursively when
+          # present. Still WARN-ONLY: qou has 36 non-test wildcard imports
+          # on 0e4cafe1a, so this would be red there.
+          roots=()
+          for d in tools crates; do [ -d "$d" ] && roots+=("$d"); done
+          count=0; [ "${#roots[@]}" -gt 0 ] && count=$(find "${roots[@]}" -name '*.rs' -not -path '*/target/*' | wc -l)
           if [ "$count" -eq 0 ]; then
-            echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
+            echo "SKIP — no tools/**/*.rs or crates/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
             exit 0
           fi
           # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
           # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
           matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
-            tools --include='*.rs' 2>/dev/null | grep -vE 'use super::\*;' || true)
+            "${roots[@]}" --include='*.rs' --exclude-dir=target 2>/dev/null | grep -vE 'use super::\*;' || true)
           if [ -n "$matches" ]; then
-            echo "::warning::Non-test wildcard imports in tools/ (ratchet — narrow when touched):"
+            echo "::warning::Non-test wildcard imports in ${roots[*]} (ratchet — narrow when touched):"
             echo "$matches" | while IFS= read -r line; do
               echo "::warning::$line"
               echo "  $line"
